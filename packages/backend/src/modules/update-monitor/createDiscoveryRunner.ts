@@ -1,17 +1,17 @@
 import {
-  DiscoveryChainConfig,
-  DiscoveryLogger,
-  DiscoveryCache as IDiscoveryCache,
+  type DiscoveryChainConfig,
+  type DiscoveryLogger,
+  type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
   LeveledCache,
   RedisCache,
   getDiscoveryEngine,
 } from '@l2beat/discovery'
 
-import { Database } from '@l2beat/database'
-import { HttpClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { Peripherals } from '../../peripherals/Peripherals'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 

@@ -5,11 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('silicon')
 
@@ -39,8 +40,8 @@ export const silicon: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [Badge.DA.DAC],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'Silicon',
     slug: 'silicon',
     description:
@@ -53,7 +54,6 @@ export const silicon: Layer2 = polygonCDKStack({
       repositories: [],
       socialMedia: ['https://x.com/0xSilicon'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.silicon.network',
   rollupModuleContract: discovery.getContract('SiliconValidium'),
@@ -170,4 +170,12 @@ export const silicon: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { SimpleMethodHandler } from './SimpleMethodHandler'
 

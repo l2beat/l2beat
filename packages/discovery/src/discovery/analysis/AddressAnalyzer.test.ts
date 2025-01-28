@@ -3,14 +3,14 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { createContractConfig } from '../config/ContractConfig'
 import { DiscoveryContract } from '../config/RawDiscoveryConfig'
-import { HandlerExecutor } from '../handlers/HandlerExecutor'
-import { IProvider } from '../provider/IProvider'
-import { ProxyDetector } from '../proxies/ProxyDetector'
-import { ContractSources } from '../source/SourceCodeService'
-import { SourceCodeService } from '../source/SourceCodeService'
+import type { HandlerExecutor } from '../handlers/HandlerExecutor'
+import type { IProvider } from '../provider/IProvider'
+import type { ProxyDetector } from '../proxies/ProxyDetector'
+import type { ContractSources } from '../source/SourceCodeService'
+import type { SourceCodeService } from '../source/SourceCodeService'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
-import { TemplateService } from './TemplateService'
+import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
   const overrides = DiscoveryContract.parse({})

@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Context, Middleware, Next } from 'koa'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Context, Middleware, Next } from 'koa'
 
 export function createApiLogger(logger: Logger): Middleware {
   return async function (ctx: Context, next: Next): Promise<void> {

@@ -47,9 +47,9 @@
         "recipientsData": {
           "description": "Lists recipients and weights using events, while the latest represents the current state.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RecipientsUpdated",
-            "returnParams": ["recipients", "weights"]
+            "type": "event",
+            "select": ["recipients", "weights"],
+            "add": { "event": "RecipientsUpdated" }
           }
         }
       }
@@ -59,9 +59,9 @@
         "recipientsData": {
           "description": "Lists recipients and weights using events, while the latest represents the current state.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RecipientsUpdated",
-            "returnParams": ["recipients", "weights"]
+            "type": "event",
+            "select": ["recipients", "weights"],
+            "add": { "event": "RecipientsUpdated" }
           }
         }
       }

@@ -1,6 +1,5 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import {
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
   KnowledgeNugget,
   Milestone,
   ScalingProjectContracts,
@@ -9,7 +8,7 @@ import {
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnologyChoice,
-} from '../../../common'
+} from '../../../types'
 
 export interface Bridge {
   type: 'bridge'

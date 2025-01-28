@@ -1,6 +1,6 @@
-import { InvertedAddressDetails, Role } from '@l2beat/discovery'
+import type { InvertedAddressDetails, Role } from '@l2beat/discovery'
 
-import { StackPermissionTemplate } from '../StackTemplateTypes'
+import type { StackPermissionTemplate } from '../StackTemplateTypes'
 
 export function stringFormat(str: string, ...val: string[]) {
   for (let index = 0; index < val.length; index++) {

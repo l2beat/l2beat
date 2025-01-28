@@ -1,5 +1,5 @@
-import { Database, IndexerStateRecord } from '@l2beat/database'
-import { UnixTime, json } from '@l2beat/shared-pure'
+import type { Database, IndexerStateRecord } from '@l2beat/database'
+import { UnixTime, type json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'

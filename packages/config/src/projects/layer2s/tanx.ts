@@ -19,7 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -31,7 +31,8 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -67,8 +68,8 @@ export const tanx: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'tanX',
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',
@@ -88,7 +89,6 @@ export const tanx: Layer2 = {
         'https://linkedin.com/company/tanx-fi',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -192,4 +192,10 @@ export const tanx: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 }

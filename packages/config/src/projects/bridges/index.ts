@@ -40,7 +40,7 @@ import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { transporter } from './transporter'
-import { Bridge } from './types'
+import type { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
 

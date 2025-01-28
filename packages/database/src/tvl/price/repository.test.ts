@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { testDeletingArchivedRecords } from '../../utils/deleteArchivedRecords.test'
-import { PriceRecord } from './entity'
+import type { PriceRecord } from './entity'
 import { PriceRepository } from './repository'
 
 describeDatabase(PriceRepository.name, (db) => {

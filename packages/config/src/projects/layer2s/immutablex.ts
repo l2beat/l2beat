@@ -19,7 +19,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -31,7 +31,12 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+} from '../da-beat/common'
+import { StarkexDAC } from '../da-beat/templates/starkex-template'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
 
@@ -56,6 +61,12 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 
 const committee = getCommittee(discovery)
 
+const requiredHonestMembersPercentage = (
+  ((committee.accounts.length - committee.minSigners + 1) /
+    committee.accounts.length) *
+  100
+).toFixed(0)
+
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
@@ -66,8 +77,8 @@ export const immutablex: Layer2 = {
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
     name: 'Immutable X',
     slug: 'immutablex',
     description:
@@ -88,7 +99,6 @@ export const immutablex: Layer2 = {
         'https://twitter.com/Immutable',
       ],
     },
-    activityDataSource: 'Closed API',
   },
   stage: {
     stage: 'NotApplicable',
@@ -209,4 +219,60 @@ export const immutablex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
+  dataAvailabilitySolution: StarkexDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      knownMembers: [
+        {
+          external: false,
+          name: 'Immutable',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'StarkWare',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Deversifi',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Consensys',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Nethermind',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Iqlusion',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Infura',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Cephalopod',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+      ],
+    },
+    discovery,
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+      committeeSecurity:
+        DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
+          `${committee.minSigners}/${committee.accounts.length}`,
+          requiredHonestMembersPercentage,
+        ),
+    },
+  }),
 }

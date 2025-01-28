@@ -1,6 +1,5 @@
 import { expect } from 'earl'
-
-import { ScalingProjectRisk } from '../'
+import type { ScalingProjectRisk } from '../types'
 
 export function checkRisk(risk: ScalingProjectRisk, name: string) {
   it(`${name} is correctly formatted`, () => {

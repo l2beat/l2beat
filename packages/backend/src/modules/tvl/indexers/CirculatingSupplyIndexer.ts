@@ -2,7 +2,7 @@ import { INDEXER_NAMES, createAmountId } from '@l2beat/backend-shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { CirculatingSupplyIndexerDeps } from './types'
+import type { CirculatingSupplyIndexerDeps } from './types'
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configurationId: string

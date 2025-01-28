@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -18,19 +18,19 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('swell')
 
@@ -136,6 +136,7 @@ export const swell: Layer2 = {
     Badge.Infra.Superchain,
     Badge.RaaS.AltLayer,
   ],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Swellchain',
     slug: 'swell',
@@ -156,7 +157,6 @@ export const swell: Layer2 = {
         'https://swellnetwork.io/blog',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -201,7 +201,7 @@ export const swell: Layer2 = {
       defaultUrl: 'https://rpc.ankr.com/swell',
       defaultCallsPerMinute: 700,
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(1),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
     finality: {
       type: 'OPStack',

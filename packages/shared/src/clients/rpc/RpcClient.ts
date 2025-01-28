@@ -1,22 +1,22 @@
 import {
   assert,
-  Block,
+  type Block,
   Bytes,
-  EthereumAddress,
-  json,
+  type EthereumAddress,
+  type json,
 } from '@l2beat/shared-pure'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
-  ClientCoreDependencies as ClientCoreDependencies,
+  type ClientCoreDependencies as ClientCoreDependencies,
 } from '../ClientCore'
-import { BlockClient } from '../types'
+import type { BlockClient } from '../types'
 import {
-  CallParameters,
+  type CallParameters,
   EVMBalanceResponse,
-  EVMBlock,
+  type EVMBlock,
   EVMBlockResponse,
-  EVMBlockWithTransactions,
+  type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
   EVMTransactionReceiptResponse,

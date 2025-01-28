@@ -26,7 +26,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -100,7 +100,6 @@ export const degate3: Layer2 = {
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
     },
-    activityDataSource: 'Explorer API',
     liveness: {
       explanation:
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',

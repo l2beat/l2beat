@@ -1,7 +1,7 @@
-import { ProxyDetails } from '@l2beat/discovery-types'
+import type { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { IProvider } from '../provider/IProvider'
+import type { IProvider } from '../provider/IProvider'
 import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {

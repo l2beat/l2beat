@@ -1,7 +1,8 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type {
+  ScalingProjectRisk,
+  ScalingProjectTechnologyChoice,
+} from '../types'
 
 function REGULAR(
   type: 'zk' | 'optimistic',

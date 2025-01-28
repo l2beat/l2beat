@@ -1,10 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
@@ -18,11 +19,11 @@ export const educhain: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['Social'],
   hostChain: ProjectId('arbitrum'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'EDU Chain',
     slug: 'edu-chain',
     description:
@@ -41,7 +42,6 @@ export const educhain: Layer3 = orbitStackL3({
         'https://medium.com/edu-chain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
   discoveryDrivenData: true,
@@ -76,4 +76,10 @@ export const educhain: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1737096804),
+    },
+    discovery,
+  }),
 })

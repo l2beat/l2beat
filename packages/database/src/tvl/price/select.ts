@@ -1,4 +1,4 @@
-import { Price } from '../../kysely/generated/types'
+import type { Price } from '../../kysely/generated/types'
 
 export const selectPrice = [
   'configurationId',

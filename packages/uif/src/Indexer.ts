@@ -1,19 +1,19 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 
 import { assert } from '@l2beat/shared-pure'
-import { Retries, RetryStrategy } from './Retries'
+import { Retries, type RetryStrategy } from './Retries'
 import { assertUnreachable } from './assertUnreachable'
 import { getInitialState } from './reducer/getInitialState'
 import { indexerReducer } from './reducer/indexerReducer'
-import { IndexerAction } from './reducer/types/IndexerAction'
-import {
+import type { IndexerAction } from './reducer/types/IndexerAction'
+import type {
   InitializeStateEffect,
   InvalidateEffect,
   NotifyReadyEffect,
   SetSafeHeightEffect,
   UpdateEffect,
 } from './reducer/types/IndexerEffect'
-import { IndexerState } from './reducer/types/IndexerState'
+import type { IndexerState } from './reducer/types/IndexerState'
 
 export interface IndexerOptions {
   tickRetryStrategy?: RetryStrategy

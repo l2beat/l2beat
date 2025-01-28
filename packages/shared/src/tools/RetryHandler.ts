@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 
 interface Deps {

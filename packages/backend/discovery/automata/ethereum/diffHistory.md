@@ -1,4 +1,58 @@
-Generated with discovered.json: 0xb6642c2f359c292578b8851d34cb35f179e2c0a1
+Generated with discovered.json: 0xcd6048122207e24cc310cdc500abda7a0944e67d
+
+# Diff at Mon, 27 Jan 2025 11:06:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21265411
+- current block number: 21715439
+
+## Description
+
+Automata adds an EOA as SystemConfig owner.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.via.0:
++        {"address":"0x5E2FC552288857cfE709C398Ecac448314dE1320"}
+      values.owner:
+-        "0x49eC5Bd8C9cC35Ce26b87E534d2E36980621dDD2"
++        "0x5E2FC552288857cfE709C398Ecac448314dE1320"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AutomataOpsMultisig (0x5E2FC552288857cfE709C398Ecac448314dE1320)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/AutomataOpsMultisig/Safe.sol    | 1088 ++++++++++++++++++++
+ .../.flat/AutomataOpsMultisig/SafeProxy.p.sol      |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21265411 (main branch discovery), not current.
+
+```diff
+    contract AutomataUpgradeMultisig (0x03eC1C43434E2f910A2fb984906cd2470fdb39c8) {
+    +++ description: None
+      name:
+-        "AutomataMultisig"
++        "AutomataUpgradeMultisig"
+    }
+```
+
+Generated with discovered.json: 0x40446be24fe195940d4df25c7158c6d34d980dc9
 
 # Diff at Mon, 20 Jan 2025 11:09:17 GMT:
 

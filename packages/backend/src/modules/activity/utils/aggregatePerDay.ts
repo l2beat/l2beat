@@ -1,5 +1,5 @@
-import { ActivityRecord } from '@l2beat/database'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { ActivityRecord } from '@l2beat/database'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 type Block = {
   txsCount: number

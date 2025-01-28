@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0xfd79e4589b4a7f71cfc72cc4136de3801008009208f84c7c0822be0ad7eb58fd",
+  "configHash": "0x9ebcd5112cb17881d75ae0a2723c83a048a7a8c676517ed56c57ab21cc6c12e0",
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -132,7 +132,7 @@
         "loopringV3": "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
         "owner": "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "shutdownTriggered": [{ "timestamp": 1699762379 }],
+        "shutdownTriggered": [1699762379],
         "state": {
           "maxAgeDepositUntilWithdrawable": 1296000,
           "DOMAIN_SEPARATOR": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",

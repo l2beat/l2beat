@@ -9,13 +9,13 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -29,16 +29,16 @@ export const eclipse: Layer2 = {
   id: ProjectId('eclipse'),
   createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Eclipse',
     slug: 'eclipse',
     description:
       'Eclipse is a sidechain powered by the Solana Virtual Machine (SVM).',
     category: 'Other',
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],

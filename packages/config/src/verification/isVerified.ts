@@ -1,4 +1,7 @@
-import { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../projects'
+import type { Bridge } from '../projects/bridges'
+import type { DaBridge, DaLayer } from '../projects/da-beat'
+import type { Layer2 } from '../projects/layer2s'
+import type { Layer3 } from '../projects/layer3s'
 
 export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaLayer,

@@ -4,10 +4,16 @@
   "fields": {
     "additionalProposers": {
       "handler": {
-        "type": "arrayFromOneEvent",
-        "event": "ProposerUpdated",
-        "valueKey": "proposer",
-        "flagKey": "added"
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerUpdated",
+          "where": ["=", "#added", true]
+        },
+        "remove": {
+          "event": "ProposerUpdated",
+          "where": ["!=", "#added", true]
+        }
       }
     },
     "owner": {

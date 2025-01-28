@@ -2,7 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { tokenList } from '../../src'
 import { escrowTimestamps } from './escrowTimestamps'
-import { IntermediateConfig } from './generateIntermediateConfig'
+import type { IntermediateConfig } from './generateIntermediateConfig'
 
 export function generateFinalConfig(config: IntermediateConfig) {
   const destinations = config.chains.map((x) => x.name).filter(notUndefined)

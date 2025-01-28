@@ -4,8 +4,8 @@ import {
   assert,
   Bytes,
   CoingeckoId,
-  EthereumAddress,
-  Token,
+  type EthereumAddress,
+  type Token,
 } from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 

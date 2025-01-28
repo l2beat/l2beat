@@ -3,16 +3,16 @@ import { expect } from 'earl'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
-import {
-  NUGGETS,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
-} from '../../common'
+import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
+import type {
+  ScalingProjectRiskViewEntry,
+  ScalingProjectTechnologyChoice,
+} from '../../types'
 import { getReferencedAddresses } from '../layer2s/index.test'
-import { BridgeTechnology, bridges } from './index'
+import { type BridgeTechnology, bridges } from './index'
 
 describe('bridges', () => {
   describe('links', () => {

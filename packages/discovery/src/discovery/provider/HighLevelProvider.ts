@@ -1,12 +1,17 @@
-import { BlobsInBlock } from '@l2beat/shared'
-import { assert, Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
-import { ContractSource } from '../../utils/IEtherscanClient'
+import type { BlobsInBlock } from '@l2beat/shared'
+import {
+  assert,
+  Bytes,
+  type EthereumAddress,
+  type Hash256,
+} from '@l2beat/shared-pure'
+import { type providers, utils } from 'ethers'
+import type { ContractSource } from '../../utils/IEtherscanClient'
 import { bytes32ToAddress } from '../utils/address'
 import { isRevert } from '../utils/isRevert'
-import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
-import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, IProvider, RawProviders } from './IProvider'
+import type { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
+import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
+import type { ContractDeployment, IProvider, RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {

@@ -1,4 +1,4 @@
-import { Transaction } from '@l2beat/shared-pure'
+import type { Transaction } from '@l2beat/shared-pure'
 import { EIP712_TX_TYPE } from './const'
 
 export function isEip712(tx: Transaction): boolean {

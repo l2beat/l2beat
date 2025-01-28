@@ -1,10 +1,10 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { providers, utils } from 'ethers'
+import { type EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { type providers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
-import { IProvider } from '../../provider/IProvider'
-import { Handler, HandlerResult } from '../Handler'
+import type { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
+import type { IProvider } from '../../provider/IProvider'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type ArbitrumActorsHandlerDefinition = z.infer<
   typeof ArbitrumActorsHandlerDefinition

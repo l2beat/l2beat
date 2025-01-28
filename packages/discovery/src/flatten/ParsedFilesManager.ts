@@ -3,7 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 import { getASTIdentifiers } from './getASTIdentifiers'
-import { FlattenOptions } from './types'
+import type { FlattenOptions } from './types'
 
 type ParseResult = ReturnType<typeof parse>
 

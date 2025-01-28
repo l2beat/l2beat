@@ -1,5 +1,5 @@
 import { Fragment } from 'react/jsx-runtime'
-import { ApiAbi, ApiAbiEntry } from '../api/types'
+import type { ApiAbi, ApiAbiEntry } from '../api/types'
 import * as solidity from '../panel-code/solidity'
 import { AddressDisplay } from './AddressDisplay'
 

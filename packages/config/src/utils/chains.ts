@@ -1,4 +1,7 @@
-import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
+import type { Bridge } from '../projects/bridges'
+import type { DaLayer } from '../projects/da-beat'
+import type { Layer2 } from '../projects/layer2s'
+import type { Layer3 } from '../projects/layer3s'
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -47,9 +50,7 @@ export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
 }
 
 function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
-  const bridges = daLayer.bridges.filter(
-    (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
-  )
+  const bridges = daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
   const addresses = bridges.flatMap((b) =>
     Object.values(b.contracts.addresses).flat(),
   )

@@ -41,9 +41,9 @@
       "fields": {
         "PREDICATES": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
-            "valueKey": "predicateAddress"
+            "type": "event",
+            "select": "predicateAddress",
+            "add": { "event": "PredicateRegistered" }
           },
           "target": { "template": "polygonposbridge/predicate" } // adds accesscontrol discovery
         }
@@ -65,9 +65,9 @@
       "fields": {
         "REGISTRATIONS": {
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
-            "valueKey": "sender"
+            "type": "event",
+            "select": "sender",
+            "add": { "event": "RegistrationUpdated" }
           }
         }
       },

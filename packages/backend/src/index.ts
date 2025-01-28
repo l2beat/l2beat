@@ -1,12 +1,12 @@
 import {
   ElasticSearchTransport,
-  ElasticSearchTransportOptions,
+  type ElasticSearchTransportOptions,
   LogFormatterEcs,
   LogFormatterJson,
   LogFormatterPretty,
   Logger,
-  LoggerOptions,
-  LoggerTransportOptions,
+  type LoggerOptions,
+  type LoggerTransportOptions,
   getEnv,
 } from '@l2beat/backend-tools'
 

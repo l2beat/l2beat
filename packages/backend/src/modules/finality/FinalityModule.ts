@@ -1,11 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import { Config } from '../../config'
-import { FinalityProjectConfig } from '../../config/features/finality'
-import { Providers } from '../../providers/Providers'
-import { ApplicationModule } from '../ApplicationModule'
-import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
+import type { Config } from '../../config'
+import type { FinalityProjectConfig } from '../../config/features/finality'
+import type { Providers } from '../../providers/Providers'
+import type { ApplicationModule } from '../ApplicationModule'
+import type { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { FinalityIndexer } from './FinalityIndexer'
 import { LoopringT2IAnalyzer } from './analyzers/LoopringT2IAnalyzer'
 import { ScrollT2IAnalyzer } from './analyzers/ScrollT2IAnalyzer'
@@ -17,7 +17,7 @@ import { OpStackStateUpdateAnalyzer } from './analyzers/opStack/OpStackStateUpda
 import { OpStackT2IAnalyzer } from './analyzers/opStack/OpStackT2IAnalyzer'
 import { PolygonZkEvmT2IAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmT2IAnalyzer'
 import { zkSyncEraT2IAnalyzer } from './analyzers/zkSyncEraT2IAnalyzer'
-import { FinalityConfig } from './types/FinalityConfig'
+import type { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
   config: Config,

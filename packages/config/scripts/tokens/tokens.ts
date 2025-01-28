@@ -1,6 +1,6 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import {
-  CoinListPlatformEntry,
+  type CoinListPlatformEntry,
   CoingeckoClient,
   HttpClient,
 } from '@l2beat/shared'
@@ -8,16 +8,20 @@ import {
   AssetId,
   ChainConverter,
   ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  UnixTime,
+  type CoingeckoId,
+  type EthereumAddress,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { isEqual } from 'lodash'
 import { chains } from '../../src'
-import { ChainConfig } from '../../src/common'
-import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
+import type {
+  GeneratedToken,
+  Output,
+  SourceEntry,
+} from '../../src/tokens/types'
+import type { ChainConfig } from '../../src/types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import {
   readGeneratedFile,

@@ -1,4 +1,7 @@
-import { AddressesWithTemplates, Analysis } from '../analysis/AddressAnalyzer'
+import type {
+  AddressesWithTemplates,
+  Analysis,
+} from '../analysis/AddressAnalyzer'
 
 export function removeAlreadyAnalyzed(
   toAnalyze: AddressesWithTemplates,

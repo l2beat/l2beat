@@ -1,6 +1,5 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type { ScalingProjectTechnologyChoice } from '../types'
 
 function ARBITRUM_DAO(
   l1Delay: number,

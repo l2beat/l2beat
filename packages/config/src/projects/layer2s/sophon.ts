@@ -5,12 +5,12 @@ import {
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sophon')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -22,16 +22,13 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const sophon: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: 'sophonValidatorsAdded',
-    removed: 'sophonValidatorsRemoved',
-  },
+  validatorsKey: 'sophonValidators',
   additionalBadges: [Badge.DA.Avail],
   createdAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Sophon',
     slug: 'sophon',
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
     description:
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
@@ -47,7 +44,6 @@ export const sophon: Layer2 = zkStackL2({
         'https://discord.gg/sophonhub',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['SOPH'],
   rpcUrl: 'https://rpc.sophon.xyz/',
@@ -121,38 +117,6 @@ export const sophon: Layer2 = zkStackL2({
       description:
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
-  ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('SophonZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('SophonZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Sophon zkEVM diamond contract.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'SophonChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Sophon Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'SophOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'SophonZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description: 'Can set the conversion factor for SOPH deposits to Sophon.',
-    },
-    ...discovery.getMultisigPermission(
-      'SophonUSDCEscrowMultisig',
-      'Can upgrade the implementation of the external USDC escrow and potentially steal all funds locked therein.',
-    ),
   ],
   milestones: [
     {

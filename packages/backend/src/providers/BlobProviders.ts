@@ -1,4 +1,4 @@
-import { BlobClient, BlobProvider } from '@l2beat/shared'
+import { type BlobClient, BlobProvider } from '@l2beat/shared'
 
 export class BlobProviders {
   private readonly blobProvider: BlobProvider

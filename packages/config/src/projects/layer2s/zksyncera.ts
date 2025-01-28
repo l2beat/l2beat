@@ -1,10 +1,10 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Upgradeability, zkStackL2 } from './templates/zkStack'
-import { Layer2 } from './types'
+import { type Upgradeability, zkStackL2 } from './templates/zkStack'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -14,55 +14,43 @@ const discovery_ZKstackGovL2 = new ProjectDiscovery(
 const shared = new ProjectDiscovery('shared-zk-stack')
 const bridge = shared.getContract('L1SharedBridge')
 
-const executionDelayOldS = discovery.getContractValue<number>(
-  'ValidatorTimelockOld',
-  'executionDelay',
-)
-const executionDelayOld =
-  executionDelayOldS > 0 && formatSeconds(executionDelayOldS)
-
-const validatorsOld = () => {
-  // old validatorTL accepted validators in constructor
+const validatorsVTLold = () => {
+  // get validators added in the constructor args
   const constructorArgsValis = discovery.getContractValue<{
     _validators: string[]
   }>('ValidatorTimelockOld', 'constructorArgs')
-
-  const validatorsAdded = discovery
-    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsAdded')
+  // add the validators from events
+  const allValis = discovery
+    .getContractValue<string[]>('ValidatorTimelockOld', 'validatorsVTLold')
     .concat(constructorArgsValis._validators)
-
-  const validatorsRemoved = discovery.getContractValue<string[]>(
-    'ValidatorTimelockOld',
-    'validatorsRemoved',
-  )
-
-  // Create a map to track the net state of each validator (added or removed)
-  const validatorStates = new Map<string, number>()
-
-  // Increment for added validators
-  validatorsAdded.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  })
-
-  // Decrement for removed validators
-  validatorsRemoved.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  })
-
-  // Filter validators that have a net positive state (added more times than removed)
-  return Array.from(validatorStates.entries())
-    .filter(([_, state]) => state > 0)
-    .map(([validator, _]) => validator)
+  // dedup
+  return [...new Set(allValis)]
 }
+
+const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
+// Extract addresses from new validators and convert to lowercase for comparison
+const newValidatorAddresses = validatorsVTLnew.map((v) =>
+  v.address.toLowerCase(),
+)
+const oldValidators = validatorsVTLold()
+
+// Check if all old validators exist in new validators array
+const missingValidators = oldValidators.filter(
+  (oldValidator) => !newValidatorAddresses.includes(oldValidator.toLowerCase()),
+)
+
+assert(
+  missingValidators.length === 0,
+  `Some validators from old timelock are missing in new timelock: ${missingValidators.join(
+    ', ',
+  )}`,
+)
 
 export const zksyncera: Layer2 = zkStackL2({
   createdAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
-  validatorsEvents: {
-    added: `zksyncValidatorsAdded`,
-    removed: 'zksyncValidatorsRemoved',
-  },
+  validatorsKey: 'zksyncValidators',
   additionalBadges: [Badge.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',
@@ -90,7 +78,6 @@ export const zksyncera: Layer2 = zkStackL2({
       ],
       rollupCodes: 'https://rollup.codes/zksync-era',
     },
-    activityDataSource: 'Blockchain RPC',
   },
   diamondContract: discovery.getContract('ZKsync'),
   chainConfig: {
@@ -366,41 +353,6 @@ export const zksyncera: Layer2 = zkStackL2({
     minTimestamp: new UnixTime(1708556400),
     lag: 0,
   },
-  nonTemplatePermissions: [
-    {
-      name: 'ChainAdmin Owner',
-      accounts: [
-        discovery.getPermissionedAccount('EraChainAdminProxy', 'owner'),
-      ],
-      description:
-        'Can manage fees, apply predefined upgrades and censor bridge transactions (*ChainAdmin* role).',
-    },
-    {
-      name: 'ValidatorTimelockOld Validators',
-      accounts: validatorsOld().map((v) =>
-        discovery.formatPermissionedAccount(v),
-      ),
-      fromRole: true,
-      description:
-        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the currently unused ValidatorTimelockOld.',
-    },
-  ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('ZKsync', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('EraChainAdminProxy', {
-      description:
-        'Intermediary governance contract proxies the *Elastic Chain Operator* role for the shared contracts and the *ChainAdmin* role for ZKsync Era.',
-    }),
-    discovery.getContractDetails(
-      'ValidatorTimelockOld',
-      `Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by ${executionDelayOld}.`,
-    ),
-  ],
   milestones: [
     {
       name: 'Onchain Governance Launch',

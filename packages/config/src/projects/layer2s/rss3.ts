@@ -1,17 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('rss3')
 
 export const rss3: Layer2 = opStackL2({
   createdAt: new UnixTime(1705391231), // 2024-01-16T07:47:11Z
-  additionalBadges: [Badge.DA.NearDA],
   daProvider: {
     layer: DA_LAYERS.NEAR_DA,
     riskView: {
@@ -52,15 +51,16 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
+    badge: Badge.DA.NearDA,
   },
   associatedTokens: ['RSS3'],
   discovery,
   additionalPurposes: ['AI', 'Information'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
@@ -83,7 +83,6 @@ export const rss3: Layer2 = opStackL2({
         'https://t.me/rss3_en',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {

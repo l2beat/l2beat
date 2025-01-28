@@ -1,3 +1,248 @@
+Generated with discovered.json: 0x37afcf2efbe9a4192e28623d51a6d684b5ab4366
+
+# Diff at Mon, 27 Jan 2025 15:02:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3683d6e8b703ed59c2657f83d1b54955644c5977 block: 21678881
+- current block number: 21716626
+
+## Description
+
+new templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21678881 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      template:
++        "global/ProxyAdmin"
+    }
+```
+
+Generated with discovered.json: 0x7479eba0469174faed82a2293c6ad1775a6ad1ef
+
+# Diff at Wed, 22 Jan 2025 10:04:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae0363af45e5c1f3ac9d68ef4ce62fdaada6de1c block: 21667783
+- current block number: 21678881
+
+## Description
+
+New verifier, new Proxyadmin owner MS.
+
+MultipleVersionRollupVerifier (verifier router) has minimal changes.
+
+ZkEvmVerifierV1 (the actual verifier) is code-identical with the previous one.
+
+## Watched changes
+
+```diff
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      issuedPermissions.7.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      issuedPermissions.0.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) {
+    +++ description: None
+      values.owner:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      issuedPermissions.0.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      issuedPermissions.0.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e)
+    +++ description: None
+```
+
+```diff
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      issuedPermissions.0.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      issuedPermissions.32.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+      values.verifier:
+-        "0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6"
++        "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6)
+    +++ description: None
+```
+
+```diff
+    contract MorphOpsMultisig (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"0x759894Ced0e6af42c26668076Ffa84d02E3CeF60","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.4:
+-        {"permission":"upgrade","from":"0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      receivedPermissions.3:
+-        {"permission":"upgrade","from":"0x0Dc417F8AF88388737c5053FF73f345f080543F7","via":[{"address":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"}]
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+      issuedPermissions.1.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      issuedPermissions.0.to:
+-        "0xB822319ab7848b7cC4537c8409e50f85BFb04377"
++        "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154)
+    +++ description: Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0.
+```
+
+```diff
++   Status: CREATED
+    contract MorphUpgradeMultisig (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/MorphUpgradeMultisig/Safe.sol   | 1088 ++++++++++++++++++++
+ .../.flat/MorphUpgradeMultisig/SafeProxy.p.sol     |   37 +
+ .../MultipleVersionRollupVerifier.sol              |   13 +-
+ 3 files changed, 1137 insertions(+), 1 deletion(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21667783 (main branch discovery), not current.
+
+```diff
+    contract ZkEvmVerifierV1 (0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e) {
+    +++ description: None
+      description:
+-        "Current SP1 verifier using Blobs for DA, used to prepare data for the PlonkVerifierV0."
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x87C1D0dAb8d96b69CB91f97F4135E3ed5A49DCF6) {
+    +++ description: None
+      description:
+-        "Used to update the verifier and keep track of current and old versions."
+      values.latestVerifier.4:
++        [0,"0x0000000000000000000000000000000000000000"]
+      values.latestVerifier.3:
++        [0,"0x0000000000000000000000000000000000000000"]
+      values.latestVerifier.2:
++        [0,"0x0000000000000000000000000000000000000000"]
+      values.latestVerifier.1:
++        [0,"0x0000000000000000000000000000000000000000"]
+      values.latestVerifier.0:
+-        {"startBatchIndex":0,"verifier":"0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e"}
++        [0,"0x6dAece7dFaE212b6A9F55c56FD3cf1462F44069e"]
+      values.legacyVerifiersLength.4:
++        0
+      values.legacyVerifiersLength.3:
++        0
+      values.legacyVerifiersLength.2:
++        0
+      values.legacyVerifiersLength.1:
++        0
+      values.verifierVersions:
+-        [0]
+      errors:
++        {"latestVerifier":"Processing error occurred.","legacyVerifiersLength":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract MorphOpsMultisig (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      name:
+-        "MorphAdminMSig"
++        "MorphOpsMultisig"
+    }
+```
+
 Generated with discovered.json: 0x72f1722fef77263dbdc89f0ae4a67e13359d4916
 
 # Diff at Mon, 20 Jan 2025 19:26:41 GMT:

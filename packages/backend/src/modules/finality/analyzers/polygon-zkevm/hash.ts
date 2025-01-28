@@ -1,6 +1,6 @@
 import { utils } from 'ethers'
 
-import { PolygonZkEvmTransaction } from './types'
+import type { PolygonZkEvmTransaction } from './types'
 
 const { keccak256, serializeTransaction } = utils
 

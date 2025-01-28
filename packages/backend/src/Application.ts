@@ -1,10 +1,10 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
 import { createDatabase } from '@l2beat/database'
 import { ApiServer } from './api/ApiServer'
-import { Config } from './config'
-import { ApplicationModule } from './modules/ApplicationModule'
+import type { Config } from './config'
+import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'

@@ -50,54 +50,29 @@
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER",
           "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "BatchConfirmerStatusChanged",
-            "valueKey": "batchConfirmer",
-            "flagKey": "status"
+            "type": "event",
+            "select": "batchConfirmer",
+            "add": {
+              "event": "BatchConfirmerStatusChanged",
+              "where": ["=", "#status", true]
+            },
+            "remove": {
+              "event": "BatchConfirmerStatusChanged",
+              "where": ["!=", "#status", true]
+            }
           }
         }
       }
     },
     "StakeRegistry": {
       "fields": {
-        "firstQuorumStrategies": {
+        "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
           "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "0"
-          }
-        },
-        "secondQuorumStrategies": {
-          "description": "The strategies for the second quorum (EIGEN).",
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "1"
-          }
-        },
-        "thirdQuorumStrategies": {
-          "description": "The strategies for the third quorum.",
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "2"
-          }
-        },
-        "fourthQuorumStrategies": {
-          "description": "The strategies for the fourth quorum. Not used yet, here to catch a potential new quorum.",
-          "handler": {
-            "type": "arrayFromOneEventWithArg",
-            "event": "StrategyAddedToQuorum",
-            "valueKey": "strategy",
-            "arg": "quorumNumber",
-            "argValue": "3"
+            "type": "event",
+            "select": "strategy",
+            "groupBy": "quorumNumber",
+            "add": { "event": "StrategyAddedToQuorum" }
           }
         }
       }
@@ -141,11 +116,10 @@
         "registeredOperators": {
           "description": "List of all registered operators ids",
           "handler": {
-            "type": "arrayFromTwoEvents",
-            "addEvent": "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
-            "addKey": "operatorId",
-            "removeEvent": "event OperatorDeregistered(address indexed operator, bytes32 indexed operatorId)",
-            "removeKey": "operatorId"
+            "type": "event",
+            "select": "operatorId",
+            "add": { "event": "OperatorRegistered" },
+            "remove": { "event": "OperatorDeregistered" }
           }
         },
         "ejectionCooldown": {

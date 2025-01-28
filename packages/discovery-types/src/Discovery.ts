@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { EthereumAddress } from './EthereumAddress'
-import { Hash256 } from './Hash256'
+import type { EthereumAddress } from './EthereumAddress'
+import type { Hash256 } from './Hash256'
 
 export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([
@@ -29,6 +29,7 @@ export interface DiscoveryOutput {
   eoas: EoaParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
+  sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
 }
 
@@ -54,6 +55,7 @@ export type PermissionType =
   | 'configure'
   | 'upgrade'
   | 'act'
+  | 'validateZkStack'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress

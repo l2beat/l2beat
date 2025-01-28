@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polynomial')
 
@@ -12,8 +12,8 @@ export const polynomial: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Polynomial',
     slug: 'polynomial',
     description:
@@ -29,7 +29,6 @@ export const polynomial: Layer2 = opStackL2({
         'https://discord.gg/Mr9XKU5W',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.polynomial.fi',
   finality: {

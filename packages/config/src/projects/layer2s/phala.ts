@@ -1,5 +1,5 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
@@ -65,7 +65,6 @@ export const phala: Layer2 = {
     description: `Phala is cloud computing protocol which aims at offering developers a secure and efficient platform for deploying and managing AI-ready applications in a trusted environment (TEE).
       Phala rollup on Ethereum leverages the Op-Succinct stack, a combination of OP stack contracts and Zero-Knowledge Proofs (ZK) using the SP1 zkVM.`,
     category: 'ZK Rollup',
-    activityDataSource: 'Blockchain RPC',
     purposes: ['Universal'],
     links: {
       websites: ['https://phala.network/'],

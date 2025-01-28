@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 
-import { DashboardProject } from '../props/getDashboardProjects'
+import type { DashboardProject } from '../props/getDashboardProjects'
 import { TableData } from './components/Components'
 import { Diff } from './components/Diff'
 import { Page } from './components/Page'

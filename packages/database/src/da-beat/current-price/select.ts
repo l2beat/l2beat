@@ -1,4 +1,4 @@
-import { CurrentPrice } from '../../kysely/generated/types'
+import type { CurrentPrice } from '../../kysely/generated/types'
 
 export const selectCurrentPrice = [
   'coingeckoId',

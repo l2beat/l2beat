@@ -1,8 +1,12 @@
-import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
-import { Database } from '@l2beat/database'
-import { LoopringClient, RpcClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { LoopringClient, RpcClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 

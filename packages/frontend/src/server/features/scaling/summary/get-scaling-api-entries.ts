@@ -111,8 +111,8 @@ function getScalingApiEntry(
   }
 }
 
-function getStage(config: StageConfig | undefined) {
-  if (!config || config.stage === 'NotApplicable') {
+function getStage(config: StageConfig) {
+  if (config.stage === 'NotApplicable') {
     return 'Not applicable'
   }
   if (config.stage === 'UnderReview') {

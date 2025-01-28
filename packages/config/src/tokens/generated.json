@@ -72,6 +72,20 @@
       "supply": "zero"
     },
     {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0x3F382DbD960E3a9bbCeaE22651E88158d2791550",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1599986900,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Across Protocol Token",
       "coingeckoId": "across-protocol",
       "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
@@ -221,6 +235,20 @@
       "coingeckoListingTimestamp": 1721174400,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39170/large/A8_Token-04_200x200.png?1720798300",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Animecoin",
+      "coingeckoId": "anime",
+      "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277",
+      "symbol": "ANIME",
+      "decimals": 18,
+      "deploymentTimestamp": 1736790131,
+      "coingeckoListingTimestamp": 1737590400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53575/large/anime.jpg?1736748703",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2537,6 +2565,20 @@
       "supply": "zero"
     },
     {
+      "name": "HashKey Platform Token",
+      "coingeckoId": "hashkey-ecopoints",
+      "address": "0xE7C6BF469e97eEB0bFB74C8dbFF5BD47D4C1C98a",
+      "symbol": "HSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1719663791,
+      "coingeckoListingTimestamp": 1732579200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29779/large/HSKlogo.jpg?1719445510",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Hegic",
       "coingeckoId": "hegic",
       "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
@@ -2826,6 +2868,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/4703/large/lambda_200.png?1696505268",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "League of Kingdoms Arena",
+      "coingeckoId": "league-of-kingdoms",
+      "address": "0x61E90A50137E1F645c9eF4a0d3A4f01477738406",
+      "symbol": "LOKA",
+      "decimals": 18,
+      "deploymentTimestamp": 1641359360,
+      "coingeckoListingTimestamp": 1642636800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -7179,6 +7235,20 @@
       "supply": "zero"
     },
     {
+      "name": "Fidelity ILF USD Fund Class G Acc",
+      "coingeckoId": "sygnum-fiusd-liquidity-fund",
+      "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
+      "symbol": "FIUSD",
+      "decimals": 2,
+      "deploymentTimestamp": 1708523359,
+      "coingeckoListingTimestamp": 1737417600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50749/large/FIUDS_200x200px_%281%29.png?1728956878",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Frax",
       "coingeckoId": "frax",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
@@ -8500,6 +8570,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Aavegotchi GHST Token",
+      "coingeckoId": "aavegotchi",
+      "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
+      "symbol": "GHST",
+      "decimals": 18,
+      "deploymentTimestamp": 1712052491,
+      "coingeckoListingTimestamp": 1600041600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12467/large/GHST.png?1696512286",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "name": "Aerodrome",
@@ -11711,6 +11795,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1716417748,
       "coingeckoListingTimestamp": 1720483200,
+      "untilTimestamp": 1736409600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38625/large/image_%281%29.png?1718168417",
       "chainId": 111188,

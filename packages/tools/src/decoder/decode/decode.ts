@@ -1,4 +1,4 @@
-import { DecodedResult } from './DecodedResult'
+import type { DecodedResult } from './DecodedResult'
 import { decodeFunction } from './decodeFunction'
 import { decodeMultisend } from './decodeMultisend'
 import { decodeParameters } from './decodeParameters'

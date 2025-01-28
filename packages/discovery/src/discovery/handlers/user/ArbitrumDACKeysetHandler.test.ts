@@ -1,8 +1,8 @@
 import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { providers, utils } from 'ethers'
+import { type providers, utils } from 'ethers'
 
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
 
 describe(ArbitrumDACKeysetHandler.name, () => {

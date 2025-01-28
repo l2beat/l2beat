@@ -1,6 +1,6 @@
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
-import { L2Block } from '../types/BaseAnalyzer'
+import type { L2Block } from '../types/BaseAnalyzer'
 import { decodeV0Blob } from './decodeV0Blob'
 
 // NOTE(radomski): Based on https://github.com/Consensys/linea-monorepo/blob/main/prover/lib/compressor/blob/blob.go

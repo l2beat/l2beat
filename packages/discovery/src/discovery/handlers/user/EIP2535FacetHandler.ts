@@ -1,8 +1,8 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
-import { IProvider } from '../../provider/IProvider'
+import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
-import { Handler, HandlerResult } from '../Handler'
+import type { Handler, HandlerResult } from '../Handler'
 
 export type EIP2535FacetHandlerDefinition = z.infer<
   typeof EIP2535FacetHandlerDefinition

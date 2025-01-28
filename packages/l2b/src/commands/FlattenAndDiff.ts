@@ -2,7 +2,7 @@ import { writeFileSync } from 'fs'
 import path from 'path'
 import { flattenStartingFrom } from '@l2beat/discovery'
 import {
-  ExplorerConfig,
+  type ExplorerConfig,
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'

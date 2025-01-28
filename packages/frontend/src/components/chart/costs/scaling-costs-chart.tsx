@@ -17,9 +17,10 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
-import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type CostsUnit } from '~/server/features/scaling/costs/types'
-import { type CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
+import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import type { CostsUnit } from '~/server/features/scaling/costs/types'
+import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import {
   type CostsResolution,
   rangeToResolution,
@@ -41,13 +42,14 @@ interface Props {
 
 export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
+  const { checked } = useRecategorisationPreviewContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
   const filters = useScalingFilterValues()
 
   const onMetricChange = (metric: CostsMetric) => {
     setMetric(metric)
-    if (metric === 'per-l2-tx' && (range === '1d' || range === '7d')) {
+    if (metric === 'per-l2-uop' && (range === '1d' || range === '7d')) {
       setRange('30d')
     }
   }
@@ -76,6 +78,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter,
+    previewRecategorisation: checked,
   })
 
   const { chartRange, columns, formatYAxisLabel, valuesStyle } =

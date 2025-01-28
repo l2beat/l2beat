@@ -1,4 +1,4 @@
-import { Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 
 export async function findUnusedConfigs(db: Database): Promise<string[]> {
   const allConfigs = await db.indexerConfiguration.getByIndexerId(

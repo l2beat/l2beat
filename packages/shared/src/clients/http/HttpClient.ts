@@ -1,4 +1,4 @@
-import fetch, { RequestInit } from 'node-fetch'
+import fetch, { type RequestInit } from 'node-fetch'
 
 export class HttpClient {
   /**

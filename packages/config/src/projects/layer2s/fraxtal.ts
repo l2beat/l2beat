@@ -1,17 +1,24 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaFraudDetectionRisk,
+  DaRelayerFailureRisk,
+  DaUpgradeabilityRisk,
+} from '../da-beat/common'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
   createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
-  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
+  additionalBadges: [Badge.Infra.Superchain],
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
@@ -48,14 +55,15 @@ export const fraxtal: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
+    badge: Badge.DA.CustomDA,
   },
   associatedTokens: ['FXS', 'FPIS'],
   discovery,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Fraxtal',
     slug: 'fraxtal',
     description:
@@ -72,7 +80,6 @@ export const fraxtal: Layer2 = opStackL2({
         'https://t.me/fraxfinance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.frax.com',
   genesisTimestamp: new UnixTime(1706811599),
@@ -92,4 +99,62 @@ export const fraxtal: Layer2 = opStackL2({
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
   discoveryDrivenData: true,
+  dataAvailabilitySolution: {
+    type: 'DaLayer',
+    kind: 'No DAC',
+    display: {
+      name: 'FraxtalDA',
+      description:
+        'FraxtalDA is a custom data availability solution built by the Fraxtal team.',
+    },
+    systemCategory: 'custom',
+    challengeMechanism: 'None',
+    technology: {
+      description: `
+      ## Architecture
+      FraxtalDA is a custom data availability solution built by the Fraxtal team. 
+      The data is posted by the OP batcher to three separate locations: AWS, IPFS, and Cloudfare R2. 
+      The IPFS hash is then submitted to the onchain inbox contract on Ethereum.
+      FraxtalDA relies on a single DA endpoint to manage data posting between the three different locations. 
+  
+      ![FraxtalDA](/images/da-layer-technology/fraxtalDA/FraxtalDA.png#center)
+  
+      The sequencer attests to data availability by posting an IPFS hash to an onchain inbox contract on Ethereum. L2 nodes derive the L2 chain from the L1 by reading transactions commitments from this sequencer inbox.
+          When reading from the inbox, the op-node verifies that the commitment hash is a valid IPFS CID. If the data corresponding to the hash is missing from IPFS, the op-node will halt, preventing further derivation of the L2 chain. 
+      `,
+      references: [
+        {
+          text: 'FraxtalDA Documentation',
+          href: 'https://docs.frax.com/fraxtal/network/data-availability',
+        },
+        {
+          text: 'Fraxtal DA Follower - Source Code',
+          href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `the sequencer posts an invalid data availability commitment.`,
+        },
+      ],
+    },
+    bridge: {
+      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      type: 'NoDacBridge',
+      technology: {
+        description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.
+      Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.There is no committee attesting to the availability of the data. For L2 chain derivation, the system relies on sequencer commitments to an L1 onchain inbox. See DA layer technology section for more details.\n`,
+      },
+      risks: {
+        committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
+        upgradeability: DaUpgradeabilityRisk.NoBridge,
+        relayerFailure: DaRelayerFailureRisk.NoBridge,
+      },
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.Unknown,
+      fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    },
+  },
 })

@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
 import { underReviewL2 } from './templates/underReview'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 export const nal: Layer2 = underReviewL2({
   id: 'nal',
@@ -22,7 +21,6 @@ export const nal: Layer2 = underReviewL2({
       repositories: [],
       socialMedia: ['https://x.com/nal_network'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.nal.network/',
   transactionApi: {
@@ -30,7 +28,7 @@ export const nal: Layer2 = underReviewL2({
     startBlock: 1,
     defaultUrl: 'https://rpc.nal.network/',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

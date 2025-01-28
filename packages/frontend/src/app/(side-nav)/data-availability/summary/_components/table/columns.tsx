@@ -113,9 +113,7 @@ const challengeMechanismColumn = columnHelper.display({
   header: 'Challenge\nmechanism',
   cell: (ctx) => (
     <TwoRowCell>
-      <TwoRowCell.First>
-        {ctx.row.original.challengeMechanism?.value ?? 'None'}
-      </TwoRowCell.First>
+      <TwoRowCell.First>{ctx.row.original.challengeMechanism}</TwoRowCell.First>
     </TwoRowCell>
   ),
   meta: {

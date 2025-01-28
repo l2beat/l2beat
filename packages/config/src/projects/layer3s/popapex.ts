@@ -1,11 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import { Layer3 } from './types'
+import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
@@ -22,11 +21,11 @@ export const popapex: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
-      REASON_FOR_BEING_OTHER.SMALL_DAC,
-    ],
     name: 'Proof of Play Apex',
     shortName: 'PoP Apex',
     slug: 'popapex',
@@ -47,14 +46,13 @@ export const popapex: Layer3 = orbitStackL3({
         'https://piratenation.medium.com/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   transactionApi: {
     type: 'rpc',
     startBlock: 1,
     defaultUrl: 'https://rpc.apex.proofofplay.com',
     defaultCallsPerMinute: 5000,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   discoveryDrivenData: true,
   milestones: [
@@ -67,4 +65,10 @@ export const popapex: Layer3 = orbitStackL3({
       type: 'incident',
     },
   ],
+  dataAvailabilitySolution: AnytrustDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+    },
+    discovery,
+  }),
 })

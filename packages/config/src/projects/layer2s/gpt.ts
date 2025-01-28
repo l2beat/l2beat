@@ -1,20 +1,18 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('gpt')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'GptProtocolDAC',
@@ -41,10 +39,13 @@ export const gpt: Layer2 = polygonCDKStack({
   createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
   additionalPurposes: ['AI'],
+  isArchived: true,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'GPT Protocol',
     slug: 'gpt',
+    headerWarning:
+      'The operator has stopped servicing this Validium and a fork was [deployed outside the shared Polygon AggLayer contracts](https://app.blocksec.com/explorer/tx/eth/0x6e3d75c42350019dce5484cc45e9db89b2a29bf8ff8c000ddfa2aa5a9df08628).',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     links: {
@@ -64,7 +65,6 @@ export const gpt: Layer2 = polygonCDKStack({
         'https://instagram.com/gptprotocol/',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['GPT'],
   rpcUrl: 'https://rpc.gptprotocol.io', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
@@ -116,21 +116,7 @@ export const gpt: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('GptProtocolValidium'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
-  nonTemplateEscrows: [
-    shared.getEscrowDetails({
-      address: bridge.address,
-      tokens: ['GPT', 'WETH'],
-      sinceTimestamp: new UnixTime(1712620800),
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherWrapped',
-        tokensToAssignFromL1: ['GPT'],
-        wethAddress: EthereumAddress(
-          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
-        ),
-      },
-    }),
-  ],
+  nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
@@ -185,4 +171,12 @@ export const gpt: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

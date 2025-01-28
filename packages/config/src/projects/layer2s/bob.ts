@@ -1,11 +1,11 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bob')
 
@@ -14,8 +14,8 @@ export const bob: Layer2 = opStackL2({
   discovery,
   additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
   additionalPurposes: ['Bitcoin DApps'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'BOB',
     slug: 'bob',
     tvlWarning: {
@@ -33,7 +33,6 @@ export const bob: Layer2 = opStackL2({
       repositories: ['https://github.com/bob-collective'],
       socialMedia: ['https://twitter.com/build_on_bob'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

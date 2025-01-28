@@ -1,14 +1,14 @@
 import {
-  ContractParameters,
+  type ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
+import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
-import {
+import type {
   ScalingProjectReference,
   ScalingProjectRiskViewEntry,
-} from '../../../common'
-import { BadgeId, badges } from '../../badges'
+} from '../../../types'
+import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
   inherentBadges: BadgeId[],

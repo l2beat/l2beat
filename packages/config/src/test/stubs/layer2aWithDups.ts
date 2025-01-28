@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -10,7 +9,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import { Layer2 } from '../../projects'
+import type { Layer2 } from '../../projects/layer2s'
 
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',

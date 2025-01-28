@@ -1,9 +1,13 @@
-import { assert, ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
-import { Database } from '@l2beat/database'
-import { RpcClient } from '@l2beat/shared'
+import type { Database } from '@l2beat/database'
+import type { RpcClient } from '@l2beat/shared'
 import { byteArrFromHexStr } from '../../utils/byteArrFromHexStr'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import type { L2Block, Transaction } from '../types/BaseAnalyzer'
@@ -88,20 +92,29 @@ function extractTransactionData(data: string): string[] {
   return batches.map((batch) => batch.transactions)
 }
 
-const oldMethod = {
-  name: 'sequenceBatches',
-  signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)`,
-  id: '0xecef3f99',
-}
-
-const newMethod = {
-  name: 'sequenceBatches',
-  signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)`,
-  id: '0xdef57e54',
-}
-
-const oldIface = new utils.Interface([oldMethod.signature])
-const newIface = new utils.Interface([newMethod.signature])
+const methods = new Map<string, { name: string; signature: string }>([
+  [
+    '0xecef3f99',
+    {
+      name: 'sequenceBatches',
+      signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)`,
+    },
+  ],
+  [
+    '0xdef57e54',
+    {
+      name: 'sequenceBatches',
+      signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)`,
+    },
+  ],
+  [
+    '0xb910e0f9',
+    {
+      name: 'sequenceBatches',
+      signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint32 l1InfoTreeLeafCount, uint64 maxSequenceTimestamp, bytes32 expectedFinalAccInputHash, address l2Coinbase)`,
+    },
+  ],
+])
 
 /**
  * Transaction batches are compatible across both APIs.
@@ -109,14 +122,12 @@ const newIface = new utils.Interface([newMethod.signature])
 function decodeData(data: string) {
   const txSig = data.slice(0, 10)
 
-  if (txSig === oldMethod.id) {
-    return oldIface.decodeFunctionData(oldMethod.name, data)
-  }
-
-  if (txSig === newMethod.id) {
-    return newIface.decodeFunctionData(newMethod.name, data)
-  }
-  throw new Error(
+  const method = methods.get(txSig)
+  assert(
+    method,
     `Programmer error: can't recognize function signature: ${txSig}`,
   )
+
+  const iface = new utils.Interface([method.signature])
+  return iface.decodeFunctionData(method.name, data)
 }

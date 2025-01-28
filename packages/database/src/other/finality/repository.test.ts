@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { FinalityRecord } from './entity'
+import type { FinalityRecord } from './entity'
 import { FinalityRepository } from './repository'
 
 describeDatabase(FinalityRepository.name, (db) => {

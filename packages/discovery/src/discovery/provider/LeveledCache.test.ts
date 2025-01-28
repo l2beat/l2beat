@@ -1,5 +1,5 @@
-import { MockObject, expect, mockFn, mockObject } from 'earl'
-import { DiscoveryCache } from './DiscoveryCache'
+import { type MockObject, expect, mockFn, mockObject } from 'earl'
+import type { DiscoveryCache } from './DiscoveryCache'
 import { LeveledCache } from './LeveledCache'
 
 describe('LeveledCache', () => {

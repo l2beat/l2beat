@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { ParseError, parse } from 'jsonc-parser'
+import { type ParseError, parse } from 'jsonc-parser'
 
-import { GeneratedToken, Output, Source } from '../../../src/tokens/types'
-import { ScriptLogger } from './ScriptLogger'
+import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
+import type { ScriptLogger } from './ScriptLogger'
 
 const SOURCE_FILE_PATH = './src/tokens/tokens.jsonc'
 const OUTPUT_FILE_PATH = './src/tokens/generated.json'

@@ -88,45 +88,45 @@
         "RoleGuardianChanged": {
           "description": "The guardian permission allows canceling operations that have been scheduled under the role.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RoleGuardianChanged",
-            "returnParams": ["roleId", "guardian"],
+            "type": "event",
+            "select": "guardian",
+            "set": { "event": "RoleGuardianChanged" },
             "groupBy": "roleId"
           }
         },
         "RoleAdminChanged": {
           "description": "The RoleAdmin permission is required to grant the role, revoke the role and update the execution delay for the respective role.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RoleAdminChanged",
-            "returnParams": ["roleId", "admin"],
+            "type": "event",
+            "select": "admin",
+            "set": { "event": "RoleAdminChanged" },
             "groupBy": "roleId"
           }
         },
         "RoleGrantDelayChanged": {
           "description": "Grant delay for a given `roleId`.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RoleGrantDelayChanged",
-            "returnParams": ["roleId", "delay", "since"],
+            "type": "event",
+            "select": ["delay", "since"],
+            "set": { "event": "RoleGrantDelayChanged" },
             "groupBy": "roleId"
           }
         },
         "TargetAdminDelayUpdated": {
           "description": "Delay for changing the AccessManager configuration of a given target contract.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "TargetAdminDelayUpdated",
-            "returnParams": ["target", "delay", "since"],
+            "type": "event",
+            "select": ["delay", "since"],
+            "set": { "event": "TargetAdminDelayUpdated" },
             "groupBy": "target"
           }
         },
         "TargetFunctionRoleUpdated": {
           "description": "Target addresses and function selectors accessible from a given role id.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "TargetFunctionRoleUpdated",
-            "returnParams": ["target", "selector", "roleId"],
+            "type": "event",
+            "select": ["selector", "roleId"],
+            "set": { "event": "TargetFunctionRoleUpdated" },
             "groupBy": "target"
           }
         },
@@ -134,38 +134,32 @@
           "description": "List of scheduled operations.",
           "severity": "HIGH",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "OperationScheduled",
-            "returnParams": [
+            "type": "event",
+            "select": [
               "operationId",
               "nonce",
               "schedule",
               "caller",
               "target",
               "data"
-            ]
+            ],
+            "add": { "event": "OperationScheduled" }
           }
         },
         "AdditionalRoles": {
           "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RoleLabel",
-            "returnParams": ["roleId", "label"]
+            "type": "event",
+            "select": ["roleId", "label"],
+            "add": { "event": "RoleLabel" }
           }
         },
         "RolesGranted": {
           "description": "List of roles granted to accounts.",
           "handler": {
-            "type": "stateFromEvent",
-            "event": "RoleGranted",
-            "returnParams": [
-              "roleId",
-              "account",
-              "delay",
-              "since",
-              "newMember"
-            ],
+            "type": "event",
+            "select": ["account", "delay", "since", "newMember"],
+            "set": { "event": "RoleGranted" },
             "groupBy": "roleId"
           }
         }

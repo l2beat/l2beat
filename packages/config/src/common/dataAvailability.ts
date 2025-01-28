@@ -1,17 +1,9 @@
-import { ValueWithSentiment } from '@l2beat/shared-pure'
-
-import {
-  DataAvailabilityBridge,
+import type { ValueWithSentiment } from '@l2beat/shared-pure'
+import type {
   DataAvailabilityConfig,
   DataAvailabilityLayer,
-  DataAvailabilityMode,
-} from './ScalingProjectDataAvailability'
-
-export interface ProjectDataAvailability {
-  layer: ValueWithSentiment<string> & { secondLine?: string }
-  bridge: DataAvailabilityBridge
-  mode: DataAvailabilityMode
-}
+  ProjectDataAvailability,
+} from '../types'
 
 export const DA_MODES = {
   STATE_DIFFS: {

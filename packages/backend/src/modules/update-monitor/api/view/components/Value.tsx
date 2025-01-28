@@ -1,7 +1,7 @@
 import { isObject } from 'lodash'
 import { default as React } from 'react'
 
-import { DashboardContractFieldValue } from '../../props/utils/getValues'
+import type { DashboardContractFieldValue } from '../../props/utils/getValues'
 import { DASHBOARD_COLORS } from '../constants'
 
 interface ValueProps {

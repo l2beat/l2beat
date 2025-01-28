@@ -1,28 +1,16 @@
 import { ConfigReader } from '@l2beat/discovery'
 import {
-  ContractValue,
-  DiscoveryOutput,
+  type ContractValue,
+  type DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { hashJson } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import {
-  Bridge,
-  DaLayer,
-  Layer2,
-  Layer3,
-  ScalingProjectContract,
-  ScalingProjectPermission,
-  bridges,
-  layer2s,
-  layer3s,
-} from '..'
+import { type Bridge, bridges } from '../projects/bridges'
+import type { DaLayer } from '../projects/da-beat'
+import { type Layer2, layer2s } from '../projects/layer2s'
+import { type Layer3, layer3s } from '../projects/layer3s'
+import type { ScalingProjectContract, ScalingProjectPermission } from '../types'
 
 type CommonProject = Layer2 | Layer3 | Bridge
 
@@ -56,7 +44,7 @@ export function getCommonContractsIn(project: Params) {
   return {}
 }
 
-const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
+const memo = new Map<string, Record<string, ReferenceInfo[]>>()
 
 function findCommonContractsMemoized(
   projects: Pick<
@@ -65,14 +53,14 @@ function findCommonContractsMemoized(
   >[],
   hostChain: string = 'ethereum',
 ) {
-  const hash = hashJson(hostChain + JSON.stringify(projects.map((p) => p.id)))
-  if (memo.has(hash)) {
-    const result = memo.get(hash)
+  const key = hostChain + JSON.stringify(projects.map((p) => p.id))
+  if (memo.has(key)) {
+    const result = memo.get(key)
     assert(result !== undefined)
     return result
   }
   const result = findCommonContracts(projects, hostChain)
-  memo.set(hash, result)
+  memo.set(key, result)
   return result
 }
 

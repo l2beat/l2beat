@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { Insertable, Selectable } from 'kysely'
-import { BlockTimestamp } from '../../kysely/generated/types'
+import type { Insertable, Selectable } from 'kysely'
+import type { BlockTimestamp } from '../../kysely/generated/types'
 
 export interface BlockTimestampRecord {
   chain: string

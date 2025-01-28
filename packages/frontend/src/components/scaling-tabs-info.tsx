@@ -35,9 +35,9 @@ export function OthersInfo() {
   return (
     <InfoWithMobileDrawer
       title="What are Others?"
-      content="Others are L2s that either do not have a working proof system or they
-      don&apos;t have an external DA sufficiently decentralised (ie at least 5
-      independent attesters)"
+      content="Others are L2s that either lack a working proof system or
+      don&apos;t provide sufficient external DA guarantees (i.e. at least 5
+      independent attesters, a high enough threshold, or a proper DA bridge). To be listed in this category, the L2 must enshrine deposits from L1."
     />
   )
 }

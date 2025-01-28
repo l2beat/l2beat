@@ -1,12 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
 
@@ -17,11 +15,11 @@ export const aevo: Layer2 = opStackL2({
   associatedTokens: ['AEVO'],
   discovery,
   additionalPurposes: ['Exchange'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
-    reasonsForBeingOther: [
-      REASON_FOR_BEING_OTHER.NO_PROOFS,
-      REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
-    ],
     name: 'Aevo',
     slug: 'aevo',
     description:
@@ -38,7 +36,6 @@ export const aevo: Layer2 = opStackL2({
         'https://t.me/aevoupdates',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'aevo',
@@ -63,7 +60,7 @@ export const aevo: Layer2 = opStackL2({
     defaultUrl: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
     startBlock: 1,
     defaultCallsPerMinute: 800,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,

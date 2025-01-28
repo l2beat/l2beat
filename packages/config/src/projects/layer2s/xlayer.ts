@@ -5,11 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('xlayer')
 
@@ -92,8 +93,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       },
     ],
   },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
     name: 'X Layer',
     slug: 'xlayer',
     description:
@@ -108,7 +109,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
@@ -184,4 +184,12 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
+  dataAvailabilitySolution: PolygoncdkDAC({
+    bridge: {
+      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
+      transactionDataType: 'Transaction data',
+    },
+  }),
 })

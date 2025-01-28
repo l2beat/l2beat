@@ -1,5 +1,7 @@
-import { ScalingProjectRisk } from './ScalingProjectRisk'
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import type {
+  ScalingProjectRisk,
+  ScalingProjectTechnologyChoice,
+} from '../types'
 
 export const FRONTRUNNING_RISK: ScalingProjectRisk = {
   category: 'MEV can be extracted if',

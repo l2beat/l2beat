@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21630186,
-  "configHash": "0xdbdf317f30c905de8b646b75ed90e7c504b5ed666cc9de5edca8fdb3d7ff1cbb",
+  "configHash": "0x0bb531ebd201c08fab88993a8e9a190c54cc9e3fb0bd90ee8bc4f1ecc6ca08ba",
   "contracts": [
     {
       "name": "Factory",

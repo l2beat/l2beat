@@ -1,11 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
@@ -37,7 +35,6 @@ export const kinto: Layer2 = orbitStackL2({
         'https://medium.com/mamori-finance',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'kinto',
@@ -68,7 +65,7 @@ export const kinto: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.kinto-rpc.com',
     defaultCallsPerMinute: 600,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   stage: getStage(

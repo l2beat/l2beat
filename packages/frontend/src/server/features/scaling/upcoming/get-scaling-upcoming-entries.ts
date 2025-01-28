@@ -17,13 +17,14 @@ export async function getScalingUpcomingEntries() {
   })
 
   const entries = projects
-    .sort((a, b) => b.addedAt.toNumber() - a.addedAt.toNumber())
     .map((project) => getScalingUpcomingEntry(project))
+    .sort((a, b) => b.initialOrder - a.initialOrder)
 
   return groupByTabs(entries)
 }
 
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
+  initialOrder: number
   category: ScalingProjectCategory
   provider: ScalingProjectStack | undefined
   purposes: string[]
@@ -37,5 +38,6 @@ function getScalingUpcomingEntry(
     category: project.scalingInfo.type,
     provider: project.scalingInfo.stack,
     purposes: project.scalingInfo.purposes,
+    initialOrder: project.addedAt.toNumber(),
   }
 }

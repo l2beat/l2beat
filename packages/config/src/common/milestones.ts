@@ -1,4 +1,4 @@
-import { Milestone } from './Milestone'
+import type { Milestone } from '../types'
 
 const MAINNET_OPEN = {
   name: 'Mainnet for everyone',

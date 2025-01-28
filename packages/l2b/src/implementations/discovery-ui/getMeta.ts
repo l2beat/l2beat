@@ -1,7 +1,7 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { getContractType } from './getContractType'
-import { ApiAddressType } from './types'
+import type { ApiAddressType } from './types'
 
 export type ContractsMeta = Record<
   string,

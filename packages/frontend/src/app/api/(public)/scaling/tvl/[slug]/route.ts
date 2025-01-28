@@ -35,6 +35,7 @@ const getCachedResponse = cache(
       range,
       excludeAssociatedTokens: false,
       filter: { type: 'projects', projectIds: [project.id] },
+      previewRecategorisation: false,
     })
 
     const oldestTvlData = data.at(0)

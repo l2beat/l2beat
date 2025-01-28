@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ethernity')
 
@@ -12,8 +12,8 @@ export const ethernity: Layer2 = opStackL2({
   additionalBadges: [Badge.RaaS.Gelato, Badge.Infra.Superchain],
   additionalPurposes: ['AI'],
   discovery,
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
     name: 'Ethernity',
     slug: 'ethernity',
     redWarning:
@@ -38,7 +38,6 @@ export const ethernity: Layer2 = opStackL2({
         'https://discord.com/invite/EthernityChain',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
   },
   associatedTokens: ['ERN'],
   discoveryDrivenData: true,
