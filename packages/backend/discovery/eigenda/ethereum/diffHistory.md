@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf667a84b25c96960cc98f2fb5922bc416234d8c6
+Generated with discovered.json: 0x92bec746bce7659193c6390db61a1c9c824e7909
 
-# Diff at Tue, 28 Jan 2025 14:41:07 GMT:
+# Diff at Tue, 28 Jan 2025 15:12:38 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 21628459
-- current block number: 21723681
+- current block number: 21723767
 
 ## Description
 
@@ -313,7 +313,7 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract EigenLayerExecutorMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
     +++ description: None
 ```
 
@@ -321,6 +321,12 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 +   Status: CREATED
     contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
     +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
 ```
 
 ```diff
@@ -373,7 +379,7 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract TimelockController (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
     +++ description: None
 ```
 
@@ -1338,7 +1344,7 @@ Generated with discovered.json: 0x42a76c68ceedd557005c4d604b1551be8993140a
 
 ## Description
 
-The OperationsMultisig updated the ejectionCooldown param, and quorumEjection params for quorum 0 (ETH) and quorum 1 (EIGEN).
+The OperationsMultisig updated the ejectionCooldown param, and quorumEjection params for quorum 0 (ETH) and quorum 1 (EIGEN). 
 Shortened ejectionRateLimitWindow and ejectionCooldown to 3 days, so that max 33% of the stake can be ejected in a 3-day window, and ejected operators can rejoin after 3 days from being ejected.
 Added description for ejectionCooldown value in config.
 
@@ -3139,7 +3145,6 @@ Generated with discovered.json: 0x012e5a445d7bc77ae4e992083f1a0ef924afe1ff
 ## Description
 
 This eigenDAServiceManager implementation upgrade prepared for the ability of AVSs to reward stakers and operators. Apart from that, only formatting and abstraction changes:
-
 - New `ServiceManagerBaseStorage` abstract contract (moved out from `ServiceManagerBase`)
 - New `createAVSRewardsSubmission` function and `onlyRewardsInitiator` modifier to call it: This allows AVSs to reward stakers and operators (https://www.blog.eigenlayer.xyz/coming-soon-avs-rewards-and-eigen-programmatic-incentives/)
 - `IServiceManagerUI` abstracted out of `IServiceManager`
@@ -3256,16 +3261,21 @@ Generated with discovered.json: 0x1cb8d13729ba33d6cddd0c638aca07a479a0e8bf
 
 ## Description
 
-Registry coordinator: - Ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
+Registry coordinator:
+    - Ejector address was changed from the EigenLayerOperationsMultisig to the EjectionManager
 
-eigenDAServiceManager: - New EjectionManager contract - quorumNumbersRequired - second quorum (EIGEN token) now active
+eigenDAServiceManager:
+    - New EjectionManager contract
+    - quorumNumbersRequired - second quorum (EIGEN token) now active
 
 EjectionManager:
-
 - used to eject validators from quorum
 - permissioned, only ejectors and owner can eject operators
 - operators to eject are external input provided by ejector
-  Ejection spec parameters: - Max 200 operators for each quorum. When the global operator cap (200) is reached for the quorum, the joining operator must have more than 1.1X the quorum weight of the current lowest-weighted operator in order to replace that operator. - RateLimitWindow and max EjectableStakePercent. There is a time delta (7 days) to track ejection over. SC checks that system cannot eject more than ejectableStakePercent (33.33%) of total stake in this time delta.
+    Ejection spec parameters: 
+        - Max 200 operators for each quorum. When the global operator cap (200) is reached for the quorum, the joining operator must have more than 1.1X the quorum weight of the current lowest-weighted operator in order to replace that operator.
+        - RateLimitWindow and max EjectableStakePercent. There is a time delta (7 days) to track ejection over. SC checks that system cannot eject more than ejectableStakePercent (33.33%) of total stake in this time delta.
+
 
 ## Watched changes
 

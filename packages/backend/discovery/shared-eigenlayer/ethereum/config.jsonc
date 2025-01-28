@@ -129,33 +129,6 @@
         }
       }
     },
-    "bEIGEN Timelock": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "EIGEN Timelock": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "EigenLayer Timelock": {
-      "fields": {
-        "admin": {
-          "target": {
-            "permissions": [{ "type": "act", "delay": "{{delay}}" }]
-          }
-        }
-      }
-    },
     "EIGEN token": {
       "ignoreMethods": ["getPastTotalSupply", "clock"],
       "ignoreInWatchMode": ["totalSupply"],

@@ -14,7 +14,7 @@
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
     "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "EigenLayerOperationsMultisig",
-    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerExecutorMultisig",
+    "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenLayerOwningMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenLayerCommunityMultisig",
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "EjectionManager",
     "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": "BLSApkRegistry",
@@ -22,11 +22,20 @@
     "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": "StrategyBase",
     "0xb6D149C8DdA37aAAa2F8AD0934f2e5682C35890B": "StakedALT",
     "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault",
-    "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
     "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
-    "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": "EigenPod"
+    "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": "EigenPod",
+    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning"
   },
   "overrides": {
+    "TimelockControllerOwning": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        }
+      }
+    },
     "EigenPod": {
       "ignoreRelatives": ["ethPOS"]
     },

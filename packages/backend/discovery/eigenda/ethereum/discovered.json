@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 21723681,
-  "configHash": "0x24371fe43fc7dbeddf6c9588f979f64fccc3675a2c7ce837f1dfca6e9b1170ec",
+  "blockNumber": 21723767,
+  "configHash": "0x6f0e00acd0cfd831e5255207ca2970568d48c039a9a0bbe85bcd32505a83b289",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -526,7 +526,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "30492495251483179454523",
+        "totalShares": "30492270962520895384539",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "fieldMeta": {
@@ -975,7 +975,7 @@
       }
     },
     {
-      "name": "EigenLayerExecutorMultisig",
+      "name": "EigenLayerOwningMultisig",
       "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1084,6 +1084,36 @@
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "STAKER_DELEGATION_TYPEHASH": "0x39111bc4a4d688e1f685123d7497d4615370152a8ee4a0593e647bd06ad8bb0b",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      }
+    },
+    {
+      "name": "Safe",
+      "address": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732236023,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3",
+          "0x9229C290F60F303884073F28EB8E81F9B82506d5",
+          "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927",
+          "0xc5280E368648b0e192b355c7d8330593bA7af700",
+          "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x61ee3be2a1999f4d0139ce35b0a2142d8ad067c74102210278661869542d9630",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 7,
+        "VERSION": "1.4.1"
       }
     },
     {
@@ -1779,7 +1809,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 79787,
+        "batchId": 79789,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1811,7 +1841,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 79787,
+        "taskNumber": 79789,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -2332,7 +2362,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "403786784603323465250840846",
+        "totalShares": "403786826061305445250840846",
         "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
       },
       "fieldMeta": {
@@ -2524,7 +2554,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "TimelockController",
+      "name": "TimelockControllerOwning",
       "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
@@ -2756,13 +2786,42 @@
       "sinceTimestamp": 1732234379,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "TIMELOCK_ADMIN_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "0xFEA47018D632A77bA579846c840d5706705Dc598"
+            ]
+          },
+          "PROPOSER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": [
+              "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+              "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+            ]
+          },
+          "EXECUTOR_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"]
+          },
+          "CANCELLER_ROLE": {
+            "adminRole": "TIMELOCK_ADMIN_ROLE",
+            "members": ["0xBE1685C81aA44FF9FB319dD389addd9374383e90"]
+          }
+        },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 864000,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
-      }
+      },
+      "derivedName": "TimelockController"
     },
     {
       "name": "Slasher",
@@ -3253,6 +3312,7 @@
         }
       ]
     },
+    { "address": "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE" },
     { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
     {
       "address": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
@@ -3323,6 +3383,7 @@
       ]
     },
     { "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95" },
+    { "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5" },
     { "address": "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815" },
     {
       "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4",
@@ -3354,9 +3415,12 @@
       ]
     },
     { "address": "0xaBd099133278ACF0415186c88F34e01b05D116f6" },
+    { "address": "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3" },
     { "address": "0xAF4D94Cd299211de542530399290877E2c85F061" },
     { "address": "0xb7Ae34BB33da55f12797e793E01e63a17B11d108" },
     { "address": "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0" },
+    { "address": "0xc5280E368648b0e192b355c7d8330593bA7af700" },
+    { "address": "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927" },
     { "address": "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7" },
     {
       "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
@@ -3813,6 +3877,57 @@
       "function transferOwnership(address newOwner)",
       "function unpause(uint256 newPausedStatus)",
       "function whitelistStrategies(address[] strategiesToWhitelist, bool[] thirdPartyTransfersForbiddenValues)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": [
+      "constructor(address _singleton)"
     ],
     "0x5050389572f2d220ad927CcbeA0D406831012390": [
       "constructor(address _singleton)"

@@ -10,7 +10,7 @@ import type { DaBridge } from '../types'
 const discovery = new ProjectDiscovery('eigenda')
 
 const EIGENUpgradeDelay = discovery.getContractValue<number>(
-  'EIGEN Timelock',
+  'TimelockControllerOwning',
   'getMinDelay',
 )
 
