@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import type { Layer3 } from './types'
@@ -39,7 +37,7 @@ export const clique: Layer3 = underReviewL3({
     startBlock: 1,
     defaultUrl: 'https://rpc.myclique.io/',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     // BRIDGE

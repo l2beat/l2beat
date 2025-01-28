@@ -1,9 +1,8 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-
 import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
-} from './ScalingProject'
+} from '../types'
 
 const EXIT_CENSORSHIP: ScalingProjectRisk = {
   category: 'Users can be censored if',

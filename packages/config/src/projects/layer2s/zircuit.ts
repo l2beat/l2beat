@@ -1,8 +1,7 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectTechnologyChoice } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProjectTechnologyChoice } from '../../types'
 import { opStackL2 } from './templates/opStack'
 import type { Layer2 } from './types'
 

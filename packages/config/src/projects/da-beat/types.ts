@@ -7,7 +7,7 @@ import type {
   ScalingProjectReference,
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
-} from '../../common'
+} from '../../types'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 

@@ -112,34 +112,6 @@ export const zeronetwork: Layer2 = zkStackL2({
       ...zkStackUpgrades,
     }),
   ],
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('ZeroNetworkZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('ZeroNetworkZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the ZERϴ zkEVM diamond contract.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ZeroNetworkChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the ZERϴ Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'ZeroNetworkOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'ZeroNetworkZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description: 'Can set the conversion factor for SOPH deposits to ZERϴ.',
-    },
-  ],
   milestones: [
     {
       name: 'Mainnet launch',

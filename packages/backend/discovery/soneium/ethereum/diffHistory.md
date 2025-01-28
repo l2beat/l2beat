@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x97fbd426e27cf448b55bfdf7e5654b51dff899c3
+
+# Diff at Mon, 27 Jan 2025 12:04:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 21679918
+- current block number: 21715739
+
+## Description
+
+Soneium external bridge gov change.
+
+## Watched changes
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      values.$admin:
+-        "0x448dAe9299366ff611678fdA2f3a386791C95d41"
++        "0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75"
+      values.owner:
+-        "0x448dAe9299366ff611678fdA2f3a386791C95d41"
++        "0xE7c9a9DddAb8a384c38D721DE64E4222Fe76DF75"
+    }
+```
+
 Generated with discovered.json: 0x8730e527cd5a87ec57ec483c285c96d2fc30707a
 
 # Diff at Wed, 22 Jan 2025 12:20:00 GMT:

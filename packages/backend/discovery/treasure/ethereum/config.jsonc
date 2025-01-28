@@ -12,79 +12,28 @@
     "bleppo": "shared-zk-stack"
   },
   "overrides": {
-    "TreasureZkEvmAdmin": {
-      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+      // local override over the template to fetch the validators from the shared contract
       "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl",
-            "roleNames": {
-              "0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42": "ADMIN",
-              "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8": "ORACLE",
-              "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c": "UPGRADER",
-              "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e": "FEE_ADMIN"
-            }
-          }
-        }
-      }
-    },
-    "TreasureZkEvm": {
-      "ignoreRelatives": ["getBaseToken"],
-      "ignoreMethods": [
-        "l2LogsRootHash",
-        "storedBlockHash",
-        "storedBatchHash",
-        "getName",
-        "priorityQueueFrontOperation"
-      ],
-      "ignoreInWatchMode": [
-        "getPriorityQueueSize",
-        "getTotalBlocksCommitted",
-        "getTotalBlocksExecuted",
-        "getTotalBlocksVerified",
-        "getTotalBatchesExecuted",
-        "getTotalBatchesVerified",
-        "getTotalBatchesCommitted",
-        "getTotalPriorityTxs",
-        "getFirstUnprocessedPriorityTx",
-        "baseTokenGasPriceMultiplierNominator",
-        "baseTokenGasPriceMultiplierDenominator"
-      ],
-      "fields": {
-        "txFilterer": {
-          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
-          "severity": "HIGH",
+        "validatorsVTL": {
           "handler": {
             "type": "event",
-            "select": ["oldTransactionFilterer", "newTransactionFilterer"],
-            "add": { "event": "NewTransactionFilterer" }
-          }
-        },
-        "validators": {
-          "handler": {
-            "type": "zksynceraValidators"
-          }
-        },
-        "getProtocolVersion": {
-          "description": "Protocol version, increments with each protocol change",
-          "severity": "MEDIUM"
-        },
-        "getVerifierParams": {
-          "description": "Verifier parameters used for proving batches",
-          "severity": "LOW"
-        },
-        "facets": {
-          "handler": {
-            "type": "eip2535Facets"
-          }
-        },
-        "daMode": {
-          "description": "0 = rollup; 1 = Validium",
-          "handler": {
-            "type": "storage",
-            "slot": 38,
-            "offset": 0,
-            "returnType": "uint8"
+            "select": ["validator"],
+            "add": {
+              "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            },
+            "remove": {
+              "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+              "where": ["=", "#chainId", 61166]
+            }
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateZkStack"
+              }
+            ]
           }
         }
       }

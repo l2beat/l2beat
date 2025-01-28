@@ -26,14 +26,6 @@ export function safeGetTokenByAssetId(assetId: AssetId) {
   return tokenMapByAssetId.get(assetId)
 }
 
-export function getTokenByAssetId(assetId: AssetId) {
-  const token = tokenMapByAssetId.get(assetId)
-  if (!token) {
-    throw new TypeError(`Unknown token ${assetId.toString()}`)
-  }
-  return token
-}
-
 function toToken(generated: GeneratedToken): Token {
   const chain = chains.find((c) => c.chainId === +generated.chainId)
   assert(chain, `Chain nor found for ${generated.symbol}`)

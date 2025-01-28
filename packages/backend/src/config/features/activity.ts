@@ -107,7 +107,7 @@ export function getChainActivityConfig(
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
-      assessCount: project.transactionApi.assessCount,
+      adjustCount: project.transactionApi.adjustCount,
       startBlock: project.transactionApi.startBlock,
     }
   } else if (project.transactionApi.type === 'starkex') {

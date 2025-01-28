@@ -1,8 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
@@ -59,7 +57,7 @@ export const b3: Layer3 = opStackL3({
     defaultUrl: 'https://mainnet-rpc.b3.fun/http',
     startBlock: 1,
     defaultCallsPerMinute: 800,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1722378840),
   isNodeAvailable: false,

@@ -1,7 +1,7 @@
 import type {
   ScalingProjectRisk,
   ScalingProjectTechnologyChoice,
-} from './ScalingProject'
+} from '../types'
 
 export const FRONTRUNNING_RISK: ScalingProjectRisk = {
   category: 'MEV can be extracted if',

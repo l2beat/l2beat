@@ -1,4 +1,4 @@
-import type { AssessCount } from '@l2beat/config'
+import type { AdjustCount } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 
 interface SimpleActivityTransactionConfig<T extends string> {
@@ -11,7 +11,7 @@ interface RpcActivityTransactionConfig {
   type: 'rpc'
   url: string
   callsPerMinute: number
-  assessCount?: AssessCount
+  adjustCount?: AdjustCount
   startBlock?: number
 }
 

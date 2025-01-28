@@ -1,14 +1,13 @@
 import {
+  type ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import {
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
-import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -22,8 +21,7 @@ import {
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
@@ -235,7 +233,7 @@ export const optimism: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://mainnet.optimism.io/',
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(105235064),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
     finality: {
       type: 'OPStack',

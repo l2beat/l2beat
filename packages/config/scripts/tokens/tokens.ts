@@ -16,12 +16,12 @@ import { providers } from 'ethers'
 
 import { isEqual } from 'lodash'
 import { chains } from '../../src'
-import type { ChainConfig } from '../../src/common'
 import type {
   GeneratedToken,
   Output,
   SourceEntry,
 } from '../../src/tokens/types'
+import type { ChainConfig } from '../../src/types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import {
   readGeneratedFile,

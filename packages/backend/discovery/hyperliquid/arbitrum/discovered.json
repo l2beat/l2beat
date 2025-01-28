@@ -1,7 +1,7 @@
 {
   "name": "hyperliquid",
   "chain": "arbitrum",
-  "blockNumber": 287788820,
+  "blockNumber": 299812098,
   "configHash": "0x394aa6ff77a1e0ea797e76f23ed6f7d2c4b13936594c701e22e38e3f2a9c0357",
   "contracts": [
     {
@@ -34,7 +34,7 @@
           "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
           "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
         ],
-        "getLockersVotingLock": [],
+        "getLockersVotingLock": ["0xf9d2282A4A4C216f624717C0747D23146FC048c5"],
         "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
         "lockers": [
           "0x58E1b0E63C905D5982324FCd9108582623b8132e",

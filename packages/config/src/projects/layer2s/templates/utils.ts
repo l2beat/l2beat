@@ -7,7 +7,7 @@ import { unionBy } from 'lodash'
 import type {
   ScalingProjectReference,
   ScalingProjectRiskViewEntry,
-} from '../../../common'
+} from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
