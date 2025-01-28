@@ -30,8 +30,6 @@ export const pmon: Layer3 = underReviewL3({
         'https://bridge.arbitrum.io/?destinationChain=pmon-chain&sourceChain=arbitrum-one',
       ],
       documentation: ['https://battle-docs.polychainmonsters.com/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/protocolmon',
         'https://discord.gg/protocolmon',

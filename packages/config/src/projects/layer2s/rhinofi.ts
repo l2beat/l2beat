@@ -84,7 +84,6 @@ export const rhinofi: Layer2 = {
         'https://support.rhino.fi/en/',
         'https://docs.starkware.co/starkex/index.html',
       ],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/rhinofi',

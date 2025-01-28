@@ -43,7 +43,6 @@ export const eclipse: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
-      apps: [],
       documentation: ['https://docs.eclipse.xyz/'],
       explorers: ['https://explorer.eclipse.xyz/'],
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],

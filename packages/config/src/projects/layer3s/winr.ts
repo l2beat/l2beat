@@ -32,7 +32,6 @@ export const winr: Layer3 = orbitStackL3({
       apps: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
-      repositories: [],
       socialMedia: ['https://x.com/WINRProtocol'],
     },
   },

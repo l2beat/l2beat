@@ -36,9 +36,6 @@ export const layer2financezk: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/celer-network/defi-pooling-broker-contracts',

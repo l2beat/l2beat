@@ -15,10 +15,6 @@ export const turboprotocol: Layer2 = upcomingL2({
     category: 'Validium',
     links: {
       websites: ['https://turboprotocol.xyz/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/TurboProtocol'],
     },
   },

@@ -17,7 +17,6 @@ export const status: Layer2 = upcomingL2({
       websites: ['https://status.app/'],
       apps: ['https://status.app/apps#desktop'],
       documentation: ['https://status.app/specs'],
-      explorers: [],
       repositories: ['https://github.com/status-im'],
       socialMedia: ['https://x.com/ethstatus'],
     },

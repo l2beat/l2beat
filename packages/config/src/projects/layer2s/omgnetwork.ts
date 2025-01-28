@@ -31,7 +31,6 @@ export const omgnetwork: Layer2 = {
 
     links: {
       websites: ['https://omg.network'],
-      apps: [],
       documentation: ['https://docs.omg.network/'],
       explorers: ['https://blockexplorer.mainnet.v1.omg.network/'],
       repositories: ['https://github.com/omgnetwork/plasma-contracts'],

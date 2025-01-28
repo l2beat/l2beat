@@ -32,7 +32,6 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://explorer.zero.network/',
         'https://zero-network.calderaexplorer.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://x.com/ZEROdotnetwork',
         'https://zero.network/blog',

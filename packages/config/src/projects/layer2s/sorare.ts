@@ -79,9 +79,7 @@ export const sorare: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://sorare.com/'],
-      apps: [],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
-      explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://discord.gg/TSjtHaM',

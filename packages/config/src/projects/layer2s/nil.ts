@@ -15,7 +15,6 @@ export const nil: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://nil.foundation/'],
-      apps: [],
       documentation: ['https://docs.nil.foundation/'],
       explorers: ['https://explore.nil.foundation'],
       repositories: ['https://github.com/nilfoundation'],

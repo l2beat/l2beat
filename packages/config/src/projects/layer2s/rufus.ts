@@ -19,9 +19,7 @@ export const rufus: Layer2 = underReviewL2({
     links: {
       websites: ['https://dogelonmars.com/'],
       apps: ['https://rufus.bridge.caldera.xyz/'],
-      documentation: [],
       explorers: ['https://rufus.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/dogelonmars',
         'https://dogelonmars.com/blog',

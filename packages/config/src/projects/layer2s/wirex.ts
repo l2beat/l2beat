@@ -53,7 +53,6 @@ export const wirex: Layer2 = polygonCDKStack({
       apps: ['https://pay-chain-bridge.wirexpaychain.com/'],
       documentation: ['https://docs.wirexpaychain.com/tech/wirex-pay-chain'],
       explorers: ['https://pay-chain-blockscout.wirexpaychain.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/wirexpaychain',
         'https://discord.gg/f8UGp4dH6g',

@@ -19,16 +19,12 @@ export const HotShotLightClient = {
     slug: 'hotshot',
     description: `The HotShot Light Client is a data availability bridge using Zero-Knowledge proofs to verify Espresso HotShot data availability attestations on Ethereum.`,
     links: {
-      websites: [],
       documentation: [
         'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality/light-client',
       ],
       repositories: [
         'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
       ],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
     },
   },
   contracts: {

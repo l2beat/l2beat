@@ -16,10 +16,6 @@ export const azchain: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://arena-z.gg/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/OfficialArenaZ',
         'https://t.me/OfficialArenaZ',

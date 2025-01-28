@@ -24,7 +24,6 @@ export const hook: Layer3 = underReviewL3({
       apps: ['https://hook.xyz/trade/'],
       documentation: ['https://odysseydocumentation.hook.xyz/'],
       explorers: ['https://hook.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/HookProtocol',
         'https://discord.com/invite/8Hqw76DHQm',

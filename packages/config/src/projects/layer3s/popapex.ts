@@ -37,7 +37,6 @@ export const popapex: Layer3 = orbitStackL3({
         'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],
-      documentation: [],
       explorers: ['https://explorer.apex.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [

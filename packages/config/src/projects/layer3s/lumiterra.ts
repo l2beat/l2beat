@@ -22,8 +22,6 @@ export const lumiterra: Layer3 = upcomingL3({
       documentation: [
         'https://docs.lumiterra.net/docs/overview/mainnet-beta/beta-test-arbiturm',
       ],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/LumiterraGame',
         'https://discord.com/invite/q3P5hjqsuE',

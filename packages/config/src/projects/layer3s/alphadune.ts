@@ -17,10 +17,7 @@ export const alphadune: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://alphadune.com/'],
-      apps: [],
       documentation: ['https://docs.alphadune.com/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/alphadune',
         'https://discord.com/invite/N8AnA662Mx',

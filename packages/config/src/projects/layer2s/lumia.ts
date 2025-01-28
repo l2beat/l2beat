@@ -18,9 +18,7 @@ export const lumia: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://lumia.org/'],
-      apps: [],
       documentation: ['https://docs.lumia.org/'],
-      explorers: [],
       repositories: ['https://github.com/orionprotocol'],
       socialMedia: [
         'https://x.com/BuildOnLumia',

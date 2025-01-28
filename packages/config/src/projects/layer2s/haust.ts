@@ -16,7 +16,6 @@ export const haust: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://haust.network/'],
-      apps: [],
       documentation: ['https://docs.haust.network/'],
       explorers: ['https://explorer-test.haust.network'],
       repositories: ['https://github.com/Haust-Labs'],

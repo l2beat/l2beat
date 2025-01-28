@@ -16,9 +16,7 @@ export const align: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://align.network/'],
-      apps: [],
       documentation: ['https://docs.align.network/docs/getting-started'],
-      explorers: [],
       repositories: ['https://github.com/alignnetwork'],
       socialMedia: [
         'https://x.com/align_network',

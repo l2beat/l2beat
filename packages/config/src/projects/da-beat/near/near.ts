@@ -22,7 +22,6 @@ export const near: BlockchainDaLayer = {
         'https://github.com/near',
         'https://github.com/Nuffle-Labs/data-availability',
       ],
-      apps: [],
       explorers: ['https://nearblocks.io/'],
       socialMedia: [
         'https://x.com/NEARProtocol',

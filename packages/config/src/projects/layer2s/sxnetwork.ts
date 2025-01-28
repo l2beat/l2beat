@@ -32,7 +32,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
       ],
       documentation: ['https://docs.sx.technology/'],
       explorers: ['https://explorerl2.sx.technology/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/SX_Network',
         'https://discord.com/invite/sxnetwork',

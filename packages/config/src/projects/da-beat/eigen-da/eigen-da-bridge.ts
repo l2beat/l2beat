@@ -109,14 +109,7 @@ export const eigenDAbridge = {
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-    },
+    links: {},
   },
   contracts: {
     addresses: {

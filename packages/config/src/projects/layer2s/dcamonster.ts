@@ -21,8 +21,6 @@ export const dcamonster: Layer2 = upcomingL2({
       repositories: ['https://github.com/dcamonster'],
       socialMedia: ['https://twitter.com/dca_monster'],
       websites: ['https://dca.monster'],
-      apps: [],
-      explorers: [],
     },
   },
 })

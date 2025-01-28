@@ -34,7 +34,6 @@ export const degen: Layer3 = orbitStackL3({
       apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],
       documentation: ['https://docs.syndicate.io/get-started/introduction'],
       explorers: ['https://explorer.degen.tips/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/degentokenbase',
         'https://warpcast.com/~/channel/degen',

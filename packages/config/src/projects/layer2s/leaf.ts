@@ -16,10 +16,6 @@ export const leaf: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://leafprotocol.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/leaf_rollup'],
     },
   },

@@ -20,11 +20,9 @@ export const reddiozkvm: Layer2 = {
     stack: 'SN Stack',
     links: {
       websites: ['https://reddio.com'],
-      apps: [],
       documentation: [
         'https://docs.reddio.com/guide/starknet/smart-contracts/overview.html',
       ],
-      explorers: [],
       repositories: ['https://github.com/reddio-com/starknet-appchain-utils'],
       socialMedia: [
         'https://twitter.com/reddio_com',

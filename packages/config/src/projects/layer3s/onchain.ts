@@ -26,9 +26,7 @@ export const onchain: Layer3 = underReviewL3({
     links: {
       websites: ['https://onchaincoin.io/', 'https://portal.onchaincoin.io/'],
       apps: ['https://onchaingate.io/', 'https://t.me/onchaincoin_bot'],
-      documentation: [],
       explorers: ['https://explorer.onchainpoints.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/onchaincoin',
         'https://warpcast.com/~/channel/onchaincoin',

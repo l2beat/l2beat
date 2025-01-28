@@ -30,7 +30,6 @@ export const apechain: Layer3 = orbitStackL3({
       apps: ['https://apechain.com/portal'],
       documentation: ['https://docs.apechain.com/'],
       explorers: ['https://apescan.io/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/apecoin',
         'https://discord.gg/apecoindao',

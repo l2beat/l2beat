@@ -17,7 +17,6 @@ export const puffer: Layer2 = upcomingL2({
       websites: ['https://puffer.fi/'],
       apps: ['https://quest.puffer.fi/unifi'],
       documentation: ['https://docs.puffer.fi/unifi-based-rollup/'],
-      explorers: [],
       repositories: ['https://github.com/PufferFinance'],
       socialMedia: [
         'https://x.com/puffer_unifi',

@@ -22,7 +22,6 @@ export const eigenDA: DaServiceDaLayer = {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
       repositories: ['https://github.com/Layr-Labs/eigenda'],
-      apps: [],
       explorers: ['https://blobs.eigenda.xyz/'],
       socialMedia: ['https://x.com/eigen_da'],
     },

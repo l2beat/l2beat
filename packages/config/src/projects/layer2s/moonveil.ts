@@ -16,8 +16,6 @@ export const moonveil: Layer2 = upcomingL2({
     links: {
       websites: ['https://moonveil.gg/'],
       apps: ['https://moonveil.gg/AstrArk/'],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/SwellNetwork'],
       socialMedia: [
         'https://x.com/Moonveil_Studio',

@@ -16,10 +16,6 @@ export const socialnetwork: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://social.network/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/socialnetworkL2'],
     },
   },

@@ -15,7 +15,6 @@ export const stealthchain: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
-      apps: [],
       documentation: ['https://docs.stealthchain.org'],
       explorers: [
         'https://test.stealthscan.xyz/',

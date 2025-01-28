@@ -35,7 +35,6 @@ export const molten: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.unidex.exchange/appchain/markdown'],
       explorers: ['https://molten.calderaexplorer.xyz'],
-      repositories: [],
       socialMedia: [
         'https://x.com/moltenl3',
         'https://discord.gg/moltennetwork',

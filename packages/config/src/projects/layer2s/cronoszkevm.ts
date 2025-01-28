@@ -30,7 +30,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
       apps: ['https://zkevm.cronos.org/bridge'],
       documentation: ['https://docs-zkevm.cronos.org/'],
       explorers: ['https://explorer.zkevm.cronos.org/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/cronos_chain',
         'https://discord.com/invite/cronos',

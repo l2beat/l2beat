@@ -29,7 +29,6 @@ export const ebichain: Layer2 = orbitStackL2({
       apps: ['https://ebi.xyz/en/trade/contract/'],
       documentation: ['https://docs.ebi.xyz/ebi.xyz-overview'],
       explorers: ['https://explorer.ebi.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/ebixyzdex',
         'https://t.me/ebixyzofficial',

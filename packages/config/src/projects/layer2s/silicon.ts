@@ -51,7 +51,6 @@ export const silicon: Layer2 = polygonCDKStack({
       apps: ['https://bridge.silicon.network/'],
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
-      repositories: [],
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },

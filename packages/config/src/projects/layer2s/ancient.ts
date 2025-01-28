@@ -35,7 +35,6 @@ export const ancient: Layer2 = opStackL2({
       apps: ['https://bridge.ancient8.gg/', 'https://space3.gg/A8Layer2'],
       documentation: ['https://docs.ancient8.gg/'],
       explorers: ['https://scan.ancient8.gg/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Ancient8_gg',
         'https://discord.gg/ancient8',

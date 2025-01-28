@@ -53,7 +53,6 @@ export const gmnetwork: Layer2 = opStackL2({
       apps: ['https://bridge.gmnetwork.ai/'],
       documentation: ['https://docs.gmnetwork.ai/docs'],
       explorers: ['https://scan.gmnetwork.ai/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/gmnetwork_ai',
         'https://instagram.com/gmnetwork.ai',

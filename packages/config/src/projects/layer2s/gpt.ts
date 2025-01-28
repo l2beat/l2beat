@@ -55,7 +55,6 @@ export const gpt: Layer2 = polygonCDKStack({
         'https://assistant.gptprotocol.io/',
         'https://staking.gptprotocol.org/',
       ],
-      documentation: [],
       explorers: ['https://explorer.gptprotocol.io/'],
       repositories: ['https://github.com/gptprotocol'],
       socialMedia: [

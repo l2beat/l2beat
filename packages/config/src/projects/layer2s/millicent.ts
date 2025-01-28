@@ -16,10 +16,7 @@ export const millicent: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://millicent.io/'],
-      apps: [],
       documentation: ['https://docs.millicent.io'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/MillicentLabs'],
     },
   },

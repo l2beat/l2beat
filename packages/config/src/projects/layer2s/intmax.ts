@@ -15,12 +15,10 @@ export const intmax: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://intmax.io/'],
-      apps: [],
       documentation: [
         'https://eprint.iacr.org/2023/1082.pdf',
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
       ],
-      explorers: [],
       repositories: ['https://github.com/InternetMaximalism'],
       socialMedia: ['https://twitter.com/intmaxIO'],
     },

@@ -33,8 +33,6 @@ export const grvt: Layer2 = zkStackL2({
       websites: ['https://grvt.io'],
       apps: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
       documentation: ['https://help.grvt.io/en'], // https://docs.grvt.io/ is private
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/grvt_io',
         'https://discord.gg/3jsVPwaGeB',

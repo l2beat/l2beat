@@ -38,7 +38,6 @@ export const geist: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.playongeist.com/'],
       explorers: ['https://geist-mainnet.explorer.alchemy.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/PlayOnGeist',
         'https://x.com/aavegotchi',

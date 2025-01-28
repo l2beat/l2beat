@@ -17,10 +17,6 @@ export const animechain: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://anime.xyz/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/animecoin'],
     },
   },

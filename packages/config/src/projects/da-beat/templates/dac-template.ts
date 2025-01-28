@@ -6,8 +6,8 @@ import type {
   DacDaLayer,
   DacTransactionDataType,
   IntegratedDacBridge,
+  ProjectLinks,
 } from '../../../types'
-import type { DaLinks } from '../../../types'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -27,7 +27,7 @@ type Optionals = {
   /** Overwrite some of the risks, check defaults below */
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
   /** Links for given DAC, defaults to Project's main links */
-  links?: Partial<DaLinks>
+  links?: ProjectLinks
   /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
     technology?: DacDaLayer['technology']

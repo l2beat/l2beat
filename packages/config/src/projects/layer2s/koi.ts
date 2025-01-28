@@ -18,7 +18,6 @@ export const koi: Layer2 = upcomingL2({
       websites: ['https://koi.finance/'],
       apps: ['https://dapp.koi.finance/'],
       documentation: ['https://docs.koi.finance/'],
-      explorers: [],
       repositories: ['https://github.com/koifinance'],
       socialMedia: [
         'https://t.me/mute_io',

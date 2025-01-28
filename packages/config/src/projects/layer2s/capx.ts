@@ -16,10 +16,6 @@ export const capx: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://capx.ai/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://discord.com/invite/capx', 'https://x.com/0xCapx'],
     },
   },

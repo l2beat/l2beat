@@ -16,7 +16,6 @@ export const playchain: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://playfi.ai/'],
-      apps: [],
       documentation: ['https://docs.playfi.ai/'],
       explorers: ['https://albireo-explorer.playfi.ai/'],
       repositories: ['https://github.com/playFi-Labs'],

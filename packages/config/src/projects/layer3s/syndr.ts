@@ -17,9 +17,7 @@ export const syndr: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://syndr.com/'],
-      apps: [],
       documentation: ['https://docs.syndr.com'],
-      explorers: [],
       repositories: ['https://github.com/0xSyndr'],
       socialMedia: [
         'https://x.com/SyndrHQ',

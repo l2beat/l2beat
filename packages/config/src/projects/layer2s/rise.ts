@@ -16,9 +16,7 @@ export const rise: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://riselabs.xyz/'],
-      apps: [],
       documentation: ['https://docs.riselabs.xyz/'],
-      explorers: [],
       repositories: ['https://github.com/risechain'],
       socialMedia: [
         'https://discord.com/invite/4yWVabz63y',

@@ -19,7 +19,6 @@ export const palm: Layer2 = upcomingL2({
       apps: ['https://app.palm.io/bridge', 'https://uniswap-v3.scroll.io'],
       documentation: ['https://docs.palm.io/'],
       explorers: ['https://explorer.palm.io/'],
-      repositories: [],
       socialMedia: ['https://twitter.com/palmnetwork3'],
     },
   },

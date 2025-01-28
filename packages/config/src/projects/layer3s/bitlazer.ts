@@ -31,7 +31,6 @@ export const bitlazer: Layer3 = underReviewL3({
       ],
       documentation: ['https://bitlazer.gitbook.io/bitlazer'],
       explorers: ['https://bitlazer.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/bitlazer', 'https://t.me/bitlazer_io'],
     },
   },

@@ -247,7 +247,7 @@ export type ScalingProjectDisplay = {
   /** A short (<20 characters) description of the use case */
   purposes: ScalingProjectPurpose[]
   /** List of links */
-  links: ScalingProjectLinks
+  links: ProjectLinks
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
@@ -321,19 +321,19 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export interface ScalingProjectLinks {
+export interface ProjectLinks {
   /** Links to marketing landing pages. */
-  websites: string[]
+  websites?: string[]
   /** Links to web apps connected to the layer2. */
-  apps: string[]
+  apps?: string[]
   /** Links to documentation pages. */
-  documentation: string[]
+  documentation?: string[]
   /** Links to transaction explorers. */
-  explorers: string[]
+  explorers?: string[]
   /** Links to source code repositories. */
-  repositories: string[]
+  repositories?: string[]
   /** Links to social media pages. */
-  socialMedia: string[]
+  socialMedia?: string[]
   /** Link to rollup codes. */
   rollupCodes?: string
 }
@@ -779,7 +779,7 @@ export interface BridgeDisplay {
   description: string
   detailedDescription?: string
   category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
-  links: Partial<ScalingProjectLinks>
+  links: ProjectLinks
   architectureImage?: string
 }
 
@@ -898,7 +898,7 @@ export interface DaLayerDisplay {
   /** A short description of the data availability layer. */
   description: string
   /** Links related to the data availability layer. */
-  links?: DaLinks
+  links: ProjectLinks
 }
 
 export interface DaConsensusAlgorithm {
@@ -931,8 +931,6 @@ export interface DaLayerThroughput {
    */
   frequency: number
 }
-
-export interface DaLinks extends Omit<ScalingProjectLinks, 'rollupCodes'> {}
 
 export interface DaTechnology {
   /** Description of technology used by the data availability layer. [MARKDOWN] */
@@ -1060,7 +1058,7 @@ interface DaBridgeDisplay {
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
   /** Links related to the data availability bridge. */
-  links: DaLinks
+  links: ProjectLinks
 }
 
 export interface DaBridgeRisks {

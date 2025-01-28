@@ -147,8 +147,6 @@ export const ink: Layer2 = {
     stack: 'OP Stack',
     links: {
       websites: ['https://inkonchain.com/en-US'],
-      apps: [],
-      documentation: [],
       explorers: [
         'https://explorer.inkonchain.com',
         'https://okx.com/en-au/web3/explorer/inkchain',

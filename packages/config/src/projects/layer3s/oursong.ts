@@ -17,10 +17,6 @@ export const oursong: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://oursong.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/oursong'],
     },
   },

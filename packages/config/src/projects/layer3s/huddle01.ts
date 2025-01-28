@@ -28,7 +28,6 @@ export const huddle01: Layer3 = underReviewL3({
       apps: ['https://huddle01.bridge.caldera.xyz/', 'https://huddle01.app/'],
       documentation: ['https://docs.huddle01.com/docs'],
       explorers: ['https://huddle01.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/huddle01com',
         'https://discord.gg/hkYx393Sps',

@@ -16,11 +16,9 @@ export const fhenix: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://fhenix.io/'],
-      apps: [],
       documentation: [
         'https://fhenix.io/fhe-rollups-scaling-confidential-smart-contracts-on-ethereum-and-beyond-whitepaper/',
       ],
-      explorers: [],
       repositories: ['https://github.com/orgs/FhenixProtocol/'],
       socialMedia: [
         'https://x.com/FhenixIO',

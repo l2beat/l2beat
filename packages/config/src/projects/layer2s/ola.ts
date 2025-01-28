@@ -15,9 +15,7 @@ export const ola: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://olavm.org/'],
-      apps: [],
       documentation: ['https://ola-2.gitbook.io/ola-developer-documents/'],
-      explorers: [],
       repositories: ['https://github.com/Sin7Y'],
       socialMedia: [
         'https://twitter.com/ola_zkzkvm',

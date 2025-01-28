@@ -16,10 +16,6 @@ export const creator: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://oncreator.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/oncreator_'],
     },
   },

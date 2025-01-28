@@ -15,11 +15,9 @@ export const telos: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://zkevm.telos.net/'],
-      apps: [],
       documentation: [
         'https://docs.telos.net/overview/what-is-telos/introduction/',
       ],
-      explorers: [],
       repositories: ['https://github.com/telosnetwork'],
       socialMedia: [
         'https://x.com/HelloTelos',

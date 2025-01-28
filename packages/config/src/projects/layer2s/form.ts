@@ -19,7 +19,6 @@ export const form: Layer2 = upcomingL2({
       apps: ['https://bridge.form.network'],
       documentation: ['https://docs.form.network'],
       explorers: ['https://explorer.form.network'],
-      repositories: [],
       socialMedia: [
         'https://x.com/0xform',
         'https://discord.com/invite/formnetwork',

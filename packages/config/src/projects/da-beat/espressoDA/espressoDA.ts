@@ -18,7 +18,6 @@ export const espressoDA: DaServiceDaLayer = {
       websites: ['https://espressosys.com/'],
       documentation: ['https://docs.espressosys.com/'],
       repositories: ['https://github.com/espressosystems/'],
-      apps: [],
       explorers: ['https://explorer.main.net.espresso.network/'],
       socialMedia: [
         'https://x.com/EspressoSys',

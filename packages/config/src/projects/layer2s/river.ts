@@ -20,9 +20,7 @@ export const river: Layer2 = opStackL2({
     links: {
       websites: ['https://river.build/'],
       apps: ['https://river-mainnet.bridge.river.build/'],
-      documentation: [],
       explorers: ['https://explorer.river.build/'],
-      repositories: [],
       socialMedia: ['https://x.com/buildonriver'],
     },
   },

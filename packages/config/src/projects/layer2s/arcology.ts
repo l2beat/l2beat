@@ -15,9 +15,7 @@ export const arcology: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://arcology.network/'],
-      apps: [],
       documentation: ['https://doc.arcology.network/main'],
-      explorers: [],
       repositories: ['https://github.com/arcology-network'],
       socialMedia: [
         'https://twitter.com/ArcologyN',

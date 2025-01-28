@@ -19,7 +19,6 @@ export const bobanetwork: Layer2 = opStackL2({
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     links: {
       websites: ['https://boba.network'],
-      apps: [],
       documentation: ['https://docs.boba.network/'],
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],

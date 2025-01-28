@@ -16,9 +16,7 @@ export const hybrid: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://buildonhybrid.com/'],
-      apps: [],
       documentation: ['https://docs.buildonhybrid.com'],
-      explorers: [],
       repositories: ['https://github.com/buildonhybrid'],
       socialMedia: [
         'https://x.com/BuildOnHybrid',

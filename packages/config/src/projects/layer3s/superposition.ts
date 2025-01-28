@@ -22,7 +22,6 @@ export const superposition: Layer3 = underReviewL3({
       ],
       documentation: ['https://docs.superposition.so/'],
       explorers: ['https://explorer.superposition.so/'],
-      repositories: [],
       socialMedia: ['https://x.com/Superpositionso'],
     },
   },

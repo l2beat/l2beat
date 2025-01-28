@@ -30,7 +30,6 @@ export const cheese: Layer3 = underReviewL3({
       ],
       documentation: ['https://docs.cheesechain.lol/'],
       explorers: ['https://fetascan.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/layerofcheese',
         'https://t.me/cheesegateway',

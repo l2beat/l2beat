@@ -24,10 +24,8 @@ export const thebinaryholdings: Layer2 = opStackL2({
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
     links: {
       websites: ['https://thebinaryholdings.com/'],
-      apps: [],
       documentation: ['https://docs.thebinaryholdings.com/'],
       explorers: ['https://explorer.thebinaryholdings.com'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/thebinaryhldgs',
         'https://t.me/tbhofficialchat',

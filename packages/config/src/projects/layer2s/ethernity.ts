@@ -29,7 +29,6 @@ export const ethernity: Layer2 = opStackL2({
       ],
       documentation: ['https://docs.ethernity.io/'],
       explorers: ['https://ernscan.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/EthernityChain',
         'https://instagram.com/ethernity',

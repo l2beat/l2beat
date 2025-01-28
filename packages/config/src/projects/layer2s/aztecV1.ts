@@ -65,8 +65,6 @@ export const aztecV1: Layer2 = {
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',

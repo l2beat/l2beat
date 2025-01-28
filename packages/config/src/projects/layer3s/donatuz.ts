@@ -30,7 +30,6 @@ export const donatuz: Layer3 = opStackL3({
     links: {
       websites: ['https://donatuz.org/'],
       apps: ['https://bridge.donatuz.com'],
-      documentation: [],
       explorers: ['https://explorer.donatuz.com/'],
       repositories: ['https://github.com/Donatuz-Labs'],
       socialMedia: [

@@ -31,7 +31,6 @@ export const xrone: Layer3 = underReviewL3({
       ],
       documentation: ['https://xr-one.gitbook.io/xr'],
       explorers: ['https://xr-one.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/XR_Foundation',
         'https://discord.com/invite/W4BdM6N8xb',

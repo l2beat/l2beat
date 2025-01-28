@@ -18,9 +18,7 @@ export const dodochain: Layer3 = underReviewL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://dodochain.com/'],
-      apps: [],
       documentation: ['https://docs.dodochain.com/en/dodochain'],
-      explorers: [],
       repositories: ['https://github.com/DODOEX'],
       socialMedia: [
         'https://x.com/DODO_Chain',

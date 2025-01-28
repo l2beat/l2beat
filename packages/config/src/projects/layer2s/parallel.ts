@@ -28,7 +28,6 @@ export const parallel: Layer2 = orbitStackL2({
       explorers: [
         'https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/ParallelFi',
         'https://discord.gg/rdjVz8zavF',

@@ -26,7 +26,6 @@ export const alienx: Layer2 = orbitStackL2({
       apps: ['https://bridge.alienxchain.io/', 'https://alienswap.xyz/'],
       documentation: ['https://docs.alienxchain.io'],
       explorers: ['https://explorer.alienxchain.io'],
-      repositories: [],
       socialMedia: [
         'https://x.com/ALIENXchain',
         'https://discord.gg/alienxchain',

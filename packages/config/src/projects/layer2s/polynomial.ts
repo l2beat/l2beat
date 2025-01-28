@@ -20,7 +20,6 @@ export const polynomial: Layer2 = opStackL2({
       'Polynomial Chain is a derivatives chain that addresses liquidity fragmentation with a unified liquidity layer, enabling innovative derivatives.',
     links: {
       websites: ['https://polynomial.fi/'],
-      apps: [],
       documentation: ['https://docs.polynomial.fi/'],
       explorers: ['https://polynomialscan.io/'],
       repositories: ['https://github.com/Polynomial-Protocol'],

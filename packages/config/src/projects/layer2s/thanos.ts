@@ -16,7 +16,6 @@ export const thanos: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://tokamak.network/'],
-      apps: [],
       documentation: ['https://docs.tokamak.network/'],
       explorers: ['https://explorer.thanos-sepolia.tokamak.network/'],
       repositories: ['https://github.com/tokamak-network/tokamak-thanos'],

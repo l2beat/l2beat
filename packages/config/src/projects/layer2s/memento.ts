@@ -16,10 +16,6 @@ export const memento: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://mementoblockchain.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/Memento_Bc',
         'https://linkedin.com/company/memento-blockchain/',

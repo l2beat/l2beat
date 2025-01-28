@@ -35,7 +35,6 @@ export const gluon: Layer2 = {
       apps: ['https://live.leverj.io/'],
       documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Leverj_io',
         'https://t.me/leverj',

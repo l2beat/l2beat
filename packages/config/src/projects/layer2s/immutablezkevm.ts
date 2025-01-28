@@ -49,10 +49,7 @@ export const immutablezkevm: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
-      apps: [],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/Immutable'],
     },
   },

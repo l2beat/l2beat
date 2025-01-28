@@ -17,11 +17,8 @@ export const unite: Layer3 = upcomingL3({
     stack: 'OP Stack',
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
-      repositories: [],
       socialMedia: ['https://x.com/uniteio'],
       websites: ['https://unite.io/'],
-      apps: [],
-      explorers: [],
     },
   },
 })

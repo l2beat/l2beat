@@ -17,10 +17,6 @@ export const aviveworld: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://avive.world/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/Avive_World'],
     },
   },

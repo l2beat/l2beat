@@ -81,8 +81,6 @@ export const tanx: Layer2 = {
       websites: ['https://tanx.fi/'],
       apps: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',

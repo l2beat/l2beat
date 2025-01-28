@@ -25,7 +25,6 @@ export const xchain: Layer2 = orbitStackL2({
       apps: ['https://exchange.idex.io/'],
       documentation: ['https://docs.idex.io/'],
       explorers: ['https://xchain-explorer.idex.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/idexio',
         'https://discord.com/invite/idex',

@@ -28,7 +28,6 @@ export const inevm: Layer3 = orbitStackL3({
       apps: ['https://inevm.bridge.caldera.xyz/', 'https://inevmbridge.com/'],
       documentation: ['https://docs.inevm.com/'],
       explorers: ['https://inevm.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/injective'],
     },
   },

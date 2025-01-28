@@ -16,11 +16,6 @@ export const pandasea: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://pandasea.io/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
     },
   },
 })

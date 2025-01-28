@@ -16,7 +16,6 @@ export const celo: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://celo.org/'],
-      apps: [],
       documentation: ['https://docs.celo.org/'],
       explorers: ['https://explorer.celo.org/mainnet/'],
       repositories: ['https://github.com/celo-org'],

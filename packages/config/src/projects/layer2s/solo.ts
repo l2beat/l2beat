@@ -19,7 +19,6 @@ export const solo: Layer2 = upcomingL2({
       apps: ['https://solo-testnet.bridge.caldera.xyz'],
       documentation: ['https://docs.solo.tech/'],
       explorers: ['https://solo-testnet.explorer.caldera.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/SoloDePIN', 'https://t.me/SoloDePIN'],
     },
   },

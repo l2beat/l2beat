@@ -19,7 +19,6 @@ export const nal: Layer2 = underReviewL2({
       apps: [], //https://bridge.nal.network/deposit for testnet, no mainnet bridge UI is available yet
       documentation: ['https://docs.nal.network/chain/Overview.html'],
       explorers: ['https://scan.nal.network/'],
-      repositories: [],
       socialMedia: ['https://x.com/nal_network'],
     },
   },

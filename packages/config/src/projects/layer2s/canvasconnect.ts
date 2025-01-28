@@ -71,9 +71,7 @@ export const canvasconnect: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://canvas.co/'],
-      apps: [],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
-      explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://twitter.com/canvas_defi',

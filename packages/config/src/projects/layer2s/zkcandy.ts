@@ -16,10 +16,6 @@ export const zkcandy: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://zkcandy.io', 'https://icandy.io/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/zkCandyHQ',
         'https://discord.gg/zkcandy',

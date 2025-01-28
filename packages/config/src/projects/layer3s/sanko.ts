@@ -36,7 +36,6 @@ export const sanko: Layer3 = orbitStackL3({
         'https://tools.sanko.xyz/',
         'https://explorer.sanko.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://x.com/SankoGameCorp',
         'https://discord.gg/Cnz62Vfa2C',

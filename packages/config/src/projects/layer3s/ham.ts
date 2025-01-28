@@ -39,7 +39,6 @@ export const ham: Layer3 = opStackL3({
         'https://ham.fun/developers',
       ],
       explorers: ['https://explorer.ham.fun/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/HamOnWarpcast',
         'https://warpcast.com/~/channel/lp',

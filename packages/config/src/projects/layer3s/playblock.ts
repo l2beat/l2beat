@@ -27,8 +27,6 @@ export const playblock: Layer3 = orbitStackL3({
       'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     links: {
       websites: ['https://playnance.com/'],
-      apps: [],
-      documentation: [],
       explorers: ['https://explorer.playblock.io/'],
       repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],

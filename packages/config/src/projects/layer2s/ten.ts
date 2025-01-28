@@ -15,7 +15,6 @@ export const ten: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://ten.xyz'],
-      apps: [],
       documentation: [
         'https://docs.ten.xyz',
         'https://ten.xyz/litepaper',

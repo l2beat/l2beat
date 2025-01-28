@@ -15,9 +15,7 @@ export const fluent: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://fluentlabs.xyz/'],
-      apps: [],
       documentation: ['https://docs.fluentlabs.xyz/learn'],
-      explorers: [],
       repositories: ['https://github.com/fluentlabs-xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',

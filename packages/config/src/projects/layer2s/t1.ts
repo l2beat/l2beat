@@ -15,9 +15,6 @@ export const t1: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://t1protocol.com'],
-      apps: [],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/t1protocol'],
       socialMedia: [
         'https://x.com/t1protocol',

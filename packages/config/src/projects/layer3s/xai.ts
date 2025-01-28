@@ -26,7 +26,6 @@ export const xai: Layer3 = orbitStackL3({
       'Xai is an Ethereum Layer-3 that leverages Arbitrum AnyTrust to enable open trade in the next generation of video games.',
     links: {
       websites: ['https://xai.games/'],
-      apps: [],
       documentation: ['https://xai-foundation.gitbook.io/xai-network/'],
       explorers: ['https://explorer.xai-chain.net/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],

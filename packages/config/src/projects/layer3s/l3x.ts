@@ -33,7 +33,6 @@ export const l3x: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.l3x.com/'],
       explorers: ['https://explorer.l3x.com/'],
-      repositories: [],
       socialMedia: ['https://t.me/l3x_protocol', 'https://x.com/l3x_protocol'],
     },
   },

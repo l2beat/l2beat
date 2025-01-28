@@ -27,7 +27,6 @@ export const hypr: Layer2 = opStackL2({
       apps: ['https://bridge.hypr.network/'],
       documentation: ['https://docs.hypr.network'],
       explorers: ['https://explorer.hypr.network/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/hypr_network',
         'https://t.me/hyprnetwork',

@@ -15,7 +15,6 @@ export const specular: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://specular.network/'],
-      apps: [],
       documentation: ['https://docs.specular.network/overview/welcome'],
       explorers: ['https://explorer.specular.network/'],
       repositories: ['https://github.com/fabriqnetwork/specular'],

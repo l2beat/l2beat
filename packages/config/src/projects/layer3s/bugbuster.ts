@@ -53,7 +53,6 @@ export const bugbuster: Layer3 = {
         'https://t.me/+G_CPMEhCHC04MzA5',
       ],
       websites: ['https://bugbuster.app/'],
-      apps: [],
       explorers: [
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],

@@ -15,12 +15,9 @@ export const arithmic: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://arithmic.com'],
-      apps: [],
       documentation: [
         'https://arithmic-labs.gitbook.io/arithmic-documentation/',
       ],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/ArithmicNetwork'],
     },
   },

@@ -15,7 +15,6 @@ export const kakarotzkevm: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://kakarot.org/'],
-      apps: [],
       documentation: ['https://docs.kakarot.org/'],
       explorers: ['https://sepolia.kakarotscan.org/'],
       repositories: ['https://github.com/kkrt-labs/kakarot'],

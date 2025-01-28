@@ -17,10 +17,6 @@ export const mvchain: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://genso.game/en/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/genso_meta'],
     },
   },

@@ -24,12 +24,8 @@ export const vector = {
     slug: 'vector',
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
     links: {
-      websites: [],
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
     },
   },
   validation: validation,

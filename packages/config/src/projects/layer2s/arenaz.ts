@@ -152,9 +152,7 @@ export const arenaz: Layer2 = {
         'https://bridge.arena-z.gg/bridge/arena-z',
         'https://leagueofkingdoms.com/',
       ],
-      documentation: [],
       explorers: ['https://explorer.arena-z.gg/'],
-      repositories: [],
       socialMedia: ['https://x.com/OfficialArenaZ'],
     },
     liveness: {

@@ -15,10 +15,8 @@ export const move: Layer2 = upcomingL2({
     category: 'Validium',
     links: {
       websites: ['https://movementlabs.xyz'],
-      apps: [],
       documentation: ['https://docs.movementlabs.xyz/'],
       explorers: ['https://explorer.movementlabs.xyz/#/?network=local'],
-      repositories: [],
       socialMedia: [
         'https://x.com/movementlabsxyz',
         'https://t.me/movementlabsxyz',

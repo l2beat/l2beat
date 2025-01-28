@@ -38,7 +38,6 @@ export const orderly: Layer2 = opStackL2({
         'https://orderly.network/docs/build-on-evm/building-on-evm',
       ],
       explorers: ['https://explorer.orderly.network/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/OrderlyNetwork',
         'https://discord.gg/orderlynetwork',

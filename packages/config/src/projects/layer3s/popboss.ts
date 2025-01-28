@@ -37,7 +37,6 @@ export const popboss: Layer3 = orbitStackL3({
         'https://bridge.arbitrum.io/?destinationChain=pop-boss&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],
-      documentation: [],
       explorers: ['https://explorer.boss.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [

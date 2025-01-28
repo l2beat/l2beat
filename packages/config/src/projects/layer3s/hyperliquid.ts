@@ -77,7 +77,6 @@ export const hyperliquid: Layer3 = {
       apps: ['https://app.hyperliquid.xyz/trade'],
       socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
-      repositories: [],
     },
   },
   config: {

@@ -18,9 +18,7 @@ export const ternoa: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://ternoa.network/'],
-      apps: [],
       documentation: ['https://docs.ternoa.network/learn/ternoa-zkevm+'],
-      explorers: [],
       repositories: ['https://github.com/capsule-corp-ternoa'],
       socialMedia: [
         'https://x.com/ternoa_',

@@ -16,7 +16,6 @@ export const memo: BlockchainDaLayer = {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],
       repositories: ['https://github.com/memoio'],
-      apps: [],
       explorers: ['https://scan.metamemo.one:8080/'],
       socialMedia: [
         'https://x.com/MemoLabsOrg',

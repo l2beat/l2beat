@@ -16,10 +16,6 @@ export const happychain: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://linktr.ee/happychaindevs'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/HappyChainDevs',
         'https://mirror.xyz/0x20Af38e22e1722F97f5A1b5afc96c00EECd566b2',

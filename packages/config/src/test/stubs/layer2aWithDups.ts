@@ -23,14 +23,7 @@ export const layer2aWithDups: Layer2 = {
     purposes: ['Universal'],
     stack: 'OP Stack',
     category: 'Optimistic Rollup',
-    links: {
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
+    links: {},
     finality: {
       warnings: {
         timeToInclusion: {

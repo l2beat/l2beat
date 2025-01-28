@@ -92,12 +92,10 @@ export const xlayer: Layer2 = polygonCDKStack({
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
-      apps: [],
       documentation: [
         'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
-      repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
   },

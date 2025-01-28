@@ -17,10 +17,6 @@ export const meliora: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://meliorachain.io/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/meliorafnd'],
     },
   },

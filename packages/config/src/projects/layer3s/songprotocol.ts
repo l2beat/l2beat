@@ -17,10 +17,6 @@ export const songprotocol: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://songprotocol.org/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/songprotocol'],
     },
   },
