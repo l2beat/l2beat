@@ -3,8 +3,8 @@ import {
   type BridgeRiskView,
   type Project,
   ProjectService,
+  type ValueWithSentiment,
 } from '@l2beat/config'
-import { type ValueWithSentiment } from '@l2beat/shared-pure'
 import {
   type ProjectChanges,
   getProjectsChangeReport,

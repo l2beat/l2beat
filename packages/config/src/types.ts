@@ -1,16 +1,29 @@
-import type {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  ValueWithSentiment,
-  WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import type { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DA_BRIDGES, DA_LAYERS, DA_MODES } from './common'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
 import type { DacDaLayer, ProjectDaTrackingConfig } from './projects/da-beat'
 import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
 import type { ProofVerification } from './projects/types'
+
+export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
+
+export type ValueWithSentiment<T, S extends string = Sentiment> = {
+  sentiment: S
+  description?: string
+} & (T extends unknown[]
+  ? {
+      values: T
+    }
+  : {
+      value: T
+    })
+
+type WarningSentiment = 'bad' | 'warning' | 'neutral'
+export type WarningValueWithSentiment = ValueWithSentiment<
+  string,
+  WarningSentiment
+>
 
 export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =

@@ -1,4 +1,4 @@
-import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   ProjectTechnologyChoice,
   ReferenceLink,
@@ -7,6 +7,7 @@ import type {
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectRisk,
+  Sentiment,
 } from '../../types'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer

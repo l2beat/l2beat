@@ -1,8 +1,8 @@
-import type { ValueWithSentiment } from '@l2beat/shared-pure'
 import type {
   DataAvailabilityConfig,
   DataAvailabilityLayer,
   ProjectDataAvailability,
+  ValueWithSentiment,
 } from '../types'
 
 export const DA_MODES = {

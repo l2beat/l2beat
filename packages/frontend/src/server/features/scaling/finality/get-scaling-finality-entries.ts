@@ -4,8 +4,8 @@ import {
   ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
+  type WarningValueWithSentiment,
 } from '@l2beat/config'
-import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
   type ProjectChanges,
