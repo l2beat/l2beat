@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { useIsMobile } from '~/hooks/use-breakpoint'
-import { InfoIcon } from '~/icons/info'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
@@ -31,7 +31,7 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
       <TooltipTrigger className="flex gap-1">
         <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
         {isAppchain && (
-          <InfoIcon
+          <CircleQuestionMarkIcon
             className={cn(
               'mt-[3px] size-4 fill-current',
               getStageTextClassname(stageConfig.stage),

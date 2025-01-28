@@ -14,6 +14,7 @@ import {
 import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { InfoIcon } from '~/icons/info'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
@@ -79,7 +80,7 @@ export function ScalingProjectStats({ project, className }: Props) {
                   />
                 </a>
                 {isAppchain && (
-                  <InfoIcon
+                  <CircleQuestionMarkIcon
                     className={cn(
                       'mt-1 inline-block size-4',
                       isAppchain && [
