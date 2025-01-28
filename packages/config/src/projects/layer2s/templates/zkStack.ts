@@ -26,6 +26,7 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectTechnologyChoice,
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
@@ -33,8 +34,7 @@ import type {
   ScalingProjectRiskView,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type {
   ChainConfig,
@@ -57,7 +57,7 @@ export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
@@ -77,7 +77,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: ContractParameters
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -745,9 +745,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   }
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

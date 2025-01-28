@@ -28,6 +28,7 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectContract,
   ScalingProjectEscrow,
@@ -37,8 +38,7 @@ import type {
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
@@ -56,7 +56,7 @@ export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
 
@@ -67,7 +67,7 @@ export interface PolygonCDKStackConfig {
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: ScalingProjectPermission[]
@@ -615,9 +615,7 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
     : DA.riskView
 }
 
-function technologyDA(
-  DA: DAProvider | undefined,
-): ScalingProjectTechnologyChoice {
+function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

@@ -17,10 +17,10 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
 import type {
+  ProjectTechnologyChoice,
   ScalingProjectReference,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
 } from '../../types'
 import { layer2s, milestonesLayer2s } from './index'
 
@@ -367,8 +367,8 @@ describe('layer2s', () => {
             }
             it(`${layer2.id.toString()} : ${key}`, () => {
               const choicesTyped = choicesAny as
-                | ScalingProjectTechnologyChoice
-                | ScalingProjectTechnologyChoice[]
+                | ProjectTechnologyChoice
+                | ProjectTechnologyChoice[]
 
               const choices = Array.isArray(choicesTyped)
                 ? choicesTyped
@@ -420,10 +420,7 @@ describe('layer2s', () => {
             }
           }
 
-          function checkChoice(
-            choice: ScalingProjectTechnologyChoice,
-            name: string,
-          ) {
+          function checkChoice(choice: ProjectTechnologyChoice, name: string) {
             it(`${name}.name doesn't end with a dot`, () => {
               expect(choice.name.endsWith('.')).toEqual(false)
             })

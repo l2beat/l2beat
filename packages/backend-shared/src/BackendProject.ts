@@ -6,8 +6,8 @@ import {
   type Layer2TxConfig,
   type Layer3,
   type ScalingProjectEscrow,
-  type ScalingProjectTransactionApi,
   type SharedEscrow,
+  type TransactionApiConfig,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -32,7 +32,7 @@ export interface BackendProject {
   type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
   escrows: BackendProjectEscrow[]
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   trackedTxsConfig?: TrackedTxConfigEntry[] | undefined
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig

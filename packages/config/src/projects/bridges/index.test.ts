@@ -8,8 +8,8 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
 import type {
+  ProjectTechnologyChoice,
   ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
 } from '../../types'
 import { getReferencedAddresses } from '../layer2s/index.test'
 import { type BridgeTechnology, bridges } from './index'
@@ -148,10 +148,7 @@ describe('bridges', () => {
           }
         }
 
-        function checkChoice(
-          choice: ScalingProjectTechnologyChoice,
-          name: string,
-        ) {
+        function checkChoice(choice: ProjectTechnologyChoice, name: string) {
           it(`${name}.name doesn't end with a dot`, () => {
             expect(choice.name.endsWith('.')).toEqual(false)
           })

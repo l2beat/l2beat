@@ -1,12 +1,12 @@
 import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
 import type {
+  ProjectTechnologyChoice,
   DataAvailabilityLayer as ScalingDaLayerOption,
   ScalingProjectContract,
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectReference,
   ScalingProjectRisk,
-  ScalingProjectTechnologyChoice,
 } from '../../types'
 
 export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
@@ -87,7 +87,7 @@ export type CommonDaLayer = {
   /** The technology used by the data availability layer. */
   technology: DaTechnology
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 export interface DaLayerRisks {
@@ -252,7 +252,7 @@ type CommonDaBridge = {
   /** List of projects given bridge is being used in. */
   usedIn: UsedInProject[]
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 interface DaBridgeDisplay {

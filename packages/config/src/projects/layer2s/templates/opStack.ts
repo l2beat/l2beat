@@ -35,6 +35,7 @@ import type {
   KnowledgeNugget,
   Milestone,
   ProjectDataAvailability,
+  ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCategory,
@@ -47,8 +48,7 @@ import type {
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
 import type { DacDaLayer } from '../../da-beat/types'
@@ -104,7 +104,7 @@ interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
-  technology: ScalingProjectTechnologyChoice
+  technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
   badge: BadgeId
 }
@@ -125,7 +125,7 @@ interface OpStackConfigCommon {
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -726,7 +726,7 @@ function decideDA(
 function technologyDA(
   DA: DAProvider | undefined,
   usesBlobs: boolean | undefined,
-): ScalingProjectTechnologyChoice {
+): ProjectTechnologyChoice {
   if (DA !== undefined) {
     return DA.technology
   }

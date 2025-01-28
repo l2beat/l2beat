@@ -3,7 +3,7 @@ import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
   ScalingProjectDisplay,
   ScalingProjectEscrow,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig } from '../../../types'
 import type { BadgeId } from '../../badges'
@@ -16,7 +16,7 @@ interface UnderReviewConfigCommon {
   rpcUrl?: string
   escrows?: ScalingProjectEscrow[]
   chainConfig?: ChainConfig
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   badges?: BadgeId[]
   isArchived?: boolean
 }

@@ -1,12 +1,12 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectTechnologyChoice } from '../types'
+import type { ProjectTechnologyChoice } from '../types'
 import { CONTRACTS } from './contracts'
 
 function ARBITRUM_DAO(
   l1Delay: number,
   challengeWindow: number,
   l2Delay: number,
-): ScalingProjectTechnologyChoice {
+): ProjectTechnologyChoice {
   const totalDelay = l1Delay + challengeWindow + l2Delay
   return {
     name: 'Arbitrum DAO is in charge of upgrades',

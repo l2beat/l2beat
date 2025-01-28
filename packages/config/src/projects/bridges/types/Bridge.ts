@@ -2,12 +2,12 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   KnowledgeNugget,
   Milestone,
+  ProjectTechnologyChoice,
   ScalingProjectContracts,
   ScalingProjectEscrow,
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
-  ScalingProjectTechnologyChoice,
 } from '../../../types'
 
 export interface Bridge {
@@ -55,8 +55,8 @@ export interface BridgeRiskView {
 export interface BridgeTechnology {
   canonical?: boolean
   destination: string[]
-  principleOfOperation?: ScalingProjectTechnologyChoice
-  validation?: ScalingProjectTechnologyChoice
-  destinationToken?: ScalingProjectTechnologyChoice
+  principleOfOperation?: ProjectTechnologyChoice
+  validation?: ProjectTechnologyChoice
+  destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
 }

@@ -133,7 +133,7 @@ export interface ScalingProjectConfig {
   /** List of contracts in which L1 funds are locked */
   escrows: ScalingProjectEscrow[]
   /** API parameters used to get transaction count */
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig
 }
@@ -539,26 +539,26 @@ export interface ScalingProjectStateValidation {
 
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
-  stateCorrectness?: ScalingProjectTechnologyChoice
+  stateCorrectness?: ProjectTechnologyChoice
   /** What is the new cryptography used in the project */
-  newCryptography?: ScalingProjectTechnologyChoice
+  newCryptography?: ProjectTechnologyChoice
   /** What is the data availability choice for the project */
-  dataAvailability?: ScalingProjectTechnologyChoice
+  dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */
-  operator?: ScalingProjectTechnologyChoice
+  operator?: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
-  forceTransactions?: ScalingProjectTechnologyChoice
+  forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
-  exitMechanisms?: ScalingProjectTechnologyChoice[]
+  exitMechanisms?: ProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
-  massExit?: ScalingProjectTechnologyChoice
+  massExit?: ProjectTechnologyChoice
   /** Other considerations */
-  otherConsiderations?: ScalingProjectTechnologyChoice[]
+  otherConsiderations?: ProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
 }
 
-export interface ScalingProjectTechnologyChoice {
+export interface ProjectTechnologyChoice {
   /** Name of the specific technology choice */
   name: string
   /** Description of the specific technology choice. Null means missing information */
@@ -573,15 +573,14 @@ export interface ScalingProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-export type AdjustCount =
-  | { type: 'SubtractOne' }
-  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
-
-export interface SimpleTransactionApi<T extends string> {
-  type: T
-  defaultUrl: string
-  defaultCallsPerMinute?: number
-}
+export type TransactionApiConfig =
+  | RpcTransactionApi
+  | StarkexTransactionApi
+  | CustomTransactionApi<'starknet'>
+  | CustomTransactionApi<'zksync'>
+  | CustomTransactionApi<'loopring'>
+  | CustomTransactionApi<'degate3'>
+  | CustomTransactionApi<'fuel'>
 
 export interface RpcTransactionApi {
   type: 'rpc'
@@ -591,6 +590,10 @@ export interface RpcTransactionApi {
   startBlock?: number
 }
 
+export type AdjustCount =
+  | { type: 'SubtractOne' }
+  | { type: 'SubtractOneSinceBlock'; blockNumber: number }
+
 export interface StarkexTransactionApi {
   type: 'starkex'
   product: string[]
@@ -598,14 +601,11 @@ export interface StarkexTransactionApi {
   resyncLastDays?: number
 }
 
-export type ScalingProjectTransactionApi =
-  | SimpleTransactionApi<'starknet'>
-  | SimpleTransactionApi<'zksync'>
-  | SimpleTransactionApi<'loopring'>
-  | SimpleTransactionApi<'degate3'>
-  | SimpleTransactionApi<'fuel'>
-  | RpcTransactionApi
-  | StarkexTransactionApi
+export interface CustomTransactionApi<T extends string> {
+  type: T
+  defaultUrl: string
+  defaultCallsPerMinute?: number
+}
 
 export interface ProjectDataAvailability {
   layer: ValueWithSentiment<string> & { secondLine?: string }

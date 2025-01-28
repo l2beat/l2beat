@@ -30,6 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   Milestone,
+  ProjectTechnologyChoice,
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectEscrow,
@@ -41,8 +42,7 @@ import type {
   ScalingProjectStateValidation,
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
-  ScalingProjectTechnologyChoice,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
 import type {
   ChainConfig,
@@ -64,7 +64,7 @@ import type {
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
-const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible smart contracts are supported',
     description:
@@ -84,7 +84,7 @@ const EVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
   },
 ]
 
-export const WASMVM_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
+export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
     name: 'EVM compatible and Stylus smart contracts are supported',
     description:
@@ -129,11 +129,11 @@ interface OrbitStackConfigCommon {
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
-  additiveConsiderations?: ScalingProjectTechnologyChoice[]
+  additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
