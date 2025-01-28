@@ -789,32 +789,32 @@ export const kinto: Layer2 = orbitStackL2({
   ],
   milestones: [
     {
-      name: 'Security Council Governance',
-      link: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+      title: 'Security Council Governance',
+      url: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
       date: '2024-11-03T00:00:00Z',
       description:
         'Kinto gives the ownership of all L1 system contracts to a Security Council that is properly set up.',
       type: 'general',
     },
     {
-      name: 'First ever Challenge on mainnet',
-      link: 'https://x.com/vincfurc/status/1853891918037463521',
+      title: 'First ever Challenge on mainnet',
+      url: 'https://x.com/vincfurc/status/1853891918037463521',
       date: '2024-10-31T00:00:00Z',
       description:
         'The first correctly resolved fault proof challenge of a mainnet Orbit stack rollup.',
       type: 'general',
     },
     {
-      name: 'Mainnet full launch',
-      link: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',
+      title: 'Mainnet full launch',
+      url: 'https://medium.com/mamori-finance/%EF%B8%8F-engen-is-over-kinto-is-launching-d9f2dd49fb2e',
       date: '2024-05-22T00:00:00Z',
       description:
         'Engen mining is completed and locked funds are bridged to the Kinto L2.',
       type: 'general',
     },
     {
-      name: 'Kinto Mainnet Genesis',
-      link: 'https://medium.com/mamori-finance/%EF%B8%8F-kintos-launch-the-set-up-7eddfbb4bc38',
+      title: 'Kinto Mainnet Genesis',
+      url: 'https://medium.com/mamori-finance/%EF%B8%8F-kintos-launch-the-set-up-7eddfbb4bc38',
       date: '2023-12-15T00:00:00Z',
       description: 'Kinto mainnet is launched. Deposits by users are disabled.',
       type: 'general',

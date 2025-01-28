@@ -162,8 +162,8 @@ export const silicon: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Silicon Mainnet Launch',
-      link: 'https://x.com/0xSilicon/status/1828704079687917908',
+      title: 'Silicon Mainnet Launch',
+      url: 'https://x.com/0xSilicon/status/1828704079687917908',
       date: '2024-08-28',
       description:
         'Silicon Mainnet launches officially, integrated with Polygon AggLayer.',

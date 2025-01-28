@@ -120,15 +120,15 @@ export const sophon: Layer2 = zkStackL2({
   ],
   milestones: [
     {
-      name: 'Mainnet public launch',
-      link: 'https://x.com/sophon/status/1861771965284896996',
+      title: 'Mainnet public launch',
+      url: 'https://x.com/sophon/status/1861771965284896996',
       date: '2024-12-18T00:00:00Z',
       description: 'Sophon Mainnet is now open for all users.',
       type: 'general',
     },
     {
-      name: 'Mainnet private launch',
-      link: 'https://blog.sophon.xyz/the-road-to-mainnet/',
+      title: 'Mainnet private launch',
+      url: 'https://blog.sophon.xyz/the-road-to-mainnet/',
       date: '2024-09-22T00:00:00Z',
       description: 'Sophon launches their mainnet privately.',
       type: 'general',

@@ -134,8 +134,8 @@ export const grvt: Layer2 = zkStackL2({
   },
   milestones: [
     {
-      name: 'Mainnet alpha launch',
-      link: 'https://grvt.io/blog/grvt-mainnet-alpha-first-hour-15-million/',
+      title: 'Mainnet alpha launch',
+      url: 'https://grvt.io/blog/grvt-mainnet-alpha-first-hour-15-million/',
       date: '2024-12-20T00:00:00Z',
       description: 'GRVT mainnet alpha launches for all users.',
       type: 'general',

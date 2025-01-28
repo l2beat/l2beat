@@ -357,17 +357,17 @@ export const aztecV1: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Aztec operator sunset',
+      title: 'Aztec operator sunset',
       date: '2023-07-08T00:00:00Z',
-      link: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
+      url: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
       description:
         'Aztec stops their rollup operators. Users now have to run the Rollup manually.',
       type: 'general',
     },
     {
-      name: 'Aztec 2.0',
+      title: 'Aztec 2.0',
       date: '2021-03-15T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
+      url: 'https://medium.com/aztec-protocol/launching-aztec-2-0-rollup-ac7db8012f4b',
       description:
         'Private Rollup is live on mainnet, allowing user to access DeFi.',
       type: 'general',

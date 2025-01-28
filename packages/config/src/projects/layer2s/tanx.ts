@@ -184,9 +184,9 @@ export const tanx: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2023-04-27T00:00:00.00Z',
-      link: 'https://tanx.fi/',
+      url: 'https://tanx.fi/',
       description: 'tanX is live on mainnet.',
       type: 'general',
     },

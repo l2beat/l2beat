@@ -163,8 +163,8 @@ export const gpt: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'GPT Protocol Launch',
-      link: 'https://x.com/gpt_protocol/status/1827155009123090891',
+      title: 'GPT Protocol Launch',
+      url: 'https://x.com/gpt_protocol/status/1827155009123090891',
       date: '2024-08-24',
       description:
         'GPT Protocol launches officially, integrated with Polygon AggLayer.',

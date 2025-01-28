@@ -1261,31 +1261,31 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
   ],
   milestones: [
     {
-      name: 'Starknet starts using blobs',
-      link: 'https://twitter.com/Starknet/status/1767915153700290839',
+      title: 'Starknet starts using blobs',
+      url: 'https://twitter.com/Starknet/status/1767915153700290839',
       date: '2024-03-13T00:00:00Z',
       description: 'Starknet starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Starknet Provisions',
-      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      title: 'Starknet Provisions',
+      url: 'https://www.starknet.io/en/content/starknet-provisions-program',
       date: '2024-02-14T00:00:00Z',
       description:
         'Starknet begins allocating $STRK to early contributors and users.',
       type: 'general',
     },
     {
-      name: 'Starknet Alpha',
-      link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
+      title: 'Starknet Alpha',
+      url: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
       description:
         'Rollup is live on mainnet, enabling general computation using ZK Rollup technology.',
       type: 'general',
     },
     {
-      name: 'StarkGate Alpha',
-      link: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
+      title: 'StarkGate Alpha',
+      url: 'https://medium.com/starkware/starkgate-alpha-35d01d21e3af',
       date: '2022-05-09T00:00:00Z',
       description:
         'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',

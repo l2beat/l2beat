@@ -78,8 +78,8 @@ export const mantapacific: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Manta Pacific Network Launch',
-      link: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
+      title: 'Manta Pacific Network Launch',
+      url: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
       date: '2023-09-12T00:00:00Z',
       description: 'Manta Pacific is live on mainnet.',
       type: 'general',

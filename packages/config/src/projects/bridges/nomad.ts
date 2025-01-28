@@ -169,9 +169,9 @@ export const nomad: Bridge = {
   ],
   milestones: [
     {
-      name: 'Contracts hacked for $190M',
+      title: 'Contracts hacked for $190M',
       date: '2022-08-02T00:00:00.00Z',
-      link: 'https://rekt.news/nomad-rekt/',
+      url: 'https://rekt.news/nomad-rekt/',
       type: 'incident',
     },
   ],

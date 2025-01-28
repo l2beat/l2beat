@@ -232,15 +232,15 @@ export const honeypot: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Honeypot announcement',
-      link: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
+      title: 'Honeypot announcement',
+      url: 'https://medium.com/cartesi/cartesi-ecosystem-update-2023-124b384401cc#:~:text=Honeypot%20DApp%20on%20Mainnet',
       date: '2023-04-11T00:00:00Z',
       description: 'Honeypot first announced to the community.',
       type: 'general',
     },
     {
-      name: 'Honeypot launch',
-      link: 'https://x.com/cartesiproject/status/1706685141421047982',
+      title: 'Honeypot launch',
+      url: 'https://x.com/cartesiproject/status/1706685141421047982',
       date: '2023-09-26T00:00:00Z',
       description: 'Honeypot launched on mainnet.',
       type: 'general',

@@ -108,8 +108,8 @@ export const treasure: Layer2 = zkStackL2({
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://x.com/Treasure_DAO/status/1865101292752040255',
+      title: 'Mainnet launch',
+      url: 'https://x.com/Treasure_DAO/status/1865101292752040255',
       date: '2024-12-11T00:00:00Z',
       description: 'Treasure mainnet launches for all users.',
       type: 'general',

@@ -321,8 +321,8 @@ export const phala: Layer2 = {
   permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
-      name: 'Phala Network Launch',
-      link: 'https://x.com/PhalaNetwork/status/1877052813383184606',
+      title: 'Phala Network Launch',
+      url: 'https://x.com/PhalaNetwork/status/1877052813383184606',
       date: '2025-01-08T00:00:00Z',
       description: 'Phala Network is live on Ethereum mainnet.',
       type: 'general',

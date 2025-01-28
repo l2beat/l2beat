@@ -84,8 +84,8 @@ export const facet: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1733855495),
   milestones: [
     {
-      name: 'Facet Mainnet Launch',
-      link: 'https://x.com/0xFacet/status/1866610169620336761',
+      title: 'Facet Mainnet Launch',
+      url: 'https://x.com/0xFacet/status/1866610169620336761',
       date: '2024-12-10T00:00:00Z',
       description: 'Facet launches at Ethereum block 21373000.',
       type: 'general',

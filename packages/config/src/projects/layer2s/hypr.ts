@@ -38,8 +38,8 @@ export const hypr: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'Hypr live on mainnet',
-      link: 'https://x.com/hypr_network/status/1750251802451378528',
+      title: 'Hypr live on mainnet',
+      url: 'https://x.com/hypr_network/status/1750251802451378528',
       date: '2024-01-24T00:00:00Z',
       description: 'Hypr launches on mainnet.',
       type: 'general',

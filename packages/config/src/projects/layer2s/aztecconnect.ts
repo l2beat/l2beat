@@ -282,25 +282,25 @@ export const aztecconnect: Layer2 = {
   },
   milestones: [
     {
-      name: 'Aztec operator sunset',
+      title: 'Aztec operator sunset',
       date: '2024-04-30T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',
+      url: 'https://medium.com/aztec-protocol/sunsetting-aztec-connect-a786edce5cae',
       description:
         'Aztec stops rollup operators, renouces ownership. Users must run the Rollup manually to withdraw.',
       type: 'general',
     },
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2022-07-07T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
+      url: 'https://medium.com/aztec-protocol/aztec-network-launches-first-ever-private-defi-solution-for-ethereum-e5ec7624d430',
       description:
         'Aztec Connect is live on mainnet, enabling private DeFi on Ethereum.',
       type: 'general',
     },
     {
-      name: 'Introducing Noir',
+      title: 'Introducing Noir',
       date: '2022-10-06T00:00:00Z',
-      link: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
+      url: 'https://medium.com/aztec-protocol/introducing-noir-the-universal-language-of-zero-knowledge-ff43f38d86d9',
       description:
         'Noir - programming language for zero-knowledge proofs, has been introduced.',
       type: 'general',

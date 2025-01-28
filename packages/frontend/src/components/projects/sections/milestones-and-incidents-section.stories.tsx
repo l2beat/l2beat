@@ -11,24 +11,24 @@ const meta = {
     sectionOrder: '1',
     milestones: [
       {
-        name: 'Nitro upgrade is activated',
-        link: 'https://l2beat.com',
+        title: 'Nitro upgrade is activated',
+        url: 'https://l2beat.com',
         date: '2022-08-31T00:00:00Z',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis dui eu odio aliquam, in sodales dolor lacinia. Aliquam pharetra malesuada urna turpis.',
         type: 'general',
       },
       {
-        name: 'Arbitrum Odyssey begins',
-        link: 'https://l2beat.com',
+        title: 'Arbitrum Odyssey begins',
+        url: 'https://l2beat.com',
         date: '2022-06-25T00:00:00Z',
         description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed iaculis dui eu odio aliquam, in sodales dolor lacinia. Aliquam pharetra malesuada urna turpis.',
         type: 'incident',
       },
       {
-        name: 'Creation of Arbitrum One',
-        link: 'https://l2beat.com',
+        title: 'Creation of Arbitrum One',
+        url: 'https://l2beat.com',
         date: '2019-11-14T00:00:00Z',
         type: 'general',
       },

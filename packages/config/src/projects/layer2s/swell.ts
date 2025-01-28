@@ -466,8 +466,8 @@ export const swell: Layer2 = {
   ),
   milestones: [
     {
-      name: 'Mainnet full launch',
-      link: 'https://www.swellnetwork.io/post/swellchain',
+      title: 'Mainnet full launch',
+      url: 'https://www.swellnetwork.io/post/swellchain',
       date: '2024-12-19T00:00:00Z',
       description: 'Swellchain mainnet launches publicly.',
       type: 'general',

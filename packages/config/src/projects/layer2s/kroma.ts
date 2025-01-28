@@ -582,32 +582,32 @@ export const kroma: Layer2 = {
   },
   milestones: [
     {
-      name: 'Chain fork #2 - Output root replaced',
-      link: 'https://x.com/kroma_network/status/1774683208753590506',
+      title: 'Chain fork #2 - Output root replaced',
+      url: 'https://x.com/kroma_network/status/1774683208753590506',
       date: '2024-04-05T00:00:00Z',
       description:
         'The chain forked and an L2 output on Ethereum has to be replaced by the Security Council.',
       type: 'incident',
     },
     {
-      name: 'Chain fork - Output root replaced',
-      link: 'https://x.com/kroma_network/status/1767478100819153009',
+      title: 'Chain fork - Output root replaced',
+      url: 'https://x.com/kroma_network/status/1767478100819153009',
       date: '2024-03-18T00:00:00Z',
       description:
         'The chain forked and an L2 output on Ethereum has to be replaced by the Security Council.',
       type: 'incident',
     },
     {
-      name: 'Ecotone upgrade',
-      link: 'https://twitter.com/kroma_network/status/1783410075346063564',
+      title: 'Ecotone upgrade',
+      url: 'https://twitter.com/kroma_network/status/1783410075346063564',
       date: '2024-04-25T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability and more L2 opcodes.',
       type: 'general',
     },
     {
-      name: 'Kroma Mainnet Launch',
-      link: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
+      title: 'Kroma Mainnet Launch',
+      url: 'https://twitter.com/kroma_network/status/1699267271968055305?s=20',
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',
       type: 'general',

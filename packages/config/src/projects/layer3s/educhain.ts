@@ -69,8 +69,8 @@ export const educhain: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://medium.com/edu-chain', //TODO
+      title: 'Mainnet launch',
+      url: 'https://medium.com/edu-chain', //TODO
       date: '2025-01-17T00:00:00Z',
       description: 'Educhain L3 opens its mainnet to all users.',
       type: 'general',

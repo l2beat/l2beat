@@ -332,8 +332,8 @@ export const degate2: Layer2 = {
   },
   milestones: [
     {
-      name: 'DeGate Redeploy',
-      link: 'https://medium.com/degate/degate-mainnet-beta-redeployment-update-a0f1a6b7350c',
+      title: 'DeGate Redeploy',
+      url: 'https://medium.com/degate/degate-mainnet-beta-redeployment-update-a0f1a6b7350c',
       date: '2023-09-14T00:00:00Z',
       description: 'DeGate redeploys the contracts to fix a bug.',
       type: 'general',

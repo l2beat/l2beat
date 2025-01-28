@@ -107,15 +107,15 @@ export const rss3: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'RSS3 Mainnet Alpha Launch',
-      link: 'https://x.com/rss3_/status/1767370007275851789',
+      title: 'RSS3 Mainnet Alpha Launch',
+      url: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
       description: 'RSS3 Network Mainnet Alpha is live.',
       type: 'general',
     },
     {
-      name: 'RSS3 starts using NearDA',
-      link: 'https://x.com/rss3_/status/1788183577219436985',
+      title: 'RSS3 starts using NearDA',
+      url: 'https://x.com/rss3_/status/1788183577219436985',
       date: '2024-05-07T00:00:00Z',
       description: 'RSS3 Network starts publishing data to NearDA.',
       type: 'general',

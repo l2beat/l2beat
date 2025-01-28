@@ -52,8 +52,8 @@ export const ancient: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'Ancient8 Network Launch',
-      link: 'https://twitter.com/Ancient8_gg/status/1760666331764961479',
+      title: 'Ancient8 Network Launch',
+      url: 'https://twitter.com/Ancient8_gg/status/1760666331764961479',
       date: '2024-02-22T00:00:00Z',
       description: 'Ancient8 Chain is live on mainnet.',
       type: 'general',

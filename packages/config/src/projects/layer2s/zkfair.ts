@@ -401,8 +401,8 @@ export const zkfair: Layer2 = {
   },
   milestones: [
     {
-      name: 'ZKFair Mainnet is Live',
-      link: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
+      title: 'ZKFair Mainnet is Live',
+      url: 'https://twitter.com/ZKFCommunity/status/1737307444181869017',
       date: '2023-12-20T00:00:00Z',
       description: 'ZKFair launched.',
       type: 'general',

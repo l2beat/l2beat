@@ -194,17 +194,17 @@ export const myria: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Mainnet Launch',
+      title: 'Mainnet Launch',
       date: '2022-08-26T00:00:00Z',
-      link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
+      url: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
       type: 'general',
     },
     {
-      name: 'MYRIA Token Airdrop',
+      title: 'MYRIA Token Airdrop',
       date: '2023-04-06T00:00:00Z',
-      link: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
+      url: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
       description: 'MYRIA token launches.',
       type: 'general',
     },

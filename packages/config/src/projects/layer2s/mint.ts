@@ -62,8 +62,8 @@ export const mint: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mint Mainnet Launch',
-      link: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
+      title: 'Mint Mainnet Launch',
+      url: 'https://mirror.xyz/mintchain.eth/HYbutKDjAKkphS_3_93AFh93JGWDUKtrz1lH6NpUybM',
       date: '2024-05-14T00:00:00Z',
       description: 'Mint Mainnet is now live.',
       type: 'general',

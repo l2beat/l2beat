@@ -52,8 +52,8 @@ export const bob: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Phase 1: Optimistic BOB',
-      link: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
+      title: 'Phase 1: Optimistic BOB',
+      url: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',

@@ -154,39 +154,39 @@ export const multichain: Bridge = {
   ],
   milestones: [
     {
-      name: 'Anyswap rebrands to Multichain',
+      title: 'Anyswap rebrands to Multichain',
       date: '2021-12-16T00:00:00Z',
-      link: 'https://medium.com/multichainorg/anyswap-to-officially-rebrand-as-multichain-16ee7b961ffa',
+      url: 'https://medium.com/multichainorg/anyswap-to-officially-rebrand-as-multichain-16ee7b961ffa',
       type: 'general',
     },
     {
-      name: 'Contracts hacked for $3M',
+      title: 'Contracts hacked for $3M',
       date: '2022-01-18T00:00:00Z',
       description:
         'Multiple critical vulnerabilities were found in the contracts.',
-      link: 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8',
+      url: 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8',
       type: 'incident',
     },
     {
-      name: 'anyCall was introduced',
+      title: 'anyCall was introduced',
       date: '2022-04-11T00:00:00Z',
       description:
         'This is the generic cross-chain mechanism that Multichain uses.',
-      link: 'https://medium.com/multichainorg/anycall-for-your-cross-chain-dapps-ac0ece9140e9',
+      url: 'https://medium.com/multichainorg/anycall-for-your-cross-chain-dapps-ac0ece9140e9',
       type: 'general',
     },
     {
-      name: 'fastMPC was introduced',
+      title: 'fastMPC was introduced',
       date: '2022-09-21T00:00:00Z',
       description:
         'It is an upgrade of the network that is used to check cross chain messages.',
-      link: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
+      url: 'https://multichainorg.medium.com/fastmpc-mainnet-goes-live-running-in-a-decentralized-way-99f9fe2956b8',
       type: 'general',
     },
     {
-      name: 'Contracts hacked for $130M',
+      title: 'Contracts hacked for $130M',
       date: '2023-07-07T00:00:00Z',
-      link: 'https://blockworks.co/news/multichain-anyswap-exploit',
+      url: 'https://blockworks.co/news/multichain-anyswap-exploit',
       type: 'incident',
     },
   ],

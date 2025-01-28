@@ -473,8 +473,8 @@ export const world: Layer2 = {
   },
   milestones: [
     {
-      name: 'World Chain Launch',
-      link: 'https://world.org/blog/announcements/world-chain-now-open-every-human', // TO UPDATE
+      title: 'World Chain Launch',
+      url: 'https://world.org/blog/announcements/world-chain-now-open-every-human', // TO UPDATE
       date: '2024-10-17T00:00:00Z',
       description: 'World Chain Mainnet is officially live.',
       type: 'general',

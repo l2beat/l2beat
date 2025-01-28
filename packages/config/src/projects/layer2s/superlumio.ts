@@ -43,8 +43,8 @@ export const superlumio: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'SuperLumio Launch',
-      link: 'https://x.com/PontemNetwork/status/1762887219235127612',
+      title: 'SuperLumio Launch',
+      url: 'https://x.com/PontemNetwork/status/1762887219235127612',
       date: '2024-02-28T00:00:00Z',
       description: 'SuperLumio launch is announced on X.',
       type: 'general',

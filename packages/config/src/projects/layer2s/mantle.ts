@@ -186,22 +186,22 @@ export const mantle: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
+      title: 'Mainnet launch',
+      url: 'https://www.mantle.xyz/blog/announcements/mantle-network-mainnet-alpha',
       date: '2023-07-14T00:00:00.00Z',
       description: 'Mantle is live on mainnet.',
       type: 'general',
     },
     {
-      name: 'Mainnet v2 Tectonic Upgrade',
-      link: 'https://www.mantle.xyz/blog/announcements/mantle-completes-mainnet-v2-tectonic-upgrade',
+      title: 'Mainnet v2 Tectonic Upgrade',
+      url: 'https://www.mantle.xyz/blog/announcements/mantle-completes-mainnet-v2-tectonic-upgrade',
       date: '2024-03-15T00:00:00.00Z',
       description: 'Mantle completes Mainnet v2 Tectonic Upgrade.',
       type: 'general',
     },
     {
-      name: 'MNT token migration begins',
-      link: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
+      title: 'MNT token migration begins',
+      url: 'https://www.mantle.xyz/blog/announcements/bit-to-mnt-user-guide',
       date: '2023-07-11T00:00:00.00Z',
       description: 'User can exchange their BIT tokens to MNT tokens.',
       type: 'general',

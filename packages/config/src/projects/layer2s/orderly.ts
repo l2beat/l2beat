@@ -129,15 +129,15 @@ export const orderly: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'ORDER Token Airdrop',
-      link: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
+      title: 'ORDER Token Airdrop',
+      url: 'https://orderly.network/blog/orderly-network-staking-unstake-ORDER/',
       date: '2024-08-26T00:00:00.00Z',
       description: 'ORDER token launched as a governance token.',
       type: 'general',
     },
     {
-      name: 'Orderly Network Mainnet Launch',
-      link: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
+      title: 'Orderly Network Mainnet Launch',
+      url: 'https://twitter.com/OrderlyNetwork/status/1749419001913237526',
       date: '2024-01-22T00:00:00Z',
       description: 'Orderly Network is live on mainnet.',
       type: 'general',

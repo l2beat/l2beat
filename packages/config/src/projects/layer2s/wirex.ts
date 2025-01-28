@@ -170,8 +170,8 @@ export const wirex: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'Wirex Pay Chain Protocol Launch',
-      link: 'https://x.com/wirexpaychain/status/1828779629051793710',
+      title: 'Wirex Pay Chain Protocol Launch',
+      url: 'https://x.com/wirexpaychain/status/1828779629051793710',
       date: '2024-08-28',
       description:
         'Wirex Pay Chain launches officially, integrated with Polygon AggLayer.',

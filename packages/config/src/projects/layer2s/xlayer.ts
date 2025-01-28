@@ -129,8 +129,8 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'X Layer Public Launch',
-      link: 'https://x.com/XLayerOfficial/status/1780056275898048562',
+      title: 'X Layer Public Launch',
+      url: 'https://x.com/XLayerOfficial/status/1780056275898048562',
       date: '2024-04-16',
       description: 'X Layer is now accessible to everyone.',
       type: 'general',

@@ -64,8 +64,8 @@ export const b3: Layer3 = opStackL3({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'B3 Open Mainnet Launch',
-      link: 'https://cryptoslate.com/press-releases/b3-fun-debuts-mainnet-with-record-breaking-367k-wallets-and-47m-transactions-in-just-1-month-of-testnet/',
+      title: 'B3 Open Mainnet Launch',
+      url: 'https://cryptoslate.com/press-releases/b3-fun-debuts-mainnet-with-record-breaking-367k-wallets-and-47m-transactions-in-just-1-month-of-testnet/',
       date: '2024-08-15T00:00:00.00Z',
       description: 'B3 opens the mainnet to the public.',
       type: 'general',

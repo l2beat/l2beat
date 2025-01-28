@@ -346,8 +346,8 @@ export const degate: Layer2 = {
   },
   milestones: [
     {
-      name: 'DeGate DEX Launches Mainnet Beta',
-      link: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
+      title: 'DeGate DEX Launches Mainnet Beta',
+      url: 'https://medium.com/degate/degate-dex-launches-mainnet-beta-trade-easy-sleep-easy-603574bd3a46',
       date: '2023-05-03T00:00:00Z',
       description:
         'DeGate launches mainnet beta with a deposit cap and a program to recover eventual user losses.',

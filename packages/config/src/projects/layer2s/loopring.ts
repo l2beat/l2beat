@@ -441,54 +441,54 @@ export const loopring: Layer2 = {
   },
   milestones: [
     {
-      name: 'Loopring ZK Rollup is live',
-      link: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
+      title: 'Loopring ZK Rollup is live',
+      url: 'https://medium.com/loopring-protocol/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
       date: '2019-12-04T00:00:00Z',
       description:
         'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
       type: 'general',
     },
     {
-      name: 'Loopring Protocol 3.6 Pre-release',
-      link: 'https://medium.loopring.io/loopring-3-6-is-code-complete-and-security-audit-has-begun-68a642506e31',
+      title: 'Loopring Protocol 3.6 Pre-release',
+      url: 'https://medium.loopring.io/loopring-3-6-is-code-complete-and-security-audit-has-begun-68a642506e31',
       date: '2020-09-22T00:00:00Z',
       description:
         'Enhancements in transfers, order-book trading and AMM swap.',
       type: 'general',
     },
     {
-      name: 'Loopring’s ZK Rollup AMM is Live',
-      link: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
+      title: 'Loopring’s ZK Rollup AMM is Live',
+      url: 'https://medium.loopring.io/looprings-zkrollup-amm-is-live-2f8251cd0fcd',
       date: '2020-12-02T00:00:00Z',
       description:
         'Improved implementation, enabling gas-free instant swaps and liquidity changes.',
       type: 'general',
     },
     {
-      name: 'Loopring Supports Payments',
-      link: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
+      title: 'Loopring Supports Payments',
+      url: 'https://medium.loopring.io/loopring-pay-is-live-zkrollup-transfers-on-ethereum-770d35213408',
       date: '2020-06-06T00:00:00Z',
       description: 'Support for ERC20 transfers is live on Loopring.',
       type: 'general',
     },
     {
-      name: 'DeFi Port is Live on Loopring',
-      link: 'https://medium.loopring.io/loopring-l2-defi-port-cd6e811250a9',
+      title: 'DeFi Port is Live on Loopring',
+      url: 'https://medium.loopring.io/loopring-l2-defi-port-cd6e811250a9',
       date: '2022-09-27T00:00:00Z',
       description:
         'Dutch auctions, lending, and other DeFi functions can be performed on Loopring.',
       type: 'general',
     },
     {
-      name: 'Loopring Supports NFTs',
-      link: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
+      title: 'Loopring Supports NFTs',
+      url: 'https://medium.loopring.io/loopring-now-supports-nfts-on-l2-29174a343d0d',
       date: '2021-08-24T00:00:00Z',
       description: 'Loopring supports NFT minting, trading, and transfers.',
       type: 'general',
     },
     {
-      name: 'Loopring DEX is online',
-      link: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
+      title: 'Loopring DEX is online',
+      url: 'https://medium.loopring.io/loopring-launches-zkrollup-exchange-loopring-io-d6a85beeed21',
       date: '2020-02-27T00:00:00Z',
       description:
         'ZK Rollup trading is live, as Loopring launches their order book based exchange.',

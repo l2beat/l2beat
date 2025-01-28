@@ -487,16 +487,16 @@ export const zksynclite: Layer2 = {
   ],
   milestones: [
     {
-      name: 'ZKsync 1.0 launch',
-      link: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
+      title: 'ZKsync 1.0 launch',
+      url: 'https://blog.matter-labs.io/zksync-is-live-bringing-trustless-scalable-payments-to-ethereum-9c634b3e6823',
       date: '2020-06-18T00:00:00Z',
       description:
         'ZKsync is live, bringing scalable payments to Ethereum using ZK Rollup technology.',
       type: 'general',
     },
     {
-      name: 'Rebranding',
-      link: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
+      title: 'Rebranding',
+      url: 'https://blog.matter-labs.io/all-aboard-zksync-era-mainnet-8b8964ba7c59#:~:text=ZKsync%201.0%20is%20now%20zkSync%20Lite',
       date: '2023-02-16T00:00:00Z',
       description: 'ZKsync becomes ZKsync Lite.',
       type: 'general',

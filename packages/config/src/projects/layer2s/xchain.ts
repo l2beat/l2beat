@@ -53,8 +53,8 @@ export const xchain: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://blog.idex.io/p/idex-mainnet-is-live',
+      title: 'Mainnet launch',
+      url: 'https://blog.idex.io/p/idex-mainnet-is-live',
       date: '2024-09-02T00:00:00Z',
       description: 'XCHAIN launches together with a new version of IDEX.',
       type: 'general',

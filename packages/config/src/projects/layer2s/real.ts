@@ -81,24 +81,24 @@ export const real: Layer2 = orbitStackL2({
   ],
   milestones: [
     {
-      name: 'Re.al Mainnet Launch',
-      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/FL4Ewx3CKsFEfMFsU7DZ-cIdhZc05aChfASQ1t-SQ-A',
+      title: 'Re.al Mainnet Launch',
+      url: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/FL4Ewx3CKsFEfMFsU7DZ-cIdhZc05aChfASQ1t-SQ-A',
       date: '2024-05-15T00:00:00Z',
       description:
         'Re.al launches its mainnet with some initial dapps deployed.',
       type: 'general',
     },
     {
-      name: 'Arcana Launch',
-      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/t3MsS-cCeJJD4ljXgQef3U01t564VL2h_au6iM6rBk4',
+      title: 'Arcana Launch',
+      url: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/t3MsS-cCeJJD4ljXgQef3U01t564VL2h_au6iM6rBk4',
       date: '2024-05-15T00:00:00Z',
       description:
         'Arcana launches their platform for rebasing, delta-neutral yields on re.al.',
       type: 'general',
     },
     {
-      name: 'RWA Token Launch',
-      link: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/eUmaidSfGSsjKKzepfyus6YSMog_FRdAQ6q5bsRoF7Y',
+      title: 'RWA Token Launch',
+      url: 'https://mirror.xyz/0xBE105a62f39a2E0b09772C49E3EcF6ef21BEd85C/eUmaidSfGSsjKKzepfyus6YSMog_FRdAQ6q5bsRoF7Y',
       date: '2024-05-15T00:00:00Z',
       description: 'Re.al launches the RWA token and its governance protocol.',
       type: 'general',

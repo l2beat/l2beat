@@ -53,8 +53,8 @@ export const ethernity: Layer2 = opStackL2({
     //   type: 'general',
     // },
     {
-      name: 'Ethernity Permissioned Mainnet',
-      link: 'https://www.ethernity.io/blog/the-ethernity-mainnet-launch-is-approaching',
+      title: 'Ethernity Permissioned Mainnet',
+      url: 'https://www.ethernity.io/blog/the-ethernity-mainnet-launch-is-approaching',
       date: '2024-10-29T00:00:00Z',
       description:
         'Ethernity is accessible to early development partners and flagship apps.',

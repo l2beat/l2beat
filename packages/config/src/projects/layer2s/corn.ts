@@ -100,8 +100,8 @@ export const corn: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
+      title: 'Mainnet launch',
+      url: 'https://blog.usecorn.com/corn-the-genesis-of-the-super-yield-network-f52170ffbe84',
       date: '2024-08-22T00:00:00Z',
       description: 'Corn launches its super yield network.',
       type: 'general',

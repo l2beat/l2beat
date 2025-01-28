@@ -98,8 +98,8 @@ export const xai: Layer3 = orbitStackL3({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'XAI Mainnet Launch',
-      link: 'https://x.com/XAI_GAMES/status/1744815749410242568',
+      title: 'XAI Mainnet Launch',
+      url: 'https://x.com/XAI_GAMES/status/1744815749410242568',
       date: '2024-01-09T00:00:00Z',
       description: 'XAI launches on Arbitrum One.',
       type: 'general',

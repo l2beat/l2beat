@@ -42,8 +42,8 @@ export const dbk: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'DeBank Chain Launch',
-      link: 'https://debank.com/stream/2539393',
+      title: 'DeBank Chain Launch',
+      url: 'https://debank.com/stream/2539393',
       date: '2024-07-19T00:00:00Z',
       description: 'DeBank mainnet is open for users.',
       type: 'general',

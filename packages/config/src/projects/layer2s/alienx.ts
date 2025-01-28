@@ -51,8 +51,8 @@ export const alienx: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://medium.com/@ALIENXchain/alienx-mainnet-launch-join-the-genesis-voyage-and-claim-your-passcard-for-aix-airdrop-9bdf6a2a0472',
+      title: 'Mainnet launch',
+      url: 'https://medium.com/@ALIENXchain/alienx-mainnet-launch-join-the-genesis-voyage-and-claim-your-passcard-for-aix-airdrop-9bdf6a2a0472',
       date: '2024-06-24T00:00:00Z',
       description: 'AlienX launches their public mainnet.',
       type: 'general',

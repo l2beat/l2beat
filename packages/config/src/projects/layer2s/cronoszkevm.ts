@@ -112,8 +112,8 @@ export const cronoszkevm: Layer2 = zkStackL2({
   // },
   milestones: [
     {
-      name: 'Alpha Mainnet Launch',
-      link: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
+      title: 'Alpha Mainnet Launch',
+      url: 'https://blog.cronos.org/p/cronos-zkevm-launches-its-alpha-mainnet',
       date: '2024-08-15T00:00:00Z',
       description: 'Cronos zkEVM Launches Its Alpha Mainnet powered by ZKsync.',
       type: 'general',

@@ -227,17 +227,17 @@ export const rhinofi: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Rebranding',
+      title: 'Rebranding',
       date: '2022-07-13T00:00:00Z',
-      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      url: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
       description:
         'DeversiFi becomes rhino.fi: multi-chain platform gathering DeFi in one place.',
       type: 'general',
     },
     {
-      name: 'DeversiFi Relaunched using Starkware',
+      title: 'DeversiFi Relaunched using Starkware',
       date: '2020-06-03T00:00:00Z',
-      link: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
+      url: 'https://rhino.fi/blog/introducing-rhino-fi-the-first-frictionless-gateway-to-multi-chain-defi/',
       description:
         'DeversiFi is live, bringing first STARKex Validium for spot trading.',
       type: 'general',

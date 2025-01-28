@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -371,25 +371,27 @@ export const nova: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      name: 'ArbOS 32 Emergency upgrade',
-      link: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
+      title: 'ArbOS 32 Emergency upgrade',
+      url: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
       date: '2024-09-25T00:00:00Z',
       description:
         'SecurityCouncil emergency upgrades to fix attack vectors related to Stylus resource pricing.',
       type: 'incident',
     },
     {
-      name: 'ArbOS 31 Bianca upgrade',
-      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      title: 'ArbOS 31 Bianca upgrade',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
       date: '2024-09-03T00:00:00Z',
       description:
         'Nova upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
       type: 'general',
     },
     {
-      ...MILESTONES.MAINNET_OPEN,
+      title: 'Mainnet for everyone',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
       date: '2022-08-09T00:00:00Z',
-      link: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
+      url: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
       type: 'general',
     },
   ],

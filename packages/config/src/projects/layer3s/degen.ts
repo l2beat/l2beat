@@ -82,9 +82,9 @@ export const degen: Layer3 = orbitStackL3({
   associatedTokens: ['DEGEN'],
   milestones: [
     {
-      name: 'Degen Chain halts for two days',
+      title: 'Degen Chain halts for two days',
       date: '2024-05-13T00:00:00Z',
-      link: 'https://x.com/degentokenbase/status/1789944238731297188',
+      url: 'https://x.com/degentokenbase/status/1789944238731297188',
       description:
         'Degen Chain halts for two days due to a chain misconfiguration.',
       type: 'incident',

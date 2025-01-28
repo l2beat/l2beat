@@ -195,8 +195,8 @@ export const reddioex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Reddio Announces Mainnet Launch',
-      link: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
+      title: 'Reddio Announces Mainnet Launch',
+      url: 'https://blog.reddio.com/announces-layer2-zkrollup-mainnet-launch/',
       date: '2022-09-29T00:00:00Z',
       description: 'Reddio announces its Validium Mainnet launch.',
       type: 'general',

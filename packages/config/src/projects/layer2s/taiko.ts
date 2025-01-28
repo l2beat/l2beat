@@ -515,22 +515,22 @@ export const taiko: Layer2 = {
   ],
   milestones: [
     {
-      name: 'TKO Token Airdrop',
-      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      title: 'TKO Token Airdrop',
+      url: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
       date: '2024-06-05T00:00:00.00Z',
       description: 'TKO token launches.',
       type: 'general',
     },
     {
-      name: 'Taiko Mainnet Launch',
-      link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
+      title: 'Taiko Mainnet Launch',
+      url: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',
       type: 'general',
     },
     {
-      name: 'Taiko Based Sequencing Upgrade',
-      link: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
+      title: 'Taiko Based Sequencing Upgrade',
+      url: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
       date: '2024-06-06T00:00:00.00Z',
       description: 'Proposing blocks on Taiko is now permissionless.',
       type: 'general',

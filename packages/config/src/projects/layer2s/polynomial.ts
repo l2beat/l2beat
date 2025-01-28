@@ -43,10 +43,10 @@ export const polynomial: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1718038307),
   milestones: [
     {
-      name: 'Polynomial Chain announced',
+      title: 'Polynomial Chain announced',
       date: '2024-07-16T00:00:00.000Z',
       description: 'Polynomial Chain announced on X.',
-      link: 'https://x.com/PolynomialFi/status/1813259120629457403',
+      url: 'https://x.com/PolynomialFi/status/1813259120629457403',
       type: 'general',
     },
   ],

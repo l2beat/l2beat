@@ -511,24 +511,24 @@ export const dydx: Layer2 = {
   },
   milestones: [
     {
-      name: 'Public launch',
-      link: 'https://dydx.exchange/blog/public',
+      title: 'Public launch',
+      url: 'https://dydx.exchange/blog/public',
       date: '2021-04-06T00:00:00Z',
       description:
         'Layer 2 cross-margined Perpetuals are now live in production for all traders.',
       type: 'general',
     },
     {
-      name: 'dYdX Foundation',
-      link: 'https://dydx.exchange/blog/introducing-dydx-foundation',
+      title: 'dYdX Foundation',
+      url: 'https://dydx.exchange/blog/introducing-dydx-foundation',
       date: '2021-08-03T00:00:00Z',
       description:
         'Independent foundation was created to participate in the Protocol governance.',
       type: 'general',
     },
     {
-      name: 'dYdX v4 announcement',
-      link: 'https://dydx.exchange/blog/dydx-chain',
+      title: 'dYdX v4 announcement',
+      url: 'https://dydx.exchange/blog/dydx-chain',
       date: '2022-06-22T00:00:00Z',
       description:
         'dYdX V4 will be developed as a standalone blockchain based on the Cosmos SDK.',

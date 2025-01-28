@@ -88,16 +88,16 @@ export const reya: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Reya DEX launch',
-      link: 'https://x.com/reya_xyz/status/1793296498727485712',
+      title: 'Reya DEX launch',
+      url: 'https://x.com/reya_xyz/status/1793296498727485712',
       date: '2024-05-21T00:00:00Z',
       description:
         'Reya DEX launches with Perpetual trading available for ETH and BTC.',
       type: 'general',
     },
     {
-      name: 'Reya LGE',
-      link: 'https://medium.com/@reyalabs123/reya-network-the-first-trading-optimised-l2-liquidity-generation-event-launch-f3cd958302ec',
+      title: 'Reya LGE',
+      url: 'https://medium.com/@reyalabs123/reya-network-the-first-trading-optimised-l2-liquidity-generation-event-launch-f3cd958302ec',
       date: '2024-04-22T00:00:00Z',
       description:
         'Reya launches with a Liquidity Generation Event (LGE) where users can provide USDC to the network.',

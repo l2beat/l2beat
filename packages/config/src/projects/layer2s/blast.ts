@@ -135,23 +135,23 @@ export const blast: Layer2 = opStackL2({
   },
   milestones: [
     {
-      name: 'Blast Network Launch',
-      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
+      title: 'Blast Network Launch',
+      url: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
       date: '2024-02-29T00:00:00Z',
       description: 'Blast Network is live on mainnet.',
       type: 'general',
     },
     {
-      name: 'Blast upgrades to censor exploiter',
-      link: 'https://x.com/miszke_eth/status/1772946372309737970',
+      title: 'Blast upgrades to censor exploiter',
+      url: 'https://x.com/miszke_eth/status/1772946372309737970',
       date: '2024-03-26T00:00:00Z',
       description:
         'The Munchables exploiter is prohibited from forcing transactions.',
       type: 'incident',
     },
     {
-      name: 'Blast Mainnet starts using blobs',
-      link: 'https://x.com/Blast_L2/status/1793686918506623032',
+      title: 'Blast Mainnet starts using blobs',
+      url: 'https://x.com/Blast_L2/status/1793686918506623032',
       date: '2024-05-27T00:00:00Z',
       description: 'Blast Mainnet starts publishing data to blobs.',
       type: 'general',

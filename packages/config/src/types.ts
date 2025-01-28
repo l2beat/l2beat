@@ -58,8 +58,8 @@ export interface KnowledgeNugget {
 }
 
 export interface Milestone {
-  name: string
-  link: string
+  title: string
+  url: string
   date: string
   description?: string
   type: 'general' | 'incident'

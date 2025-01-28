@@ -176,17 +176,17 @@ export const portal: Bridge = {
   ],
   milestones: [
     {
-      name: 'Wormhole introduces NTT for $W',
+      title: 'Wormhole introduces NTT for $W',
       date: '2024-04-25T00:00:00.00Z',
-      link: 'https://wormhole.com/docs/learn/messaging/native-token-transfers/overview/',
+      url: 'https://wormhole.com/docs/learn/messaging/native-token-transfers/overview/',
       description:
         'Native Token Transfers (NTT) is a multichain composable token standard developed by Wormhole.',
       type: 'general',
     },
     {
-      name: 'Contracts hacked for $326M',
+      title: 'Contracts hacked for $326M',
       date: '2022-02-03T00:00:00.00Z',
-      link: 'https://rekt.news/wormhole-rekt/',
+      url: 'https://rekt.news/wormhole-rekt/',
       type: 'incident',
     },
   ],
