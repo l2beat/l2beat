@@ -8,8 +8,8 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('river')
 
 export const river: Layer2 = opStackL2({
-  addedAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
-  additionalBadges: [Badge.RaaS.Caldera, Badge.Infra.Superchain],
+  createdAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
+  additionalBadges: [Badge.RaaS.Caldera],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
