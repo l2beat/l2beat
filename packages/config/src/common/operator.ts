@@ -28,8 +28,8 @@ const STARKEX_OPERATOR: ProjectTechnologyChoice = {
     ' Typically, the Operator is the hot wallet of the StarkEx service submitting state updates for which proofs have been already submitted and verified.',
   references: [
     {
-      text: 'Operator - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/shared/contract-management.html#operator_perpetual',
+      title: 'Operator - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/perpetual/shared/contract-management.html#operator_perpetual',
     },
   ],
 }

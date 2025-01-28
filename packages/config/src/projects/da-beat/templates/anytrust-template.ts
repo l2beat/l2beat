@@ -66,8 +66,8 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     `,
     references: [
       {
-        text: 'Inside AnyTrust - Arbitrum Docs',
-        href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
+        title: 'Inside AnyTrust - Arbitrum Docs',
+        url: 'https://docs.arbitrum.io/how-arbitrum-works/inside-anytrust',
       },
     ],
   }

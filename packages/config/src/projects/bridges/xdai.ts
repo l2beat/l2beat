@@ -66,12 +66,12 @@ export const xdai: Bridge = {
       description: `xDai Bridge is the native Gnosis Chain bridge for swapping Dai on Ethereum into xDai on Gnosis, which is the native asset used for gas and transaction fees. Due to this native aspect of xDai it is minted via block reward contract by Gnosis consensus mechanism. Specifically, when a user deposits Dai to Bridge Contract on Ethereum, it is noticed by an external Bridge Validator Oracle service (${validatorThresholdstring} Multisig). After collecting required signatures, the service calls a Bridge Contract on the Gnosis chain which instructs a Block Reward Contract that recipient's xDai balance needs to be increased (as an EVM state update by consensus engine). To transfer xDai to Ethereum, a user deposits xDai to Bridge Contract on Gnosis chain, which is then burned. The Bridge Validator Service provides required signatures for a Bridge Contract on Ethereum which releases Dai to the user. Bridge contract on Ethereum supports sending deposited tokens to Compound to accrue yield, which can be transferred to EOA account with intention to be spent on supporting bridge operations.`,
       references: [
         {
-          text: 'xDai Bridge Documentation',
-          href: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge',
+          title: 'xDai Bridge Documentation',
+          url: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge',
         },
         {
-          text: 'Earning yield on Bridge Deposit',
-          href: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge#earning-yield-on-bridge-deposits',
+          title: 'Earning yield on Bridge Deposit',
+          url: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge#earning-yield-on-bridge-deposits',
         },
       ],
       risks: [],
@@ -81,8 +81,8 @@ export const xdai: Bridge = {
       description: `Dai and xDai deposits to Bridge Contracts are validated by a ${validatorThresholdstring} Validator MultiSig. A separate ${discovery.getMultisigStats('GnosisBridgeGovernanceMultisig')} Governor Multisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts.`,
       references: [
         {
-          text: 'xDai Bridge Documentation',
-          href: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge',
+          title: 'xDai Bridge Documentation',
+          url: 'https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge',
         },
       ],
       risks: [

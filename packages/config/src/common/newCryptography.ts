@@ -25,8 +25,8 @@ const ZK_STARKS: ProjectTechnologyChoice = {
   ],
   references: [
     {
-      text: 'STARK Core Engine Deep Dive',
-      href: 'https://medium.com/starkware/starkdex-deep-dive-the-stark-core-engine-497942d0f0ab',
+      title: 'STARK Core Engine Deep Dive',
+      url: 'https://medium.com/starkware/starkdex-deep-dive-the-stark-core-engine-497942d0f0ab',
     },
   ],
 }

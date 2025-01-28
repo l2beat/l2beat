@@ -22,8 +22,8 @@ const meta = {
         ],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: '#',
+            title: 'Introducing EVM Equivalence',
+            url: '#',
           },
         ],
         isIncomplete: false,

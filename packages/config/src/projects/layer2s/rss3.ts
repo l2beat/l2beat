@@ -25,16 +25,16 @@ export const rss3: Layer2 = opStackL2({
         'Transaction data is submitted to a blob store contract on NearDA. Only hashes of blob data is published on an onchain inbox.',
       references: [
         {
-          text: 'REP-20 - Data Availability Layer Integration',
-          href: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
+          title: 'REP-20 - Data Availability Layer Integration',
+          url: 'https://github.com/RSS3-Network/REPs/blob/main/REPs/REP-20.md',
         },
         {
-          text: 'RSS3 NearDA blob store contract',
-          href: 'https://nearblocks.io/address/vsl-da.near',
+          title: 'RSS3 NearDA blob store contract',
+          url: 'https://nearblocks.io/address/vsl-da.near',
         },
         {
-          text: 'On-Chain Inbox',
-          href: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
+          title: 'On-Chain Inbox',
+          url: 'https://etherscan.io/address/0xfFFF000000000000000000000000000000012553',
         },
       ],
       risks: [

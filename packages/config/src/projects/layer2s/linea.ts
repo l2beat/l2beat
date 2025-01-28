@@ -458,8 +458,9 @@ export const linea: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'LineaRollup.sol - Etherscan source code, submitBlobs() function',
-          href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          title:
+            'LineaRollup.sol - Etherscan source code, submitBlobs() function',
+          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
         },
       ],
     },
@@ -477,8 +478,9 @@ export const linea: Layer2 = {
       ],
       references: [
         {
-          text: 'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+          title:
+            'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
+          url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
         },
       ],
     },
@@ -494,12 +496,14 @@ export const linea: Layer2 = {
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            title:
+              'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
           },
           {
-            text: 'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
+            title:
+              'LineaRollup.sol - Etherscan source code, setFallbackOperator() function',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code#F1#L212',
           },
         ],
       },
@@ -552,8 +556,9 @@ export const linea: Layer2 = {
         })(),
         references: [
           {
-            text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            title:
+              'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
+            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
           },
         ],
         ...upgradesTimelock,

@@ -212,8 +212,8 @@ export const phala: Layer2 = {
         Through the SuccinctL2OutputOracle, the system also allows to switch to an optimistic mode, in which no proofs are required and a challenger can challenge the proposed output state root within the finalization period.`,
       references: [
         {
-          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          text: 'Op-Succinct architecture',
+          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          title: 'Op-Succinct architecture',
         },
       ],
       risks: [
@@ -243,8 +243,8 @@ export const phala: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          href: 'https://succinctlabs.github.io/op-succinct/architecture.html',
-          text: 'Op-Succinct architecture',
+          url: 'https://succinctlabs.github.io/op-succinct/architecture.html',
+          title: 'Op-Succinct architecture',
         },
       ],
       risks: [],
@@ -253,8 +253,8 @@ export const phala: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          href: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
-          text: 'BatchInbox - Etherscan address',
+          url: 'https://etherscan.io/address/0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b',
+          title: 'BatchInbox - Etherscan address',
         },
       ],
       risks: [],
@@ -263,14 +263,16 @@ export const phala: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, CHALLENGER address',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'SuccinctL2OutputOracle.sol - Etherscan source code, CHALLENGER address',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             l2OutputOracle,
           )}#code`,
         },
         {
-          text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER address',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER address',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             l2OutputOracle,
           )}#code`,
         },
@@ -282,20 +284,23 @@ export const phala: Layer2 = {
         ...EXITS.REGULAR_YIELDING('zk', finalizationPeriod),
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'SuccinctL2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               l2OutputOracle,
             )}#code`,
           },

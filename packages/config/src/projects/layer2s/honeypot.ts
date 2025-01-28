@@ -159,8 +159,9 @@ export const honeypot: Layer2 = {
       ],
       references: [
         {
-          text: 'Authority.sol#L148 - Etherscan source code, submitClaim function',
-          href: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
+          title:
+            'Authority.sol#L148 - Etherscan source code, submitClaim function',
+          url: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
         },
       ],
     },
@@ -168,8 +169,8 @@ export const honeypot: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'InputBox.sol#30 - Etherscan source code, addInput function',
-          href: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+          title: 'InputBox.sol#30 - Etherscan source code, addInput function',
+          url: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
         },
       ],
     },

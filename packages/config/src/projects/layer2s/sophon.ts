@@ -71,8 +71,8 @@ export const sophon: Layer2 = zkStackL2({
       ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
         },
       ],
     },

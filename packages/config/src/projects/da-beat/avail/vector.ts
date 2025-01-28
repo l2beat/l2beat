@@ -64,12 +64,12 @@ export const vector = {
     `,
     references: [
       {
-        text: 'SP1 Vector Operator',
-        href: 'https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs',
+        title: 'SP1 Vector Operator',
+        url: 'https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs',
       },
       {
-        text: 'Succinct Gateway - Etherscan',
-        href: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
+        title: 'Succinct Gateway - Etherscan',
+        url: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
       },
     ],
     risks: [

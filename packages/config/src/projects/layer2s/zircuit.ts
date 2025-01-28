@@ -27,8 +27,8 @@ const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   ],
   references: [
     {
-      text: 'Verifier.sol - Etherscan source code',
-      href: 'https://etherscan.io/address/0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e#code#F1#L9',
+      title: 'Verifier.sol - Etherscan source code',
+      url: 'https://etherscan.io/address/0xa1f99E9E8D23B4945b62eAFF65eCf3D0dE6a0a5e#code#F1#L9',
     },
   ],
 }

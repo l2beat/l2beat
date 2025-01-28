@@ -33,12 +33,12 @@ export const fraxtal: Layer2 = opStackL2({
         'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
       references: [
         {
-          text: 'Fraxtal documentation',
-          href: 'https://docs.frax.com/fraxtal',
+          title: 'Fraxtal documentation',
+          url: 'https://docs.frax.com/fraxtal',
         },
         {
-          text: 'On-Chain Inbox',
-          href: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
+          title: 'On-Chain Inbox',
+          url: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
         },
       ],
       risks: [
@@ -124,12 +124,12 @@ export const fraxtal: Layer2 = opStackL2({
       `,
       references: [
         {
-          text: 'FraxtalDA Documentation',
-          href: 'https://docs.frax.com/fraxtal/network/data-availability',
+          title: 'FraxtalDA Documentation',
+          url: 'https://docs.frax.com/fraxtal/network/data-availability',
         },
         {
-          text: 'Fraxtal DA Follower - Source Code',
-          href: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
+          title: 'Fraxtal DA Follower - Source Code',
+          url: 'https://github.com/FraxFinance/fraxtal-da-follower/blob/791e849b41465e1e00377f57c8f0c49d4b13caa8/main.go',
         },
       ],
       risks: [

@@ -116,12 +116,12 @@ export const stargatev2: Bridge = {
       These credits can be moved and rebalanced (but not minted) by a permissioned Planner.`,
       references: [
         {
-          text: 'Stargate Docs: Modes of transport',
-          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/modes-of-transport-taxi-and-bus',
+          title: 'Stargate Docs: Modes of transport',
+          url: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/modes-of-transport-taxi-and-bus',
         },
         {
-          text: 'Stargate Docs: Credit allocation system',
-          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/credit-allocation-system',
+          title: 'Stargate Docs: Credit allocation system',
+          url: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/credit-allocation-system',
         },
       ],
       risks: [],
@@ -148,8 +148,8 @@ export const stargatev2: Bridge = {
         If both DVNs agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
         references: [
           {
-            text: 'LayerZero Docs: Security Stack',
-            href: 'https://docs.layerzero.network/v2/home/modular-security/security-stack-dvns',
+            title: 'LayerZero Docs: Security Stack',
+            url: 'https://docs.layerzero.network/v2/home/modular-security/security-stack-dvns',
           },
         ],
         risks: [
@@ -170,8 +170,8 @@ export const stargatev2: Bridge = {
         'Since Stargate is mainly a Liquidity Network, its liquidity pools at the destination are filled with tokens from canonical or other bridges than Stargate. As no new tokens are minted, the users do not inherit the risk of the Stargate bridge as soon as the bridging is complete. For chains where a destination asset is not available, Stargate v2 offers a Token Bridge mode called Hydra that locks the asset at the source and mints a Stargate OFT at the destination.',
       references: [
         {
-          text: 'Stargate Docs: Token Bridge mode (Hydra)',
-          href: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/token-types/hydra-ofts',
+          title: 'Stargate Docs: Token Bridge mode (Hydra)',
+          url: 'https://stargateprotocol.gitbook.io/stargate/v/v2-developer-docs/integrate-with-stargate/token-types/hydra-ofts',
         },
       ],
       risks: [],

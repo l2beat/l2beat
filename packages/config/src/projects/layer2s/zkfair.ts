@@ -237,8 +237,9 @@ export const zkfair: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
+          title:
+            'ZKFairValidium.sol#L758 - Etherscan source code, _verifyAndRewardBatches function',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L758',
         },
       ],
     },
@@ -246,8 +247,9 @@ export const zkfair: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [
         {
-          text: 'ZKFairValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L494',
+          title:
+            'ZKFairValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L494',
         },
       ],
     },
@@ -265,8 +267,9 @@ export const zkfair: Layer2 = {
       ],
       references: [
         {
-          text: 'ZKFairValidium.sol#L61 - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L461',
+          title:
+            'ZKFairValidium.sol#L61 - Etherscan source code, onlyTrustedSequencer modifier',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L461',
         },
       ],
     },
@@ -276,8 +279,9 @@ export const zkfair: Layer2 = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          text: 'ZKFairValidium.sol#L475 - Etherscan source code, isForceBatchAllowed modifier',
-          href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L475',
+          title:
+            'ZKFairValidium.sol#L475 - Etherscan source code, isForceBatchAllowed modifier',
+          url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L475',
         },
       ],
     },
@@ -286,8 +290,9 @@ export const zkfair: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
+            title:
+              'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
+            url: 'https://etherscan.io/address/0xEb80283EBc508CF6AaC5E054118954a2BD7fA006#code#F19#L315',
           },
         ],
       },
@@ -387,8 +392,9 @@ export const zkfair: Layer2 = {
     ],
     references: [
       {
-        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
+        title:
+          'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],

@@ -89,8 +89,8 @@ export const transporter: Bridge = {
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [
         {
-          text: 'Risk Management Network',
-          href: 'https://docs.chain.link/ccip/concepts#risk-management-network',
+          title: 'Risk Management Network',
+          url: 'https://docs.chain.link/ccip/concepts#risk-management-network',
         },
       ],
       risks: [

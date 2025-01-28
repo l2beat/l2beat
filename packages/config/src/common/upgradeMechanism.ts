@@ -22,8 +22,8 @@ function ARBITRUM_DAO(
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(totalDelay))],
     references: [
       {
-        text: 'Arbitrum DAO',
-        href: 'https://docs.arbitrum.foundation/concepts/arbitrum-dao',
+        title: 'Arbitrum DAO',
+        url: 'https://docs.arbitrum.foundation/concepts/arbitrum-dao',
       },
     ],
   }

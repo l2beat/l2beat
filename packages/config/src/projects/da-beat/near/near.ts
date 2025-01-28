@@ -103,24 +103,24 @@ export const near: BlockchainDaLayer = {
   `,
     references: [
       {
-        text: 'Near Nightshade Consensus',
-        href: 'https://pages.near.org/downloads/Nightshade.pdf',
+        title: 'Near Nightshade Consensus',
+        url: 'https://pages.near.org/downloads/Nightshade.pdf',
       },
       {
-        text: 'Near Doomslug Finality Gadget',
-        href: 'https://discovery-domain.org/papers/doomslug.pdf',
+        title: 'Near Doomslug Finality Gadget',
+        url: 'https://discovery-domain.org/papers/doomslug.pdf',
       },
       {
-        text: 'Near documentation',
-        href: 'https://dev.near.org/documentation/',
+        title: 'Near documentation',
+        url: 'https://dev.near.org/documentation/',
       },
       {
-        text: 'Near Core - Architecture',
-        href: 'https://near.github.io/nearcore/',
+        title: 'Near Core - Architecture',
+        url: 'https://near.github.io/nearcore/',
       },
       {
-        text: 'Blob Store contract - Nuffle Labs',
-        href: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
+        title: 'Blob Store contract - Nuffle Labs',
+        url: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
       },
     ],
     risks: [

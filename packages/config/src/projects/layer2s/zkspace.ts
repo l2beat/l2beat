@@ -203,8 +203,8 @@ export const zkspace: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'ZKSpace Whitepaper',
-          href: 'https://github.com/l2labs/zkspace-whitepaper',
+          title: 'ZKSpace Whitepaper',
+          url: 'https://github.com/l2labs/zkspace-whitepaper',
         },
       ],
     },

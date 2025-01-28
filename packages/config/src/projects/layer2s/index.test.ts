@@ -18,7 +18,7 @@ import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
 import type {
   ProjectTechnologyChoice,
-  ScalingProjectReference,
+  ReferenceLink,
   ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
 } from '../../types'
@@ -374,7 +374,7 @@ describe('layer2s', () => {
                 ? choicesTyped
                 : [choicesTyped]
               const referencedAddresses = getReferencedAddresses(
-                choices.flatMap((c) => c.references).map((ref) => ref.href),
+                choices.flatMap((c) => c.references).map((ref) => ref.url),
               )
 
               const allAddresses = discovery
@@ -617,8 +617,8 @@ describe('layer2s', () => {
   })
 })
 
-function getAddressFromReferences(references: ScalingProjectReference[] = []) {
-  const addresses = references.map((r) => r.href)
+function getAddressFromReferences(references: ReferenceLink[] = []) {
+  const addresses = references.map((r) => r.url)
   return getReferencedAddresses(addresses)
 }
 

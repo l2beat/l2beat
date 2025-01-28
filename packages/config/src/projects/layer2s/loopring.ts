@@ -233,8 +233,8 @@ export const loopring: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'Operators - Loopring design doc',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          title: 'Operators - Loopring design doc',
+          url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
         },
       ],
     },
@@ -242,8 +242,8 @@ export const loopring: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Operators - Loopring design doc',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
+          title: 'Operators - Loopring design doc',
+          url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#operators',
         },
       ],
     },
@@ -251,8 +251,8 @@ export const loopring: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Introduction - Loopring design doc',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#introduction',
+          title: 'Introduction - Loopring design doc',
+          url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#introduction',
         },
       ],
     },
@@ -260,12 +260,14 @@ export const loopring: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
-          href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
+          title:
+            'ExchangeV3.sol#L315-L322 - Etherscan source code, submitBlocks function',
+          url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8022',
         },
         {
-          text: 'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
-          href: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
+          title:
+            'LoopringIOExchangeOwner.sol#L123-L126 - Etherscan source code, hasAccessTo function call',
+          url: 'https://etherscan.io/address/0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512#code#L5539',
         },
       ],
     },
@@ -273,12 +275,12 @@ export const loopring: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'Forced Withdrawals - Loopring design doc',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-withdrawals',
+          title: 'Forced Withdrawals - Loopring design doc',
+          url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-withdrawals',
         },
         {
-          text: 'Forced Request Handling - Loopring design doc',
-          href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+          title: 'Forced Request Handling - Loopring design doc',
+          url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
         },
       ],
     },
@@ -287,8 +289,8 @@ export const loopring: Layer2 = {
         ...EXITS.REGULAR('zk', 'no proof'),
         references: [
           {
-            text: 'Withdraw - Loopring design doc',
-            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#withdraw',
+            title: 'Withdraw - Loopring design doc',
+            url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#withdraw',
           },
         ],
       },
@@ -296,12 +298,13 @@ export const loopring: Layer2 = {
         ...EXITS.FORCED(),
         references: [
           {
-            text: 'Forced Request Handling - Loopring design doc',
-            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+            title: 'Forced Request Handling - Loopring design doc',
+            url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
           {
-            text: 'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
+            title:
+              'ExchangeV3.sol#L8118 - Loopring source code, forceWithdraw function',
+            url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8118',
           },
         ],
       },
@@ -313,12 +316,13 @@ export const loopring: Layer2 = {
         ),
         references: [
           {
-            text: 'Forced Request Handling - Loopring design doc',
-            href: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
+            title: 'Forced Request Handling - Loopring design doc',
+            url: 'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md#forced-request-handling',
           },
           {
-            text: 'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
-            href: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
+            title:
+              'ExchangeV3.sol#L8159 - Loopring source code, withdrawFromMerkleTree function',
+            url: 'https://etherscan.io/address/0x26d8Ba776a067C5928841985bCe342f75BAE7E82#code#L8159',
           },
         ],
       },

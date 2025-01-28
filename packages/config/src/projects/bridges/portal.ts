@@ -85,8 +85,8 @@ export const portal: Bridge = {
         'This is a type of Token Bridge that locks tokens in the escrow contracts on the source chain and mints tokens at the destination. What differentiates this solution is that the cross-chain message is sent via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes (Wormhole: Guardians) and then verified. After its verification, the message is submitted to the destination chain for processing. Since the Guardian network is essential to the security of the Wormhole protocol, Guardians can tap into additional sources of truth apart from the events emitted at the source chain. The Wormhole Gateway, a Cosmos-SDK chain, serves as a hub that can perform additional standardized checks on metadata like VAA format and global token balances and flows.',
       references: [
         {
-          text: 'Docs: Wormhole architecture',
-          href: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
+          title: 'Docs: Wormhole architecture',
+          url: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
         },
       ],
       risks: [],
@@ -97,8 +97,8 @@ export const portal: Bridge = {
         'Validation process takes place in an external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on a threshold of VAAs, users can withdraw funds on the other end of the bridge.',
       references: [
         {
-          text: 'WormholeCore contract: function verifyVM()',
-          href: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
+          title: 'WormholeCore contract: function verifyVM()',
+          url: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
         },
       ],
       risks: [
@@ -122,8 +122,8 @@ export const portal: Bridge = {
         'The type of token received on the destination chain depends on the token: If it is native to this chain, the user will receive the canonical token. If the bridged token is not native to the destination chain the user will receive a wrapped version. The token contract in this case is called BridgeToken and is upgradable.',
       references: [
         {
-          text: 'BridgeToken contract implementation',
-          href: 'https://etherscan.io/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6#code',
+          title: 'BridgeToken contract implementation',
+          url: 'https://etherscan.io/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6#code',
         },
       ],
       risks: [

@@ -46,8 +46,8 @@ export const sollet: Bridge = {
         'Sollet Bridge becomes deprecated on Oct 31, 2022. Users are encouraged to use Wormhole instead. Bridge contract supports withdrawals of assets locked on Ethereum but requests need to be signed by the contract owner (EOA account).',
       references: [
         {
-          text: 'Deprecating Sollet Bridge',
-          href: 'https://projectserum.medium.com/deprecating-sollet-bridge-5a092fbd5dda',
+          title: 'Deprecating Sollet Bridge',
+          url: 'https://projectserum.medium.com/deprecating-sollet-bridge-5a092fbd5dda',
         },
       ],
       risks: [

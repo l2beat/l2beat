@@ -964,8 +964,8 @@ export const starknet: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'What is Starknet',
-          href: 'https://starkware.co/starknet/',
+          title: 'What is Starknet',
+          url: 'https://starkware.co/starknet/',
         },
       ],
     },
@@ -981,8 +981,8 @@ export const starknet: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of Starknet - Forum Discussion',
-          href: 'https://community.starknet.io/t/censorship-resistance/196',
+          title: 'Censorship resistance of Starknet - Forum Discussion',
+          url: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
     },

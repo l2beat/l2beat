@@ -30,8 +30,8 @@ function STARKEX_SPOT_WITHDRAW(delay?: number): ProjectTechnologyChoice {
     ...WITHDRAW_OR_HALT(delay),
     references: [
       {
-        text: 'Censorship Prevention - StarkEx documentation',
-        href: 'https://docs.starkware.co/starkex/architecture/solution-architecture.html#8-censorship-prevention',
+        title: 'Censorship Prevention - StarkEx documentation',
+        url: 'https://docs.starkware.co/starkex/architecture/solution-architecture.html#8-censorship-prevention',
       },
     ],
   }
@@ -45,12 +45,12 @@ function STARKEX_PERPETUAL_WITHDRAW(delay?: number): ProjectTechnologyChoice {
       ' Perpetual positions can also be force closed before withdrawing, however this requires the user to find the counterparty for the trade themselves.',
     references: [
       {
-        text: 'Censorship Prevention - StarkEx documentation',
-        href: 'https://docs.starkware.co/starkex/architecture/overview-architecture.html#8_censorship_prevention',
+        title: 'Censorship Prevention - StarkEx documentation',
+        url: 'https://docs.starkware.co/starkex/architecture/overview-architecture.html#8_censorship_prevention',
       },
       {
-        text: 'Forced Trade - StarkEx documentation',
-        href: 'https://docs.starkware.co/starkex/perpetual/forced-actions-escape-hatch-perpetual.html#forcedtrade',
+        title: 'Forced Trade - StarkEx documentation',
+        url: 'https://docs.starkware.co/starkex/perpetual/forced-actions-escape-hatch-perpetual.html#forcedtrade',
       },
     ],
     risks: [

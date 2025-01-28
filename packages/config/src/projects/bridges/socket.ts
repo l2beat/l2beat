@@ -68,8 +68,8 @@ export const socket: Bridge = {
         'Vaults can use any registered switchboards. The validation model is chosen by the switchboard and their security can vary from using a canonical bridge to a third-party validation model.',
       references: [
         {
-          text: 'Protocol Design - Socket Documentation',
-          href: 'https://developer.socket.tech/Learn/protocol-design#architecture',
+          title: 'Protocol Design - Socket Documentation',
+          url: 'https://developer.socket.tech/Learn/protocol-design#architecture',
         },
       ],
       risks: [

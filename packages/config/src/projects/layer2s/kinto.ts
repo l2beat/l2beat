@@ -115,8 +115,8 @@ export const kinto: Layer2 = orbitStackL2({
         ],
         references: [
           {
-            text: 'User Owned KYC - Kinto documentation',
-            href: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/how-does-kinto-solve-it',
+            title: 'User Owned KYC - Kinto documentation',
+            url: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/how-does-kinto-solve-it',
           },
         ],
       },

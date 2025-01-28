@@ -59,8 +59,9 @@ export const facet: Layer2 = opStackL2({
           'Users can initiate a withdrawal from the L1StandardBridge escrow by sending a transaction to the L1 contract, forcing the operator to either process it, halt all withdrawals or produce an invalid state transition. Deposits from the L1StandardBridge are disabled, and the use of the fast bridge is encouraged. There is no way to force the fast bridge operator (EOA) to process a withdrawal.',
         references: [
           {
-            text: 'PausedL1StandardBridge.sol - Etherscan source code, disabled _initiateBridgeERC20 function',
-            href: 'https://etherscan.io/address//0x8F75466D69a52EF53C7363F38834bEfC027A2909#code',
+            title:
+              'PausedL1StandardBridge.sol - Etherscan source code, disabled _initiateBridgeERC20 function',
+            url: 'https://etherscan.io/address//0x8F75466D69a52EF53C7363F38834bEfC027A2909#code',
           },
         ],
         risks: [

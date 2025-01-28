@@ -1,11 +1,11 @@
 import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
 import type {
   ProjectTechnologyChoice,
+  ReferenceLink,
   DataAvailabilityLayer as ScalingDaLayerOption,
   ScalingProjectContract,
   ScalingProjectLinks,
   ScalingProjectPermission,
-  ScalingProjectReference,
   ScalingProjectRisk,
 } from '../../types'
 
@@ -145,7 +145,7 @@ export interface DaTechnology {
   /** List of risks associated with the technology */
   risks?: ScalingProjectRisk[] // scaling risks on purpose
   /** List of references put underneath the technology section */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
 }
 
 export type DaBridge =
@@ -282,7 +282,7 @@ export interface DaBridgeContracts {
   /** List of the contracts on each chain */
   addresses: Record<string, ScalingProjectContract[]>
   /** List of references backing up the claim */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
   /** The description and research is under review */

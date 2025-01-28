@@ -71,8 +71,8 @@ export const grvt: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L53',
         },
       ],
     },
@@ -118,16 +118,16 @@ export const grvt: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: "L1 - L2 interoperability - Developer's documentation",
-          href: 'https://docs.zksync.io/zksync-protocol/rollup/l1_l2_communication#priority-operations-1',
+          title: "L1 - L2 interoperability - Developer's documentation",
+          url: 'https://docs.zksync.io/zksync-protocol/rollup/l1_l2_communication#priority-operations-1',
         },
         {
-          text: 'Mailbox facet',
-          href: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
+          title: 'Mailbox facet',
+          url: 'https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240',
         },
         {
-          text: 'TransactionFilterer',
-          href: 'https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29',
+          title: 'TransactionFilterer',
+          url: 'https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29',
         },
       ],
     },

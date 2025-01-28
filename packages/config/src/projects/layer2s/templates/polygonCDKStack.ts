@@ -28,10 +28,10 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectEscrow,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectContract,
-  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskViewEntry,
@@ -421,7 +421,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ...STATE_CORRECTNESS.VALIDITY_PROOFS,
         references: explorerReferences(explorerUrl, [
           {
-            text: 'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
+            title:
+              'PolygonRollupManager.sol - source code, _verifyAndRewardBatches function',
             address: safeGetImplementation(rollupManagerContract),
           },
         ]),
@@ -443,7 +444,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
+            title: `${templateVars.rollupModuleContract.name}.sol - source code, onlyTrustedSequencer modifier`,
             address: safeGetImplementation(templateVars.rollupModuleContract),
           },
         ]),
@@ -455,7 +456,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           'The mechanism for allowing users to submit their own transactions is currently disabled.',
         references: explorerReferences(explorerUrl, [
           {
-            text: `${templateVars.rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
+            title: `${templateVars.rollupModuleContract.name}.sol - source code, forceBatchAddress address`,
             address: safeGetImplementation(templateVars.rollupModuleContract),
           },
         ]),
@@ -465,7 +466,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: explorerReferences(explorerUrl, [
             {
-              text: 'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
+              title:
+                'PolygonZkEvmBridgeV2.sol - source code, claimAsset function',
               address: safeGetImplementation(bridge),
             },
           ]),
@@ -581,7 +583,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       references: explorerReferences(explorerUrl, [
         {
-          text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+          title:
+            'State injections - stateRoot and exitRoot are part of the validity proof input.',
           address: safeGetImplementation(rollupManagerContract),
         },
       ]),

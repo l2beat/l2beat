@@ -399,8 +399,9 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -408,8 +409,9 @@ export const scroll: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -417,8 +419,9 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
-          href: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
+          title:
+            'ScrollChain.sol - Etherscan source code, finalizeBundleWithProof() function modifier',
+          url: 'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
         },
       ],
     },
@@ -426,12 +429,12 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
+          title: 'EnforcedTxGateway.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
         },
         {
-          text: 'EnforcedTxGateway is paused - Etherscan proxy contract',
-          href: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
+          title: 'EnforcedTxGateway is paused - Etherscan proxy contract',
+          url: 'https://etherscan.io/address/0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d#readProxyContract#F7',
         },
       ],
     },
@@ -441,8 +444,9 @@ export const scroll: Layer2 = {
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
+            title:
+              'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
+            url: 'https://etherscan.io/address/0x546E0bF31FB6e7babD493452e4e6999191367B42#code',
           },
         ],
       },

@@ -273,8 +273,8 @@ export const arbitrum: Layer2 = orbitStackL2({
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
       [
         {
-          text: 'Security Council members - Arbitrum Foundation Docs',
-          href: 'https://docs.arbitrum.foundation/security-council-members',
+          title: 'Security Council members - Arbitrum Foundation Docs',
+          url: 'https://docs.arbitrum.foundation/security-council-members',
         },
       ],
     ),

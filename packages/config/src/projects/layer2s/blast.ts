@@ -44,16 +44,18 @@ export const blast: Layer2 = opStackL2({
         ),
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
           },
           {
-            text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
+            title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            url: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
@@ -62,8 +64,8 @@ export const blast: Layer2 = opStackL2({
         ...EXITS.FORCED('all-withdrawals'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },

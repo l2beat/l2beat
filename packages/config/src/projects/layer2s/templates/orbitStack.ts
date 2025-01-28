@@ -30,10 +30,10 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   Milestone,
+  ProjectEscrow,
   ProjectTechnologyChoice,
   ScalingProjectContract,
   ScalingProjectDisplay,
-  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRisk,
@@ -77,8 +77,8 @@ const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     ],
     references: [
       {
-        text: 'Inside Arbitrum Nitro',
-        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+        title: 'Inside Arbitrum Nitro',
+        url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
       },
     ],
   },
@@ -97,12 +97,12 @@ export const WASMVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
     ],
     references: [
       {
-        text: 'Inside Arbitrum Nitro',
-        href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+        title: 'Inside Arbitrum Nitro',
+        url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
       },
       {
-        text: 'A gentle introduction: Stylus',
-        href: 'https://docs.arbitrum.io/stylus/stylus-gentle-introduction',
+        title: 'A gentle introduction: Stylus',
+        url: 'https://docs.arbitrum.io/stylus/stylus-gentle-introduction',
       },
     ],
   },
@@ -263,8 +263,8 @@ function defaultStateValidation(
       ],
       references: [
         {
-          text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          title: 'How is fraud proven - Arbitrum documentation FAQ',
+          url: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
       ],
     },
@@ -275,8 +275,8 @@ function defaultStateValidation(
       )}, this implies that the protocol can be subject to [delay attacks](https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a), where a malicious actor can delay withdrawals as long as they are willing to pay the cost of losing their stakes. If the protocol is delayed attacked, the new stake requirement increases exponentially for each challenge period of delay. Challenges are played via a bisection game, where asserter and challenger play together to find the first instruction of disagreement. Such instruction is then executed onchain in the WASM OneStepProver contract to determine the winner, who then gets half of the stake of the loser. As said before, a state root is rejected only when no one left is staked on it. The protocol does not enforces valid bisections, meaning that actors can propose correct initial claim and then provide incorrect midpoints.`,
       references: [
         {
-          text: 'Fraud Proof Wars: Arbitrum Classic',
-          href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+          title: 'Fraud Proof Wars: Arbitrum Classic',
+          url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
         },
       ],
     },
@@ -299,8 +299,9 @@ function defaultStateValidation(
       ],
       references: [
         {
-          text: 'Fast withdrawals for AnyTrust chains - Arbitrum documentation',
-          href: 'https://docs.arbitrum.io/launch-orbit-chain/how-tos/fast-withdrawals#fast-withdrawals-for-anytrust-chains',
+          title:
+            'Fast withdrawals for AnyTrust chains - Arbitrum documentation',
+          url: 'https://docs.arbitrum.io/launch-orbit-chain/how-tos/fast-withdrawals#fast-withdrawals-for-anytrust-chains',
         },
       ],
     })
@@ -462,12 +463,14 @@ function orbitStackCommon(
                 : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
                 {
-                  text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
-                  href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+                  title:
+                    'Sequencing followed by deterministic execution - Arbitrum documentation',
+                  url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
                 },
                 ...explorerReferences(explorerUrl, [
                   {
-                    text: 'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                    title:
+                      'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
                     address: safeGetImplementation(templateVars.sequencerInbox),
                   },
                 ]),
@@ -477,8 +480,8 @@ function orbitStackCommon(
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
-            text: 'Sequencer - Arbitrum documentation',
-            href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#the-sequencer',
+            title: 'Sequencer - Arbitrum documentation',
+            url: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#the-sequencer',
           },
         ],
       },
@@ -493,13 +496,14 @@ function orbitStackCommon(
         references: [
           ...explorerReferences(explorerUrl, [
             {
-              text: 'SequencerInbox.sol - source code, forceInclusion function',
+              title:
+                'SequencerInbox.sol - source code, forceInclusion function',
               address: safeGetImplementation(templateVars.sequencerInbox),
             },
           ]),
           {
-            text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-            href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
+            title: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
+            url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
           },
         ],
       },
@@ -508,16 +512,16 @@ function orbitStackCommon(
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
             {
-              text: 'Transaction lifecycle - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/tx-lifecycle',
+              title: 'Transaction lifecycle - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/tx-lifecycle',
             },
             {
-              text: 'L2 to L1 Messages - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+              title: 'L2 to L1 Messages - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
             },
             {
-              text: 'Mainnet for everyone - Arbitrum Blog',
-              href: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+              title: 'Mainnet for everyone - Arbitrum Blog',
+              url: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
             },
           ],
           risks: [],
@@ -529,8 +533,8 @@ function orbitStackCommon(
           risks: [],
           references: [
             {
-              text: 'Tradeable Bridge Exits - Arbitrum documentation',
-              href: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
+              title: 'Tradeable Bridge Exits - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
             },
           ],
         },

@@ -45,8 +45,8 @@ export const soon: Layer2 = opStackL2({
         risks: [],
         references: [
           {
-            text: 'Soon Docs - Decoupled SVM',
-            href: 'https://docs.soo.network/introduction/decoupled-svm',
+            title: 'Soon Docs - Decoupled SVM',
+            url: 'https://docs.soo.network/introduction/decoupled-svm',
           },
         ],
       },

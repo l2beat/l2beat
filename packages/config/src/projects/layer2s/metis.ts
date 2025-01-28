@@ -144,8 +144,8 @@ export const metis: Layer2 = {
       ],
       references: [
         {
-          text: 'MVM_Verifier.sol#L133 - Metis source code',
-          href: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
+          title: 'MVM_Verifier.sol#L133 - Metis source code',
+          url: 'https://github.com/MetisProtocol/mvm/blob/develop/packages/contracts/contracts/MVM/MVM_Verifier.sol#L133',
         },
       ],
     },
@@ -163,8 +163,8 @@ export const metis: Layer2 = {
       ],
       references: [
         {
-          text: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
-          href: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
+          title: 'The Tech Journey: Lower Gas Costs & Storage Layer on Metis',
+          url: 'https://metisdao.medium.com/the-tech-journey-lower-gas-costs-storage-layer-on-metis-867ddcf6d381',
         },
       ],
     },
@@ -175,8 +175,8 @@ export const metis: Layer2 = {
       risks: [FRONTRUNNING_RISK],
       references: [
         {
-          text: 'Decentralized Sequencer - Metis documentation',
-          href: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
+          title: 'Decentralized Sequencer - Metis documentation',
+          url: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
         },
       ],
     },
@@ -184,8 +184,8 @@ export const metis: Layer2 = {
       ...FORCE_TRANSACTIONS.ENQUEUE,
       references: [
         {
-          text: 'CanonicalTransactionChain - Etherscan source code',
-          href: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
+          title: 'CanonicalTransactionChain - Etherscan source code',
+          url: 'https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code',
         },
       ],
     },
@@ -194,8 +194,8 @@ export const metis: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdrawing from Metis - Metis documentation',
-            href: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
+            title: 'Withdrawing from Metis - Metis documentation',
+            url: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
@@ -215,8 +215,8 @@ export const metis: Layer2 = {
         ],
         references: [
           {
-            text: 'MVM repository - Metis source code',
-            href: 'https://github.com/MetisProtocol/mvm',
+            title: 'MVM repository - Metis source code',
+            url: 'https://github.com/MetisProtocol/mvm',
           },
         ],
       },

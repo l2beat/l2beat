@@ -318,20 +318,23 @@ export const kroma: Layer2 = {
         resulting in a lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
       references: [
         {
-          text: 'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
+          title:
+            'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
         },
         {
-          text: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
+          title: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
         },
         {
-          text: 'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          href: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
+          title:
+            'Colosseum.sol#L434 - Etherscan source code, proveFault function',
+          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
         },
         {
-          text: 'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
-          href: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
+          title:
+            'KROMA-020: lack of validation segments and proofs in Colosseum.sol - ChainLight security audit',
+          url: 'https://drive.google.com/file/d/13TUxZ9KPyvUXNZGddALcJLin-xmp_Fkj/view',
         },
       ],
       risks: [
@@ -349,16 +352,17 @@ export const kroma: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Derivation: Batch Submission - Kroma specs',
-          href: 'https://specs.kroma.network/glossary.html#batch-submission',
+          title: 'Derivation: Batch Submission - Kroma specs',
+          url: 'https://specs.kroma.network/glossary.html#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: 'https://etherscan.io/address/0xff00000000000000000000000000000000000255',
+          title: 'BatchInbox - Etherscan address',
+          url: 'https://etherscan.io/address/0xff00000000000000000000000000000000000255',
         },
         {
-          text: 'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+          title:
+            'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
         },
       ],
     },
@@ -366,8 +370,8 @@ export const kroma: Layer2 = {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
-          text: 'SystemConfig - batcher address',
-          href: 'https://etherscan.io/address/0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35#readProxyContract#F3',
+          title: 'SystemConfig - batcher address',
+          url: 'https://etherscan.io/address/0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35#readProxyContract#F3',
         },
       ],
     },
@@ -375,12 +379,13 @@ export const kroma: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - Kroma specs',
-          href: 'https://specs.kroma.network/glossary.html#sequencing-window',
+          title: 'Sequencing Window - Kroma specs',
+          url: 'https://specs.kroma.network/glossary.html#sequencing-window',
         },
         {
-          text: 'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
-          href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+          title:
+            'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
         },
       ],
     },
@@ -389,12 +394,14 @@ export const kroma: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof', finalizationPeriod),
         references: [
           {
-            text: 'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
+            title:
+              'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
           },
           {
-            text: 'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
+            title:
+              'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
           },
         ],
       },
@@ -408,8 +415,8 @@ export const kroma: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -467,8 +474,8 @@ export const kroma: Layer2 = {
       description: `Members of the SecurityCouncil.`,
       references: [
         {
-          text: 'Security Council members - Announcing Kroma Security Council',
-          href: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
+          title: 'Security Council members - Announcing Kroma Security Council',
+          url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
         },
       ],
     },

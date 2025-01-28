@@ -358,12 +358,12 @@ export const taiko: Layer2 = {
       If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
-          text: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
+          title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
         },
         {
-          text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
+          title: 'TaikoL1.sol - Etherscan source code, liveness bond',
+          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
         },
       ],
       risks: [
@@ -388,8 +388,8 @@ export const taiko: Layer2 = {
         Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
-          text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
+          title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
+          url: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
         },
       ],
       risks: [],

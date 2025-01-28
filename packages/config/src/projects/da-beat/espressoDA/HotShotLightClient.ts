@@ -57,12 +57,12 @@ export const HotShotLightClient = {
   `,
     references: [
       {
-        text: 'Light Client Functionality',
-        href: 'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality',
+        title: 'Light Client Functionality',
+        url: 'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality',
       },
       {
-        text: 'Espresso Github Repository',
-        href: 'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
+        title: 'Espresso Github Repository',
+        url: 'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
       },
     ],
     risks: [

@@ -31,12 +31,12 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   risks: [],
   references: [
     {
-      text: 'Data Availability Modes - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
+      title: 'Data Availability Modes - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
     },
     {
-      text: 'ZK Rollup - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#zk_rollup',
+      title: 'ZK Rollup - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/con_data_availability.html#zk_rollup',
     },
   ],
 }
@@ -51,8 +51,8 @@ const STARKNET_ON_CHAIN = (
     risks: [],
     references: [
       {
-        text: 'On-Chain Data - Starknet documentation',
-        href: 'https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/',
+        title: 'On-Chain Data - Starknet documentation',
+        url: 'https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/',
       },
     ],
   }
@@ -88,8 +88,8 @@ function ANYTRUST_OFF_CHAIN(DAC: {
     ],
     references: [
       {
-        text: 'Inside AnyTrust - Arbitrum documentation',
-        href: 'https://developer.offchainlabs.com/inside-anytrust',
+        title: 'Inside AnyTrust - Arbitrum documentation',
+        url: 'https://developer.offchainlabs.com/inside-anytrust',
       },
     ],
   }
@@ -108,16 +108,16 @@ const STARKEX_OFF_CHAIN: ProjectTechnologyChoice = {
   ],
   references: [
     {
-      text: 'Data Availability Modes - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
+      title: 'Data Availability Modes - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
     },
     {
-      text: 'Validium - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#validium_starkex',
+      title: 'Validium - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/con_data_availability.html#validium_starkex',
     },
     {
-      text: 'Availability Verifiers - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/shared/contract-management.html#availability_verifiers_spot',
+      title: 'Availability Verifiers - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/spot/shared/contract-management.html#availability_verifiers_spot',
     },
   ],
 }
@@ -152,8 +152,8 @@ function CELESTIA_OFF_CHAIN(
     ],
     references: [
       {
-        text: 'Introducing Blobstream: streaming modular DA to Ethereum',
-        href: 'https://blog.celestia.org/introducing-blobstream/',
+        title: 'Introducing Blobstream: streaming modular DA to Ethereum',
+        url: 'https://blog.celestia.org/introducing-blobstream/',
       },
     ],
   }
@@ -182,8 +182,9 @@ function AVAIL_OFF_CHAIN(isUsingVector: boolean): ProjectTechnologyChoice {
     ],
     references: [
       {
-        text: "Avail's Data Attestation Bridge: Enabling Secure Validiums and Optimistic Chains",
-        href: 'https://blog.availproject.org/data-attestation-bridge/',
+        title:
+          "Avail's Data Attestation Bridge: Enabling Secure Validiums and Optimistic Chains",
+        url: 'https://blog.availproject.org/data-attestation-bridge/',
       },
     ],
   }
@@ -214,8 +215,8 @@ function EIGENDA_OFF_CHAIN(
     ],
     references: [
       {
-        text: 'EigenDA Docs - Overview',
-        href: 'https://docs.eigenda.xyz/overview',
+        title: 'EigenDA Docs - Overview',
+        url: 'https://docs.eigenda.xyz/overview',
       },
     ],
   }
@@ -251,12 +252,12 @@ function DACHALLENGES_OFF_CHAIN(
       If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. This mechanism fully depends on the derivation rule of the L2 node and can only be verified in its source code,${nodeSourceLink ? ` which [can be reviewed here](${nodeSourceLink}).` : ' which in this case is not made available.'}`,
     references: [
       {
-        text: 'OP Plasma specification',
-        href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+        title: 'OP Plasma specification',
+        url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
       },
       {
-        text: 'Universal Plasma and DA Challenges - Ethresear.ch',
-        href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+        title: 'Universal Plasma and DA Challenges - Ethresear.ch',
+        url: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
       },
     ],
     risks,

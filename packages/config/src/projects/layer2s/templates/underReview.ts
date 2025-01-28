@@ -1,8 +1,8 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
-  ScalingProjectDisplay,
   ProjectEscrow,
+  ScalingProjectDisplay,
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig } from '../../../types'

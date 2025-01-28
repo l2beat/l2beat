@@ -28,8 +28,9 @@ const STARKEX_VALIDITY_PROOFS: ProjectTechnologyChoice = {
     ' The system state is represented using Merkle roots.',
   references: [
     {
-      text: 'Enforcing Consistency on the On-Chain State - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/shared/README-off-chain-state.html#enforcing_consistency_in_the_on_chain_state_spot',
+      title:
+        'Enforcing Consistency on the On-Chain State - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/spot/shared/README-off-chain-state.html#enforcing_consistency_in_the_on_chain_state_spot',
     },
   ],
 }

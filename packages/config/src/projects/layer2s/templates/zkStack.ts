@@ -26,9 +26,9 @@ import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   Milestone,
+  ProjectEscrow,
   ProjectTechnologyChoice,
   ScalingProjectContract,
-  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
@@ -544,8 +544,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
         ],
         references: [
           {
-            text: "L1 - L2 interoperability - Developer's documentation",
-            href: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
+            title: "L1 - L2 interoperability - Developer's documentation",
+            url: 'https://docs.zksync.io/build/developer-reference/l1-l2-interoperability#priority-queue',
           },
         ],
       },
@@ -554,8 +554,8 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           ...EXITS.REGULAR('zk', 'merkle proof'),
           references: [
             {
-              text: 'Withdrawing funds - ZKsync documentation',
-              href: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
+              title: 'Withdrawing funds - ZKsync documentation',
+              url: 'https://docs.zksync.io/build/developer-reference/bridging-assets',
             },
           ],
         },

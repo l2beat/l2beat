@@ -160,8 +160,8 @@ export const aztecconnect: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupProcessorV3.sol#L706 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
+          title: 'RollupProcessorV3.sol#L706 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L706',
         },
       ],
     },
@@ -169,8 +169,8 @@ export const aztecconnect: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Verifier28x32.sol#L150 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
+          title: 'Verifier28x32.sol#L150 - Etherscan source code',
+          url: 'https://etherscan.io/address/0xb7baA1420f88b7758E341c93463426A2b7651CFB#code#F3#L150',
         },
       ],
     },
@@ -180,8 +180,8 @@ export const aztecconnect: Layer2 = {
         'Since EOL this is only true if the user themself runs the rollup locally and publishes the data.',
       references: [
         {
-          text: 'RollupProcessorV3.sol#L686 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
+          title: 'RollupProcessorV3.sol#L686 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L686',
         },
       ],
     },
@@ -191,12 +191,13 @@ export const aztecconnect: Layer2 = {
       description: `Only specific addresses appointed by the owner were permitted to propose new blocks during regular rollup operation. Now that the system is EOL, the rollup can only be processed locally by volunteers.`,
       references: [
         {
-          text: 'RollupProcessorV3.sol#L692 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
+          title: 'RollupProcessorV3.sol#L692 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L692',
         },
         {
-          text: 'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
-          href: 'https://github.com/AztecProtocol/aztec-connect-ejector',
+          title:
+            'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
+          url: 'https://github.com/AztecProtocol/aztec-connect-ejector',
         },
       ],
     },
@@ -212,8 +213,9 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
-            href: 'https://github.com/AztecProtocol/aztec-connect-ejector',
+            title:
+              'Aztec Connect Ejector - Codespace template for running the Aztec Connect rollup.',
+            url: 'https://github.com/AztecProtocol/aztec-connect-ejector',
           },
         ],
       },
@@ -224,12 +226,12 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'RollupProcessorV3.sol#F1#L1174 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1174',
+            title: 'RollupProcessorV3.sol#F1#L1174 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1174',
           },
           {
-            text: 'RollupProcessorV3.sol#F1#L1332 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1332',
+            title: 'RollupProcessorV3.sol#F1#L1332 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728#code#F1#L1332',
           },
         ],
       },
@@ -242,8 +244,8 @@ export const aztecconnect: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+            title: 'Fast Privacy, Now - Aztec Medium Blog',
+            url: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
           },
         ],
       },

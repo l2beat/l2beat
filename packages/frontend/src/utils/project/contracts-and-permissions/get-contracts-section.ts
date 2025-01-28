@@ -4,9 +4,10 @@ import {
   type DaLayer,
   type Layer2,
   type Layer3,
+  type ProjectEscrow,
+  type ReferenceLink,
   type ScalingProjectContract,
   type ScalingProjectContracts,
-  type ProjectEscrow,
   layer2s,
 } from '@l2beat/config'
 import {
@@ -26,7 +27,6 @@ import type {
   TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
-import type { Reference } from '../../../components/projects/sections/reference-list'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
@@ -285,7 +285,7 @@ function makeTechnologyContract(
       addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const additionalReferences: Reference[] = []
+  const additionalReferences: ReferenceLink[] = []
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>

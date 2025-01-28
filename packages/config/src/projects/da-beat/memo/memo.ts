@@ -59,20 +59,20 @@ export const memo: BlockchainDaLayer = {
   `,
     references: [
       {
-        text: 'Meeda Documentation - Architecture',
-        href: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
+        title: 'Meeda Documentation - Architecture',
+        url: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
       },
       {
-        text: 'Meeda FileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
+        title: 'Meeda FileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
       },
       {
-        text: 'Meeda ControlFileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
+        title: 'Meeda ControlFileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
       },
       {
-        text: 'Meeda ProxyFileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
+        title: 'Meeda ProxyFileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
       },
     ],
     risks: [

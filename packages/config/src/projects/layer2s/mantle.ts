@@ -122,12 +122,14 @@ export const mantle: Layer2 = opStackL2({
       ],
       references: [
         {
-          text: 'DataLayrServiceManager.sol#L389 - Etherscan source code, confirmDataStore function',
-          href: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L389',
+          title:
+            'DataLayrServiceManager.sol#L389 - Etherscan source code, confirmDataStore function',
+          url: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L389',
         },
         {
-          text: 'DataLayrServiceManager.sol#L404 - Etherscan source code, signature verification check ',
-          href: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L404',
+          title:
+            'DataLayrServiceManager.sol#L404 - Etherscan source code, signature verification check ',
+          url: 'https://etherscan.io/address/0xab42127980a3bff124e6465e097a5fc97228827e#code#F1#L404',
         },
       ],
     },

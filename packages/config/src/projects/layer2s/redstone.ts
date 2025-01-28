@@ -94,12 +94,12 @@ export const redstone: Layer2 = opStackL2({
     `,
       references: [
         {
-          text: 'Alt-DA Specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+          title: 'Alt-DA Specification',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
-          text: 'Security Considerations - Ethresear.ch ',
-          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+          title: 'Security Considerations - Ethresear.ch ',
+          url: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
         },
       ],
       risks: [

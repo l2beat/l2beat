@@ -35,13 +35,13 @@ import type {
   KnowledgeNugget,
   Milestone,
   ProjectDataAvailability,
+  ProjectEscrow,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCategory,
   ScalingProjectContract,
   ScalingProjectDisplay,
-  ProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
@@ -321,7 +321,7 @@ function opStackCommon(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
+            title: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -332,13 +332,14 @@ function opStackCommon(
         references: [
           ...technologyDA(daProvider, usesBlobs).references,
           {
-            text: 'Derivation: Batch submission - OP Mainnet specs',
-            href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+            title: 'Derivation: Batch submission - OP Mainnet specs',
+            url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
           ...explorerReferences(explorerUrl, [
-            { text: 'BatchInbox - address', address: sequencerInbox },
+            { title: 'BatchInbox - address', address: sequencerInbox },
             {
-              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              title:
+                'OptimismPortal.sol - source code, depositTransaction function',
               address: safeGetImplementation(portal),
             },
           ]),
@@ -348,11 +349,11 @@ function opStackCommon(
         ...OPERATOR.CENTRALIZED_OPERATOR,
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, CHALLENGER address',
+            title: 'L2OutputOracle.sol - source code, CHALLENGER address',
             address: safeGetImplementation(l2OutputOracle),
           },
           {
-            text: 'L2OutputOracle.sol - source code, PROPOSER address',
+            title: 'L2OutputOracle.sol - source code, PROPOSER address',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -362,12 +363,13 @@ function opStackCommon(
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
         references: [
           {
-            text: 'Sequencing Window - OP Mainnet Specs',
-            href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+            title: 'Sequencing Window - OP Mainnet Specs',
+            url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
           },
           ...explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - source code, depositTransaction function',
+              title:
+                'OptimismPortal.sol - source code, depositTransaction function',
               address: safeGetImplementation(portal),
             },
           ]),
@@ -385,15 +387,17 @@ function opStackCommon(
           ),
           references: explorerReferences(explorerUrl, [
             {
-              text: 'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
+              title:
+                'OptimismPortal.sol - source code, proveWithdrawalTransaction function',
               address: safeGetImplementation(portal),
             },
             {
-              text: 'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
+              title:
+                'OptimismPortal.sol - source code, finalizeWithdrawalTransaction function',
               address: safeGetImplementation(portal),
             },
             {
-              text: 'L2OutputOracle.sol - source code, PROPOSER check',
+              title: 'L2OutputOracle.sol - source code, PROPOSER check',
               address: safeGetImplementation(l2OutputOracle),
             },
           ]),
@@ -403,8 +407,8 @@ function opStackCommon(
           ...EXITS.FORCED('all-withdrawals'),
           references: [
             {
-              text: 'Forced withdrawal from an OP Stack blockchain',
-              href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+              title: 'Forced withdrawal from an OP Stack blockchain',
+              url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
             },
           ],
         },
@@ -418,8 +422,8 @@ function opStackCommon(
           risks: [],
           references: [
             {
-              text: 'Introducing EVM Equivalence',
-              href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+              title: 'Introducing EVM Equivalence',
+              url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
             },
           ],
         },

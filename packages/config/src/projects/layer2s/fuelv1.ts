@@ -108,8 +108,8 @@ export const fuelv1: Layer2 = {
       ...STATE_CORRECTNESS.FRAUD_PROOFS,
       references: [
         {
-          text: 'Background - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          title: 'Background - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
         },
       ],
     },
@@ -117,8 +117,8 @@ export const fuelv1: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'Background - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
+          title: 'Background - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#background',
         },
       ],
     },
@@ -126,12 +126,12 @@ export const fuelv1: Layer2 = {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
         {
-          text: 'Architecture: A High-Level View - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          title: 'Architecture: A High-Level View - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
         },
         {
-          text: 'Mainnet deployment parameters - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Deployment%20Parameters.html#mainnet',
+          title: 'Mainnet deployment parameters - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Deployment%20Parameters.html#mainnet',
         },
       ],
     },
@@ -139,8 +139,8 @@ export const fuelv1: Layer2 = {
       ...FORCE_TRANSACTIONS.PROPOSE_OWN_BLOCKS,
       references: [
         {
-          text: 'Architecture: A High-Level View - Fuel documentation',
-          href: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
+          title: 'Architecture: A High-Level View - Fuel documentation',
+          url: 'https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/Fuel%20Overview.html#architectureahighlevelview',
         },
       ],
     },
@@ -149,8 +149,8 @@ export const fuelv1: Layer2 = {
         ...EXITS.REGULAR('optimistic', 'merkle proof'),
         references: [
           {
-            text: 'Withdraw.yulp#L40 - Fuel documentation',
-            href: 'https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Withdraw.yulp#L40',
+            title: 'Withdraw.yulp#L40 - Fuel documentation',
+            url: 'https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Withdraw.yulp#L40',
           },
         ],
       },

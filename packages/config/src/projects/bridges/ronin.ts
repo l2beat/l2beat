@@ -105,8 +105,8 @@ export const ronin: Bridge = {
         'A Ronin Bridge service watches for events on Ethereum and transmits those events to a contract on Ronin chain (Axie Infinity chain). Designated group of weighted validators vote on the validity of those events, and when acknowledged, a "representation token" is minted on the Ronin chain. To withdraw tokens, user needs to deposit them to a contract on the Ronin chain, which will generate an event to be picked by the validators. When validators acknowledge the event, they generate signature, which can be submitted to the Ethereum bridge contract to finalize the withdrawal. Ronin V2 introduced multi-tier withdrawal limits dependent on the overall value of the transaction and the token used. The higher value of transaction, the more validators need to vote to approve withdrawal request. There is a separate group of actors called "governors" who are able to change thresholds, add/remove validators and update contracts. Each validator has a corresponding weighted governor account. There is also a daily withdrawal limit. If it\'s crossed, an address from a list of "Withdrawal unlockers" needs to participate in the transaction.',
       references: [
         {
-          text: 'Token withdrawals',
-          href: 'https://docs.roninchain.com/apps/ronin-bridge/withdraw-token',
+          title: 'Token withdrawals',
+          url: 'https://docs.roninchain.com/apps/ronin-bridge/withdraw-token',
         },
       ],
       risks: [

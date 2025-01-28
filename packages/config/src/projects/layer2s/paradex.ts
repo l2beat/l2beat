@@ -313,8 +313,8 @@ export const paradex: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of Starknet - Forum Discussion',
-          href: 'https://community.starknet.io/t/censorship-resistance/196',
+          title: 'Censorship resistance of Starknet - Forum Discussion',
+          url: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
     },

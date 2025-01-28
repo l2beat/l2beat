@@ -141,7 +141,7 @@ export interface ScalingProjectContracts {
   /** List of the contracts on the chain itself */
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   /** List of references backing up the claim */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
   /** The description and research is under review */
@@ -175,7 +175,7 @@ export interface ScalingProjectContract {
     pausableBy: string[]
   }
   /** List of references */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
@@ -334,7 +334,7 @@ export interface ScalingProjectPermission {
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain?: string
   /** List of source code permalinks and useful materials */
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
   participants?: ScalingProjectPermissionedAccount[]
   /** Indicates whether the permission comes from a role like Proposer or Guardian */
@@ -386,11 +386,9 @@ export type ScalingProjectPurpose =
   | 'IoT'
   | 'Restaking'
 
-export interface ScalingProjectReference {
-  /** Short text describing link contents */
-  text: string
-  /** URL of the link, preferably https */
-  href: string
+export interface ReferenceLink {
+  title: string
+  url: string
 }
 
 export interface ScalingProjectRisk {
@@ -456,7 +454,7 @@ export type ScalingProjectStateValidationCategory = {
   title: CategoryTitle
   description: string
   risks?: ScalingProjectRisk[]
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
 }
 
 export interface ScalingProjectStateValidation {
@@ -492,7 +490,7 @@ export interface ProjectTechnologyChoice {
   /** Description of the specific technology choice. Null means missing information */
   description: string
   /** List of references backing up the claim */
-  references: ScalingProjectReference[]
+  references: ReferenceLink[]
   /** List of risks associated with the technology choice */
   risks: ScalingProjectRisk[]
   /** The description and research is incomplete */

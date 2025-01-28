@@ -239,8 +239,8 @@ export const aztecV1: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupProcessor.sol#L395 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
+          title: 'RollupProcessor.sol#L395 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L395',
         },
       ],
     },
@@ -248,8 +248,8 @@ export const aztecV1: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'TurboVerifier.sol#L37 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
+          title: 'TurboVerifier.sol#L37 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
         },
       ],
     },
@@ -257,8 +257,8 @@ export const aztecV1: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'RollupProcessor.sol#L359 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
+          title: 'RollupProcessor.sol#L359 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L359',
         },
       ],
     },
@@ -268,12 +268,12 @@ export const aztecV1: Layer2 = {
       description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.`,
       references: [
         {
-          text: 'RollupProcessor.sol#L97 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L97',
+          title: 'RollupProcessor.sol#L97 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L97',
         },
         {
-          text: 'RollupProcessor.sol#L369 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L369',
+          title: 'RollupProcessor.sol#L369 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L369',
         },
       ],
     },
@@ -284,16 +284,16 @@ export const aztecV1: Layer2 = {
         `The private key of one of the permissioned operators is public (first Anvil address), therefore anyone can in principle resume regular operations. No funds need to be deposited to that address since submitting signatures is enough. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which any address can propose new blocks.`,
       references: [
         {
-          text: 'Anvil - a local testnet node toolchain',
-          href: 'https://book.getfoundry.sh/anvil/',
+          title: 'Anvil - a local testnet node toolchain',
+          url: 'https://book.getfoundry.sh/anvil/',
         },
         {
-          text: 'RollupProcessor.sol#L347 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
+          title: 'RollupProcessor.sol#L347 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L347',
         },
         {
-          text: 'RollupProcessor.sol#L168 - Etherscan source code',
-          href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
+          title: 'RollupProcessor.sol#L168 - Etherscan source code',
+          url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L168',
         },
       ],
     },
@@ -305,8 +305,8 @@ export const aztecV1: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'RollupProcessor.sol#LL396 - Etherscan source code',
-            href: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
+            title: 'RollupProcessor.sol#LL396 - Etherscan source code',
+            url: 'https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L396',
           },
         ],
       },
@@ -316,8 +316,9 @@ export const aztecV1: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Aztec v2 Ejector - Codespace template for running the Aztec v2 rollup.',
-            href: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
+            title:
+              'Aztec v2 Ejector - Codespace template for running the Aztec v2 rollup.',
+            url: 'https://github.com/AztecProtocol/aztec-v2-ejector/',
           },
         ],
       },
@@ -330,8 +331,8 @@ export const aztecV1: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Fast Privacy, Now - Aztec Medium Blog',
-            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+            title: 'Fast Privacy, Now - Aztec Medium Blog',
+            url: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
           },
         ],
       },

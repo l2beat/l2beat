@@ -102,8 +102,9 @@ export const gpt: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },

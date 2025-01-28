@@ -2,9 +2,9 @@ import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type {
   KnowledgeNugget,
   Milestone,
+  ProjectEscrow,
   ProjectTechnologyChoice,
   ScalingProjectContracts,
-  ProjectEscrow,
   ScalingProjectLinks,
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,

@@ -28,11 +28,11 @@ import {
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 import type {
-  ScalingProjectContract,
   ProjectEscrow,
+  ReferenceLink,
+  ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
-  ScalingProjectReference,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -104,7 +104,10 @@ export class ProjectDiscovery {
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
-      references: contract.references,
+      references: contract.references?.map((x) => ({
+        title: x.text,
+        url: x.href,
+      })),
       ...descriptionOrOptions,
     }
   }
@@ -372,7 +375,7 @@ export class ProjectDiscovery {
   getMultisigPermission(
     identifier: string,
     description: string | string[],
-    userReferences?: ScalingProjectReference[],
+    userReferences?: ReferenceLink[],
     useBulletPoints: boolean = false,
   ): ScalingProjectPermission[] {
     const contract = this.getContract(identifier)
@@ -394,7 +397,10 @@ export class ProjectDiscovery {
 
     const references = [
       ...(userReferences ?? []),
-      ...(contract.references ?? []),
+      ...(contract.references ?? []).map((x) => ({
+        title: x.text,
+        url: x.href,
+      })),
     ]
 
     return [
@@ -589,7 +595,10 @@ export class ProjectDiscovery {
         },
       ],
       chain: this.chain,
-      references: contract.references,
+      references: contract.references?.map((x) => ({
+        title: x.text,
+        url: x.href,
+      })),
       description,
     }
   }

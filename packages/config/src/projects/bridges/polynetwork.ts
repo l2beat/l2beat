@@ -94,8 +94,8 @@ export const polynetwork: Bridge = {
         'Poly Bridge operation is centered around PolyNetwork chain that acts as a type of a light client for all supported chains. Each supported chain has a set or Relayers that transmit successive block headers to the PolyNetwork chain, as well as lock or burn events. Those events, after passing verification on PolyNetwork chain, are relayed to the destination chain by Relayers that are responsible for the destination chain. Relayers on the destination chain pass messages to appropriate contracts that mint or release corresponding tokens to the user after verifying validity of the message.',
       references: [
         {
-          text: 'Poly Bridge docs',
-          href: 'https://github.com/polynetwork/poly-bridge/tree/master/doc',
+          title: 'Poly Bridge docs',
+          url: 'https://github.com/polynetwork/poly-bridge/tree/master/doc',
         },
       ],
       risks: [
@@ -112,8 +112,8 @@ export const polynetwork: Bridge = {
         'Each supported chain has a set of Relayers that are responsible for sending successive block headers since pre-specified origin to the PolyNetwork chain, which stores these blocks after validating their aspects, such as structure, difficulty, consistency with previous blocks, etc. When user locks or burns an asset for a cross-chain swap, an event is relayed by Relayer to the PolyNetwork chain with a Merkle proof of that transaction being included in a block. The PolyNetwork chain is able to verify Merkle proof using block headers that it keeps. PolyNetwork chain itself uses a set of Keepers to sign transactions after checking their validity. Once a cross-chain transaction is verified on PolyNetwork, an event is emitted that is picked by Relayers on the destination chain. The block header and Merkle proof for a transaction on a source chain is validated by a contract on the destination chain (if it supports such verification) and the asset is minted or released to the recipient.',
       references: [
         {
-          text: 'Header verification source code',
-          href: 'https://github.com/polynetwork/poly/blob/master/native/service/header_sync/eth/header_sync.go#L99',
+          title: 'Header verification source code',
+          url: 'https://github.com/polynetwork/poly/blob/master/native/service/header_sync/eth/header_sync.go#L99',
         },
       ],
       risks: [

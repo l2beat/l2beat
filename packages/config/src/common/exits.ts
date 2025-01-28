@@ -96,8 +96,8 @@ const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
   ...REGULAR('zk', 'no proof'),
   references: [
     {
-      text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/withdrawal-perpetual.html',
+      title: 'Withdrawal - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/perpetual/withdrawal-perpetual.html',
     },
   ],
 }
@@ -109,8 +109,8 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
     ' When withdrawing NFTs they are minted on L1.',
   references: [
     {
-      text: 'Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/withdrawal.html',
+      title: 'Withdrawal - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/spot/withdrawal.html',
     },
   ],
 }
@@ -119,16 +119,16 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
   ...FORCED(),
   references: [
     {
-      text: 'Forced Operations - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/shared/README-forced-operations.html',
+      title: 'Forced Operations - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/perpetual/shared/README-forced-operations.html',
     },
     {
-      text: 'Forced Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_withdrawal',
+      title: 'Forced Withdrawal - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_withdrawal',
     },
     {
-      text: 'Forced Trade - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_trade',
+      title: 'Forced Trade - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/perpetual/perpetual-trading-forced-withdrawal-and-forced-trade.html#forced_trade',
     },
   ],
 }
@@ -137,12 +137,12 @@ const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
   ...FORCED(),
   references: [
     {
-      text: 'Forced Operations - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/shared/README-forced-operations.html',
+      title: 'Forced Operations - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/spot/shared/README-forced-operations.html',
     },
     {
-      text: 'Full Withdrawal - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html',
+      title: 'Full Withdrawal - StarkEx documentation',
+      url: 'https://docs.starkware.co/starkex/spot/spot-trading-full-withdrawals.html',
     },
   ],
 }
@@ -169,8 +169,9 @@ const STARKNET_REGULAR: ProjectTechnologyChoice = {
     ' Note that the withdrawal request can be censored by the Sequencer.',
   references: [
     {
-      text: 'Withdrawing is based on l2 to l1 messages - Starknet documentation',
-      href: 'https://book.cairo-lang.org/ch16-04-L1-L2-messaging.html#sending-messages-from-starknet-to-ethereum',
+      title:
+        'Withdrawing is based on l2 to l1 messages - Starknet documentation',
+      url: 'https://book.cairo-lang.org/ch16-04-L1-L2-messaging.html#sending-messages-from-starknet-to-ethereum',
     },
   ],
   risks: [OPERATOR_CENSORS_WITHDRAWAL],
@@ -196,8 +197,8 @@ const STARKEX_BLOCKLIST: ProjectTechnologyChoice = {
   risks: [BLOCKLIST_CENSORS_WITHDRAWAL],
   references: [
     {
-      text: 'Blocklist - Implementation on etherscan',
-      href: 'https://etherscan.io/address/0x5524cB52490e01CBa4EB64F230CC661780cB6298#code#F4#L33',
+      title: 'Blocklist - Implementation on etherscan',
+      url: 'https://etherscan.io/address/0x5524cB52490e01CBa4EB64F230CC661780cB6298#code#F4#L33',
     },
   ],
 }

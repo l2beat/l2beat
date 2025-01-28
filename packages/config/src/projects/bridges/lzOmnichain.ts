@@ -79,8 +79,8 @@ export const lzOmnichain: Bridge = {
         Once block hash is submitted, Relayers can provide the proof for the transfers. The Oracle and Relayer used can be either default LayerZero contracts, or custom built by the token developers.',
       references: [
         {
-          text: 'LayerZero security model analysis',
-          href: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
+          title: 'LayerZero security model analysis',
+          url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],
       risks: [

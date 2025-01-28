@@ -90,12 +90,12 @@ export const ethereum = {
     `,
     references: [
       {
-        text: 'EIP-4844',
-        href: 'https://eips.ethereum.org/EIPS/eip-4844',
+        title: 'EIP-4844',
+        url: 'https://eips.ethereum.org/EIPS/eip-4844',
       },
       {
-        text: 'Ethereum Technical Handbook',
-        href: 'https://eth2book.info/latest/',
+        title: 'Ethereum Technical Handbook',
+        url: 'https://eth2book.info/latest/',
       },
     ],
   },

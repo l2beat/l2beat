@@ -165,8 +165,9 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
       references: [
         {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
-          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          title:
+            'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+          url: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
     },
@@ -174,8 +175,9 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
-          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          title:
+            'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
+          url: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
     },
