@@ -77,6 +77,8 @@ export function getStageTextClassname(
       return 'text-yellow-700'
     case 'Stage 0':
       return 'text-negative'
+    case 'UnderReview':
+      return 'text-n-yellow-700 dark:text-yellow-200'
     default:
       return 'text-secondary'
   }
