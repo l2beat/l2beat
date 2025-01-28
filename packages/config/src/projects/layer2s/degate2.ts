@@ -53,7 +53,7 @@ export const degate2: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate2'),
   capability: 'appchain',
-  createdAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
+  addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
