@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 21686453,
-  "configHash": "0xeeda102a0677ed5fe2e4f7bc4ea5d1f049a6a5e47d01563c912fa4383375aa5b",
+  "configHash": "0x61fa02d1be12c1bd19f6d84d3fc6f9347240d9da090c3fd0dee59b84c64184a7",
   "contracts": [
     {
       "name": "Permit2",
@@ -1383,7 +1383,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

@@ -29,7 +29,7 @@ export interface Node<T = EthereumAddress> {
   threshold: number
   delay: number
   edges: Edge<T>[]
-  canActIndependently: boolean
+  canActIndependently: boolean | undefined
 }
 
 export interface Edge<T = EthereumAddress> {
@@ -152,12 +152,11 @@ function followThrough<T>(
     }
   }
 
-  const canActIndependently: boolean = [
-    node.canActIndependently ?? false,
-    isMultisigAndActsIndependently(node),
-  ].some((z) => z)
+  const canActIndependently = isMultisigAndActsIndependently(node)
+    ? true
+    : node.canActIndependently
 
-  if (!followed) {
+  if (!followed && canActIndependently !== false) {
     result.push(resolved)
   } else if (canActIndependently) {
     result.push(structuredClone(resolved))

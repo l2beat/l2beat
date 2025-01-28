@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "optimism",
   "blockNumber": 127126176,
-  "configHash": "0xea47bff8fa06953693db9c1f8b5e711d35b05ec512bb4b0875713e3410d79bdb",
+  "configHash": "0x8449d68da5abc432bc07b9d57358e19dbf1e41cbcec81a6bb0692b21b8b76f5a",
   "contracts": [
     {
       "name": "FPValidator",
@@ -1947,6 +1947,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

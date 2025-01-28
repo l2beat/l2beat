@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21628462,
-  "configHash": "0x492a276fe0e24cc14a7c4ac3b6e1d6d3427721121e25610066ea3c8bd8498ded",
+  "configHash": "0xd237a84e00773fdcf6ea4f2b601105e4c04a58638a6deaa5395389736fdcfc9f",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -338,6 +338,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

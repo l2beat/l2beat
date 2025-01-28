@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "bsc",
   "blockNumber": 40976255,
-  "configHash": "0x723f62c3750eccbd1974003f39b52df12144d6bc82a6281d66ff3cc73727d78e",
+  "configHash": "0xe7fa9375b04db2172a8f9acb7eea47a5dae9bb0e2da25d9af6ed292d20c16b12",
   "contracts": [
     {
       "name": "FPValidator",
@@ -2180,6 +2180,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

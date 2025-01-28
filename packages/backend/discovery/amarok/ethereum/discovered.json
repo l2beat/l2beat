@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0x2c2f84f5bedbda3c9120ca2da4fbf57f6c2b56dc37cff80bf62ec7ef2757af11",
+  "configHash": "0x52978a1b98b8f273d79d7607595dab387526614fe7b6cbba828a8d331ffdb0ee",
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -3467,8 +3467,8 @@
     ]
   },
   "usedTemplates": {
-    "amarok/Relayer": "0x8420bd193754b39fbfe441219c96ff1b0081e61db93b859647b8f2d3607d7741",
-    "amarok/RelayerProxyHub": "0x9cb4edf0a1f069de9367fe2969edcadc5b8d97e21857dd7d3123f4ddf61b05c6",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "amarok/Relayer": "0x3a6be074287901cfb38c447116b5565a612e3c23598ab099b9337c2d868f886c",
+    "amarok/RelayerProxyHub": "0x405525f0dd20eb304bbc081d98ee126da402d6e417535ac48d0012300c14c9a8",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

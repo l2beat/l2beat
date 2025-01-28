@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 20089055,
-  "configHash": "0x425a88cbe14158fe2261cf0ece9d5b72516a5ed36f54ceb49bdfa1d1600447eb",
+  "configHash": "0xc74ae64d621b0cbb9d95b12183e00393b10d01655c9b7fc3da391995b29d649c",
   "contracts": [
     {
       "name": "TokenImplementation",

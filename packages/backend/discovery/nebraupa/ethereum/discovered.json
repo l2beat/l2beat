@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0xf6e12550ebd4d462529b0d123f133baf1d234bd58227095d207b776a70dd312f",
+  "configHash": "0xc965e2a81466ac6731ec4892640579c61606f49a2e6123a3fa2b76a804779cac",
   "contracts": [
     {
       "name": "UpaVerifier",
@@ -322,6 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

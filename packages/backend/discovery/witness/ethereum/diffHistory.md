@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xf4a2ba2fd94a56f138e3f7046ea71111b26ee9aa
+
+# Diff at Tue, 28 Jan 2025 15:41:23 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@74b593a4e23a0f1eeb37e9554e9a6178c76f8286 block: 21715800
+- current block number: 21715800
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715800 (main branch discovery), not current.
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+    }
+```
+
 Generated with discovered.json: 0xa22d730af5e1ef0045336b06c63ea3af81de8bf6
 
 # Diff at Mon, 27 Jan 2025 12:16:15 GMT:

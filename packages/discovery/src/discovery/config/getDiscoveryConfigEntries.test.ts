@@ -63,7 +63,6 @@ describe(getDiscoveryConfigEntries.name, () => {
         // correctly sort params (nest level = 1)
         [ADDRESS_C.toString()]: {
           // correctly sort params (nest level = 2)
-          canActIndependently: false,
           fields: {},
           ignoreDiscovery: false,
           // sort array values
@@ -76,7 +75,6 @@ describe(getDiscoveryConfigEntries.name, () => {
           types: {},
         },
         [ADDRESS_B.toString()]: {
-          canActIndependently: false,
           fields: {
             // do not sort this (nest level = 3)
             B: {

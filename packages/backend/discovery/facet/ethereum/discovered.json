@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 21678827,
-  "configHash": "0xc703eb652c97d832f8b8ea743952dbb4027ec025f2273d3792291e842f34807c",
+  "configHash": "0x4401bfe4af070f65d14b585319f425ff76f887d71d758c211bdc2b2349622d60",
   "contracts": [
     {
       "name": "FacetEtherBridgeV6",
@@ -1333,19 +1333,19 @@
     ]
   },
   "usedTemplates": {
-    "facet/EthscriptionsSafeModule": "0x2460850d23767856b9599bc97bb48436bbcf90c4873618bbf94c194a02939909",
-    "facet/EthscriptionsSafeProxy": "0x5fc6df1302441705623f400bc0c635b9ff8029f204fad898acb2f612d63d43ae",
-    "facet/FacetEtherBridge": "0x2ef8a9117ebebc3f9bc6a3080910cc173b3b9f9c3db2642602a7fae68e539ea2",
-    "facet/FacetSafeModule": "0x60b0ef11c315f68e8073b592a31a6a25dedc9e10984d7b57baa1b6e86941056e",
-    "facet/FacetSafeProxy": "0xa53aee35eb0895b28d8a4b3379fd0ba360cc3680ebf90aef94fd4f1d6e033755",
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1StandardBridge_facet": "0xdda9663db6ae5d838e3a9ed97ab627657d1f0fea5b56b441bbc6d727a47835ca",
-    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
-    "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
-    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
-    "opstack/SystemConfig_facet": "0x431083489272d99861681a9158be96941614628a21d3bb737ac875bde3021993"
+    "facet/EthscriptionsSafeModule": "0x1fe7ca7bde98f336f9fc852b118044540a7a25159c30a525311a5e78c8032bb8",
+    "facet/EthscriptionsSafeProxy": "0x1f0897e83315b1fe2481355d53da7ff7385fb95ee9a333be35cfe237fd2c759d",
+    "facet/FacetEtherBridge": "0x6ee9f6adba78a0be72190d74a304b54fd08e32f9a755ae92276840c664bc8a38",
+    "facet/FacetSafeModule": "0xfa1951548ffb3cb7654b08a58cb2dfa12c6272033a0d5afc4bdd67765f66437a",
+    "facet/FacetSafeProxy": "0x070169d23ac84d914094b297eac853ec3d5731aafc77e1a09189244146ef8a03",
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1StandardBridge_facet": "0xf4edcdf89b6a8a7da452e1f51fa37ba52532d7c528a9213ba4fb3f8a665a6e80",
+    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
+    "opstack/SystemConfig_facet": "0xf63c87b509480eadfc7060a4b83e7aadc7423f4b232bc6ff82188c9ce7bb8964"
   }
 }

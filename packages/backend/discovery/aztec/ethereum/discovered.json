@@ -322,9 +322,9 @@
     ]
   },
   "usedTemplates": {
-    "aztecv1/AztecFeeDistributor": "0x665ad46ab3a80550bd30e674e25a6dad4614c65e2533d80813ffcbadc5e97c7d",
-    "aztecv1/RollupProcessor": "0x19ec9a89602a787cd6c11c61e4bb251c12c36113429d57bc8112e14ea56225a1",
-    "aztecv1/TurboVerifier": "0xd2e0334db1e4d807266fd35ca09d3061271f1d3b4931090aac72541599f7f5b5",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "aztecv1/AztecFeeDistributor": "0x01f53879c0e821cfd23ca1dd9ab70280e0bf590a849a9d55a9305270f986589b",
+    "aztecv1/RollupProcessor": "0xc77e2de47fc3b202656442e652a83c1f7618dbd9edf3a50987d0fee75363d14b",
+    "aztecv1/TurboVerifier": "0x6d4830e9542801453fb3d14200361e7f81cf5ee9290adb09d13a68c164d95e9d",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

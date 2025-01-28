@@ -2,7 +2,7 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0xffc27b81a7bd4459bdd0889ffc770deec0715b0233e17242815b4658d4fcb1eb",
+  "configHash": "0xe15833534ee482fd3660328edbfc162efa539d0c39a7a108dc7ac78635b2b064",
   "contracts": [
     {
       "name": "",
@@ -455,6 +455,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

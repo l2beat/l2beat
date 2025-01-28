@@ -46,11 +46,24 @@ export function mergeContractMeta(
     categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
-    canActIndependently:
-      (a?.canActIndependently ?? false) || (b?.canActIndependently ?? false),
+    canActIndependently: mergeCanActIndependently(
+      a?.canActIndependently,
+      b?.canActIndependently,
+    ),
     references: mergeReferences(a?.references, b?.references),
   }
   return isEmptyObject(result) ? undefined : result
+}
+
+export function mergeCanActIndependently(
+  a?: boolean | undefined,
+  b?: boolean | undefined,
+): boolean | undefined {
+  // Don't cast to false, undefined means we don't know
+  if (a === undefined && b === undefined) {
+    return undefined
+  }
+  return a ?? b
 }
 
 export function mergePermissions(

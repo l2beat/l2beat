@@ -74,7 +74,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         displayName: 'ContractA',
         description: 'description 1',
-        canActIndependently: false,
+        canActIndependently: undefined,
         permissions: [
           {
             type: 'configure',
@@ -238,7 +238,7 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           description: undefined,
           permissions: [
@@ -258,7 +258,7 @@ describe('metaUtils', () => {
           references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           description: undefined,
@@ -285,7 +285,7 @@ describe('metaUtils', () => {
           references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           description: undefined,
@@ -409,7 +409,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           description: 'Important contract',
           permissions: [
@@ -430,7 +430,7 @@ describe('metaUtils', () => {
           references: undefined,
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           description: 'The resource config of the contract',
           permissions: [
@@ -451,7 +451,7 @@ describe('metaUtils', () => {
           references: undefined,
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-          canActIndependently: false,
+          canActIndependently: undefined,
           displayName: undefined,
           description: 'The resource config of the contract',
           permissions: [

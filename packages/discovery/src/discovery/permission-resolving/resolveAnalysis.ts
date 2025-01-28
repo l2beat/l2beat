@@ -32,7 +32,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         delay: 0,
         permission: 'member',
       })),
-      canActIndependently: analysis.combinedMeta?.canActIndependently ?? false,
+      canActIndependently: analysis.combinedMeta?.canActIndependently,
     }
     if (analysis.combinedMeta === undefined) {
       continue
@@ -49,8 +49,7 @@ export function resolveAnalysis(analyses: Analysis[]): ResolvedPermission[] {
         delay: 0,
         threshold,
         edges: [],
-        canActIndependently:
-          analysis.combinedMeta?.canActIndependently ?? false,
+        canActIndependently: undefined,
       }
       graph[entryAddress.toString()]?.edges.push({
         toNode: address,

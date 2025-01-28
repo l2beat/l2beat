@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21630127,
-  "configHash": "0xceb4cee1478e471326f07e709db9d05e23b7736b3ed527306f8292bcc92cc522",
+  "configHash": "0x71880cdd686617dcb78c3cff71fc0825f8ded222d00be9f049f47b21718954a6",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -642,6 +642,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }
