@@ -52,4 +52,14 @@ export const world = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('WORLD'),
   isNodeAvailable: 'UnderReview',
   discoveryDrivenData: true,
+  milestones: [
+    {
+      name: 'World Chain Launch',
+      link: 'https://world.org/blog/announcements/world-chain-now-open-every-human', // TO UPDATE
+      date: '2024-10-17T00:00:00Z',
+      description: 'World Chain Mainnet is officially live.',
+      type: 'general',
+    },
+  ],
+  hasProperSecurityCouncil: false,
 })
