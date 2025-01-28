@@ -38,7 +38,6 @@ export class DataFormulaExecutor {
   ) {
     for (const timestamp of timestamps) {
       /** Optimization to fetch block for timestamp only once per chain */
-      // TODO: save it in storage
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
       const promises = amounts.map(async (amount) => {
@@ -75,21 +74,22 @@ export class DataFormulaExecutor {
         await this.storage.writeAmount(amount.id, timestamp, value)
       })
 
+      promises.concat(
+        prices.map(async (price, index) => {
+          this.logger.info(`Processing price ${index} of ${prices.length}`)
+
+          const cachedValue = await this.storage.getPrice(price.id, timestamp)
+          if (cachedValue !== undefined) {
+            this.logger.info(`Cached value found for ${price.id}`)
+            return // Skip further processing for this price
+          }
+
+          const value = await this.fetchPrice(price, timestamp)
+          await this.storage.writePrice(price.id, timestamp, value)
+        }),
+      )
+
       await Promise.all(promises)
-
-      for (const index in prices) {
-        this.logger.info(`Processing amount ${index} of ${prices.length}`)
-        const price = prices[index]
-
-        const cachedValue = await this.storage.getPrice(price.id, timestamp)
-        if (cachedValue !== undefined) {
-          this.logger.info(`Cached value found for ${price.id}`)
-          continue
-        }
-
-        const v = await this.fetchPrice(price, timestamp)
-        await this.storage.writePrice(price.id, timestamp, v)
-      }
     }
   }
 
