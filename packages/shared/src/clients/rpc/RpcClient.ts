@@ -208,18 +208,19 @@ export class RpcClient extends ClientCore implements BlockClient {
     })
   }
 
+  // TODO: add multi-method support
   async batchQuery(
     method: string,
     paramsBatch: (string | number | boolean | Record<string, string>)[][],
   ) {
-    const queries = paramsBatch.map((q) => ({
+    const queries = paramsBatch.map((params) => ({
       method: method,
-      params: q,
+      params: params,
       id: this.$.generateId ? this.$.generateId() : generateId(),
       jsonrpc: '2.0',
     }))
 
-    const result = await this.fetch(this.$.url, {
+    const response = await this.fetch(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(queries),
@@ -227,10 +228,15 @@ export class RpcClient extends ClientCore implements BlockClient {
       timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
     })
 
-    const parsedResult = z.array(RpcResponse).parse(result)
+    const results = new Map(
+      z
+        .array(RpcResponse)
+        .parse(response)
+        .map((p) => [p.id, p]),
+    )
 
     return queries.map((q) => {
-      const r = parsedResult.find((p) => p.id === q.id)
+      const r = results.get(q.id)
       assert(r, `Request with with ${q.id} not found`)
       return r
     })
