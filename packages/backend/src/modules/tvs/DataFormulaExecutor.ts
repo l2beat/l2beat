@@ -1,11 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  type UnixTime,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -43,7 +38,7 @@ export class DataFormulaExecutor {
       const promises = amounts.map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
-          this.logger.info(`Cached value found for ${amount.id}`)
+          this.logger.debug(`Cached value found for ${amount.id}`)
           return
         }
 
@@ -76,11 +71,11 @@ export class DataFormulaExecutor {
 
       promises.concat(
         prices.map(async (price, index) => {
-          this.logger.info(`Processing price ${index} of ${prices.length}`)
+          this.logger.debug(`Processing price ${index} of ${prices.length}`)
 
           const cachedValue = await this.storage.getPrice(price.id, timestamp)
           if (cachedValue !== undefined) {
-            this.logger.info(`Cached value found for ${price.id}`)
+            this.logger.debug(`Cached value found for ${price.id}`)
             return // Skip further processing for this price
           }
 
@@ -89,6 +84,10 @@ export class DataFormulaExecutor {
         }),
       )
 
+      this.logger.info(
+        `Fetching prices [${prices.length}] and amounts [${amounts.length}]`,
+      )
+      this.logger.info('This will take a minute ;-)')
       await Promise.all(promises)
     }
   }
@@ -97,7 +96,7 @@ export class DataFormulaExecutor {
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
   ): Promise<number> {
-    this.logger.info(`Fetching circulating supply for ${config.ticker}`)
+    this.logger.debug(`Fetching circulating supply for ${config.ticker}`)
 
     try {
       return await this.circulatingSupplyProvider.getCirculatingSupply(
@@ -117,7 +116,7 @@ export class DataFormulaExecutor {
     config: TotalSupplyAmountConfig,
     blockNumber: number,
   ): Promise<number> {
-    this.logger.info(
+    this.logger.debug(
       `Fetching total supply for ${config.address} on ${config.chain}`,
     )
     return await this.totalSupplyProvider.getTotalSupply(
@@ -132,7 +131,7 @@ export class DataFormulaExecutor {
     config: BalanceOfEscrowAmountFormula,
     blockNumber: number,
   ): Promise<number> {
-    this.logger.info(
+    this.logger.debug(
       `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
     )
     const escrowBalance =
@@ -157,7 +156,7 @@ export class DataFormulaExecutor {
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
     try {
       // TODO think about getting prices from STAGING DB
-      this.logger.info(`Fetching price for ${config.ticker}`)
+      this.logger.debug(`Fetching price for ${config.ticker}`)
       return await this.priceProvider.getPrice(config.ticker, timestamp)
     } catch {
       // TODO temporary workaround for issues with rhinofi
@@ -195,10 +194,11 @@ export class DataFormulaExecutor {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(
-        `Getting block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching block number for timestamp ${timestamp.toNumber()} on ${chain}`,
       )
       const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
       result.set(chain, blockNumber)
+      await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
     }
 
     return result
