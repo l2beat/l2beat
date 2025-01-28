@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -44,4 +44,23 @@ export const soneium = opStackL2({
   isNodeAvailable: 'UnderReview',
   stateDerivation: DERIVATION.OPSTACK('SONEIUM'),
   discoveryDrivenData: true,
+  chainConfig: {
+    name: 'soneium',
+    chainId: 1868,
+    blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
+    explorerUrl: 'https://soneium.blockscout.com/',
+    explorerApi: {
+      url: 'https://soneium.blockscout.com/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1733134751),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
+  },
 })

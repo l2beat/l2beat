@@ -14,6 +14,7 @@ export const swell = opStackL2({
   additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.AltLayer],
   additionalPurposes: ['Restaking'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
+  associatedTokens: ['WLD'],
   display: {
     name: 'Swellchain',
     slug: 'swell',
@@ -44,4 +45,10 @@ export const swell = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('SWELL'),
   isNodeAvailable: true,
   discoveryDrivenData: true,
+  chainConfig: {
+    name: 'swell',
+    chainId: 1923,
+    // coingeckoPlatform: '',
+    minTimestampForTvl: new UnixTime(1732696703),
+  },
 })
