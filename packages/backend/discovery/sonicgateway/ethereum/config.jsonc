@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "sonicgateway",
+  "initialAddresses": ["0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"],
+  "names": {
+    "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": "TokenDeposit",
+    "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": "TokenPairs",
+    "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "UpdateManager",
+    "0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry",
+    "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SonicGatewayMultisig"
+  },
+  "overrides": {
+    "TokenDeposit": {
+      "ignoreMethods": [
+        "claims",
+        "deposits",
+        "getClaimSlotIndex",
+        "getWithdrawalSlotIndex",
+        "proxiableUUID"
+      ],
+      "ignoreRelatives": ["bridge"]
+    },
+    "TokenPairs": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "UpdateManager": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "ValidatorsRegistry": {
+      "fields": {
+        "validatorAddress": {
+          "handler": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}
