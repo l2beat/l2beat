@@ -1,14 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
-import { utils } from 'ethers'
+import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
-
-export const erc20Interface = new utils.Interface([
-  'function balanceOf(address account) view returns (uint256)',
-  'function totalSupply() view returns (uint256)',
-])
 
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
@@ -282,6 +276,107 @@ describe(RpcClient.name, () => {
     })
   })
 
+  describe(RpcClient.prototype.batchCall.name, () => {
+    it('batches multiple calls correctly and returns results in order', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => [
+          { id: '0x1', result: '0x123abc' },
+          { id: '0x3', result: '0x789abc' },
+          { id: '0x2', result: '0x456def' },
+        ],
+      })
+
+      const rpc = mockClient({
+        http,
+        generateId: mockFn()
+          .returnsOnce('0x1')
+          .returnsOnce('0x2')
+          .returnsOnce('0x3'),
+      })
+
+      const calls = [
+        {
+          params: {
+            to: EthereumAddress('0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+            data: Bytes.fromHex('0x70a08231'),
+          },
+          blockNumber: 'latest' as const,
+        },
+        {
+          params: {
+            to: EthereumAddress('0x1234567890123456789012345678901234567890'),
+            data: Bytes.fromHex('0x'),
+          },
+          blockNumber: 12345678,
+        },
+        {
+          params: {
+            from: EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa'),
+            to: EthereumAddress('0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB'),
+            data: Bytes.fromHex('0x123456'),
+          },
+          blockNumber: 'latest' as const,
+        },
+      ]
+
+      const result = await rpc.batchCall(calls)
+
+      // Expected results in the order of the input calls
+      expect(result).toEqual([
+        Bytes.fromHex('0x123abc'),
+        Bytes.fromHex('0x456def'),
+        Bytes.fromHex('0x789abc'),
+      ])
+
+      // Verify that the HTTP fetch was called with the correct batch request
+      expect(http.fetch).toHaveBeenCalledWith('API_URL', {
+        body: JSON.stringify([
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+                data: '0x70a08231',
+              },
+              'latest',
+            ],
+            id: '0x1',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0x1234567890123456789012345678901234567890',
+                data: '0x',
+              },
+              '0xbc614e', // Encoded block number 12345678
+            ],
+            id: '0x2',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_call',
+            params: [
+              {
+                to: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+                from: '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+                data: '0x123456',
+              },
+              'latest',
+            ],
+            id: '0x3',
+            jsonrpc: '2.0',
+          },
+        ]),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
+    })
+  })
+
   describe(RpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
       const http = mockObject<HttpClient>({
@@ -300,6 +395,59 @@ describe(RpcClient.name, () => {
           id: 'unique-id',
           jsonrpc: '2.0',
         }),
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        timeout: 5000,
+      })
+    })
+  })
+
+  describe(RpcClient.prototype.batchQuery.name, () => {
+    it('calls http client with correct params and returns data', async () => {
+      const queries = [
+        ['a', 1, true],
+        ['b', 2, true],
+        ['c', 3, false],
+      ]
+
+      // Response from RPC can have different order of results
+      const mockResponse = [
+        { id: '0x2', result: 'two' },
+        { id: '0x3', result: 'three' },
+        { id: '0x1', result: 'one' },
+      ]
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => mockResponse,
+      })
+
+      const rpc = mockClient({
+        http,
+        generateId: mockFn()
+          .returnsOnce('0x1')
+          .returnsOnce('0x2')
+          .returnsOnce('0x3'),
+      })
+
+      const result = await rpc.batchQuery('rpc_method', queries)
+
+      const expectedResult = [
+        { id: '0x1', result: 'one' },
+        { id: '0x2', result: 'two' },
+        { id: '0x3', result: 'three' },
+      ]
+
+      const expectedPayload = queries.map((params, index) => ({
+        method: 'rpc_method',
+        params,
+        id: `0x${index + 1}`,
+        jsonrpc: '2.0',
+      }))
+
+      expect(result).toEqual(expectedResult)
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL', {
+        body: JSON.stringify(expectedPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         redirect: 'follow',

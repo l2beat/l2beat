@@ -6,6 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+export const RpcResponse = z.object({ id: z.string(), result: z.unknown() })
+
 export const Quantity = {
   decode: z.preprocess((s) => {
     const res = z.string().parse(s)

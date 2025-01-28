@@ -10,12 +10,18 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
 import { mapConfig } from './modules/tvs/mapConfig'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
+import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
 import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
 
@@ -44,7 +50,7 @@ async function main() {
   )
 
   const chains = ['ethereum', 'arbitrum']
-  const rpcs = new Map<string, RpcClient>()
+  const rpcs = new Map<string, RpcClientPOC>()
   const blockProviders = new Map<string, BlockProvider>()
 
   for (const chain of chains) {
@@ -57,7 +63,14 @@ async function main() {
       sourceName: chain,
       callsPerMinute: 120,
     })
-    rpcs.set(chain, rpc)
+    rpcs.set(
+      chain,
+      new RpcClientPOC(
+        rpc,
+        EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        logger,
+      ),
+    )
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
 

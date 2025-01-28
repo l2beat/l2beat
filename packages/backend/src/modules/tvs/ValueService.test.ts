@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from './DataStorage'
 import { ValueService } from './ValueService'
-import { createAmountConfig, createPriceConfig } from './mapConfig'
+import { createAmountConfig } from './mapConfig'
 import {
   type BalanceOfEscrowAmountFormula,
   type Token,
@@ -10,7 +10,6 @@ import {
   type TokenValue,
   type TotalSupplyAmountFormula,
   type TvsConfig,
-  type ValueFormula,
 } from './types'
 
 describe(ValueService.name, () => {
@@ -40,12 +39,6 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const priceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker,
-        }),
-      ).id
-
       const mockTimestamp = UnixTime.now()
 
       const mockDataStorage = mockObject<DataStorage>({
@@ -54,7 +47,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000)
           .resolvesToOnce(10000),
         getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
+          .given(ticker, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })
@@ -162,17 +155,9 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const wBTCPriceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker: 'WBTC',
-        }),
-      ).id
+      const wBTCPriceConfigId = 'WBTC'
 
-      const solvBTCPriceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker: 'solvBTC',
-        }),
-      ).id
+      const solvBTCPriceConfigId = 'solvBTC'
 
       const mockTimestamp = UnixTime.now()
 

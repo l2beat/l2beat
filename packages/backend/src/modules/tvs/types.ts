@@ -115,7 +115,6 @@ export type TvsConfig = {
 }
 
 export type PriceConfig = {
-  id: string
   ticker: string
 }
 
