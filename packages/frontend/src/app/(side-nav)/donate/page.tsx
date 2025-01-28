@@ -207,7 +207,7 @@ function FundingSourcesTable() {
     <div className="mt-4 overflow-x-auto pb-3">
       <table>
         <thead>
-          <tr className="h-8 border-b border-divider pb-2.5 pt-2 text-left text-[13px] font-semibold uppercase tracking-[-0.13px] text-zinc-500 ">
+          <tr className="h-8 border-b border-divider pb-2.5 pt-2 text-left text-[13px] font-semibold uppercase tracking-[-0.13px] text-zinc-500 dark:text-secondary">
             <th className="min-w-[300px] md:pl-4">Source / Project</th>
             <th className="md:pl-4">Tier</th>
             <th className="md:pl-4">Description</th>
