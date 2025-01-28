@@ -1,5 +1,6 @@
 import type { ProjectId, Sentiment, UnixTime } from '@l2beat/shared-pure'
 import type {
+  Milestone,
   DataAvailabilityLayer as ScalingDaLayerOption,
   ScalingProjectContract,
   ScalingProjectLinks,
@@ -88,6 +89,8 @@ export type CommonDaLayer = {
   technology: DaTechnology
   /** Other considerations */
   otherConsiderations?: ScalingProjectTechnologyChoice[]
+  /** Links to recent developments, milestones achieved by the project */
+  milestones?: Milestone[]
 }
 
 export interface DaLayerRisks {
