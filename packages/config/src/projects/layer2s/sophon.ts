@@ -56,17 +56,7 @@ export const sophon: Layer2 = zkStackL2({
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {
     layer: DA_LAYERS.AVAIL,
-    riskView: {
-      ...RISK_VIEW.DATA_AVAIL(false),
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_AVAIL(false),
     technology: {
       ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
       references: [

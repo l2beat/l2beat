@@ -388,28 +388,12 @@ export const linea: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'LineaRollup',
-          references: [
-            'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
-          ],
-        },
-      ],
     },
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN,
       description:
         RISK_VIEW.DATA_ON_CHAIN.description +
         ' Unlike most ZK rollups, transaction data is posted instead of state diffs.',
-      sources: [
-        {
-          contract: 'LineaRollup',
-          references: [
-            'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
-          ],
-        },
-      ],
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(timelockDelay, 0),
     sequencerFailure: {

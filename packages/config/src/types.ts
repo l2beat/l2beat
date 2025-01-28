@@ -426,10 +426,6 @@ export interface ScalingProjectRiskViewEntry {
   secondLine?: string // second line in risk view
   sentiment: Sentiment
   warning?: WarningValueWithSentiment
-  sources?: {
-    contract: string
-    references: string[]
-  }[]
   definingMetric?: number
 }
 

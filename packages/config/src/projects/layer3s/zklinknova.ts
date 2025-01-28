@@ -403,28 +403,8 @@ export const zklinknova: Layer3 = {
   },
   stage: { stage: 'NotApplicable' },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
-      sources: [
-        {
-          contract: 'zkLink',
-          references: [
-            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'zkLink',
-          references: [
-            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL,
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       upgradeDelaySeconds,
       executionDelaySeconds,

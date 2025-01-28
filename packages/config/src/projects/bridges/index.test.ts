@@ -1,17 +1,10 @@
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import type {
-  ProjectTechnologyChoice,
-  ScalingProjectRiskViewEntry,
-} from '../../types'
-import { getReferencedAddresses } from '../layer2s/index.test'
+import type { ProjectTechnologyChoice } from '../../types'
 import { type BridgeTechnology, bridges } from './index'
 
 describe('bridges', () => {
@@ -34,48 +27,6 @@ describe('bridges', () => {
             expect(link).not.toInclude('www')
           }
         })
-      }
-    })
-  })
-  describe('references', () => {
-    describe('points to an existing implementation', () => {
-      for (const bridge of bridges) {
-        try {
-          const discovery = new ProjectDiscovery(bridge.id.toString())
-
-          for (const [riskName, riskEntry] of Object.entries(
-            bridge.riskView ?? {},
-          )) {
-            const risk = riskEntry as ScalingProjectRiskViewEntry
-            if (risk.sources === undefined) continue
-
-            describe(`${bridge.id.toString()} : ${riskName}`, () => {
-              for (const sourceCodeReference of risk.sources ?? []) {
-                it(sourceCodeReference.contract, () => {
-                  const referencedAddresses = getReferencedAddresses(
-                    sourceCodeReference.references,
-                  )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
-
-                  const contractAddresses = [
-                    contract.address,
-                    ...get$Implementations(contract.values),
-                  ]
-
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
-                })
-              }
-            })
-          }
-        } catch {
-          continue
-        }
       }
     })
   })

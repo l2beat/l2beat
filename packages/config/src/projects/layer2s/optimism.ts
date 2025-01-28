@@ -327,14 +327,6 @@ export const optimism: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
-      sources: [
-        {
-          contract: 'DisputeGameFactory',
-          references: [
-            'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
-          ],
-        },
-      ],
       secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

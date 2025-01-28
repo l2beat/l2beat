@@ -127,21 +127,8 @@ export const honeypot: Layer2 = {
     mode: DA_MODES.TRANSACTION_DATA,
   }),
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_NONE,
-      value: 'None',
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'InputBox',
-          references: [
-            'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(0),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,

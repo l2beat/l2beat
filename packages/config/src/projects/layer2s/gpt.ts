@@ -75,20 +75,10 @@ export const gpt: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:

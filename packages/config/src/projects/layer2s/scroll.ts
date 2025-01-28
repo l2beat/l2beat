@@ -332,70 +332,14 @@ export const scroll: Layer2 = {
     stateValidation: {
       ...STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'L1MessageQueue',
-          references: [
-            'https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code',
-          ],
-        },
-        {
-          contract: 'EnforcedTxGateway',
-          references: [
-            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'ScrollChain',
-          references: [
-            'https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-    },
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_SNARKS,
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
