@@ -32,8 +32,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     },
     getBlockLink: (blockNumber: number) =>
       `https://abscan.org/block/${blockNumber}`,
-    getTxLink: (txHash: string) =>
-      `https://abscan.org/tx/${txHash}`,
+    getTxLink: (txHash: string) => `https://abscan.org/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://abscan.org/address/${address}`,
   },
