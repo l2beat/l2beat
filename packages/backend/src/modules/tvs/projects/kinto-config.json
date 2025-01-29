@@ -87,23 +87,6 @@
       "isAssociated": false
     },
     {
-      "id": "ethereum-0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2-0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
-      "ticker": "WETH",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "chain": "ethereum",
-        "escrowAddress": "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1716142367,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
       "id": "ethereum-0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0-0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
       "ticker": "wstETH",
       "symbol": "wstETH",
@@ -359,23 +342,6 @@
       "isAssociated": false
     },
     {
-      "id": "base-0x4200000000000000000000000000000000000006-0xfDF267c43c0C868046c66695c1a85c973418CBFb",
-      "ticker": "WETH",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x4200000000000000000000000000000000000006",
-        "chain": "base",
-        "escrowAddress": "0xfDF267c43c0C868046c66695c1a85c973418CBFb",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1716142417,
-      "category": "ether",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
       "id": "base-0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452-0xE194f2B41A5dc6Be311aD7811eF391a0ac84687d",
       "ticker": "wstETH",
       "symbol": "wstETH",
@@ -406,23 +372,6 @@
       },
       "sinceTimestamp": 1715972109,
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false
-    },
-    {
-      "id": "arbitrum-0x82aF49447D8a07e3bd95BD0d56f35241523fBab1-0x4D585D346DFB27b297C37F480a82d4cAB39491Bb",
-      "ticker": "WETH",
-      "symbol": "WETH",
-      "name": "Wrapped Ether",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-        "chain": "arbitrum",
-        "escrowAddress": "0x4D585D346DFB27b297C37F480a82d4cAB39491Bb",
-        "decimals": 18
-      },
-      "sinceTimestamp": 1716142397,
-      "category": "ether",
       "source": "external",
       "isAssociated": false
     },
@@ -508,6 +457,49 @@
       },
       "sinceTimestamp": 1718367579,
       "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "id": "kinto-0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+      "ticker": "WETH",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+        "chain": "kinto",
+        "decimals": 18
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "ticker": "WETH",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+              "chain": "kinto",
+              "decimals": 18
+            }
+          },
+          {
+            "type": "value",
+            "ticker": "ETH",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "kinto",
+              "escrowAddress": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+              "decimals": 18
+            }
+          }
+        ]
+      },
+      "sinceTimestamp": 1716142367,
+      "category": "ether",
       "source": "external",
       "isAssociated": false
     }
