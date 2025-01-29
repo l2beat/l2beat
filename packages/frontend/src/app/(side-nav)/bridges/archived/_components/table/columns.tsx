@@ -5,7 +5,7 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
-import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
 const columnHelper = createColumnHelper<BridgesArchivedEntry>()
@@ -38,7 +38,7 @@ export const bridgesArchivedColumns = [
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
   }),
-  columnHelper.accessor('totalTvl', {
+  columnHelper.accessor('totalTvs', {
     id: 'total',
     header: 'Total value secured',
     cell: (ctx) => {
@@ -54,14 +54,14 @@ export const bridgesArchivedColumns = [
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.totalTvl ?? 0
-      const bTvl = b.totalTvl ?? 0
+      const aTvs = a.totalTvs ?? 0
+      const bTvs = b.totalTvs ?? 0
 
-      if (aTvl === bTvl) {
+      if (aTvs === bTvs) {
         return b.name.localeCompare(a.name)
       }
 
-      return aTvl - bTvl
+      return aTvs - bTvs
     },
     meta: {
       align: 'right',

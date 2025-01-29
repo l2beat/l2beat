@@ -5,7 +5,7 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
@@ -40,17 +40,17 @@ export const bridgesSummaryActiveColumns = [
   }),
   columnHelper.accessor(
     (e) => {
-      return e.tvl.breakdown?.total
+      return e.tvs.breakdown?.total
     },
     {
       id: 'total',
       header: 'Total',
       cell: (ctx) => {
-        const value = ctx.row.original.tvl
+        const value = ctx.row.original.tvs
         return (
           <TotalCell
             associatedTokenSymbols={value.associatedTokens}
-            tvlWarnings={value.warnings}
+            tvsWarnings={value.warnings}
             breakdown={value.breakdown}
             change={value.change}
           />

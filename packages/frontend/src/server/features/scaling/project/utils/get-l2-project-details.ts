@@ -6,7 +6,7 @@ import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
-  isTvlChartDataEmpty,
+  isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
@@ -18,7 +18,7 @@ import { getOperatorSection } from '~/utils/project/technology/get-operator-sect
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
-import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
+import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
@@ -76,7 +76,7 @@ export async function getL2ProjectDetails({
   const dataAvailabilitySection = getDataAvailabilitySection(project)
 
   await Promise.all([
-    api.tvl.chart.prefetch({
+    api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
@@ -90,9 +90,9 @@ export async function getL2ProjectDetails({
       filter: { type: 'projects', projectIds: [project.id] },
     }),
   ])
-  const [tvlChartData, activityChartData, costsChartData, tokens] =
+  const [tvsChartData, activityChartData, costsChartData, tokens] =
     await Promise.all([
-      api.tvl.chart({
+      api.tvs.chart({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,
@@ -115,11 +115,11 @@ export async function getL2ProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
-        id: 'tvl',
+        id: 'tvs',
         stacked: true,
         title: 'Value Secured',
         projectId: project.id,

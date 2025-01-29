@@ -20,19 +20,19 @@ import type { EconomicSecurityData } from '../project/utils/get-da-project-econo
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
-  getDaProjectsTvl,
-  pickTvlForProjects,
-} from '../utils/get-da-projects-tvl'
+  getDaProjectsTvs,
+  pickTvsForProjects,
+} from '../utils/get-da-projects-tvs'
 import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const [economicSecurity, tvlPerProject] = await Promise.all([
+  const [economicSecurity, tvsPerProject] = await Promise.all([
     getDaProjectsEconomicSecurity(),
-    getDaProjectsTvl(uniqueProjectsInUse),
+    getDaProjectsTvs(uniqueProjectsInUse),
   ])
-  const getTvs = pickTvlForProjects(tvlPerProject)
+  const getTvs = pickTvsForProjects(tvsPerProject)
 
   const dacEntries = getDacEntries(getTvs)
   const entries = daLayers.map((daLayer) =>

@@ -15,8 +15,8 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -37,7 +37,7 @@ export function ScalingDaTables(props: Props) {
   const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
-        (a, b) => b.tvlOrder - a.tvlOrder,
+        (a, b) => b.tvsOrder - a.tvsOrder,
       )
     : filteredEntries
 

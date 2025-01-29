@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   revalidatePath('/data-availability/projects/[layer]/[bridge]')
 
   revalidateTag('update-monitor')
-  revalidateTag('tvl')
+  revalidateTag('tvs')
   revalidateTag('costs')
   return NextResponse.json({ message: 'revalidated hourly data' })
 }
