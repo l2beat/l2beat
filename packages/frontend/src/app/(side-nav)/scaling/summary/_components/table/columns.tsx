@@ -15,7 +15,7 @@ import {
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
+import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'

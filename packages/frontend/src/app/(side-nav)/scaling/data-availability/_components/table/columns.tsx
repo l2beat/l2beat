@@ -4,7 +4,10 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
@@ -34,37 +37,46 @@ export const columns = [
       return stackCompare
     },
   }),
-  columnHelper.accessor('dataAvailability.layer', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.layer), {
     header: 'DA Layer',
     meta: {
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
-    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.layer} />
+    ),
     sortDescFirst: true,
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
         a.original.dataAvailability.layer,
         b.original.dataAvailability.layer,
       ),
   }),
-  columnHelper.accessor('dataAvailability.bridge', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.bridge), {
     header: 'DA Bridge',
     meta: {
       tooltip:
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
-    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.bridge} />
+    ),
     sortDescFirst: true,
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
         a.original.dataAvailability.bridge,
         b.original.dataAvailability.bridge,
       ),
   }),
-  columnHelper.accessor('dataAvailability.mode', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.mode), {
     header: 'Type of data',
-    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.mode} />
+    ),
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
         a.original.dataAvailability.mode,

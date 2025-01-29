@@ -2,7 +2,10 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -11,9 +14,9 @@ const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
 export const bridgesArchivedColumns = [
   ...getBridgesCommonProjectColumns(columnHelper),
-  columnHelper.accessor('validatedBy', {
+  columnHelper.accessor((e) => adjustTableValue(e.validatedBy), {
     header: 'Validated by',
-    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
+    cell: (ctx) => <TableValueCell value={ctx.row.original.validatedBy} />,
     meta: {
       tooltip: 'How are the messages sent via this bridge checked?',
     },

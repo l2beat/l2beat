@@ -6,7 +6,10 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
@@ -36,16 +39,20 @@ export const scalingFinalityColumns = [
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('dataAvailabilityMode', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailabilityMode), {
     header: 'DA Mode',
-    cell: (ctx) => (
-      <TableValueCell emptyMode="em-dash" value={ctx.getValue()} />
-    ),
     meta: {
       cellClassName: 'whitespace-nowrap',
       tooltip:
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
     },
+    cell: (ctx) => (
+      <TableValueCell
+        emptyMode="em-dash"
+        value={ctx.row.original.dataAvailabilityMode}
+      />
+    ),
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
         a.original.dataAvailabilityMode,

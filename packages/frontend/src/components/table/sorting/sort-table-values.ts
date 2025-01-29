@@ -8,6 +8,21 @@ const sentimentOrder: Record<Sentiment, number> = {
   UnderReview: -3,
 }
 
+/**
+ * Because of how react-table works we need this workaround to make sure
+ * items under review are always at the bottom.
+ *
+ * This should always be paired with: `sortUndefined: 'last'`.
+ */
+export function adjustTableValue(
+  value: TableReadyValue | undefined,
+): TableReadyValue | undefined {
+  if (value?.sentiment === 'UnderReview') {
+    return undefined
+  }
+  return value
+}
+
 export function sortTableValues(
   a: TableReadyValue | undefined,
   b: TableReadyValue | undefined,
