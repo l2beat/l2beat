@@ -662,13 +662,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      (isUsingValidBlobstreamWmr 
+      (isUsingValidBlobstreamWmr
         ? pickWorseRisk(
             RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS)
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
           )
-        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)
-      ),
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -1043,13 +1042,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        (isUsingValidBlobstreamWmr 
+        (isUsingValidBlobstreamWmr
           ? pickWorseRisk(
               RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS)
+              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
             )
-          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)
-        ),
+          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
       sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),
