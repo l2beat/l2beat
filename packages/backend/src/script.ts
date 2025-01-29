@@ -60,11 +60,11 @@ async function main() {
     })
     rpcs.set(
       chain,
-      new RpcClientPOC(
-        rpc,
-        EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        logger,
-      ),
+      new RpcClientPOC(rpc, logger, {
+        multicallV3: EthereumAddress(
+          '0xcA11bde05977b3631167028862bE2a173976CA11',
+        ),
+      }),
     )
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
