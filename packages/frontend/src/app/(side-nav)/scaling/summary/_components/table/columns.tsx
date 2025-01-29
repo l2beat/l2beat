@@ -9,7 +9,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -127,16 +127,15 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         return <NoDataBadge />
       }
       return (
-        <TwoRowCell>
-          <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
-          {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>
-              {latestValue.bridge.value === 'None'
+        <TableValueCell
+          value={{
+            ...latestValue.layer,
+            secondLine:
+              latestValue.bridge.value === 'None'
                 ? 'No bridge'
-                : latestValue.bridge.value}
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
+                : latestValue.bridge.value,
+          }}
+        />
       )
     },
   }),
