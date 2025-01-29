@@ -231,7 +231,7 @@ export function DATA_CELESTIA(isUsingBlobstream: boolean): TableReadyValue {
     description:
       `Proof construction and state derivation fully rely on data that is posted on Celestia.` +
       additional,
-    sentiment: 'bad',
+    sentiment: isUsingBlobstream ? 'warning' : 'bad',
   }
 }
 
