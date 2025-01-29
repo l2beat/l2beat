@@ -32,17 +32,19 @@ export class DataFormulaExecutor {
     timestamps: UnixTime[],
     latestMode: boolean,
   ) {
+    const chains = extractUniqueChains(amounts)
+
     /** Optimization to fetch block for timestamp only once per chain */
     let blockNumbersToTimestamps: Map<number, Map<string, number>> | undefined
 
     if (latestMode) {
       blockNumbersToTimestamps = await this.getLatestBlockNumbers(
-        amounts,
+        chains,
         timestamps[0],
       )
     } else {
       blockNumbersToTimestamps = await this.getBlockNumbersForTimestamps(
-        amounts,
+        chains,
         timestamps,
       )
     }
@@ -246,10 +248,8 @@ export class DataFormulaExecutor {
     }
   }
 
-  async getLatestBlockNumbers(amounts: AmountConfig[], timestamp: UnixTime) {
+  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
     const result = new Map<string, number>()
-
-    const chains = extractUniqueChains(amounts)
 
     for (const chain of chains) {
       const block = this.blockProviders.get(chain)
@@ -264,18 +264,13 @@ export class DataFormulaExecutor {
     return new Map([[timestamp.toNumber(), result]])
   }
 
-  async getBlockNumbersForTimestamps(
-    amounts: AmountConfig[],
-    timestamps: UnixTime[],
-  ) {
-    const uniqueChains = extractUniqueChains(amounts)
-
+  async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
     const result = new Map<number, Map<string, number>>()
 
     for (const timestamp of timestamps) {
       result.set(
         timestamp.toNumber(),
-        await this.getTimestampToBlockNumbersMapping(uniqueChains, timestamp),
+        await this.getTimestampToBlockNumbersMapping(chains, timestamp),
       )
     }
 
@@ -307,6 +302,7 @@ export class DataFormulaExecutor {
     return result
   }
 }
+
 function extractUniqueChains(amounts: AmountConfig[]) {
   return [
     ...new Set(
