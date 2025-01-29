@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -19,9 +19,7 @@ export const bridgesArchivedColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      !a.original.validatedBy || !b.original.validatedBy
-        ? -1
-        : sortBySentiment(a.original.validatedBy, b.original.validatedBy),
+      sortTableValues(a.original.validatedBy, b.original.validatedBy),
   }),
   columnHelper.accessor('type', {
     header: 'Type',

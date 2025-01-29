@@ -6,7 +6,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
-import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
+import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
@@ -47,7 +47,7 @@ export const scalingFinalityColumns = [
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
     },
     sortingFn: (a, b) =>
-      sortTwoRowCell(
+      sortTableValues(
         a.original.dataAvailabilityMode,
         b.original.dataAvailabilityMode,
       ),

@@ -1,10 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
-import { sortByExitWindow } from '~/components/table/sorting/functions/sort-by-exit-window'
-import {
-  sortBySentiment,
-  sortBySentimentAndAlphabetically,
-} from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 
@@ -21,7 +17,7 @@ export const scalingRiskColumns = [
     sortUndefined: 'last',
     sortDescFirst: true,
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.risks.stateValidation,
         b.original.risks.stateValidation,
       ),
@@ -35,7 +31,7 @@ export const scalingRiskColumns = [
     sortUndefined: 'last',
     sortDescFirst: true,
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.risks.dataAvailability,
         b.original.risks.dataAvailability,
       ),
@@ -49,25 +45,8 @@ export const scalingRiskColumns = [
     cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
     sortUndefined: 'last',
     sortDescFirst: true,
-    sortingFn: (a, b) => {
-      const sentimentResult = sortBySentiment(
-        a.original.risks.exitWindow,
-        b.original.risks.exitWindow,
-      )
-      if (sentimentResult !== 0) {
-        return sentimentResult
-      }
-
-      const exitWindowResult = sortByExitWindow(
-        a.original.risks.exitWindow.orderHint ?? 0,
-        b.original.risks.exitWindow.orderHint ?? 0,
-      )
-      if (exitWindowResult !== 0) {
-        return exitWindowResult
-      }
-
-      return a.original.name.localeCompare(b.original.name)
-    },
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.risks.exitWindow, b.original.risks.exitWindow),
   }),
   columnHelper.accessor('risks.sequencerFailure', {
     header: 'Sequencer\nFailure',
@@ -79,7 +58,7 @@ export const scalingRiskColumns = [
     sortUndefined: 'last',
     sortDescFirst: true,
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.risks.sequencerFailure,
         b.original.risks.sequencerFailure,
       ),
@@ -94,7 +73,7 @@ export const scalingRiskColumns = [
     sortUndefined: 'last',
     sortDescFirst: true,
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.risks.proposerFailure,
         b.original.risks.proposerFailure,
       ),

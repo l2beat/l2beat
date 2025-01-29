@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
@@ -12,19 +12,8 @@ export const bridgesRisksColumns = [
   columnHelper.accessor('destination', {
     header: 'Destination',
     cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
-    sortingFn: (a, b) => {
-      const sentimentResult = sortBySentimentAndAlphabetically(
-        a.original.destination,
-        b.original.destination,
-      )
-      if (sentimentResult !== 0) {
-        return sentimentResult
-      }
-      return (
-        (a.original.destination.description?.split(',').length ?? 0) -
-        (b.original.destination.description?.split(',').length ?? 0)
-      )
-    },
+    sortingFn: (a, b) =>
+      sortTableValues(a.original.destination, b.original.destination),
     meta: {
       tooltip: 'What chains can you get to using this bridge?',
     },
@@ -37,7 +26,7 @@ export const bridgesRisksColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.riskView.validatedBy,
         b.original.riskView.validatedBy,
       ),
@@ -59,7 +48,7 @@ export const bridgesRisksColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.riskView.sourceUpgradeability,
         b.original.riskView.sourceUpgradeability,
       ),
@@ -72,7 +61,7 @@ export const bridgesRisksColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
+      sortTableValues(
         a.original.riskView.destinationToken,
         b.original.riskView.destinationToken,
       ),

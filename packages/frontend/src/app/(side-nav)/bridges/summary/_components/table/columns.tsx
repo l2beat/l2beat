@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortBySentimentAndAlphabetically } from '~/components/table/sorting/functions/sort-by-sentiment'
+import { sortTableValues } from '~/components/table/sorting/functions/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
@@ -18,10 +18,7 @@ export const bridgesSummaryActiveColumns = [
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortBySentimentAndAlphabetically(
-        a.original.validatedBy,
-        b.original.validatedBy,
-      ),
+      sortTableValues(a.original.validatedBy, b.original.validatedBy),
   }),
   columnHelper.accessor('type', {
     header: 'Type',
