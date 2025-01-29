@@ -61,7 +61,7 @@ export const blast: Layer2 = opStackL2({
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',

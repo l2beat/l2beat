@@ -445,7 +445,7 @@ export const zklinknova: Layer3 = {
     },
     exitMechanisms: [
       EXITS.REGULAR_MESSAGING('zk'),
-      EXITS.FORCED('forced-withdrawals'),
+      EXITS.FORCED_MESSAGING('forced-messages'),
     ],
     otherConsiderations: [
       {

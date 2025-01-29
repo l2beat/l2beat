@@ -388,7 +388,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           ],
         },
-        EXITS.FORCED('forced-withdrawals'),
+        EXITS.FORCED_MESSAGING('forced-messages'),
       ],
     },
     upgradesAndGovernance: (() => {

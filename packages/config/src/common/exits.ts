@@ -69,7 +69,7 @@ function REGULAR_YIELDING(
   }
 }
 
-function FORCED(
+function FORCED_WITHDRAWAL(
   orHalt?: 'forced-withdrawals' | 'all-withdrawals',
 ): ProjectTechnologyChoice {
   let orHaltString = ''
@@ -77,7 +77,7 @@ function FORCED(
     switch (orHalt) {
       case 'forced-withdrawals':
         orHaltString =
-          ' or halt all messages from L1, including all forced withdrawals and deposits'
+          ' or halt all withdrawals from L1, including all forced withdrawals and deposits'
         break
       case 'all-withdrawals':
         orHaltString =
@@ -88,6 +88,30 @@ function FORCED(
   return {
     name: 'Forced exit',
     description: `If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.`,
+    risks: [],
+    references: [],
+  }
+}
+
+function FORCED_MESSAGING(
+  orHalt?: 'forced-messages' | 'all-messages',
+): ProjectTechnologyChoice {
+  let orHaltString = ''
+  if (orHalt) {
+    switch (orHalt) {
+      case 'forced-messages':
+        orHaltString =
+          ' or halt all messages from L1, including all forced withdrawals and deposits'
+        break
+      case 'all-messages':
+        orHaltString =
+          ' or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2'
+        break
+    }
+  }
+  return {
+    name: 'Forced messaging',
+    description: `If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.`,
     risks: [],
     references: [],
   }
@@ -140,7 +164,7 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
-  ...FORCED(),
+  ...FORCED_WITHDRAWAL(),
   references: [
     {
       title: 'Forced Operations - StarkEx documentation',
@@ -158,7 +182,7 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
-  ...FORCED(),
+  ...FORCED_WITHDRAWAL(),
   references: [
     {
       title: 'Forced Operations - StarkEx documentation',
@@ -265,7 +289,8 @@ export const EXITS = {
   REGULAR_WITHDRAWAL,
   REGULAR_MESSAGING,
   REGULAR_YIELDING,
-  FORCED,
+  FORCED_WITHDRAWAL,
+  FORCED_MESSAGING,
   EMERGENCY,
   AUTONOMOUS,
   STARKEX_PERPETUAL: [

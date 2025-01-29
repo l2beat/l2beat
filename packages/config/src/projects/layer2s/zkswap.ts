@@ -134,7 +134,7 @@ export const zkswap: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'ZkSync.sol#L404 - ZKSwap source code',
