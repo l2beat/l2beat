@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const ternoa: Layer2 = upcomingL2({
   id: 'ternoa',
@@ -18,9 +18,7 @@ export const ternoa: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://ternoa.network/'],
-      apps: [],
       documentation: ['https://docs.ternoa.network/learn/ternoa-zkevm+'],
-      explorers: [],
       repositories: ['https://github.com/capsule-corp-ternoa'],
       socialMedia: [
         'https://x.com/ternoa_',

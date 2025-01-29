@@ -11,7 +11,7 @@ import {
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config'
+import type { UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -20,9 +20,9 @@ import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
 } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/da-project-sections'
-import { type ProjectLink } from '~/components/projects/links/types'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { ProjectLink } from '~/components/projects/links/types'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import {
@@ -219,13 +219,8 @@ export async function getEthereumDaProjectEntry(
   const layerTvs =
     tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
 
-  const layerGrissiniValue = mapLayerRisksToRosetteValues(daLayer.risks)
-  const bridgeGrissiniValue = mapBridgeRisksToRosetteValues(daBridge.risks)
-
-  const evaluatedGrissiniValues = [
-    ...layerGrissiniValue,
-    ...bridgeGrissiniValue,
-  ]
+  const layerGrissiniValues = mapLayerRisksToRosetteValues(daLayer.risks)
+  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(daBridge.risks)
 
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
@@ -233,7 +228,8 @@ export async function getEthereumDaProjectEntry(
     daLayer,
     daBridge,
     isVerified: common.isVerified,
-    evaluatedGrissiniValues,
+    layerGrissiniValues,
+    bridgeGrissiniValues,
   })
 
   const { usedIn } = daLayer.bridges[0]

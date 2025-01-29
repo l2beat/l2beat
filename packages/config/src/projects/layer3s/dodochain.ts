@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import type { Layer3 } from '../../types'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const dodochain: Layer3 = underReviewL3({
   id: 'dodochain',
@@ -18,9 +18,7 @@ export const dodochain: Layer3 = underReviewL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://dodochain.com/'],
-      apps: [],
       documentation: ['https://docs.dodochain.com/en/dodochain'],
-      explorers: [],
       repositories: ['https://github.com/DODOEX'],
       socialMedia: [
         'https://x.com/DODO_Chain',

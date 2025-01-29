@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const sxt: Layer2 = upcomingL2({
   id: 'sxt',
@@ -18,7 +18,6 @@ export const sxt: Layer2 = upcomingL2({
       websites: ['https://spaceandtime.io'],
       apps: ['https://app.spaceandtime.ai'],
       documentation: ['https://docs.spaceandtime.io'],
-      explorers: [],
       repositories: ['https://github.com/spaceandtimelabs'],
       socialMedia: [
         'https://x.com/SpaceandTimeDB',

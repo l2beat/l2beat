@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
-import type { Bridge } from './types'
+import type { Bridge } from '../../types'
 
 export const avalanche: Bridge = {
   type: 'bridge',

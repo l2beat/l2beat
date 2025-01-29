@@ -2,9 +2,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -24,7 +24,7 @@ export const treasure: Layer2 = zkStackL2({
     name: 'Treasure',
     slug: 'treasure',
     tvlWarning: {
-      content:
+      value:
         'The total TVS includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. L2BEAT is working on a fix.',
       sentiment: 'warning',
     },

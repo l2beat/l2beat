@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const capx: Layer2 = upcomingL2({
   id: 'capx',
@@ -16,10 +16,6 @@ export const capx: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://capx.ai/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://discord.com/invite/capx', 'https://x.com/0xCapx'],
     },
   },

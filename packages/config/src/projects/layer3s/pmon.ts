@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from '../layer3s'
 
 export const pmon: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
@@ -30,8 +30,6 @@ export const pmon: Layer3 = underReviewL3({
         'https://bridge.arbitrum.io/?destinationChain=pmon-chain&sourceChain=arbitrum-one',
       ],
       documentation: ['https://battle-docs.polychainmonsters.com/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/protocolmon',
         'https://discord.gg/protocolmon',

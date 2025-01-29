@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const henez: Layer3 = underReviewL3({
   id: 'henez',
@@ -28,7 +28,6 @@ export const henez: Layer3 = underReviewL3({
       apps: ['https://henez.bridge.caldera.xyz/'],
       documentation: ['https://docs.henez.fi/'],
       explorers: ['https://henez.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/HenezFinance',
         'https://mirror.xyz/0xFCA778F8DC17E130E91c03843275939595DD9930',

@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const genesisTimestamp = new UnixTime(1729881083)
 const chainId = 2741
@@ -54,7 +54,7 @@ export const abstract: Layer2 = zkStackL2({
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [
     discovery.getEscrowDetails({
       address: bridge.address,
-      tokens: ['ETH', 'WBTC', 'USDT'], // just assuming here, since USDC is stargate-routed
+      tokens: ['ETH'], // just assuming here, since USDC, USDT are stargate-routed and we want to reduce strain on TVS sync
       description:
         'Shared bridge for depositing tokens to Abstract and other ZK stack chains.',
       sharedEscrow: {

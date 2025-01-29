@@ -1,8 +1,8 @@
 {
   "name": "allbridge",
   "chain": "ethereum",
-  "blockNumber": 20785156,
-  "configHash": "0xbb6df1e0d3fe72e802a7e35707c91911adf6b32e8ae8e5e8ca91cd7edb592d16",
+  "blockNumber": 21723681,
+  "configHash": "0xaf03b60016afcda3d9ddc459329d032404d8bdeea67bdbc378015ef02ebfbf83",
   "contracts": [
     {
       "name": "GasOracle",
@@ -28,7 +28,7 @@
       "values": {
         "$immutable": true,
         "chainId": 1,
-        "otherChainIds": "0x0000010101010101010101010000000000000000000000000000000000000000",
+        "otherChainIds": "0x0000010101010101010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "derivedName": "Messenger"
@@ -87,28 +87,26 @@
             "members": []
           }
         },
-        "accRewardPerShareP": "895095638480028852",
-        "adminFeeAmount": 7260606974,
+        "accRewardPerShareP": "1083504370947232914",
+        "adminFeeAmount": 14760508008,
         "adminFeeShareBP": 2000,
         "balanceRatioMinBP": 1000,
         "canDeposit": 1,
         "canWithdraw": 1,
-        "d": 9917865452,
+        "d": 4229753210,
         "decimals": 3,
         "feeShareBP": 15,
-        "getPrice": 9990,
-        "getY": [
-          55219293611088, 39047371400578, 31882943974507, 27612095604307
-        ],
+        "getPrice": 9988,
+        "getY": [15380007045969, 10875919067282, 8880534050757, 7691047956027],
         "name": "Allbridge LP",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "reserves": 9815551954,
+        "reserves": 4190068186,
         "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDT",
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "tokenBalance": 5052203970,
-        "totalSupply": 9917429499,
-        "vUsdBalance": 4865704265
+        "tokenBalance": 2164979954,
+        "totalSupply": 4228996248,
+        "vUsdBalance": 2064802206
       }
     },
     {
@@ -121,7 +119,7 @@
       "values": {
         "$immutable": true,
         "chainId": 1,
-        "otherChainIds": "0x0000010001010100010101010000000000000000000000000000000000000000",
+        "otherChainIds": "0x0000010001010100010101010001000000000000000000000000000000000000",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "derivedName": "WormholeMessenger"
@@ -178,28 +176,28 @@
             "members": []
           }
         },
-        "accRewardPerShareP": "1122288684932117625",
-        "adminFeeAmount": 3215683279,
+        "accRewardPerShareP": "1338465061338040792",
+        "adminFeeAmount": 17681022672,
         "adminFeeShareBP": 2000,
         "balanceRatioMinBP": 1000,
         "canDeposit": 1,
         "canWithdraw": 1,
-        "d": 5917417564,
+        "d": 6529342980,
         "decimals": 3,
         "feeShareBP": 15,
-        "getPrice": 9962,
+        "getPrice": 9989,
         "getY": [
-          25449145284395, 17996119078021, 14694305940526, 12726033756260
+          29496922396095, 20858418222640, 17031418853973, 14750073393887
         ],
         "name": "Allbridge LP",
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "reserves": 5908603835,
+        "reserves": 6293832786,
         "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDC",
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "tokenBalance": 3182895308,
-        "totalSupply": 5916568965,
-        "vUsdBalance": 2734938073
+        "tokenBalance": 3335746174,
+        "totalSupply": 6528249557,
+        "vUsdBalance": 3193634544
       }
     },
     {

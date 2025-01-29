@@ -104,6 +104,12 @@
           "via": []
         },
         {
+          "permission": "configure",
+          "to": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
+          "description": "manage the whitelist of addresses.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
           "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "via": []
@@ -590,6 +596,11 @@
           "permission": "configure",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist."
+        },
+        {
+          "permission": "configure",
+          "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
+          "description": "manage the whitelist of addresses."
         }
       ]
     }

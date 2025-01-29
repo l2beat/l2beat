@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x7931340304b7563d8c82f3843773ec9d4e0a0504
+Generated with discovered.json: 0xd736970d8df850999330f41ea339a8663e282877
+
+# Diff at Wed, 29 Jan 2025 09:51:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5741cb966172a3b26ba8279dd9fe4323805a53c2 block: 21721209
+- current block number: 21721209
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21721209 (main branch discovery), not current.
+
+```diff
+    contract GRVTTransactionFilterer (0x3Cd52B238Ac856600b22756133eEb31ECb25109a) {
+    +++ description: None
+      issuedPermissions.4:
++        {"permission":"upgrade","to":"0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5","via":[]}
+      issuedPermissions.3.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.3.to:
+-        "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5"
++        "0xF29bFff344c7ef0186432fE30C39fda0cca0550b"
+      issuedPermissions.3.description:
++        "manage the whitelist of addresses."
+    }
+```
+
+Generated with discovered.json: 0x828b4c785ebeb4d554e814ff682f6c733052cd6d
 
 # Diff at Tue, 28 Jan 2025 06:33:43 GMT:
 

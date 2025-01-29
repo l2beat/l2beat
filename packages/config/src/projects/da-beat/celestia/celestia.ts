@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 import { SP1Blobstream } from './SP1Blobstream'
 
 export const blobstream = [SP1Blobstream]
@@ -21,7 +21,6 @@ export const celestia: BlockchainDaLayer = {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],
       repositories: ['https://github.com/celestiaorg'],
-      apps: [],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/CelestiaOrg',
@@ -143,7 +142,7 @@ export const celestia: BlockchainDaLayer = {
   },
   pruningWindow: 86400 * 30, // 30 days in seconds
   throughput: {
-    size: 2000, // 2 MB
+    size: 8000, // 8 MB
     frequency: 6, // 6 seconds
   },
   risks: {
@@ -158,4 +157,29 @@ export const celestia: BlockchainDaLayer = {
       coingeckoId: 'celestia',
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet launch',
+      url: 'https://blog.celestia.org/celestia-mainnet-is-live/',
+      date: '2023-10-31T14:00:00Z',
+      description: 'Celestia mainnet launches.',
+      type: 'general',
+    },
+    {
+      title: 'Ginger upgrade',
+      url: 'https://blog.celestia.org/ginger/',
+      date: '2024-12-12T00:00:00Z',
+      description:
+        'Celestia Ginger upgrade cuts the block time in half from 12 to 6 seconds.',
+      type: 'general',
+    },
+    {
+      title: 'Block size increase to 8MB',
+      url: 'https://x.com/celestia/status/1881756463317860430/',
+      date: '2025-01-28T00:00:00Z',
+      description:
+        'Celestia onchain governance votes to increase the block size from 2MB to 8MB.',
+      type: 'general',
+    },
+  ],
 }

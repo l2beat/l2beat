@@ -1,6 +1,4 @@
-import type { Layer2 } from '../../layer2s'
-import type { Layer3 } from '../../layer3s'
-import type { UsedInProject } from '../types'
+import type { Layer2, Layer3, UsedInProject } from '../../../types'
 
 export function toUsedInProject(projects: (Layer2 | Layer3)[]) {
   return projects.map(toUsedIn)

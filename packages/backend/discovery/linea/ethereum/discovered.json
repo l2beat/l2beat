@@ -240,6 +240,11 @@
         {
           "permission": "configure",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel transactions that are waiting in the Timelock."
+        },
+        {
+          "permission": "configure",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions in the Timelock."
         },
         {
@@ -580,8 +585,20 @@
         {
           "permission": "configure",
           "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "description": "propose transactions in the Timelock.",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
         },
         {
           "permission": "configure",
@@ -643,6 +660,12 @@
       "proxyType": "gnosis safe zodiac module",
       "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
         {
           "permission": "configure",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",

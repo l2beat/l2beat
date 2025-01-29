@@ -19,7 +19,7 @@ export function getAssociatedTokenWarning({
   if (associatedTokens.length === 1) {
     const what = `The ${associatedTokens[0]} token associated with ${name}`
     return {
-      content: `${what} accounts for ${percent} of the TVS!`,
+      value: `${what} accounts for ${percent} of the TVS!`,
       sentiment,
     }
   }
@@ -31,7 +31,7 @@ export function getAssociatedTokenWarning({
   const what = `The ${joined} tokens associated with ${name}`
 
   return {
-    content: `${what} account for ${percent} of the TVS!`,
+    value: `${what} account for ${percent} of the TVS!`,
     sentiment,
   }
 }

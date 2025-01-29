@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import type { Layer3 } from './types'
 
 export const anomaly: Layer3 = upcomingL3({
   id: 'anomaly',
@@ -17,10 +17,7 @@ export const anomaly: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://anomalygames.ai/'],
-      apps: [],
       documentation: ['https://docs.anomalygames.ai/'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/anomalygamesinc'],
     },
   },

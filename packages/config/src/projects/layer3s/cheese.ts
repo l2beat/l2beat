@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from '../layer3s'
 
 export const cheese: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
@@ -30,7 +30,6 @@ export const cheese: Layer3 = underReviewL3({
       ],
       documentation: ['https://docs.cheesechain.lol/'],
       explorers: ['https://fetascan.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/layerofcheese',
         'https://t.me/cheesegateway',

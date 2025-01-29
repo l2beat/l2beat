@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf4a2ba2fd94a56f138e3f7046ea71111b26ee9aa
+Generated with discovered.json: 0x3085d9b67acb58b979c0dcf47d1a8c4a37ec9a67
 
-# Diff at Tue, 28 Jan 2025 15:41:23 GMT:
+# Diff at Wed, 29 Jan 2025 09:52:46 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@74b593a4e23a0f1eeb37e9554e9a6178c76f8286 block: 21715800
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5741cb966172a3b26ba8279dd9fe4323805a53c2 block: 21715800
 - current block number: 21715800
 
 ## Description

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const network3: Layer2 = upcomingL2({
   id: 'network3',
@@ -15,12 +15,9 @@ export const network3: Layer2 = upcomingL2({
     category: 'Validium',
     links: {
       websites: ['https://network3.io/'],
-      apps: [],
       documentation: [
         'https://litepaper.network3.ai/~/changes/0jJxEcDKtGZ0s8Ew29KS',
       ],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/network3_ai',
         'https://discord.gg/q4cHgxZUCH',

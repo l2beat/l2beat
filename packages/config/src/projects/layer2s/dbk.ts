@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dbk')
 
@@ -18,10 +18,8 @@ export const dbk: Layer2 = opStackL2({
       'DeBank Chain is an OP stack Layer 2 on Ethereum that is deeply integrated into the DeBank ecosystem, allowing bridging directly from inside the Rabby Wallet.',
     links: {
       websites: ['https://dbkchain.io/'],
-      apps: [],
       documentation: ['https://docs.dbkchain.io/'],
       explorers: ['https://scan.dbkchain.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/dbkchain',
         'https://debank.com/official/117425',

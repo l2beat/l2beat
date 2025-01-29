@@ -1,4 +1,26 @@
-Generated with discovered.json: 0xcf8cb878f46cf38e12be1e93b5bc50e427004f01
+Generated with discovered.json: 0x4572f666d165de7cd1ada70c327e3d91f6548235
+
+# Diff at Tue, 28 Jan 2025 15:49:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 299812098
+- current block number: 300202969
+
+## Description
+
+Pauser vote removed. Heartbeat txes are coming again from the address.
+
+## Watched changes
+
+```diff
+    contract HyperliquidBridge (0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7) {
+    +++ description: Single contract containing all the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions.
+      values.getLockersVotingLock.0:
+-        "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
+    }
+```
+
+Generated with discovered.json: 0x06ea91b4f79ba32cd93174c222dcba5c239a9625
 
 # Diff at Mon, 27 Jan 2025 12:25:17 GMT:
 

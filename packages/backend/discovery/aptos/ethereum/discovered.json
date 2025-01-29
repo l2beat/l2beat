@@ -1,8 +1,8 @@
 {
   "name": "aptos",
   "chain": "ethereum",
-  "blockNumber": 21264260,
-  "configHash": "0x291cf5a36f8aa3d7720fa466ff4353464d16a7f01409e08d26ada147e4e19aaf",
+  "blockNumber": 21723791,
+  "configHash": "0x0c6806b55432622cb853beaad71f30ab56cd61f5ec225430a7fc58e98d888ab2",
   "contracts": [
     {
       "name": "LayerZero Proof Library",
@@ -157,7 +157,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 820,
+        "nonce": 884,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -302,17 +302,18 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+          "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+          "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-          "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
-          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-          "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 189,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 219,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -320,17 +321,18 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
     { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
     { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
     { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
-    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
     { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
     { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
     { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
     { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
     { "address": "0x7C8D1Db01130acEEc5fF892c99a18c4b4BAdC326" },
     { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" },
     { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" }
   ],
   "abis": {

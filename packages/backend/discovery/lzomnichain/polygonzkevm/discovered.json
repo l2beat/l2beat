@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "polygonzkevm",
-  "blockNumber": 14728552,
-  "configHash": "0x5431ef445e0e00f97a85ed79d0c9d2a253ab7cbbc32974df5f4c946e241e62a8",
+  "blockNumber": 19516552,
+  "configHash": "0x737ceaf86e4f35f8897670a83634ca06220c9d81b6a6fa06ca78453a9cf0c35e",
   "contracts": [
     {
       "name": "",
@@ -75,7 +75,7 @@
         "getChainId": 1101,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 45,
+        "nonce": 94,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"

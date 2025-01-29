@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const palm: Layer2 = upcomingL2({
   id: 'palm',
@@ -19,7 +19,6 @@ export const palm: Layer2 = upcomingL2({
       apps: ['https://app.palm.io/bridge', 'https://uniswap-v3.scroll.io'],
       documentation: ['https://docs.palm.io/'],
       explorers: ['https://explorer.palm.io/'],
-      repositories: [],
       socialMedia: ['https://twitter.com/palmnetwork3'],
     },
   },

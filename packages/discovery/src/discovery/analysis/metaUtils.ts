@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import {
   type ContractFieldSeverity,
@@ -8,7 +8,7 @@ import {
   get$Admins,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { uniqBy } from 'lodash'
+import { groupBy, uniqBy } from 'lodash'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
   DiscoveryContractField,
@@ -71,19 +71,29 @@ export function mergePermissions(
   b: PermissionConfiguration[] = [],
 ): PermissionConfiguration[] | undefined {
   const encodeKey = (v: PermissionConfiguration): string => {
-    return `${v.type}-${v.target.toString()}`
+    return `${v.type}-${v.target.toString()}-${v.condition ?? ''}`
   }
 
-  const accumulator: Map<string, PermissionConfiguration> = new Map()
-  for (const entry of a.concat(b)) {
-    const key = encodeKey(entry)
-    const comparisonEntry = accumulator.get(key) ?? entry
-    if (comparisonEntry.delay <= entry.delay) {
-      accumulator.set(key, entry)
+  const result: PermissionConfiguration[] = []
+  const grouping = groupBy(a.concat(b), encodeKey)
+  for (const key in grouping) {
+    const allEntries = grouping[key] ?? []
+    const highestDelay = allEntries.reduce(
+      (a, b) => Math.max(a, b.delay),
+      -Infinity,
+    )
+    const entries = allEntries.filter((e) => e.delay === highestDelay)
+
+    const withDescription = entries.filter((e) => e.description !== undefined)
+    if (withDescription.length > 0) {
+      result.push(...withDescription)
+    } else if (entries.length > 0) {
+      const entry = entries.find((e) => e.description === undefined)
+      assert(entry !== undefined)
+      result.push(entry)
     }
   }
 
-  const result = [...accumulator.values()]
   return result.length === 0 ? undefined : result
 }
 

@@ -4,7 +4,7 @@ import {
   type DaChallengeMechanism,
   type DaLayerRisks,
   type DaServiceDaLayer,
-  type DataAvailabilityLayer,
+  type TableReadyValue,
   type UsedInProject,
   daLayers,
   ethereumDaLayer,
@@ -49,7 +49,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   isPublic: boolean
   economicSecurity: EconomicSecurityData | undefined
   risks: DaLayerRisks
-  fallback: DataAvailabilityLayer | undefined
+  fallback: TableReadyValue | undefined
   challengeMechanism: DaChallengeMechanism | undefined
   tvs: number
   bridges: DaBridgeSummaryEntry[]

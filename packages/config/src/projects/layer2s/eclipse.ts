@@ -14,8 +14,8 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -43,7 +43,6 @@ export const eclipse: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
-      apps: [],
       documentation: ['https://docs.eclipse.xyz/'],
       explorers: ['https://explorer.eclipse.xyz/'],
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],

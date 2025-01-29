@@ -2,9 +2,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('grvt')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -23,7 +23,7 @@ export const grvt: Layer2 = zkStackL2({
     name: 'GRVT',
     slug: 'grvt',
     tvlWarning: {
-      content:
+      value:
         'L2BEAT is currently unable to track the TVL of the GRVT Validium due to the lack of a public rpc / explorer.',
       sentiment: 'neutral',
     },
@@ -33,8 +33,6 @@ export const grvt: Layer2 = zkStackL2({
       websites: ['https://grvt.io'],
       apps: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
       documentation: ['https://help.grvt.io/en'], // https://docs.grvt.io/ is private
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/grvt_io',
         'https://discord.gg/3jsVPwaGeB',
