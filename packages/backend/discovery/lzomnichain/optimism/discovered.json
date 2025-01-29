@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "optimism",
   "blockNumber": 131239060,
-  "configHash": "0xea47bff8fa06953693db9c1f8b5e711d35b05ec512bb4b0875713e3410d79bdb",
+  "configHash": "0x8449d68da5abc432bc07b9d57358e19dbf1e41cbcec81a6bb0692b21b8b76f5a",
   "contracts": [
     {
       "name": "FPValidator",
