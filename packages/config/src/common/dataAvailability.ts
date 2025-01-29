@@ -1,8 +1,14 @@
-import type {
-  DataAvailabilityConfig,
-  DataAvailabilityLayer,
-  ProjectDataAvailability,
-} from '../types'
+import type { ProjectDataAvailability, TableReadyValue } from '../types'
+
+export interface DataAvailabilityConfig {
+  layers: DataAvailabilityLayer[]
+  bridge: TableReadyValue
+  mode: TableReadyValue
+}
+
+export interface DataAvailabilityLayer extends TableReadyValue {
+  fallbackDescription?: string
+}
 
 export function addSentimentToDataAvailability(
   data: DataAvailabilityConfig,

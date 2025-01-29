@@ -2,35 +2,35 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.6666666666666666
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
+    orderHint: 0.6666666666666666
     sentiment: "bad"
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -345600
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -345600
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: 3848712
     description: "Anyone can become a Proposer after 44d 13h of inactivity from the currently whitelisted Proposers."
+    orderHint: 3848712
     secondLine: "44d 13h delay"
     sentiment: "good"
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 345600
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 4d delay on this operation."
+    orderHint: 345600
     secondLine: "4d delay"
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 2
     description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 38d 4h challenge period."
+    orderHint: 2
     secondLine: "38d 4h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
@@ -41,33 +41,33 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.6666666666666666
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 2/3 that is tasked with protecting and supplying the data."
+    orderHint: 0.6666666666666666
     sentiment: "bad"
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -604800
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: 3848712
     description: "Anyone can become a Proposer after 44d 13h of inactivity from the currently whitelisted Proposers."
+    orderHint: 3848712
     sentiment: "good"
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 388800
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 4d 12h delay on this operation."
+    orderHint: 388800
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: 2
     description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 38d 4h challenge period."
+    orderHint: 2
     secondLine: "38d 4h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
