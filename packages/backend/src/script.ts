@@ -73,8 +73,9 @@ async function main() {
 
   const config = arbitrumConfig
 
-  const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
-  const tvs = await localExecutor.run(config, [timestamp])
+  // const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
+  const timestamp = UnixTime.now()
+  const tvs = await localExecutor.run(config, [timestamp], true)
 
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')

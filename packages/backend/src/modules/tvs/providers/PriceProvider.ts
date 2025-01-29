@@ -21,4 +21,24 @@ export class PriceProvider {
 
     return prices[0].value
   }
+
+  async getLatestPrices(tickers: string[]): Promise<Map<string, number>> {
+    const coingeckoIds = tickers.map((ticker) =>
+      CoingeckoId(tickerToCoingeckoId(ticker, tokenList)),
+    )
+
+    const prices = await this.client.getLatestPrices(coingeckoIds)
+
+    const result = new Map<string, number>()
+
+    for (const ticker of tickers) {
+      const price = prices.get(
+        CoingeckoId(tickerToCoingeckoId(ticker, tokenList)),
+      )
+      assert(price !== undefined, `${ticker}: Price not found`)
+      result.set(ticker, price)
+    }
+
+    return result
+  }
 }

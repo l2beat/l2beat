@@ -30,11 +30,27 @@ export class DataFormulaExecutor {
     prices: PriceConfig[],
     amounts: AmountConfig[],
     timestamps: UnixTime[],
+    latestMode: boolean,
   ) {
+    /** Optimization to fetch block for timestamp only once per chain */
+    let blockNumbersToTimestamps: Map<number, Map<string, number>> | undefined
+
+    if (latestMode) {
+      blockNumbersToTimestamps = await this.getLatestBlockNumbers(
+        amounts,
+        timestamps[0],
+      )
+    } else {
+      blockNumbersToTimestamps = await this.getBlockNumbersForTimestamps(
+        amounts,
+        timestamps,
+      )
+    }
+    assert(blockNumbersToTimestamps)
+
     for (const timestamp of timestamps) {
-      /** Optimization to fetch block for timestamp only once per chain */
-      // TODO: save it in storage
-      const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
+      const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
+      assert(blockNumbers)
 
       for (const index in amounts) {
         this.logger.info(
@@ -71,20 +87,31 @@ export class DataFormulaExecutor {
         }
       }
 
-      for (const index in prices) {
-        this.logger.info(
-          `Processing price ${Number(index) + 1} of ${prices.length}`,
+      if (latestMode) {
+        const latestPrices = await this.priceProvider.getLatestPrices(
+          prices.map((p) => p.ticker),
         )
-        const price = prices[index]
 
-        const cachedValue = await this.storage.getPrice(price.id, timestamp)
-        if (cachedValue !== undefined) {
-          this.logger.info(`Cached value found for ${price.id}`)
-          continue
+        for (const price of prices) {
+          const latest = latestPrices.get(price.ticker)
+          assert(latest, `${price.ticker}: No latest price found`)
+
+          await this.storage.writePrice(price.ticker, timestamp, latest)
         }
+      } else {
+        for (const price of prices) {
+          const cachedValue = await this.storage.getPrice(
+            price.ticker,
+            timestamp,
+          )
+          if (cachedValue !== undefined) {
+            this.logger.info(`Cached value found for ${price.ticker}`)
+            continue
+          }
 
-        const v = await this.fetchPrice(price, timestamp)
-        await this.storage.writePrice(price.id, timestamp, v)
+          const v = await this.fetchPrice(price, timestamp)
+          await this.storage.writePrice(price.ticker, timestamp, v)
+        }
       }
     }
   }
@@ -162,18 +189,40 @@ export class DataFormulaExecutor {
     }
   }
 
-  async getBlockNumbers(amounts: AmountConfig[], timestamp: UnixTime) {
-    const uniqueChains = [
-      ...new Set(
-        amounts
-          .filter(
-            (x) => x.type === 'balanceOfEscrow' || x.type === 'totalSupply',
-          )
-          .map((x) => x.chain),
-      ).values(),
-    ]
+  async getLatestBlockNumbers(amounts: AmountConfig[], timestamp: UnixTime) {
+    const result = new Map<string, number>()
 
-    return await this.getTimestampToBlockNumbersMapping(uniqueChains, timestamp)
+    const chains = extractUniqueChains(amounts)
+
+    for (const chain of chains) {
+      const block = this.blockProviders.get(chain)
+      assert(block, `${chain}: No BlockProvider configured`)
+      this.logger.info(
+        `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+      )
+      const latestBlock = await block.getLatestBlockNumber()
+      result.set(chain, latestBlock)
+    }
+
+    return new Map([[timestamp.toNumber(), result]])
+  }
+
+  async getBlockNumbersForTimestamps(
+    amounts: AmountConfig[],
+    timestamps: UnixTime[],
+  ) {
+    const uniqueChains = extractUniqueChains(amounts)
+
+    const result = new Map<number, Map<string, number>>()
+
+    for (const timestamp of timestamps) {
+      result.set(
+        timestamp.toNumber(),
+        await this.getTimestampToBlockNumbersMapping(uniqueChains, timestamp),
+      )
+    }
+
+    return result
   }
 
   async getTimestampToBlockNumbersMapping(
@@ -194,4 +243,13 @@ export class DataFormulaExecutor {
 
     return result
   }
+}
+function extractUniqueChains(amounts: AmountConfig[]) {
+  return [
+    ...new Set(
+      amounts
+        .filter((x) => x.type === 'balanceOfEscrow' || x.type === 'totalSupply')
+        .map((x) => x.chain),
+    ).values(),
+  ]
 }
