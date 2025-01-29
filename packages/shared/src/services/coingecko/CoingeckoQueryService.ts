@@ -177,10 +177,6 @@ export class CoingeckoQueryService {
       coingeckoIds.length > i * CoingeckoClient.COINS_MARKET_PAGE_SIZE;
       i++
     ) {
-      console.log(
-        i * CoingeckoClient.COINS_MARKET_PAGE_SIZE,
-        (i + 1) * CoingeckoClient.COINS_MARKET_PAGE_SIZE,
-      )
       const p = await this.coingeckoClient.getCoinsMarket(
         coingeckoIds.slice(
           i * CoingeckoClient.COINS_MARKET_PAGE_SIZE,

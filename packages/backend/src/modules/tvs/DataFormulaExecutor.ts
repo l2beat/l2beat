@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -52,7 +52,7 @@ export class DataFormulaExecutor {
       const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
       assert(blockNumbers)
 
-      let promises = amounts.map(async (amount) => {
+      const promises = amounts.map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
@@ -79,34 +79,51 @@ export class DataFormulaExecutor {
             break
           }
         }
-      }
+
+        await this.storage.writeAmount(amount.id, timestamp, value)
+      })
 
       if (latestMode) {
-        const latestPrices = await this.priceProvider.getLatestPrices(
-          prices.map((p) => p.ticker),
+        promises.push(
+          (async () => {
+            const latestPrices = await this.priceProvider.getLatestPrices(
+              prices.map((p) => p.ticker),
+            )
+
+            for (const price of prices) {
+              const latest = latestPrices.get(price.ticker)
+              assert(
+                latest !== undefined,
+                `${price.ticker}: No latest price found`,
+              )
+
+              await this.storage.writePrice(price.ticker, timestamp, latest)
+            }
+          })(),
         )
-
-        for (const price of prices) {
-          const latest = latestPrices.get(price.ticker)
-          assert(latest, `${price.ticker}: No latest price found`)
-
-          await this.storage.writePrice(price.ticker, timestamp, latest)
-        }
       } else {
         for (const price of prices) {
-          const cachedValue = await this.storage.getPrice(
-            price.ticker,
-            timestamp,
+          promises.push(
+            (async () => {
+              const cachedValue = await this.storage.getPrice(
+                price.ticker,
+                timestamp,
+              )
+              if (cachedValue !== undefined) {
+                this.logger.info(`Cached value found for ${price.ticker}`)
+                return
+              }
+              const v = await this.fetchPrice(price, timestamp)
+              await this.storage.writePrice(price.ticker, timestamp, v)
+            })(),
           )
-          if (cachedValue !== undefined) {
-            this.logger.info(`Cached value found for ${price.ticker}`)
-            continue
-          }
-
-          const v = await this.fetchPrice(price, timestamp)
-          await this.storage.writePrice(price.ticker, timestamp, v)
         }
       }
+
+      this.logger.info(`Fetching data...`)
+      console.time('Data fetched')
+      await Promise.all(promises)
+      console.timeEnd('Data fetched')
     }
   }
 
