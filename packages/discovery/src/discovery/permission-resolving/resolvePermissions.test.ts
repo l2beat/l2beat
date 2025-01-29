@@ -217,6 +217,41 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('one actor, one contract, multiple configures', () => {
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelock', [
+        edge('configure', 'actor', { description: 'can zig', delay: 100 }),
+        edge('configure', 'actor', { description: 'can zag', delay: 200 }),
+      ]),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        path: [
+          pathElem({
+            address: 'timelock',
+            gives: 'configure',
+            description: 'can zig',
+            delay: 100,
+          }),
+          pathElem({ address: 'actor' }),
+        ],
+      },
+      {
+        path: [
+          pathElem({
+            address: 'timelock',
+            gives: 'configure',
+            description: 'can zag',
+            delay: 200,
+          }),
+          pathElem({ address: 'actor' }),
+        ],
+      },
+    ])
+  })
+
   it('one actor, four contracts, two timelocks with same delays', () => {
     const graph: Node<string>[] = [
       node('actor'),

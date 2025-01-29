@@ -359,6 +359,12 @@
         {
           "permission": "configure",
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
           "via": []
         }
@@ -582,6 +588,12 @@
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
+          "via": []
         }
       ],
       "receivedPermissions": [
@@ -616,12 +628,22 @@
         {
           "permission": "configure",
           "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
+          "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+        },
+        {
+          "permission": "configure",
+          "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
           "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
         },
         {
           "permission": "configure",
           "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
+        },
+        {
+          "permission": "configure",
+          "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
+          "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
