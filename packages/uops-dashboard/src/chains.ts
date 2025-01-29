@@ -28,7 +28,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     name: 'Abstract',
     blockchainApi: {
       type: 'rpc',
-      url: 'https://api.abscan.org/api',
+      url: 'https://api.mainnet.abs.xyz',
     },
     getBlockLink: (blockNumber: number) =>
       `https://abscan.org/block/${blockNumber}`,
