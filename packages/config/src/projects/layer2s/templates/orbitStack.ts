@@ -316,7 +316,7 @@ const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
 
-// Add blobstream delay
+// TO DO: Add blobstream delay when timelock is enabled
 const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
