@@ -1,6 +1,18 @@
 {
   "ethereum": [
     {
+      "symbol": "KNINE",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE"
+    },
+    {
+      "symbol": "BONE",
+      "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9"
+    },
+    {
+      "symbol": "LEASH",
+      "address": "0x27C70Cd1946795B66be9d954418546998b546634"
+    },
+    {
       "symbol": "ANIME",
       "address": "0x4DC26fC5854e7648a064a4ABD590bBE71724C277"
     },
