@@ -32,7 +32,8 @@ export class BalanceProvider {
       return 0
     }
 
-    return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
+    // we want to to have 2 decimals precision
+    return bigIntToNumber(response.toString(), decimals)
   }
 
   async getNativeAssetBalance(
@@ -50,6 +51,6 @@ export class BalanceProvider {
       return 0
     }
 
-    return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
+    return bigIntToNumber(response.toString(), decimals)
   }
 }

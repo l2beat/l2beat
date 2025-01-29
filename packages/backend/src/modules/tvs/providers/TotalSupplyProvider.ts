@@ -25,6 +25,6 @@ export class TotalSupplyProvider {
       blockNumber,
     )
 
-    return Number(BigInt(response.toString()) / 10n ** BigInt(decimals))
+    return bigIntToNumber(response.toString(), decimals)
   }
 }

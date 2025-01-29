@@ -17,6 +17,8 @@ export interface HashedFileContent {
   content: string
 }
 
+const cache: Map<string, Hash256> = new Map()
+
 // Flatten the first (non-proxy) source file.
 // This functions is used to find "matching" contract templates.
 // This handles gross majority of cases and works very well
@@ -52,7 +54,9 @@ export function flattenFirstSource(
   return output
 }
 
-export function flatteningHash(source: ContractSource): string | undefined {
+export function contractFlatteningHash(
+  source: ContractSource,
+): string | undefined {
   if (!source.isVerified) {
     return undefined
   }
@@ -67,11 +71,21 @@ export function flatteningHash(source: ContractSource): string | undefined {
   const content =
     input.length === 0
       ? Object.values(source.files).join('\n')
-      : formatIntoHashable(
-          flattenStartingFrom(source.name, input, source.remappings),
-        )
+      : flattenStartingFrom(source.name, input, source.remappings)
 
-  return sha2_256bit(content)
+  return flatteningHash(content)
+}
+
+export function flatteningHash(source: string): Hash256 {
+  const blake = createHash('blake2s256').update(source).digest('hex')
+  const cached = cache.get(blake)
+  if (cached !== undefined) {
+    return cached
+  }
+
+  const value = sha2_256bit(formatIntoHashable(source))
+  cache.set(blake, value)
+  return value
 }
 
 export function formatIntoHashable(source: string) {

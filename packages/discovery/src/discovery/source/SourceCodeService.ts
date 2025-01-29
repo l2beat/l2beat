@@ -1,7 +1,7 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
-import { flatteningHash, sha2_256bit } from '../../flatten/utils'
+import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import type { IProvider } from '../provider/IProvider'
 import { deduplicateAbi } from './deduplicateAbi'
@@ -93,7 +93,7 @@ export class SourceCodeService {
     item: ContractSource,
     manualSourcePath: string | undefined,
   ): string | undefined {
-    const hash = flatteningHash(item)
+    const hash = contractFlatteningHash(item)
     if (hash === undefined && manualSourcePath !== undefined) {
       return sha2_256bit(manualSourcePath)
     }

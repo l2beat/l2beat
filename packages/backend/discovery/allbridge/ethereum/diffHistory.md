@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x5212641163941350330b12fb5fecd02ffcba8cc5
+
+# Diff at Tue, 28 Jan 2025 14:41:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 20785156
+- current block number: 21723681
+
+## Description
+
+this diff is pretty smol, almost missed it, but discomon misses nothing. allbridge concatenate their supported chainIds abstracted as simple indexes, which makes them uniquely unreadable tbh frfr. But i would interpret this as there was a single new supported chainId added here (index 14 if i can count).
+
+## Watched changes
+
+```diff
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA) {
+    +++ description: None
+      values.otherChainIds:
+-        "0x0000010101010101010101010000000000000000000000000000000000000000"
++        "0x0000010101010101010101010001000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract WormholeMessenger (0x7f02294f065A605C8D21D9812b8d1De7E5E1da74) {
+    +++ description: None
+      values.otherChainIds:
+-        "0x0000010001010100010101010000000000000000000000000000000000000000"
++        "0x0000010001010100010101010001000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xf8f46606c276ee98184796e6c21c9fd54a0b14b4
 
 # Diff at Mon, 14 Oct 2024 10:49:06 GMT:
