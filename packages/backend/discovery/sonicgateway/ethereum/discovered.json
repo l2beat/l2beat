@@ -1,8 +1,8 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 21722405,
-  "configHash": "0x20da264322f69d58d3c04d574368fba110536b7e072f518358c22c38fbae5422",
+  "blockNumber": 21730042,
+  "configHash": "0x9046921f957a76c36d5b45174d3aba3437afa901241f80136b87aa2fb076836f",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -18,6 +18,14 @@
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
         "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "totalWeight": 800,
+        "validator1Weight": 100,
+        "validator2Weight": 100,
+        "validator3Weight": 100,
+        "validator4Weight": 100,
+        "validator5Weight": 100,
+        "validator6Weight": 100,
+        "validator7Weight": 100,
+        "validator8Weight": 100,
         "validatorAddress": [
           "0x0000000000000000000000000000000000000000",
           "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
@@ -84,7 +92,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -169,7 +177,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 5665369,
+        "lastBlockNum": 5770800,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -191,9 +199,9 @@
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 5665369,
-        "lastState": "0x2a2797a2095301162dc00d7c79df0eae4a3fa70b6f78303f8dafdba80f94c109",
-        "lastUpdateTime": 1738057859,
+        "lastBlockNum": 5770800,
+        "lastState": "0x8df9d05dc0b90cdcc5f82b02513b8184a923552ee99fabd59acd44af602c3cbb",
+        "lastUpdateTime": 1738149695,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       }
     },

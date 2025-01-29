@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x6f0218c07664d70c0a8360add6c05fa835addcf4
+Generated with discovered.json: 0x2e8747bc43da47282370286ff14d80680c344bee
 
-# Diff at Tue, 28 Jan 2025 10:24:16 GMT:
+# Diff at Wed, 29 Jan 2025 12:13:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21722405
+- current block number: 21730042
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial Discovery: Standard TokenBridge validated by 6/8 Validators and secured by a 3/4 Multisig.
 
 ## Initial discovery
 

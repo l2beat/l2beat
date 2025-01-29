@@ -12,45 +12,50 @@ export const sonicgateway: Bridge = {
   id: ProjectId('sonicgateway'),
   createdAt: new UnixTime(1738059875), // 2025-01-28T10:24:35+00:00
   display: {
-    name: 'Portal (Wormhole)',
-    slug: 'portal',
+    name: 'Sonic Gateway',
+    slug: 'sonicgateway',
     links: {
-      websites: ['https://wormhole.com/'],
-      documentation: [
-        'https://portalbridge.com/docs/',
-        'https://docs.wormhole.com/wormhole',
-      ],
-      explorers: ['https://wormholescan.io/'],
-      apps: ['https://portalbridge.com'],
-      repositories: ['https://github.com/wormhole-foundation/wormhole'],
+      websites: ['https://gateway.soniclabs.com/'],
+      documentation: ['https://docs.soniclabs.com/sonic/sonic-gateway'],
+      explorers: [],
+      apps: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
+      repositories: [],
       socialMedia: [
-        'https://discord.gg/wormholecrypto',
-        'https://t.me/wormholecrypto',
-        'https://x.com/wormhole',
-        'https://youtube.com/@wormholecrypto',
+        'https://x.com/SonicLabs',
+        'https://t.me/SonicAnnouncements',
+        'https://discord.gg/3Ynr2QDSnB',
+        'https://reddit.com/r/0xSonic/',
       ],
     },
     description:
-      'The Portal token bridge is built on top of Wormhole, a message passing protocol for enabling and validating cross-chain communication.',
-    detailedDescription:
-      'A specialized network of external nodes called Guardians are the source of truth for all such messages. The bridge escrow contracts are governed by the same set of Guardians that run the underlying Wormhole message protocol.',
+      'The Sonic Gateway is a token bridge built for token transfers between Ethereum and Sonic. It has a quasi-symmetrical design for two-way bridging but converts Ethereum-locked FTM into S on Sonic.',
     category: 'Token Bridge',
   },
   config: {
     escrows: [
-      {
-        address: EthereumAddress('0x3ee18B2214AFF97000D974cf647E7C347E8fa585'), // Escrows to various chains
-        sinceTimestamp: new UnixTime(1631535967),
-        tokens: '*',
-        chain: 'ethereum',
-      },
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20'),
+        tokens: [
+          'FTM',
+          'USDT',
+          'USDC',
+          'EURC',
+          'WETH',
+          'DOLA',
+          'SILO',
+          'UNI',
+          'CRV',
+        ],
+        description:
+          'This is the central escrow that locks tokens on the Ethereum side of the Sonic Gateway.',
+      }),
     ],
   },
   riskView: {
     validatedBy: {
       value: 'Third Party',
       description:
-        'Transfers need to be signed offchain by a set of 2/3 of Guardians and then relayed to the destination chain.',
+        'Transfers need to be signed by a threshold of 6/8 Validators and then relayed to the destination chain.',
       sentiment: 'bad',
     },
     sourceUpgradeability: {
@@ -59,25 +64,10 @@ export const sonicgateway: Bridge = {
         'The code that secures the system can be changed arbitrarily and without notice.',
       sentiment: 'bad',
     },
-    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
+    destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    destination: [
-      'Acala',
-      'Algorand',
-      'Aurora',
-      'Avalanche',
-      'Binance Smart Chain',
-      'Celo',
-      'Ethereum',
-      'Fantom',
-      'Karura',
-      'Klaytn',
-      'Moonbeam',
-      'Near',
-      'Oasis',
-      'Polygon',
-    ],
+    destination: ['Sonic'],
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
@@ -85,8 +75,8 @@ export const sonicgateway: Bridge = {
         'This is a type of Token Bridge that locks tokens in the escrow contracts on the source chain and mints tokens at the destination. What differentiates this solution is that the cross-chain message is sent via the Wormhole protocol, in which emitted messages on one chain are observed by a network of nodes (Wormhole: Guardians) and then verified. After its verification, the message is submitted to the destination chain for processing. Since the Guardian network is essential to the security of the Wormhole protocol, Guardians can tap into additional sources of truth apart from the events emitted at the source chain. The Wormhole Gateway, a Cosmos-SDK chain, serves as a hub that can perform additional standardized checks on metadata like VAA format and global token balances and flows.',
       references: [
         {
-          text: 'Docs: Wormhole architecture',
-          href: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
+          title: 'Docs: Wormhole architecture',
+          url: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
         },
       ],
       risks: [],
@@ -97,8 +87,8 @@ export const sonicgateway: Bridge = {
         'Validation process takes place in an external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on a threshold of VAAs, users can withdraw funds on the other end of the bridge.',
       references: [
         {
-          text: 'WormholeCore contract: function verifyVM()',
-          href: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
+          title: 'WormholeCore contract: function verifyVM()',
+          url: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
         },
       ],
       risks: [
@@ -122,8 +112,8 @@ export const sonicgateway: Bridge = {
         'The type of token received on the destination chain depends on the token: If it is native to this chain, the user will receive the canonical token. If the bridged token is not native to the destination chain the user will receive a wrapped version. The token contract in this case is called BridgeToken and is upgradable.',
       references: [
         {
-          text: 'BridgeToken contract implementation',
-          href: 'https://etherscan.io/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6#code',
+          title: 'BridgeToken contract implementation',
+          url: 'https://etherscan.io/address/0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6#code',
         },
       ],
       risks: [
@@ -140,7 +130,7 @@ export const sonicgateway: Bridge = {
       discovery.getContractDetails(
         'WormholeCore',
         'Governance contract storing the current Guardian set and providing a facility to verify cross-chain messages by verifying Guardians signatures. \
-        Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
+           Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
       ),
       discovery.getContractDetails(
         'TokenBridge',
@@ -176,17 +166,17 @@ export const sonicgateway: Bridge = {
   ],
   milestones: [
     {
-      name: 'Wormhole introduces NTT for $W',
+      title: 'Wormhole introduces NTT for $W',
       date: '2024-04-25T00:00:00.00Z',
-      link: 'https://wormhole.com/docs/learn/messaging/native-token-transfers/overview/',
+      url: 'https://wormhole.com/docs/learn/messaging/native-token-transfers/overview/',
       description:
         'Native Token Transfers (NTT) is a multichain composable token standard developed by Wormhole.',
       type: 'general',
     },
     {
-      name: 'Contracts hacked for $326M',
+      title: 'Contracts hacked for $326M',
       date: '2022-02-03T00:00:00.00Z',
-      link: 'https://rekt.news/wormhole-rekt/',
+      url: 'https://rekt.news/wormhole-rekt/',
       type: 'incident',
     },
   ],

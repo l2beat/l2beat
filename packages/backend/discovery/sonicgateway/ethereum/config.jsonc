@@ -19,7 +19,21 @@
         "getWithdrawalSlotIndex",
         "proxiableUUID"
       ],
-      "ignoreRelatives": ["bridge"]
+      "ignoreRelatives": ["bridge"],
+      "fields": {
+        "exitAdministrator": {
+          "severity": "HIGH"
+        },
+        "proofVerifier": {
+          "severity": "HIGH"
+        },
+        "stateOracle": {
+          "severity": "HIGH"
+        },
+        "deadState": {
+          "severity": "HIGH"
+        }
+      }
     },
     "TokenPairs": {
       "ignoreMethods": ["proxiableUUID"]
@@ -32,6 +46,63 @@
         "validatorAddress": {
           "handler": {
             "type": "array"
+          }
+        },
+        // manual check of weights
+        "validator1Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x92E33222A1389aAf89C0794643fBBC7E679a6Dad"]
+          }
+        },
+        "validator2Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572"]
+          }
+        },
+        "validator3Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x32744b98cC03A76C0559e905a31E8474a31729c1"]
+          }
+        },
+        "validator4Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011"]
+          }
+        },
+        "validator5Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65"]
+          }
+        },
+        "validator6Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x8406de45bfAca854d08377ca1436C6b4785b4D79"]
+          }
+        },
+        "validator7Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x3Dd6C793AbA45738e531639977a292A3A8E32C9D"]
+          }
+        },
+        "validator8Weight": {
+          "handler": {
+            "type": "call",
+            "method": "function validatorWeight(address validatorId) view returns (uint256 weight)",
+            "args": ["0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"]
           }
         }
       }
