@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2c597af9d290c4e2917a43da0d96ffaa5b347965
+Generated with discovered.json: 0x42ccc1f410353649368f0d6223f119255b8596ca
 
-# Diff at Wed, 29 Jan 2025 13:45:34 GMT:
+# Diff at Wed, 29 Jan 2025 14:53:51 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 21628459
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@74b593a4e23a0f1eeb37e9554e9a6178c76f8286 block: 21628459
 - current block number: 21730569
 
 ## Description
@@ -97,8 +97,6 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 +        "can add and remove strategies"
       template:
 +        "eigenlayer/RegistryCoordinator"
-      receivedPermissions:
-+        [{"permission":"configure","from":"0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","description":"can approve the replacement of churned operators from a quorum"}]
     }
 ```
 
@@ -202,54 +200,56 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 ```diff
     contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
     +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
-      issuedPermissions.20:
-+        {"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
       issuedPermissions.19:
-+        {"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
++        {"permission":"upgrade","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
       issuedPermissions.18:
-+        {"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
++        {"permission":"upgrade","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
       issuedPermissions.17:
-+        {"permission":"configure","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","description":"can pause the DA bridge","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"upgrade","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
       issuedPermissions.16:
-+        {"permission":"configure","to":"0xEFca484E497a9de170Da32abfa11650957dD2a95","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0xFEA47018D632A77bA579846c840d5706705Dc598","description":"can pause the DA bridge","via":[{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.15:
-+        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","via":[]}
++        {"permission":"configure","to":"0xEFca484E497a9de170Da32abfa11650957dD2a95","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.14:
-+        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer","via":[]}
       issuedPermissions.13:
-+        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.12:
-+        {"permission":"configure","to":"0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0xBE1685C81aA44FF9FB319dD389addd9374383e90","description":"can pause the DA bridge","via":[{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.11:
-+        {"permission":"configure","to":"0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.10:
-+        {"permission":"configure","to":"0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","description":"can confirm batches to the DA bridge.","via":[]}
++        {"permission":"configure","to":"0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.9:
-+        {"permission":"configure","to":"0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","description":"can confirm batches to the DA bridge.","via":[]}
++        {"permission":"configure","to":"0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","description":"can confirm batches to the DA bridge.","via":[]}
       issuedPermissions.8:
-+        {"permission":"configure","to":"0x57af860e3a1C16641CDDDa92898266D2df7Dfa71","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","description":"can confirm batches to the DA bridge.","via":[]}
       issuedPermissions.7:
-+        {"permission":"configure","to":"0x4a3CD82B73821d075799680AcDff3e884B726777","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x57af860e3a1C16641CDDDa92898266D2df7Dfa71","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.6:
-+        {"permission":"configure","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x4a3CD82B73821d075799680AcDff3e884B726777","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.5:
-+        {"permission":"configure","to":"0x454Ef2f69f91527856E06659f92a66f464C1ca4e","description":"can confirm batches to the DA bridge.","via":[]}
++        {"permission":"configure","to":"0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F","description":"can pause the DA bridge","via":[{"address":"0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d","delay":864000},{"address":"0x369e6F597e22EaB55fFb173C6d9cD234BD699111"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.4:
-+        {"permission":"configure","to":"0x34D64c402cA43C1c4B368e16130C64aC245718C6","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x454Ef2f69f91527856E06659f92a66f464C1ca4e","description":"can confirm batches to the DA bridge.","via":[]}
       issuedPermissions.3:
-+        {"permission":"configure","to":"0x2E158da11961426E2A1Cc9e79f40244486b6845C","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x34D64c402cA43C1c4B368e16130C64aC245718C6","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.2:
-+        {"permission":"configure","to":"0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A","description":"can create rewards submissions.","via":[]}
++        {"permission":"configure","to":"0x2E158da11961426E2A1Cc9e79f40244486b6845C","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
       issuedPermissions.1:
-+        {"permission":"configure","to":"0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256","description":"can pause the DA bridge","via":[{"address":"0x5050389572f2d220ad927CcbeA0D406831012390"},{"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}]}
++        {"permission":"configure","to":"0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A","description":"can create rewards submissions.","via":[]}
       issuedPermissions.0.permission:
 -        "upgrade"
 +        "configure"
       issuedPermissions.0.to:
 -        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-+        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      issuedPermissions.0.via.1:
++        {"address":"0x0c431C66F4dE941d089625E5B423D00707977060"}
+      issuedPermissions.0.via.0:
++        {"address":"0x5050389572f2d220ad927CcbeA0D406831012390"}
       issuedPermissions.0.description:
-+        "can approve the replacement of churned operators from a quorum"
++        "can pause the DA bridge"
       template:
 +        "eigenlayer/EigenDAServiceManager"
       description:
@@ -344,7 +344,7 @@ discovery. Values are for block 21628459 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Protocol Council (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    contract EigenLayerProtocolCouncil (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
     +++ description: None
 ```
 

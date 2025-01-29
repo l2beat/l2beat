@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 21730569,
-  "configHash": "0xabc214d111980d571be092df864b2b5187bf0dde20590b3e6111d2aed1b6643f",
+  "configHash": "0x00f4c0998e961f5b9d8b8a2b74bbb16879c182c26912de9052db3ff272bcd2a9",
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -213,13 +213,6 @@
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "configure",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can approve the replacement of churned operators from a quorum"
         }
       ],
       "ignoreInWatchMode": ["registeredOperators"],
@@ -909,7 +902,7 @@
       }
     },
     {
-      "name": "Protocol Council",
+      "name": "EigenLayerProtocolCouncil",
       "address": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1391,12 +1384,6 @@
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "issuedPermissions": [
-        {
-          "permission": "configure",
-          "to": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "description": "can approve the replacement of churned operators from a quorum",
-          "via": []
-        },
         {
           "permission": "configure",
           "to": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
@@ -3700,7 +3687,7 @@
     "eigenlayer/BLSApkRegistry": "0x999140dae47630da82029a120093e00e0ede6ffc6f01249bfe56d5775e9f5358",
     "eigenlayer/DelegationManager": "0x0b175e41427b8f36011bf976432888f9a1298e1857cdd39380ec3b0de868ae5f",
     "eigenlayer/EIGEN token": "0xa47d59e05f42fc2ca6509d9ae33c4f00491666cdf2c18f6fd94097dd0872dec7",
-    "eigenlayer/EigenDAServiceManager": "0x5472b178d2f5ba6edceaed32b3be0cba0a6e97fd88cc68861bb5b7c4a710ecd9",
+    "eigenlayer/EigenDAServiceManager": "0x44f1b704199bfb42496ec4946aac0414509198177322a4d8b86c72cef3e450ae",
     "eigenlayer/EigenPod": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
     "eigenlayer/EigenPodManager": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
     "eigenlayer/EjectionManager": "0xd643b56b0ca22e302c9c5fa85d122883ba5dee74356f3282c8269714f633ead6",

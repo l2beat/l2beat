@@ -44,16 +44,6 @@
         ]
       }
     },
-    "registryCoordinator": {
-      "target": {
-        "permissions": [
-          {
-            "type": "configure",
-            "description": "can approve the replacement of churned operators from a quorum"
-          }
-        ]
-      }
-    },
     "pauserRegistry": {
       "target": {
         "permissions": [
