@@ -2,21 +2,21 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
+    orderHint: Infinity
     sentiment: "good"
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
@@ -26,8 +26,8 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition. The system currently operates with a single whitelisted challenger."
+    orderHint: Infinity
     secondLine: "2d challenge period"
     sentiment: "bad"
     value: "Fraud proofs (1R, ZK)"
