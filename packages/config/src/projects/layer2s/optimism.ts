@@ -335,7 +335,7 @@ export const optimism: Layer2 = {
       description:
         'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
-      definingMetric: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
+      orderHint: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(

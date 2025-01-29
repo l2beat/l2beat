@@ -28,7 +28,6 @@ export {
 } from './projects/badges'
 export { bridges } from './projects/bridges'
 export {
-  DaCommitteeSecurityRisk,
   daLayers,
   ethereumDaLayer,
   toUsedInProject,

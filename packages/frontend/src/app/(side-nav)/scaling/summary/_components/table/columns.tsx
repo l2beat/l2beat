@@ -9,13 +9,13 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { sortStages } from '~/components/table/sorting/functions/stage-sorting'
+import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
@@ -40,7 +40,7 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
@@ -127,16 +127,15 @@ export const scalingSummaryValidiumAndOptimiumsColumns = [
         return <NoDataBadge />
       }
       return (
-        <TwoRowCell>
-          <TwoRowCell.First>{latestValue.layer.value}</TwoRowCell.First>
-          {ctx.row.original.dataAvailability && (
-            <TwoRowCell.Second>
-              {latestValue.bridge.value === 'None'
+        <TableValueCell
+          value={{
+            ...latestValue.layer,
+            secondLine:
+              latestValue.bridge.value === 'None'
                 ? 'No bridge'
-                : latestValue.bridge.value}
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
+                : latestValue.bridge.value,
+          }}
+        />
       )
     },
   }),

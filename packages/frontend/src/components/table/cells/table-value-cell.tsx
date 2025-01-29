@@ -15,12 +15,12 @@ import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
 
 interface Props {
-  risk: TableReadyValue | undefined
+  value: TableReadyValue | undefined
   emptyMode?: 'em-dash' | 'no-info'
 }
 
-export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
-  if (!risk) {
+export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
+  if (!value) {
     if (emptyMode === 'em-dash') {
       return (
         <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -31,46 +31,46 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
     return <NoInfoCell />
   }
 
-  if (risk.sentiment === 'UnderReview') {
+  if (value.sentiment === 'UnderReview') {
     return <UnderReviewBadge />
   }
 
   const trigger = (
     <TwoRowCell>
       <TwoRowCell.First className="flex items-center gap-1">
-        <SentimentText sentiment={risk.sentiment ?? 'neutral'}>
-          {risk.value}
+        <SentimentText sentiment={value.sentiment ?? 'neutral'}>
+          {value.value}
         </SentimentText>
-        {risk.warning && (
+        {value.warning && (
           <RoundedWarningIcon
             className={cn(
               'size-3.5 md:size-4',
-              sentimentToFillColor(risk.warning.sentiment),
+              sentimentToFillColor(value.warning.sentiment),
             )}
           />
         )}
       </TwoRowCell.First>
-      {risk.secondLine && (
-        <TwoRowCell.Second>{risk.secondLine}</TwoRowCell.Second>
+      {value.secondLine && (
+        <TwoRowCell.Second>{value.secondLine}</TwoRowCell.Second>
       )}
     </TwoRowCell>
   )
 
-  if (risk.description) {
+  if (value.description) {
     return (
       <Tooltip>
         <TooltipTrigger>{trigger}</TooltipTrigger>
         <TooltipContent>
-          {risk.warning && (
+          {value.warning && (
             <WarningBar
               className="mb-2"
-              text={risk.warning.value}
+              text={value.warning.value}
               icon={RoundedWarningIcon}
-              color={sentimentToWarningBarColor(risk.warning.sentiment)}
+              color={sentimentToWarningBarColor(value.warning.sentiment)}
               ignoreMarkdown
             />
           )}
-          {!!risk.description ? risk.description : null}
+          {!!value.description ? value.description : null}
         </TooltipContent>
       </Tooltip>
     )
