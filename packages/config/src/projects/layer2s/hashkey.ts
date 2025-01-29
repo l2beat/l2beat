@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('hashkey')
 const genesisTimestamp = new UnixTime(1734347135)
 
 export const hashkey = opStackL2({
-  createdAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
+  addedAt: new UnixTime(1736518370), // 2025-01-10T17:09:00Z
   discovery,
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

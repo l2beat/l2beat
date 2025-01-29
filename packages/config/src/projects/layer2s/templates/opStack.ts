@@ -195,7 +195,7 @@ function opStackCommon(
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
-    | 'provider'
+    | 'stack'
     | 'category'
     | 'warning'
   >
@@ -289,7 +289,7 @@ function opStackCommon(
         fraudProofType === 'Permissionless')
           ? 'opfp'
           : undefined,
-      provider: 'OP Stack',
+      stack: 'OP Stack',
       category:
         templateVars.display.category ??
         (postsToEthereum ? 'Optimistic Rollup' : 'Optimium'),
@@ -386,8 +386,7 @@ function opStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
-    riskView:
-      templateVars.riskView ?? getRiskView(templateVars, daProvider, portal),
+    riskView: templateVars.riskView ?? getRiskView(templateVars, daProvider),
     stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
     dataAvailability: decideDA(daProvider, nativeDA),
   }
@@ -609,8 +608,8 @@ function describeOPFP({
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
-            text: 'OP stack specification: Fault Dispute Game',
-            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+            title: 'OP stack specification: Fault Dispute Game',
+            url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
       },
@@ -635,8 +634,8 @@ function describeOPFP({
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).`,
         references: [
           {
-            text: 'Fraud Proof Wars: OPFP',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+            title: 'Fraud Proof Wars: OPFP',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
           },
         ],
       },
@@ -656,7 +655,6 @@ function getRiskView(
       ...(daProvider === undefined
         ? RISK_VIEW.DATA_ON_CHAIN
         : daProvider.riskView),
-      sources: [{ contract: portal.name, references: [] }],
     },
     sequencerFailure: {
       // the value is inside the node config, but we have no reference to it
@@ -665,7 +663,6 @@ function getRiskView(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       ),
       secondLine: formatDelay(HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS),
-      sources: [{ contract: portal.name, references: [] }],
     },
   }
 }
@@ -700,13 +697,9 @@ function getRiskViewStateValidation(
 function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
 ): ScalingProjectRiskViewEntry {
-  const portal = getOptimismPortal(templateVars)
   const finalizationPeriod = getFinalizationPeriod(templateVars)
 
-  return {
-    ...RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod),
-    sources: [{ contract: portal.name, references: [] }],
-  }
+  return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
 }
 
 function getRiskViewProposerFailure(
@@ -714,15 +707,8 @@ function getRiskViewProposerFailure(
 ): ScalingProjectRiskViewEntry {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
-    case 'None': {
-      const l2OutputOracle =
-        templateVars.l2OutputOracle ??
-        templateVars.discovery.getContract('L2OutputOracle')
-      return {
-        ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-        sources: [{ contract: l2OutputOracle.name, references: [] }],
-      }
-    }
+    case 'None':
+      return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissioned':
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
@@ -801,13 +787,13 @@ function getTechnology(
       references: [
         ...technologyDA(daProvider, usesBlobs).references,
         {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
         },
         ...explorerReferences(explorerUrl, [
-          { text: 'BatchInbox - address', address: sequencerInbox },
+          { title: 'BatchInbox - address', address: sequencerInbox },
           {
-            text: `${portal.name}.sol - source code, depositTransaction function`,
+            title: `${portal.name}.sol - source code, depositTransaction function`,
             address: safeGetImplementation(portal),
           },
         ]),
@@ -819,12 +805,12 @@ function getTechnology(
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         ...explorerReferences(explorerUrl, [
           {
-            text: `${portal.name}.sol - source code, depositTransaction function`,
+            title: `${portal.name}.sol - source code, depositTransaction function`,
             address: safeGetImplementation(portal),
           },
         ]),
@@ -840,8 +826,8 @@ function getTechnology(
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -852,7 +838,7 @@ function getTechnology(
 function getTechnologyOperator(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-): ScalingProjectTechnologyChoice | undefined {
+): ProjectTechnologyChoice | undefined {
   if (templateVars.nonTemplateTechnology?.operator !== undefined) {
     return templateVars.nonTemplateTechnology.operator
   }
@@ -868,11 +854,11 @@ function getTechnologyOperator(
         ...OPERATOR.CENTRALIZED_OPERATOR,
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, CHALLENGER address',
+            title: 'L2OutputOracle.sol - source code, CHALLENGER address',
             address: safeGetImplementation(l2OutputOracle),
           },
           {
-            text: 'L2OutputOracle.sol - source code, PROPOSER address',
+            title: 'L2OutputOracle.sol - source code, PROPOSER address',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -887,7 +873,7 @@ function getTechnologyOperator(
 function getTechnologyStateCorrectness(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-): ScalingProjectTechnologyChoice | undefined {
+): ProjectTechnologyChoice | undefined {
   if (templateVars.nonTemplateTechnology?.stateCorrectness !== undefined) {
     return templateVars.nonTemplateTechnology.stateCorrectness
   }
@@ -912,7 +898,7 @@ function getTechnologyStateCorrectness(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
+            title: 'L2OutputOracle.sol - source code, deleteL2Outputs function',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -936,11 +922,11 @@ function getTechnologyStateCorrectness(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
+            title: 'DisputeGameFactory.sol - Etherscan source code, create() function',
             address: safeGetImplementation(disputeGameFactory),
           },
           {
-            text: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+            title: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
             address: permissionedDisputeGame.address,
           },
         ]),
@@ -964,11 +950,11 @@ function getTechnologyStateCorrectness(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
+            title: 'DisputeGameFactory.sol - Etherscan source code, create() function',
             address: safeGetImplementation(disputeGameFactory),
           },
           {
-            text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
+            title: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
             address: faultDisputeGame.address,
           },
         ]),
@@ -980,12 +966,12 @@ function getTechnologyStateCorrectness(
 function getTechnologyExitMechanism(
   templateVars: OpStackConfigCommon,
   explorerUrl: string | undefined,
-): ScalingProjectTechnologyChoice[] {
+): ProjectTechnologyChoice[] {
   if (templateVars.nonTemplateTechnology?.exitMechanisms !== undefined) {
     return templateVars.nonTemplateTechnology.exitMechanisms
   }
 
-  const result: ScalingProjectTechnologyChoice[] = []
+  const result: ProjectTechnologyChoice[] = []
 
   const portal = getOptimismPortal(templateVars)
   const fraudProofType = getFraudProofType(templateVars)
@@ -1003,15 +989,15 @@ function getTechnologyExitMechanism(
         ),
         references: explorerReferences(explorerUrl, [
           {
-            text: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
+            title: `${portal.name}.sol - source code, proveWithdrawalTransaction function`,
             address: safeGetImplementation(portal),
           },
           {
-            text: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
+            title: `${portal.name}.sol - source code, finalizeWithdrawalTransaction function`,
             address: safeGetImplementation(portal),
           },
           {
-            text: 'L2OutputOracle.sol - source code, PROPOSER check',
+            title: 'L2OutputOracle.sol - source code, PROPOSER check',
             address: safeGetImplementation(l2OutputOracle),
           },
         ]),
@@ -1055,14 +1041,14 @@ function getTechnologyExitMechanism(
         risks: [],
         references: [
           {
-            text: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
@@ -1076,8 +1062,8 @@ function getTechnologyExitMechanism(
     ...EXITS.FORCED('all-withdrawals'),
     references: [
       {
-        text: 'Forced withdrawal from an OP Stack blockchain',
-        href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+        title: 'Forced withdrawal from an OP Stack blockchain',
+        url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
       },
     ],
   })

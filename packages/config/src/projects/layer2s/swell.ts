@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('swell')
 const genesisTimestamp = new UnixTime(1732696703)
 
 export const swell = opStackL2({
-  createdAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
+  addedAt: new UnixTime(1712341625), // 2024-04-05T18:27:05Z
   discovery,
   genesisTimestamp,
   additionalBadges: [Badge.RaaS.AltLayer],

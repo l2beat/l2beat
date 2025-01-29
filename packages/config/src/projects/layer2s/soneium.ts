@@ -7,7 +7,7 @@ const discovery = new ProjectDiscovery('soneium')
 const genesisTimestamp = new UnixTime(1733498411)
 
 export const soneium = opStackL2({
-  createdAt: new UnixTime(1724842746),
+  addedAt: new UnixTime(1724842746),
   discovery,
   genesisTimestamp,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

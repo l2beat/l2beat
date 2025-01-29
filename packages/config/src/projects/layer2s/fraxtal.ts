@@ -17,7 +17,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
-  createdAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
+  addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {
