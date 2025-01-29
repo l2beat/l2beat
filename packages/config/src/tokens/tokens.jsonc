@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "EURC",
+      "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
+    },
+    {
       "symbol": "KNINE",
       "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE"
     },
