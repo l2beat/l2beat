@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 
@@ -61,6 +61,16 @@ export const soneium = opStackL2({
       },
     ],
   },
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb'),
+      name: 'Custom USDC Escrow',
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom externally governed escrow for USDC bridged to Soneium.',
+      tokens: ['USDC'],
+    }),
+  ],
   milestones: [
     {
       title: 'Soneium RPC providers censor IP-infringing tokens',
