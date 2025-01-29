@@ -26,6 +26,8 @@ export class TotalSupplyProvider {
       blockNumber,
     )
 
+    if (response.toString() === '0x') return 0
+
     return bigIntToNumber(response.toString(), decimals)
   }
 }
