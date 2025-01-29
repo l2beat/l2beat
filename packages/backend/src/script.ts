@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { arbitrumConfig } from './modules/tvs/projects/arbitrum'
+import { kintoConfig } from './modules/tvs/projects/kinto'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
@@ -44,7 +44,7 @@ async function main() {
     coingeckoQueryService,
   )
 
-  const chains = ['ethereum', 'arbitrum']
+  const chains = ['ethereum', 'arbitrum', 'kinto', 'base']
   const rpcs = new Map<string, RpcClientPOC>()
   const blockProviders = new Map<string, BlockProvider>()
 
@@ -56,15 +56,15 @@ async function main() {
       logger,
       retryStrategy: 'RELIABLE',
       sourceName: chain,
-      callsPerMinute: 120,
+      callsPerMinute: 12000,
     })
     rpcs.set(
       chain,
-      new RpcClientPOC(
-        rpc,
-        EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        logger,
-      ),
+      new RpcClientPOC(rpc, logger, {
+        multicallV3: EthereumAddress(
+          '0xcA11bde05977b3631167028862bE2a173976CA11',
+        ),
+      }),
     )
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
@@ -81,10 +81,11 @@ async function main() {
     logger,
   )
 
-  const config = arbitrumConfig
+  const config = kintoConfig
 
-  const timestamp = UnixTime.now().toStartOf('hour')
-  const tvs = await localExecutor.run(config, [timestamp])
+  // const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
+  const timestamp = UnixTime.now()
+  const tvs = await localExecutor.run(config, [timestamp], true)
 
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')

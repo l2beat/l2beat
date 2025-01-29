@@ -1,9 +1,9 @@
 import {
-  type DataAvailabilityMode,
   type Project,
   ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
+  type TableReadyValue,
   type WarningWithSentiment,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -59,7 +59,7 @@ export async function getScalingFinalityEntries() {
 export interface ScalingFinalityEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   stack: ScalingProjectStack | undefined
-  dataAvailabilityMode: DataAvailabilityMode | undefined
+  dataAvailabilityMode: TableReadyValue | undefined
   data: {
     timeToInclusion: {
       averageInSeconds: number

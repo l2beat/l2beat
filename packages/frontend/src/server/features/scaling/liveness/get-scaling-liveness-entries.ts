@@ -1,9 +1,9 @@
 import {
-  type DataAvailabilityMode,
   type Project,
   ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
+  type TableReadyValue,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -55,7 +55,7 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
-  dataAvailabilityMode: DataAvailabilityMode | undefined
+  dataAvailabilityMode: TableReadyValue | undefined
   tvsOrder: number
 }
 

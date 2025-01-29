@@ -1,9 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { NoInfoCell } from '~/components/table/cells/no-info-cell'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeCell } from '~/components/table/cells/type-cell'
-import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -12,27 +14,19 @@ const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 
 export const bridgesArchivedColumns = [
   ...getBridgesCommonProjectColumns(columnHelper),
-  columnHelper.accessor('validatedBy', {
+  columnHelper.accessor((e) => adjustTableValue(e.validatedBy), {
     header: 'Validated by',
-    cell: (ctx) => {
-      const validatedBy = ctx.getValue()
-
-      return validatedBy ? <RiskCell risk={validatedBy} /> : <NoInfoCell />
-    },
+    cell: (ctx) => <TableValueCell value={ctx.row.original.validatedBy} />,
     meta: {
       tooltip: 'How are the messages sent via this bridge checked?',
     },
     sortUndefined: 'last',
     sortingFn: (a, b) =>
-      !a.original.validatedBy || !b.original.validatedBy
-        ? -1
-        : sortBySentiment(a.original.validatedBy, b.original.validatedBy),
+      sortTableValues(a.original.validatedBy, b.original.validatedBy),
   }),
   columnHelper.accessor('type', {
     header: 'Type',
-    cell: (ctx) => {
-      return <TypeCell>{ctx.getValue()}</TypeCell>
-    },
+    cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
     meta: {
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',

@@ -13,6 +13,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -25,8 +26,6 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -55,7 +54,7 @@ export interface DAProvider {
   fallback?: DataAvailabilityLayer
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
-  bridge: DataAvailabilityBridge
+  bridge: TableReadyValue
 }
 
 export interface PolygonCDKStackConfig {

@@ -21,10 +21,12 @@ export class TotalSupplyProvider {
 
     const calldata = erc20Interface.encodeFunctionData('totalSupply', [])
 
-    const response = await rpc.callWithBatching(
+    const response = await rpc.callWithMulticall(
       { to: address, data: Bytes.fromHex(calldata) },
       blockNumber,
     )
+
+    if (response.toString() === '0x') return 0
 
     return bigIntToNumber(response.toString(), decimals)
   }
