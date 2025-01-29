@@ -1,16 +1,17 @@
 import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card'
 
 export default function Page() {
   return (
     <>
       <MainPageHeader>About Us</MainPageHeader>
-      <section className="overflow-hidden bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
+      <PrimaryCard>
         <h1 className="mb-4 text-3xl font-bold md:hidden">About Us</h1>
         <p className="mb-6 text-xl font-bold">
           Learn about L2BEAT and its mission
         </p>
         <Details />
-      </section>
+      </PrimaryCard>
     </>
   )
 }
