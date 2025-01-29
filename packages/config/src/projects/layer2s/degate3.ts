@@ -23,10 +23,10 @@ import {
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -91,7 +91,6 @@ export const degate3: Layer2 = {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
-      explorers: [],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',

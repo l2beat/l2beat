@@ -2,9 +2,9 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zksync2')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(

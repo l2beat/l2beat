@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const creator: Layer2 = upcomingL2({
   id: 'creator',
@@ -16,10 +16,6 @@ export const creator: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://oncreator.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/oncreator_'],
     },
   },

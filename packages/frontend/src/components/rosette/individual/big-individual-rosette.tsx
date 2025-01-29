@@ -111,7 +111,7 @@ function RosetteTooltipContent() {
           {context.content?.outerProjectName}
         </span>
         <SentimentText
-          sentiment={content.outer.sentiment}
+          sentiment={content.outer.sentiment ?? 'neutral'}
           vibrant={true}
           className="flex items-center gap-1 font-medium"
         >
@@ -131,7 +131,7 @@ function RosetteTooltipContent() {
           {context.content?.innerProjectName}
         </span>
         <SentimentText
-          sentiment={content.inner.sentiment}
+          sentiment={content.inner.sentiment ?? 'neutral'}
           vibrant={true}
           className="flex items-center gap-1 font-medium"
         >

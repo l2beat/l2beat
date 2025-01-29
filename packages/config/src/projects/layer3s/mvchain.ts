@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import type { Layer3 } from './types'
 
 export const mvchain: Layer3 = upcomingL3({
   id: 'mvchain',
@@ -17,10 +17,6 @@ export const mvchain: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://genso.game/en/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/genso_meta'],
     },
   },

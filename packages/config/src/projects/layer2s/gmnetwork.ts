@@ -2,6 +2,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -11,7 +12,6 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('gmnetwork')
 
@@ -32,11 +32,7 @@ const daResolveWindow = formatSeconds(
 export const gmnetwork: Layer2 = opStackL2({
   addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  additionalBadges: [Badge.RaaS.AltLayer],
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -53,7 +49,6 @@ export const gmnetwork: Layer2 = opStackL2({
       apps: ['https://bridge.gmnetwork.ai/'],
       documentation: ['https://docs.gmnetwork.ai/docs'],
       explorers: ['https://scan.gmnetwork.ai/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/gmnetwork_ai',
         'https://instagram.com/gmnetwork.ai',

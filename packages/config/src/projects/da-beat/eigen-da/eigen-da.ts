@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { DaServiceDaLayer } from '../../../types'
 import { aevo } from '../../layer2s/aevo'
 import { soon } from '../../layer2s/soon'
 import { donatuz } from '../../layer3s/donatuz'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { DaServiceDaLayer } from '../types'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './eigen-da-bridge'
 
@@ -22,7 +22,6 @@ export const eigenDA: DaServiceDaLayer = {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
       repositories: ['https://github.com/Layr-Labs/eigenda'],
-      apps: [],
       explorers: ['https://blobs.eigenda.xyz/'],
       socialMedia: ['https://x.com/eigen_da'],
     },
@@ -102,4 +101,20 @@ export const eigenDA: DaServiceDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'EigenDA launch on mainnet',
+      url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',
+      date: '2024-04-09T00:00:00Z',
+      description: 'EigenLayer and EigenDA launch on the Ethereum mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'EIGEN token unlock',
+      url: 'https://x.com/eigenlayer/status/1840967244408344619',
+      date: '2024-10-01T00:00:00Z',
+      description: 'EIGEN token becomes transferable.',
+      type: 'general',
+    },
+  ],
 }

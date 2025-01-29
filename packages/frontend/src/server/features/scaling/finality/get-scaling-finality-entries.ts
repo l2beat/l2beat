@@ -4,7 +4,7 @@ import {
   ProjectService,
   type ScalingProjectCategory,
   type ScalingProjectStack,
-  type WarningValueWithSentiment,
+  type WarningWithSentiment,
 } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -65,12 +65,12 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
       averageInSeconds: number
       minimumInSeconds: number | undefined
       maximumInSeconds: number
-      warning: WarningValueWithSentiment | undefined
+      warning: WarningWithSentiment | undefined
     }
     stateUpdateDelay:
       | {
           averageInSeconds: number
-          warning: WarningValueWithSentiment | undefined
+          warning: WarningWithSentiment | undefined
         }
       | undefined
     isSynced: boolean

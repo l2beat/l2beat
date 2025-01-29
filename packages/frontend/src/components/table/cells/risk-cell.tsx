@@ -1,4 +1,4 @@
-import type { Sentiment, WarningValueWithSentiment } from '@l2beat/config'
+import type { TableReadyValue } from '@l2beat/config'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
@@ -14,16 +14,8 @@ import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
 
-interface Risk {
-  value: string
-  sentiment: Sentiment
-  description?: string
-  warning?: WarningValueWithSentiment
-  secondLine?: string
-}
-
 interface Props {
-  risk: Risk | undefined
+  risk: TableReadyValue | undefined
   emptyMode?: 'em-dash' | 'no-info'
 }
 
@@ -46,7 +38,9 @@ export function RiskCell({ risk, emptyMode = 'no-info' }: Props) {
   const trigger = (
     <TwoRowCell>
       <TwoRowCell.First className="flex items-center gap-1">
-        <SentimentText sentiment={risk.sentiment}>{risk.value}</SentimentText>
+        <SentimentText sentiment={risk.sentiment ?? 'neutral'}>
+          {risk.value}
+        </SentimentText>
         {risk.warning && (
           <RoundedWarningIcon
             className={cn(

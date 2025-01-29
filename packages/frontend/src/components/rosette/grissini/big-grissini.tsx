@@ -86,7 +86,7 @@ function GrissiniTooltipContent() {
   return (
     <TooltipContent side="bottom" className="w-[300px]">
       <SentimentText
-        sentiment={selectedRisk.sentiment}
+        sentiment={selectedRisk.sentiment ?? 'neutral'}
         className="mb-2 flex items-center gap-1 font-medium"
       >
         {selectedRisk.value}

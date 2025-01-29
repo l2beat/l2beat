@@ -4,8 +4,10 @@ import {
   type ProjectId,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { type Layer2, type Layer3, bridges, layer2s, layer3s } from '../'
+import { bridges } from '../projects/bridges'
+import { layer2s } from '../projects/layer2s'
+import { layer3s } from '../projects/layer3s'
+import type { Layer2, Layer3 } from '../types'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'

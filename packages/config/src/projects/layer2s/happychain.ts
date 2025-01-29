@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const happychain: Layer2 = upcomingL2({
   id: 'happy-chain',
@@ -16,10 +16,6 @@ export const happychain: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://linktr.ee/happychaindevs'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/HappyChainDevs',
         'https://mirror.xyz/0x20Af38e22e1722F97f5A1b5afc96c00EECd566b2',

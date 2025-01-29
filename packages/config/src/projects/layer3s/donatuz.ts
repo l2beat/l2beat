@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL3 } from '../layer2s/templates/opStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('donatuz', 'base')
 
@@ -30,7 +30,6 @@ export const donatuz: Layer3 = opStackL3({
     links: {
       websites: ['https://donatuz.org/'],
       apps: ['https://bridge.donatuz.com'],
-      documentation: [],
       explorers: ['https://explorer.donatuz.com/'],
       repositories: ['https://github.com/Donatuz-Labs'],
       socialMedia: [

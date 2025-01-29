@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const celo: Layer2 = upcomingL2({
   id: 'celo',
@@ -16,7 +16,6 @@ export const celo: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://celo.org/'],
-      apps: [],
       documentation: ['https://docs.celo.org/'],
       explorers: ['https://explorer.celo.org/mainnet/'],
       repositories: ['https://github.com/celo-org'],

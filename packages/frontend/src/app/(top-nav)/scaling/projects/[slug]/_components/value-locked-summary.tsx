@@ -83,10 +83,10 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
               <TooltipTrigger>
                 <RoundedWarningIcon
                   className="size-4"
-                  sentiment={props.tvl?.warning.sentiment}
+                  sentiment={props.tvl.warning.sentiment}
                 />
               </TooltipTrigger>
-              <TooltipContent>{props.tvl?.warning.content}</TooltipContent>
+              <TooltipContent>{props.tvl.warning.value}</TooltipContent>
             </Tooltip>
           ) : null}
         </div>

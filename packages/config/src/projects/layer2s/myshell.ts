@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const myshell: Layer2 = upcomingL2({
   id: 'myshell',
@@ -16,10 +16,7 @@ export const myshell: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://myshell.ai/'],
-      apps: [],
       documentation: ['https://docs.myshell.ai/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/myshell_ai',
         'https://discord.com/invite/myshell',

@@ -79,7 +79,7 @@ export function BridgesProjectStats({ project }: Props) {
         title="Destination"
         value={
           <SentimentText
-            sentiment={project.header.destination.sentiment}
+            sentiment={project.header.destination.sentiment ?? 'neutral'}
             className="text-lg font-medium !leading-none md:text-xl md:font-bold"
           >
             {project.header.destination.value}
@@ -91,7 +91,7 @@ export function BridgesProjectStats({ project }: Props) {
         value={
           project.header.validatedBy ? (
             <SentimentText
-              sentiment={project.header.validatedBy.sentiment}
+              sentiment={project.header.validatedBy.sentiment ?? 'neutral'}
               className="text-lg font-medium !leading-none md:text-xl md:font-bold"
             >
               {project.header.validatedBy.value}

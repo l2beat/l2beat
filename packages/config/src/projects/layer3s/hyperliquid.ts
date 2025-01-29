@@ -13,8 +13,8 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
@@ -77,7 +77,6 @@ export const hyperliquid: Layer3 = {
       apps: ['https://app.hyperliquid.xyz/trade'],
       socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
-      repositories: [],
     },
   },
   config: {
