@@ -8,11 +8,7 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
 import { arbitrumConfig } from './modules/tvs/projects/arbitrum'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
