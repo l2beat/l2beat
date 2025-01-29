@@ -1,24 +1,49 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import type { ProjectTechnologyChoice, ScalingProjectRisk } from '../types'
 
-function REGULAR(
+function REGULAR_WITHDRAWAL(
   type: 'zk' | 'optimistic',
-  proof: 'no proof' | 'merkle proof',
   timeSeconds?: number,
 ): ProjectTechnologyChoice {
-  const finalized = type === 'zk' ? 'proven' : 'finalized'
-  const requires = proof === 'no proof' ? 'does not require' : 'requires'
-  const timeString =
+  // optimistic specific considerations
+  const delay =
     timeSeconds !== undefined
       ? `takes a challenge period of ${formatSeconds(timeSeconds)}`
       : 'usually takes several days'
-  const time =
+  const optimisticConsideration =
     type === 'optimistic'
-      ? ` The process of block finalization ${timeString} to complete.`
+      ? ` The process of settling a block ${delay} to complete.`
       : ''
+  // zk specific considerations
+  const zkConsideration =
+    type === 'zk' ? 'ZK proofs are required to settle blocks.' : ''
   return {
     name: 'Regular exit',
-    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Finally the user submits an L1 transaction to claim the funds. This transaction ${requires} a merkle proof.`,
+    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is settled the funds become available for withdrawal on L1.${optimisticConsideration}${zkConsideration} Finally the user submits an L1 transaction to claim the funds.`,
+    risks: [],
+    references: [],
+  }
+}
+
+function REGULAR_MESSAGING(
+  type: 'zk' | 'optimistic',
+  timeSeconds?: number,
+): ProjectTechnologyChoice {
+  // optimistic specific considerations
+  const delay =
+    timeSeconds !== undefined
+      ? `takes a challenge period of ${formatSeconds(timeSeconds)}`
+      : 'usually takes several days'
+  const optimisticConsideration =
+    type === 'optimistic'
+      ? ` The process of block finalization ${delay} to complete.`
+      : ''
+  // zk specific considerations
+  const zkConsideration =
+    type === 'zk' ? ' ZK proofs are required to settle blocks.' : ''
+  return {
+    name: 'Regular messaging',
+    description: `The user initiates L2->L1 messages by submitting a regular transaction on this chain. When the block containing that transaction is settled, the message becomes available for processing on L1.${optimisticConsideration}${zkConsideration}`,
     risks: [],
     references: [],
   }
@@ -28,7 +53,6 @@ function REGULAR_YIELDING(
   type: 'zk' | 'optimistic',
   timeSeconds?: number,
 ): ProjectTechnologyChoice {
-  const finalized = type === 'zk' ? 'proven' : 'finalized'
   const timeString =
     timeSeconds !== undefined
       ? `takes a challenge period of ${formatSeconds(timeSeconds)}`
@@ -39,13 +63,13 @@ function REGULAR_YIELDING(
       : ''
   return {
     name: 'Regular exit',
-    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Once funds are added to the withdrawal queue, operator must ensure there is enough liquidity for withdrawals. If not, they need to reclaim tokens from Yield Providers.`,
+    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is settled the funds become available for withdrawal on L1.${time} Once funds are added to the withdrawal queue, operator must ensure there is enough liquidity for withdrawals. If not, they need to reclaim tokens from Yield Providers.`,
     risks: [],
     references: [],
   }
 }
 
-function FORCED(
+function FORCED_WITHDRAWAL(
   orHalt?: 'forced-withdrawals' | 'all-withdrawals',
 ): ProjectTechnologyChoice {
   let orHaltString = ''
@@ -53,7 +77,7 @@ function FORCED(
     switch (orHalt) {
       case 'forced-withdrawals':
         orHaltString =
-          ' or halt all messages from L1, including all forced withdrawals and deposits'
+          ' or halt all withdrawals from L1, including all forced withdrawals and deposits'
         break
       case 'all-withdrawals':
         orHaltString =
@@ -64,6 +88,30 @@ function FORCED(
   return {
     name: 'Forced exit',
     description: `If the user experiences censorship from the operator with regular exit they can submit their withdrawal requests directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular exit.`,
+    risks: [],
+    references: [],
+  }
+}
+
+function FORCED_MESSAGING(
+  orHalt?: 'forced-messages' | 'all-messages',
+): ProjectTechnologyChoice {
+  let orHaltString = ''
+  if (orHalt) {
+    switch (orHalt) {
+      case 'forced-messages':
+        orHaltString =
+          ' or halt all messages from L1, including all forced withdrawals and deposits'
+        break
+      case 'all-messages':
+        orHaltString =
+          ' or halt all messages, including forced withdrawals from L1 and regular messages initiated on L2'
+        break
+    }
+  }
+  return {
+    name: 'Forced messaging',
+    description: `If the user experiences censorship from the operator with regular L2->L1 messaging they can submit their messages directly on L1. The system is then obliged to service this request${orHaltString}. Once the force operation is submitted and if the request is serviced, the operation follows the flow of a regular message.`,
     risks: [],
     references: [],
   }
@@ -93,7 +141,7 @@ function EMERGENCY(
 }
 
 const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
-  ...REGULAR('zk', 'no proof'),
+  ...REGULAR_WITHDRAWAL('zk'),
   references: [
     {
       title: 'Withdrawal - StarkEx documentation',
@@ -103,9 +151,9 @@ const STARKEX_REGULAR_PERPETUAL: ProjectTechnologyChoice = {
 }
 
 const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
-  ...REGULAR('zk', 'no proof'),
+  ...REGULAR_WITHDRAWAL('zk'),
   description:
-    REGULAR('zk', 'no proof').description +
+    REGULAR_WITHDRAWAL('zk').description +
     ' When withdrawing NFTs they are minted on L1.',
   references: [
     {
@@ -116,7 +164,7 @@ const STARKEX_REGULAR_SPOT: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
-  ...FORCED(),
+  ...FORCED_WITHDRAWAL(),
   references: [
     {
       title: 'Forced Operations - StarkEx documentation',
@@ -134,7 +182,7 @@ const STARKEX_FORCED_PERPETUAL: ProjectTechnologyChoice = {
 }
 
 const STARKEX_FORCED_SPOT: ProjectTechnologyChoice = {
-  ...FORCED(),
+  ...FORCED_WITHDRAWAL(),
   references: [
     {
       title: 'Forced Operations - StarkEx documentation',
@@ -163,10 +211,10 @@ const OPERATOR_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
 }
 
 const STARKNET_REGULAR: ProjectTechnologyChoice = {
-  ...REGULAR('zk', 'no proof'),
+  ...REGULAR_MESSAGING('zk'),
   description:
-    REGULAR('zk', 'no proof').description +
-    ' Note that the withdrawal request can be censored by the Sequencer.',
+    REGULAR_MESSAGING('zk').description +
+    ' Note that the message request can be censored by the Sequencer.',
   references: [
     {
       title:
@@ -238,9 +286,11 @@ export const RISK_LACK_OF_LIQUIDITY: ScalingProjectRisk = {
 }
 
 export const EXITS = {
-  REGULAR,
+  REGULAR_WITHDRAWAL,
+  REGULAR_MESSAGING,
   REGULAR_YIELDING,
-  FORCED,
+  FORCED_WITHDRAWAL,
+  FORCED_MESSAGING,
   EMERGENCY,
   AUTONOMOUS,
   STARKEX_PERPETUAL: [

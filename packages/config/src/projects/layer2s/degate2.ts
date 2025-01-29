@@ -203,7 +203,7 @@ export const degate2: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Withdraw - DeGate design doc',
@@ -212,7 +212,7 @@ export const degate2: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'Forced Request Handling - DeGate design doc',

@@ -142,7 +142,7 @@ export const bugbuster: Layer3 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },

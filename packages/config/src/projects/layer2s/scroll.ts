@@ -385,7 +385,7 @@ export const scroll: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_MESSAGING('zk'),
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {

@@ -259,7 +259,7 @@ export const loopring: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Withdraw - Loopring design doc',
@@ -268,7 +268,7 @@ export const loopring: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'Forced Request Handling - Loopring design doc',

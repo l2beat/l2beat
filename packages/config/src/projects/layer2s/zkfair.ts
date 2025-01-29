@@ -249,7 +249,7 @@ export const zkfair: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
+        ...EXITS.REGULAR_MESSAGING('zk'),
         references: [
           {
             title:

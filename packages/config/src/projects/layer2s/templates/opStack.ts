@@ -983,9 +983,8 @@ function getTechnologyExitMechanism(
         templateVars.discovery.getContract('L2OutputOracle')
 
       result.push({
-        ...EXITS.REGULAR(
+        ...EXITS.REGULAR_MESSAGING(
           'optimistic',
-          'merkle proof',
           getFinalizationPeriod(templateVars),
         ),
         references: explorerReferences(explorerUrl, [
@@ -1060,7 +1059,7 @@ function getTechnologyExitMechanism(
   }
 
   result.push({
-    ...EXITS.FORCED('all-withdrawals'),
+    ...EXITS.FORCED_MESSAGING('all-messages'),
     references: [
       {
         title: 'Forced withdrawal from an OP Stack blockchain',

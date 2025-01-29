@@ -217,8 +217,8 @@ export const fuel: Layer2 = {
       ],
     },
     exitMechanisms: [
-      EXITS.REGULAR('optimistic', 'merkle proof'),
-      EXITS.FORCED('all-withdrawals'),
+      EXITS.REGULAR_MESSAGING('optimistic'),
+      EXITS.FORCED_MESSAGING('all-messages'),
     ],
     otherConsiderations: [
       {
