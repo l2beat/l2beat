@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('ethernity')
 
 export const ethernity: Layer2 = opStackL2({
   addedAt: new UnixTime(1718182472), // 2024-06-12T08:54:32Z
-  additionalBadges: [Badge.RaaS.Gelato, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],

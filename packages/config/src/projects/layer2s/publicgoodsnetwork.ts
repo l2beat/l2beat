@@ -12,11 +12,7 @@ const discovery = new ProjectDiscovery('publicgoodsnetwork')
 export const publicgoodsnetwork: Layer2 = opStackL2({
   isArchived: true,
   addedAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
-  additionalBadges: [
-    Badge.DA.Celestia,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [
