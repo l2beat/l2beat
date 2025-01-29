@@ -19,7 +19,7 @@ export interface StageTooltipProps {
 
 export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
-  const hasNotice = stageConfig.stage !== 'UnderReview' && !!stageConfig.notice
+
   return (
     <div className="flex max-w-[300px] flex-col py-1">
       <div
@@ -35,15 +35,24 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
           {getStageName(stageConfig.stage)}
         </div>
       </div>
-      {isAppchain && hasNotice && (
-        <div className="mt-2 font-medium">
-          <span className={getStageTextClassname(stageConfig.stage)}>
-            Appchain
-          </span>
-          : This project brings additional app-specific considerations that are
-          not reflected in the stages framework.
-        </div>
-      )}
+      {stageConfig.stage !== 'UnderReview' &&
+      !!stageConfig.additionalConsiderations ? (
+        isAppchain ? (
+          <div className="mt-2">
+            <span
+              className={cn(
+                'font-medium',
+                getStageTextClassname(stageConfig.stage),
+              )}
+            >
+              Appchain
+            </span>
+            : {stageConfig.additionalConsiderations.short}
+          </div>
+        ) : (
+          stageConfig.additionalConsiderations.short
+        )
+      ) : null}
       <HorizontalSeparator className="my-4" />
 
       {stageConfig.stage === 'UnderReview' ? (

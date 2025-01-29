@@ -27,7 +27,12 @@ export interface StageSectionProps extends ProjectSectionProps {
   type: string
   stageConfig: UsableStageConfig
   isAppchain: boolean
-  notice: string | undefined
+  additionalConsiderations:
+    | {
+        short: string
+        long: string
+      }
+    | undefined
 }
 
 export function StageSection({
@@ -36,7 +41,7 @@ export function StageSection({
   type,
   stageConfig,
   isAppchain,
-  notice,
+  additionalConsiderations,
   ...sectionProps
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
@@ -91,7 +96,7 @@ export function StageSection({
         />
         <span> {type}</span>.
       </span>
-      {notice && (
+      {additionalConsiderations && (
         <div className="space-y-4 p-4 text-base">
           {isAppchain && (
             <p>
@@ -99,7 +104,7 @@ export function StageSection({
               <strong>application-specific</strong> might bring additional risk.
             </p>
           )}
-          <p>{notice}</p>
+          <p>{additionalConsiderations.long}</p>
           {isAppchain && (
             <div>
               <div className="text-[13px] font-semibold uppercase leading-none text-secondary">

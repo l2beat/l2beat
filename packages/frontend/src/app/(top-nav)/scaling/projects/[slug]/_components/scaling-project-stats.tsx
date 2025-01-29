@@ -26,7 +26,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   const hasNotice =
     project.stageConfig.stage !== 'UnderReview' &&
     project.stageConfig.stage !== 'NotApplicable' &&
-    !!project.stageConfig.notice
+    !!project.stageConfig.additionalConsiderations
   return (
     <div
       className={cn(

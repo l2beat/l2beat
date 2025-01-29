@@ -228,9 +228,9 @@ export async function getL2ProjectDetails({
         type: project.display.category,
         isUnderReview: project.isUnderReview,
         isAppchain: project.capability === 'appchain',
-        notice:
+        additionalConsiderations:
           project.stage.stage !== 'UnderReview'
-            ? project.stage.notice
+            ? project.stage.additionalConsiderations
             : undefined,
       },
     })

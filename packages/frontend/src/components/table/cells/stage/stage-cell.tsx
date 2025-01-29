@@ -31,7 +31,9 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
       />
     )
   }
-  const hasNotice = stageConfig.stage !== 'UnderReview' && !!stageConfig.notice
+  const hasNotice =
+    stageConfig.stage !== 'UnderReview' &&
+    !!stageConfig.additionalConsiderations
   return (
     <Tooltip>
       <TooltipTrigger className="flex gap-1">
