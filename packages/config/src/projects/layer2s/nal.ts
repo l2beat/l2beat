@@ -4,12 +4,13 @@ import type { Layer2 } from './types'
 
 export const nal: Layer2 = underReviewL2({
   id: 'nal',
-  createdAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  capability: 'universal',
+  addedAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
   display: {
     name: 'Nal',
     slug: 'nal',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'Nal is a general-purpose OP stack chain. It aims to facilitate the creation and trading of new assets, including AIGC and physical-to-digital transformations.',
     purposes: ['Universal'],

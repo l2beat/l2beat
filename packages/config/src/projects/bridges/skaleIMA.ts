@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('skale-ima')
 export const skaleIMA: Bridge = {
   type: 'bridge',
   id: ProjectId('skale-ima'),
-  createdAt: new UnixTime(1684437883), // 2023-05-18T19:24:43Z
+  addedAt: new UnixTime(1684437883), // 2023-05-18T19:24:43Z
   display: {
     name: 'SKALE IMA Bridge',
     slug: 'skale-ima',
@@ -58,8 +58,8 @@ export const skaleIMA: Bridge = {
         'It is a cross-chain BLS threshold bridge that allows users to transfer Eth, ERC20, ERC721, ERC1155 and arbitrary messages between Ethereum and SKALE chains without fees and between SKALE chains without gas fees. Locks/Unlocks on main chain (Ethereum or SKALE chain which is origin of the asset), Burns/Mints on target chain.',
       references: [
         {
-          text: 'Bridging transactions',
-          href: 'https://bridge-docs.orbitchain.io/bridging-transaction',
+          title: 'Bridging transactions',
+          url: 'https://bridge-docs.orbitchain.io/bridging-transaction',
         },
       ],
       risks: [],
@@ -71,8 +71,8 @@ export const skaleIMA: Bridge = {
         'SKALE IMA Bridge operates on SKALE Network nodes for connected SKALE chain. Messages are signed by BLS secret key with an 11 out of 16 threshold, then sent and validated on Ethereum. The validator set signing the message is the same one that is used for the consensus of the SKALE chain, making the bridge as secure as the chain itself. Since the state root is not sent to L1, the bridge and the chain state can diverge.',
       references: [
         {
-          text: 'SKALE IMA Bridge - Overview',
-          href: 'https://docs.skale.network/ima/1.4.x/',
+          title: 'SKALE IMA Bridge - Overview',
+          url: 'https://docs.skale.network/ima/1.4.x/',
         },
       ],
       risks: [],
@@ -85,15 +85,6 @@ export const skaleIMA: Bridge = {
       description:
         'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
       sentiment: 'warning',
-      sources: [
-        {
-          contract: 'MessageProxyForMainnet',
-          references: [
-            'https://etherscan.io/address/0x0AE92a5105111281151b980A0aD680b890bf1944#code#F1#L508',
-            'https://etherscan.io/tx/0xb463ae9bacd3b0ba41eea25bdb51b115858bd9997d631bc26ccbb8a4fc3774c7',
-          ],
-        },
-      ],
     },
     sourceUpgradeability: {
       value: 'Yes',

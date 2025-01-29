@@ -1,4 +1,4 @@
-import { type ScalingProjectReference } from '@l2beat/config'
+import { type ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/diagram-image'
 import {
   type DiagramType,
@@ -18,7 +18,7 @@ export interface MarkdownSectionProps extends ProjectSectionProps {
   content: string
   mdClassName?: string
   risks?: TechnologyRisk[]
-  references?: ScalingProjectReference[]
+  references?: ReferenceLink[]
 }
 
 export function MarkdownSection({

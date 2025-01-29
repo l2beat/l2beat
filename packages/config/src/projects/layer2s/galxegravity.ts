@@ -9,7 +9,7 @@ import type { Layer2 } from './types'
 const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 
 export const galxegravity: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
+  addedAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   associatedTokens: ['G'],
@@ -71,7 +71,7 @@ export const galxegravity: Layer2 = orbitStackL2({
   discoveryDrivenData: true,
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

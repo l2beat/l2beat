@@ -1,12 +1,6 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import {
-  CONTRACTS,
-  MILESTONES,
-  NUGGETS,
-  RISK_VIEW,
-  UPGRADE_MECHANISM,
-} from '../../common'
+import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -92,7 +86,7 @@ const maxTimeVariation = discovery.getContractValue<{
 const selfSequencingDelay = maxTimeVariation.delaySeconds
 
 export const arbitrum: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
     Badge.VM.WasmVM,
     Badge.Stack.Nitro,
@@ -273,8 +267,8 @@ export const arbitrum: Layer2 = orbitStackL2({
       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
       [
         {
-          text: 'Security Council members - Arbitrum Foundation Docs',
-          href: 'https://docs.arbitrum.foundation/security-council-members',
+          title: 'Security Council members - Arbitrum Foundation Docs',
+          url: 'https://docs.arbitrum.foundation/security-council-members',
         },
       ],
     ),
@@ -490,29 +484,13 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateRiskView: {
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_NITRO(
-        l2TimelockDelay,
-        selfSequencingDelay,
-        challengeWindowSeconds,
-        validatorAfkTime,
-        l1TimelockDelay,
-      ),
-      sources: [
-        {
-          contract: 'RollupProxy',
-          references: [
-            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
-          ],
-        },
-        {
-          contract: 'Outbox',
-          references: [
-            'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
-          ],
-        },
-      ],
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+      l2TimelockDelay,
+      selfSequencingDelay,
+      challengeWindowSeconds,
+      validatorAfkTime,
+      l1TimelockDelay,
+    ),
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -560,67 +538,69 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      name: 'Exit window extension to 7 days',
-      link: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      title: 'Exit window extension to 7 days',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2024-10-25T00:00:00Z',
       type: 'general',
     },
     {
-      name: 'ArbOS 32 Emergency upgrade',
-      link: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
+      title: 'ArbOS 32 Emergency upgrade',
+      url: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
       date: '2024-09-25T00:00:00Z',
       description:
         'SecurityCouncil emergency upgrades to fix attack vectors related to Stylus resource pricing.',
       type: 'incident',
     },
     {
-      name: 'ArbOS 31 Bianca upgrade',
-      link: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
+      title: 'ArbOS 31 Bianca upgrade',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616',
       date: '2024-09-03T00:00:00Z',
       description:
         'Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts).',
       type: 'general',
     },
     {
-      name: 'Arbitrum starts using blobs',
-      link: 'https://twitter.com/arbitrum/status/1768306107318178061',
+      title: 'Arbitrum starts using blobs',
+      url: 'https://twitter.com/arbitrum/status/1768306107318178061',
       date: '2024-03-14T00:00:00Z',
       description: 'Arbitrum starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'ARB token airdrop',
-      link: 'https://twitter.com/arbitrum/status/1638888588443111425',
+      title: 'ARB token airdrop',
+      url: 'https://twitter.com/arbitrum/status/1638888588443111425',
       date: '2023-03-23T00:00:00Z',
       description: 'ARB token launched as a governance token for Arbitrum DAO.',
       type: 'general',
     },
     {
-      name: 'Nitro Upgrade',
-      link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
+      title: 'Nitro Upgrade',
+      url: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: '2022-08-31T00:00:00Z',
       description:
         'Upgrade is live, introducing new architecture, increased throughput and lower fees.',
       type: 'general',
     },
     {
-      name: 'Odyssey paused',
-      link: 'https://twitter.com/arbitrum/status/1542159109511847937',
+      title: 'Odyssey paused',
+      url: 'https://twitter.com/arbitrum/status/1542159109511847937',
       date: '2022-06-29T00:00:00Z',
       description:
         'Due of the heavy load being put on the chain, Odyssey program got paused.',
       type: 'incident',
     },
     {
-      name: 'Odyssey started',
-      link: 'https://twitter.com/arbitrum/status/1539292126105706496',
+      title: 'Odyssey started',
+      url: 'https://twitter.com/arbitrum/status/1539292126105706496',
       date: '2022-06-21T00:00:00Z',
       description: 'Incentives program to onboard new users has started.',
       type: 'general',
     },
     {
-      ...MILESTONES.MAINNET_OPEN,
-      link: 'https://twitter.com/arbitrum/status/1432817424752128008',
+      title: 'Mainnet for everyone',
+      description:
+        'Whitelist got removed, there are no restrictions on who can transact with the network.',
+      url: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: '2021-08-31T00:00:00Z',
       type: 'general',
     },

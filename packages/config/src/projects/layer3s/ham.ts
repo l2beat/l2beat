@@ -8,14 +8,10 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('ham', 'base')
 
 export const ham: Layer3 = opStackL3({
-  createdAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
+  addedAt: new UnixTime(1722499160), // 2024-08-01T07:59:20Z
   discovery,
   hostChain: ProjectId('base'),
-  additionalBadges: [
-    Badge.L3ParentChain.Base,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Caldera,
-  ],
+  additionalBadges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

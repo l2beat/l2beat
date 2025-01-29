@@ -4,71 +4,22 @@
   dataAvailability: {
     description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ValidatorTimelock"
-        references: [
-          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120"
-          "https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63"
-        ]
-      }
-      {
-        contract: "GrvtZkEvm"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L267"
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L57"
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121"
-        ]
-      }
-    ]
     value: "External"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "GrvtZkEvm"
-        references: [
-          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L130"
-          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L148"
-        ]
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
     definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
     sentiment: "warning"
-    sources: [
-      {
-        contract: "GrvtZkEvm"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L270"
-        ]
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. The Operator actively uses a TransactionFilterer contract, which requires accounts that enqueue or force transactions from L1 to be whitelisted."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "GrvtZkEvm"
-        references: [
-          "https://etherscan.io/address//0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L240"
-          "https://etherscan.io/address//0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96"
-        ]
-      }
-      {
-        contract: "GRVTTransactionFilterer"
-        references: [
-          "https://etherscan.io/address/0x8319fede99061c6723c86d366a903e8fa3a0f541#code#F1#L29"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
@@ -76,27 +27,6 @@
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
     secondLine: "21h execution delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "ValidatorTimelock"
-        references: [
-          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169"
-        ]
-      }
-      {
-        contract: "GrvtZkEvm"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529"
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F10#L26"
-        ]
-      }
-      {
-        contract: "Verifier"
-        references: [
-          "https://etherscan.io/address/0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66#code#F1#L343"
-        ]
-      }
-    ]
     value: "ZK proofs (ST, SN)"
   }
 }

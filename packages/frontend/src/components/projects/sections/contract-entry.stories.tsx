@@ -40,8 +40,8 @@ const ADMIN = {
 
 const REFERENCES = [
   {
-    href: '#',
-    text: 'Sequencer - Optimism Documentation',
+    url: '#',
+    title: 'Sequencer - Optimism Documentation',
   },
 ]
 

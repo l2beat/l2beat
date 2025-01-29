@@ -40,7 +40,7 @@ type Optionals = {
     technology?: IntegratedDacBridge['technology']
   } & Pick<
     IntegratedDacBridge,
-    | 'createdAt'
+    | 'addedAt'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
@@ -59,7 +59,7 @@ export type DacTemplateVars = Optionals & TemplateSpecific
 export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
   bridge: Pick<
     IntegratedDacBridge,
-    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
   > & {
     membersCount?: number
     requiredMembers?: number

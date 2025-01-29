@@ -1,16 +1,16 @@
-import {
-  type BlockchainDaLayer,
-  type DaServiceDaLayer,
-  type EnshrinedBridge,
-  type EthereumDaLayer,
-  type NoDaBridge,
-  type OnChainDaBridge,
-  type StandaloneDacBridge,
+import type {
+  BlockchainDaLayer,
+  DaServiceDaLayer,
+  EnshrinedBridge,
+  EthereumDaLayer,
+  NoDaBridge,
+  OnChainDaBridge,
+  StandaloneDacBridge,
 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
 import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
@@ -85,7 +85,8 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: layerGrissiniValues,
+      layerGrissiniValues,
+      hideTitle: true,
     },
   })
 
@@ -115,8 +116,9 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: bridgeGrissiniValues,
+      bridgeGrissiniValues,
       hideRisks: daBridge.type === 'NoBridge',
+      hideTitle: true,
     },
   })
 
@@ -161,6 +163,24 @@ export function getRegularDaProjectSections({
   }
 
   const items: ProjectDetailsSection[] = []
+
+  if (
+    !daLayer.isUpcoming &&
+    daLayer.milestones &&
+    daLayer.milestones.length > 0
+  ) {
+    const sortedMilestones = daLayer.milestones.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
+    items.push({
+      type: 'MilestonesAndIncidentsSection',
+      props: {
+        id: 'milestones-and-incidents',
+        title: 'Milestones & Incidents',
+        milestones: sortedMilestones,
+      },
+    })
+  }
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
@@ -217,14 +237,16 @@ type EthereumDetailsParams = {
   daLayer: EthereumDaLayer
   daBridge: EnshrinedBridge
   isVerified: boolean
-  evaluatedGrissiniValues: RosetteValue[]
+  layerGrissiniValues: RosetteValue[]
+  bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getEthereumDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
-  evaluatedGrissiniValues,
+  layerGrissiniValues,
+  bridgeGrissiniValues,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     daLayer,
@@ -255,8 +277,10 @@ export function getEthereumDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
-      grissiniValues: evaluatedGrissiniValues,
+      layerGrissiniValues,
+      bridgeGrissiniValues,
       description: daLayer.display.description,
+      hideTitle: true,
     },
   })
 

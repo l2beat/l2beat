@@ -198,13 +198,16 @@ function getUniqueContractsFromList(
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
-function getProjectContractsForChain(project: Project, chain: string) {
+function getProjectContractsForChain(
+  project: Project,
+  chain: string,
+): ScalingProjectContract[] {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
     isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
-      if (!escrow.newVersion) {
+      if (!escrow.contract) {
         return []
       }
       return { address: escrow.address, ...escrow.contract }

@@ -30,13 +30,9 @@ const daResolveWindow = formatSeconds(
 )
 
 export const gmnetwork: Layer2 = opStackL2({
-  createdAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
+  addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  additionalBadges: [Badge.RaaS.AltLayer],
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -101,12 +97,12 @@ export const gmnetwork: Layer2 = opStackL2({
     `,
       references: [
         {
-          text: 'Alt-DA Specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+          title: 'Alt-DA Specification',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
-          text: 'Security Considerations - Ethresear.ch ',
-          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+          title: 'Security Considerations - Ethresear.ch ',
+          url: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
         },
       ],
       risks: [
@@ -121,7 +117,7 @@ export const gmnetwork: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'IntegratedDacBridge',
       technology: {
         description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

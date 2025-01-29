@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const funki: Layer2 = underReviewL2({
   id: 'funki',
-  createdAt: new UnixTime(1728289959), // 2024-10-07T08:32:39Z
+  capability: 'universal',
+  addedAt: new UnixTime(1728289959), // 2024-10-07T08:32:39Z
   display: {
     name: 'Funki',
     slug: 'funki',
@@ -12,7 +13,7 @@ export const funki: Layer2 = underReviewL2({
       'Funki chain is an OP Stack Optimium on Ethereum reimagining the blockchain experience as an interconnected world brimming with wonder, adventure, and fun.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://funkichain.com'],
       apps: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],

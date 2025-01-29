@@ -22,17 +22,17 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     sortingFn: ({ original: a }, { original: b }) =>
       sortTwoRowCell(
         {
           value: a.category ?? '',
-          secondLine: a.provider && providerMap[a.provider]?.text,
+          secondLine: a.stack && providerMap[a.stack]?.text,
         },
         {
           value: b.category ?? '',
-          secondLine: b.provider && providerMap[b.provider]?.text,
+          secondLine: b.stack && providerMap[b.stack]?.text,
         },
       ),
   }),

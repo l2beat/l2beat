@@ -9,7 +9,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
 export const playblock: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
   hostChain: ProjectId('nova'),
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
@@ -60,7 +60,7 @@ export const playblock: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

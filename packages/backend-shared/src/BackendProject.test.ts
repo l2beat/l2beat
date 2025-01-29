@@ -1,4 +1,4 @@
-import { type ScalingProjectEscrow, layer2s } from '@l2beat/config'
+import { type ProjectEscrow, layer2s } from '@l2beat/config'
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -144,10 +144,8 @@ const getMockToken = (token: Partial<Token>): Token => {
     ...token,
   }
 }
-function getMockEscrow(
-  escrow: Partial<ScalingProjectEscrow>,
-): ScalingProjectEscrow {
-  return mockObject<ScalingProjectEscrow>({
+function getMockEscrow(escrow: Partial<ProjectEscrow>): ProjectEscrow {
+  return mockObject<ProjectEscrow>({
     address: EthereumAddress.random(),
     tokens: '*',
     excludedTokens: [],

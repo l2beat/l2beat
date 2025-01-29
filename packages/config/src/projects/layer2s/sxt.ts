@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const sxt: Layer2 = upcomingL2({
   id: 'sxt',
-  createdAt: new UnixTime(1716819511), // 2024-05-27T14:18:31Z
+  capability: 'universal',
+  addedAt: new UnixTime(1716819511), // 2024-05-27T14:18:31Z
   display: {
     name: 'Space and Time',
     slug: 'sxt',
@@ -12,7 +13,7 @@ export const sxt: Layer2 = upcomingL2({
       "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT hyperchain will serve as a settlement layer and payment hub for data queries.",
     purposes: ['AI', 'Information'],
     category: 'ZK Rollup',
-    provider: 'ZK Stack',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://spaceandtime.io'],
       apps: ['https://app.spaceandtime.ai'],

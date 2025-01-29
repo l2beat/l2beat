@@ -8,7 +8,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('donatuz', 'base')
 
 export const donatuz: Layer3 = opStackL3({
-  createdAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
+  addedAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   hostChain: ProjectId('base'),

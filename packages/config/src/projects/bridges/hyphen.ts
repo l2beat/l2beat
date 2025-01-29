@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('hyphen')
 export const hyphen: Bridge = {
   type: 'bridge',
   id: ProjectId('hyphen'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Hyphen',
     slug: 'hyphen',

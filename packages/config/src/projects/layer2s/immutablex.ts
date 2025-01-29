@@ -70,7 +70,8 @@ const requiredHonestMembersPercentage = (
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.AppChain,
     Badge.DA.DAC,
@@ -84,7 +85,7 @@ export const immutablex: Layer2 = {
     description:
       'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://immutable.com/'],
@@ -130,26 +131,10 @@ export const immutablex: Layer2 = {
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: committee.accounts.length,
-        requiredSignatures: committee.minSigners,
-      }),
-      sources: [
-        {
-          contract: 'StarkExchange',
-          references: [
-            'https://etherscan.io/address/0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2#code#F34#L123',
-          ],
-        },
-        {
-          contract: 'Committee',
-          references: [
-            'https://etherscan.io/address/0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295#code#F1#L63',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
       freezeGracePeriod,
@@ -202,16 +187,16 @@ export const immutablex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Trading is live on Immutable X Marketplace',
-      link: 'https://twitter.com/immutable/status/1380269810525872131?s=21&t=kyMdE6ORI9f76e8aqizlpg',
+      title: 'Trading is live on Immutable X Marketplace',
+      url: 'https://twitter.com/immutable/status/1380269810525872131?s=21&t=kyMdE6ORI9f76e8aqizlpg',
       date: '2021-04-08T00:00:00Z',
       description:
         'Immutable has launched the first phase of its Layer 2 scaling protocol.',
       type: 'general',
     },
     {
-      name: 'IMX Token introduced',
-      link: 'https://www.immutable.com/blog/introducing-imx-to-power-ethereums-first-layer-2-for-nfts',
+      title: 'IMX Token introduced',
+      url: 'https://www.immutable.com/blog/introducing-imx-to-power-ethereums-first-layer-2-for-nfts',
       date: '2022-06-29T00:00:00Z',
       description:
         'Immutable announce IMX, the native ERC-20 utility token of Immutable X.',
@@ -221,7 +206,7 @@ export const immutablex: Layer2 = {
   knowledgeNuggets: [...NUGGETS.STARKWARE],
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       knownMembers: [
         {
           external: false,

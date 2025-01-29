@@ -27,7 +27,8 @@ const withdrawalDelaySeconds = discovery.getContractValue<number>(
 export const eclipse: Layer2 = {
   type: 'layer2',
   id: ProjectId('eclipse'),
-  createdAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
+  capability: 'universal',
+  addedAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
   badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -88,16 +89,19 @@ export const eclipse: Layer2 = {
       description: `Eclipse implements a custom permissioned bridge. Withdrawals need to be actively authorized by a Multisig. Moreover, there is no mechanism to send arbitrary messages from Eclipse back to Ethereum. There is a ${formatSeconds(withdrawalDelaySeconds)} delay for withdrawals.`,
       references: [
         {
-          text: 'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
-          href: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
+          title:
+            'CanonicalBridge.sol - Etherscan source code, authorizeWithdraw() function',
+          url: 'https://etherscan.io/address/0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11#code#F1#L183',
         },
         {
-          text: 'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
-          href: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
+          title:
+            'Mailbox.sol - Etherscan source code, receiveMessage() function calls CanonicalBridge',
+          url: 'https://etherscan.io/address/0x4cef0fa54dc06ce0ea198dab2f57d28a9dee712b#code#F1#L199',
         },
         {
-          text: 'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
-          href: 'https://etherscan.io/address/0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978#code',
+          title:
+            'Treasury.sol - Etherscan source code, emergencyWithdraw() function',
+          url: 'https://etherscan.io/address/0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978#code',
         },
       ],
       risks: [

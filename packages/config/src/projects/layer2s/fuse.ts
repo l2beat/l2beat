@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const fuse: Layer2 = upcomingL2({
   id: 'fuse',
-  createdAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
+  capability: 'universal',
+  addedAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
   display: {
     name: 'Fuse',
     slug: 'fuse',
@@ -12,7 +13,7 @@ export const fuse: Layer2 = upcomingL2({
       'Fuse announced a strategic move to integrate with the Ethereum ecosystem as a Polygon CDK L2.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://fuse.io/'],
       apps: ['https://fuse.io/network'],

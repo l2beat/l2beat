@@ -4,7 +4,8 @@ import type { Layer2 } from './types'
 
 export const capx: Layer2 = upcomingL2({
   id: 'capx',
-  createdAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
+  capability: 'universal',
+  addedAt: new UnixTime(1692958606), // '2023-08-25T10:16:46Z'
   display: {
     name: 'Capx',
     slug: 'capx',
@@ -12,7 +13,7 @@ export const capx: Layer2 = upcomingL2({
       'Capx is a Layer 2 focused on simplifying and reducing the cost of building AI agents.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://capx.ai/'],
       apps: [],

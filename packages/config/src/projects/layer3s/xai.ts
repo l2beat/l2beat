@@ -10,7 +10,7 @@ import type { Layer3 } from './types'
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 export const xai: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
+  addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   hostChain: ProjectId('arbitrum'),
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
@@ -57,28 +57,31 @@ export const xai: Layer3 = orbitStackL3({
       ],
       references: [
         {
-          text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          title: 'How is fraud proven - Arbitrum documentation FAQ',
+          url: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
-          text: 'Arbitrum Glossary: Challenge Period',
-          href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
+          title: 'Arbitrum Glossary: Challenge Period',
+          url: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
         },
         {
-          text: 'RollupUser.sol - Etherscan source code, onlyValidator modifier',
-          href: `https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code`,
+          title:
+            'RollupUser.sol - Etherscan source code, onlyValidator modifier',
+          url: `https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code`,
         },
         {
-          text: 'Referee.sol - Etherscan source code, submitChallenge function',
-          href: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L337',
+          title:
+            'Referee.sol - Etherscan source code, submitChallenge function',
+          url: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L337',
         },
         {
-          text: 'Referee.sol - Etherscan source code, submitAssertionToChallenge function',
-          href: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L428',
+          title:
+            'Referee.sol - Etherscan source code, submitAssertionToChallenge function',
+          url: 'https://arbiscan.io/address/0x254954e3f6bd7443444036bea2d8fe88fdf496c1#code#F53#L428',
         },
         {
-          text: 'Solutions to Delay Attacks on Rollups',
-          href: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
+          title: 'Solutions to Delay Attacks on Rollups',
+          url: 'https://medium.com/offchainlabs/solutions-to-delay-attacks-on-rollups-434f9d05a07a',
         },
       ],
     },
@@ -95,8 +98,8 @@ export const xai: Layer3 = orbitStackL3({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'XAI Mainnet Launch',
-      link: 'https://x.com/XAI_GAMES/status/1744815749410242568',
+      title: 'XAI Mainnet Launch',
+      url: 'https://x.com/XAI_GAMES/status/1744815749410242568',
       date: '2024-01-09T00:00:00Z',
       description: 'XAI launches on Arbitrum One.',
       type: 'general',
@@ -104,7 +107,7 @@ export const xai: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       knownMembers: [
         {
           external: false,

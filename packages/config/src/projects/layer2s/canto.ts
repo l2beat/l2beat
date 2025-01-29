@@ -3,8 +3,9 @@ import { upcomingL2 } from './templates/upcoming'
 import type { Layer2 } from './types'
 
 export const canto: Layer2 = upcomingL2({
-  id: 'canto', // this project should be deleted, because the team is no longer builiding the L2.
-  createdAt: new UnixTime(1690815262), // '2023-07-31T14:54:22Z'
+  id: 'canto',
+  capability: 'universal', // this project should be deleted, because the team is no longer builiding the L2.
+  addedAt: new UnixTime(1690815262), // '2023-07-31T14:54:22Z'
   display: {
     name: 'Canto',
     slug: 'canto',
@@ -12,7 +13,7 @@ export const canto: Layer2 = upcomingL2({
       "Canto is the L1 which will migrate to an Ethereum L2 scaling solution powered by Polygon's CDK dedicated to Real World Assets.",
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://canto.io'],
       apps: ['https://app.canto.io/bridge'],

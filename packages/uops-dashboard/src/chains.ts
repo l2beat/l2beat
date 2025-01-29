@@ -24,6 +24,19 @@ export type Chain = {
 
 export const SUPPORTED_CHAINS: Chain[] = [
   {
+    id: 'abstract',
+    name: 'Abstract',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://api.mainnet.abs.xyz',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://abscan.org/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://abscan.org/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://abscan.org/address/${address}`,
+  },
+  {
     id: 'alephzero',
     name: 'Aleph Zero EVM',
     blockchainApi: {
