@@ -73,9 +73,11 @@ export const sonicgateway: Bridge = {
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `This is a standard Token Bridge that locks tokens in the escrow contract on Ethereum and mints tokens on Sonic. Permissioned relayers need to periodically update the state root in the StateOracle on both sides of the bridge. Referencing the latest state root, a user can then prove their deposit at the destination bridge contract using a merkle proof and receive their tokens. Each state root update must be signed by at least ${validatorThresholdString} validators. The permissioned validator set can be changed with each state update as long as it is signed by ${validatorThresholdString} of the current validator set. 
-        
-        For the special case of the S token (gasToken on Sonic), there is an adapter contract on the Sonic side that escrows S and unlocks the tokens for incoming bridge transactions. The FTM token on the Ethereum side is mapped to the S token on Sonic, which means the token gets 'converted' when bridged in either direction. Since new S or FTM cannot be minted by the bridge, there is a limit to how much can be bridged either way. For other supported tokens, this is not the case because they can be minted on Sonic.`,
+      description: `
+      This is a standard Token Bridge that locks tokens in the escrow contract on Ethereum and mints tokens on Sonic. Permissioned relayers need to periodically update the state root in the StateOracle on both sides of the bridge. Referencing the latest state root, a user can then prove their deposit at the destination bridge contract using a merkle proof and receive their tokens. Each state root update must be signed by at least ${validatorThresholdString} validators. The permissioned validator set can be changed with each state update as long as it is signed by ${validatorThresholdString} of the current validator set.
+      
+      
+      For the special case of the S token (gasToken on Sonic), there is an adapter contract on the Sonic side that escrows S and unlocks the tokens for incoming bridge transactions. The FTM token on the Ethereum side is mapped to the S token on Sonic, which means the token gets 'converted' when bridged in either direction. Since new S or FTM cannot be minted by the bridge, there is a limit to how much can be bridged either way. For other supported tokens, this is not the case because they can be minted on Sonic.`,
       references: [
         {
           title: 'Sonic Documentation: Sonic Gateway',

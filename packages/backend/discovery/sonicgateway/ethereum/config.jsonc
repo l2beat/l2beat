@@ -8,10 +8,12 @@
     "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": "TokenPairs",
     "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "UpdateManager",
     "0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry",
-    "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SonicGatewayMultisig"
+    "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SonicGatewayMultisig",
+    "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SonicGatewayOpsMultisig"
   },
   "overrides": {
     "TokenDeposit": {
+      "description": "Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.",
       "ignoreMethods": [
         "claims",
         "deposits",
@@ -21,6 +23,16 @@
       ],
       "ignoreRelatives": ["bridge"],
       "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "set the proof verifier and the exit administrator."
+              }
+            ]
+          }
+        },
         "exitAdministrator": {
           "severity": "HIGH"
         },
@@ -36,16 +48,151 @@
       }
     },
     "TokenPairs": {
-      "ignoreMethods": ["proxiableUUID"]
+      "description": "Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.",
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        },
+        "acAdmin": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage access control roles."
+              }
+            ]
+          }
+        },
+        "acRegister": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "REGISTER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "add tokens to the whitelist."
+              }
+            ]
+          }
+        },
+        "acUnregister": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "UNREGISTER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "remove tokens from the whitelist."
+              }
+            ]
+          }
+        }
+      }
     },
     "UpdateManager": {
-      "ignoreMethods": ["proxiableUUID"]
+      "description": "Entry point for state (oracle) updates.",
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl"
+          }
+        },
+        "acAdmin": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "manage all access control roles."
+              }
+            ]
+          }
+        },
+        "acFeeSetter": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "FEE_SETTER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "set the fast lane fee."
+              }
+            ]
+          }
+        },
+        "acHeartbeat": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "HEARTBEAT_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
+              }
+            ]
+          }
+        },
+        "acRelay": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "RELAY_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "relay"
+              }
+            ]
+          }
+        },
+        "acRelayAdmin": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "RELAY_ADMIN_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "set permissioned relayers."
+              }
+            ]
+          }
+        }
+      }
     },
     "ValidatorsRegistry": {
+      "description": "Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).",
       "fields": {
         "validatorAddress": {
           "handler": {
             "type": "array"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "validateBridge"
+              }
+            ]
           }
         },
         // manual check of weights
