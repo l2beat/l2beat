@@ -135,6 +135,10 @@ function getCombinations(total: number, required: number) {
 }
 
 function factorial(num: number): number {
+  if (num > 15) {
+    throw new Error(`Factorial will loose accuracy with large numbers: ${num}!`)
+  }
+
   if (num < 0) {
     return -1
   }
