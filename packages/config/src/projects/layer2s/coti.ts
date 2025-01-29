@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const coti: Layer2 = upcomingL2({
   id: 'coti',
@@ -15,11 +15,9 @@ export const coti: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://coti.io/'],
-      apps: [],
       documentation: [
         'https://medium.com/cotinetwork/how-coti-is-gearing-up-for-2024-and-beyond-e0d465794767',
       ],
-      explorers: [],
       repositories: ['https://github.com/coti-io'],
       socialMedia: [
         'https://twitter.com/COTInetwork',

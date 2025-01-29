@@ -80,7 +80,8 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
-    if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+    // TODO: This feels very wrong!
+    if (ctx.row.original.risks.economicSecurity.value === 'None') {
       return (
         <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
           {formatDollarValueNumber(0)}
@@ -215,7 +216,8 @@ function sortSlashableStake(
 }
 
 function slashableStakeToValue(entry: DaSummaryEntry) {
-  if (entry.risks.economicSecurity.type === 'Unknown') {
+  // TODO: This feels very wrong!
+  if (entry.risks.economicSecurity.value === 'None') {
     return 0
   }
 

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const camp: Layer2 = upcomingL2({
   id: 'camp',
@@ -21,7 +21,6 @@ export const camp: Layer2 = upcomingL2({
       explorers: [
         'https://explorerl2new-camp-network-4xje7wy105.t.conduit.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Camp_L2',
         'https://discord.com/invite/GDQRjR2PrY',

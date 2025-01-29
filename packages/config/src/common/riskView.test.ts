@@ -1,12 +1,12 @@
 import { Bytes } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { ScalingProjectRiskViewEntry, Sentiment } from '../types'
+import type { Sentiment, TableReadyValue } from '../types'
 import { pickWorseRisk, sumRisk } from './riskView'
 
 function createFakeRisk(
   sentiment: Sentiment,
   definingMetric?: number,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   return {
     description: 'description',
     value: Bytes.randomOfLength(32).toString(),

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const rise: Layer2 = upcomingL2({
   id: 'rise',
@@ -16,9 +16,7 @@ export const rise: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://riselabs.xyz/'],
-      apps: [],
       documentation: ['https://docs.riselabs.xyz/'],
-      explorers: [],
       repositories: ['https://github.com/risechain'],
       socialMedia: [
         'https://discord.com/invite/4yWVabz63y',

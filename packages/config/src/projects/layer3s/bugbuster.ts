@@ -13,9 +13,9 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
@@ -53,7 +53,6 @@ export const bugbuster: Layer3 = {
         'https://t.me/+G_CPMEhCHC04MzA5',
       ],
       websites: ['https://bugbuster.app/'],
-      apps: [],
       explorers: [
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],

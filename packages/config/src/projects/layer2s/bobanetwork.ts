@@ -2,8 +2,8 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
@@ -19,7 +19,6 @@ export const bobanetwork: Layer2 = opStackL2({
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     links: {
       websites: ['https://boba.network'],
-      apps: [],
       documentation: ['https://docs.boba.network/'],
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],

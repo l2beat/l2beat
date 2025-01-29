@@ -29,10 +29,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
 
@@ -136,7 +136,6 @@ export const apex: Layer2 = {
       websites: ['https://apex.exchange/'],
       apps: ['https://pro.apex.exchange/'],
       documentation: ['https://apex-pro.gitbook.io/apex-pro?lang=en-US'],
-      explorers: [],
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: [
         'https://twitter.com/OfficialApeXdex',

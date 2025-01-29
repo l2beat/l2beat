@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 

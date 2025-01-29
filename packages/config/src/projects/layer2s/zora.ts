@@ -3,9 +3,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
@@ -22,7 +22,6 @@ export const zora: Layer2 = opStackL2({
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
-      apps: [],
       documentation: ['https://docs.zora.co/docs/zora-network/intro'],
       explorers: [
         'https://explorer.zora.energy/',

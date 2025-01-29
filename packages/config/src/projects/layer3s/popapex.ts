@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
@@ -37,7 +37,6 @@ export const popapex: Layer3 = orbitStackL3({
         'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],
-      documentation: [],
       explorers: ['https://explorer.apex.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [

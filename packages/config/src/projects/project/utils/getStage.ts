@@ -1,5 +1,4 @@
-import type { StageConfig } from '../../layer2s'
-import type { ScalingProjectStage } from '../BaseProject'
+import type { ScalingProjectStage, StageConfig } from '../../../types'
 
 export function getStage(config: StageConfig): ScalingProjectStage {
   if (config.stage === 'NotApplicable') {

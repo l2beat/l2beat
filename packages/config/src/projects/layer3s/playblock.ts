@@ -1,10 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
@@ -27,8 +27,6 @@ export const playblock: Layer3 = orbitStackL3({
       'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     links: {
       websites: ['https://playnance.com/'],
-      apps: [],
-      documentation: [],
       explorers: ['https://explorer.playblock.io/'],
       repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],

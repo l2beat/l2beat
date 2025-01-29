@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const arcology: Layer2 = upcomingL2({
   id: 'arcology',
@@ -15,9 +15,7 @@ export const arcology: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://arcology.network/'],
-      apps: [],
       documentation: ['https://doc.arcology.network/main'],
-      explorers: [],
       repositories: ['https://github.com/arcology-network'],
       socialMedia: [
         'https://twitter.com/ArcologyN',

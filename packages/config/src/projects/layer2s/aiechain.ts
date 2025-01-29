@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const aiechain: Layer2 = upcomingL2({
   id: 'aiechain',
@@ -16,10 +16,7 @@ export const aiechain: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://genesis.aielabs.io/'],
-      apps: [],
       documentation: ['https://docs.aielabs.io'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/AIE_Labs',
         'https://t.me/aielabsnews',

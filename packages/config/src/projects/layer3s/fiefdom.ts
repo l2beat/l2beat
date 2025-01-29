@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import type { Layer3 } from './types'
 
 export const fiefdom: Layer3 = upcomingL3({
   id: 'fiefdom',
@@ -17,10 +17,6 @@ export const fiefdom: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://fief.gg/fiefdom'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/fiefdomgg'],
     },
   },

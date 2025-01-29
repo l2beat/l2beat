@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const degenlayer: Layer2 = upcomingL2({
   id: 'degenlayer',
@@ -19,7 +19,6 @@ export const degenlayer: Layer2 = upcomingL2({
       apps: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],
       documentation: ['https://docs.degenlayer.wtf'],
       explorers: ['https://scan-test.degenlayer.wtf/'],
-      repositories: [],
       socialMedia: ['https://x.com/degenlayer', 'https://t.me/delayedfrens'],
     },
   },

@@ -20,7 +20,6 @@ export const deri = orbitStackL3({
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
     links: {
       websites: ['https://deri.io/'],
-      apps: [],
       documentation: ['https://docs.deri.io/'],
       explorers: ['https://explorer-dchain.deri.io/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],
