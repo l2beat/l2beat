@@ -56,15 +56,15 @@ async function main() {
       logger,
       retryStrategy: 'RELIABLE',
       sourceName: chain,
-      callsPerMinute: 120,
+      callsPerMinute: 12000,
     })
     rpcs.set(
       chain,
-      new RpcClientPOC(
-        rpc,
-        EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
-        logger,
-      ),
+      new RpcClientPOC(rpc, logger, {
+        multicallV3: EthereumAddress(
+          '0xcA11bde05977b3631167028862bE2a173976CA11',
+        ),
+      }),
     )
     blockProviders.set(chain, new BlockProvider(chain, [rpc]))
   }
@@ -83,8 +83,9 @@ async function main() {
 
   const config = kintoConfig
 
-  const timestamp = UnixTime.now().toStartOf('hour')
-  const tvs = await localExecutor.run(config, [timestamp])
+  // const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
+  const timestamp = UnixTime.now()
+  const tvs = await localExecutor.run(config, [timestamp], true)
 
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')

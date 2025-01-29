@@ -23,6 +23,7 @@ interface Dependencies extends ClientCoreDependencies {
 }
 
 export class CoingeckoClient extends ClientCore {
+  static COINS_MARKET_PAGE_SIZE = 250
   private readonly timeoutMs = 10_000
 
   constructor(private readonly $: Dependencies) {
@@ -88,6 +89,7 @@ export class CoingeckoClient extends ClientCore {
     return parsed.image.large
   }
 
+  /** Fetches latest prices, uses */
   async getCoinsMarket(
     coinIds: CoingeckoId[],
     vs_currency: string,
@@ -95,6 +97,7 @@ export class CoingeckoClient extends ClientCore {
     const data = await this.query('/coins/markets', {
       vs_currency: vs_currency.toLowerCase(),
       ids: coinIds.map((id) => id.toString()).join(','),
+      per_page: CoingeckoClient.COINS_MARKET_PAGE_SIZE.toString(),
     })
 
     return CoinsMarketResultData.parse(data)

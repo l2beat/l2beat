@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -30,69 +30,152 @@ export class DataFormulaExecutor {
     prices: PriceConfig[],
     amounts: AmountConfig[],
     timestamps: UnixTime[],
+    isLatestMode: boolean,
   ) {
-    for (const timestamp of timestamps) {
-      /** Optimization to fetch block for timestamp only once per chain */
-      const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
+    const chains = extractUniqueChains(amounts)
 
-      let promises = amounts.map(async (amount) => {
+    /** Optimization to fetch block for timestamp only once per chain */
+    const blockNumbersToTimestamps = await this.getBlockNumbers(
+      chains,
+      timestamps,
+      isLatestMode,
+    )
+
+    const promises: Promise<void>[] = []
+
+    for (const timestamp of timestamps) {
+      const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
+      assert(blockNumbers)
+
+      promises.push(
+        ...this.processTotalSuppliesAndEscrows(
+          amounts,
+          timestamp,
+          blockNumbers,
+        ),
+      )
+
+      promises.push(
+        ...this.processCirculatingSupplies(amounts, timestamp, isLatestMode),
+      )
+
+      promises.push(...this.processPrices(prices, timestamp, isLatestMode))
+
+      this.logger.info(`Fetching data...`)
+      console.time('Data fetched')
+      await Promise.all(promises)
+      console.timeEnd('Data fetched')
+    }
+  }
+
+  private processTotalSuppliesAndEscrows(
+    amounts: AmountConfig[],
+    timestamp: UnixTime,
+    blockNumbers: Map<string, number>,
+  ) {
+    return amounts
+      .filter((a) => a.type !== 'circulatingSupply')
+      .map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
           return
         }
 
-        let value: number
+        const block = blockNumbers.get(amount.chain)
+        assert(block, `Block number not found for chain ${amount.chain}`)
 
         switch (amount.type) {
-          case 'circulatingSupply': {
-            value = await this.fetchCirculatingSupply(amount, timestamp)
-            break
-          }
           case 'totalSupply': {
-            const b = blockNumbers.get(amount.chain)
-            assert(b, `Block number not found for chain ${amount.chain}`)
-            value = await this.fetchTotalSupply(amount, b)
+            const value = await this.fetchTotalSupply(amount, block)
+            await this.storage.writeAmount(amount.id, timestamp, value)
             break
           }
           case 'balanceOfEscrow': {
-            const b = blockNumbers.get(amount.chain)
-            assert(b, `Block number not found for chain ${amount.chain}`)
-            value = await this.fetchEscrowBalance(amount, b)
+            const value = await this.fetchEscrowBalance(amount, block)
+            await this.storage.writeAmount(amount.id, timestamp, value)
             break
           }
-          default: {
-            assertUnreachable(amount)
-          }
         }
-
-        await this.storage.writeAmount(amount.id, timestamp, value)
       })
+  }
 
-      promises = promises.concat(
-        prices.map(async (price, index) => {
-          this.logger.debug(`Processing price ${index} of ${prices.length}`)
-
-          const cachedValue = await this.storage.getPrice(
-            price.ticker,
-            timestamp,
+  private processCirculatingSupplies(
+    amounts: AmountConfig[],
+    timestamp: UnixTime,
+    isLatestMode: boolean,
+  ) {
+    if (isLatestMode) {
+      return [
+        (async () => {
+          const circulatingSupplies = amounts.filter(
+            (a) => a.type === 'circulatingSupply',
           )
+          const latestCirculatingSupplies =
+            await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
+              circulatingSupplies.map((p) => p.ticker),
+            )
+
+          for (const c of circulatingSupplies) {
+            const latest = latestCirculatingSupplies.get(c.ticker)
+            assert(
+              latest !== undefined,
+              `${c.ticker}: No latest circulating supply found`,
+            )
+
+            await this.storage.writeAmount(c.id, timestamp, latest)
+          }
+        })(),
+      ]
+    } else {
+      return amounts
+        .filter((a) => a.type === 'circulatingSupply')
+        .map(async (amount) => {
+          const cachedValue = await this.storage.getAmount(amount.id, timestamp)
           if (cachedValue !== undefined) {
-            this.logger.debug(`Cached value found for ${price.ticker}`)
-            return // Skip further processing for this price
+            this.logger.debug(`Cached value found for ${amount.id}`)
+            return
           }
 
-          const value = await this.fetchPrice(price, timestamp)
-          await this.storage.writePrice(price.ticker, timestamp, value)
-        }),
-      )
+          const value = await this.fetchCirculatingSupply(amount, timestamp)
+          await this.storage.writeAmount(amount.id, timestamp, value)
+        })
+    }
+  }
 
-      this.logger.info(
-        `Fetching prices [${prices.length}] and amounts [${amounts.length}]`,
-      )
-      this.logger.info('This will take a minute ;-)')
-      await Promise.all(promises)
-      this.logger.info('Data fetched')
+  private processPrices(
+    prices: PriceConfig[],
+    timestamp: UnixTime,
+    isLatestMode: boolean,
+  ) {
+    if (isLatestMode) {
+      return [
+        (async () => {
+          const latestPrices = await this.priceProvider.getLatestPrices(
+            prices.map((p) => p.ticker),
+          )
+
+          for (const price of prices) {
+            const latest = latestPrices.get(price.ticker)
+            assert(
+              latest !== undefined,
+              `${price.ticker}: No latest price found`,
+            )
+
+            await this.storage.writePrice(price.ticker, timestamp, latest)
+          }
+        })(),
+      ]
+    } else {
+      return prices.map(async (price) => {
+        const cachedValue = await this.storage.getPrice(price.ticker, timestamp)
+        if (cachedValue !== undefined) {
+          this.logger.info(`Cached value found for ${price.ticker}`)
+          return
+        }
+        const v = await this.fetchPrice(price, timestamp)
+        await this.storage.writePrice(price.ticker, timestamp, v)
+      })
     }
   }
 
@@ -167,18 +250,33 @@ export class DataFormulaExecutor {
     }
   }
 
-  async getBlockNumbers(amounts: AmountConfig[], timestamp: UnixTime) {
-    const uniqueChains = [
-      ...new Set(
-        amounts
-          .filter(
-            (x) => x.type === 'balanceOfEscrow' || x.type === 'totalSupply',
-          )
-          .map((x) => x.chain),
-      ).values(),
-    ]
+  async getLatestBlockNumbers(chains: string[], timestamp: UnixTime) {
+    const result = new Map<string, number>()
 
-    return await this.getTimestampToBlockNumbersMapping(uniqueChains, timestamp)
+    for (const chain of chains) {
+      const block = this.blockProviders.get(chain)
+      assert(block, `${chain}: No BlockProvider configured`)
+      this.logger.info(
+        `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+      )
+      const latestBlock = await block.getLatestBlockNumber()
+      result.set(chain, latestBlock)
+    }
+
+    return new Map([[timestamp.toNumber(), result]])
+  }
+
+  async getBlockNumbersForTimestamps(chains: string[], timestamps: UnixTime[]) {
+    const result = new Map<number, Map<string, number>>()
+
+    for (const timestamp of timestamps) {
+      result.set(
+        timestamp.toNumber(),
+        await this.getTimestampToBlockNumbersMapping(chains, timestamp),
+      )
+    }
+
+    return result
   }
 
   async getTimestampToBlockNumbersMapping(
@@ -205,4 +303,36 @@ export class DataFormulaExecutor {
 
     return result
   }
+
+  async getBlockNumbers(
+    chains: string[],
+    timestamps: UnixTime[],
+    isLatestMode: boolean,
+  ) {
+    let blockNumbersToTimestamps: Map<number, Map<string, number>> | undefined
+
+    if (isLatestMode) {
+      blockNumbersToTimestamps = await this.getLatestBlockNumbers(
+        chains,
+        timestamps[0],
+      )
+    } else {
+      blockNumbersToTimestamps = await this.getBlockNumbersForTimestamps(
+        chains,
+        timestamps,
+      )
+    }
+    assert(blockNumbersToTimestamps)
+    return blockNumbersToTimestamps
+  }
+}
+
+function extractUniqueChains(amounts: AmountConfig[]) {
+  return [
+    ...new Set(
+      amounts
+        .filter((x) => x.type === 'balanceOfEscrow' || x.type === 'totalSupply')
+        .map((x) => x.chain),
+    ).values(),
+  ]
 }

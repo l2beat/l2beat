@@ -61,7 +61,7 @@ export class ValueService {
   ): Promise<number> {
     const config = createAmountConfig(formula)
     const amount = await this.storage.getAmount(config.id, timestamp)
-    assert(amount !== undefined)
+    assert(amount !== undefined, `${formula.type} ${config.id}`)
     return amount
   }
 
