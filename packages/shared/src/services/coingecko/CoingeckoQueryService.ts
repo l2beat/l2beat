@@ -169,7 +169,7 @@ export class CoingeckoQueryService {
       : to
   }
 
-  async getLatestPrices(coingeckoIds: CoingeckoId[]) {
+  async getLatestMarketData(coingeckoIds: CoingeckoId[]) {
     const prices: CoinsMarketResultData = []
 
     for (
@@ -187,15 +187,21 @@ export class CoingeckoQueryService {
       prices.push(...p)
     }
 
-    const result = new Map<CoingeckoId, number>()
+    const result = new Map<
+      CoingeckoId,
+      { price: number; circulating: number }
+    >()
 
     for (const c of coingeckoIds) {
       const p = prices.find((p) => p.id === c)
       if (p === undefined) {
         this.logger.error(`${c}: Price not found, assuming 0`)
-        result.set(c, 0)
+        result.set(c, { price: 0, circulating: 0 })
       } else {
-        result.set(c, p.current_price)
+        result.set(c, {
+          price: p.current_price,
+          circulating: p.circulating_supply,
+        })
       }
     }
 

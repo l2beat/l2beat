@@ -27,16 +27,16 @@ export class PriceProvider {
       CoingeckoId(tickerToCoingeckoId(ticker, tokenList)),
     )
 
-    const prices = await this.client.getLatestPrices(coingeckoIds)
+    const latestMarketData = await this.client.getLatestMarketData(coingeckoIds)
 
     const result = new Map<string, number>()
 
     for (const ticker of tickers) {
-      const price = prices.get(
+      const data = latestMarketData.get(
         CoingeckoId(tickerToCoingeckoId(ticker, tokenList)),
       )
-      assert(price !== undefined, `${ticker}: Price not found`)
-      result.set(ticker, price)
+      assert(data !== undefined, `${ticker}: Price not found`)
+      result.set(ticker, data.price)
     }
 
     return result

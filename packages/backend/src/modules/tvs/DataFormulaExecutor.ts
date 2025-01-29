@@ -48,41 +48,89 @@ export class DataFormulaExecutor {
     }
     assert(blockNumbersToTimestamps)
 
+    const promises: Promise<void>[] = []
+
     for (const timestamp of timestamps) {
       const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
       assert(blockNumbers)
 
-      const promises = amounts.map(async (amount) => {
-        const cachedValue = await this.storage.getAmount(amount.id, timestamp)
-        if (cachedValue !== undefined) {
-          this.logger.debug(`Cached value found for ${amount.id}`)
-          return
-        }
+      // Total supplies & escrows
+      promises.push(
+        ...amounts
+          .filter((a) => a.type !== 'circulatingSupply')
+          .map(async (amount) => {
+            const cachedValue = await this.storage.getAmount(
+              amount.id,
+              timestamp,
+            )
+            if (cachedValue !== undefined) {
+              this.logger.debug(`Cached value found for ${amount.id}`)
+              return
+            }
 
-        let value: number
+            const block = blockNumbers.get(amount.chain)
+            assert(block, `Block number not found for chain ${amount.chain}`)
 
-        switch (amount.type) {
-          case 'circulatingSupply': {
-            value = await this.fetchCirculatingSupply(amount, timestamp)
-            break
-          }
-          case 'totalSupply': {
-            const b = blockNumbers.get(amount.chain)
-            assert(b, `Block number not found for chain ${amount.chain}`)
-            value = await this.fetchTotalSupply(amount, b)
-            break
-          }
-          case 'balanceOfEscrow': {
-            const b = blockNumbers.get(amount.chain)
-            assert(b, `Block number not found for chain ${amount.chain}`)
-            value = await this.fetchEscrowBalance(amount, b)
-            break
-          }
-        }
+            switch (amount.type) {
+              case 'totalSupply': {
+                const value = await this.fetchTotalSupply(amount, block)
+                await this.storage.writeAmount(amount.id, timestamp, value)
+                break
+              }
+              case 'balanceOfEscrow': {
+                const value = await this.fetchEscrowBalance(amount, block)
+                await this.storage.writeAmount(amount.id, timestamp, value)
+                break
+              }
+            }
+          }),
+      )
 
-        await this.storage.writeAmount(amount.id, timestamp, value)
-      })
+      // Circulating Supply
 
+      if (latestMode) {
+        promises.push(
+          (async () => {
+            const circulatingSupplies = amounts.filter(
+              (a) => a.type === 'circulatingSupply',
+            )
+            const latestCirculatingSupplies =
+              await this.circulatingSupplyProvider.getLatestCirculatingSupplies(
+                circulatingSupplies.map((p) => p.ticker),
+              )
+
+            for (const c of circulatingSupplies) {
+              const latest = latestCirculatingSupplies.get(c.ticker)
+              assert(
+                latest !== undefined,
+                `${c.ticker}: No latest circulating supply found`,
+              )
+
+              await this.storage.writeAmount(c.id, timestamp, latest)
+            }
+          })(),
+        )
+      } else {
+        promises.push(
+          ...amounts
+            .filter((a) => a.type === 'circulatingSupply')
+            .map(async (amount) => {
+              const cachedValue = await this.storage.getAmount(
+                amount.id,
+                timestamp,
+              )
+              if (cachedValue !== undefined) {
+                this.logger.debug(`Cached value found for ${amount.id}`)
+                return
+              }
+
+              const value = await this.fetchCirculatingSupply(amount, timestamp)
+              await this.storage.writeAmount(amount.id, timestamp, value)
+            }),
+        )
+      }
+
+      // Prices
       if (latestMode) {
         promises.push(
           (async () => {
