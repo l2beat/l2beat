@@ -85,7 +85,8 @@ function AutoDAC(params: {
       sentiment === 'bad'
         ? NoCommitteeSecurity().description
         : LimitedCommitteeSecurity().description,
-    orderHint: probabilityOfCompromise(
+    // We need the `-` because the higher the probability the worse outcome
+    orderHint: -probabilityOfCompromise(
       params.requiredMembers,
       params.membersCount,
     ),
@@ -121,7 +122,7 @@ function getDacSentiment(params: {
  * This function approximates the probability of a compromise in a DAC.
  * With the assumption that the probability of a single member being compromised is 1%.
  */
-function probabilityOfCompromise(required: number, total: number) {
+export function probabilityOfCompromise(required: number, total: number) {
   const combinations = getCombinations(total, required)
   return combinations * 0.01 ** required
 }

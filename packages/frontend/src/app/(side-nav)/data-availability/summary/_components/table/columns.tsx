@@ -124,7 +124,9 @@ const challengeMechanismColumn = columnHelper.display({
 
 const fallbackColumn = columnHelper.display({
   header: 'Fallback',
-  cell: (ctx) => <TableValueCell value={ctx.row.original.fallback} />,
+  cell: (ctx) => (
+    <TableValueCell value={ctx.row.original.fallback ?? { value: 'None' }} />
+  ),
   meta: {
     tooltip:
       'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',

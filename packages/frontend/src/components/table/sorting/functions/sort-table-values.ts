@@ -30,13 +30,13 @@ export function sortTableValues(
     return aOrderHint - bOrderHint
   }
 
-  const valueCompare = a.value.localeCompare(b.value)
+  const valueCompare = b.value.localeCompare(a.value)
   if (valueCompare !== 0) {
     return valueCompare
   }
 
-  const secondLineCompare = (a.secondLine ?? '').localeCompare(
-    b.secondLine ?? '',
+  const secondLineCompare = (b.secondLine ?? '').localeCompare(
+    a.secondLine ?? '',
   )
   return secondLineCompare
 }

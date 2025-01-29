@@ -1,3 +1,4 @@
+import { probabilityOfCompromise } from '../projects/da-beat/common'
 import type { TableReadyValue } from '../types'
 import { getDacSentiment } from './dataAvailability'
 
@@ -6,6 +7,7 @@ const NONE: TableReadyValue = {
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available.',
+  orderHint: -2,
 }
 
 const NONE_WITH_DA_CHALLENGES: TableReadyValue = {
@@ -13,6 +15,7 @@ const NONE_WITH_DA_CHALLENGES: TableReadyValue = {
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge the unavailability of data.',
+  orderHint: -1,
 }
 
 const ENSHRINED: TableReadyValue = {
@@ -54,6 +57,7 @@ function DAC_MEMBERS({
     description: requiredSignatures
       ? `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`
       : `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 
@@ -68,6 +72,7 @@ function STAKED_OPERATORS({
     value: `${requiredSignatures}/${membersCount} Staked Operators`,
     sentiment: 'warning',
     description: `There is a threshold of ${requiredSignatures}/${membersCount} of staked operators that must sign and attest that the data has been made available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 
