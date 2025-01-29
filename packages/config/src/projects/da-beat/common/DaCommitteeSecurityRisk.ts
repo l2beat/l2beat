@@ -1,9 +1,7 @@
-import type { Sentiment } from '../../../types'
-import type { DaRisk } from '../../../types'
+import type { IntegratedDacBridge, TableReadyValue } from '../../../types'
 
-function RobustAndDiverseCommittee(value?: string): DaRisk {
+function RobustAndDiverseCommittee(value?: string): TableReadyValue {
   return {
-    type: 'RobustAndDiverseCommittee',
     value: value ?? 'Permissionless',
     sentiment: 'good',
     description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment. 
@@ -15,9 +13,8 @@ function LimitedCommitteeSecurity(
   value?: string,
   externalMembersPercentage?: string,
   totalNumberOfOperators?: number,
-): DaRisk {
+): TableReadyValue {
   return {
-    type: 'LimitedCommitteeSecurity',
     value: value ?? 'Permissioned',
     sentiment: 'warning',
     description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
@@ -33,18 +30,16 @@ function LimitedCommitteeSecurity(
   }
 }
 
-function NoCommitteeSecurity(value?: string): DaRisk {
+function NoCommitteeSecurity(value?: string): TableReadyValue {
   return {
-    type: 'NoCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee does not meet basic security standards, either due to insufficient size, lack of member diversity, or poorly defined threshold parameters. The system lacks an effective DA bridge and it is reliant on the assumption of an honest sequencer, creating significant risks to data integrity and availability.`,
   }
 }
 
-function NoDiversityCommitteeSecurity(value?: string): DaRisk {
+function NoDiversityCommitteeSecurity(value?: string): TableReadyValue {
   return {
-    type: 'NoDiversityCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee requires an honest minority (less than 1/3) of members (or the network stake) to prevent the DA bridge from accepting an unavailable data commitment.
@@ -56,9 +51,8 @@ function NoDiversityCommitteeSecurity(value?: string): DaRisk {
 function NoHonestMinimumCommitteeSecurity(
   value?: string,
   honestMembersPercentage?: string,
-): DaRisk {
+): TableReadyValue {
   return {
-    type: 'NoHonestMinimumCommitteeSecurity',
     value: value ?? 'None',
     sentiment: 'bad',
     description: `The committee should require an honest minority (33% or less) of members to prevent the DA bridge from accepting an unavailable data commitment.
@@ -66,28 +60,51 @@ function NoHonestMinimumCommitteeSecurity(
   }
 }
 
-const NoBridge: DaRisk = {
-  type: 'NoBridge',
+const NoBridge: TableReadyValue = {
   value: 'N/A',
   sentiment: 'bad',
   description: 'There is no committee attesting to the availability of data. ',
 }
 
-function Auto(params?: {
-  resolved: { value: string; sentiment: Sentiment }
-}): DaRisk {
+function AutoDAC(params: {
+  membersCount: number
+  requiredMembers: number
+  knownMembers: IntegratedDacBridge['knownMembers']
+}): TableReadyValue {
+  const sentiment = getDacSentiment(params)
   return {
-    type: 'Auto',
-    // Will be overwritten by a processor
-    value: params?.resolved.value ?? '',
-    sentiment: params?.resolved.sentiment ?? 'bad',
+    value: `${params.requiredMembers}/${params.membersCount}`,
+    sentiment,
     description:
-      params?.resolved.sentiment === 'bad'
+      sentiment === 'bad'
         ? NoCommitteeSecurity().description
-        : params?.resolved.sentiment === 'warning'
-          ? LimitedCommitteeSecurity().description
-          : '',
+        : LimitedCommitteeSecurity().description,
   }
+}
+
+function getDacSentiment(params: {
+  membersCount: number
+  requiredMembers: number
+  knownMembers: IntegratedDacBridge['knownMembers']
+}) {
+  if (!params.knownMembers) return 'bad'
+
+  const assumedHonestMembers = params.membersCount - params.requiredMembers + 1
+
+  // If less than 6 members or more than 1/3 of members need to be honest, the sentiment is bad
+  if (
+    params.knownMembers.length < 6 ||
+    assumedHonestMembers / params.knownMembers.length > 1 / 3
+  ) {
+    return 'bad'
+  }
+
+  // If less than 5 members are external, the sentiment is bad
+  if (params.knownMembers.filter((member) => member.external).length < 5) {
+    return 'bad'
+  }
+
+  return 'warning'
 }
 
 export const DaCommitteeSecurityRisk = {
@@ -97,5 +114,5 @@ export const DaCommitteeSecurityRisk = {
   NoDiversityCommitteeSecurity,
   NoHonestMinimumCommitteeSecurity,
   NoBridge,
-  Auto,
+  AutoDAC,
 }

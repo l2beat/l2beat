@@ -92,7 +92,12 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
     },
     risks: {
       committeeSecurity:
-        template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+        template.risks?.committeeSecurity ??
+        DaCommitteeSecurityRisk.AutoDAC({
+          requiredMembers: template.bridge.requiredMembers,
+          membersCount: template.bridge.membersCount,
+          knownMembers: template.bridge.knownMembers,
+        }),
       // TODO: make it required and remove the default
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,

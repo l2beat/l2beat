@@ -821,7 +821,7 @@ export type EthereumDaLayer = CommonDaLayer & {
   kind: 'EthereumDaLayer'
   bridges: [EnshrinedBridge]
   /** Risks associated with the data availability layer. */
-  risks: DaRisk
+  risks: TableReadyValue
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
   /** The consensus algorithm used by the data availability layer. */
@@ -880,8 +880,8 @@ export type CommonDaLayer = {
 }
 
 export interface DaLayerRisks {
-  economicSecurity: DaRisk
-  fraudDetection: DaRisk
+  economicSecurity: TableReadyValue
+  fraudDetection: TableReadyValue
 }
 
 export interface DaLayerDisplay {
@@ -956,7 +956,7 @@ export type NoDacBridge = Omit<CommonDaBridge, 'id' | 'display' | 'usedIn'> & {
 
 export type EnshrinedBridge = CommonDaBridge & {
   type: 'Enshrined'
-  risks: DaRisk
+  risks: TableReadyValue
   callout: string
 }
 
@@ -1056,9 +1056,9 @@ interface DaBridgeDisplay {
 }
 
 export interface DaBridgeRisks {
-  committeeSecurity: DaRisk
-  upgradeability: DaRisk
-  relayerFailure: DaRisk
+  committeeSecurity: TableReadyValue
+  upgradeability: TableReadyValue
+  relayerFailure: TableReadyValue
 }
 
 export interface DaBridgeContracts {
@@ -1072,14 +1072,6 @@ export interface DaBridgeContracts {
   isIncomplete?: boolean
   /** The description and research is under review */
   isUnderReview?: boolean
-}
-
-export interface DaRisk {
-  type: string
-  value: string
-  sentiment: Sentiment
-  description: string
-  secondLine?: string
 }
 
 export interface UsedInProject {
