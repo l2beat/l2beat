@@ -30,10 +30,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -79,9 +79,7 @@ export const sorare: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://sorare.com/'],
-      apps: [],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
-      explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://discord.gg/TSjtHaM',

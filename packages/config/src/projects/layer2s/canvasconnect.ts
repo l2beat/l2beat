@@ -28,8 +28,8 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('canvasconnect')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -71,9 +71,7 @@ export const canvasconnect: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://canvas.co/'],
-      apps: [],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
-      explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://twitter.com/canvas_defi',

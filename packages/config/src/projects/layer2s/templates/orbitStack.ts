@@ -29,9 +29,18 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  ChainConfig,
+  DacDaLayer,
+  KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+  Layer3,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
+  ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectDisplay,
@@ -43,25 +52,12 @@ import type {
   ScalingProjectStateValidation,
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
+  StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import type {
-  ChainConfig,
-  KnowledgeNugget,
-  ReasonForBeingInOther,
-} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
-import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 

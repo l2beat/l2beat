@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 import { SP1Blobstream } from './SP1Blobstream'
 
 export const blobstream = [SP1Blobstream]
@@ -21,7 +21,6 @@ export const celestia: BlockchainDaLayer = {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],
       repositories: ['https://github.com/celestiaorg'],
-      apps: [],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/CelestiaOrg',

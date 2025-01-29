@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polynomial')
 
@@ -20,7 +20,6 @@ export const polynomial: Layer2 = opStackL2({
       'Polynomial Chain is a derivatives chain that addresses liquidity fragmentation with a unified liquidity layer, enabling innovative derivatives.',
     links: {
       websites: ['https://polynomial.fi/'],
-      apps: [],
       documentation: ['https://docs.polynomial.fi/'],
       explorers: ['https://polynomialscan.io/'],
       repositories: ['https://github.com/Polynomial-Protocol'],

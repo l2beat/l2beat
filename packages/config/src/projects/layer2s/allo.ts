@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const allo: Layer2 = upcomingL2({
   id: 'allo',
@@ -17,9 +17,6 @@ export const allo: Layer2 = upcomingL2({
     links: {
       websites: ['https://allo.xyz'],
       apps: ['https://app.allo.xyz/'],
-      explorers: [],
-      repositories: [],
-      documentation: [],
       socialMedia: [
         'https://x.com/allo_xyz',
         'https://discord.gg/allo',

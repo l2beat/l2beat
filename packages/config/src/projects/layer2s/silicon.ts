@@ -7,10 +7,10 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('silicon')
 
@@ -51,7 +51,6 @@ export const silicon: Layer2 = polygonCDKStack({
       apps: ['https://bridge.silicon.network/'],
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
-      repositories: [],
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },

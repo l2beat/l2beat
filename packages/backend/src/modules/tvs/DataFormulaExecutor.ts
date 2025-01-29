@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider } from '@l2beat/shared'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataStorage } from './DataStorage'
 import type { BalanceProvider } from './providers/BalanceProvider'
 import type { CirculatingSupplyProvider } from './providers/CirculatingSupplyProvider'
@@ -52,36 +52,30 @@ export class DataFormulaExecutor {
       const blockNumbers = blockNumbersToTimestamps.get(timestamp.toNumber())
       assert(blockNumbers)
 
-      for (const index in amounts) {
-        this.logger.info(
-          `Processing amount ${Number(index) + 1} of ${amounts.length}`,
-        )
-        const amount = amounts[index]
-
+      let promises = amounts.map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
-          this.logger.info(`Cached value found for ${amount.id}`)
-          continue
+          this.logger.debug(`Cached value found for ${amount.id}`)
+          return
         }
+
+        let value: number
 
         switch (amount.type) {
           case 'circulatingSupply': {
-            const v = await this.fetchCirculatingSupply(amount, timestamp)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            value = await this.fetchCirculatingSupply(amount, timestamp)
             break
           }
           case 'totalSupply': {
             const b = blockNumbers.get(amount.chain)
-            assert(b)
-            const v = await this.fetchTotalSupply(amount, b)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            assert(b, `Block number not found for chain ${amount.chain}`)
+            value = await this.fetchTotalSupply(amount, b)
             break
           }
           case 'balanceOfEscrow': {
             const b = blockNumbers.get(amount.chain)
-            assert(b)
-            const v = await this.fetchEscrowBalance(amount, b)
-            await this.storage.writeAmount(amount.id, timestamp, v)
+            assert(b, `Block number not found for chain ${amount.chain}`)
+            value = await this.fetchEscrowBalance(amount, b)
             break
           }
         }
@@ -120,7 +114,7 @@ export class DataFormulaExecutor {
     config: CirculatingSupplyAmountConfig,
     timestamp: UnixTime,
   ): Promise<number> {
-    this.logger.info(`Fetching circulating supply for ${config.ticker}`)
+    this.logger.debug(`Fetching circulating supply for ${config.ticker}`)
 
     try {
       return await this.circulatingSupplyProvider.getCirculatingSupply(
@@ -128,7 +122,6 @@ export class DataFormulaExecutor {
         timestamp,
       )
     } catch {
-      // TODO temporary workaround for issues with UMAMI
       this.logger.error(
         `Error fetching circulating supply for ${config.ticker}. Assuming 0`,
       )
@@ -140,7 +133,7 @@ export class DataFormulaExecutor {
     config: TotalSupplyAmountConfig,
     blockNumber: number,
   ): Promise<number> {
-    this.logger.info(
+    this.logger.debug(
       `Fetching total supply for ${config.address} on ${config.chain}`,
     )
     return await this.totalSupplyProvider.getTotalSupply(
@@ -155,7 +148,7 @@ export class DataFormulaExecutor {
     config: BalanceOfEscrowAmountFormula,
     blockNumber: number,
   ): Promise<number> {
-    this.logger.info(
+    this.logger.debug(
       `Fetching balance of ${config.address} token for escrow ${config.escrowAddress} on ${config.chain}`,
     )
     const escrowBalance =
@@ -180,10 +173,9 @@ export class DataFormulaExecutor {
   async fetchPrice(config: PriceConfig, timestamp: UnixTime): Promise<number> {
     try {
       // TODO think about getting prices from STAGING DB
-      this.logger.info(`Fetching price for ${config.ticker}`)
+      this.logger.debug(`Fetching price for ${config.ticker}`)
       return await this.priceProvider.getPrice(config.ticker, timestamp)
     } catch {
-      // TODO temporary workaround for issues with rhinofi
       this.logger.error(`Error fetching price for ${config.ticker}. Assuming 0`)
       return 0
     }
@@ -232,13 +224,19 @@ export class DataFormulaExecutor {
     const result = new Map<string, number>()
 
     for (const chain of chains) {
+      const cached = await this.storage.getBlockNumber(chain, timestamp)
+      if (cached) {
+        result.set(chain, cached)
+        continue
+      }
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
       this.logger.info(
-        `Getting block number for timestamp ${timestamp.toNumber()} on ${chain}`,
+        `Fetching block number for timestamp ${timestamp.toNumber()} on ${chain}`,
       )
       const blockNumber = await block.getBlockNumberAtOrBefore(timestamp)
       result.set(chain, blockNumber)
+      await this.storage.writeBlockNumber(chain, timestamp, blockNumber)
     }
 
     return result

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const form: Layer2 = upcomingL2({
   id: 'form',
@@ -19,7 +19,6 @@ export const form: Layer2 = upcomingL2({
       apps: ['https://bridge.form.network'],
       documentation: ['https://docs.form.network'],
       explorers: ['https://explorer.form.network'],
-      repositories: [],
       socialMedia: [
         'https://x.com/0xform',
         'https://discord.com/invite/formnetwork',

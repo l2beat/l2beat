@@ -1,5 +1,6 @@
 import { expect } from 'earl'
 import { daLayers } from '.'
+import type { ProjectLinks } from '../../types'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 
@@ -20,10 +21,14 @@ describe('DA-BEAT', () => {
     })
 
     describe(`${layer.display.name} does not have duplicated links`, () => {
-      const getFlatLinks = (links: Record<string, string[]>) =>
-        Object.values(links).flatMap((link) => link)
+      const getFlatLinks = (links: ProjectLinks | undefined) => {
+        const values: (string | string[] | undefined)[] = Object.values(
+          links ?? {},
+        )
+        return values.filter((x) => x !== undefined).flatMap((link) => link)
+      }
 
-      const links = getFlatLinks(layer.display?.links ?? {})
+      const links = getFlatLinks(layer.display?.links)
       const uniqueLinks = new Set(links)
 
       for (const bridge of layer.bridges) {

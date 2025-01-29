@@ -30,6 +30,16 @@
         {
           "permission": "configure",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "configure",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "configure",
+          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions."
         },
         {
@@ -108,6 +118,18 @@
         {
           "permission": "configure",
           "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
           "description": "propose transactions.",
           "via": []
         }
@@ -159,6 +181,18 @@
       ],
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
         {
           "permission": "configure",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
@@ -228,6 +262,16 @@
         }
       ],
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "configure",
+          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "description": "execute transactions that are ready."
+        },
         {
           "permission": "configure",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
@@ -414,6 +458,16 @@
         {
           "permission": "configure",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "description": "cancel queued transactions."
+        },
+        {
+          "permission": "configure",
+          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "description": "execute transactions that are ready."
+        },
+        {
+          "permission": "configure",
+          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions."
         }
       ],
@@ -474,6 +528,18 @@
       ],
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "description": "cancel queued transactions.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "description": "execute transactions that are ready.",
+          "via": []
+        },
         {
           "permission": "configure",
           "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { EnshrinedBridge } from '../../../types'
 import { EthereumDaBridgeRisks } from '../common'
-import type { EnshrinedBridge } from '../types'
 import { linkByDA } from '../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
@@ -11,14 +11,7 @@ export const enshrinedBridge: EnshrinedBridge = {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',
     description: 'The DA bridge on Ethereum is enshrined.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-    },
+    links: {},
   },
   technology: {
     description: `

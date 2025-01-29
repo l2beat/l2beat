@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const zkcandy: Layer2 = upcomingL2({
   id: 'zkcandy',
@@ -16,10 +16,6 @@ export const zkcandy: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://zkcandy.io', 'https://icandy.io/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/zkCandyHQ',
         'https://discord.gg/zkcandy',

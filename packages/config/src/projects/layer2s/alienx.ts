@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('alienx')
 
@@ -26,7 +26,6 @@ export const alienx: Layer2 = orbitStackL2({
       apps: ['https://bridge.alienxchain.io/', 'https://alienswap.xyz/'],
       documentation: ['https://docs.alienxchain.io'],
       explorers: ['https://explorer.alienxchain.io'],
-      repositories: [],
       socialMedia: [
         'https://x.com/ALIENXchain',
         'https://discord.gg/alienxchain',

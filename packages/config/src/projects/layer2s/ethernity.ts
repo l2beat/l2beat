@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ethernity')
 
 export const ethernity: Layer2 = opStackL2({
   addedAt: new UnixTime(1718182472), // 2024-06-12T08:54:32Z
-  additionalBadges: [Badge.RaaS.Gelato, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Gelato],
   additionalPurposes: ['AI'],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -29,7 +29,6 @@ export const ethernity: Layer2 = opStackL2({
       ],
       documentation: ['https://docs.ethernity.io/'],
       explorers: ['https://ernscan.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/EthernityChain',
         'https://instagram.com/ethernity',

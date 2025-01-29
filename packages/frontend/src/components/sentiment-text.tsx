@@ -29,7 +29,9 @@ export function SentimentText(props: Props) {
     <span
       className={cn(
         'font-medium',
-        sentimentToTextColor(props.sentiment, { vibrant: props.vibrant }),
+        sentimentToTextColor(props.sentiment, {
+          vibrant: props.vibrant,
+        }),
         props.className,
       )}
     >

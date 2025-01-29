@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const memento: Layer2 = upcomingL2({
   id: 'memento',
@@ -16,10 +16,6 @@ export const memento: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://mementoblockchain.com/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/Memento_Bc',
         'https://linkedin.com/company/memento-blockchain/',
