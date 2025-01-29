@@ -1,7 +1,7 @@
 import { formatSeconds } from '@l2beat/shared-pure'
 import { type Row, createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -30,29 +30,17 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('dataAvailabilityMode.value', {
+  columnHelper.accessor('dataAvailabilityMode', {
     header: 'DA Mode',
-    cell: (ctx) => {
-      const daMode = ctx.row.original.dataAvailabilityMode
-      if (!daMode) {
-        return <span>&mdash;</span>
-      }
-
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>{daMode.value}</TwoRowCell.First>
-          {daMode.secondLine && (
-            <TwoRowCell.Second>{daMode.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
+    cell: (ctx) => (
+      <TableValueCell emptyMode="em-dash" value={ctx.getValue()} />
+    ),
     meta: {
       cellClassName: 'whitespace-nowrap',
       tooltip:

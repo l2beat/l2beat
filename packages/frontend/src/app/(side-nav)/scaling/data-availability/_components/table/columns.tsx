@@ -1,6 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SentimentText } from '~/components/sentiment-text'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
@@ -22,7 +21,7 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     sortingFn: ({ original: a }, { original: b }) =>
       sortTwoRowCell(
@@ -36,30 +35,13 @@ export const columns = [
         },
       ),
   }),
-  columnHelper.accessor('dataAvailability.layer.value', {
+  columnHelper.accessor('dataAvailability.layer', {
     header: 'DA Layer',
     meta: {
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
-    cell: (ctx) => {
-      const data = ctx.row.original.dataAvailability.layer
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <SentimentText
-              sentiment={data.sentiment ?? 'neutral'}
-              description={data.description}
-            >
-              {ctx.getValue()}
-            </SentimentText>
-          </TwoRowCell.First>
-          {data.secondLine && (
-            <TwoRowCell.Second>{data.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
+    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
     sortDescFirst: true,
     sortingFn: (a, b) => {
       const sentimentResult = sortBySentiment(
@@ -76,23 +58,13 @@ export const columns = [
       )
     },
   }),
-  columnHelper.accessor('dataAvailability.bridge.value', {
+  columnHelper.accessor('dataAvailability.bridge', {
     header: 'DA Bridge',
     meta: {
       tooltip:
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
-    cell: (ctx) => {
-      const data = ctx.row.original.dataAvailability.bridge
-      return (
-        <SentimentText
-          sentiment={data.sentiment ?? 'neutral'}
-          description={data.description}
-        >
-          {ctx.getValue()}
-        </SentimentText>
-      )
-    },
+    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
     sortDescFirst: true,
     sortingFn: (a, b) => {
       const bridgeA = a.original.dataAvailability.bridge
@@ -110,22 +82,9 @@ export const columns = [
       return (bridgeA?.value ?? '').localeCompare(bridgeB?.value ?? '')
     },
   }),
-  columnHelper.accessor('dataAvailability.mode.value', {
+  columnHelper.accessor('dataAvailability.mode', {
     header: 'Type of data',
-    cell: (ctx) => {
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            {ctx.row.original.dataAvailability.mode.value}
-          </TwoRowCell.First>
-          {ctx.row.original.dataAvailability.mode.secondLine && (
-            <TwoRowCell.Second>
-              {ctx.row.original.dataAvailability.mode.secondLine}
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
+    cell: (ctx) => <TableValueCell value={ctx.getValue()} />,
     sortingFn: (a, b) =>
       sortTwoRowCell(
         a.original.dataAvailability.mode,
