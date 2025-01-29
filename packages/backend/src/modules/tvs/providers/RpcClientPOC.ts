@@ -11,13 +11,6 @@ import type {
 const MAX_BATCH_SIZE = 100
 
 export class RpcClientPOC {
-  pool: {
-    id: string
-    params: CallParameters
-    blockNumber: number | 'latest'
-  }[] = []
-  responses: Map<string, Bytes> = new Map()
-
   multicallPool: {
     id: string
     params: MulticallRequest
@@ -27,11 +20,19 @@ export class RpcClientPOC {
 
   constructor(
     private readonly rpcClient: RpcClient,
-    private multicallV3: EthereumAddress,
     private logger: Logger,
+    /** If Multicall configured all the calls will be batched*/
+    private params: {
+      multicallV3?: EthereumAddress
+      batchingEnabled?: boolean
+    },
   ) {
-    setInterval(() => this.flush(), 1000)
-    setInterval(() => this.flushMulticall(), 1000)
+    if (params.multicallV3) {
+      setInterval(() => this.flushMulticall(), 1000)
+    }
+    if (params.batchingEnabled) {
+      setInterval(() => this.flush(), 1000)
+    }
   }
 
   async getBalance(
@@ -45,8 +46,88 @@ export class RpcClientPOC {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
+    if (this.params.multicallV3 && this.params.batchingEnabled) {
+      throw new Error('Multicall and batching not supported together, yet')
+    }
+
+    if (this.params.multicallV3) {
+      return await this.callWithMulticall(callParams, blockNumber)
+    }
+
+    if (this.params.batchingEnabled) {
+      return this.callWithBatching(callParams, blockNumber)
+    }
+
     return await this.rpcClient.call(callParams, blockNumber)
   }
+
+  async callWithMulticall(
+    callParams: CallParameters,
+    blockNumber: number | 'latest',
+  ): Promise<Bytes> {
+    const id = randomUUID()
+    this.logger.debug(`Adding to multicall pool ${id}`)
+    assert(callParams.data)
+    this.multicallPool.push({
+      id,
+      params: {
+        address: callParams.to,
+        data: callParams.data,
+      },
+      blockNumber,
+    })
+
+    let response = this.multicallResponses.get(id)
+    while (response === undefined) {
+      this.logger.debug(`Waiting ${id}`)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      response = this.multicallResponses.get(id)
+      this.multicallResponses.delete(id)
+    }
+
+    return response
+  }
+
+  async flushMulticall() {
+    assert(this.params.multicallV3, `Missing MulticallV3 address`)
+
+    if (this.multicallPool.length === 0) {
+      this.logger.debug('Nothing to flush...')
+      return
+    }
+
+    this.logger.debug(`Flushing multicall [${this.pool.length}]...`)
+    const queries = [...this.multicallPool]
+    this.multicallPool = []
+
+    const batches = toBatches(queries, MAX_BATCH_SIZE)
+
+    const promises = batches.map(async (batch, index) => {
+      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
+      const blockNumber = batch[0].blockNumber
+      const encoded = encodeBatch(batch.map((b) => b.params))
+      assert(this.params.multicallV3, `Missing MulticallV3 address`)
+      const response = await this.rpcClient.call(
+        { to: this.params.multicallV3, data: encoded },
+        blockNumber,
+      )
+      const r = decodeBatch(response)
+      for (const [index, query] of batch.entries()) {
+        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
+        this.multicallResponses.set(query.id, r[index].data)
+      }
+    })
+
+    await Promise.all(promises)
+  }
+
+  // Batchin PoC
+  pool: {
+    id: string
+    params: CallParameters
+    blockNumber: number | 'latest'
+  }[] = []
+  responses: Map<string, Bytes> = new Map()
 
   async callWithBatching(
     callParams: CallParameters,
@@ -85,63 +166,6 @@ export class RpcClientPOC {
       for (const [index, query] of batch.entries()) {
         this.logger.debug(`Setting ${query.id} - ${r[index]}`)
         this.responses.set(query.id, r[index])
-      }
-    })
-
-    await Promise.all(promises)
-  }
-
-  async callWithMulticall(
-    callParams: CallParameters,
-    blockNumber: number | 'latest',
-  ): Promise<Bytes> {
-    const id = randomUUID()
-    this.logger.debug(`Adding to multicall pool ${id}`)
-    assert(callParams.data)
-    this.multicallPool.push({
-      id,
-      params: {
-        address: callParams.to,
-        data: callParams.data,
-      },
-      blockNumber,
-    })
-
-    let response = this.multicallResponses.get(id)
-    while (response === undefined) {
-      this.logger.debug(`Waiting ${id}`)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      response = this.multicallResponses.get(id)
-      this.multicallResponses.delete(id)
-    }
-
-    return response
-  }
-
-  async flushMulticall() {
-    if (this.multicallPool.length === 0) {
-      this.logger.debug('Nothing to flush...')
-      return
-    }
-
-    this.logger.debug(`Flushing multicall [${this.pool.length}]...`)
-    const queries = [...this.multicallPool]
-    this.multicallPool = []
-
-    const batches = toBatches(queries, MAX_BATCH_SIZE)
-
-    const promises = batches.map(async (batch, index) => {
-      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
-      const blockNumber = batch[0].blockNumber
-      const encoded = encodeBatch(batch.map((b) => b.params))
-      const response = await this.rpcClient.call(
-        { to: this.multicallV3, data: encoded },
-        blockNumber,
-      )
-      const r = decodeBatch(response)
-      for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
-        this.multicallResponses.set(query.id, r[index].data)
       }
     })
 
