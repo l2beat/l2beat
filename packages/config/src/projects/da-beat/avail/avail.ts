@@ -140,4 +140,13 @@ export const avail: BlockchainDaLayer = {
       coingeckoId: 'avail',
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet launch',
+      url: 'https://blog.availproject.org/avail-da-mainnet-is-live/',
+      date: '2024-07-23T00:00:00Z',
+      description: 'Avail mainnet and the AVAIL token launch.',
+      type: 'general',
+    },
+  ],
 }

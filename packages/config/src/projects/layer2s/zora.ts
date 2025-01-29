@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('zora')
 export const zora: Layer2 = opStackL2({
   addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
