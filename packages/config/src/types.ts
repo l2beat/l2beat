@@ -197,31 +197,6 @@ export interface ScalingProjectUpgradeability {
   implementations: EthereumAddress[]
 }
 
-export interface DataAvailabilityConfig {
-  layers: DataAvailabilityLayer[]
-  bridge: DataAvailabilityBridge
-  mode: DataAvailabilityMode
-}
-
-export interface DataAvailabilityMode {
-  value: string
-  secondLine?: string
-}
-
-export interface DataAvailabilityLayer {
-  value: string
-  sentiment: Sentiment
-  secondLine?: string
-  description: string
-  fallbackDescription?: string
-}
-
-export interface DataAvailabilityBridge {
-  value: string
-  description: string
-  sentiment: Sentiment
-}
-
 export type ScalingProjectDisplay = {
   /** Name of the scaling project, will be used as a display name on the website */
   name: string
@@ -545,9 +520,9 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: DataAvailabilityLayer
-  bridge: DataAvailabilityBridge
-  mode: DataAvailabilityMode
+  layer: TableReadyValue
+  bridge: TableReadyValue
+  mode: TableReadyValue
 }
 
 export interface Layer2 extends ScalingProject {
@@ -843,7 +818,7 @@ export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
   /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
   /** Fallback */
-  fallback?: DataAvailabilityLayer
+  fallback?: TableReadyValue
   /** Supported challenge mechanism in place */
   challengeMechanism: DaChallengeMechanism
   /** Number of operators in the data availability layer. */

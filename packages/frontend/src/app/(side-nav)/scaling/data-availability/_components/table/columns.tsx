@@ -48,7 +48,7 @@ export const columns = [
         <TwoRowCell>
           <TwoRowCell.First>
             <SentimentText
-              sentiment={data.sentiment}
+              sentiment={data.sentiment ?? 'neutral'}
               description={data.description}
             >
               {ctx.getValue()}
@@ -86,7 +86,7 @@ export const columns = [
       const data = ctx.row.original.dataAvailability.bridge
       return (
         <SentimentText
-          sentiment={data.sentiment}
+          sentiment={data.sentiment ?? 'neutral'}
           description={data.description}
         >
           {ctx.getValue()}

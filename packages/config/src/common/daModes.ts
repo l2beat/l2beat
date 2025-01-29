@@ -1,19 +1,19 @@
-import type { DataAvailabilityMode } from '../types'
+import type { TableReadyValue } from '../types'
 
-const STATE_DIFFS: DataAvailabilityMode = {
+const STATE_DIFFS: TableReadyValue = {
   value: 'State diffs',
 }
 
-const STATE_DIFFS_COMPRESSED: DataAvailabilityMode = {
+const STATE_DIFFS_COMPRESSED: TableReadyValue = {
   value: 'State diffs',
   secondLine: 'Compressed',
 }
 
-const TRANSACTION_DATA: DataAvailabilityMode = {
+const TRANSACTION_DATA: TableReadyValue = {
   value: 'Transaction data',
 }
 
-const TRANSACTION_DATA_COMPRESSED: DataAvailabilityMode = {
+const TRANSACTION_DATA_COMPRESSED: TableReadyValue = {
   value: 'Transaction data',
   secondLine: 'Compressed',
 }

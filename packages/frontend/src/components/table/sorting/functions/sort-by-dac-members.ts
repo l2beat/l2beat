@@ -2,7 +2,7 @@ import type { Sentiment } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 
 export function sortByDacMembers<
-  TData extends { sentiment: Sentiment; value: string },
+  TData extends { sentiment?: Sentiment; value: string },
 >(rowA: TData | undefined, rowB: TData | undefined) {
   const dacMembersA = getDacMembers(rowA?.value)
   const dacMembersB = getDacMembers(rowB?.value)
