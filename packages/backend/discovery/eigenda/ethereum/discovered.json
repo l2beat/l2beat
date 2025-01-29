@@ -1,12 +1,13 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 21723767,
-  "configHash": "0x6f0e00acd0cfd831e5255207ca2970568d48c039a9a0bbe85bcd32505a83b289",
+  "blockNumber": 21730569,
+  "configHash": "0xabc214d111980d571be092df864b2b5187bf0dde20590b3e6111d2aed1b6643f",
   "contracts": [
     {
       "name": "StakeRegistry",
       "address": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+      "template": "eigenlayer/StakeRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x249715f12cf118070103f30534be5816b6847d0b1cd8fe8cae8e1833c6afd1f8"
@@ -16,8 +17,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -76,12 +93,12 @@
         "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH)."
         }
-      },
-      "derivedName": "StakeRegistry"
+      }
     },
     {
       "name": "BLSApkRegistry",
       "address": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+      "template": "eigenlayer/BLSApkRegistry",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xb4ca65ab7fb0cd9a8fd6f0c4b7805ea96914dcb6dd65309b2557931358ad1ff3"
@@ -91,8 +108,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -124,12 +157,12 @@
         ],
         "$upgradeCount": 2,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
-      },
-      "derivedName": "BLSApkRegistry"
+      }
     },
     {
       "name": "RegistryCoordinator",
       "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+      "template": "eigenlayer/RegistryCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
@@ -138,9 +171,37 @@
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "issuedPermissions": [
         {
+          "permission": "configure",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "description": "can add and remove strategies",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
+          "description": "can approve the replacement of churned operators from a quorum",
+          "via": []
+        },
+        {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -154,7 +215,7 @@
           ]
         }
       ],
-      "directlyReceivedPermissions": [
+      "receivedPermissions": [
         {
           "permission": "configure",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
@@ -272,7 +333,6 @@
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
           "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x298a5d7f39ddadc4ea6ec53dfe8f53da3bcb79f78959d6f0b052db493af7a750",
-          "0x94d2c886f24ae27781d3da791b60f350b623ee1bd098ae2afdf078536caeecac",
           "0x3de65d5688bab111480ec6fbc980b0de1bdda1c812df51db1e3c677f085553a7",
           "0xeb1e8a9a0cc314d9ebb782fd565febeff180eae541796ce5222209ed97b3c9b2",
           "0x3a552b77ef1900fb007ad48c8d3c350381872ed1364a590b34ac3ce717c1fe8d",
@@ -433,8 +493,7 @@
           "description": "The time in seconds that an operator must wait before being able to re-register after being ejected.",
           "type": "RISK_PARAMETER"
         }
-      },
-      "derivedName": "RegistryCoordinator"
+      }
     },
     {
       "name": "PauserRegistry",
@@ -476,78 +535,6 @@
       }
     },
     {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0xb6e75618673d4c8271ddc66b99d5cdc306dc03e400ce0a1f05f8e74b124dbb06",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "30492270962520895384539",
-        "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "template": "eigenlayer/EjectionManager",
@@ -556,7 +543,7 @@
         "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).",
+      "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -566,8 +553,24 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -617,8 +620,7 @@
         "ejectableStakePercent": {
           "description": "Max stake to be ejectable per time delta."
         }
-      },
-      "derivedName": "EjectionManager"
+      }
     },
     {
       "name": "AVSDirectory",
@@ -632,8 +634,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -729,79 +747,7 @@
       }
     },
     {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0x91ae672142747f6575ebefe89dba8550752c42ee0b0fe29e9df2523d93e6976d",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "818178130615251898888",
-        "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
+      "name": "EigenLayerRewardsInitiatorMultisig",
       "address": "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -809,6 +755,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can create rewards submissions."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1721762183,
       "values": {
@@ -828,151 +781,8 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 8,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1686349019,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-06-09T22:16:59.000Z",
-            "0xc48ef66054da437f0a7eed4315c5b3f3029f6ebc85ded6d0891272f8f100bc26",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "19335866976647196671716",
-        "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1704485723,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2024-01-05T20:15:23.000Z",
-            "0x6d9bbd5b0323a53856a76ca93769d0e105d9e08a48b502a55cbbb51187583a38",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "174442923841207420296707",
-        "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "EigenLayerOwningMultisig",
@@ -995,10 +805,6 @@
         {
           "permission": "act",
           "from": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1033,8 +839,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -1087,7 +909,7 @@
       }
     },
     {
-      "name": "Safe",
+      "name": "Protocol Council",
       "address": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1095,6 +917,189 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "via": [
+            { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "executes scheduled operations after the delay"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1732236023,
       "values": {
@@ -1114,10 +1119,11 @@
         "multisigThreshold": "3 of 5 (60%)",
         "nonce": 7,
         "VERSION": "1.4.1"
-      }
+      },
+      "derivedName": "Safe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "EigenLayerPauserMultisig",
       "address": "0x5050389572f2d220ad927CcbeA0D406831012390",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1153,151 +1159,8 @@
         "multisigThreshold": "1 of 8 (13%)",
         "nonce": 24,
         "VERSION": "1.3.0"
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1686349019,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-06-09T22:16:59.000Z",
-            "0xbc6446c92131a356edff85618f044940164fc98d078a272b9e4c6a78e6102c23",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "7182917863039475781964",
-        "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0xaedc32e20363c051714d18605ac7df70c74c35f65bd45310b53a71146cec5028",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "17906757420025746190364",
-        "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "UpgradeableBeacon",
@@ -1323,8 +1186,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -1358,61 +1237,9 @@
       }
     },
     {
-      "name": "StrategyBase",
-      "address": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
-      "unverified": true,
-      "template": "eigenlayer/Strategy",
-      "proxyType": "Beacon proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [{ "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [{ "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1724651639,
-      "values": {
-        "$admin": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
-        "$beacon": "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9",
-        "$implementation": "0xe9FA8F904d97854C7389b68923262ADCC6C27827",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "3741641549046931108379835",
-        "underlyingToken": "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      },
-      "derivedName": "StrategyBase"
-    },
-    {
       "name": "EigenPod",
       "address": "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430",
+      "template": "eigenlayer/EigenPod",
       "sourceHashes": [
         "0xda9b2195cd2d07052198378564d56758772451df9c7849c8d958ef8e2207e059"
       ],
@@ -1434,89 +1261,15 @@
         "podOwner": "0x0000000000000000000000000000000000000000",
         "proofSubmitter": "0x0000000000000000000000000000000000000000",
         "withdrawableRestakedExecutionLayerGwei": 0
-      },
-      "derivedName": "EigenPod"
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0x1a3e6c479ac05253780d481ab8558b6e690f50d4387ae17ec3f0891b3480830e",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "26355101832632092793556",
-        "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
       }
     },
     {
-      "name": "eigenDAProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0xae641c7d7a83bba7fa913b9544f946dc23ca0527c2f4abb9c6a3496f49375218"
       ],
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -1547,8 +1300,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "StrategyManager",
@@ -1563,8 +1315,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -1615,6 +1383,7 @@
     {
       "name": "EigenDAServiceManager",
       "address": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+      "template": "eigenlayer/EigenDAServiceManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"
@@ -1624,12 +1393,24 @@
       "issuedPermissions": [
         {
           "permission": "configure",
+          "to": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can approve the replacement of churned operators from a quorum",
+          "via": []
+        },
+        {
+          "permission": "configure",
           "to": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
           "description": "can pause the DA bridge",
           "via": [
             { "address": "0x5050389572f2d220ad927CcbeA0D406831012390" },
             { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }
           ]
+        },
+        {
+          "permission": "configure",
+          "to": "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A",
+          "description": "can create rewards submissions.",
+          "via": []
         },
         {
           "permission": "configure",
@@ -1654,6 +1435,19 @@
           "to": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
           "description": "can confirm batches to the DA bridge.",
           "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+          "description": "can pause the DA bridge",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }
+          ]
         },
         {
           "permission": "configure",
@@ -1712,23 +1506,21 @@
         {
           "permission": "configure",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
-          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
-          "via": []
-        },
-        {
-          "permission": "configure",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
           "description": "can pause the DA bridge",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }
           ]
         },
         {
           "permission": "configure",
-          "to": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
-          "description": "can approve the replacement of churned operators from a quorum",
-          "via": [{ "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656" }]
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
+          "via": []
         },
         {
           "permission": "configure",
@@ -1750,8 +1542,24 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -1809,7 +1617,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 79789,
+        "batchId": 79926,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -1841,7 +1649,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 79789,
+        "taskNumber": 79926,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1865,8 +1673,7 @@
           "description": "The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.",
           "type": "RISK_PARAMETER"
         }
-      },
-      "derivedName": "EigenDAServiceManager"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -1878,23 +1685,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
         },
         {
           "permission": "upgrade",
@@ -1902,19 +1693,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
         },
         {
           "permission": "upgrade",
@@ -1922,31 +1701,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xAe60d8180437b5C34bB956822ac2710972584473"
         },
         {
           "permission": "upgrade",
@@ -1964,80 +1719,9 @@
       }
     },
     {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1704485723,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2024-01-05T20:15:23.000Z",
-            "0xc0d0e91ba0b422da6b6eff6470f3f570d19263084102caefd1352898d1595f1a",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "9624320551267201824325",
-        "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
       "name": "EigenPodManager",
       "address": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+      "template": "eigenlayer/EigenPodManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x0e8b710d3b23eeae5d441beddd0f023fb1532922dee0f7daf4098658bc4f4d32"
@@ -2046,8 +1730,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -2092,367 +1792,12 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32882,
+        "numPods": 32895,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "slasher": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
-      },
-      "derivedName": "EigenPodManager"
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1686349019,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-06-09T22:16:59.000Z",
-            "0x2d3c7d1611d7d6f9331598452e2a567c223b1ba5e8cfac15e81c1e352ce30cba",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "944128764962539286687448",
-        "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0x98c6f2080df9ded027ca703bb52acef213576aa9b376f9c7451e41ab4c265170",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "80115600598932602118321",
-        "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1701791243,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2023-12-05T15:47:23.000Z",
-            "0xb70781ea053daa5b4eb4cba00d8d18d08c6097378713ce601363b5c02060e229",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "5587692127501666635660",
-        "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "EigenStrategy",
-      "address": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
-        "0x4c5ff062896caf72eb8999dc0f839adca5dbec7dd71c1aa6d0b1defce8ee6046"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1713414611,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428",
-        "$pastUpgrades": [
-          [
-            "2024-04-18T04:30:11.000Z",
-            "0x1e60f03a48d638e436087faed31f404435ea0af12795342b5de9f63d27772295",
-            ["0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "403786826061305445250840846",
-        "underlyingToken": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
-      }
-    },
-    {
-      "name": "StrategyBaseTVLLimits",
-      "address": "0xAe60d8180437b5C34bB956822ac2710972584473",
-      "template": "eigenlayer/Strategy",
-      "sourceHashes": [
-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x0c3feee8ba16b88486431df7d8867f64bc50ea12410ff83491b8020bdc49a9fd"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "A strategy implementation allowing to deposit a specific token as a restakable asset.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
-          "via": [
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
-          ]
-        }
-      ],
-      "ignoreInWatchMode": ["totalShares"],
-      "sinceTimestamp": 1704485723,
-      "values": {
-        "$admin": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
-        "$implementation": "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3",
-        "$pastUpgrades": [
-          [
-            "2024-01-05T20:15:23.000Z",
-            "0x2cf67ed2870057d5151bb9935962cb9282fd15f7c6e25ef78af3ba23c09886b1",
-            ["0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "explanation": "Base Strategy implementation to inherit from for more complex implementations",
-        "getTVLLimits": [
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-        ],
-        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "paused": 0,
-        "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
-        "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "8355943316331330269923",
-        "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
-      },
-      "fieldMeta": {
-        "getTVLLimits": {
-          "severity": "LOW",
-          "description": "Maximum TVL of the strategy.",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "severity": "LOW",
-          "description": "Maximum value of one deposit transaction",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "severity": "LOW",
-          "description": "Same as TVL limit",
-          "type": "RISK_PARAMETER"
-        }
       }
     },
     {
@@ -2466,8 +1811,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
@@ -2514,6 +1875,24 @@
       "receivedPermissions": [
         {
           "permission": "configure",
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can add and remove strategies"
+        },
+        {
+          "permission": "configure",
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "description": "can pause the DA bridge",
+          "via": [
+            { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "configure",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [{ "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }]
@@ -2522,12 +1901,178 @@
           "permission": "configure",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
+        },
+        {
+          "permission": "configure",
+          "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "description": "can cancel scheduled operations"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "via": [
+            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
+          "via": [
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x0c431C66F4dE941d089625E5B423D00707977060"
+        },
+        {
+          "permission": "act",
+          "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "delay": 864000
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2556,231 +2101,23 @@
     {
       "name": "TimelockControllerOwning",
       "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+      "template": "eigenlayer/TimelockControllerOwning",
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
       ],
-      "receivedPermissions": [
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
+      "issuedPermissions": [
         {
           "permission": "configure",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can pause the DA bridge",
-          "via": [
-            { "address": "0x0c431C66F4dE941d089625E5B423D00707977060" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
+          "description": "executes scheduled operations after the delay",
+          "via": []
         },
         {
-          "permission": "upgrade",
-          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
-          "via": [{ "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xAe60d8180437b5C34bB956822ac2710972584473",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
-          "via": [
-            { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xD92145c07f8Ed1D392c1B88017934E301CC1c3Cd",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
+          "permission": "configure",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "description": "can cancel scheduled operations",
+          "via": []
         }
       ],
       "sinceTimestamp": 1732234379,
@@ -2815,10 +2152,16 @@
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellers": ["0xBE1685C81aA44FF9FB319dD389addd9374383e90"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executors": ["0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"],
         "getMinDelay": 864000,
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposers": [
+          "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+        ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
       "derivedName": "TimelockController"
@@ -2834,8 +2177,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -2928,8 +2287,24 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+          "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
+            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
+            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
+          "via": [
+            {
+              "address": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
+              "delay": 864000
+            },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" },
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" }
           ]
@@ -3043,14 +2418,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "via": [
             { "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" },
@@ -3067,30 +2434,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
           "via": [
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
@@ -3099,36 +2442,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4",
-          "via": [{ "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x7CA911E83dabf90C90dD3De5411a10F1A6112184",
           "via": [
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
@@ -3152,55 +2466,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
           "from": "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xa4C637e0F704745D182e4D38cAb7E7485321d059",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7",
-          "via": [
-            { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
-            { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xAe60d8180437b5C34bB956822ac2710972584473",
           "via": [
             { "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444" },
             { "address": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111" }
@@ -3438,15 +2704,8 @@
       "receivedPermissions": [
         {
           "permission": "configure",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-          "description": "can approve the replacement of churned operators from a quorum",
-          "via": [{ "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "description": "can approve the replacement of churned operators from a quorum"
         }
       ]
     },
@@ -3522,17 +2781,6 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
     ],
-    "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x130d8EA0052B45554e4C99079B84df292149Bd5E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3545,17 +2793,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3719,17 +2956,6 @@
       "function registryCoordinator() view returns (address)",
       "function totalOperatorsForQuorum(uint8 quorumNumber) view returns (uint32)"
     ],
-    "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96": [
       "constructor(address _registryCoordinator, address _delegationManager)",
       "event MinimumStakeForQuorumUpdated(uint8 indexed quorumNumber, uint96 minimumStake)",
@@ -3769,47 +2995,6 @@
       "function strategyParamsLength(uint8 quorumNumber) view returns (uint256)",
       "function updateOperatorStake(address operator, bytes32 operatorId, bytes quorumNumbers) returns (uint192)",
       "function weightOfOperatorForQuorum(uint8 quorumNumber, address operator) view returns (uint96)"
-    ],
-    "0x27e7a3A81741B9fcc5Ad7edCBf9F8a72a5c00428": [
-      "constructor(address _strategyManager)",
-      "event Initialized(uint8 version)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function EIGEN() view returns (address)",
-      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
-      "function explanation() pure returns (string)",
-      "function initialize(address _underlyingToken, address _pauserRegistry)",
-      "function initialize(address _EIGEN, address _bEIGEN, address _pauserRegistry)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function shares(address user) view returns (uint256)",
-      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
-      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
-      "function strategyManager() view returns (address)",
-      "function totalShares() view returns (uint256)",
-      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToken() view returns (address)",
-      "function unpause(uint256 newPausedStatus)",
-      "function userUnderlying(address user) returns (uint256)",
-      "function userUnderlyingView(address user) view returns (uint256)",
-      "function withdraw(address recipient, address token, uint256 amountShares)"
-    ],
-    "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f": [
       "constructor(address _registryCoordinator, address _stakeRegistry)",
@@ -3931,28 +3116,6 @@
     ],
     "0x5050389572f2d220ad927CcbeA0D406831012390": [
       "constructor(address _singleton)"
-    ],
-    "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07": [
       "constructor(address __avsDirectory, address __rewardsCoordinator, address __registryCoordinator, address __stakeRegistry)",
@@ -4183,17 +3346,6 @@
       "function unpause(uint256 newPausedStatus)",
       "function withdrawSharesAsTokens(address podOwner, address destination, uint256 shares)"
     ],
-    "0x7CA911E83dabf90C90dD3De5411a10F1A6112184": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -4238,68 +3390,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x93c4b944D05dfe6df7645A86cd2206016c51564D": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xa4C637e0F704745D182e4D38cAb7E7485321d059": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xAe60d8180437b5C34bB956822ac2710972584473": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -4519,41 +3610,6 @@
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function updateSocket(string socket)"
     ],
-    "0xdfdA04f980bE6A64E3607c95Ca26012Ab9aA46d3": [
-      "constructor(address _strategyManager)",
-      "event Initialized(uint8 version)",
-      "event MaxPerDepositUpdated(uint256 previousValue, uint256 newValue)",
-      "event MaxTotalDepositsUpdated(uint256 previousValue, uint256 newValue)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function deposit(address token, uint256 amount) returns (uint256 newShares)",
-      "function explanation() pure returns (string)",
-      "function getTVLLimits() view returns (uint256, uint256)",
-      "function initialize(uint256 _maxPerDeposit, uint256 _maxTotalDeposits, address _underlyingToken, address _pauserRegistry)",
-      "function initialize(address _underlyingToken, address _pauserRegistry)",
-      "function maxPerDeposit() view returns (uint256)",
-      "function maxTotalDeposits() view returns (uint256)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function setTVLLimits(uint256 newMaxPerDeposit, uint256 newMaxTotalDeposits)",
-      "function shares(address user) view returns (uint256)",
-      "function sharesToUnderlying(uint256 amountShares) view returns (uint256)",
-      "function sharesToUnderlyingView(uint256 amountShares) view returns (uint256)",
-      "function strategyManager() view returns (address)",
-      "function totalShares() view returns (uint256)",
-      "function underlyingToShares(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToSharesView(uint256 amountUnderlying) view returns (uint256)",
-      "function underlyingToken() view returns (address)",
-      "function unpause(uint256 newPausedStatus)",
-      "function userUnderlying(address user) returns (uint256)",
-      "function userUnderlyingView(address user) view returns (uint256)",
-      "function withdraw(address depositor, address token, uint256 amountShares)"
-    ],
     "0xe9FA8F904d97854C7389b68923262ADCC6C27827": [
       "constructor(address _strategyManager)",
       "event ExchangeRateEmitted(uint256 rate)",
@@ -4641,12 +3697,19 @@
   },
   "usedTemplates": {
     "eigenlayer/AVSDirectory": "0x2a04edb4ae6fefbff182b022e911e95b661b3ae858fa04695112c39eaaf75d71",
+    "eigenlayer/BLSApkRegistry": "0x999140dae47630da82029a120093e00e0ede6ffc6f01249bfe56d5775e9f5358",
     "eigenlayer/DelegationManager": "0x0b175e41427b8f36011bf976432888f9a1298e1857cdd39380ec3b0de868ae5f",
     "eigenlayer/EIGEN token": "0xa47d59e05f42fc2ca6509d9ae33c4f00491666cdf2c18f6fd94097dd0872dec7",
-    "eigenlayer/EjectionManager": "0x3bc4d9c500aeb8e11c9373cf2d685180fe87e5f89dba11baef2d6b61080efb58",
+    "eigenlayer/EigenDAServiceManager": "0x5472b178d2f5ba6edceaed32b3be0cba0a6e97fd88cc68861bb5b7c4a710ecd9",
+    "eigenlayer/EigenPod": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
+    "eigenlayer/EigenPodManager": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
+    "eigenlayer/EjectionManager": "0xd643b56b0ca22e302c9c5fa85d122883ba5dee74356f3282c8269714f633ead6",
     "eigenlayer/PauserRegistry": "0x4072012c2d9a6dcc9bcaac6075469c96090c7279b8ec8a2ae07c519449010ede",
+    "eigenlayer/RegistryCoordinator": "0xa81a22546a06351d4c1d306034181e373e6b8e93d48eac557a6d21bf65665927",
+    "eigenlayer/StakeRegistry": "0xdb60bebc47f3d945cc55cc081508ad01da8f12b45130d52fae961f0058715bbb",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
     "eigenlayer/StrategyManager": "0x98c3bdea63c8e2933b01b0835c31f890ee6cb385bd0de9d528055c1fcf5bc7dc",
+    "eigenlayer/TimelockControllerOwning": "0xf9dc15b1ee1957b1e3a4cbd20240267456612f300819b86ea3b8cc21e348964c",
     "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
     "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
   }
