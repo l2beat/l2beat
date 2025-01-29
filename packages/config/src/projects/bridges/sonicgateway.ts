@@ -27,6 +27,12 @@ const timeUntilDeadString = discovery.getContractValue<string>(
   'TokenDeposit',
   'TimeUntilDead',
 )
+const heartBeatInterval = discovery.getContractValue<number>(
+  'UpdateManager',
+  'heartbeat',
+)
+const fastLaneFee =
+  discovery.getContractValue<number>('UpdateManager', 'fastLaneFee') / 1e18
 
 export const sonicgateway: Bridge = {
   type: 'bridge',
@@ -99,7 +105,7 @@ export const sonicgateway: Bridge = {
       For the special case of the S token (gasToken on Sonic), there is an adapter contract on the Sonic side that escrows S and unlocks the tokens for incoming bridge transactions. The FTM token on the Ethereum side is mapped to the S token on Sonic, which means the token gets 'converted' when bridged in either direction. Since new S or FTM cannot be minted by the bridge, there is a limit to how much can be bridged either way. For other supported tokens, this is not the case because they can be minted on Sonic.
       
       
-      The bridge has a liveness self-check that sets the bridge status to 'dead' after a predefined period of ${timeUntilDeadString} in which no new state updates have arrived. In the 'dead' state, users can re-claim their deposits on the source chain side and withdraw based on the latest available state root on the destination chain side.`,
+      State updates are expected regularly (currently every ${heartBeatInterval} seconds) and can be fast-tracked by paying a fee of ${fastLaneFee} ETH. The state updates are not enforced and only Relayers are permitted to update. The bridge has a liveness self-check that sets the bridge status to 'dead' after a predefined period of ${timeUntilDeadString} in which no new state updates have arrived. In the 'dead' state, users can re-claim their deposits on the source chain side and withdraw based on the latest available state root on the destination chain side.`,
       references: [
         {
           title: 'Sonic Documentation: Sonic Gateway',
