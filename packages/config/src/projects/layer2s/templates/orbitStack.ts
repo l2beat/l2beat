@@ -508,7 +508,7 @@ function orbitStackCommon(
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('optimistic'),
           references: [
             {
               title: 'Transaction lifecycle - Arbitrum documentation',

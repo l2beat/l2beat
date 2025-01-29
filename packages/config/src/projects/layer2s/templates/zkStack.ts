@@ -380,7 +380,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('zk', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('zk'),
           references: [
             {
               title: 'Withdrawing funds - ZKsync documentation',

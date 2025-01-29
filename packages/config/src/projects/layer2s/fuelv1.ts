@@ -146,7 +146,7 @@ export const fuelv1: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [
           {
             title: 'Withdraw.yulp#L40 - Fuel documentation',

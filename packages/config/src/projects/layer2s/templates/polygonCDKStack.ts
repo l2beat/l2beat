@@ -441,7 +441,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('zk', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('zk'),
           references: explorerReferences(explorerUrl, [
             {
               title:

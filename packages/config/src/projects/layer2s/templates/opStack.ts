@@ -984,9 +984,8 @@ function getTechnologyExitMechanism(
         templateVars.discovery.getContract('L2OutputOracle')
 
       result.push({
-        ...EXITS.REGULAR(
+        ...EXITS.REGULAR_MESSAGING(
           'optimistic',
-          'merkle proof',
           getFinalizationPeriod(templateVars),
         ),
         references: explorerReferences(explorerUrl, [

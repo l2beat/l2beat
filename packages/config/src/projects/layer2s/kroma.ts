@@ -352,7 +352,7 @@ export const kroma: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof', finalizationPeriod),
+        ...EXITS.REGULAR_MESSAGING('optimistic', finalizationPeriod),
         references: [
           {
             title:
