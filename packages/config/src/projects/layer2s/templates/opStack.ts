@@ -1184,8 +1184,7 @@ function getTrackedTxs(
         templateVars.l2OutputOracle ??
         templateVars.discovery.getContract('L2OutputOracle')
 
-      return ifPostsToEthereum(
-        templateVars,
+      return (
         templateVars.nonTemplateTrackedTxs ?? [
           {
             uses: [
@@ -1216,7 +1215,7 @@ function getTrackedTxs(
               ),
             },
           },
-        ],
+        ]
       )
     }
     case 'Permissioned':
