@@ -24,14 +24,58 @@
     "0xF96798F49936EfB1a56F99Ceae924b6B8359afFb": "ERC4626Vault",
     "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
     "0x6D225e974Fa404D25Ffb84eD6E242Ffa18eF6430": "EigenPod",
-    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning"
+    "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
+    "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "Protocol Council"
   },
   "overrides": {
     "TimelockControllerOwning": {
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
       "fields": {
         "accessControl": {
           "handler": {
             "type": "accessControl"
+          }
+        },
+        "proposers": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "PROPOSER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "act",
+                "delay": "{{ getMinDelay }}"
+              }
+            ]
+          }
+        },
+        "executors": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "EXECUTOR_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "executes scheduled operations after the delay"
+              }
+            ]
+          }
+        },
+        "cancellers": {
+          "handler": {
+            "type": "accessControl",
+            "pickRoleMembers": "CANCELLER_ROLE"
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can cancel scheduled operations"
+              }
+            ]
           }
         }
       }
@@ -93,16 +137,6 @@
             ]
           }
         },
-        "registryCoordinator": {
-          "target": {
-            "permissions": [
-              {
-                "type": "configure",
-                "description": "can approve the replacement of churned operators from a quorum"
-              }
-            ]
-          }
-        },
         "pauserRegistry": {
           "target": {
             "permissions": [
@@ -127,6 +161,7 @@
     },
     "StakeRegistry": {
       "description": "Keeps track of the total stake of each operator.",
+      "ignoreRelatives": ["quorumStrategies"],
       "fields": {
         "quorumStrategies": {
           "description": "The strategies for the first quorum (ETH).",
@@ -195,11 +230,22 @@
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
         },
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "can add and remove startegies"
+              }
+            ]
+          }
+        },
         "churnApprover": {
           "target": {
             "permissions": [
               {
-                "type": "act"
+                "type": "configure",
+                "description": "can approve the replacement of churned operators from a quorum"
               }
             ]
           }
