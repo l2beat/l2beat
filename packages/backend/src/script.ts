@@ -18,9 +18,11 @@ import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
 import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
 
-main().catch((e: unknown) => {
-  console.error(e)
-})
+main()
+  .catch((e: unknown) => {
+    console.error(e)
+  })
+  .finally(() => process.exit(0))
 
 async function main() {
   const env = getEnv()
@@ -81,7 +83,7 @@ async function main() {
 
   const config = arbitrumConfig
 
-  const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
+  const timestamp = UnixTime.now().toStartOf('hour')
   const tvs = await localExecutor.run(config, [timestamp])
 
   const tokens = tvs.get(timestamp.toNumber())
