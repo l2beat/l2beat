@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21730042,
-  "configHash": "0x9046921f957a76c36d5b45174d3aba3437afa901241f80136b87aa2fb076836f",
+  "configHash": "0x5c3dec22f1e54872126be6e155935b94468502a273d1ebd19961b648e27d045c",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -140,6 +140,12 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC_BURN_PREPARER_ROLE": "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6",
         "USDT_BURN_PREPARER_ROLE": "0xcc83783a336c5977a84d3445de8848e96ef07372a420bac3d7f276ab3bcb0b40"
+      },
+      "fieldMeta": {
+        "exitAdministrator": { "severity": "HIGH" },
+        "proofVerifier": { "severity": "HIGH" },
+        "stateOracle": { "severity": "HIGH" },
+        "deadState": { "severity": "HIGH" }
       },
       "derivedName": "TokenDeposit"
     },
