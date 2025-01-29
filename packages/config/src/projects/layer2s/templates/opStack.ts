@@ -922,11 +922,13 @@ function getTechnologyStateCorrectness(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            title: 'DisputeGameFactory.sol - Etherscan source code, create() function',
+            title:
+              'DisputeGameFactory.sol - Etherscan source code, create() function',
             address: safeGetImplementation(disputeGameFactory),
           },
           {
-            title: 'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
+            title:
+              'PermissionedDisputeGame.sol - Etherscan source code, attack() function',
             address: permissionedDisputeGame.address,
           },
         ]),
@@ -950,11 +952,13 @@ function getTechnologyStateCorrectness(
         ],
         references: explorerReferences(explorerUrl, [
           {
-            title: 'DisputeGameFactory.sol - Etherscan source code, create() function',
+            title:
+              'DisputeGameFactory.sol - Etherscan source code, create() function',
             address: safeGetImplementation(disputeGameFactory),
           },
           {
-            title: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
+            title:
+              'FaultDisputeGame.sol - Etherscan source code, attack() function',
             address: faultDisputeGame.address,
           },
         ]),
