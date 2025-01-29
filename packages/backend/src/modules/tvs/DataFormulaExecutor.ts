@@ -35,7 +35,7 @@ export class DataFormulaExecutor {
       /** Optimization to fetch block for timestamp only once per chain */
       const blockNumbers = await this.getBlockNumbers(amounts, timestamp)
 
-      const promises = amounts.map(async (amount) => {
+      let promises = amounts.map(async (amount) => {
         const cachedValue = await this.storage.getAmount(amount.id, timestamp)
         if (cachedValue !== undefined) {
           this.logger.debug(`Cached value found for ${amount.id}`)
@@ -69,7 +69,7 @@ export class DataFormulaExecutor {
         await this.storage.writeAmount(amount.id, timestamp, value)
       })
 
-      promises.concat(
+      promises = promises.concat(
         prices.map(async (price, index) => {
           this.logger.debug(`Processing price ${index} of ${prices.length}`)
 
@@ -108,7 +108,6 @@ export class DataFormulaExecutor {
         timestamp,
       )
     } catch {
-      // TODO temporary workaround for issues with UMAMI
       this.logger.error(
         `Error fetching circulating supply for ${config.ticker}. Assuming 0`,
       )
@@ -163,7 +162,6 @@ export class DataFormulaExecutor {
       this.logger.debug(`Fetching price for ${config.ticker}`)
       return await this.priceProvider.getPrice(config.ticker, timestamp)
     } catch {
-      // TODO temporary workaround for issues with rhinofi
       this.logger.error(`Error fetching price for ${config.ticker}. Assuming 0`)
       return 0
     }
