@@ -77,11 +77,7 @@ export const eigenDAbridge = {
   },
   contracts: {
     addresses: {
-      ethereum: discovery
-        .getDiscoveredContracts()
-        .filter(
-          (contract) => !contract.name.startsWith('StrategyBaseTVLLimits'),
-        ),
+      ethereum: discovery.getDiscoveredContracts(),
     },
     risks: [
       {
