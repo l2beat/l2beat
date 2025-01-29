@@ -52,10 +52,10 @@ import type {
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   StageConfig,
+  TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
@@ -102,7 +102,7 @@ export function DACHALLENGES_DA_PROVIDER(
 interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
   badge: BadgeId

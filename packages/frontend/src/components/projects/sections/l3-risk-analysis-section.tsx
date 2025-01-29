@@ -238,12 +238,12 @@ function HeaderCell({
 }
 
 function RiskCell(props: {
-  sentiment: Sentiment
+  sentiment?: Sentiment
   value: string
   backgroundFill?: boolean
   className?: string
 }) {
-  const bg = sentimentToTransparentBgColor(props.sentiment)
+  const bg = sentimentToTransparentBgColor(props.sentiment ?? 'neutral')
 
   return (
     <td
@@ -253,7 +253,7 @@ function RiskCell(props: {
         props.className,
       )}
     >
-      <SentimentText sentiment={props.sentiment} vibrant>
+      <SentimentText sentiment={props.sentiment ?? 'neutral'} vibrant>
         {props.value}
       </SentimentText>
     </td>

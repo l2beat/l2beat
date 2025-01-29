@@ -1,9 +1,4 @@
-import type {
-  Bridge,
-  Layer2,
-  Layer3,
-  ScalingProjectRiskViewEntry,
-} from '../../../types'
+import type { Bridge, Layer2, Layer3, TableReadyValue } from '../../../types'
 
 // this function should be updated when new sections that can be under review are added
 export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {
@@ -14,7 +9,7 @@ export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {
     !!project.contracts?.isUnderReview ||
     project.permissions === 'UnderReview' ||
     Object.values(project.riskView).some(
-      (risk: ScalingProjectRiskViewEntry) => risk.sentiment === 'UnderReview',
+      (risk: TableReadyValue) => risk.sentiment === 'UnderReview',
     )
   )
 }

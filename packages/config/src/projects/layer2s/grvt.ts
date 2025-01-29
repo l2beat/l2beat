@@ -23,7 +23,7 @@ export const grvt: Layer2 = zkStackL2({
     name: 'GRVT',
     slug: 'grvt',
     tvlWarning: {
-      content:
+      value:
         'L2BEAT is currently unable to track the TVL of the GRVT Validium due to the lack of a public rpc / explorer.',
       sentiment: 'neutral',
     },

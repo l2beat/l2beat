@@ -37,8 +37,8 @@ import type {
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
+  TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
 import type {
@@ -55,7 +55,7 @@ import { mergeBadges } from './utils'
 export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }

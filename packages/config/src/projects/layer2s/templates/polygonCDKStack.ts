@@ -38,10 +38,10 @@ import type {
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPurpose,
-  ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
   ScalingProjectTechnology,
+  TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
@@ -53,7 +53,7 @@ import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }
@@ -585,7 +585,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 }
 
-function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
+function riskViewDA(DA: DAProvider | undefined): TableReadyValue {
   return DA === undefined
     ? {
         ...RISK_VIEW.DATA_ON_CHAIN,

@@ -24,7 +24,7 @@ export const treasure: Layer2 = zkStackL2({
     name: 'Treasure',
     slug: 'treasure',
     tvlWarning: {
-      content:
+      value:
         'The total TVS includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. L2BEAT is working on a fix.',
       sentiment: 'warning',
     },

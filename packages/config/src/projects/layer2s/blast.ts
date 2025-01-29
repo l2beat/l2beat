@@ -27,7 +27,7 @@ export const blast: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
     tvlWarning: {
-      content: 'The TVS does account for rehypothecated tokens.',
+      value: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
   },

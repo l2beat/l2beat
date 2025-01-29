@@ -6,9 +6,9 @@ import type {
   Layer2Display,
   ScalingProjectContracts,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
   StageConfig,
+  TableReadyValue,
 } from '../../../types'
 import { isUnderReview } from './isUnderReview'
 
@@ -71,7 +71,7 @@ describe(isUnderReview.name, () => {
         riskView: {
           ...mockProject.riskView,
           sequencerFailure: {
-            ...mockObject<ScalingProjectRiskViewEntry>(),
+            ...mockObject<TableReadyValue>(),
             sentiment: 'UnderReview' as const,
           },
         },

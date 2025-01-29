@@ -13,7 +13,8 @@ import type { BadgeId } from './projects/badges'
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
 export type WarningSentiment = 'bad' | 'warning' | 'neutral'
-export interface WarningValueWithSentiment {
+
+export interface WarningWithSentiment {
   value: string
   sentiment: WarningSentiment
 }
@@ -425,21 +426,21 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export interface ScalingProjectRiskViewEntry {
+export interface TableReadyValue {
   value: string
-  description: string
-  secondLine?: string // second line in risk view
-  sentiment: Sentiment
-  warning?: WarningValueWithSentiment
+  secondLine?: string
+  description?: string
+  sentiment?: Sentiment
+  warning?: WarningWithSentiment
   definingMetric?: number
 }
 
 export interface ScalingProjectRiskView {
-  stateValidation: ScalingProjectRiskViewEntry
-  dataAvailability: ScalingProjectRiskViewEntry
-  exitWindow: ScalingProjectRiskViewEntry
-  sequencerFailure: ScalingProjectRiskViewEntry
-  proposerFailure: ScalingProjectRiskViewEntry
+  stateValidation: TableReadyValue
+  dataAvailability: TableReadyValue
+  exitWindow: TableReadyValue
+  sequencerFailure: TableReadyValue
+  proposerFailure: TableReadyValue
 }
 
 export interface ScalingProjectStateDerivation {
@@ -577,8 +578,8 @@ export interface ProjectLivenessInfo {
 export interface Layer2FinalityDisplay {
   /** Warning tooltip content for finality tab for given project */
   warnings?: {
-    timeToInclusion?: WarningValueWithSentiment
-    stateUpdateDelay?: WarningValueWithSentiment
+    timeToInclusion?: WarningWithSentiment
+    stateUpdateDelay?: WarningWithSentiment
   }
   /** Finalization period displayed in table for given project (time in seconds) */
   finalizationPeriod?: number
@@ -591,13 +592,6 @@ export interface Layer2Config extends ScalingProjectConfig {
   liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
-}
-
-export interface WarningWithSentiment {
-  /** Content of the warning */
-  content: string
-  /** Color with which the warning should be displayed */
-  sentiment: Extract<Sentiment, 'bad' | 'warning' | 'neutral'>
 }
 
 export type Layer2TxConfig = {
@@ -789,9 +783,9 @@ export interface BridgeConfig {
 }
 
 export interface BridgeRiskView {
-  validatedBy: ScalingProjectRiskViewEntry
-  sourceUpgradeability?: ScalingProjectRiskViewEntry
-  destinationToken?: ScalingProjectRiskViewEntry
+  validatedBy: TableReadyValue
+  sourceUpgradeability?: TableReadyValue
+  destinationToken?: TableReadyValue
 }
 
 export interface BridgeTechnology {
