@@ -407,7 +407,8 @@ export interface TableReadyValue {
   description?: string
   sentiment?: Sentiment
   warning?: WarningWithSentiment
-  definingMetric?: number
+  /** Taken into account when sorting. Defaults to 0. */
+  orderHint?: number
 }
 
 export interface ScalingProjectRiskView {

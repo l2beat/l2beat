@@ -81,8 +81,8 @@ export const scalingRiskColumns = [
         }
 
         const exitWindowResult = sortByExitWindow(
-          a.original.risks.exitWindow.definingMetric ?? 0,
-          b.original.risks.exitWindow.definingMetric ?? 0,
+          a.original.risks.exitWindow.orderHint ?? 0,
+          b.original.risks.exitWindow.orderHint ?? 0,
         )
         if (exitWindowResult !== 0) {
           return exitWindowResult
