@@ -30,10 +30,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('myria')
 
@@ -83,7 +83,6 @@ export const myria: Layer2 = {
       websites: ['https://myria.com/'],
       apps: ['https://hub.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
-      explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
         'https://medium.com/@myriagames',

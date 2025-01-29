@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const koi: Layer2 = upcomingL2({
   id: 'koi',
@@ -18,7 +18,6 @@ export const koi: Layer2 = upcomingL2({
       websites: ['https://koi.finance/'],
       apps: ['https://dapp.koi.finance/'],
       documentation: ['https://docs.koi.finance/'],
-      explorers: [],
       repositories: ['https://github.com/koifinance'],
       socialMedia: [
         'https://t.me/mute_io',

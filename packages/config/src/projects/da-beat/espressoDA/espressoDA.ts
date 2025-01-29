@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { DaServiceDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { DaServiceDaLayer } from '../types'
 import { HotShotLightClient } from './HotShotLightClient'
 
 export const espressoDA: DaServiceDaLayer = {
@@ -18,7 +18,6 @@ export const espressoDA: DaServiceDaLayer = {
       websites: ['https://espressosys.com/'],
       documentation: ['https://docs.espressosys.com/'],
       repositories: ['https://github.com/espressosystems/'],
-      apps: [],
       explorers: ['https://explorer.main.net.espresso.network/'],
       socialMedia: [
         'https://x.com/EspressoSys',
@@ -90,4 +89,14 @@ export const espressoDA: DaServiceDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'EspressoDA launch on mainnet',
+      url: 'https://medium.com/@espressosys/espresso-mainnet-0-is-live-deedc2505081',
+      date: '2024-11-11T00:00:00Z',
+      description:
+        'EspressoDA mainnet launches with a permissioned set of node operators.',
+      type: 'general',
+    },
+  ],
 }

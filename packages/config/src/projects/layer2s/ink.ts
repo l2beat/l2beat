@@ -25,10 +25,10 @@ import {
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ink')
 
@@ -147,8 +147,6 @@ export const ink: Layer2 = {
     stack: 'OP Stack',
     links: {
       websites: ['https://inkonchain.com/en-US'],
-      apps: [],
-      documentation: [],
       explorers: [
         'https://explorer.inkonchain.com',
         'https://okx.com/en-au/web3/explorer/inkchain',

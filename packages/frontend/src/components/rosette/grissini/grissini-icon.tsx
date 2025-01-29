@@ -36,7 +36,9 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
     >
       {values.map((value, i) => (
         <SingleGrissini
-          sentiment={hasNoBridge ? 'UnderReview' : value.sentiment}
+          sentiment={
+            hasNoBridge ? 'UnderReview' : (value.sentiment ?? 'neutral')
+          }
           key={i}
           onMouseEnter={() => selectRisk(value)}
         />

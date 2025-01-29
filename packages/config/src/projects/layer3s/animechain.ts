@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import type { Layer3 } from './types'
 
 export const animechain: Layer3 = upcomingL3({
   id: 'animechain',
@@ -17,10 +17,6 @@ export const animechain: Layer3 = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://anime.xyz/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/animecoin'],
     },
   },

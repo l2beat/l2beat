@@ -29,10 +29,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 
@@ -81,8 +81,6 @@ export const tanx: Layer2 = {
       websites: ['https://tanx.fi/'],
       apps: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/tanXfinance',
         'https://discord.gg/wMAnf3gVTh',

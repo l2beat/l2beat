@@ -1,11 +1,8 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import {
-  DaCommitteeSecurityRisk,
-  DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
-} from '../common'
-import type { DaBridge } from '../types'
+import type { DaBridge } from '../../../types'
+import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -76,14 +73,7 @@ export const eigenDAbridge = {
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',
-    links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-    },
+    links: {},
   },
   contracts: {
     addresses: {

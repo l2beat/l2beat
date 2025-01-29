@@ -25,6 +25,10 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   DataAvailabilityBridge,
   DataAvailabilityLayer,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
@@ -33,8 +37,8 @@ import type {
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
+  TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
 import type {
@@ -42,22 +46,16 @@ import type {
   KnowledgeNugget,
   ReasonForBeingInOther,
 } from '../../../types'
+import type { StageConfig } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { mergeBadges } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
 }

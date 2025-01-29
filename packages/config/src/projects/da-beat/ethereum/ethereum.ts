@@ -1,5 +1,5 @@
+import type { EthereumDaLayer } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
-import type { EthereumDaLayer } from '../types'
 import { enshrinedBridge } from './enshrinedBridge'
 
 export const ethereum = {
@@ -20,7 +20,6 @@ export const ethereum = {
         'https://ethereum.org/en/developers/docs/nodes-and-clients/#execution-clients',
         'https://ethereum.org/en/developers/docs/nodes-and-clients/#consensus-clients',
       ],
-      apps: [],
       explorers: [
         'https://etherscan.io/',
         'https://eth.blockscout.com/',

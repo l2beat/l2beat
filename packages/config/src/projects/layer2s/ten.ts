@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const ten: Layer2 = upcomingL2({
   id: 'ten',
@@ -15,7 +15,6 @@ export const ten: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://ten.xyz'],
-      apps: [],
       documentation: [
         'https://docs.ten.xyz',
         'https://ten.xyz/litepaper',

@@ -15,8 +15,8 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -49,10 +49,7 @@ export const immutablezkevm: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
-      apps: [],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/Immutable'],
     },
   },

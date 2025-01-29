@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x81a68c516dc94164c4a8036d09f8fd161d969a0a
+
+# Diff at Wed, 29 Jan 2025 09:51:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5741cb966172a3b26ba8279dd9fe4323805a53c2 block: 21543769
+- current block number: 21543769
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21543769 (main branch discovery), not current.
+
+```diff
+    contract EtherRouter (0x5acAf61d339dd123e60ba450Ea38fbC49445007C) {
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x8306300ffd616049FD7e4b0354a64Da835c1A81C","description":"withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).","via":[]}
+      issuedPermissions.0.description:
+-        "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
++        "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+    }
+```
+
+```diff
+    contract FraxEtherMinter (0x7Bc6bad540453360F744666D625fec0ee1320cA3) {
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+      issuedPermissions.1:
++        {"permission":"configure","to":"0x8306300ffd616049FD7e4b0354a64Da835c1A81C","description":"pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).","via":[]}
+    }
+```
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"configure","from":"0x7Bc6bad540453360F744666D625fec0ee1320cA3","description":"pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."}
+      receivedPermissions.2:
++        {"permission":"configure","from":"0x7Bc6bad540453360F744666D625fec0ee1320cA3","description":"configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."}
+      receivedPermissions.1.from:
+-        "0x7Bc6bad540453360F744666D625fec0ee1320cA3"
++        "0x5acAf61d339dd123e60ba450Ea38fbC49445007C"
+      receivedPermissions.1.description:
+-        "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
++        "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
+      receivedPermissions.0.description:
+-        "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
++        "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
+    }
+```
+
 Generated with discovered.json: 0x9394150e4a7b8235f3bc38e8c95c4a718638bc79
 
 # Diff at Mon, 20 Jan 2025 11:09:31 GMT:

@@ -5,8 +5,8 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('transporter')
 const upgradeDelay = discovery.getContractValue<number>(

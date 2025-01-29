@@ -4,8 +4,8 @@ import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import type { ProjectTechnologyChoice } from '../../types'
-import { type BridgeTechnology, bridges } from './index'
+import type { BridgeTechnology, ProjectTechnologyChoice } from '../../types'
+import { bridges } from './index'
 
 describe('bridges', () => {
   describe('links', () => {

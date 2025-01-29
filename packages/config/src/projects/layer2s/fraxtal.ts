@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -12,13 +13,11 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
 
 export const fraxtal: Layer2 = opStackL2({
   addedAt: new UnixTime(1708511622), // 2024-02-21T10:33:42Z
-  additionalBadges: [Badge.Infra.Superchain],
   daProvider: {
     layer: DA_LAYERS.FRAXTAL_DA,
     riskView: {

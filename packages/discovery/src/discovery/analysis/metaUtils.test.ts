@@ -130,6 +130,136 @@ describe('metaUtils', () => {
         { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
       ])
     })
+
+    it('returns undefined if both arrays are empty', () => {
+      expect(mergePermissions([], [])).toEqual(undefined)
+    })
+
+    it('returns the non-empty array if the other is empty', () => {
+      const a: PermissionConfiguration[] = [
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+      ]
+      expect(mergePermissions(a, [])).toEqual(a)
+      expect(mergePermissions([], a)).toEqual(a)
+    })
+
+    it('keeps only entries with the highest delay', () => {
+      const a: PermissionConfiguration[] = [
+        { type: 'configure', delay: 5, target: EthereumAddress.from('0x1234') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+      ]
+      const b: PermissionConfiguration[] = [
+        {
+          type: 'configure',
+          delay: 10,
+          target: EthereumAddress.from('0x1234'),
+        },
+      ]
+      expect(mergePermissions(a, b)).toEqual([
+        {
+          type: 'configure',
+          delay: 10,
+          target: EthereumAddress.from('0x1234'),
+        },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+      ])
+    })
+
+    it('prefers entries with a description at the same highest delay', () => {
+      const a: PermissionConfiguration[] = [
+        {
+          type: 'upgrade',
+          delay: 10,
+          target: EthereumAddress.from('0x1111'),
+          description: 'Described upgrade',
+        },
+        {
+          type: 'upgrade',
+          delay: 10,
+          target: EthereumAddress.from('0x1111'),
+        },
+      ]
+      const b: PermissionConfiguration[] = [
+        {
+          type: 'upgrade',
+          delay: 10,
+          target: EthereumAddress.from('0x1111'),
+        },
+      ]
+      expect(mergePermissions(a, b)).toEqual([
+        {
+          type: 'upgrade',
+          delay: 10,
+          target: EthereumAddress.from('0x1111'),
+          description: 'Described upgrade',
+        },
+      ])
+    })
+
+    it('retains multiple described entries if they share the same largest delay', () => {
+      const a: PermissionConfiguration[] = [
+        {
+          type: 'configure',
+          delay: 7,
+          target: EthereumAddress.from('0x2222'),
+          description: 'Description A',
+        },
+      ]
+      const b: PermissionConfiguration[] = [
+        {
+          type: 'configure',
+          delay: 7,
+          target: EthereumAddress.from('0x2222'),
+          description: 'Description B',
+        },
+      ]
+      const result = mergePermissions(a, b)
+      expect(result ?? []).toEqualUnsorted([
+        {
+          type: 'configure',
+          delay: 7,
+          target: EthereumAddress.from('0x2222'),
+          description: 'Description A',
+        },
+        {
+          type: 'configure',
+          delay: 7,
+          target: EthereumAddress.from('0x2222'),
+          description: 'Description B',
+        },
+      ])
+    })
+
+    it('merges permissions even if they differ by condition', () => {
+      const a: PermissionConfiguration[] = [
+        {
+          type: 'configure',
+          delay: 0,
+          target: EthereumAddress.from('0x3333'),
+          condition: 'some-condition',
+        },
+      ]
+      const b: PermissionConfiguration[] = [
+        {
+          type: 'configure',
+          delay: 0,
+          target: EthereumAddress.from('0x3333'),
+        },
+      ]
+      expect(mergePermissions(a, b)).toEqual([
+        {
+          type: 'configure',
+          delay: 0,
+          target: EthereumAddress.from('0x3333'),
+          condition: 'some-condition',
+        },
+        {
+          type: 'configure',
+          delay: 0,
+          target: EthereumAddress.from('0x3333'),
+        },
+      ])
+    })
   })
 
   describe('getTargetsMeta', () => {

@@ -1,12 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
+import type {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
+  ProjectLivenessInfo,
+} from '../../types'
+import type { BaseProject, ProjectCostsInfo } from '../../types'
 import { isVerified } from '../../verification/isVerified'
-import { type Bridge, bridges } from '../bridges'
-import { type DaLayer, daLayers } from '../da-beat'
-import { type Layer2, type ProjectLivenessInfo, layer2s } from '../layer2s'
-import { type Layer3, layer3s } from '../layer3s'
+import { bridges } from '../bridges'
+import { daLayers } from '../da-beat'
+import { layer2s } from '../layer2s'
+import { layer3s } from '../layer3s'
 import { refactored } from '../refactored'
-import type { BaseProject, ProjectCostsInfo } from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
