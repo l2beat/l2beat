@@ -11,7 +11,6 @@ import type {
 const MAX_BATCH_SIZE = 100
 
 export class RpcClientPOC {
-  isPoolBlocked = false
   pool: {
     id: string
     params: CallParameters
@@ -19,7 +18,6 @@ export class RpcClientPOC {
   }[] = []
   responses: Map<string, Bytes> = new Map()
 
-  isMulticallPoolBlocked = false
   multicallPool: {
     id: string
     params: MulticallRequest
@@ -54,10 +52,6 @@ export class RpcClientPOC {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
-    while (this.isPoolBlocked) {
-      this.logger.debug('Waiting for pool unblock...')
-      await new Promise((resolve) => setTimeout(resolve, 500))
-    }
     const id = randomUUID()
     this.logger.debug(`Adding to pool ${id}`)
     this.pool.push({ id, params: callParams, blockNumber })
@@ -79,11 +73,9 @@ export class RpcClientPOC {
       return
     }
 
-    this.isPoolBlocked = true
     this.logger.debug(`Flushing [${this.pool.length}]...`)
     const queries = [...this.pool]
     this.pool = []
-    this.isPoolBlocked = false
 
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
@@ -103,10 +95,6 @@ export class RpcClientPOC {
     callParams: CallParameters,
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
-    while (this.isMulticallPoolBlocked) {
-      this.logger.debug('Waiting for multicall pool unblock...')
-      await new Promise((resolve) => setTimeout(resolve, 500))
-    }
     const id = randomUUID()
     this.logger.debug(`Adding to multicall pool ${id}`)
     assert(callParams.data)
@@ -136,11 +124,9 @@ export class RpcClientPOC {
       return
     }
 
-    this.isMulticallPoolBlocked = true
     this.logger.debug(`Flushing multicall [${this.pool.length}]...`)
     const queries = [...this.multicallPool]
     this.multicallPool = []
-    this.isMulticallPoolBlocked = false
 
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
