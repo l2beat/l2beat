@@ -23,7 +23,6 @@ export default async function Page() {
       filter: { type: 'rollups' },
       previewRecategorisation: false,
     }),
-    api.costs.table.prefetch({ range: '30d' }),
   ])
 
   return (
