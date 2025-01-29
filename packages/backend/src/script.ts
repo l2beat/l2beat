@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { arbitrumConfig } from './modules/tvs/projects/arbitrum'
+import { kintoConfig } from './modules/tvs/projects/kinto'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
@@ -44,7 +44,7 @@ async function main() {
     coingeckoQueryService,
   )
 
-  const chains = ['ethereum', 'arbitrum']
+  const chains = ['ethereum', 'arbitrum', 'kinto', 'base']
   const rpcs = new Map<string, RpcClientPOC>()
   const blockProviders = new Map<string, BlockProvider>()
 
@@ -81,7 +81,7 @@ async function main() {
     logger,
   )
 
-  const config = arbitrumConfig
+  const config = kintoConfig
 
   const timestamp = UnixTime.now().toStartOf('hour')
   const tvs = await localExecutor.run(config, [timestamp])

@@ -1,4 +1,4 @@
-import type { DataAvailabilityLayer } from '../types'
+import type { DataAvailabilityLayer } from './dataAvailability'
 
 const ETH_CALLDATA: DataAvailabilityLayer = {
   value: 'Ethereum',

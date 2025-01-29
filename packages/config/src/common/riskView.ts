@@ -15,7 +15,7 @@ export const STATE_NONE: TableReadyValue = {
   description:
     'Currently the system permits invalid state roots. More details in project overview.',
   sentiment: 'bad',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export const STATE_FP: TableReadyValue = {
@@ -23,7 +23,7 @@ export const STATE_FP: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_FP_1R: TableReadyValue = {
@@ -31,7 +31,7 @@ export const STATE_FP_1R: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_FP_INT: TableReadyValue = {
@@ -39,7 +39,7 @@ export const STATE_FP_INT: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_FP_INT_ZK: TableReadyValue = {
@@ -47,7 +47,7 @@ export const STATE_FP_INT_ZK: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_FP_1R_ZK: TableReadyValue = {
@@ -55,7 +55,7 @@ export const STATE_FP_1R_ZK: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_ZKP_SN: TableReadyValue = {
@@ -63,7 +63,7 @@ export const STATE_ZKP_SN: TableReadyValue = {
   description:
     'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_ZKP_ST: TableReadyValue = {
@@ -71,7 +71,7 @@ export const STATE_ZKP_ST: TableReadyValue = {
   description:
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
@@ -79,7 +79,7 @@ export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
   description:
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export function STATE_ZKP_L3(L2: string): TableReadyValue {
@@ -87,7 +87,7 @@ export function STATE_ZKP_L3(L2: string): TableReadyValue {
     value: 'ZK proofs',
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
-    definingMetric: Infinity,
+    orderHint: Infinity,
   }
 }
 
@@ -96,7 +96,7 @@ export const STATE_EXITS_ONLY: TableReadyValue = {
   description:
     'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
   sentiment: 'bad',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export function STATE_ARBITRUM_FRAUD_PROOFS(
@@ -139,7 +139,7 @@ export function STATE_ARBITRUM_FRAUD_PROOFS(
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
     sentiment: sentiment,
-    definingMetric: nOfChallengers,
+    orderHint: nOfChallengers,
   }
 }
 
@@ -150,7 +150,7 @@ export const DATA_ON_CHAIN: TableReadyValue = {
   description:
     'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const DATA_ON_CHAIN_L3: TableReadyValue = {
@@ -158,7 +158,7 @@ export const DATA_ON_CHAIN_L3: TableReadyValue = {
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const DATA_ON_CHAIN_STATE_DIFFS: TableReadyValue = {
@@ -166,7 +166,7 @@ export const DATA_ON_CHAIN_STATE_DIFFS: TableReadyValue = {
   description:
     'All of the data (SD = state diffs) needed for proof construction is published onchain.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const DATA_MIXED: TableReadyValue = {
@@ -174,14 +174,14 @@ export const DATA_MIXED: TableReadyValue = {
   description:
     'Some of the data needed for proof construction is not published onchain.',
   sentiment: 'warning',
-  definingMetric: 0,
+  orderHint: 0,
 }
 
 export const DATA_EXTERNAL_MEMO: TableReadyValue = {
   value: 'External (MEMO)',
   description: 'Transaction data is kept in MEMO decentralized storage.',
   sentiment: 'bad',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export function DATA_EXTERNAL_DAC(DAC?: {
@@ -197,7 +197,7 @@ export function DATA_EXTERNAL_DAC(DAC?: {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment: getDacSentiment(DAC),
-    definingMetric: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
+    orderHint: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
   }
 }
 
@@ -356,7 +356,7 @@ export function SEQUENCER_SELF_SEQUENCE(delay?: number): TableReadyValue {
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1.${delayString}`,
     sentiment: 'good',
-    definingMetric: delay,
+    orderHint: delay,
   }
 }
 
@@ -383,7 +383,7 @@ export function SEQUENCER_FORCE_VIA_L1(delay?: number): TableReadyValue {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
     sentiment: 'good',
-    definingMetric: delay,
+    orderHint: delay,
   }
 }
 
@@ -395,7 +395,7 @@ export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
     value: 'Force via L1',
     description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
     sentiment: 'good',
-    definingMetric: delay,
+    orderHint: delay,
   }
 }
 
@@ -415,7 +415,7 @@ export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
     sentiment: 'good',
-    definingMetric: delay,
+    orderHint: delay,
   }
 }
 
@@ -450,7 +450,7 @@ export const PROPOSER_CANNOT_WITHDRAW: TableReadyValue = {
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen.',
   sentiment: 'bad',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
@@ -458,7 +458,7 @@ export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade.',
   sentiment: 'warning',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
@@ -466,7 +466,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP: TableReadyValue = {
@@ -474,7 +474,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP: TableReadyValue = {
   description:
     'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: TableReadyValue = {
@@ -482,7 +482,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: TableReadyValue = {
   description:
     PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' NFTs will be minted on L1 to exit.',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: TableReadyValue = {
@@ -490,7 +490,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: TableReadyValue = {
   description:
     PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' Positions will be closed using the average price from the last batch state update.',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
@@ -501,7 +501,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
     value: 'Self propose',
     description: `Anyone can become a Proposer after ${delayString} of inactivity from the currently whitelisted Proposers.`,
     sentiment: 'good',
-    definingMetric: delay,
+    orderHint: delay,
   }
 }
 
@@ -517,7 +517,7 @@ export const PROPOSER_SELF_PROPOSE_ROOTS: TableReadyValue = {
   description:
     'Anyone can be a Proposer and propose new roots to the L1 bridge.',
   sentiment: 'good',
-  definingMetric: 0,
+  orderHint: 0,
 }
 
 function PROPOSER_POLYGON_POS(
@@ -578,7 +578,7 @@ export function EXIT_WINDOW(
       ? `${options.multisig.threshold}/${options.multisig.count} Multisig`
       : undefined,
     sentiment,
-    definingMetric: window,
+    orderHint: window,
   }
 }
 
@@ -630,7 +630,7 @@ export const EXIT_WINDOW_NON_UPGRADABLE: TableReadyValue = {
   description:
     'Users can exit funds at any time because contracts are not upgradeable.',
   sentiment: 'good',
-  definingMetric: Infinity,
+  orderHint: Infinity,
 }
 
 export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
@@ -638,7 +638,7 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
   description:
     'Some contracts are not verified, so there is no way to assess the exit window.',
   sentiment: 'bad',
-  definingMetric: -Infinity,
+  orderHint: -Infinity,
 }
 
 export const RISK_VIEW = {
@@ -728,10 +728,10 @@ export function pickWorseRisk(
   const bVal = sentimentValue[b.sentiment ?? 'neutral']
   if (aVal === bVal) {
     assert(
-      a.definingMetric !== undefined && b.definingMetric !== undefined,
+      a.orderHint !== undefined && b.orderHint !== undefined,
       'Unable to pick worse risk without a defining metric',
     )
-    return a.definingMetric < b.definingMetric ? a : b
+    return a.orderHint < b.orderHint ? a : b
   }
   if (aVal > bVal) {
     return a
@@ -751,10 +751,10 @@ export function sumRisk(
     a.sentiment === b.sentiment
   ) {
     assert(
-      a.definingMetric !== undefined && b.definingMetric !== undefined,
+      a.orderHint !== undefined && b.orderHint !== undefined,
       'Cannot sum good risks without delaySeconds',
     )
-    return formattingFunction(a.definingMetric + b.definingMetric)
+    return formattingFunction(a.orderHint + b.orderHint)
   }
 
   return pickWorseRisk(a, b)

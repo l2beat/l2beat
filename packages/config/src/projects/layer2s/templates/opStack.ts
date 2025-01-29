@@ -13,6 +13,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
@@ -32,8 +33,6 @@ import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
   DacDaLayer,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -109,7 +108,7 @@ interface DAProvider {
   fallback?: DataAvailabilityLayer
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
-  bridge: DataAvailabilityBridge
+  bridge: TableReadyValue
   badge: BadgeId
 }
 
