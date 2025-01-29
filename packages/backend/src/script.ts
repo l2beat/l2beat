@@ -56,7 +56,7 @@ async function main() {
       logger,
       retryStrategy: 'RELIABLE',
       sourceName: chain,
-      callsPerMinute: 120,
+      callsPerMinute: 12000,
     })
     rpcs.set(
       chain,
