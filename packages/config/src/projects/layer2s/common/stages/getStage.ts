@@ -4,7 +4,10 @@ import type { ChecklistTemplate } from './types'
 interface GetStageOptions {
   rollupNodeLink?: string
   securityCouncilReference?: string
-  notice?: string
+  additionalConsiderations?: {
+    short: string
+    long: string
+  }
 }
 type Blueprint = ReturnType<typeof getBlueprint>
 type BlueprintChecklist = ChecklistTemplate<Blueprint>
@@ -23,7 +26,7 @@ export const getStage = (
   const blueprint = getBlueprint(opts)
   return {
     ...createGetStage(blueprint)(blueprintChecklist),
-    notice: opts?.notice,
+    additionalConsiderations: opts?.additionalConsiderations,
   }
 }
 
