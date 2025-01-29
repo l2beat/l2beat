@@ -9,9 +9,29 @@
     "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "UpdateManager",
     "0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry",
     "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SonicGatewayMultisig",
-    "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SonicGatewayOpsMultisig"
+    "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SonicGatewayOpsMultisig",
+    "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": "MPTProofVerifier",
+    "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": "StateOracle"
   },
   "overrides": {
+    "StateOracle": {
+      "description": "Simple contract that saves the latest state root.",
+      "fields": {
+        "owner": {
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "update the state root."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "MPTProofVerifier": {
+      "description": "Verifier contract for merkle proofs."
+    },
     "TokenDeposit": {
       "description": "Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.",
       "ignoreMethods": [
@@ -33,8 +53,22 @@
             ]
           }
         },
+        "TimeUntilDead": {
+          "handler": {
+            "type": "hardcoded",
+            "value": "200d"
+          }
+        },
         "exitAdministrator": {
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "target": {
+            "permissions": [
+              {
+                "type": "configure",
+                "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
+              }
+            ]
+          }
         },
         "proofVerifier": {
           "severity": "HIGH"

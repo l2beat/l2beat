@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xdebbc5e77f619631ba0dcbf6f16a4ea100053075
+Generated with discovered.json: 0x2ee1ac73f14cc919f928e59ed995ea338f9fb144
 
-# Diff at Wed, 29 Jan 2025 15:52:51 GMT:
+# Diff at Wed, 29 Jan 2025 16:28:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 21730951
@@ -32,7 +32,7 @@ Initial Discovery: Standard TokenBridge validated by 6/8 Validators and secured 
 ```diff
 +   Status: CREATED
     contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306)
-    +++ description: None
+    +++ description: Verifier contract for merkle proofs.
 ```
 
 ```diff
@@ -56,7 +56,7 @@ Initial Discovery: Standard TokenBridge validated by 6/8 Validators and secured 
 ```diff
 +   Status: CREATED
     contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f)
-    +++ description: None
+    +++ description: Simple contract that saves the latest state root.
 ```
 
 ```diff

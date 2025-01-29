@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21730951,
-  "configHash": "0xe804fa649e213d5244da4be52af58a888580a108f2bfeac002001d08f9f12f69",
+  "configHash": "0x7b77c91475a27363f324dd717ac35e6f81843ffba7763a742a2ac808e01ea3eb",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -89,6 +89,14 @@
       "sourceHashes": [
         "0x8098841579ecf27111655e2469db7694f23f693dcd7bc781864783f8c03ea4df"
       ],
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+          "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
+        }
+      ],
       "sinceTimestamp": 1734690695,
       "values": {
         "$immutable": true,
@@ -147,8 +155,10 @@
       "sourceHashes": [
         "0xfca61099dca9ccc6f9eb4019b9ca13d0b1cbe6e68f74766cb39e25550441701e"
       ],
+      "description": "Verifier contract for merkle proofs.",
       "sinceTimestamp": 1734690407,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "MPTProofVerifier"
     },
     {
       "name": "SonicGatewayMultisig",
@@ -223,6 +233,12 @@
       "issuedPermissions": [
         {
           "permission": "configure",
+          "to": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
+          "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed.",
+          "via": []
+        },
+        {
+          "permission": "configure",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "set the proof verifier and the exit administrator.",
           "via": []
@@ -257,6 +273,7 @@
         "owner": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+        "TimeUntilDead": "200d",
         "tokenPairs": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC_BURN_PREPARER_ROLE": "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6",
@@ -308,6 +325,13 @@
           "permission": "relay",
           "to": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
           "via": []
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+          "description": "update the state root."
         }
       ],
       "sinceTimestamp": 1734690815,
@@ -381,6 +405,15 @@
       "sourceHashes": [
         "0x32d9b287383d91a40dcf024a5f38e044b104c231806ecf21aa5867f45f895eb0"
       ],
+      "description": "Simple contract that saves the latest state root.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "description": "update the state root.",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1734690443,
       "values": {
         "$immutable": true,
@@ -389,7 +422,8 @@
         "lastState": "0xea48a05e87ef2f63f59a84eeed4bd44326c71881dcfc8c64725bed6555d047d6",
         "lastUpdateTime": 1738159679,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
-      }
+      },
+      "derivedName": "StateOracle"
     },
     {
       "name": "TokenPairs",
