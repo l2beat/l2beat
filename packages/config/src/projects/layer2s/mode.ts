@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('mode')
 export const mode: Layer2 = opStackL2({
   addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Mode Network',

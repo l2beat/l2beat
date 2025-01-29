@@ -146,6 +146,7 @@ import { rss3 } from './rss3'
 import { rufus } from './rufus'
 import { scroll } from './scroll'
 import { shape } from './shape'
+import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
 import { socialnetwork } from './socialnetwork'
@@ -355,6 +356,7 @@ export const layer2s: Layer2[] = [
   status,
   stealthchain,
   shape,
+  shibarium,
   superlumio,
   superseed,
   swan,

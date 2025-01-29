@@ -31,11 +31,7 @@ const daResolveWindow = formatSeconds(
 
 export const automata: Layer2 = opStackL2({
   addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  additionalBadges: [Badge.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

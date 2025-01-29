@@ -13,11 +13,7 @@ const discovery = new ProjectDiscovery('lyra')
 export const lyra: Layer2 = opStackL2({
   addedAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [
-    Badge.DA.Celestia,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  additionalBadges: [Badge.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,

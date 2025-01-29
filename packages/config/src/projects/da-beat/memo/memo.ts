@@ -16,7 +16,7 @@ export const memo: BlockchainDaLayer = {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],
       repositories: ['https://github.com/memoio'],
-      explorers: ['https://scan.metamemo.one:8080/'],
+      explorers: ['https://scan.metamemo.one/'],
       socialMedia: [
         'https://x.com/MemoLabsOrg',
         'https://discord.com/invite/YG4Ydv2E7X',
@@ -92,4 +92,14 @@ export const memo: BlockchainDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'MEMO Megrez Network launch',
+      url: 'https://memolabs.medium.com/memo-megrez-network-went-live-on-october-15-b99c187e041c',
+      date: '2022-10-15T00:00:00Z',
+      description:
+        'MemoMegrez Network is the underlying storage network of the MEMO storage system.',
+      type: 'general',
+    },
+  ],
 }

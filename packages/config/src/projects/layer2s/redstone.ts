@@ -1,10 +1,8 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import { DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -33,7 +31,6 @@ const daResolveWindow = formatSeconds(
 export const redstone: Layer2 = opStackL2({
   addedAt: new UnixTime(1714996778), // 2024-05-06T11:59:38Z
   discovery,
-  additionalBadges: [Badge.DA.CustomDA, Badge.Infra.Superchain],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

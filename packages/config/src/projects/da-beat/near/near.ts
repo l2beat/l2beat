@@ -155,4 +155,21 @@ export const near: BlockchainDaLayer = {
       coingeckoId: 'near',
     },
   },
+  milestones: [
+    {
+      title: 'Near mainnet launch',
+      url: 'https://near.org/blog/near-mainnet-genesis',
+      date: '2020-04-22T00:00:00Z',
+      description: 'Near mainnet launches.',
+      type: 'general',
+    },
+    {
+      title: 'Near Foundation launches Near DA',
+      url: 'https://medium.com/nearprotocol/near-foundation-launches-near-da-to-offer-secure-cost-effective-data-availability-for-eth-rollups-2d26beeb4cd8',
+      date: '2023-11-08T00:00:00Z',
+      description:
+        'Near Foundation proposes Near DA as a data availability layer for Ethereum L2s.',
+      type: 'general',
+    },
+  ],
 }

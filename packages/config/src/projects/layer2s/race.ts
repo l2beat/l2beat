@@ -2,7 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('race')
@@ -12,7 +11,6 @@ export const race: Layer2 = opStackL2({
   discovery,
   addedAt: new UnixTime(1726563843), // 2024-09-17T09:04:03Z
   genesisTimestamp: new UnixTime(1720421591),
-  additionalBadges: [Badge.Infra.Superchain],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Race Network',

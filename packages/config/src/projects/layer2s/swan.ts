@@ -2,7 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('swan')
@@ -10,7 +9,6 @@ const discovery = new ProjectDiscovery('swan')
 export const swan: Layer2 = opStackL2({
   addedAt: new UnixTime(1722275591), // 2024-07-29T17:53:11Z
   discovery,
-  additionalBadges: [Badge.Infra.Superchain],
   additionalPurposes: ['AI', 'Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

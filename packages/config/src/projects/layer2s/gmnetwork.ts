@@ -32,11 +32,7 @@ const daResolveWindow = formatSeconds(
 export const gmnetwork: Layer2 = opStackL2({
   addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  additionalBadges: [Badge.RaaS.AltLayer],
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

@@ -89,4 +89,14 @@ export const espressoDA: DaServiceDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'EspressoDA launch on mainnet',
+      url: 'https://medium.com/@espressosys/espresso-mainnet-0-is-live-deedc2505081',
+      date: '2024-11-11T00:00:00Z',
+      description:
+        'EspressoDA mainnet launches with a permissioned set of node operators.',
+      type: 'general',
+    },
+  ],
 }
