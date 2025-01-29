@@ -1,5 +1,6 @@
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { bigIntToNumber } from '../bigIntToNumber'
 import type { RpcClientPOC } from './RpcClientPOC'
 
 export const erc20Interface = new utils.Interface([

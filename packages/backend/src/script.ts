@@ -11,7 +11,6 @@ import {
 import {
   assert,
   EthereumAddress,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
