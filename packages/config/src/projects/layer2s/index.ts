@@ -174,6 +174,7 @@ import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
+import { tusima } from './tusima'
 import type { Layer2 } from './types'
 import { unichain } from './unichain'
 import { wirex } from './wirex'
@@ -374,6 +375,7 @@ export const layer2s: Layer2[] = [
   thanos,
   treasure,
   turboprotocol,
+  tusima,
   unichain,
   wirex,
   witness,
