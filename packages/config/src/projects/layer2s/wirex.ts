@@ -7,10 +7,10 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('wirex')
 
@@ -53,7 +53,6 @@ export const wirex: Layer2 = polygonCDKStack({
       apps: ['https://pay-chain-bridge.wirexpaychain.com/'],
       documentation: ['https://docs.wirexpaychain.com/tech/wirex-pay-chain'],
       explorers: ['https://pay-chain-blockscout.wirexpaychain.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/wirexpaychain',
         'https://discord.gg/f8UGp4dH6g',

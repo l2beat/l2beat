@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('thebinaryholdings')
 
@@ -22,10 +22,8 @@ export const thebinaryholdings: Layer2 = opStackL2({
       'The Binary Holdings is a web3 infrastructure that integrates into telecommunication and banking apps to increase user engagement, retention, and ARPU (Average Revenue Per User) - while rewarding users for their engagement. It uses its own token (BNRY) for gas.',
     links: {
       websites: ['https://thebinaryholdings.com/'],
-      apps: [],
       documentation: ['https://docs.thebinaryholdings.com/'],
       explorers: ['https://explorer.thebinaryholdings.com'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/thebinaryhldgs',
         'https://t.me/tbhofficialchat',

@@ -1,9 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { DacDaLayer } from '../../types'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -12,9 +13,7 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { DaRelayerFailureRisk } from '../da-beat/common/DaRelayerFailureRisk'
-import type { DacDaLayer } from '../da-beat/types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
 

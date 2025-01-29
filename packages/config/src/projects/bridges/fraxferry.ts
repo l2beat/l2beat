@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from './types'
+import type { Bridge } from '../../types'
 
 const discovery = new ProjectDiscovery('fraxferry')
 
@@ -26,7 +26,6 @@ export const fraxferry: Bridge = {
     slug: 'fraxferry',
     links: {
       websites: ['https://frax.com/'],
-      explorers: [],
       apps: ['https://mainnet.frax.com/tools/bridge/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
       socialMedia: ['https://twitter.com/fraxfinance'],

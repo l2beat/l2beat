@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const frame: Layer2 = upcomingL2({
   id: 'frame',
@@ -16,7 +16,6 @@ export const frame: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://frame.xyz/'],
-      apps: [],
       documentation: ['https://docs.frame.xyz/'],
       explorers: ['https://explorer.testnet.frame.xyz/'],
       repositories: ['https://github.com/frame-network'],

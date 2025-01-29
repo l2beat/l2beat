@@ -31,12 +31,20 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
+  DacDaLayer,
   DataAvailabilityBridge,
   DataAvailabilityLayer,
   KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2FinalityDisplay,
+  Layer2TxConfig,
+  Layer3,
   Milestone,
   ProjectDataAvailability,
   ProjectEscrow,
+  ProjectLivenessInfo,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
@@ -48,26 +56,16 @@ import type {
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
   ScalingProjectTechnology,
+  StageConfig,
+  TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2FinalityDisplay,
-  Layer2TxConfig,
-  ProjectLivenessInfo,
-} from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
@@ -109,7 +107,7 @@ export function DACHALLENGES_DA_PROVIDER(
 interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: DataAvailabilityBridge
   badge: BadgeId
@@ -669,7 +667,7 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
 
   switch (fraudProofType) {
@@ -696,7 +694,7 @@ function getRiskViewStateValidation(
 
 function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
 
   return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
@@ -704,7 +702,7 @@ function getRiskViewExitWindow(
 
 function getRiskViewProposerFailure(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None':

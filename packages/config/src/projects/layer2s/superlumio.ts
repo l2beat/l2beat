@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('superlumio')
 
@@ -19,7 +19,6 @@ export const superlumio: Layer2 = opStackL2({
       'SuperLumio (сanary mainnet) marks the initial phase of the Lumio Layer 2 on the Optimism Superchain, launched as a pure Ethereum Virtual Machine fork with the support of Conduit technology. This platform is designed to serve as a testnet-in-production. Lumio is a rollup technology suite that enables developers to build with any VM on any chain.',
     links: {
       websites: ['https://lumio.io/'],
-      apps: [],
       documentation: ['https://docs.lumio.io/'],
       explorers: ['https://explorer.lumio.io/'],
       repositories: ['https://github.com/pontem-network'],

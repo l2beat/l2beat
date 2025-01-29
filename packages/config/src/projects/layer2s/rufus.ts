@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
-import type { Layer2 } from './types'
 
 export const rufus: Layer2 = underReviewL2({
   id: 'rufus',
@@ -19,9 +19,7 @@ export const rufus: Layer2 = underReviewL2({
     links: {
       websites: ['https://dogelonmars.com/'],
       apps: ['https://rufus.bridge.caldera.xyz/'],
-      documentation: [],
       explorers: ['https://rufus.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/dogelonmars',
         'https://dogelonmars.com/blog',

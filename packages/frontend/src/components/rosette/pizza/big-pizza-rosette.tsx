@@ -99,7 +99,7 @@ function RosetteTooltipContent() {
     >
       <p className="font-medium text-primary">{selectedRisk.name}</p>
       <SentimentText
-        sentiment={selectedRisk.sentiment}
+        sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
         className="mb-2 flex items-center gap-1 text-lg font-bold"
       >

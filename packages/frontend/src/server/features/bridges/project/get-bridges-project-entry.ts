@@ -1,6 +1,6 @@
 import {
   type Bridge,
-  type ScalingProjectRiskViewEntry,
+  type TableReadyValue,
   getContractsVerificationStatuses,
   isVerified,
 } from '@l2beat/config'
@@ -81,18 +81,13 @@ async function getHeader(project: Bridge) {
   }
 }
 
-function getDestination(destinations: string[]): ScalingProjectRiskViewEntry {
+function getDestination(destinations: string[]): TableReadyValue {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }
   const firstItem = destinations[0]
   if (destinations.length === 1 && firstItem) {
-    return { value: firstItem, description: '', sentiment: 'neutral' }
+    return { value: firstItem }
   }
-
-  return {
-    value: 'Various',
-    description: destinations.join(',\n'),
-    sentiment: 'neutral',
-  }
+  return { value: 'Various', description: destinations.join(',\n') }
 }

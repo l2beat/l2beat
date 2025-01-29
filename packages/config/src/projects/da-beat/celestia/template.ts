@@ -1,12 +1,11 @@
-import type { OnChainDaBridge } from '../types'
-import type { DaLinks } from '../types'
+import type { OnChainDaBridge, ProjectLinks } from '../../../types'
 
 type TemplateVars = Pick<
   OnChainDaBridge,
   'addedAt' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
 > & {
   display: {
-    links: DaLinks
+    links: ProjectLinks
   }
 }
 

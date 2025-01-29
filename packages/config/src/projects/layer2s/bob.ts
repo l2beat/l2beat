@@ -3,9 +3,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bob')
 
@@ -19,7 +19,7 @@ export const bob: Layer2 = opStackL2({
     name: 'BOB',
     slug: 'bob',
     tvlWarning: {
-      content:
+      value:
         'The total TVS doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
       sentiment: 'warning',
     },

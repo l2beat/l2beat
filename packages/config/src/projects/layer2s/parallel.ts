@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
 
@@ -28,7 +28,6 @@ export const parallel: Layer2 = orbitStackL2({
       explorers: [
         'https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/ParallelFi',
         'https://discord.gg/rdjVz8zavF',

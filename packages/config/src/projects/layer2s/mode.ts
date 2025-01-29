@@ -3,9 +3,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mode')
 
@@ -25,7 +25,6 @@ export const mode: Layer2 = opStackL2({
       apps: ['https://app.mode.network/'],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://modescan.io'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/modenetwork',
         'https://discord.gg/modenetworkofficial',

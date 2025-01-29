@@ -136,7 +136,7 @@ function StatsItem(props: StatsItemProps) {
                 className="size-5"
               />
             </TooltipTrigger>
-            <TooltipContent>{props.warning.content}</TooltipContent>
+            <TooltipContent>{props.warning.value}</TooltipContent>
           </Tooltip>
         )}
       </div>

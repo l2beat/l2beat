@@ -9,7 +9,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
@@ -31,7 +31,6 @@ export const omgnetwork: Layer2 = {
 
     links: {
       websites: ['https://omg.network'],
-      apps: [],
       documentation: ['https://docs.omg.network/'],
       explorers: ['https://blockexplorer.mainnet.v1.omg.network/'],
       repositories: ['https://github.com/omgnetwork/plasma-contracts'],

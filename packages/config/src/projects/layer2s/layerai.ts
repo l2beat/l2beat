@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const layerai: Layer2 = upcomingL2({
   id: 'layerai',
@@ -18,8 +18,6 @@ export const layerai: Layer2 = upcomingL2({
       websites: ['https://layerai.org/'],
       apps: ['https://kyotox.com/', 'https://layervpn.com/'],
       documentation: ['https://docs.layerai.org/'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://t.me/LayerAI_org', 'https://x.com/LayerAIorg'],
     },
   },

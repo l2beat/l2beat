@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const onchain: Layer3 = underReviewL3({
   id: 'onchain',
@@ -26,9 +26,7 @@ export const onchain: Layer3 = underReviewL3({
     links: {
       websites: ['https://onchaincoin.io/', 'https://portal.onchaincoin.io/'],
       apps: ['https://onchaingate.io/', 'https://t.me/onchaincoin_bot'],
-      documentation: [],
       explorers: ['https://explorer.onchainpoints.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/onchaincoin',
         'https://warpcast.com/~/channel/onchaincoin',

@@ -1,5 +1,5 @@
+import type { DaTechnology, DacDaLayer } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
-import type { DaTechnology, DacDaLayer } from '../types'
 import { DAC, type DacTemplateVars } from './dac-template'
 
 export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {

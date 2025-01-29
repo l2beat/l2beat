@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const neva: Layer2 = upcomingL2({
   id: 'neva',
@@ -15,9 +15,7 @@ export const neva: Layer2 = upcomingL2({
     category: 'Validium',
     links: {
       websites: ['https://neva.network/'],
-      apps: [],
       documentation: ['https://docs.neva.network/'],
-      explorers: [],
       repositories: ['https://github.com/NevaNetwork'],
       socialMedia: ['https://x.com/NevaNetwork', 'https://t.me/NevaPortal'],
     },

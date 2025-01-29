@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 
 export const memo: BlockchainDaLayer = {
   id: 'memo',
@@ -16,7 +16,6 @@ export const memo: BlockchainDaLayer = {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],
       repositories: ['https://github.com/memoio'],
-      apps: [],
       explorers: ['https://scan.metamemo.one/'],
       socialMedia: [
         'https://x.com/MemoLabsOrg',

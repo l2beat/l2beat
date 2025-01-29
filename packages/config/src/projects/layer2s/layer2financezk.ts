@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
@@ -36,9 +36,6 @@ export const layer2financezk: Layer2 = {
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/celer-network/defi-pooling-broker-contracts',
