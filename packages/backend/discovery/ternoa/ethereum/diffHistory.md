@@ -7,7 +7,7 @@ Generated with discovered.json: 0xad9a1295487eff55ba59b9a8caf17acb3dce59f5
 
 ## Description
 
-Initial discovery.
+Initial discovery: Type 7 polygon CDK validium (DAC) with custom gas token: CAPS.
 
 ## Initial discovery
 
