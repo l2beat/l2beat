@@ -1,10 +1,10 @@
-import type { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../types'
+import type { Bridge, DaBridge, DaProject, Layer2, Layer3 } from '../types'
 
 export function isVerified(
-  project: Layer2 | Layer3 | Bridge | DaLayer,
+  project: Layer2 | Layer3 | Bridge | DaProject,
 ): boolean {
   if (project.type === 'DaLayer') {
-    return project.bridges.every((bridge) =>
+    return project.daLayer.bridges.every((bridge) =>
       isDaBridgeVerified(project, bridge),
     )
   }
@@ -25,7 +25,7 @@ export function isVerified(
   return newVerification
 }
 
-export function isDaBridgeVerified(_: DaLayer, daBridge: DaBridge): boolean {
+export function isDaBridgeVerified(_: DaProject, daBridge: DaBridge): boolean {
   let verification = true
 
   if ('contracts' in daBridge) {

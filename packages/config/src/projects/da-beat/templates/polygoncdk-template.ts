@@ -1,8 +1,8 @@
-import type { DaTechnology, DacDaLayer } from '../../../types'
+import type { DaTechnology, DaLayer } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC, type DacTemplateVars } from './dac-template'
 
-export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
+export function PolygoncdkDAC(template: DacTemplateVars): DaLayer {
   const bridgeTechnology: DaTechnology = {
     description: `
     ## DA Bridge Architecture

@@ -1,5 +1,5 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { DaBridge, DacDaLayer, IntegratedDacBridge } from '../../../types'
+import type { DaBridge, DaLayer, IntegratedDacBridge } from '../../../types'
 import type { DaTechnology } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC, type DacTemplateVars } from './dac-template'
@@ -14,7 +14,7 @@ type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
   discovery: ProjectDiscovery
 }
 
-export function AnytrustDAC(template: TemplateVars): DacDaLayer {
+export function AnytrustDAC(template: TemplateVars): DaLayer {
   const dac = template.discovery.getContractValue<{
     membersCount: number
     requiredSignatures: number

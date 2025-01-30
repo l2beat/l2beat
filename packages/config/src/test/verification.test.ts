@@ -51,14 +51,14 @@ describe('verification status', () => {
   })
 
   describe('DABEAT', () => {
-    for (const daLayer of daLayers) {
-      const chains = getChainNamesForDA(daLayer)
-      for (const bridge of daLayer.bridges) {
+    for (const project of daLayers) {
+      const chains = getChainNamesForDA(project)
+      for (const bridge of project.daLayer.bridges) {
         const bridgeId = bridge.id.toString()
         for (const chain of chains) {
           it(`${bridgeId}:${chain}`, () => {
             const projectIds =
-              daLayer.kind === 'PublicBlockchain'
+              project.daLayer.kind === 'PublicBlockchain'
                 ? [bridge.id]
                 : bridge.usedIn.map((u) => u.id.toString())
             for (const projectId of projectIds) {

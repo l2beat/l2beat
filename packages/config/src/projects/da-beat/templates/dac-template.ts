@@ -3,10 +3,13 @@ import type {
   DaBridgeRisks,
   DaChallengeMechanism,
   DaLayerRisks,
-  DacDaLayer,
+  DaLayer,
   DacTransactionDataType,
   IntegratedDacBridge,
   ProjectLinks,
+  TableReadyValue,
+  DaTechnology,
+  ProjectTechnologyChoice,
 } from '../../../types'
 import {
   DaCommitteeSecurityRisk,
@@ -30,8 +33,8 @@ type Optionals = {
   links?: ProjectLinks
   /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
-    technology?: DacDaLayer['technology']
-    otherConsiderations?: DacDaLayer['otherConsiderations']
+    technology?: DaTechnology
+    otherConsiderations?: ProjectTechnologyChoice[]
   }
   /**
    * Optional bridge technology, defaults to generic ones
@@ -51,7 +54,7 @@ type Optionals = {
   /** Optional challenge mechanism, defaults to undefined */
   challengeMechanism?: DaChallengeMechanism
   /** Optional fallback, defaults to undefined */
-  fallback?: DacDaLayer['fallback']
+  fallback?: TableReadyValue
 }
 
 export type DacTemplateVars = Optionals & TemplateSpecific
@@ -74,7 +77,7 @@ export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function DAC(template: DacTemplateVars): DacDaLayer {
+export function DAC(template: DacTemplateVars): DaLayer {
   // "Bridge" backfill for DAC
   const bridgeTechnology =
     template.bridge.technology?.description ??
@@ -117,14 +120,11 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
   their operational transparency, and the mechanisms in place to handle disputes and failures.
   `
 
-  const dacLayer: DacDaLayer = {
-    display: {
-      description:
-        template.display?.description ??
-        'Set of parties responsible for signing and attesting to the availability of data.',
-    },
+  const dacLayer: DaLayer = {
+    description:
+      template.display?.description ??
+      'Set of parties responsible for signing and attesting to the availability of data.',
     kind: 'DAC',
-    type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback,
     challengeMechanism: template.challengeMechanism ?? 'None',
@@ -132,7 +132,7 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
       ...template.layer?.technology,
       description: layerTechnology,
     },
-    bridge: dacBridge,
+    bridges: [dacBridge],
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

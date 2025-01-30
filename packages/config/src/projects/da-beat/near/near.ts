@@ -1,14 +1,13 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import type { BlockchainDaLayer } from '../../../types'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
 
-export const near: BlockchainDaLayer = {
-  id: 'near',
+export const near: DaProject = {
   type: 'DaLayer',
-  kind: 'PublicBlockchain',
-  systemCategory: 'public',
+  id: ProjectId('near'),
+  addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   display: {
     name: 'NEAR DA',
     slug: 'near',
@@ -29,20 +28,23 @@ export const near: BlockchainDaLayer = {
       ],
     },
   },
-  consensusAlgorithm: {
-    name: 'Nightshade',
-    description: `Nightshade is a sharding-based, Proof-of-Stake (PoS) consensus protocol enabling parallel transaction processing.
+  daLayer: {
+    kind: 'PublicBlockchain',
+    systemCategory: 'public',
+    consensusAlgorithm: {
+      name: 'Nightshade',
+      description: `Nightshade is a sharding-based, Proof-of-Stake (PoS) consensus protocol enabling parallel transaction processing.
     Near Nightshade has one single main chain producing blocks. Main chain blocks do not contain actual transactions, but they include one chunk header for each shard, where
     a chunk is the equivalent of a block in a standard, non-shared blockchain. At the beginning of the epoch, both the block and chunk production schedule
     are randomly generated. For each block on the main chain, and for every shard, one of the assigned chunk producers is responsible to produce the part of the main chain block
     related to the shard, and share the chunk header with the network. Finality is determined by the NFG (Nightshade finality gadget), and after 2 consecutive blocks are built on the same fork the t-2 block is considered final.
     Reverting a finalized block will require at least 1/3 of the total stake to be slashed.`, // this is not shown anywhere in the UI, and maybe we don't need it
-    blockTime: 1.2, // seconds average
-    consensusFinality: 2.4, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
-    unbondingPeriod: 86400 * 2, // up to 48 hours
-  },
-  technology: {
-    description: `
+      blockTime: 1.2, // seconds average
+      consensusFinality: 2.4, // NFG (Nightshade finality gadget, after 2 consecutive blocks are built on the same fork we consider the t-2 block final, thus transactions belonging to t-2 are final )
+      unbondingPeriod: 86400 * 2, // up to 48 hours
+    },
+    technology: {
+      description: `
   ## Architecture
 
   ![Near architecture](/images/da-layer-technology/near/architecture.png#center)
@@ -100,59 +102,60 @@ export const near: BlockchainDaLayer = {
   A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a Blob Store contract, where it posts data as standard NEAR transactions. All transactions are converted into Receipts, and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
-    references: [
-      {
-        title: 'Near Nightshade Consensus',
-        url: 'https://pages.near.org/downloads/Nightshade.pdf',
-      },
-      {
-        title: 'Near Doomslug Finality Gadget',
-        url: 'https://discovery-domain.org/papers/doomslug.pdf',
-      },
-      {
-        title: 'Near documentation',
-        url: 'https://dev.near.org/documentation/',
-      },
-      {
-        title: 'Near Core - Architecture',
-        url: 'https://near.github.io/nearcore/',
-      },
-      {
-        title: 'Blob Store contract - Nuffle Labs',
-        url: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
-      },
+      references: [
+        {
+          title: 'Near Nightshade Consensus',
+          url: 'https://pages.near.org/downloads/Nightshade.pdf',
+        },
+        {
+          title: 'Near Doomslug Finality Gadget',
+          url: 'https://discovery-domain.org/papers/doomslug.pdf',
+        },
+        {
+          title: 'Near documentation',
+          url: 'https://dev.near.org/documentation/',
+        },
+        {
+          title: 'Near Core - Architecture',
+          url: 'https://near.github.io/nearcore/',
+        },
+        {
+          title: 'Blob Store contract - Nuffle Labs',
+          url: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `a dishonest majority of Near validators finalizes an unavailable block.`,
+        },
+      ],
+    },
+    bridges: [
+      NO_BRIDGE({
+        addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
+        layer: 'NearDA',
+        technology: {
+          description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
+        },
+      }),
     ],
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: `a dishonest majority of Near validators finalizes an unavailable block.`,
+    pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
+    throughput: {
+      size: 16000, // 16 MB , 4MB per 4 shard
+      frequency: 1, // 16 MB/s
+    },
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
+      fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    },
+    economicSecurity: {
+      name: 'Near',
+      token: {
+        symbol: 'NEAR',
+        decimals: 24,
+        coingeckoId: 'near',
       },
-    ],
-  },
-  bridges: [
-    NO_BRIDGE({
-      addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
-      layer: 'NearDA',
-      technology: {
-        description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
-      },
-    }),
-  ],
-  pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
-  throughput: {
-    size: 16000, // 16 MB , 4MB per 4 shard
-    frequency: 1, // 16 MB/s
-  },
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-  },
-  economicSecurity: {
-    name: 'Near',
-    token: {
-      symbol: 'NEAR',
-      decimals: 24,
-      coingeckoId: 'near',
     },
   },
   milestones: [

@@ -44,7 +44,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
-import type { DacDaLayer } from '../../../types'
+import type { DaLayer } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
@@ -61,7 +61,7 @@ export interface PolygonCDKStackConfig {
   addedAt: UnixTime
   capability?: ScalingProjectCapability
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string

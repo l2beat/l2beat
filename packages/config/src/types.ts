@@ -93,7 +93,7 @@ export interface ScalingProject {
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
   /** Data availability solution */
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -197,7 +197,7 @@ export interface ScalingProjectUpgradeability {
   implementations: EthereumAddress[]
 }
 
-export type ScalingProjectDisplay = {
+export interface ScalingProjectDisplay {
   /** Name of the scaling project, will be used as a display name on the website */
   name: string
   /** Short name of the scaling project, will be used in some places on the website as a display name */
@@ -772,88 +772,43 @@ export interface BridgeTechnology {
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
 }
-export type DaLayer = BlockchainDaLayer | EthereumDaLayer | DaServiceDaLayer
 
-export type BlockchainDaLayer = CommonDaLayer & {
-  kind: 'PublicBlockchain'
-  bridges: (OnChainDaBridge | NoDaBridge)[]
-  /** Risks associated with the data availability layer. */
-  risks: DaLayerRisks
-  /** The period within which full nodes must store and distribute data. @unit seconds */
-  pruningWindow: number
-  /** The consensus algorithm used by the data availability layer. */
-  consensusAlgorithm: DaConsensusAlgorithm
-  /** Details about data availability throughput. */
-  throughput?: DaLayerThroughput
-  /** Details about data availability sampling. */
-  dataAvailabilitySampling?: DataAvailabilitySampling
-  /** Economic security configuration. */
-  economicSecurity?: DaEconomicSecurity
-  /** Data availability tracking config */
-  daTracking?: DaLayerTrackingConfig
+export interface DaProject {
+  type: 'DaLayer'
+  id: ProjectId
+  display: DaLayerDisplay
+  /** Date of creation of the file (not the project) */
+  addedAt: UnixTime
+  isArchived?: boolean
+  isUpcoming?: boolean
+  isUnderReview?: boolean
+  daLayer: DaLayer
+  milestones?: Milestone[]
 }
 
-export type EthereumDaLayer = CommonDaLayer & {
-  kind: 'EthereumDaLayer'
-  bridges: [EnshrinedBridge]
-  /** Risks associated with the data availability layer. */
-  risks: TableReadyValue
-  /** The period within which full nodes must store and distribute data. @unit seconds */
-  pruningWindow: number
-  /** The consensus algorithm used by the data availability layer. */
-  consensusAlgorithm: DaConsensusAlgorithm
-  /** Details about data availability throughput. */
-  throughput?: DaLayerThroughput
-  /** Economic security configuration. */
-  economicSecurity?: DaEconomicSecurity
-}
+export interface DaLayer {
+  name?: string
+  description?: string
+  kind: 'DA Service' | 'DAC' | 'No DAC' | 'EthereumDaLayer' | 'PublicBlockchain'
+  systemCategory: 'public' | 'custom'
+  bridges: DaBridge[]
+  risks: DaLayerRisks | TableReadyValue
+  technology: DaTechnology
 
-export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
-  display?: {
-    // Rest will be linked dynamically from scaling
-    description?: string
-    name?: string
-  }
-  kind: 'DAC' | 'No DAC'
-  bridge: IntegratedDacBridge | NoDacBridge
-  /** Risks associated with the data availability layer. */
-  risks: DaLayerRisks
-  /** Fallback */
   fallback?: TableReadyValue
-  /** Supported challenge mechanism in place */
-  challengeMechanism: DaChallengeMechanism
-  /** Number of operators in the data availability layer. */
+  challengeMechanism?: DaChallengeMechanism
   numberOfOperators?: number
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow?: number
+  consensusAlgorithm?: DaConsensusAlgorithm
+  throughput?: DaLayerThroughput
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  economicSecurity?: DaEconomicSecurity
+  daTracking?: DaLayerTrackingConfig
+  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
-
-export type DaServiceDaLayer = CommonDaLayer & {
-  kind: 'DA Service'
-  bridges: (StandaloneDacBridge | NoDaBridge)[]
-  /** Risks associated with the data availability layer. */
-  risks: DaLayerRisks
-}
-
-export type CommonDaLayer = {
-  type: 'DaLayer'
-  /** Unique identifier of the data availability layer. */
-  id: string
-  /** Classification layers will be split based on */
-  systemCategory: 'public' | 'custom'
-  /** Display information for the data availability layer. */
-  display: DaLayerDisplay
-  /** Is the DA layer upcoming? */
-  isUpcoming?: boolean
-  /** Is the DA layer under review? */
-  isUnderReview?: boolean
-  /** The technology used by the data availability layer. */
-  technology: DaTechnology
-  /** Other considerations */
-  otherConsiderations?: ProjectTechnologyChoice[]
-  /** Links to recent developments, milestones achieved by the project */
-  milestones?: Milestone[]
-}
 
 export interface DaLayerRisks {
   economicSecurity: TableReadyValue
@@ -913,10 +868,12 @@ export interface DaTechnology {
 }
 
 export type DaBridge =
-  | NoDaBridge
-  | OnChainDaBridge
-  | StandaloneDacBridge
   | EnshrinedBridge
+  | IntegratedDacBridge
+  | StandaloneDacBridge
+  | OnChainDaBridge
+  | NoDaBridge
+  | NoDacBridge
 
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
@@ -1185,12 +1142,7 @@ export interface BaseProject {
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
-  daBridges?: (
-    | OnChainDaBridge
-    | EnshrinedBridge
-    | NoDaBridge
-    | StandaloneDacBridge
-  )[]
+  daBridges?: DaBridge[]
   countdowns?: ProjectCountdowns
   // tags
   isBridge?: true

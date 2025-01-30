@@ -5,13 +5,13 @@ import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 
 describe('DA-BEAT', () => {
-  daLayers.forEach((layer) => {
-    describe(layer.display.name, () => {
+  daLayers.forEach((project) => {
+    describe(project.display.name, () => {
       it('should contain description with dot at the end', () => {
-        expect(layer.display.description.endsWith('.')).toEqual(true)
+        expect(project.display.description.endsWith('.')).toEqual(true)
       })
 
-      layer.bridges.forEach((bridge) => {
+      project.daLayer.bridges.forEach((bridge) => {
         describe(bridge.display.name, () => {
           it(`should contain bridge description with dot at the end`, () => {
             expect(bridge.display.description.endsWith('.')).toEqual(true)
@@ -20,7 +20,7 @@ describe('DA-BEAT', () => {
       })
     })
 
-    describe(`${layer.display.name} does not have duplicated links`, () => {
+    describe(`${project.display.name} does not have duplicated links`, () => {
       const getFlatLinks = (links: ProjectLinks | undefined) => {
         const values: (string | string[] | undefined)[] = Object.values(
           links ?? {},
@@ -28,10 +28,10 @@ describe('DA-BEAT', () => {
         return values.filter((x) => x !== undefined).flatMap((link) => link)
       }
 
-      const links = getFlatLinks(layer.display?.links)
+      const links = getFlatLinks(project.display?.links)
       const uniqueLinks = new Set(links)
 
-      for (const bridge of layer.bridges) {
+      for (const bridge of project.daLayer.bridges) {
         it(`should not have duplicated links with ${bridge.display.name}`, () => {
           const hasUniqueLinks = getFlatLinks(bridge.display.links).every(
             (link) => !uniqueLinks.has(link),
@@ -66,8 +66,8 @@ describe('DA-BEAT', () => {
           (project) => !project.dataAvailabilitySolution,
         )
 
-      const daBeatProjectIds = daLayers.flatMap((daLayer) =>
-        daLayer.bridges.flatMap((bridge) =>
+      const daBeatProjectIds = daLayers.flatMap((project) =>
+        project.daLayer.bridges.flatMap((bridge) =>
           bridge.usedIn.map((usedIn) => usedIn.id),
         ),
       )

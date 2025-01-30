@@ -1,12 +1,12 @@
-import type { EthereumDaLayer } from '../../../types'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { DaProject } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
 
-export const ethereum = {
-  id: 'ethereum',
+export const ethereum: DaProject = {
   type: 'DaLayer',
-  kind: 'EthereumDaLayer',
-  systemCategory: 'public',
+  id: ProjectId('ethereum'),
+  addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   display: {
     // name: 'Ethereum (EIP-4844)',
     name: 'Ethereum',
@@ -28,8 +28,11 @@ export const ethereum = {
       socialMedia: ['https://x.com/ethereum'],
     },
   },
-  technology: {
-    description: `
+  daLayer: {
+    kind: 'EthereumDaLayer',
+    systemCategory: 'public',
+    technology: {
+      description: `
     ## Consensus
     Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
     LMD GHOST is a fork choice rule that ensures the liveness of the chain by selecting the Greedy Heaviest-Observed Sub-Tree (GHOST), and considering only the validators most recent vote (Latest Message Driven, LMD). 
@@ -87,41 +90,42 @@ export const ethereum = {
     ZK rollups, on the other hand, use the point evaluation precompile to verify that specific points in the polynomial (represented by the blob) match the expected values. 
     This method allows ZK rollups to prove that the data used in their validity proof is consistent with the blob data committed to Ethereum.
     `,
-    references: [
-      {
-        title: 'EIP-4844',
-        url: 'https://eips.ethereum.org/EIPS/eip-4844',
-      },
-      {
-        title: 'Ethereum Technical Handbook',
-        url: 'https://eth2book.info/latest/',
-      },
-    ],
-  },
-  bridges: [enshrinedBridge] as const,
-  consensusAlgorithm: {
-    name: 'Gasper',
-    description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
+      references: [
+        {
+          title: 'EIP-4844',
+          url: 'https://eips.ethereum.org/EIPS/eip-4844',
+        },
+        {
+          title: 'Ethereum Technical Handbook',
+          url: 'https://eth2book.info/latest/',
+        },
+      ],
+    },
+    bridges: [enshrinedBridge] as const,
+    consensusAlgorithm: {
+      name: 'Gasper',
+      description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
     LMD GHOST is a fork choice rule that essentially provides liveness to the chain. On the other hand, Casper FFG provides finality to the chain, protecting it from deep reversions.
     LMD GHOST provides the core of the chain fork choice rule, by selecting the Greedy Heaviest-Observed Sub-Tree (GHOST) and considering only the validators
     most recent vote (Latest Message Driven, LMD). Casper FFG is a finality gadget, it modifies the fork choice by making some of the chain branches inaccessible.
     Together they are known as "Gasper".`,
-    blockTime: 12, // seconds per slot
-    consensusFinality: 768, // seconds, two epochs of 32 slots each
-    unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
-  },
-  throughput: {
-    size: 750, // 0.75 MB
-    frequency: 12, // 12 seconds
-  },
-  pruningWindow: 86400 * 18, // 18 days in seconds
-  risks: EthereumDaLayerRisks.SelfVerify,
-  economicSecurity: {
-    name: 'Ethereum',
-    token: {
-      symbol: 'ETH',
-      decimals: 18,
-      coingeckoId: 'ethereum',
+      blockTime: 12, // seconds per slot
+      consensusFinality: 768, // seconds, two epochs of 32 slots each
+      unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
+    },
+    throughput: {
+      size: 750, // 0.75 MB
+      frequency: 12, // 12 seconds
+    },
+    pruningWindow: 86400 * 18, // 18 days in seconds
+    risks: EthereumDaLayerRisks.SelfVerify,
+    economicSecurity: {
+      name: 'Ethereum',
+      token: {
+        symbol: 'ETH',
+        decimals: 18,
+        coingeckoId: 'ethereum',
+      },
     },
   },
-} satisfies EthereumDaLayer
+}
