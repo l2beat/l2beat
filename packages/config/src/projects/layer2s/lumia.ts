@@ -164,9 +164,10 @@ export const lumia: Layer2 = polygonCDKStack({
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
       addedAt: new UnixTime(1738252392), // 2025-01-30T15:53:12+00:00
-      requiredMembers: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
+      dac: {
+        requiredMembers: requiredSignaturesDAC,
+        membersCount: membersCountDAC,
+      },
     },
   }),
   milestones: [],
