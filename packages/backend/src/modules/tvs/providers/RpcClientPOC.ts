@@ -113,7 +113,7 @@ export class RpcClientPOC {
       )
       const r = decodeBatch(response)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
+        this.logger.debug(`Setting ${query.id} - ${r[index].data}`)
         this.multicallResponses.set(query.id, r[index].data)
       }
     })
