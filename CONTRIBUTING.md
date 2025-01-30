@@ -50,13 +50,13 @@ Once you have the frontend website running, you will probably wish to explore th
 
 To explore the projects currently tracked, see the TypeScript files under [packages/config/src/projects](packages/config/src/projects).
 
+The website will be available on http://localhost:3000/
+
 ## Running the website with data
 
 Running the website with data requires a database. Setting up that database is complicated and underdocumented for the moment. Please raise an issue or contact L2Beat support if you require assistance.
 
 If you are a member of the L2Beat organization on GitHub, opening a pull request will prompt [vercel](https://vercel.com) to run a container including live data. Vercel will comment on your PR with the container's URL. NB: Vercel's post-commit hook will also respond to _draft_ PRs so you may wish to use a draft PR to avoid spamming administrators until you are ready for their review.
-
-The website will be available on http://localhost:3000/
 
 ## Add tokens to a project
 
