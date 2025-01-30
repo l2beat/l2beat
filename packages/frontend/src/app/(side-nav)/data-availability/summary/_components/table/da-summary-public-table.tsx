@@ -34,7 +34,10 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
     return (
       <>
         {remainingBridges.map((bridge) => (
-          <TableRow key={bridge.href} className={getRowTypeClassNames()}>
+          <TableRow
+            key={bridge.href}
+            className={getRowTypeClassNames({ isEthereum: false })}
+          >
             <BridgeCells bridge={bridge} />
           </TableRow>
         ))}
