@@ -70,6 +70,7 @@ export function ScalingCostsTabs(props: Props) {
     }
   }, [checked, entries.others, tab])
 
+  const showOthers = checked || entries.others.length > 0
   return (
     <>
       <ScalingFilters
@@ -85,7 +86,7 @@ export function ScalingCostsTabs(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -95,7 +96,7 @@ export function ScalingCostsTabs(props: Props) {
           <DirectoryTabsContent value="rollups" className="pt-5">
             <ScalingCostsChart
               tab="rollups"
-              entries={props.rollups}
+              entries={entries.rollups}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
@@ -103,12 +104,12 @@ export function ScalingCostsTabs(props: Props) {
             <ScalingCostsTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others" className="pt-5">
               <ScalingCostsChart
                 tab="others"
-                entries={props.others ?? []}
+                entries={entries.others}
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="my-5" />

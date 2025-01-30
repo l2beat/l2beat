@@ -2,10 +2,7 @@
 
 import type { Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type ActivityMetric,
   useActivityMetricContext,
@@ -52,7 +49,6 @@ export function ActivityChart({
   const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const includeFilter = useScalingFilter()
   const filter = useScalingFilterValues()
   const [scale, setScale] = useLocalStorage<ChartScale>(
     'scaling-tvs-scale',
@@ -70,7 +66,7 @@ export function ActivityChart({
       }
     : {
         type: 'projects',
-        projectIds: entries.filter(includeFilter).map((project) => project.id),
+        projectIds: entries.map((project) => project.id),
       }
 
   const { data: stats } = api.activity.chartStats.useQuery({
