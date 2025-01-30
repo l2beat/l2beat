@@ -10,7 +10,11 @@ import {
 } from '~/components/core/directory-tabs'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
@@ -83,6 +87,10 @@ export function ScalingLivenessTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
+            Validiums & Optimiums{' '}
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
+          </DirectoryTabsTrigger>
           {entries.others.length > 0 && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
@@ -93,6 +101,12 @@ export function ScalingLivenessTables(props: Props) {
           <DirectoryTabsContent value="rollups">
             <RollupsInfo />
             <ScalingLivenessTable entries={entries.rollups} rollups />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiumsAndOptimiums">
+            <ValidiumsAndOptimiumsInfo />
+            <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {entries.others.length > 0 && (
