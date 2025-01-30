@@ -1,4 +1,5 @@
-import { type AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import type { AmountConfigEntry } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { getAmountsStatus } from '../sync-status/get-amounts-status'

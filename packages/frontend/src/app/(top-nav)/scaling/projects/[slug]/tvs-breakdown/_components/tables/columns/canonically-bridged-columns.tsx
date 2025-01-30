@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { type CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
+import type { CanonicallyBridgedTokenEntry } from '../canonically-bridged-table'
 import { MultipleEscrowsCell } from '../cells/multiple-escrows-cell'
 import { TokenAddressCell } from '../cells/token-address-cell'
 import { TokenCanonicalAmountCell } from '../cells/token-canonical-amount-cell'

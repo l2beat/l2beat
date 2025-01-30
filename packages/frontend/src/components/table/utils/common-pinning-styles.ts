@@ -1,5 +1,5 @@
-import { type Column } from '@tanstack/react-table'
-import { type CSSProperties } from 'react'
+import type { Column } from '@tanstack/react-table'
+import type { CSSProperties } from 'react'
 
 export function getCommonPinningStyles<T>(
   column: Column<T>,

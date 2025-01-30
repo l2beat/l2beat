@@ -1,4 +1,4 @@
-import { type WarningWithSentiment } from '@l2beat/config'
+import type { WarningWithSentiment } from '@l2beat/config'
 import { formatPercent } from '~/utils/calculate-percentage-change'
 
 interface Params {

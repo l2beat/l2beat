@@ -1,4 +1,5 @@
-import { type ZodTypeAny, z } from 'zod'
+import type { ZodTypeAny } from 'zod'
+import { z } from 'zod'
 
 /**
  * Known cookie definitions.

@@ -3,10 +3,8 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import {
-  type CostsMetric,
-  useCostsMetricContext,
-} from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
+import type { CostsMetric } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
+import { useCostsMetricContext } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/app/(side-nav)/scaling/costs/_components/costs-time-range-context'
 import { CostsMetricControls } from '~/app/(side-nav)/scaling/costs/_components/costs-type-controls'
 import { useCostsUnitContext } from '~/app/(side-nav)/scaling/costs/_components/costs-unit-context'
@@ -18,10 +16,8 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
-import {
-  type CostsResolution,
-  rangeToResolution,
-} from '~/server/features/scaling/costs/utils/range'
+import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { useChartLoading } from '../core/chart-loading-context'

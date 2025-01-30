@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 
 export function DiagramImage({ diagram }: { diagram: DiagramParams }) {
   return (

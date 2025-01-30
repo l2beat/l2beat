@@ -5,11 +5,11 @@ import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { Markdown } from '../../markdown/markdown'
 import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
 import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
-import { type RosetteValue } from '../../rosette/types'
+import type { RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteType: 'pizza' | 'pentagon'

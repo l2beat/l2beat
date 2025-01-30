@@ -1,6 +1,6 @@
 'use client'
+import type { CSSProperties } from 'react'
 import {
-  type CSSProperties,
   Fragment,
   useCallback,
   useEffect,
@@ -25,7 +25,7 @@ import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { UnderReviewCallout } from '../under-review-callout'
-import { type ProjectNavigationSection } from './types'
+import type { ProjectNavigationSection } from './types'
 
 interface Project {
   title: string

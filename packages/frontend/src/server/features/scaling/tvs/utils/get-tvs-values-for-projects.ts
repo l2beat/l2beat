@@ -1,12 +1,14 @@
 import type { ValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import { type Dictionary, groupBy } from 'lodash'
+import type { Dictionary } from 'lodash'
+import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import type { TvsProject } from './get-tvs-projects'
 import { getTvsTargetTimestamp } from './get-tvs-target-timestamp'
 import { getValuesStatus } from './get-tvs-values-status'
-import { type TvsChartRange, getRangeConfig } from './range'
+import type { TvsChartRange } from './range'
+import { getRangeConfig } from './range'
 
 export async function getTvsValuesForProjects(
   projects: TvsProject[],

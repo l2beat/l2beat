@@ -1,5 +1,5 @@
+import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  type BackendProject,
   bridgeToBackendProject,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
@@ -7,20 +7,10 @@ import {
   layer3ToBackendProject,
   toBackendProject,
 } from '@l2beat/backend-shared'
-import {
-  type Bridge,
-  type Layer2,
-  type Layer3,
-  bridges,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
-import {
-  assert,
-  type AmountConfigEntry,
-  type ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
+import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { isProjectOther } from '../../utils/is-project-other'

@@ -1,5 +1,6 @@
-import { type VariantProps, cva } from 'class-variance-authority'
-import { type ReactNode } from 'react'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type { ReactNode } from 'react'
 
 const calloutVariants = cva('flex rounded-lg', {
   variants: {

@@ -14,7 +14,7 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PentagonRosetteIcon } from './pentagon-rosette-icon'
 import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 

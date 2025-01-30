@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { within } from '@storybook/test'
 import { userEvent, waitFor } from '@storybook/test'
 import range from 'lodash/range'

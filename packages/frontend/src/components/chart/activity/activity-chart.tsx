@@ -3,10 +3,8 @@
 import type { Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import {
-  type ActivityMetric,
-  useActivityMetricContext,
-} from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -27,10 +25,8 @@ import { ChartProvider } from '../core/chart-provider'
 import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
-import {
-  type ActivityChartType,
-  useActivityChartRenderParams,
-} from './use-activity-chart-render-params'
+import type { ActivityChartType } from './use-activity-chart-render-params'
+import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {

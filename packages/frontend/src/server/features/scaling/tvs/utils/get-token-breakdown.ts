@@ -1,4 +1,4 @@
-import { type ValueRecord } from '@l2beat/database'
+import type { ValueRecord } from '@l2beat/database'
 
 export function getTokenBreakdown(values: ValueRecord[]) {
   return values.reduce(

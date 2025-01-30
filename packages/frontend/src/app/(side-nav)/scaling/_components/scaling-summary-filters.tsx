@@ -1,6 +1,6 @@
 'use client'
 import { Checkbox } from '~/components/core/checkbox'
-import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 import { ScalingFilters } from './scaling-filters'

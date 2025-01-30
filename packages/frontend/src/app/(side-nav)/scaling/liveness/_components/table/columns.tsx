@@ -14,7 +14,7 @@ import { InfoIcon } from '~/icons/info'
 import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
 import { LivenessIntervalCell } from './liveness-interval-cell'
-import { type ScalingLivenessTableEntry } from './to-table-entry'
+import type { ScalingLivenessTableEntry } from './to-table-entry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 

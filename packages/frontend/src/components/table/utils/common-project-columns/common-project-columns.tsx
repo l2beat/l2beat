@@ -1,4 +1,4 @@
-import { type ColumnHelper } from '@tanstack/react-table'
+import type { ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { EM_DASH } from '~/consts/characters'
 import { IndexCell } from '../../cells/index-cell'

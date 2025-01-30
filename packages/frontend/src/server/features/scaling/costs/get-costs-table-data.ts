@@ -6,7 +6,8 @@ import { getCostsForProjects } from './get-costs-for-projects'
 import type { LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
-import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
+import type { CostsTimeRange } from './utils/range'
+import { getFullySyncedCostsRange } from './utils/range'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>

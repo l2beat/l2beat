@@ -3,7 +3,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { compact, keyBy, round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
+import type { EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
 export async function getDaProjectsEconomicSecurity(): Promise<
   Record<string, EconomicSecurityData>

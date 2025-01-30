@@ -1,8 +1,8 @@
-import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import {
-  type LivenessDataPoint,
-  type LivenessTimeRange,
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import type {
+  LivenessDataPoint,
+  LivenessTimeRange,
 } from '~/server/features/scaling/liveness/types'
 
 export type ScalingLivenessTableEntry = Omit<ScalingLivenessEntry, 'data'> & {

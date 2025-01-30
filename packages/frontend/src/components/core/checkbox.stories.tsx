@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { onlyDesktopModes } from '~/../.storybook/modes'
 import { Checkbox } from './checkbox'
 

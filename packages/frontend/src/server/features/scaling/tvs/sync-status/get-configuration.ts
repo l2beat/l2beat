@@ -1,4 +1,5 @@
-import { type MultiIndexerEntry, toIndexerId } from '@l2beat/backend-shared'
+import type { MultiIndexerEntry } from '@l2beat/backend-shared'
+import { toIndexerId } from '@l2beat/backend-shared'
 import { getDb } from '~/server/database'
 
 const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 1000

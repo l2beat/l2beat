@@ -1,5 +1,5 @@
+import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  type BackendProject,
   ConfigMapping,
   getTvlAmountsConfigForProject,
   getTvlPricesConfig,

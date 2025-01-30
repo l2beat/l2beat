@@ -1,13 +1,10 @@
-import {
-  type BlockchainDaLayer,
-  type DaBridgeRisks,
-  type DaLayerRisks,
-  type DaServiceDaLayer,
-  daLayers,
-  isDaBridgeVerified,
-  layer2s,
-  layer3s,
+import type {
+  BlockchainDaLayer,
+  DaBridgeRisks,
+  DaLayerRisks,
+  DaServiceDaLayer,
 } from '@l2beat/config'
+import { daLayers, isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'

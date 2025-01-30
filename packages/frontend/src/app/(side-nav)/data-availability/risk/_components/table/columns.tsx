@@ -3,7 +3,7 @@ import { TableValueCell } from '~/components/table/cells/table-value-cell'
 
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
-import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()

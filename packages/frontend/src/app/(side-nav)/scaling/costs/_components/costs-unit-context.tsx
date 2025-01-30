@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from 'react'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type CostsUnit } from '~/server/features/scaling/costs/types'
+import type { CostsUnit } from '~/server/features/scaling/costs/types'
 
 type CostsUnitContextValue = {
   unit: CostsUnit

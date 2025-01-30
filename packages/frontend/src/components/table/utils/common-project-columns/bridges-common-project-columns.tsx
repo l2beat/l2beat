@@ -1,10 +1,8 @@
-import { type ColumnHelper } from '@tanstack/react-table'
-import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import type { ColumnHelper } from '@tanstack/react-table'
+import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { ProjectNameCell } from '../../cells/project-name-cell'
-import {
-  type CommonProjectColumnsOptions,
-  getCommonProjectColumns,
-} from './common-project-columns'
+import type { CommonProjectColumnsOptions } from './common-project-columns'
+import { getCommonProjectColumns } from './common-project-columns'
 
 export function getBridgesCommonProjectColumns<T extends CommonProjectEntry>(
   columnHelper: ColumnHelper<T>,

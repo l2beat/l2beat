@@ -1,4 +1,4 @@
-import { type TokenBridge, type TokenBridgedUsing } from '@l2beat/shared-pure'
+import type { TokenBridge, TokenBridgedUsing } from '@l2beat/shared-pure'
 import {
   Tooltip,
   TooltipContent,

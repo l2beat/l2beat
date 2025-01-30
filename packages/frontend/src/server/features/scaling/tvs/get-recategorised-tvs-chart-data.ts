@@ -1,5 +1,6 @@
 import type { ValueRecord } from '@l2beat/database'
-import { type Dictionary, uniq } from 'lodash'
+import type { Dictionary } from 'lodash'
+import { uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'

@@ -4,12 +4,9 @@ import { FullPageHeader } from '~/components/full-page-header'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
 import { ProjectHeader } from '~/components/projects/project-header'
-import { type EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
-import {
-  DaProjectStats,
-  type ProjectStat,
-  getCommonDaProjectStats,
-} from './da-project-stats'
+import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import type { ProjectStat } from './da-project-stats'
+import { DaProjectStats, getCommonDaProjectStats } from './da-project-stats'
 import { InfoCallout } from './info-callout'
 
 interface Props {

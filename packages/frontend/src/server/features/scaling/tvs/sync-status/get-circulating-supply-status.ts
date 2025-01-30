@@ -1,8 +1,8 @@
 import { getCirculatingSupplyIndexerId } from '@l2beat/backend-shared'
-import {
-  type AmountConfigEntry,
-  type CirculatingSupplyEntry,
-  type UnixTime,
+import type {
+  AmountConfigEntry,
+  CirculatingSupplyEntry,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { getStatus } from './get-status'
 

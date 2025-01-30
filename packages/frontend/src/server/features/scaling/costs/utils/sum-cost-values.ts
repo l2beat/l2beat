@@ -1,5 +1,5 @@
-import { type AggregatedL2CostRecord } from '@l2beat/database'
-import { type LatestCostsProjectResponse } from '../types'
+import type { AggregatedL2CostRecord } from '@l2beat/database'
+import type { LatestCostsProjectResponse } from '../types'
 import { addIfDefined } from './add-if-defined'
 
 export function sumValues(

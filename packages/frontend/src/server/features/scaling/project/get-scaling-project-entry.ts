@@ -1,6 +1,5 @@
+import type { Layer2, Layer3 } from '@l2beat/config'
 import {
-  type Layer2,
-  type Layer3,
   badgesCompareFn,
   getContractsVerificationStatuses,
   isVerified,

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { type KnownCookieName, type KnownCookieValue } from '~/consts/cookies'
+import type { KnownCookieName, KnownCookieValue } from '~/consts/cookies'
 import { getCookie, setCookie } from '~/utils/cookies/client'
 
 type CookieEvent = {

@@ -1,6 +1,6 @@
-import { type ProjectId } from '@l2beat/shared-pure'
-import { type UnderReviewStatus } from '~/utils/project/under-review'
-import { type ProjectCountdownsWithContext } from '../scaling/utils/get-countdowns'
+import type { ProjectId } from '@l2beat/shared-pure'
+import type { UnderReviewStatus } from '~/utils/project/under-review'
+import type { ProjectCountdownsWithContext } from '../scaling/utils/get-countdowns'
 
 export interface CommonProjectEntry {
   id: ProjectId
