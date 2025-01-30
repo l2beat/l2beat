@@ -121,6 +121,7 @@ function createBlockBasedIndexer(
     logger,
     clock,
     blockTimestampProvider,
+    dependencies.database,
     project.id,
   )
 
