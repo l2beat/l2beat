@@ -29,11 +29,12 @@ export class BlobScanClient extends ClientCore {
     blobs.push(...firstPage.blobs)
 
     if (firstPage.totalBlobs && firstPage.totalBlobs > MAX_PER_PAGE) {
+      const expectedPages = Math.ceil(firstPage.totalBlobs / MAX_PER_PAGE) - 1
+
+      const pages = Array.from({ length: expectedPages }, (_, i) => i + 2)
+
       await Promise.all(
-        Array.from(
-          { length: Math.ceil(firstPage.totalBlobs / MAX_PER_PAGE) },
-          (_, i) => i + 2, // offset from second page
-        ).map(async (page) => {
+        pages.map(async (page) => {
           const response = await this._getBlobs(fromBlock, toBlock, page)
           blobs.push(...response.blobs)
         }),
@@ -68,11 +69,13 @@ export class BlobScanClient extends ClientCore {
       firstPage.totalTransactions &&
       firstPage.totalTransactions > MAX_PER_PAGE
     ) {
+      const expectedPages =
+        Math.ceil(firstPage.totalTransactions / MAX_PER_PAGE) - 1
+
+      const pages = Array.from({ length: expectedPages }, (_, i) => i + 2)
+
       await Promise.all(
-        Array.from(
-          { length: Math.ceil(firstPage.totalTransactions / MAX_PER_PAGE) },
-          (_, i) => i + 2, // offset from second page
-        ).map(async (page) => {
+        pages.map(async (page) => {
           const response = await this._getBlobsByAddress(
             fromBlock,
             toBlock,
