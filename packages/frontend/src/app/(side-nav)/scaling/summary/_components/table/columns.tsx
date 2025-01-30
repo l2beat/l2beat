@@ -47,7 +47,7 @@ export const scalingSummaryColumns = [
         </TwoRowCell.First>
         {ctx.row.original.capability === 'appchain' && (
           <TwoRowCell.Second>
-            {ctx.row.original.purposes.join(', ')}
+            {ctx.row.original.purposes.sort().join(', ')}
           </TwoRowCell.Second>
         )}
       </TwoRowCell>
