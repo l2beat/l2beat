@@ -9,7 +9,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
-import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-permissions/get-multichain-permissions-section'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
@@ -35,10 +35,10 @@ export function getRegularDaProjectSections({
 }: RegularDetailsParams) {
   const permissionsSection =
     daBridge.permissions &&
-    getMultichainPermissionsSection(
+    getPermissionsSection(
       {
         id: daLayer.id,
-        bridge: daBridge,
+        type: 'DaLayer',
         isUnderReview: !!daLayer.isUnderReview,
         permissions: daBridge.permissions,
       },
@@ -135,7 +135,7 @@ export function getRegularDaProjectSections({
 
   if (permissionsSection) {
     daBridgeItems.push({
-      type: 'MultichainPermissionsSection',
+      type: 'PermissionsSection',
       props: {
         ...permissionsSection,
         permissionedEntities: daBridge.dac?.knownMembers,
