@@ -1,12 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
+import type {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
+  ProjectLivenessInfo,
+} from '../../types'
+import type { BaseProject, ProjectCostsInfo } from '../../types'
 import { isVerified } from '../../verification/isVerified'
-import { type Bridge, bridges } from '../bridges'
-import { type DaLayer, daLayers } from '../da-beat'
-import { type Layer2, type ProjectLivenessInfo, layer2s } from '../layer2s'
-import { type Layer3, layer3s } from '../layer3s'
+import { bridges } from '../bridges'
+import { daLayers } from '../da-beat'
+import { layer2s } from '../layer2s'
+import { layer3s } from '../layer3s'
 import { refactored } from '../refactored'
-import type { BaseProject, ProjectCostsInfo } from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -27,7 +34,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     name: p.display.name,
     shortName: p.display.shortName,
     slug: p.display.slug,
-    addedAt: p.createdAt,
+    addedAt: p.addedAt,
     // data
     statuses: {
       yellowWarning: p.display.headerWarning,
@@ -46,6 +53,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
+      capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
@@ -55,7 +63,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),
       reasonsForBeingOther: p.reasonsForBeingOther,
-      stack: p.display.provider,
+      stack: p.display.stack,
       raas: getRaas(p.badges),
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
@@ -86,12 +94,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
 }
 
 function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
-  if (
-    p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
-    p.config.trackedTxs !== undefined
-  ) {
+  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return p.display.liveness ?? {}
   }
 }
@@ -133,7 +136,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     name: p.display.name,
     shortName: p.display.shortName,
     slug: p.display.slug,
-    addedAt: p.createdAt,
+    addedAt: p.addedAt,
     // data
     statuses: {
       yellowWarning: p.display.warning,

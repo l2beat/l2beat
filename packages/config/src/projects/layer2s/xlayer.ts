@@ -5,12 +5,12 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('xlayer')
 
@@ -37,7 +37,7 @@ const upgradeability = {
 }
 
 export const xlayer: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
+  addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
   daProvider: {
@@ -46,20 +46,10 @@ export const xlayer: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'PolygonDataCommittee.sol',
-          references: [
-            'https://etherscan.io/address/0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -73,8 +63,9 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-          href: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
+          title:
+            'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
         },
       ],
     },
@@ -101,12 +92,10 @@ export const xlayer: Layer2 = polygonCDKStack({
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
-      apps: [],
       documentation: [
         'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
-      repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
   },
@@ -128,8 +117,8 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   milestones: [
     {
-      name: 'X Layer Public Launch',
-      link: 'https://x.com/XLayerOfficial/status/1780056275898048562',
+      title: 'X Layer Public Launch',
+      url: 'https://x.com/XLayerOfficial/status/1780056275898048562',
       date: '2024-04-16',
       description: 'X Layer is now accessible to everyone.',
       type: 'general',
@@ -186,7 +175,7 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

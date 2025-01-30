@@ -1,12 +1,12 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { type StoryObj } from '@storybook/react'
+import type { StoryObj } from '@storybook/react'
 import {
   createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
 import { useTable } from '~/hooks/use-table'
-import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { BasicTable } from './basic-table'
 import { ProjectNameCell } from './cells/project-name-cell'
 import { getCommonProjectColumns } from './utils/common-project-columns/common-project-columns'

@@ -1,16 +1,15 @@
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
 
 export interface PermissionsSectionProps extends ProjectSectionProps {
-  permissions: TechnologyContract[]
-  nativePermissions: Record<string, TechnologyContract[]>
+  permissionsByChain: Record<
+    string,
+    { roles: TechnologyContract[]; actors: TechnologyContract[] }
+  >
   daSolution?: DaSolutionWith<{
     permissions: TechnologyContract[]
   }>
@@ -18,15 +17,14 @@ export interface PermissionsSectionProps extends ProjectSectionProps {
 }
 
 export function PermissionsSection({
-  permissions,
-  nativePermissions,
+  permissionsByChain,
   permissionedEntities,
   daSolution,
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
-      {permissionedEntities && (
+      {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
           The committee has the following members:
         </h3>
@@ -34,40 +32,43 @@ export function PermissionsSection({
       {permissionedEntities?.map((entity, i) => (
         <PermissionedEntityEntry key={i} entity={entity} className="my-2" />
       ))}
-      <h3 className="mt-4 font-bold">
-        The system uses the following set of permissioned addresses:
-      </h3>
-      <div className="my-4">
-        {permissions.map((permission) => (
-          <ContractEntry
-            key={technologyContractKey(permission)}
-            contract={permission}
-            className="my-4"
-            type="permission"
-          />
-        ))}
-        {nativePermissions !== undefined &&
-          Object.entries(nativePermissions).map(([chainName, permissions]) => {
-            if (permissions.length === 0) {
-              return null
-            }
-            return (
-              <div key={chainName}>
-                <h3 className="font-bold">
-                  The system consists of the following permissions on{' '}
-                  {chainName}:
-                </h3>
-                {permissions.map((permission) => (
-                  <ContractEntry
-                    key={technologyContractKey(permission)}
-                    contract={permission}
-                    className="my-4"
-                    type="permission"
-                  />
-                ))}
+      <div>
+        {Object.entries(permissionsByChain).map(([chain, permissions]) => {
+          return (
+            <div key={chain} className="mt-8">
+              <div className="flex items-baseline gap-3">
+                <h3 className="whitespace-pre text-2xl font-bold">{chain}</h3>
+                <div className="w-full border-b-2 border-divider" />
               </div>
-            )
-          })}
+              {permissions.roles.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="text-xl font-bold">Roles:</h4>
+                  {permissions.roles.map((permission) => (
+                    <ContractEntry
+                      key={technologyContractKey(permission)}
+                      contract={permission}
+                      className="my-4"
+                      type="permission"
+                    />
+                  ))}
+                </div>
+              )}
+              {permissions.actors.length > 0 && (
+                <div className="mt-3">
+                  <h4 className="text-xl font-bold">Actors:</h4>
+                  {permissions.actors.map((permission) => (
+                    <ContractEntry
+                      key={technologyContractKey(permission)}
+                      contract={permission}
+                      className="my-4"
+                      type="permission"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
       {daSolution?.permissions && (
         <h3 className="mt-4 font-bold">

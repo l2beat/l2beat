@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('pulseChain')
 
@@ -20,7 +20,7 @@ const numOfValidators = discovery.getContractValue<number>(
 export const pulseChain: Bridge = {
   type: 'bridge',
   id: ProjectId('pulseChain'),
-  createdAt: new UnixTime(1684347955), // 2023-05-17T18:25:55Z
+  addedAt: new UnixTime(1684347955), // 2023-05-17T18:25:55Z
   display: {
     name: 'PulseChain',
     slug: 'pulsechain',

@@ -1,7 +1,7 @@
 {
   "name": "witness",
   "chain": "ethereum",
-  "blockNumber": 20491473,
+  "blockNumber": 21715800,
   "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
@@ -54,7 +54,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xadda4c12ce443ca873491337a062c932f35adfb39c5dc1040c1986ec5587dcdc",
+        "lastAccInputHash": "0xce4aff4a9b6c9dfaec4366dc4e427cbf9752f6f25cf1b07572c08aad389b5b49",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "witnesschain",

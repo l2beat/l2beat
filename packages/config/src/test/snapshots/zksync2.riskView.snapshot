@@ -2,95 +2,32 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data (SD = state diffs) needed for proof construction is published onchain."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "ValidatorTimelock"
-        references: [
-          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L120"
-          "https://etherscan.io/tx/0x9dbf29985eae00b7a1b7dbd5b21eedfb287be17310eb8bef6c524990b6928f63"
-        ]
-      }
-      {
-        contract: "ZKsync"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529"
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F12#L121"
-        ]
-      }
-    ]
     value: "Onchain (SD)"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ZKsync"
-        references: [
-          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L130"
-          "https://etherscan.io/address/0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a#code#F1#L148"
-        ]
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
+    orderHint: -Infinity
     sentiment: "warning"
-    sources: [
-      {
-        contract: "ZKsync"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L270"
-        ]
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
-    sources: [
-      {
-        contract: "ZKsync"
-        references: [
-          "https://etherscan.io/address/0x5575218cECd370E1d630d1AdB03c254B0B376821#code#F1#L57"
-          "https://etherscan.io/address/0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9#code#F1#L96"
-        ]
-      }
-    ]
     value: "Enqueue via L1"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    orderHint: Infinity
     secondLine: "21h execution delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "ValidatorTimelock"
-        references: [
-          "https://etherscan.io/address/0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E#code#F1#L169"
-        ]
-      }
-      {
-        contract: "ZKsync"
-        references: [
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F1#L529"
-          "https://etherscan.io/address/0xBB13642F795014E0EAC2b0d52ECD5162ECb66712#code#F10#L26"
-        ]
-      }
-      {
-        contract: "Verifier"
-        references: [
-          "https://etherscan.io/address/0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66#code#F1#L343"
-        ]
-      }
-    ]
     value: "ZK proofs (ST, SN)"
   }
 }

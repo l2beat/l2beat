@@ -1,4 +1,4 @@
-import { type ZkCatalogOnchainVerifier } from './types'
+import type { ZkCatalogOnchainVerifier } from './types'
 
 export type TrustedSetup = 'Yes' | 'No' | '?'
 

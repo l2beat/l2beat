@@ -1,13 +1,8 @@
-import {
-  type Bridge,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  getCommonContractsIn,
-} from '@l2beat/config'
+import type { Bridge, DaLayer, Layer2, Layer3 } from '@l2beat/config'
+import { getCommonContractsIn } from '@l2beat/config'
 import { uniqBy } from 'lodash'
-import { type TechnologyContractAddress } from '../../../components/projects/sections/contract-entry'
-import { type UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
+import type { TechnologyContractAddress } from '../../../components/projects/sections/contract-entry'
+import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 
 type ProjectParams =
   | {

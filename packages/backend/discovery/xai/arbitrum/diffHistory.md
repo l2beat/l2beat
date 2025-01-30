@@ -1,3 +1,108 @@
+Generated with discovered.json: 0x32606e54dfe6efff544e855c9c3d3ce466c549d2
+
+# Diff at Mon, 27 Jan 2025 13:16:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@43cb526d71ed01f024dced9d5aea2a30cf306714 block: 295702624
+- current block number: 299816283
+
+## Description
+
+Sentry infra upgrade No 17: Minor changes to how permissioned addresses can transfer (staked) node license keys.
+
+## Watched changes
+
+```diff
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66) {
+    +++ description: This is the contract where Xai Sentry Keys for running a sentry node are minted.
+      sourceHashes.1:
+-        "0xa5bceee1502b9b30ff5e8cf1acb16d0196637dd53d375860c3bec1fae2701c7f"
++        "0xd57a1c31847923aab8fde5350591529c8c1087dcf26a2f3c0eed7017cb0bd9aa"
+      values.$implementation:
+-        "0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"
++        "0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6"
+      values.$pastUpgrades.16:
++        ["2025-01-24T16:14:51.000Z","0x8b0eeb52fc85a07634fe5b2408f0b97d395c9e6ef9707e7e13db5e6e73f45f4a",["0x249b8A8AF9152A08Ba3cF3E106962566E8343fB6"]]
+      values.$pastUpgrades.15:
++        ["2025-01-24T15:46:46.000Z","0x3112b63199a312c047fa30fc3edee4e9e95209b9cd93cf6d947fefd45fc33995",["0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"]]
+      values.$pastUpgrades.14:
++        ["2025-01-24T15:31:49.000Z","0xa3fbb4e461026eb346c5ac9650d8f9b56db4383ecebc15f9fde0a5440b011710",["0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"]]
+      values.$pastUpgrades.13:
++        ["2025-01-24T15:24:17.000Z","0xb08517cbb3644011a4a1926eb549db2944720643bf9ab8dfd2d3356aafb41a07",["0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"]]
+      values.$pastUpgrades.12:
++        ["2025-01-24T15:07:38.000Z","0x025a28d701b30dbf6fc0ca576181c2ecc3cfb30d5205532aadd550d10f535717",["0xe72b004FCa3A05251c6C8d1BF1482B9308876c7f"]]
+      values.$upgradeCount:
+-        12
++        17
+      derivedName:
+-        "NodeLicense9"
++        "NodeLicense10"
+    }
+```
+
+```diff
+    contract PoolFactory (0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5) {
+    +++ description: The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently set to true.
+      sourceHashes.1:
+-        "0x6b20ddf2a4ea9bb1615fb08c76f1f2f98b13ead97bc452a3840e59119c8abee1"
++        "0xb7442a555bc7fc85b30ed13ce21e18806035a14f3365977cd18286d5d7f808f1"
+      values.$implementation:
+-        "0x2095FE5CEDBE22Afc2174daC57cB6831954A560D"
++        "0xf7f1F9d67a46452da30d4125Ff39ED216e975E24"
+      values.$pastUpgrades.4:
++        ["2025-01-24T16:15:00.000Z","0xa80c27748c9137241e6b9591876c5e707cb35cd6caede27039fb117513be6371",["0xf7f1F9d67a46452da30d4125Ff39ED216e975E24"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.xaiVotingAddress:
++        "0x9d9c7d3C7ffe27b8F7b7e6d80AaDeFEC12453A21"
+      derivedName:
+-        "PoolFactory2"
++        "PoolFactory3"
+    }
+```
+
+```diff
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198) {
+    +++ description: The referee contract manages the Xai Sentry protocol. Sentry nodes that are tasked to watch the state transitions on Xai receive esXAI rewards for their service. These watchers participate in a game with a central 'challenger' by posting their assertions to make sure they are actually watching. In case of a malicious state transition, sentries are supposed to raise an alarm offchain. The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. New staking through this contract is disabled in favor of the new v2 staking. V1 Stakers can continue to get staking rewards here or withdraw/migrate their assets.
+      sourceHashes.1:
+-        "0xc8757a87d8b14b9a5c61b8130720860918aaa5843442a0b6bf6307c3a7353c32"
++        "0x3b80a9109759df060ce4e99dc21f4421975553bf75760dafe4c4106046fba1c1"
+      values.$implementation:
+-        "0x4F18941fE5bE7a54318989b2C42648914dCe47C4"
++        "0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"
+      values.$pastUpgrades.18:
++        ["2025-01-24T16:10:34.000Z","0x0ea3848ffb8f1e5de41e688a5ede3772e8151ecdfd415c7517e69d38f4d27166",["0x206Cd481aB724ab2f9931bBdDFFa11fF07eB6C97"]]
+      values.$pastUpgrades.17:
++        ["2025-01-24T16:02:20.000Z","0x2d6a11cbf1bc416dd2ff21b2b9e803c0c5289268540c847d178b85f7be33ddbd",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.16:
++        ["2025-01-24T15:52:10.000Z","0xddc24c8d248d8b36496c8e9349e971c1e66d13587c13f92d34d6d6716e78cd16",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.15:
++        ["2025-01-24T15:46:43.000Z","0x692de1bd88655fadaa1f09626dcfccffd1bacacfdcb224c1c3d68e52e95032e6",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.14:
++        ["2025-01-24T15:31:45.000Z","0x4d3a599492e7d982a2554108bec654ca4447f767aacb70e58407bf1056b1ed3f",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.13:
++        ["2025-01-24T15:24:10.000Z","0x42dfaba49eb879651685f113a24f6ddc0e914579c7d05ab905a1815860e0d529",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$pastUpgrades.12:
++        ["2025-01-24T15:07:28.000Z","0x41eec03f04ad675911734c1573ae8d6766bac712ea20c38d1ea7057d6ee8098b",["0x4F18941fE5bE7a54318989b2C42648914dCe47C4"]]
+      values.$upgradeCount:
+-        12
++        19
+      derivedName:
+-        "Referee10"
++        "Referee11"
+    }
+```
+
+## Source code changes
+
+```diff
+.../NodeLicenseRegistry/NodeLicense10.sol}         |  80 ++++--
+ .../PoolFactory/PoolFactory3.sol}                  | 277 ++++++++++-----------
+ .../SentryReferee/Referee11.sol}                   |  23 +-
+ 3 files changed, 200 insertions(+), 180 deletions(-)
+```
+
 Generated with discovered.json: 0xff2e1d773749727ae06763765042f2983f543191
 
 # Diff at Mon, 20 Jan 2025 11:10:36 GMT:

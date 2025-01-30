@@ -1,6 +1,5 @@
+import type { Layer2, Layer3 } from '@l2beat/config'
 import {
-  type Layer2,
-  type Layer3,
   badgesCompareFn,
   getContractsVerificationStatuses,
   isVerified,
@@ -12,8 +11,8 @@ import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getTvlProjectStats } from '../tvl/get-tvl-project-stats'
-import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
+import { getTvsProjectStats } from '../tvs/get-tvs-project-stats'
+import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { getCountdowns } from '../utils/get-countdowns'
 import { isProjectOther } from '../utils/is-project-other'
 import { getDaSolution } from './get-scaling-project-da-solution'
@@ -39,6 +38,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
   const common = {
     type: project.type,
+    capability: project.capability,
     name: project.display.name,
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({
@@ -117,9 +117,9 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 }
 
 async function getHeader(project: ScalingProject) {
-  const [activityProjectStats, tvlProjectStats] = await Promise.all([
+  const [activityProjectStats, tvsProjectStats] = await Promise.all([
     getActivityProjectStats(project.id),
-    getTvlProjectStats(project),
+    getTvsProjectStats(project),
   ])
 
   const associatedTokens = project.config.associatedTokens ?? []
@@ -136,19 +136,19 @@ async function getHeader(project: ScalingProject) {
         ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
           project.hostChain)
         : undefined,
-    tvl: !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())
+    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())
       ? {
-          breakdown: tvlProjectStats?.tvlBreakdown,
+          breakdown: tvsProjectStats?.tvsBreakdown,
           warning: project.display.tvlWarning,
           tokens: {
-            breakdown: tvlProjectStats?.tokenBreakdown,
+            breakdown: tvsProjectStats?.tokenBreakdown,
             warnings: compact([
-              tvlProjectStats &&
-                tvlProjectStats.tokenBreakdown.total > 0 &&
+              tvsProjectStats &&
+                tvsProjectStats.tokenBreakdown.total > 0 &&
                 getAssociatedTokenWarning({
                   associatedRatio:
-                    tvlProjectStats.tokenBreakdown.associated /
-                    tvlProjectStats.tokenBreakdown.total,
+                    tvsProjectStats.tokenBreakdown.associated /
+                    tvsProjectStats.tokenBreakdown.total,
                   name: project.display.name,
                   associatedTokens,
                 }),

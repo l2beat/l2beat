@@ -1,20 +1,20 @@
-import {
-  type UsedInProject as ConfigUsedInProject,
-  type DaBridge,
-  type ScalingProjectPermission,
-  type ScalingProjectPermissionedAccount,
+import type {
+  UsedInProject as ConfigUsedInProject,
+  DaBridge,
+  ScalingProjectPermission,
+  ScalingProjectPermissionedAccount,
 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
-import { type MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'
-import { type UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
+import type { MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'
+import type { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 

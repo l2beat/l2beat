@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import { getDefaultMetadata } from '~/utils/metadata'
 
 export const metadata: Metadata = getDefaultMetadata({

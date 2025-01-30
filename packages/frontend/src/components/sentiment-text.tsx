@@ -1,5 +1,4 @@
-import { type Sentiment } from '@l2beat/shared-pure'
-
+import type { Sentiment } from '@l2beat/config'
 import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
 import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/tooltip'
@@ -30,7 +29,9 @@ export function SentimentText(props: Props) {
     <span
       className={cn(
         'font-medium',
-        sentimentToTextColor(props.sentiment, { vibrant: props.vibrant }),
+        sentimentToTextColor(props.sentiment, {
+          vibrant: props.vibrant,
+        }),
         props.className,
       )}
     >

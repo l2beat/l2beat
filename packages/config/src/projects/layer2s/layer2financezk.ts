@@ -12,7 +12,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
@@ -21,7 +21,8 @@ const upgradeDelay = 0
 export const layer2financezk: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2financezk'),
-  createdAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
+  capability: 'universal',
+  addedAt: new UnixTime(1654522914), // 2022-06-06T13:41:54Z
   isArchived: true,
   display: {
     name: 'L2.Finance-zk',
@@ -31,13 +32,10 @@ export const layer2financezk: Layer2 = {
     description:
       'Celer’s Layer2.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
-    provider: 'StarkEx',
+    stack: 'StarkEx',
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/celer-network/defi-pooling-broker-contracts',

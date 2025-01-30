@@ -1,4 +1,4 @@
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
@@ -98,7 +98,7 @@ function ChartMilestone({ x, milestone }: Props) {
   return (
     <div className="absolute scale-75 select-none md:scale-100" style={style}>
       <a
-        href={milestone.link}
+        href={milestone.url}
         target="_blank"
         className="pointer-events-none md:pointer-events-auto"
       >

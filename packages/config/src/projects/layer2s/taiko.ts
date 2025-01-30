@@ -14,11 +14,11 @@ import {
   DA_MODES,
   addSentimentToDataAvailability,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -139,7 +139,8 @@ const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
 export const taiko: Layer2 = {
   id: ProjectId('taiko'),
-  createdAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
+  capability: 'universal',
+  addedAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
     bridge: DA_BRIDGES.ENSHRINED,
@@ -150,7 +151,7 @@ export const taiko: Layer2 = {
   display: {
     name: 'Taiko',
     slug: 'taiko',
-    provider: 'Taiko',
+    stack: 'Taiko',
     // headerWarning: hasThreeTiers
     //   ? 'Validity proofs (SP1, RISC0) are currently disabled, leaving only the SGX tier (minimum tier) and the two Guardian tiers.'
     //   : undefined,
@@ -358,12 +359,12 @@ export const taiko: Layer2 = {
       If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
-          text: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          href: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
+          title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
+          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
         },
         {
-          text: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          href: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
+          title: 'TaikoL1.sol - Etherscan source code, liveness bond',
+          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
         },
       ],
       risks: [
@@ -388,8 +389,8 @@ export const taiko: Layer2 = {
         Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
-          text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          href: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
+          title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
+          url: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
         },
       ],
       risks: [],
@@ -515,22 +516,22 @@ export const taiko: Layer2 = {
   ],
   milestones: [
     {
-      name: 'TKO Token Airdrop',
-      link: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
+      title: 'TKO Token Airdrop',
+      url: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
       date: '2024-06-05T00:00:00.00Z',
       description: 'TKO token launches.',
       type: 'general',
     },
     {
-      name: 'Taiko Mainnet Launch',
-      link: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
+      title: 'Taiko Mainnet Launch',
+      url: 'https://taiko.mirror.xyz/Pizjv30FvjsZUwEG-Da7Gs6F8qeDLc4CKKEBqy3pTt8',
       date: '2024-05-27T00:00:00.00Z',
       description: 'Taiko is deployed on Ethereum mainnet.',
       type: 'general',
     },
     {
-      name: 'Taiko Based Sequencing Upgrade',
-      link: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
+      title: 'Taiko Based Sequencing Upgrade',
+      url: 'https://taiko.mirror.xyz/_oKlnpzKSOxGILyy4WlvpUmYEqD7BFxzmRo3XETlJqE',
       date: '2024-06-06T00:00:00.00Z',
       description: 'Proposing blocks on Taiko is now permissionless.',
       type: 'general',

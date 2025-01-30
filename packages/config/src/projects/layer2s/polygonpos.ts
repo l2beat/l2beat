@@ -12,10 +12,10 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -46,7 +46,8 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
 export const polygonpos: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
-  createdAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
+  capability: 'universal',
+  addedAt: new UnixTime(1664808578), // 2022-10-03T14:49:38Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

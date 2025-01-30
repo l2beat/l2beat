@@ -2,20 +2,14 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.6
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 3/5 that is tasked with protecting and supplying the data."
+    orderHint: 0.6
     sentiment: "bad"
-    sources: [
-      {
-        contract: "AstarValidium"
-        references: []
-      }
-    ]
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -432000
     description: "Even though there is a 10d Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to 15d."
+    orderHint: -432000
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -28,40 +22,18 @@
     description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge. There is a 5d delay for proving and a 5d delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state."
     secondLine: "10d delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "PolygonRollupManager"
-        references: [
-          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
-        ]
-      }
-    ]
     value: "Self propose"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. Although the functionality exists in the code, it is currently disabled."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "AstarValidium"
-        references: []
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "PolygonRollupManager"
-        references: [
-          "https://etherscan.io/address/0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
-        ]
-      }
-    ]
     value: "ZK proofs (ST, SN)"
   }
 }

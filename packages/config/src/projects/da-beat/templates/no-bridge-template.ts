@@ -1,17 +1,16 @@
+import type { DaBridgeRisks, NoDaBridge, ProjectLinks } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import type { DaBridgeRisks, NoDaBridge } from '../types'
-import type { DaLinks } from '../types'
 import { linkByDA } from '../utils/link-by-da'
 
 type TemplateSpecific = {
   /** DA layer name to automatically match projects with */
   layer: string
-  createdAt: NoDaBridge['createdAt']
+  addedAt: NoDaBridge['addedAt']
 }
 
 type Optionals = Partial<{
-  links: Partial<DaLinks>
+  links: ProjectLinks
   risks: Partial<NoDaBridge['risks']>
   usedIn: NoDaBridge['usedIn']
   warnings: NoDaBridge['display']['warning']
@@ -47,12 +46,6 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
     slug: `no-bridge`,
     description,
     links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
       ...template.links,
     },
   }
@@ -67,7 +60,7 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   return {
     id,
     type,
-    createdAt: template.createdAt,
+    addedAt: template.addedAt,
     display,
     risks,
     technology,

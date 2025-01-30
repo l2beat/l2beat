@@ -2,14 +2,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DataStorage } from './DataStorage'
 import { ValueService } from './ValueService'
-import { createAmountConfig, createPriceConfig } from './mapConfig'
-import type {
-  BalanceOfEscrowAmountFormula,
-  Token,
-  TokenValue,
-  TotalSupplyAmountFormula,
-  TvsConfig,
-  ValueFormula,
+import { createAmountConfig } from './mapConfig'
+import {
+  type BalanceOfEscrowAmountFormula,
+  type Token,
+  TokenId,
+  type TokenValue,
+  type TotalSupplyAmountFormula,
+  type TvsConfig,
 } from './types'
 
 describe(ValueService.name, () => {
@@ -30,7 +30,7 @@ describe(ValueService.name, () => {
         projectId: ProjectId('project'),
         tokens: [
           mockObject<Token>({
-            id: 'tokeId',
+            id: TokenId('tokeId'),
             ticker,
             amount: amountFormula,
             valueForProject: undefined,
@@ -38,12 +38,6 @@ describe(ValueService.name, () => {
           }),
         ],
       })
-
-      const priceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker,
-        }),
-      ).id
 
       const mockTimestamp = UnixTime.now()
 
@@ -53,7 +47,7 @@ describe(ValueService.name, () => {
           .resolvesToOnce(10000)
           .resolvesToOnce(10000),
         getPrice: mockFn()
-          .given(priceConfigId, mockTimestamp)
+          .given(ticker, mockTimestamp)
           .resolvesToOnce(200)
           .resolvesToOnce(200),
       })
@@ -115,7 +109,7 @@ describe(ValueService.name, () => {
         address: wBTCContractAddress,
         chain: 'bob',
         decimals: 18,
-        escrowAddresses: [solvBTCEscrowAddress],
+        escrowAddress: solvBTCEscrowAddress,
       } as BalanceOfEscrowAmountFormula
 
       const wBTCBalanceOfEscrowConfigId = createAmountConfig(
@@ -127,7 +121,7 @@ describe(ValueService.name, () => {
         tokens: [
           // WBTC with amount formula as totalSupply on L2
           mockObject<Token>({
-            id: 'WBTC',
+            id: TokenId('WBTC'),
             ticker: 'WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
@@ -137,7 +131,7 @@ describe(ValueService.name, () => {
           // - amount formula as totalSupply on L2
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
           mockObject<Token>({
-            id: 'solvBTC',
+            id: TokenId('solvBTC'),
             ticker: 'solvBTC',
             amount: solvBTCAmountFormula,
             valueForProject: {
@@ -161,17 +155,9 @@ describe(ValueService.name, () => {
         ],
       })
 
-      const wBTCPriceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker: 'WBTC',
-        }),
-      ).id
+      const wBTCPriceConfigId = 'WBTC'
 
-      const solvBTCPriceConfigId = createPriceConfig(
-        mockObject<ValueFormula>({
-          ticker: 'solvBTC',
-        }),
-      ).id
+      const solvBTCPriceConfigId = 'solvBTC'
 
       const mockTimestamp = UnixTime.now()
 

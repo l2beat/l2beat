@@ -1,4 +1,4 @@
-import { type EthereumAddress } from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { CustomLink } from '~/components/link/custom-link'
 
 import { CustomLinkIcon } from '~/icons/outlink'

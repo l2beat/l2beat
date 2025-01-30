@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -17,19 +17,15 @@ const validation = {
 
 export const vector = {
   id: 'vector',
-  createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+  addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'OnChainBridge',
   display: {
     name: 'Vector',
     slug: 'vector',
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
     links: {
-      websites: [],
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
     },
   },
   validation: validation,
@@ -64,12 +60,12 @@ export const vector = {
     `,
     references: [
       {
-        text: 'SP1 Vector Operator',
-        href: 'https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs',
+        title: 'SP1 Vector Operator',
+        url: 'https://github.com/succinctlabs/sp1-vector/blob/a9689768ff4052e0933cc575b79001d4bcfa0cd5/script/bin/operator.rs',
       },
       {
-        text: 'Succinct Gateway - Etherscan',
-        href: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
+        title: 'Succinct Gateway - Etherscan',
+        url: 'https://etherscan.io/address/0x6c7a05e0AE641c6559fD76ac56641778B6eCd776#code#F1#L148',
       },
     ],
     risks: [

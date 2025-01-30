@@ -7,6 +7,7 @@ import type {
   ScalingProjectPermissionedAccount,
 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import { partition } from 'lodash'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -56,8 +57,7 @@ export function getPermissionsSection(
 
   const section: PermissionSection = {
     isUnderReview: projectParams.isUnderReview,
-    permissions: [],
-    nativePermissions: {},
+    permissionsByChain: {},
   }
 
   if (
@@ -78,48 +78,78 @@ export function getPermissionsSection(
     return undefined
   }
 
-  return {
-    ...section,
-    permissions:
-      projectParams.permissions?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractsVerificationStatuses,
-        ),
-      ) ?? [],
-    nativePermissions: Object.fromEntries(
+  const permissionsByChain = {
+    Ethereum: getGroupedTechnologyContracts(
+      projectParams,
+      contractsVerificationStatuses,
+      projectParams.permissions,
+    ),
+    ...Object.fromEntries(
       Object.entries(projectParams.nativePermissions ?? {}).map(
         ([slug, permissions]) => {
           return [
             slugToDisplayName(slug),
-            permissions.flatMap((p) =>
-              toTechnologyContract(
-                projectParams,
-                p,
-                contractsVerificationStatuses,
-              ),
+            getGroupedTechnologyContracts(
+              projectParams,
+              contractsVerificationStatuses,
+              permissions,
             ),
           ]
         },
       ),
     ),
-    daSolution: projectParams.daSolution
-      ? {
-          layerName: projectParams.daSolution.layerName,
-          bridgeName: projectParams.daSolution.bridgeName,
-          hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
-          permissions:
-            projectParams.daSolution.permissions?.flatMap((permission) =>
-              toTechnologyContract(
-                projectParams,
-                permission,
-                contractsVerificationStatuses,
-              ),
-            ) ?? [],
-        }
-      : undefined,
   }
+
+  return {
+    ...section,
+    permissionsByChain,
+    daSolution: getDaSolution(projectParams, contractsVerificationStatuses),
+  }
+}
+
+function getGroupedTechnologyContracts(
+  projectParams: ProjectParams,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
+  permissions: ScalingProjectPermission[],
+) {
+  const [roles, actors] = partition(permissions, (p) => p.fromRole === true)
+  return {
+    roles: roles?.flatMap((permission) =>
+      toTechnologyContract(
+        projectParams,
+        permission,
+        contractsVerificationStatuses,
+      ),
+    ),
+    actors: actors?.flatMap((permission) =>
+      toTechnologyContract(
+        projectParams,
+        permission,
+        contractsVerificationStatuses,
+      ),
+    ),
+  }
+}
+
+function getDaSolution(
+  projectParams: ProjectParams,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
+) {
+  return projectParams.daSolution
+    ? {
+        layerName: projectParams.daSolution.layerName,
+        bridgeName: projectParams.daSolution.bridgeName,
+        hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
+        permissions:
+          projectParams.daSolution.permissions?.flatMap((permission) =>
+            toTechnologyContract(
+              projectParams,
+              permission,
+              contractsVerificationStatuses,
+            ),
+          ) ?? [],
+      }
+    : undefined
 }
 
 function resolvePermissionedName(

@@ -1,8 +1,8 @@
-import { type Project } from '@l2beat/config'
-import { type ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
+import type { Project } from '@l2beat/config'
+import type { ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
-import { type ProjectChanges } from '../projects-change-report/get-projects-change-report'
-import { type CommonProjectEntry } from '../utils/get-common-project-entry'
+import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
+import type { CommonProjectEntry } from '../utils/get-common-project-entry'
 
 export interface FilterableScalingValues {
   isRollup: boolean

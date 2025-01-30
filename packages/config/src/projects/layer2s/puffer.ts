@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const puffer: Layer2 = upcomingL2({
   id: 'puffer',
-  createdAt: new UnixTime(1729172001), // 2024-10-17T15:33:21
+  capability: 'universal',
+  addedAt: new UnixTime(1729172001), // 2024-10-17T15:33:21
   display: {
     name: 'Puffer UniFi',
     slug: 'puffer',
@@ -16,7 +17,6 @@ export const puffer: Layer2 = upcomingL2({
       websites: ['https://puffer.fi/'],
       apps: ['https://quest.puffer.fi/unifi'],
       documentation: ['https://docs.puffer.fi/unifi-based-rollup/'],
-      explorers: [],
       repositories: ['https://github.com/PufferFinance'],
       socialMedia: [
         'https://x.com/puffer_unifi',

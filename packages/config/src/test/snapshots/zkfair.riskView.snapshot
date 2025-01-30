@@ -2,22 +2,14 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.6
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 3/5 that is tasked with protecting and supplying the data."
+    orderHint: 0.6
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ZKFairValidium"
-        references: [
-          "https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L587"
-        ]
-      }
-    ]
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -1209600
     description: "Even though there is a 1d Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to 15d."
+    orderHint: -1209600
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -29,42 +21,17 @@
   proposerFailure: {
     description: "If the Proposer fails, users can leverage the source available prover to submit proofs to the L1 bridge. There is a 5d delay for proving and a 5d delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state."
     sentiment: "good"
-    sources: [
-      {
-        contract: "ZKFairValidium"
-        references: [
-          "https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L639"
-          "https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L862"
-        ]
-      }
-    ]
     value: "Self propose"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring. Although the functionality exists in the code, it is currently disabled."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ZKFairValidium"
-        references: [
-          "https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L247"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "ZKFairValidium"
-        references: [
-          "https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L820"
-        ]
-      }
-    ]
     value: "ZK proofs (SN)"
   }
 }

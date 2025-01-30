@@ -1,9 +1,10 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
-import { type NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
-import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
+import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 
 const projectsIds = [...layer2s, ...layer3s]

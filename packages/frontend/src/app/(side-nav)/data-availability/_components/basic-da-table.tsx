@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
-import {
-  type Column,
-  type Header,
-  type Row,
-  type Table as TanstackTable,
-  flexRender,
+import type {
+  Column,
+  Header,
+  Row,
+  Table as TanstackTable,
 } from '@tanstack/react-table'
+import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import React from 'react'
 import {
   getBasicTableGroupParams,

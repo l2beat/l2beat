@@ -1,4 +1,4 @@
-import { type SocialIconType } from '~/icons/products/social-icon'
+import type { SocialIconType } from '~/icons/products/social-icon'
 import { formatLink } from '~/utils/format-link'
 
 interface SocialDetails {

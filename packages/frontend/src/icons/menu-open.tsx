@@ -1,4 +1,5 @@
-import { SvgIcon, type SvgIconProps } from './svg-icon'
+import type { SvgIconProps } from './svg-icon'
+import { SvgIcon } from './svg-icon'
 
 export function MenuOpenIcon(props: SvgIconProps) {
   return (

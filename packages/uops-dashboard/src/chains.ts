@@ -1,5 +1,5 @@
 export type Chain = {
-  /** Id for internal purposes, set it to an arbitraty string*/
+  /** Id for internal purposes, set it to an arbitrary string*/
   id: string
   /** This will be displayed on the UOPS explorer */
   name: string
@@ -23,6 +23,19 @@ export type Chain = {
 }
 
 export const SUPPORTED_CHAINS: Chain[] = [
+  {
+    id: 'abstract',
+    name: 'Abstract',
+    blockchainApi: {
+      type: 'rpc',
+      url: 'https://api.mainnet.abs.xyz',
+    },
+    getBlockLink: (blockNumber: number) =>
+      `https://abscan.org/block/${blockNumber}`,
+    getTxLink: (txHash: string) => `https://abscan.org/tx/${txHash}`,
+    getContractLink: (address: string) =>
+      `https://abscan.org/address/${address}`,
+  },
   {
     id: 'alephzero',
     name: 'Aleph Zero EVM',
@@ -279,7 +292,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     },
     etherscanApiUrl: 'https://api.taikoscan.io',
     getBlockLink: (blockNumber: number) =>
-      `https://taikoscan.io//block/${blockNumber}`,
+      `https://taikoscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://taikoscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://taikoscan.io/address/${address}`,
@@ -307,7 +320,7 @@ export const SUPPORTED_CHAINS: Chain[] = [
     },
     etherscanApiUrl: 'https://api.xaiscan.io',
     getBlockLink: (blockNumber: number) =>
-      `https://xaiscan.io//block/${blockNumber}`,
+      `https://xaiscan.io/block/${blockNumber}`,
     getTxLink: (txHash: string) => `https://xaiscan.io/tx/${txHash}`,
     getContractLink: (address: string) =>
       `https://xaiscan.io/address/${address}`,

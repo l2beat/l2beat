@@ -1,12 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const bitlazer: Layer3 = underReviewL3({
   id: 'bitlazer',
-  createdAt: new UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737636289), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -19,7 +19,7 @@ export const bitlazer: Layer3 = underReviewL3({
     name: 'Bitlazer',
     slug: 'bitlazer',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Bitlazer is an Orbit stack L3 with AnyTrust DA powering BTC-focused DeFi applications and payments.',
     purposes: ['Bitcoin DApps'],
@@ -31,7 +31,6 @@ export const bitlazer: Layer3 = underReviewL3({
       ],
       documentation: ['https://bitlazer.gitbook.io/bitlazer'],
       explorers: ['https://bitlazer.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/bitlazer', 'https://t.me/bitlazer_io'],
     },
   },
@@ -39,7 +38,7 @@ export const bitlazer: Layer3 = underReviewL3({
     type: 'rpc',
     defaultUrl: 'https://bitlazer.calderachain.xyz/http',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   escrows: [

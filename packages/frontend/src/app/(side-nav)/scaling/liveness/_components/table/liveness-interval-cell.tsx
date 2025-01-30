@@ -1,4 +1,4 @@
-import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { Badge } from '~/components/badge/badge'
 import { Skeleton } from '~/components/core/skeleton'
 import {
@@ -9,12 +9,12 @@ import {
 import { WarningBar } from '~/components/warning-bar'
 import { useIsClient } from '~/hooks/use-is-client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { type LivenessDataPoint } from '~/server/features/scaling/liveness/types'
+import type { LivenessDataPoint } from '~/server/features/scaling/liveness/types'
 import { DurationCell } from '../../../finality/_components/table/duration-cell'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'
-import { type ScalingLivenessTableEntry } from './to-table-entry'
+import type { ScalingLivenessTableEntry } from './to-table-entry'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry

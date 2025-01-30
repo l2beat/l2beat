@@ -1,12 +1,5 @@
-import {
-  type Sentiment,
-  type WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import type { TableReadyValue } from '@l2beat/config'
 
-export interface RosetteValue {
+export interface RosetteValue extends TableReadyValue {
   name: string
-  value: string
-  sentiment: Sentiment
-  description: string | undefined
-  warning: WarningValueWithSentiment | undefined
 }

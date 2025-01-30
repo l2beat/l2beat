@@ -1,7 +1,8 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -11,7 +12,6 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('automata')
 
@@ -30,12 +30,8 @@ const daResolveWindow = formatSeconds(
 )
 
 export const automata: Layer2 = opStackL2({
-  createdAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
+  additionalBadges: [Badge.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -99,12 +95,12 @@ export const automata: Layer2 = opStackL2({
     `,
       references: [
         {
-          text: 'Alt-DA Specification',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
+          title: 'Alt-DA Specification',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/experimental/alt-da.md',
         },
         {
-          text: 'Security Considerations - Ethresear.ch ',
-          href: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
+          title: 'Security Considerations - Ethresear.ch ',
+          url: 'https://ethresear.ch/t/universal-plasma-and-da-challenges/18629',
         },
       ],
       risks: [
@@ -119,7 +115,7 @@ export const automata: Layer2 = opStackL2({
       ],
     },
     bridge: {
-      createdAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
       type: 'IntegratedDacBridge',
       technology: {
         description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

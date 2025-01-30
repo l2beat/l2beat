@@ -1,15 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
+  addedAt: new UnixTime(1704289654), // 2024-01-03T13:47:34Z
   isArchived: true,
   discovery,
   additionalBadges: [],
@@ -30,7 +28,6 @@ export const parallel: Layer2 = orbitStackL2({
       explorers: [
         'https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/ParallelFi',
         'https://discord.gg/rdjVz8zavF',
@@ -132,22 +129,22 @@ export const parallel: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.parallel.fi',
     defaultCallsPerMinute: 120,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'ArbOS v20 upgrade',
-      link: 'https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957',
+      title: 'ArbOS v20 upgrade',
+      url: 'https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957',
       date: '2024-04-10T00:00:00.00Z',
       description:
         'Introduces EIP-4844 data blobs for L1 data availability and Dencun-related opcodes on L2.',
       type: 'general',
     },
     {
-      name: 'Parallel Mainnet closed launch',
-      link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
+      title: 'Parallel Mainnet closed launch',
+      url: 'https://twitter.com/ParallelFi/status/1743048283684237574',
       date: '2024-01-05T00:00:00Z',
       description: 'Parallel Mainnet is open for developers.',
       type: 'general',

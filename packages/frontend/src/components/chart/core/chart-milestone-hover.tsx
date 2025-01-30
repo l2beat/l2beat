@@ -1,4 +1,4 @@
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { formatDate } from '~/utils/dates'
@@ -31,12 +31,12 @@ export function ChartMilestoneHover({ milestone }: Props) {
         ) : (
           <div className="absolute mt-[2px] size-2.5 rotate-45 border-2 border-green-500 bg-green-700 md:mt-1"></div>
         )}
-        <span className="ml-4 text-left">{milestone.name}</span>
+        <span className="ml-4 text-left">{milestone.title}</span>
       </div>
       <div className="mb-1 max-w-[216px] text-left">
         {milestone.description}
       </div>
-      {isMobile && <CustomLink href={milestone.link}>Learn more</CustomLink>}
+      {isMobile && <CustomLink href={milestone.url}>Learn more</CustomLink>}
     </div>
   )
 }

@@ -2,29 +2,21 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1. Unlike most ZK rollups, transaction data is posted instead of state diffs."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "LineaRollup"
-        references: [
-          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. Eventually (after 6 months of no finalized blocks) the Operator role becomes public, theoretically allowing anyone to propose state with valid proofs."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
@@ -34,18 +26,10 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "LineaRollup"
-        references: [
-          "https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code"
-        ]
-      }
-    ]
     value: "ZK proofs (SN)"
   }
 }

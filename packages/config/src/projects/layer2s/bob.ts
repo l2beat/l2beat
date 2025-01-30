@@ -1,25 +1,25 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('bob')
 
 export const bob: Layer2 = opStackL2({
-  createdAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
+  addedAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalBadges: [Badge.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
     slug: 'bob',
     tvlWarning: {
-      content:
+      value:
         'The total TVS doublecounts underlying assets for solvBTC.BBN, solvBTC and uniBTC since they are locked on BOB. We are working on a fix.',
       sentiment: 'warning',
     },
@@ -52,8 +52,8 @@ export const bob: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Phase 1: Optimistic BOB',
-      link: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
+      title: 'Phase 1: Optimistic BOB',
+      url: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',

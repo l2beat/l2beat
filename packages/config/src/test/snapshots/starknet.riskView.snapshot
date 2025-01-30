@@ -2,58 +2,34 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data (SD = state diffs) needed for proof construction is published onchain."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "Onchain (SD)"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs are zero knowledge proofs that ensure state correctness."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "Starknet"
-        references: [
-          "https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code"
-        ]
-      }
-    ]
     value: "ZK proofs (ST)"
   }
 }

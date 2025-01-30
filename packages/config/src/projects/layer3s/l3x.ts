@@ -1,17 +1,17 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { ESCROW } from '../../common/escrow'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
 export const l3x: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
+  addedAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
   hostChain: ProjectId('arbitrum'),
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
@@ -33,7 +33,6 @@ export const l3x: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.l3x.com/'],
       explorers: ['https://explorer.l3x.com/'],
-      repositories: [],
       socialMedia: ['https://t.me/l3x_protocol', 'https://x.com/l3x_protocol'],
     },
   },
@@ -97,7 +96,7 @@ export const l3x: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

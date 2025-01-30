@@ -1,9 +1,10 @@
-import { type Layer2FinalityConfig, type Project } from '@l2beat/config'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer2FinalityConfig, Project } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { type FinalityData, type FinalityDataPoint } from './schema'
+import type { FinalityData, FinalityDataPoint } from './schema'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId

@@ -1,18 +1,16 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import { NUGGETS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER } from '../layer2s/templates/opStack'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 
 export const b3: Layer3 = opStackL3({
-  createdAt: new UnixTime(1722376845),
+  addedAt: new UnixTime(1722376845),
   hostChain: ProjectId('base'),
   additionalBadges: [
     Badge.DA.Celestia,
@@ -59,15 +57,15 @@ export const b3: Layer3 = opStackL3({
     defaultUrl: 'https://mainnet-rpc.b3.fun/http',
     startBlock: 1,
     defaultCallsPerMinute: 800,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1722378840),
   isNodeAvailable: false,
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'B3 Open Mainnet Launch',
-      link: 'https://cryptoslate.com/press-releases/b3-fun-debuts-mainnet-with-record-breaking-367k-wallets-and-47m-transactions-in-just-1-month-of-testnet/',
+      title: 'B3 Open Mainnet Launch',
+      url: 'https://cryptoslate.com/press-releases/b3-fun-debuts-mainnet-with-record-breaking-367k-wallets-and-47m-transactions-in-just-1-month-of-testnet/',
       date: '2024-08-15T00:00:00.00Z',
       description: 'B3 opens the mainnet to the public.',
       type: 'general',

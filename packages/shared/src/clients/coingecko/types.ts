@@ -49,6 +49,7 @@ export const CoinsMarketResult = z.object({
   name: z.string(),
   image: z.string(),
   current_price: z.number(),
+  circulating_supply: z.number(),
 })
 
 export const CoinsMarketResultData = z.array(CoinsMarketResult)

@@ -1,6 +1,7 @@
-import { type Milestone } from '@l2beat/config'
-import { type ReactNode, createContext, useContext, useMemo } from 'react'
-import { type SeriesStyle } from './styles'
+import type { Milestone } from '@l2beat/config'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useMemo } from 'react'
+import type { SeriesStyle } from './styles'
 import { getYAxis } from './utils/get-y-axis'
 
 interface Value {

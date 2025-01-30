@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { LinkWithThumbnail } from './link-with-thumbnail'
 
 const meta = {

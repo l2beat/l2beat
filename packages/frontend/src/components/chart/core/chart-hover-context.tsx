@@ -1,11 +1,6 @@
-import { type Milestone } from '@l2beat/config'
-import {
-  type ReactNode,
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import type { Milestone } from '@l2beat/config'
+import type { ReactNode } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 export interface ChartHoverContextProviderParams<T> {
   renderHoverContents: (pointData: T) => ReactNode

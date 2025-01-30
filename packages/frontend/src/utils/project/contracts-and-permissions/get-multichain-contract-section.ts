@@ -1,25 +1,25 @@
-import {
-  CONTRACTS,
-  type DaBridgeContracts,
-  type ScalingProjectContract,
-  type UsedInProject,
+import type {
+  DaBridgeContracts,
+  ReferenceLink,
+  ScalingProjectContract,
+  UsedInProject,
 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type EthereumAddress,
+import { CONTRACTS } from '@l2beat/config'
+import type {
+  ContractsVerificationStatuses,
+  EthereumAddress,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
-import { type Reference } from '../../../components/projects/sections/reference-list'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
@@ -176,7 +176,7 @@ function makeTechnologyContract(
       addresses.map((a) => a.address).includes(changedAddress),
   )
 
-  const additionalReferences: Reference[] = []
+  const additionalReferences: ReferenceLink[] = []
   const mainAddresses = [getAddress({ address: item.address })]
   const implementationAddresses =
     item.upgradeability?.implementations.map((implementation) =>

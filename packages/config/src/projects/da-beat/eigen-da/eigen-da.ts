@@ -1,10 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { DaServiceDaLayer } from '../../../types'
 import { aevo } from '../../layer2s/aevo'
 import { soon } from '../../layer2s/soon'
 import { donatuz } from '../../layer3s/donatuz'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { DaServiceDaLayer } from '../types'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './eigen-da-bridge'
 
@@ -22,7 +22,6 @@ export const eigenDA: DaServiceDaLayer = {
       websites: ['https://www.eigenda.xyz/'],
       documentation: ['https://docs.eigenda.xyz/overview'],
       repositories: ['https://github.com/Layr-Labs/eigenda'],
-      apps: [],
       explorers: ['https://blobs.eigenda.xyz/'],
       socialMedia: ['https://x.com/eigen_da'],
     },
@@ -66,16 +65,16 @@ export const eigenDA: DaServiceDaLayer = {
   `,
     references: [
       {
-        text: 'EigenDA - Documentation',
-        href: 'https://docs.eigenda.xyz/overview',
+        title: 'EigenDA - Documentation',
+        url: 'https://docs.eigenda.xyz/overview',
       },
       {
-        text: 'EigenDA Disperser - Source Code',
-        href: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
+        title: 'EigenDA Disperser - Source Code',
+        url: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
       },
       {
-        text: 'EigenDA Rollup Utils - Source Code',
-        href: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
+        title: 'EigenDA Rollup Utils - Source Code',
+        url: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
       },
     ],
     risks: [
@@ -87,7 +86,7 @@ export const eigenDA: DaServiceDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+      addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
       layer: 'EigenDA',
       description:
         'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
@@ -102,4 +101,20 @@ export const eigenDA: DaServiceDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'EigenDA launch on mainnet',
+      url: 'https://blog.eigenlayer.xyz/mainnet-launch-eigenlayer-eigenda/',
+      date: '2024-04-09T00:00:00Z',
+      description: 'EigenLayer and EigenDA launch on the Ethereum mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'EIGEN token unlock',
+      url: 'https://x.com/eigenlayer/status/1840967244408344619',
+      date: '2024-10-01T00:00:00Z',
+      description: 'EIGEN token becomes transferable.',
+      type: 'general',
+    },
+  ],
 }

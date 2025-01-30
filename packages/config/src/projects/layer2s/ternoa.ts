@@ -1,11 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const ternoa: Layer2 = upcomingL2({
   id: 'ternoa',
-  createdAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
+  capability: 'universal',
+  addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
   badges: [Badge.Infra.AggLayer],
   display: {
     name: 'Ternoa',
@@ -14,12 +15,10 @@ export const ternoa: Layer2 = upcomingL2({
       'Ternoa is a modular Validium leveraging Polygon CDK, Avail, and AggLayer to achieve enhanced functionality.',
     purposes: ['Universal'],
     category: 'Validium',
-    provider: 'Polygon',
+    stack: 'Polygon',
     links: {
       websites: ['https://ternoa.network/'],
-      apps: [],
       documentation: ['https://docs.ternoa.network/learn/ternoa-zkevm+'],
-      explorers: [],
       repositories: ['https://github.com/capsule-corp-ternoa'],
       socialMedia: [
         'https://x.com/ternoa_',

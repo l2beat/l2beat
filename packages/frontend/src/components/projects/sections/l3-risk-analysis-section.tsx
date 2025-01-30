@@ -1,8 +1,8 @@
-import { type Sentiment } from '@l2beat/shared-pure'
-import { type ReactNode } from 'react'
+import type { Sentiment } from '@l2beat/config'
+import type { ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
-import { type RosetteValueTuple } from '~/components/rosette/individual/individual-rosette-icon'
+import type { RosetteValueTuple } from '~/components/rosette/individual/individual-rosette-icon'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
 import { SentimentText } from '~/components/sentiment-text'
 import { EM_DASH } from '~/consts/characters'
@@ -13,7 +13,7 @@ import { sentimentToTransparentBgColor } from '~/utils/sentiment'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { SingleRisk } from './risk-analysis-section'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface L3RiskAnalysisSectionProps extends ProjectSectionProps {
   l2: {
@@ -238,12 +238,12 @@ function HeaderCell({
 }
 
 function RiskCell(props: {
-  sentiment: Sentiment
+  sentiment?: Sentiment
   value: string
   backgroundFill?: boolean
   className?: string
 }) {
-  const bg = sentimentToTransparentBgColor(props.sentiment)
+  const bg = sentimentToTransparentBgColor(props.sentiment ?? 'neutral')
 
   return (
     <td
@@ -253,7 +253,7 @@ function RiskCell(props: {
         props.className,
       )}
     >
-      <SentimentText sentiment={props.sentiment} vibrant>
+      <SentimentText sentiment={props.sentiment ?? 'neutral'} vibrant>
         {props.value}
       </SentimentText>
     </td>

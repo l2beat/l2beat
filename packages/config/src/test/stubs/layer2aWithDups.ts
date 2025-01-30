@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -10,27 +9,21 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
 } from '../../common'
-import type { Layer2 } from '../../projects'
+import type { Layer2 } from '../../types'
 
 export const layer2aWithDups: Layer2 = {
   type: 'layer2',
   id: ProjectId('layer2a'),
-  createdAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
+  capability: 'universal',
   display: {
     name: 'Layer2a',
     slug: 'layer2a',
     description: '',
     purposes: ['Universal'],
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     category: 'Optimistic Rollup',
-    links: {
-      websites: [],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
-    },
+    links: {},
     finality: {
       warnings: {
         timeToInclusion: {
@@ -60,7 +53,6 @@ export const layer2aWithDups: Layer2 = {
       {
         // this is a new version, so it is visible on frontend and should be included in verification script output
         address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
-        newVersion: true,
         contract: {
           name: 'L1Escrow',
           isVerified: true,

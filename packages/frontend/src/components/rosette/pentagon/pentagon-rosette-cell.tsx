@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PentagonRosetteIcon } from './pentagon-rosette-icon'
 import { PentagonRosetteTooltip } from './pentagon-rosette-tooltip'
 

@@ -7,7 +7,8 @@
     "0x08c5DCDD5e46d31CC1591ee15b084663507597f3" // DAChallenge
   ],
   "names": {
-    "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8": "AutomataMultisig"
+    "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8": "AutomataUpgradeMultisig",
+    "0x5E2FC552288857cfE709C398Ecac448314dE1320": "AutomataOpsMultisig"
   },
   "overrides": {
     "0xB52337F38747D6931f2976eEa24A3f3F6B7CDEA2": {

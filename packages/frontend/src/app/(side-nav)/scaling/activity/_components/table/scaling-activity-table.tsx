@@ -6,12 +6,10 @@ import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compare-activity-entry'
-import {
-  type ActivityMetric,
-  useActivityMetricContext,
-} from '../activity-metric-context'
+import type { ActivityMetric } from '../activity-metric-context'
+import { useActivityMetricContext } from '../activity-metric-context'
 import { getScalingActivityColumns } from './columns'
 
 interface Props {

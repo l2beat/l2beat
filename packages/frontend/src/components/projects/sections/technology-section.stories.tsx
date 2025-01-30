@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { TechnologySection } from './technology-section'
 
 const meta = {
@@ -22,8 +22,8 @@ const meta = {
         ],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: '#',
+            title: 'Introducing EVM Equivalence',
+            url: '#',
           },
         ],
         isIncomplete: false,

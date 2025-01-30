@@ -1,4 +1,5 @@
-import { type Database, createDatabase } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
+import { createDatabase } from '@l2beat/database'
 import { env } from '~/env'
 
 let db: Database | undefined

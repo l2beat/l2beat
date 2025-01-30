@@ -1,7 +1,7 @@
 import { uniq } from 'lodash'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { TableFilter } from '~/components/table/filters/table-filter'
-import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { useScalingFilterValues } from './scaling-filter-context'
 

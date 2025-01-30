@@ -1,18 +1,11 @@
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
-import {
-  NUGGETS,
-  type ScalingProjectRiskViewEntry,
-  type ScalingProjectTechnologyChoice,
-} from '../../common'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { NUGGETS } from '../../common'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
-import { getReferencedAddresses } from '../layer2s/index.test'
-import { type BridgeTechnology, bridges } from './index'
+import type { BridgeTechnology, ProjectTechnologyChoice } from '../../types'
+import { bridges } from './index'
 
 describe('bridges', () => {
   describe('links', () => {
@@ -34,48 +27,6 @@ describe('bridges', () => {
             expect(link).not.toInclude('www')
           }
         })
-      }
-    })
-  })
-  describe('references', () => {
-    describe('points to an existing implementation', () => {
-      for (const bridge of bridges) {
-        try {
-          const discovery = new ProjectDiscovery(bridge.id.toString())
-
-          for (const [riskName, riskEntry] of Object.entries(
-            bridge.riskView ?? {},
-          )) {
-            const risk = riskEntry as ScalingProjectRiskViewEntry
-            if (risk.sources === undefined) continue
-
-            describe(`${bridge.id.toString()} : ${riskName}`, () => {
-              for (const sourceCodeReference of risk.sources ?? []) {
-                it(sourceCodeReference.contract, () => {
-                  const referencedAddresses = getReferencedAddresses(
-                    sourceCodeReference.references,
-                  )
-                  const contract = discovery.getContract(
-                    sourceCodeReference.contract,
-                  )
-
-                  const contractAddresses = [
-                    contract.address,
-                    ...get$Implementations(contract.values),
-                  ]
-
-                  expect(
-                    contractAddresses.some((a) =>
-                      referencedAddresses.includes(a),
-                    ),
-                  ).toEqual(true)
-                })
-              }
-            })
-          }
-        } catch {
-          continue
-        }
       }
     })
   })
@@ -148,10 +99,7 @@ describe('bridges', () => {
           }
         }
 
-        function checkChoice(
-          choice: ScalingProjectTechnologyChoice,
-          name: string,
-        ) {
+        function checkChoice(choice: ProjectTechnologyChoice, name: string) {
           it(`${name}.name doesn't end with a dot`, () => {
             expect(choice.name.endsWith('.')).toEqual(false)
           })
@@ -182,8 +130,8 @@ describe('bridges', () => {
             continue
           }
           for (const milestone of project.milestones) {
-            it(`Milestone: ${milestone.name} (${project.display.name}) name is no longer than 50 characters`, () => {
-              expect(milestone.name.length).toBeLessThanOrEqual(50)
+            it(`Milestone: ${milestone.title} (${project.display.name}) name is no longer than 50 characters`, () => {
+              expect(milestone.title.length).toBeLessThanOrEqual(50)
             })
           }
         }
@@ -200,7 +148,7 @@ describe('bridges', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description ends with a dot`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description ends with a dot`, () => {
               expect(milestone.description?.endsWith('.')).toEqual(true)
             })
           }
@@ -215,7 +163,7 @@ describe('bridges', () => {
             if (milestone.description === undefined) {
               continue
             }
-            it(`Milestone: ${milestone.name} (${project.display.name}) description is no longer than 100 characters`, () => {
+            it(`Milestone: ${milestone.title} (${project.display.name}) description is no longer than 100 characters`, () => {
               expect(milestone.description?.length ?? 0).toBeLessThanOrEqual(
                 100,
               )
@@ -231,7 +179,7 @@ describe('bridges', () => {
           continue
         }
         for (const milestone of project.milestones) {
-          it(`Milestone: ${milestone.name} (${project.display.name}) date is full day`, () => {
+          it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
             expect(
               UnixTime.fromDate(new Date(milestone.date)).isFull('day'),
             ).toEqual(true)

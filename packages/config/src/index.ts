@@ -1,9 +1,52 @@
-export * from './chains'
-export * from './common'
-export * from './projects'
-export * from './tokens/tokens'
-export * from './utils/commonContracts'
-export * from './utils/discoveryDriven'
-export * from './verification/isVerified'
-export * from './verification/getContractsVerificationStatuses'
+/**
+ * IMPORTANT! PLEASE READ
+ *
+ * In an effort to streamline working with config all current non-type
+ * exports are explicitly stated in this file. The aim is to reduce non-type
+ * exports to the absolute minimum.
+ *
+ * Ideally this file would look like this:
+ *
+ * ```ts
+ * export { ProjectService } from './projects'
+ * export type * from './types'
+ * ```
+ *
+ * As you can see it'll take us a while to get there. In the meantime
+ * DO NOT ADD NEW NON-TYPE EXPORTS to @l2beat/config. Thanks!
+ */
+
+export { chains } from './chains'
+export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
+export {
+  badges,
+  badgesCompareFn,
+  BadgeType,
+  type Badge,
+  type BadgeId,
+} from './projects/badges'
+export { bridges } from './projects/bridges'
+export {
+  daLayers,
+  ethereumDaLayer,
+  toUsedInProject,
+} from './projects/da-beat'
+export { layer2s } from './projects/layer2s'
+export { layer3s } from './projects/layer3s'
+export { onChainProjects } from './projects/onChainProjects'
+export { ProjectService, type Project } from './projects/project/ProjectService'
+export { isUnderReview } from './projects/project/utils/isUnderReview'
+export {
+  safeGetTokenByAssetId,
+  tokenList,
+} from './tokens/tokens'
+export type * from './types'
+export { getCommonContractsIn } from './utils/commonContracts'
+export {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+  isDiscoveryDriven,
+} from './utils/discoveryDriven'
+export { getContractsVerificationStatuses } from './verification/getContractsVerificationStatuses'
+export { isDaBridgeVerified, isVerified } from './verification/isVerified'

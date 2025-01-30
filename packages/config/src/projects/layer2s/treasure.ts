@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('treasure')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -16,17 +16,16 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const treasure: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'treasureValidators',
   additionalBadges: [Badge.DA.CustomDA],
-  createdAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
+  addedAt: new UnixTime(1719931843), // 2024-07-02T14:50:43Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Treasure',
     slug: 'treasure',
     tvlWarning: {
-      content:
-        'The total TVS includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. The L2 escrow of these tokens [can be found here](https://treasurescan.io/address/0x24DF29723B54DE65f5fbC66a610053e90534631d). L2BEAT is working on a fix.',
+      value:
+        'The total TVS includes illiquid MAGIC tokens that were pre-bridged via the canonical bridge to support external bridging. L2BEAT is working on a fix.',
       sentiment: 'warning',
     },
     description:
@@ -76,17 +75,7 @@ export const treasure: Layer2 = zkStackL2({
   daProvider: {
     layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL,
-      sources: [
-        {
-          contract: 'ExecutorFacet',
-          references: [
-            'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL,
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -100,45 +89,16 @@ export const treasure: Layer2 = zkStackL2({
       ],
       references: [
         {
-          text: 'ExecutorFacet - _commitOneBatch() function',
-          href: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0xaD193aDe635576d8e9f7ada71Af2137b16c64075#code#F1#L53',
         },
       ],
     },
   },
-  nonTemplateContracts: (zkStackUpgrades: Upgradeability) => [
-    discovery.getContractDetails('TreasureZkEvm', {
-      description:
-        'The main Rollup contract. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract \
-          then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.',
-      ...zkStackUpgrades,
-    }),
-    discovery.getContractDetails('TreasureZkEvmAdmin', {
-      description:
-        'Intermediary governance contract that has the *ChainAdmin* role in the Treasure zkEVM diamond contract.',
-    }),
-  ],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'TreasureChainAdminMultisig',
-      'Inherits *ChainAdmin* permissions like adding/removing validators in the ValidatorTimelock, adding a TransactionFilterer that can censor transactions, upgrading the Treasure Diamond to a predeployed version of the ZK stack and settings its fee parameters.',
-    ),
-    {
-      name: 'TreasureOracleEOA',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'TreasureZkEvmAdmin',
-          'tokenMultiplierSetter',
-        ),
-      ],
-      description:
-        'Can set the conversion factor for MAGIC deposits to Treasure.',
-    },
-  ],
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://x.com/Treasure_DAO/status/1865101292752040255',
+      title: 'Mainnet launch',
+      url: 'https://x.com/Treasure_DAO/status/1865101292752040255',
       date: '2024-12-11T00:00:00Z',
       description: 'Treasure mainnet launches for all users.',
       type: 'general',

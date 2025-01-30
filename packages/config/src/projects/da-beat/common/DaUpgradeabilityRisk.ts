@@ -1,23 +1,20 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import type { DaRisk } from '../types'
+import type { TableReadyValue } from '../../../types'
 
-const Immutable: DaRisk = {
-  type: 'Immutable',
+const Immutable: TableReadyValue = {
   value: 'Immutable',
   sentiment: 'good',
   description: 'The bridge smart contract is immutable and cannot be updated.',
 }
 
-const ImmutableNoSecurity: DaRisk = {
-  type: 'Immutable',
+const ImmutableNoSecurity: TableReadyValue = {
   value: 'Immutable',
   sentiment: 'bad',
   description:
     'The bridge smart contract is immutable and cannot be updated. The bridge committee security is low and cannot be improved.',
 }
 
-const NoBridge: DaRisk = {
-  type: 'NoBridge',
+const NoBridge: TableReadyValue = {
   value: 'N/A',
   sentiment: 'bad',
   description: `Without the bridge, users cannot react in time to malicious actions by the sequencer.`,
@@ -27,10 +24,8 @@ const ONE_DAY_SECONDS = 24 * 60 * 60
 const THIRTY_DAYS_SECONDS = 30 * ONE_DAY_SECONDS
 const SEVEN_DAYS_SECONDS = 7 * ONE_DAY_SECONDS
 
-function SecurityCouncil(delaySeconds: number): DaRisk {
-  const common = {
-    type: 'SecurityCouncil',
-  }
+function SecurityCouncil(delaySeconds: number): TableReadyValue {
+  const common = {}
 
   if (delaySeconds >= THIRTY_DAYS_SECONDS) {
     return {
@@ -64,10 +59,8 @@ function SecurityCouncil(delaySeconds: number): DaRisk {
   }
 }
 
-function Eoa(delaySeconds: number): DaRisk {
-  const common = {
-    type: 'Eoa',
-  }
+function Eoa(delaySeconds: number): TableReadyValue {
+  const common = {}
 
   if (delaySeconds >= SEVEN_DAYS_SECONDS) {
     return {
@@ -90,14 +83,13 @@ function Eoa(delaySeconds: number): DaRisk {
   }
 }
 
-function LowOrNoDelay(delaySeconds?: number): DaRisk {
+function LowOrNoDelay(delaySeconds?: number): TableReadyValue {
   const value =
     delaySeconds && delaySeconds < SEVEN_DAYS_SECONDS
       ? formatSeconds(delaySeconds)
       : 'No delay'
 
   return {
-    type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
     description:

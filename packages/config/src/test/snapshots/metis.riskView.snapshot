@@ -2,40 +2,32 @@
 
 {
   dataAvailability: {
-    definingMetric: -Infinity
     description: "Transaction data is kept in MEMO decentralized storage."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "External (MEMO)"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "Users can submit transactions to an L1 queue, but can't force them. The sequencers cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencers censor or are down, they are so for everyone."
     sentiment: "warning"
-    sources: [
-      {
-        contract: "CanonicalTransactionChain"
-        references: [
-          "https://etherscan.io/address/0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9#code#F1#L212"
-        ]
-      }
-    ]
     value: "Enqueue via L1"
   }
   stateValidation: {
-    definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"

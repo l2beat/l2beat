@@ -5,7 +5,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CloseIcon } from '~/icons/close'
-import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
+import type { ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { OtherMigrationContainer } from './other-migration-container'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>

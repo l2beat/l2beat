@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 
 export const memo: BlockchainDaLayer = {
   id: 'memo',
@@ -16,8 +16,7 @@ export const memo: BlockchainDaLayer = {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],
       repositories: ['https://github.com/memoio'],
-      apps: [],
-      explorers: ['https://scan.metamemo.one:8080/'],
+      explorers: ['https://scan.metamemo.one/'],
       socialMedia: [
         'https://x.com/MemoLabsOrg',
         'https://discord.com/invite/YG4Ydv2E7X',
@@ -59,20 +58,20 @@ export const memo: BlockchainDaLayer = {
   `,
     references: [
       {
-        text: 'Meeda Documentation - Architecture',
-        href: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
+        title: 'Meeda Documentation - Architecture',
+        url: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
       },
       {
-        text: 'Meeda FileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
+        title: 'Meeda FileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
       },
       {
-        text: 'Meeda ControlFileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
+        title: 'Meeda ControlFileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
       },
       {
-        text: 'Meeda ProxyFileProof contract - Metamemo Scan',
-        href: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
+        title: 'Meeda ProxyFileProof contract - Metamemo Scan',
+        url: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
       },
     ],
     risks: [
@@ -84,7 +83,7 @@ export const memo: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
+      addedAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
       layer: 'MEMO',
     }),
   ],
@@ -93,4 +92,14 @@ export const memo: BlockchainDaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
+  milestones: [
+    {
+      title: 'MEMO Megrez Network launch',
+      url: 'https://memolabs.medium.com/memo-megrez-network-went-live-on-october-15-b99c187e041c',
+      date: '2022-10-15T00:00:00Z',
+      description:
+        'MemoMegrez Network is the underlying storage network of the MEMO storage system.',
+      type: 'general',
+    },
+  ],
 }

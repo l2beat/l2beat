@@ -4,10 +4,8 @@ import { FullPageHeader } from '~/components/full-page-header'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
 import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/metadata'
-import {
-  type GovernancePublicationEntry,
-  getGovernancePublicationEntry,
-} from '../_utils/get-governance-publication-entry'
+import type { GovernancePublicationEntry } from '../_utils/get-governance-publication-entry'
+import { getGovernancePublicationEntry } from '../_utils/get-governance-publication-entry'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'Governance publications - L2BEAT',

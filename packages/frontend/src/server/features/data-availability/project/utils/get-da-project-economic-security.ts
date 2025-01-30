@@ -7,7 +7,7 @@ export async function getDaProjectEconomicSecurity(
   daLayer: DaLayer,
 ): Promise<number | undefined> {
   if (env.MOCK) {
-    return getMockDaProjectEconomicSecurity(daLayer)
+    return 100
   }
   const db = getDb()
 
@@ -38,8 +38,4 @@ export async function getDaProjectEconomicSecurity(
     ) /
     10 ** daLayer.economicSecurity.token.decimals
   return economicSecurity
-}
-
-function getMockDaProjectEconomicSecurity(_: DaLayer) {
-  return 100
 }

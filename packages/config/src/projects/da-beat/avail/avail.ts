@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 import { vector } from './vector'
 
 export const avail: BlockchainDaLayer = {
@@ -74,16 +74,16 @@ export const avail: BlockchainDaLayer = {
     `,
     references: [
       {
-        text: 'Avail Documentation',
-        href: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+        title: 'Avail Documentation',
+        url: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
       },
       {
-        text: 'Avail Light Client - Source Code',
-        href: 'https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs',
+        title: 'Avail Light Client - Source Code',
+        url: 'https://github.com/availproject/avail-light/blob/main/core/src/light_client.rs',
       },
       {
-        text: 'Avail App Client - Source Code',
-        href: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
+        title: 'Avail App Client - Source Code',
+        url: 'https://github.com/availproject/avail-light/blob/a9e1741a6c7579d6ab1988eb409808b33f999180/core/src/app_client.rs',
       },
     ],
     risks: [
@@ -99,7 +99,7 @@ export const avail: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
+      addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
       layer: 'Avail',
       description:
         'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
@@ -140,4 +140,13 @@ export const avail: BlockchainDaLayer = {
       coingeckoId: 'avail',
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet launch',
+      url: 'https://blog.availproject.org/avail-da-mainnet-is-live/',
+      date: '2024-07-23T00:00:00Z',
+      description: 'Avail mainnet and the AVAIL token launch.',
+      type: 'general',
+    },
+  ],
 }

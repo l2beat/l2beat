@@ -14,7 +14,7 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PentagonRosetteIcon } from './pentagon-rosette-icon'
 import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 
@@ -93,7 +93,7 @@ function RosetteTooltipContent() {
   return (
     <TooltipContent side="bottom" className="w-[300px]">
       <SentimentText
-        sentiment={selectedRisk.sentiment}
+        sentiment={selectedRisk.sentiment ?? 'neutral'}
         className="mb-2 flex items-center gap-1 font-medium"
       >
         {selectedRisk.value}

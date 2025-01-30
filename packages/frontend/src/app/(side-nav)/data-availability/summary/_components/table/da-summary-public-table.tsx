@@ -1,15 +1,12 @@
 'use client'
-import {
-  type Row,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import {
-  type DaBridgeSummaryEntry,
-  type DaSummaryEntry,
+import type {
+  DaBridgeSummaryEntry,
+  DaSummaryEntry,
 } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {

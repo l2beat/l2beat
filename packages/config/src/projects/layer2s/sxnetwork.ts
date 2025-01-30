@@ -1,16 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
-import { subtractOne } from '../../common/assessCount'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
 export const sxnetwork: Layer2 = orbitStackL2({
-  createdAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
+  addedAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
   gasTokens: ['SX'],
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
@@ -32,7 +32,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
       ],
       documentation: ['https://docs.sx.technology/'],
       explorers: ['https://explorerl2.sx.technology/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/SX_Network',
         'https://discord.com/invite/sxnetwork',
@@ -50,7 +49,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
     type: 'rpc',
     defaultUrl: 'https://rpc.sx-rollup.gelato.digital',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
   nonTemplatePermissions: [
@@ -71,7 +70,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
     },
     discovery,
   }),

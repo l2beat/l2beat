@@ -5,10 +5,10 @@ import React from 'react'
 import { externalLinks } from '~/consts/external-links'
 import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'
-import {
-  type ProjectToken,
-  type ProjectTokens,
-} from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
+import type {
+  ProjectToken,
+  ProjectTokens,
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { cn } from '~/utils/cn'
 import {
   Command,

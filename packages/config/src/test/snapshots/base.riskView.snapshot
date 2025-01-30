@@ -2,44 +2,36 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
+    orderHint: Infinity
     sentiment: "good"
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -604800
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: 0
     description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
+    orderHint: 0
     sentiment: "good"
     value: "Self propose"
   }
   sequencerFailure: {
-    definingMetric: 43200
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
+    orderHint: 43200
     secondLine: "12h delay"
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve."
+    orderHint: Infinity
     secondLine: "3d 12h challenge period"
     sentiment: "good"
-    sources: [
-      {
-        contract: "DisputeGameFactory"
-        references: [
-          "https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code"
-        ]
-      }
-    ]
     value: "Fraud proofs (INT)"
   }
 }

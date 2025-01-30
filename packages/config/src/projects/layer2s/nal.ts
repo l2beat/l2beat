@@ -1,16 +1,16 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
+import type { Layer2 } from '../../types'
 import { underReviewL2 } from './templates/underReview'
-import type { Layer2 } from './types'
 
 export const nal: Layer2 = underReviewL2({
   id: 'nal',
-  createdAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
+  capability: 'universal',
+  addedAt: new UnixTime(1726499832), // 2024-09-16T15:17:12Z
   display: {
     name: 'Nal',
     slug: 'nal',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'Nal is a general-purpose OP stack chain. It aims to facilitate the creation and trading of new assets, including AIGC and physical-to-digital transformations.',
     purposes: ['Universal'],
@@ -19,7 +19,6 @@ export const nal: Layer2 = underReviewL2({
       apps: [], //https://bridge.nal.network/deposit for testnet, no mainnet bridge UI is available yet
       documentation: ['https://docs.nal.network/chain/Overview.html'],
       explorers: ['https://scan.nal.network/'],
-      repositories: [],
       socialMedia: ['https://x.com/nal_network'],
     },
   },
@@ -29,7 +28,7 @@ export const nal: Layer2 = underReviewL2({
     startBlock: 1,
     defaultUrl: 'https://rpc.nal.network/',
     defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

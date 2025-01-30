@@ -1,13 +1,10 @@
-import { type UsedInProject } from '@l2beat/config'
+import type { UsedInProject } from '@l2beat/config'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
-import { type ProjectSectionProps } from '../types'
+import type { ProjectSectionProps } from '../types'
 
 export interface MultichainPermissionsSectionProps extends ProjectSectionProps {
   permissions: Record<string, TechnologyContract[]>
@@ -23,7 +20,7 @@ export function MultichainPermissionsSection({
 }: MultichainPermissionsSectionProps) {
   return (
     <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
-      {permissionedEntities && (
+      {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
           The committee has the following members:
         </h3>

@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const fluent: Layer2 = upcomingL2({
   id: 'fluent',
-  createdAt: new UnixTime(1721218971), // 2024-07-17T12:22:51Z
+  capability: 'universal',
+  addedAt: new UnixTime(1721218971), // 2024-07-17T12:22:51Z
   display: {
     name: 'Fluent',
     slug: 'fluent',
@@ -14,9 +15,7 @@ export const fluent: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://fluentlabs.xyz/'],
-      apps: [],
       documentation: ['https://docs.fluentlabs.xyz/learn'],
-      explorers: [],
       repositories: ['https://github.com/fluentlabs-xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',

@@ -1,9 +1,11 @@
+import type {
+  BlockchainDaLayer,
+  DaChallengeMechanism,
+  DaServiceDaLayer,
+  TableReadyValue,
+  UsedInProject,
+} from '@l2beat/config'
 import {
-  type BlockchainDaLayer,
-  type DaChallengeMechanism,
-  type DaServiceDaLayer,
-  type DataAvailabilityLayer,
-  type UsedInProject,
   daLayers,
   ethereumDaLayer,
   isDaBridgeVerified,
@@ -22,19 +24,19 @@ import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
-  getDaProjectsTvl,
-  pickTvlForProjects,
-} from '../utils/get-da-projects-tvl'
+  getDaProjectsTvs,
+  pickTvsForProjects,
+} from '../utils/get-da-projects-tvs'
 import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const [economicSecurity, tvlPerProject] = await Promise.all([
+  const [economicSecurity, tvsPerProject] = await Promise.all([
     getDaProjectsEconomicSecurity(),
-    getDaProjectsTvl(uniqueProjectsInUse),
+    getDaProjectsTvs(uniqueProjectsInUse),
   ])
-  const getTvs = pickTvlForProjects(tvlPerProject)
+  const getTvs = pickTvsForProjects(tvsPerProject)
 
   const dacEntries = getDacEntries(getTvs)
   const entries = daLayers.map((daLayer) =>
@@ -52,7 +54,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   isPublic: boolean
   economicSecurity: number | undefined
   risks: RosetteValue[]
-  fallback: DataAvailabilityLayer | undefined
+  fallback: TableReadyValue | undefined
   challengeMechanism: DaChallengeMechanism | undefined
   tvs: number
   bridges: DaBridgeSummaryEntry[]

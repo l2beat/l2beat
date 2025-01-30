@@ -2,15 +2,15 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('symbiosis')
 
 export const symbiosis: Bridge = {
   type: 'bridge',
   id: ProjectId('symbiosis'),
-  createdAt: new UnixTime(1688541556), // 2023-07-05T07:19:16Z
+  addedAt: new UnixTime(1688541556), // 2023-07-05T07:19:16Z
   display: {
     name: 'Symbiosis',
     slug: 'symbiosis',

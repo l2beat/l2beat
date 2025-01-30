@@ -40,10 +40,20 @@ export class LocalExecutor {
   async run(
     config: TvsConfig,
     timestamps: UnixTime[],
+    latestMode: boolean,
   ): Promise<Map<number, TokenValue[]>> {
+    if (latestMode) {
+      this.logger.info(`Running in latest mode`)
+    }
+
     const { prices, amounts } = extractPricesAndAmounts(config)
 
-    await this.dataFormulaExecutor.execute(prices, amounts, timestamps)
+    await this.dataFormulaExecutor.execute(
+      prices,
+      amounts,
+      timestamps,
+      latestMode,
+    )
 
     return await this.valueService.calculate(config, timestamps)
   }

@@ -1,24 +1,20 @@
-import {
-  type BridgeDisplay,
-  type BridgeRiskView,
-  type Project,
-  ProjectService,
+import type {
+  BridgeDisplay,
+  BridgeRiskView,
+  Project,
+  Sentiment,
 } from '@l2beat/config'
-import { type ValueWithSentiment } from '@l2beat/shared-pure'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../projects-change-report/get-projects-change-report'
-import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
-import { getProjectsLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
-import {
-  type CommonBridgesEntry,
-  getCommonBridgesEntry,
-} from './get-common-bridges-entry'
+import { ProjectService } from '@l2beat/config'
+import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
+import { getProjectsLatestTvsUsd } from '../scaling/tvs/utils/get-latest-tvs-usd'
+import type { CommonBridgesEntry } from './get-common-bridges-entry'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export async function getBridgeRiskEntries() {
-  const [tvl, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvlUsd(),
+  const [tvs, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
@@ -32,34 +28,42 @@ export async function getBridgeRiskEntries() {
       getBridgesRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
-    .sort(compareTvl)
+    .sort(compareTvs)
 }
 
 export interface BridgesRiskEntry extends CommonBridgesEntry {
   type: BridgeDisplay['category']
-  destination: ValueWithSentiment<string>
+  destination: {
+    value: string
+    description?: string
+    sentiment: Sentiment
+  }
   riskView: BridgeRiskView
-  tvlOrder: number
+  tvsOrder: number
 }
 
 function getBridgesRiskEntry(
   project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>,
   changes: ProjectChanges,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ) {
   return {
     ...getCommonBridgesEntry({ project, changes }),
     type: project.bridgeInfo.category,
     destination: getDestination(project.bridgeInfo.destination),
     riskView: project.bridgeRisks,
-    tvlOrder: tvl ?? -1,
+    tvsOrder: tvs ?? -1,
   }
 }
 
-function getDestination(destinations: string[]): ValueWithSentiment<string> {
+function getDestination(destinations: string[]): {
+  value: string
+  description?: string
+  sentiment: Sentiment
+} {
   if (destinations.length === 0) {
     throw new Error('Invalid destination')
   }

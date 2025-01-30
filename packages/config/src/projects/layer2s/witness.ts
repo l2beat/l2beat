@@ -5,17 +5,14 @@ import {
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('witness')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'WitnessValidiumDAC',
@@ -37,7 +34,8 @@ const upgradeability = {
 }
 
 export const witness: Layer2 = polygonCDKStack({
-  createdAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  isArchived: true,
   discovery,
   additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
@@ -47,20 +45,10 @@ export const witness: Layer2 = polygonCDKStack({
       requiredSignatures: requiredSignaturesDAC,
       membersCount: membersCountDAC,
     }),
-    riskView: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount: membersCountDAC,
-        requiredSignatures: requiredSignaturesDAC,
-      }),
-      sources: [
-        {
-          contract: 'WitnessValidiumDAC',
-          references: [
-            'https://etherscan.io/address/0xd26b535ad58715c4c2fffac32908b13674533dae#code',
-          ],
-        },
-      ],
-    },
+    riskView: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount: membersCountDAC,
+      requiredSignatures: requiredSignaturesDAC,
+    }),
     technology: {
       name: 'Data is not stored on chain',
       description:
@@ -74,14 +62,17 @@ export const witness: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium() function',
-          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium() function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
   },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
+    headerWarning:
+      'The operator has stopped servicing this Validium (the last batch was posted on 2024-12-18).',
     name: 'Witness Chain',
     slug: 'witness',
     description:
@@ -106,20 +97,21 @@ export const witness: Layer2 = polygonCDKStack({
   },
   rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
-      address: bridge.address,
-      tokens: '*',
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherPreminted',
-        premintedAmount: '340282366920938463463374607431768211455',
-      },
-    }),
+    // TVS was 31 doler on 2025-01-28 when this was archived
+    // shared.getEscrowDetails({
+    //   address: bridge.address,
+    //   tokens: '*',
+    //   sharedEscrow: {
+    //     type: 'AggLayer',
+    //     nativeAsset: 'etherPreminted',
+    //     premintedAmount: '340282366920938463463374607431768211455',
+    //   },
+    // }),
   ],
   milestones: [
     {
-      name: 'Witness Chain Mainnet Launch',
-      link: 'https://x.com/witnesschain/status/1808153753897652256',
+      title: 'Witness Chain Mainnet Launch',
+      url: 'https://x.com/witnesschain/status/1808153753897652256',
       date: '2024-07-02',
       description:
         'L2 Diligence proofs are now posted to Witness Chain Mainnet by Eigenlayer operators.',
@@ -166,7 +158,7 @@ export const witness: Layer2 = polygonCDKStack({
   ],
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
-      createdAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
       transactionDataType: 'Transaction data',

@@ -1,6 +1,5 @@
+import type { Layer2, Layer3 } from '@l2beat/config'
 import {
-  type Layer2,
-  type Layer3,
   areContractsDiscoveryDriven,
   arePermissionsDiscoveryDriven,
   layer2s,
@@ -10,7 +9,7 @@ import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLiveness } from '~/server/features/scaling/liveness/get-liveness'
-import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
@@ -28,7 +27,7 @@ export async function GET() {
 }
 
 async function getResponse() {
-  const tvl = await get7dTvlBreakdown()
+  const tvs = await get7dTvsBreakdown()
   const costs = getCostsProjects().map((c) => c.id.toString())
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
@@ -42,7 +41,7 @@ async function getResponse() {
           costs,
           liveness,
           finality,
-          tvl.projects[p.id.toString()]?.breakdown.total ?? 0,
+          tvs.projects[p.id.toString()]?.breakdown.total ?? 0,
         ),
       ),
     },
@@ -54,7 +53,7 @@ function toResponseProject(
   costs: string[],
   liveness: string[],
   finality: string[],
-  tvl: number,
+  tvs: number,
 ) {
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
@@ -62,7 +61,7 @@ function toResponseProject(
 
   return {
     id: project.id.toString(),
-    tvl,
+    tvs,
     display: project.display,
     type: project.type === 'layer2' ? 'L2' : 'L3',
     arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(project),

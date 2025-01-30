@@ -1,3 +1,4 @@
+import type { ReferenceLink } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -11,14 +12,13 @@ import { BulletIcon } from '~/icons/bullet'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
-import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
-import { type Participant, ParticipantsEntry } from './permissions/participants'
+import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
+import type { Participant } from './permissions/participants'
+import { ParticipantsEntry } from './permissions/participants'
 import { UpgradeConsiderations } from './permissions/upgrade-considerations'
-import {
-  type UsedInProject,
-  UsedInProjectEntry,
-} from './permissions/used-in-project'
-import { type Reference, ReferenceList } from './reference-list'
+import type { UsedInProject } from './permissions/used-in-project'
+import { UsedInProjectEntry } from './permissions/used-in-project'
+import { ReferenceList } from './reference-list'
 
 export interface TechnologyContract {
   name: string
@@ -30,7 +30,7 @@ export interface TechnologyContract {
   usedInProjects?: UsedInProject[]
   participants?: Participant[]
   upgradeConsiderations?: string
-  references: Reference[]
+  references: ReferenceLink[]
   implementationChanged: boolean
   highSeverityFieldChanged: boolean
 }

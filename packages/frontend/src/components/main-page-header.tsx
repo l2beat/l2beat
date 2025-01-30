@@ -1,6 +1,6 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { useRecategorisationPreviewContext } from './recategorisation-preview/recategorisation-preview-provider'
 import { RecategorisationPreviewSwitch } from './recategorisation-preview/recategorisation-preview-switch'

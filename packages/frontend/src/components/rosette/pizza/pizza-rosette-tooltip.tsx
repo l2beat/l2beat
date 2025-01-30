@@ -1,6 +1,6 @@
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { RiskValue } from '../risk-value'
-import { type PizzaRosetteCellProps } from './pizza-rosette-cell'
+import type { PizzaRosetteCellProps } from './pizza-rosette-cell'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
 

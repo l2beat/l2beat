@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
+import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -77,6 +78,7 @@ import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
+import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
 import { lambda } from './lambda'
@@ -144,6 +146,7 @@ import { rss3 } from './rss3'
 import { rufus } from './rufus'
 import { scroll } from './scroll'
 import { shape } from './shape'
+import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
 import { socialnetwork } from './socialnetwork'
@@ -154,6 +157,7 @@ import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
+import { status } from './status'
 import { stealthchain } from './stealthchain'
 import { superlumio } from './superlumio'
 import { superseed } from './superseed'
@@ -172,7 +176,6 @@ import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
-import type { Layer2 } from './types'
 import { unichain } from './unichain'
 import { wirex } from './wirex'
 import { witness } from './witness'
@@ -193,8 +196,6 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
-export * from './common'
-export * from './types'
 
 export const layer2s: Layer2[] = [
   abstract,
@@ -273,6 +274,7 @@ export const layer2s: Layer2[] = [
   kakarotzkevm,
   karak,
   kinto,
+  koi,
   kontos,
   kroma,
   lambda,
@@ -351,8 +353,10 @@ export const layer2s: Layer2[] = [
   sorare,
   specular,
   starknet,
+  status,
   stealthchain,
   shape,
+  shibarium,
   superlumio,
   superseed,
   swan,

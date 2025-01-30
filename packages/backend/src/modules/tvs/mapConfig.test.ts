@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { extractPricesAndAmounts, mapConfig } from './mapConfig'
-import type { Token, TvsConfig } from './types'
+import { type Token, TokenId, type TvsConfig } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
@@ -25,21 +25,20 @@ describe(mapConfig.name, () => {
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(result.tokens[0]).toEqual({
-      id: 'ethereum-native',
+      id: TokenId('ethereum-native-0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
       ticker: 'ETH',
+      symbol: 'ETH',
+      name: 'Ether',
       amount: {
         type: 'balanceOfEscrow',
         address: 'native',
         chain: 'ethereum',
-        escrowAddresses: [
+        escrowAddress: EthereumAddress(
           '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
-          '0xcEe284F754E854890e311e3280b767F80797180d',
-          '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
-          '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
-        ],
+        ),
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1622243344),
+      sinceTimestamp: new UnixTime(1661457944),
       untilTimestamp: undefined,
       category: 'ether',
       source: 'canonical',
@@ -48,22 +47,27 @@ describe(mapConfig.name, () => {
 
     expect(
       result.tokens.find(
-        (t) => t.id === 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
+        (t) =>
+          t.id ===
+          'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1-0xcEe284F754E854890e311e3280b767F80797180d',
       ),
     ).toEqual({
-      id: 'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
+      id: TokenId(
+        'ethereum-0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1-0xcEe284F754E854890e311e3280b767F80797180d',
+      ),
       ticker: 'ARB',
+      symbol: 'ARB',
+      name: 'Arbitrum',
       amount: {
         type: 'balanceOfEscrow',
         address: EthereumAddress('0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1'),
         chain: 'ethereum',
-        escrowAddresses: [
+        escrowAddress: EthereumAddress(
           '0xcEe284F754E854890e311e3280b767F80797180d',
-          '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
-        ],
+        ),
         decimals: 18,
       },
-      sinceTimestamp: new UnixTime(1623784100),
+      sinceTimestamp: new UnixTime(1623867835),
       untilTimestamp: undefined,
       category: 'other',
       source: 'external',
@@ -75,7 +79,9 @@ describe(mapConfig.name, () => {
         (t) => t.id === 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
       ),
     ).toEqual({
-      id: 'arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548',
+      id: TokenId('arbitrum-0x912CE59144191C1204E64559FE8253a0e49E6548'),
+      symbol: 'ARB',
+      name: 'Arbitrum',
       ticker: 'ARB',
       amount: {
         type: 'circulatingSupply',
@@ -93,7 +99,9 @@ describe(mapConfig.name, () => {
         (t) => t.id === 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
       ),
     ).toEqual({
-      id: 'arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c',
+      id: TokenId('arbitrum-0xc87B37a581ec3257B734886d9d3a581F5A9d056c'),
+      symbol: 'ATH',
+      name: 'Aethir Token',
       ticker: 'ATH',
       amount: {
         type: 'totalSupply',
@@ -122,10 +130,10 @@ describe(extractPricesAndAmounts.name, () => {
               '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
             ),
             chain: 'arbitrum',
-            escrowAddresses: [
+            escrowAddress: EthereumAddress(
               '0xcEe284F754E854890e311e3280b767F80797180d',
-              '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
-            ],
+            ),
+
             decimals: 18,
           },
           valueForProject: undefined,
@@ -160,16 +168,15 @@ describe(extractPricesAndAmounts.name, () => {
     expect(result).toEqual({
       amounts: [
         {
-          id: '11466053d846',
+          id: 'de9829103265',
           address: EthereumAddress(
             '0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1',
           ),
           chain: 'arbitrum',
           decimals: 18,
-          escrowAddresses: [
-            '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+          escrowAddress: EthereumAddress(
             '0xcEe284F754E854890e311e3280b767F80797180d',
-          ],
+          ),
           type: 'balanceOfEscrow',
         },
         {
@@ -189,11 +196,9 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'c29d12840de6',
           ticker: 'ARB',
         },
         {
-          id: '7aac1877cd8b',
           ticker: 'ATH',
         },
       ],
@@ -257,7 +262,7 @@ describe(extractPricesAndAmounts.name, () => {
                   address: wBTCContractAddress,
                   chain: 'bob',
                   decimals: 18,
-                  escrowAddresses: [solvBTCEscrowAddress],
+                  escrowAddress: solvBTCEscrowAddress,
                 },
                 ticker: 'WBTC',
               },
@@ -291,16 +296,14 @@ describe(extractPricesAndAmounts.name, () => {
           address: wBTCContractAddress,
           chain: 'bob',
           decimals: 18,
-          escrowAddresses: [solvBTCEscrowAddress],
+          escrowAddress: solvBTCEscrowAddress,
         },
       ],
       prices: [
         {
-          id: 'aa65c34f8046',
           ticker: 'WBTC',
         },
         {
-          id: '3eb7e84f0423',
           ticker: 'SolvBTC',
         },
       ],

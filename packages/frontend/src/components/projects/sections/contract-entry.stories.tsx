@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { ContractEntry } from './contract-entry'
 
@@ -40,8 +40,8 @@ const ADMIN = {
 
 const REFERENCES = [
   {
-    href: '#',
-    text: 'Sequencer - Optimism Documentation',
+    url: '#',
+    title: 'Sequencer - Optimism Documentation',
   },
 ]
 

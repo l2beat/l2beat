@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
 import { getCommittee } from '../../../discovery/starkware'
+import type { DaTechnology, DacDaLayer } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import type { DaTechnology, DacDaLayer } from '../types'
 import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
 
 export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
@@ -72,8 +72,8 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DacDaLayer {
     `,
     references: [
       {
-        text: 'StarkEx Committee Service - Source Code',
-        href: 'https://github.com/starkware-libs/starkex-data-availability-committee',
+        title: 'StarkEx Committee Service - Source Code',
+        url: 'https://github.com/starkware-libs/starkex-data-availability-committee',
       },
     ],
   }

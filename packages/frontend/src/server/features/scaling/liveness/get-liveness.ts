@@ -1,27 +1,22 @@
-import {
-  type AggregatedLivenessRecord,
-  type AnomalyRecord,
-  type IndexerConfigurationRecord,
+import type {
+  AggregatedLivenessRecord,
+  AnomalyRecord,
+  IndexerConfigurationRecord,
 } from '@l2beat/database'
-import {
-  assert,
-  type TrackedTxsConfigSubtype,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, range } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
-import {
-  type TrackedTxsProject,
-  getTrackedTxsProjects,
-} from '../../utils/get-tracked-txs-projects'
-import {
-  type LivenessAnomaly,
-  type LivenessDataPoint,
-  type LivenessDetails,
-  type LivenessProject,
-  type LivenessResponse,
+import type { TrackedTxsProject } from '../../utils/get-tracked-txs-projects'
+import { getTrackedTxsProjects } from '../../utils/get-tracked-txs-projects'
+import type {
+  LivenessAnomaly,
+  LivenessDataPoint,
+  LivenessDetails,
+  LivenessProject,
+  LivenessResponse,
 } from './types'
 import { getLivenessProjects } from './utils/get-liveness-projects'
 
@@ -164,7 +159,7 @@ function mapAggregatedLivenessRecords(
 function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
   return records.map((a) => ({
     // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-    timestamp: a.timestamp.toNumber() + a.duration,
+    timestamp: a.timestamp.toNumber(),
     durationInSeconds: a.duration,
     type: a.subtype,
   }))

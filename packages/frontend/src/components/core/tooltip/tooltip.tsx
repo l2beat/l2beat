@@ -1,7 +1,8 @@
 'use client'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { type VariantProps, cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import React, { useRef, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { mergeRefs } from '~/utils/merge-refs'
@@ -62,7 +63,7 @@ const TooltipTrigger = ({
 TooltipTrigger.displayName = TooltipPrimitive.Trigger.displayName
 
 const tooltipContentVariants = cva(
-  'z-110 rounded-lg bg-surface-primary px-4 py-3 text-left text-sm font-normal normal-case leading-tight text-primary shadow-popover animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-header-secondary',
+  'z-110 rounded-lg bg-surface-primary px-4 py-3 text-left text-xs font-normal normal-case leading-tight text-primary shadow-popover animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-header-secondary',
   {
     variants: {
       fitContent: {

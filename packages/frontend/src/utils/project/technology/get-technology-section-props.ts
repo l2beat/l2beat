@@ -1,9 +1,9 @@
-import { type Bridge, type Layer2, type Layer3 } from '@l2beat/config'
-import {
-  type TechnologyChoice,
-  type TechnologySectionProps,
+import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type {
+  TechnologyChoice,
+  TechnologySectionProps,
 } from '../../../components/projects/sections/technology-section'
-import { type ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 
 export function getTechnologySectionProps(
   project: Layer2 | Layer3 | Bridge,

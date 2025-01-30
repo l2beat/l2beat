@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common/ReasonForBeingInOther'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('dbk')
 
 export const dbk: Layer2 = opStackL2({
-  createdAt: new UnixTime(1726825120), // 2024-09-20T09:38:40Z
+  addedAt: new UnixTime(1726825120), // 2024-09-20T09:38:40Z
   discovery,
   additionalBadges: [],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -18,10 +18,8 @@ export const dbk: Layer2 = opStackL2({
       'DeBank Chain is an OP stack Layer 2 on Ethereum that is deeply integrated into the DeBank ecosystem, allowing bridging directly from inside the Rabby Wallet.',
     links: {
       websites: ['https://dbkchain.io/'],
-      apps: [],
       documentation: ['https://docs.dbkchain.io/'],
       explorers: ['https://scan.dbkchain.io/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/dbkchain',
         'https://debank.com/official/117425',
@@ -42,8 +40,8 @@ export const dbk: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
-      name: 'DeBank Chain Launch',
-      link: 'https://debank.com/stream/2539393',
+      title: 'DeBank Chain Launch',
+      url: 'https://debank.com/stream/2539393',
       date: '2024-07-19T00:00:00Z',
       description: 'DeBank mainnet is open for users.',
       type: 'general',

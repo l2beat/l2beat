@@ -1,14 +1,13 @@
 import {
+  type ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
+import {
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
-import {
-  type ContractParameters,
-  get$Implementations,
-} from '@l2beat/discovery-types'
 import { BigNumber } from 'ethers'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -17,23 +16,21 @@ import {
   DA_MODES,
   DERIVATION,
   EXITS,
-  MILESTONES,
   NUGGETS,
   RISK_VIEW,
   addSentimentToDataAvailability,
 } from '../../common'
-import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
-import { ESCROW } from '../../common/escrow'
+import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -126,7 +123,8 @@ const permissionlessGameMaxClockExtension =
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
     Badge.VM.EVM,
     Badge.DA.EthereumBlobs,
@@ -140,7 +138,7 @@ export const optimism: Layer2 = {
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     purposes: ['Universal'],
@@ -235,7 +233,7 @@ export const optimism: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://mainnet.optimism.io/',
       startBlock: 1,
-      assessCount: subtractOneAfterBlockInclusive(105235064),
+      adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
     finality: {
       type: 'OPStack',
@@ -329,14 +327,6 @@ export const optimism: Layer2 = {
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
-      sources: [
-        {
-          contract: 'DisputeGameFactory',
-          references: [
-            'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
-          ],
-        },
-      ],
       secondLine: formatChallengePeriod(maxClockDuration),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -345,7 +335,7 @@ export const optimism: Layer2 = {
       description:
         'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
-      definingMetric: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
+      orderHint: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -368,12 +358,14 @@ export const optimism: Layer2 = {
       ],
       references: [
         {
-          text: 'DisputeGameFactory.sol - Etherscan source code, create() function',
-          href: 'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
+          title:
+            'DisputeGameFactory.sol - Etherscan source code, create() function',
+          url: 'https://etherscan.io/address/0xc641a33cab81c559f2bd4b21ea34c290e2440c2b#code',
         },
         {
-          text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
+          title:
+            'FaultDisputeGame.sol - Etherscan source code, attack() function',
+          url: 'https://etherscan.io/address/0x27B81db41F586016694632193b99E45b1a27B8f8#code',
         },
       ],
     },
@@ -381,16 +373,17 @@ export const optimism: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'Derivation: Batch submission - OP Mainnet specs',
-          href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
+          title: 'Derivation: Batch submission - OP Mainnet specs',
+          url: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
         },
         {
-          text: 'BatchInbox - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
+          title: 'BatchInbox - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerInbox.toString()}`,
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -401,12 +394,13 @@ export const optimism: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'Sequencing Window - OP Mainnet Specs',
-          href: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
+          title: 'Sequencing Window - OP Mainnet Specs',
+          url: 'https://github.com/ethereum-optimism/optimism/blob/51eeb76efeb32b3df3e978f311188aa29f5e3e94/specs/glossary.md#sequencing-window',
         },
         {
-          text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
-          href: `https://etherscan.io/address/${safeGetImplementation(
+          title:
+            'OptimismPortal.sol - Etherscan source code, depositTransaction function',
+          url: `https://etherscan.io/address/${safeGetImplementation(
             portal,
           )}#code`,
         },
@@ -425,25 +419,27 @@ export const optimism: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
           {
-            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${safeGetImplementation(
+            title:
+              'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: `https://etherscan.io/address/${safeGetImplementation(
               portal,
             )}#code`,
           },
         ],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
-            text: 'Forced withdrawal from an OP Stack blockchain',
-            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced withdrawal from an OP Stack blockchain',
+            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
       },
@@ -456,8 +452,8 @@ export const optimism: Layer2 = {
         risks: [],
         references: [
           {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            title: 'Introducing EVM Equivalence',
+            url: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
           },
         ],
       },
@@ -479,8 +475,8 @@ export const optimism: Layer2 = {
         )} ETH, that can be slashed if the proposal is proven incorrect via a fraud proof. Stakes can be withdrawn only after the proposal has been confirmed. A state root gets confirmed if the challenge period has passed and it is not countered.`,
         references: [
           {
-            text: 'OP stack specification: Fault Dispute Game',
-            href: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
+            title: 'OP stack specification: Fault Dispute Game',
+            url: 'https://specs.optimism.io/fault-proof/stage-one/fault-dispute-game.html#fault-dispute-game',
           },
         ],
       },
@@ -505,8 +501,8 @@ export const optimism: Layer2 = {
         )}. Since unconfirmed state roots are independent of one another, users can decide to exit with a subsequent confirmed state root if the previous one is delayed. Winners get the entire losers' stake, meaning that sybils can potentially play against each other at no cost. The final instruction found via the bisection game is then executed onchain in the MIPS one step prover contract who determines the winner. The protocol does not enforce valid bisections, meaning that actors can propose correct initial claims and then provide incorrect midpoints. The protocol can be subject to resource exhaustion attacks ([Spearbit 5.1.3](https://github.com/ethereum-optimism/optimism/blob/develop/docs/security-reviews/2024_08_Fault-Proofs-No-MIPS_Spearbit.pdf)).`,
         references: [
           {
-            text: 'Fraud Proof Wars: OPFP',
-            href: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
+            title: 'Fraud Proof Wars: OPFP',
+            url: 'https://medium.com/l2beat/fraud-proof-wars-b0cb4d0f452a',
           },
         ],
       },
@@ -558,91 +554,91 @@ export const optimism: Layer2 = {
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
-      name: 'Fallback to permissioned proposals for 26 days.',
-      link: 'https://x.com/Optimism/status/1824560759747256596',
+      title: 'Fallback to permissioned proposals for 26 days.',
+      url: 'https://x.com/Optimism/status/1824560759747256596',
       date: '2024-08-16T00:00:00Z',
       description:
         'OP Mainnet preventively disables the fraud proof system due to a bug for 26 days.',
       type: 'incident',
     },
     {
-      name: 'OP Mainnet becomes Stage 1',
-      link: 'https://x.com/Optimism/status/1800256837088145799',
+      title: 'OP Mainnet becomes Stage 1',
+      url: 'https://x.com/Optimism/status/1800256837088145799',
       date: '2024-06-10T00:00:00Z',
       description:
         'OP Mainnet introduces fraud proofs and updates permissions.',
       type: 'general',
     },
     {
-      name: 'OP Mainnet starts using blobs',
-      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      title: 'OP Mainnet starts using blobs',
+      url: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
       description: 'OP Mainnet starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Network Upgrade #5: Ecotone',
-      link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
+      title: 'Network Upgrade #5: Ecotone',
+      url: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
       date: '2024-03-14T00:00:00Z',
       description: 'Optimism adopts EIP-4844.',
       type: 'general',
     },
     {
-      name: 'Fault Proof System is live on OP Goerli',
-      link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
+      title: 'Fault Proof System is live on OP Goerli',
+      url: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
       date: '2023-10-03T00:00:00Z',
       description: 'Fraud Proof system is live on Goerli.',
       type: 'general',
     },
     {
-      name: 'Mainnet migration to Bedrock',
-      link: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
+      title: 'Mainnet migration to Bedrock',
+      url: 'https://oplabs.notion.site/Bedrock-Mission-Control-EXTERNAL-fca344b1f799447cb1bcf3aae62157c5',
       date: '2023-06-06T00:00:00Z',
       description: 'OP Mainnet, since Jun 2023 is running Bedrock.',
       type: 'general',
     },
     {
-      name: 'OP Stack Introduced',
-      link: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
+      title: 'OP Stack Introduced',
+      url: 'https://optimism.mirror.xyz/fLk5UGjZDiXFuvQh6R_HscMQuuY9ABYNF7PI76-qJYs',
       date: '2022-10-17T00:00:00Z',
       description:
         'OP Stack, modular, open-sourced blueprint on how to build scalable blockchains.',
       type: 'general',
     },
     {
-      ...MILESTONES.MAINNET_OPEN,
-      link: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
-      date: '2021-12-16T00:00:00Z',
+      title: 'Mainnet for everyone',
       description:
         'Whitelist got removed, there are no restrictions on who can transact with the network.',
+      url: 'https://medium.com/ethereum-optimism/all-gas-no-brakes-8b0f32afd466',
+      date: '2021-12-16T00:00:00Z',
       type: 'general',
     },
     {
-      name: 'OP token airdrop',
-      link: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
+      title: 'OP token airdrop',
+      url: 'https://optimism.mirror.xyz/qvd0WfuLKnePm1Gxb9dpGchPf5uDz5NSMEFdgirDS4c',
       date: '2022-05-31T00:00:00Z',
       description: 'The first round of OP token airdrop.',
       type: 'general',
     },
     {
-      name: 'Optimism removes OVM fraud proofs',
-      link: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
+      title: 'Optimism removes OVM fraud proofs',
+      url: 'https://twitter.com/optimismfnd/status/1458953238867165192?s=21&t=cQ0NPREYt-u1rP7OiPFKUg',
       date: '2021-11-12T00:00:00Z',
       description:
         'Network upgrade to OVM 2.0 and removal of fraud-proof system.',
       type: 'incident',
     },
     {
-      name: 'Mainnet Soft Launch',
-      link: 'https://medium.com/ethereum-optimism/mainnet-soft-launch-7cacc0143cd5',
+      title: 'Mainnet Soft Launch',
+      url: 'https://medium.com/ethereum-optimism/mainnet-soft-launch-7cacc0143cd5',
       date: '2021-01-16T00:00:00Z',
       description:
         'Only selected contracts like Synthetix and Uniswap are available.',
       type: 'general',
     },
     {
-      name: 'Community Launch',
-      link: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
+      title: 'Community Launch',
+      url: 'https://medium.com/ethereum-optimism/community-launch-7c9a2a9d3e84',
       date: '2021-08-19T00:00:00Z',
       description: 'All smart contracts allowed after prior approval.',
       type: 'general',

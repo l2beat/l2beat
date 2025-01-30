@@ -22,15 +22,12 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 )
 
 export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
-  createdAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
+  addedAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
   display: {
     links: {
-      websites: [],
       documentation: ['https://docs.celestia.org/developers/blobstream'],
       repositories: ['https://github.com/succinctlabs/blobstreamx'],
-      apps: [],
       explorers: ['https://arbiscan.io/'],
-      socialMedia: [],
     },
   },
   technology: {

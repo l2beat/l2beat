@@ -10,13 +10,12 @@ import type { CostsTableData } from '~/server/features/scaling/costs/get-costs-t
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
-import {
-  type CostsMetric,
-  useCostsMetricContext,
-} from '../costs-metric-context'
+import type { CostsMetric } from '../costs-metric-context'
+import { useCostsMetricContext } from '../costs-metric-context'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
 import { useCostsUnitContext } from '../costs-unit-context'
-import { type ScalingCostsTableEntry, getScalingCostsColumns } from './columns'
+import type { ScalingCostsTableEntry } from './columns'
+import { getScalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
