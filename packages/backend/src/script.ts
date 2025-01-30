@@ -22,7 +22,12 @@ import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSu
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
-import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
+import type {
+  Token,
+  TokenValue,
+  TvsBreakdown,
+  TvsConfig,
+} from './modules/tvs/types'
 
 main()
   .catch((e: unknown) => {
@@ -32,32 +37,23 @@ main()
 
 async function main() {
   const env = getEnv()
-  const http = new HttpClient()
   const logger = initLogger(env)
-  const coingeckoQueryService = initCoingecko(env, logger, http)
-  const { rpcs, blockProviders } = initChains(env, http, logger)
-
-  const priceProvider = new PriceProvider(coingeckoQueryService)
-  const circulatingSupplyProvider = new CirculatingSupplyProvider(
-    coingeckoQueryService,
-  )
-  const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-  const balanceProvider = new BalanceProvider(rpcs)
-
-  const localExecutor = new LocalExecutor(
-    priceProvider,
-    circulatingSupplyProvider,
-    blockProviders,
-    totalSupplyProvider,
-    balanceProvider,
-    logger,
-  )
+  const localExecutor = initLocalExecutor(env, logger)
 
   const config = bobConfig
 
   const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
   const tvs = await localExecutor.run(config, [timestamp], false)
 
+  outputTVS(tvs, timestamp, config, logger)
+}
+
+function outputTVS(
+  tvs: Map<number, TokenValue[]>,
+  timestamp: UnixTime,
+  config: TvsConfig,
+  logger: Logger,
+) {
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
 
@@ -162,6 +158,29 @@ async function main() {
   writeFileSync(
     path.join(__dirname, 'token-config.json'),
     JSON.stringify(filteredConfig, null, 2),
+  )
+}
+
+function initLocalExecutor(env: Env, logger: Logger) {
+  const http = new HttpClient()
+
+  const coingeckoQueryService = initCoingecko(env, logger, http)
+  const { rpcs, blockProviders } = initChains(env, http, logger)
+
+  const priceProvider = new PriceProvider(coingeckoQueryService)
+  const circulatingSupplyProvider = new CirculatingSupplyProvider(
+    coingeckoQueryService,
+  )
+  const totalSupplyProvider = new TotalSupplyProvider(rpcs)
+  const balanceProvider = new BalanceProvider(rpcs)
+
+  return new LocalExecutor(
+    priceProvider,
+    circulatingSupplyProvider,
+    blockProviders,
+    totalSupplyProvider,
+    balanceProvider,
+    logger,
   )
 }
 
