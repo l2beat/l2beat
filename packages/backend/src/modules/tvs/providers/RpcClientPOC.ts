@@ -20,6 +20,7 @@ export class RpcClientPOC {
 
   constructor(
     private readonly rpcClient: RpcClient,
+    private chain: string,
     private logger: Logger,
     /** If Multicall configured all the calls will be batched*/
     private params: {
@@ -27,6 +28,8 @@ export class RpcClientPOC {
       batchingEnabled?: boolean
     },
   ) {
+    this.logger = logger.for(this).tag({ tag: chain })
+
     if (params.multicallV3) {
       setInterval(() => this.flushMulticall(), 1000)
     }
@@ -103,18 +106,23 @@ export class RpcClientPOC {
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
     const promises = batches.map(async (batch, index) => {
-      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
       const blockNumber = batch[0].blockNumber
+      this.logger.debug(
+        `Fetching batch [${index}] of ${batch.length} calls for block ${blockNumber}`,
+      )
+      // TODO: add pools per block number
       const encoded = encodeBatch(batch.map((b) => b.params))
+      this.logger.trace(`encoded [${index}] ${encoded}`)
       assert(this.params.multicallV3, `Missing MulticallV3 address`)
       const response = await this.rpcClient.call(
         { to: this.params.multicallV3, data: encoded },
         blockNumber,
       )
-      const r = decodeBatch(response)
+      const decoded = decodeBatch(response)
+      this.logger.trace(`decoded [${index}] ${decoded}`)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index].data}`)
-        this.multicallResponses.set(query.id, r[index].data)
+        this.logger.debug(`Setting ${query.id} - ${decoded[index].data}`)
+        this.multicallResponses.set(query.id, decoded[index].data)
       }
     })
 

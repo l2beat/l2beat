@@ -28,7 +28,7 @@ async function main() {
   const env = getEnv()
   const http = new HttpClient()
   const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const logger = Logger.INFO
+  const logger = Logger.TRACE
 
   const coingeckoClient = new CoingeckoClient({
     apiKey: coingeckoApiKey,
@@ -44,29 +44,51 @@ async function main() {
     coingeckoQueryService,
   )
 
-  const chains = ['ethereum', 'arbitrum', 'kinto', 'base']
+  // https://www.multicall3.com/deployments
+  const chains = [
+    {
+      name: 'ethereum',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+    },
+    {
+      name: 'arbitrum',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+    },
+    {
+      name: 'base',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+    },
+    {
+      name: 'kinto',
+    },
+  ]
+
   const rpcs = new Map<string, RpcClientPOC>()
   const blockProviders = new Map<string, BlockProvider>()
 
   for (const chain of chains) {
-    const url = env.string(`${chain.toUpperCase()}_RPC_URL`)
+    const url = env.string(`${chain.name.toUpperCase()}_RPC_URL`)
     const rpc = new RpcClient({
       url,
       http,
       logger,
       retryStrategy: 'RELIABLE',
-      sourceName: chain,
+      sourceName: chain.name,
       callsPerMinute: 12000,
     })
     rpcs.set(
-      chain,
-      new RpcClientPOC(rpc, logger, {
-        multicallV3: EthereumAddress(
-          '0xcA11bde05977b3631167028862bE2a173976CA11',
-        ),
+      chain.name,
+      new RpcClientPOC(rpc, chain.name, logger, {
+        multicallV3: chain.multicallV3,
       }),
     )
-    blockProviders.set(chain, new BlockProvider(chain, [rpc]))
+    blockProviders.set(chain.name, new BlockProvider(chain.name, [rpc]))
   }
 
   const totalSupplyProvider = new TotalSupplyProvider(rpcs)
