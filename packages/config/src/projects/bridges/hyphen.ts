@@ -120,28 +120,30 @@ export const hyphen: Bridge = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    {
-      name: 'ProxyAdmin owner',
-      description:
-        'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-      accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
-    },
-    {
-      name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
-      description:
-        'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-      accounts: [discovery.getPermissionedAccount('LiquidityPool', 'owner')],
-    },
-    {
-      name: 'Executors',
-      description: 'Executor is able to release funds from LiquidityPool.',
-      accounts: discovery.getPermissionedAccounts(
-        'ExecutorManager',
-        'getAllExecutors',
-      ),
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'ProxyAdmin owner',
+        description:
+          'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
+        accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+      },
+      {
+        name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
+        description:
+          'Can pause contracts, change configuration and change proxy admin or update Executor list.',
+        accounts: [discovery.getPermissionedAccount('LiquidityPool', 'owner')],
+      },
+      {
+        name: 'Executors',
+        description: 'Executor is able to release funds from LiquidityPool.',
+        accounts: discovery.getPermissionedAccounts(
+          'ExecutorManager',
+          'getAllExecutors',
+        ),
+      },
+    ],
+  },
   knowledgeNuggets: [
     {
       title: 'Hyphen deep dive',

@@ -200,12 +200,14 @@ export const nova: Layer2 = orbitStackL2({
     ),
   ],
   nativePermissions: {
-    nova: [
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilEmergency',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-      ),
-    ],
+    nova: {
+      actors: [
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilEmergency',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+        ),
+      ],
+    },
   },
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {

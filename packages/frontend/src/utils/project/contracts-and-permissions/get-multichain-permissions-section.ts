@@ -3,6 +3,7 @@ import type {
   DaBridge,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
+  ScalingProjectPermissions,
 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
@@ -20,7 +21,7 @@ import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   id: string
-  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  permissions: Record<string, ScalingProjectPermissions> | 'UnderReview'
   isUnderReview: boolean
   dacUsedIn?: ConfigUsedInProject
   bridge: DaBridge
@@ -65,13 +66,22 @@ export function getMultichainPermissionsSection(
         ([slug, permissions]) => {
           return [
             slugToDisplayName(slug),
-            permissions.flatMap((p) =>
-              toTechnologyContract(
-                projectParams,
-                p,
-                contractsVerificationStatuses,
+            {
+              roles: (permissions.roles ?? []).flatMap((p) =>
+                toTechnologyContract(
+                  projectParams,
+                  p,
+                  contractsVerificationStatuses,
+                ),
               ),
-            ),
+              actors: (permissions.actors ?? []).flatMap((p) =>
+                toTechnologyContract(
+                  projectParams,
+                  p,
+                  contractsVerificationStatuses,
+                ),
+              ),
+            },
           ]
         },
       ),
@@ -89,10 +99,9 @@ function resolvePermissionedName(
   let name = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
-    const matchingPermissions = permissions[chain]?.filter(
+    const matchingPermissions = permissions[chain]?.actors?.filter(
       (p) =>
         p.name !== rootName &&
-        p.fromRole !== true &&
         p.accounts
           .map((a) => a.address.toString())
           .includes(account.address.toString()),

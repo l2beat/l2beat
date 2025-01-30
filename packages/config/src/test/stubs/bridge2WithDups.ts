@@ -120,80 +120,85 @@ export const bridge2WithDups: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Duplicate Layer2a MultiSig',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      description: '',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner and Fee Collector at Wrapper and owner at LockProxyWithLP',
-      description:
-        'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the Wrapper contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb',
-          ),
-          type: 'Contract',
-        },
-      ],
-      name: 'Owner of EthCrossChainManager (Unverified source code)',
-      description:
-        'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x8B35064B158634458Fd53A861d68Eb84152E4106',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner of LockProxy 0x250e',
-      description: 'Can update address of EthCrossChainManagerProxy contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner at LockProxy 0x3Ee7...',
-      description: 'Can update address of EthCrossChainManagerProxy contract.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Owner of LockProxy 0x53D2...',
-      description: 'Can update address of EthCrossChainManagerProxy contract.',
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Duplicate Layer2a MultiSig',
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+            ),
+            type: 'MultiSig',
+          },
+        ],
+        description: '',
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Owner and Fee Collector at Wrapper and owner at LockProxyWithLP',
+        description:
+          'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the Wrapper contract.',
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb',
+            ),
+            type: 'Contract',
+          },
+        ],
+        name: 'Owner of EthCrossChainManager (Unverified source code)',
+        description:
+          'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.',
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x8B35064B158634458Fd53A861d68Eb84152E4106',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Owner of LockProxy 0x250e',
+        description:
+          'Can update address of EthCrossChainManagerProxy contract.',
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x52D858ef5e0A768C80C38617eB8a7680f4D4d459',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Owner at LockProxy 0x3Ee7...',
+        description:
+          'Can update address of EthCrossChainManagerProxy contract.',
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0xeF86b2c8740518548ae449c4C3892B4be0475d8c',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Owner of LockProxy 0x53D2...',
+        description:
+          'Can update address of EthCrossChainManagerProxy contract.',
+      },
+    ],
+  },
 }

@@ -294,7 +294,11 @@ describe('layer2s', () => {
 
           if (layer2.permissions === 'UnderReview') continue
 
-          for (const { name, references } of layer2.permissions ?? []) {
+          const all = [
+            ...(layer2.permissions?.roles ?? []),
+            ...(layer2.permissions?.actors ?? []),
+          ]
+          for (const { name, references } of all) {
             const referencedAddresses = getAddressFromReferences(references)
             if (referencedAddresses.length === 0) continue
 
