@@ -7,7 +7,10 @@ import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
 
 export interface MultichainPermissionsSectionProps extends ProjectSectionProps {
-  permissions: Record<string, TechnologyContract[]>
+  permissions: Record<
+    string,
+    { roles: TechnologyContract[]; actors: TechnologyContract[] }
+  >
   permissionedEntities?: { name: string; href: string; key?: string }[]
   dacUsedIn?: UsedInProject
 }
@@ -31,24 +34,42 @@ export function MultichainPermissionsSection({
 
       <div className="my-4">
         {Object.entries(permissions).map(([chainName, permissions]) => {
-          if (permissions.length === 0) {
-            return null
+          if (permissions.roles.length > 0) {
+            return (
+              <div key={chainName}>
+                <h3 className="font-bold">
+                  The system consists of the following permissions on{' '}
+                  {chainName}:
+                </h3>
+                {permissions.roles.map((permission) => (
+                  <ContractEntry
+                    key={technologyContractKey(permission)}
+                    contract={permission}
+                    className="my-4"
+                    type="permission"
+                  />
+                ))}
+              </div>
+            )
           }
-          return (
-            <div key={chainName}>
-              <h3 className="font-bold">
-                The system consists of the following permissions on {chainName}:
-              </h3>
-              {permissions.map((permission) => (
-                <ContractEntry
-                  key={technologyContractKey(permission)}
-                  contract={permission}
-                  className="my-4"
-                  type="permission"
-                />
-              ))}
-            </div>
-          )
+          if (permissions.actors.length > 0) {
+            return (
+              <div key={chainName}>
+                <h3 className="font-bold">
+                  The system consists of the following permissions on{' '}
+                  {chainName}:
+                </h3>
+                {permissions.actors.map((permission) => (
+                  <ContractEntry
+                    key={technologyContractKey(permission)}
+                    contract={permission}
+                    className="my-4"
+                    type="permission"
+                  />
+                ))}
+              </div>
+            )
+          }
         })}
       </div>
       {dacUsedIn && (

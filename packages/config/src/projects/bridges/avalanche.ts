@@ -145,21 +145,23 @@ export const avalanche: Bridge = {
     addresses: [],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Bridge Wardens',
-      description:
-        'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
-          ),
-          type: 'EOA',
-        },
-      ],
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Bridge Wardens',
+        description:
+          'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+            ),
+            type: 'EOA',
+          },
+        ],
+      },
+    ],
+  },
   knowledgeNuggets: [
     {
       title: 'Avalanche Bridge deep dive',

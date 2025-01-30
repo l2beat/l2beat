@@ -234,7 +234,12 @@ function getPermissionContainingAddress(
     return undefined
   }
 
-  for (const permission of project.permissions) {
+  const all = [
+    ...(project.permissions?.roles ?? []),
+    ...(project.permissions?.actors ?? []),
+  ]
+
+  for (const permission of all) {
     if (permission.accounts.length > 1) {
       continue
     }

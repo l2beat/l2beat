@@ -5,9 +5,9 @@ import type {
   Layer3,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
+  ScalingProjectPermissions,
 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { partition } from 'lodash'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -24,9 +24,9 @@ import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   id: string
-  permissions: ScalingProjectPermission[] | 'UnderReview'
+  permissions: ScalingProjectPermissions | 'UnderReview'
   nativePermissions:
-    | Record<string, ScalingProjectPermission[]>
+    | Record<string, ScalingProjectPermissions>
     | 'UnderReview'
     | undefined
   daSolution?: DaSolution
@@ -41,16 +41,33 @@ type PermissionSection = Omit<
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 >
 
+function permissionsAreEmpty(
+  permissions: ScalingProjectPermissions | 'UnderReview' | undefined,
+): boolean {
+  if (permissions === undefined) {
+    return true
+  }
+
+  if (permissions === 'UnderReview') {
+    return false
+  }
+
+  const rolesAreEmpty =
+    permissions.roles === undefined || permissions.roles.length === 0
+  const actorsAreEmpty =
+    permissions.actors === undefined || permissions.actors.length === 0
+
+  return rolesAreEmpty && actorsAreEmpty
+}
+
 export function getPermissionsSection(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): PermissionSection | undefined {
   if (
-    projectParams.permissions.length === 0 &&
-    (!projectParams.nativePermissions ||
-      projectParams.nativePermissions.length === 0) &&
-    (!projectParams.daSolution?.permissions ||
-      projectParams.daSolution?.permissions.length === 0)
+    permissionsAreEmpty(projectParams.permissions) &&
+    permissionsAreEmpty(projectParams.nativePermissions) &&
+    permissionsAreEmpty(projectParams.daSolution?.permissions)
   ) {
     return undefined
   }
@@ -110,44 +127,56 @@ export function getPermissionsSection(
 function getGroupedTechnologyContracts(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  permissions: ScalingProjectPermission[],
-) {
-  const [roles, actors] = partition(permissions, (p) => p.fromRole === true)
+  permissions: ScalingProjectPermissions,
+): PermissionSection['permissionsByChain'][string] {
   return {
-    roles: roles?.flatMap((permission) =>
-      toTechnologyContract(
-        projectParams,
-        permission,
-        contractsVerificationStatuses,
-      ),
-    ),
-    actors: actors?.flatMap((permission) =>
-      toTechnologyContract(
-        projectParams,
-        permission,
-        contractsVerificationStatuses,
-      ),
-    ),
+    roles:
+      permissions.roles?.flatMap((permission) =>
+        toTechnologyContract(
+          projectParams,
+          permission,
+          contractsVerificationStatuses,
+        ),
+      ) ?? [],
+    actors:
+      permissions.actors?.flatMap((permission) =>
+        toTechnologyContract(
+          projectParams,
+          permission,
+          contractsVerificationStatuses,
+        ),
+      ) ?? [],
   }
 }
 
 function getDaSolution(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-) {
+): PermissionSection['daSolution'] {
   return projectParams.daSolution
     ? {
         layerName: projectParams.daSolution.layerName,
         bridgeName: projectParams.daSolution.bridgeName,
         hostChain: slugToDisplayName(projectParams.daSolution.hostChain),
-        permissions:
-          projectParams.daSolution.permissions?.flatMap((permission) =>
-            toTechnologyContract(
-              projectParams,
-              permission,
-              contractsVerificationStatuses,
-            ),
-          ) ?? [],
+        permissions: {
+          roles:
+            projectParams.daSolution.permissions?.roles?.flatMap((permission) =>
+              toTechnologyContract(
+                projectParams,
+                permission,
+                contractsVerificationStatuses,
+              ),
+            ) ?? [],
+          actors:
+            projectParams.daSolution.permissions?.actors?.flatMap(
+              (permission) =>
+                toTechnologyContract(
+                  projectParams,
+                  permission,
+                  contractsVerificationStatuses,
+                ),
+            ) ?? [],
+        },
       }
     : undefined
 }
@@ -164,10 +193,9 @@ function resolvePermissionedName(
   let name = initialName
 
   if (permissions !== undefined && permissions !== 'UnderReview') {
-    const matchingPermissions = permissions.filter(
+    const matchingPermissions = (permissions.actors ?? []).filter(
       (p) =>
         p.name !== rootName &&
-        p.fromRole !== true &&
         p.accounts
           .map((a) => a.address.toString())
           .includes(account.address.toString()),

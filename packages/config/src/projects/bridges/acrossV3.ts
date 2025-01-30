@@ -281,17 +281,19 @@ export const acrossV3: Bridge = {
       },
     ],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'HubPool Multisig',
-      'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
-    ),
-    {
-      name: 'BondToken transfer proposers',
-      accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-      description: 'Allowed to propose BondToken transfers.',
-    },
-  ],
+  permissions: {
+    actors: [
+      ...discovery.getMultisigPermission(
+        'HubPool Multisig',
+        'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
+      ),
+      {
+        name: 'BondToken transfer proposers',
+        accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
+        description: 'Allowed to propose BondToken transfers.',
+      },
+    ],
+  },
   knowledgeNuggets: [
     {
       title: 'Across deep dive',

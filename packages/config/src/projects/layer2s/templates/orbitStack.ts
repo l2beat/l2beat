@@ -45,6 +45,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -144,7 +145,7 @@ interface OrbitStackConfigCommon {
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
@@ -548,12 +549,14 @@ function orbitStackCommon(
     },
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          sequencers,
-          validators,
-          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            sequencers,
+            validators,
+            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nativePermissions,

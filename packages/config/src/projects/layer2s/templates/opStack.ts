@@ -52,6 +52,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -142,7 +143,7 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
@@ -337,16 +338,18 @@ function opStackCommon(
     technology: getTechnology(templateVars, explorerUrl),
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          ...templateVars.discovery.getOpStackPermissions({
-            batcherHash: 'Sequencer',
-            PROPOSER: 'Proposer',
-            GUARDIAN: 'Guardian',
-            CHALLENGER: 'Challenger',
-            ...(templateVars.roleOverrides ?? {}),
-          }),
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            ...templateVars.discovery.getOpStackPermissions({
+              batcherHash: 'Sequencer',
+              PROPOSER: 'Proposer',
+              GUARDIAN: 'Guardian',
+              CHALLENGER: 'Challenger',
+              ...(templateVars.roleOverrides ?? {}),
+            }),
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nonTemplateNativePermissions,

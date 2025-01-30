@@ -7,6 +7,7 @@ import {
   type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { merge } from 'lodash'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -36,7 +37,7 @@ import type {
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
-  ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectTechnology,
@@ -81,7 +82,7 @@ export interface ZkStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: ScalingProjectPermissions
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
   nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
@@ -450,10 +451,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     `
       return description
     })(),
-    permissions: [
-      ...discovery.getDiscoveredPermissions(),
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
+    permissions: merge(
+      discovery.getDiscoveredPermissions(),
+      templateVars.nonTemplatePermissions ?? [],
+    ),
     nativePermissions: {
       zksync2: discovery_ZKstackGovL2.getDiscoveredPermissions(),
     },
