@@ -30,7 +30,7 @@ export function isDaBridgeVerified(_: DaProject, daBridge: DaBridge): boolean {
 
   if ('contracts' in daBridge) {
     verification =
-      Object.values(daBridge.contracts?.addresses)
+      Object.values(daBridge.contracts?.addresses ?? {})
         .flat()
         .every((c) => c.isVerified) ?? false
   }

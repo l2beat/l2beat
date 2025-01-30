@@ -1,6 +1,5 @@
 import { expect } from 'earl'
 import { daLayers } from '.'
-import type { ProjectLinks } from '../../types'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 
@@ -12,33 +11,12 @@ describe('DA-BEAT', () => {
       })
 
       project.daLayer.bridges.forEach((bridge) => {
-        describe(bridge.display.name, () => {
-          it(`should contain bridge description with dot at the end`, () => {
-            expect(bridge.display.description.endsWith('.')).toEqual(true)
+        if (bridge.display) {
+          it(`${bridge.display.name} description ends with a dot`, () => {
+            expect(bridge.display?.description.endsWith('.')).toEqual(true)
           })
-        })
+        }
       })
-    })
-
-    describe(`${project.display.name} does not have duplicated links`, () => {
-      const getFlatLinks = (links: ProjectLinks | undefined) => {
-        const values: (string | string[] | undefined)[] = Object.values(
-          links ?? {},
-        )
-        return values.filter((x) => x !== undefined).flatMap((link) => link)
-      }
-
-      const links = getFlatLinks(project.display?.links)
-      const uniqueLinks = new Set(links)
-
-      for (const bridge of project.daLayer.bridges) {
-        it(`should not have duplicated links with ${bridge.display.name}`, () => {
-          const hasUniqueLinks = getFlatLinks(bridge.display.links).every(
-            (link) => !uniqueLinks.has(link),
-          )
-          expect(hasUniqueLinks).toEqual(true)
-        })
-      }
     })
   })
 
@@ -68,7 +46,9 @@ describe('DA-BEAT', () => {
 
       const daBeatProjectIds = daLayers.flatMap((project) =>
         project.daLayer.bridges.flatMap((bridge) =>
-          bridge.usedIn.map((usedIn) => usedIn.id),
+          Array.isArray(bridge.usedIn)
+            ? bridge.usedIn.map((usedIn) => usedIn.id)
+            : [],
         ),
       )
 

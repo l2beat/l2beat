@@ -373,9 +373,10 @@ export const zkfair: Layer2 = {
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
       addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-      transactionDataType: 'State diffs',
+      dac: {
+        requiredMembers: requiredSignaturesDAC,
+        membersCount: membersCountDAC,
+      },
     },
   }),
 }

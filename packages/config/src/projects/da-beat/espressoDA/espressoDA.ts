@@ -15,8 +15,14 @@ export const espressoDA: DaProject = {
       'Espresso DA is a three-layer data availability (DA) solution based on the HotShot consensus.',
     links: {
       websites: ['https://espressosys.com/'],
-      documentation: ['https://docs.espressosys.com/'],
-      repositories: ['https://github.com/espressosystems/'],
+      documentation: [
+        'https://docs.espressosys.com/',
+        'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality/light-client',
+      ],
+      repositories: [
+        'https://github.com/espressosystems/',
+        'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
+      ],
       explorers: ['https://explorer.main.net.espresso.network/'],
       socialMedia: [
         'https://x.com/EspressoSys',

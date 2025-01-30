@@ -1,7 +1,7 @@
-import type { OnChainDaBridge, ProjectLinks } from '../../../types'
+import type { DaBridge, ProjectLinks } from '../../../types'
 
 type TemplateVars = Pick<
-  OnChainDaBridge,
+  DaBridge,
   'addedAt' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
 > & {
   display: {
@@ -9,7 +9,7 @@ type TemplateVars = Pick<
   }
 }
 
-export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
+export function CELESTIA_BLOBSTREAM(base: TemplateVars): DaBridge {
   const id = `blobstream`
   const display = {
     name: `Blobstream`,

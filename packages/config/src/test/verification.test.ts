@@ -14,9 +14,7 @@ import type {
   DaBridge,
   Layer2,
   Layer3,
-  OnChainDaBridge,
   ScalingProjectContract,
-  StandaloneDacBridge,
 } from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
@@ -54,13 +52,15 @@ describe('verification status', () => {
     for (const project of daLayers) {
       const chains = getChainNamesForDA(project)
       for (const bridge of project.daLayer.bridges) {
-        const bridgeId = bridge.id.toString()
+        const bridgeId = bridge.id ?? 'missing-id'
         for (const chain of chains) {
           it(`${bridgeId}:${chain}`, () => {
             const projectIds =
               project.daLayer.kind === 'PublicBlockchain'
-                ? [bridge.id]
-                : bridge.usedIn.map((u) => u.id.toString())
+                ? [bridge.id ?? '']
+                : Array.isArray(bridge.usedIn)
+                  ? bridge.usedIn.map((u) => u.id.toString())
+                  : []
             for (const projectId of projectIds) {
               const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 
@@ -226,12 +226,8 @@ function getDaBridgeContractsForChain(
   bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
-  const contracts = [bridge]
-    .filter(
-      (b) => b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
-    )
-    .flatMap((b) => Object.values(b.contracts.addresses))
-  const addresses = getUniqueContractsFromList(contracts.flat())
+  const contracts = Object.values(bridge.contracts?.addresses ?? {}).flat()
+  const addresses = getUniqueContractsFromList(contracts)
   return addresses.filter((a) => a.chain === chain)
 }
 
@@ -239,32 +235,24 @@ function getDaBridgePermissionsForChain(
   bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
-  const permissions: AddressOnChain[] = [bridge]
-    .filter(
-      (b): b is OnChainDaBridge | StandaloneDacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
+  if (!bridge.permissions || bridge.permissions === 'UnderReview') {
+    return []
+  }
+  return Object.values(bridge.permissions)
+    .flatMap((perChain) =>
+      perChain.flatMap((p) =>
+        p.accounts.flatMap((a) => {
+          if (!p.chain) {
+            return []
+          }
+          return {
+            chain: p.chain.toString(),
+            address: a.address,
+          }
+        }),
+      ),
     )
-    .flatMap((b) => {
-      if (b.permissions === 'UnderReview') {
-        return []
-      }
-
-      return Object.values(b.permissions).flatMap((perChain) => {
-        return perChain.flatMap((p) =>
-          p.accounts.flatMap((a) => {
-            if (!p.chain) {
-              return []
-            }
-            return {
-              chain: p.chain.toString(),
-              address: a.address,
-            }
-          }),
-        )
-      })
-    })
-
-  return permissions.filter((p) => p.chain === chain)
+    .filter((p) => p.chain === chain)
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {

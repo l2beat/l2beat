@@ -75,9 +75,10 @@ const mantleDataAvailabilitySolution: DaLayer = {
       The confirmDataStore() function verify the signatures and if the quorum is reached, the data is considered available.
         `,
       },
-      transactionDataType: 'Transaction data',
-      requiredMembers: threshold,
-      membersCount: committeeMembers,
+      dac: {
+        requiredMembers: threshold,
+        membersCount: committeeMembers,
+      },
       risks: {
         committeeSecurity: DaCommitteeSecurityRisk.NoDiversityCommitteeSecurity(
           `${threshold}/${committeeMembers}`,
@@ -85,6 +86,7 @@ const mantleDataAvailabilitySolution: DaLayer = {
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
         relayerFailure: DaRelayerFailureRisk.NoMechanism,
       },
+      usedIn: 'self',
     },
   ],
   risks: {

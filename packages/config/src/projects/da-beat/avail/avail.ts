@@ -16,8 +16,14 @@ export const avail: DaProject = {
       'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
     links: {
       websites: ['https://www.availproject.org/'],
-      documentation: ['https://docs.availproject.org/'],
-      repositories: ['https://github.com/availproject/'],
+      documentation: [
+        'https://docs.availproject.org/',
+        'https://docs.succinct.xyz/',
+      ],
+      repositories: [
+        'https://github.com/availproject/',
+        'https://github.com/succinctlabs/sp1-vector',
+      ],
       apps: ['https://bridge.availproject.org/'],
       explorers: [
         'https://explorer.avail.so/#/explorer',

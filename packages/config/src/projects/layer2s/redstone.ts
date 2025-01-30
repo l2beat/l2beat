@@ -115,15 +115,17 @@ export const redstone: Layer2 = opStackL2({
           description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
           However, there is a mechanism that allows users to challenge unavailability of data. \n`,
         },
-        requiredMembers: 0,
-        membersCount: 0,
-        hideMembers: true,
-        transactionDataType: 'Transaction data',
+        dac: {
+          requiredMembers: 0,
+          membersCount: 0,
+          hideMembers: true,
+        },
         risks: {
           committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
           upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
           relayerFailure: DaRelayerFailureRisk.NoMechanism,
         },
+        usedIn: 'self',
       },
     ],
     risks: {

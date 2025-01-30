@@ -148,6 +148,7 @@ export const fraxtal: Layer2 = opStackL2({
           upgradeability: DaUpgradeabilityRisk.NoBridge,
           relayerFailure: DaRelayerFailureRisk.NoBridge,
         },
+        usedIn: 'self',
       },
     ],
     risks: {

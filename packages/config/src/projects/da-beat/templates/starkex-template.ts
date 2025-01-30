@@ -1,19 +1,35 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
+import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../discovery/starkware'
-import type { DaTechnology, DaLayer } from '../../../types'
+import type {
+  DaBridgeRisks,
+  DaLayer,
+  DaLayerRisks,
+  DaTechnology,
+  DacInfo,
+} from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import { DAC, type DacTemplateVarsWithDiscovery } from './dac-template'
+import { DAC } from './dac-template'
 
-export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DaLayer {
+interface TemplateVars {
+  bridge: {
+    addedAt: UnixTime
+    dac?: Partial<DacInfo>
+  }
+  risks?: Partial<DaLayerRisks & DaBridgeRisks>
+  discovery?: ProjectDiscovery
+}
+
+export function StarkexDAC(template: TemplateVars): DaLayer {
   const committee = template.discovery
     ? getCommittee(template.discovery)
     : undefined
 
   const membersCount =
-    committee?.accounts.length ?? template.bridge.membersCount
+    committee?.accounts.length ?? template.bridge.dac?.membersCount
   const requiredMembers =
-    committee?.minSigners ?? template.bridge.requiredMembers
+    committee?.minSigners ?? template.bridge.dac?.requiredMembers
 
   assert(
     membersCount,
@@ -53,7 +69,7 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DaLayer {
   const layerTechnology: DaTechnology = {
     description: `
     ## Architecture
-    ![starkex architecture](/images/da-layer-technology/starkex/architecture${template.bridge.membersCount}.png#center)
+    ![starkex architecture](/images/da-layer-technology/starkex/architecture${membersCount}.png#center)
 
     The Starkware application utilizes a data availability solution that relies on a Committee Service to ensure data persistence. This architecture comprises the following components:
 
@@ -85,9 +101,10 @@ export function StarkexDAC(template: DacTemplateVarsWithDiscovery): DaLayer {
     },
     bridge: {
       ...template.bridge,
-      membersCount: membersCount,
-      requiredMembers: requiredMembers,
-      transactionDataType: template.bridge.transactionDataType ?? 'State diffs',
+      dac: {
+        membersCount: membersCount,
+        requiredMembers: requiredMembers,
+      },
       technology: bridgeTechnology,
     },
     risks: {
