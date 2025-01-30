@@ -69,13 +69,10 @@ export const automata: Layer2 = opStackL2({
   ), // source: altlayer on telegram
   discoveryDrivenData: true,
   dataAvailabilitySolution: {
-    type: 'DaLayer',
     kind: 'No DAC',
-    display: {
-      name: 'Automata DA',
-      description:
-        'Automata DA is a data availability solution using data availability challenges (DA Challenges).',
-    },
+    name: 'Automata DA',
+    description:
+      'Automata DA is a data availability solution using data availability challenges (DA Challenges).',
     systemCategory: 'custom',
     fallback: DA_LAYERS.ETH_CALLDATA,
     challengeMechanism: 'DA Challenges',
@@ -114,23 +111,32 @@ export const automata: Layer2 = opStackL2({
         },
       ],
     },
-    bridge: {
-      addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
-      type: 'IntegratedDacBridge',
-      technology: {
-        description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
+    bridges: [
+      {
+        addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
+        type: 'IntegratedDacBridge',
+        display: {
+          name: 'DAC',
+          slug: 'dac',
+          description: '',
+        },
+        technology: {
+          description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
           However, there is a mechanism that allows users to challenge unavailability of data. \n`,
+        },
+        dac: {
+          requiredMembers: 0,
+          membersCount: 0,
+          hideMembers: true,
+        },
+        risks: {
+          committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
+          upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+          relayerFailure: DaRelayerFailureRisk.NoMechanism,
+        },
+        usedIn: [],
       },
-      requiredMembers: 0,
-      membersCount: 0,
-      hideMembers: true,
-      transactionDataType: 'Transaction data',
-      risks: {
-        committeeSecurity: DaCommitteeSecurityRisk.NoCommitteeSecurity(),
-        upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
-        relayerFailure: DaRelayerFailureRisk.NoMechanism,
-      },
-    },
+    ],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.DAChallengesNoFunds,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

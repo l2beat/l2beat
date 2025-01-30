@@ -64,7 +64,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'registeredOperators',
 ).length
 
-export const eigenDAbridge = {
+export const eigenDAbridge: DaBridge = {
   id: 'eigenda-bridge',
   addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'StandaloneDacBridge',
@@ -73,7 +73,6 @@ export const eigenDAbridge = {
     slug: 'bridge',
     description:
       'EigenDA DA attestations are bridged to Ethereum through the EigenDAServiceManager smart contract.',
-    links: {},
   },
   contracts: {
     addresses: {
@@ -151,9 +150,10 @@ export const eigenDAbridge = {
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
-  requiredMembers: 0, // currently 0 since threshold is not enforced
-  membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
-  transactionDataType: 'Transaction data',
+  dac: {
+    requiredMembers: 0, // currently 0 since threshold is not enforced
+    membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
+  },
   usedIn: [],
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
@@ -164,4 +164,4 @@ export const eigenDAbridge = {
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
-} satisfies DaBridge
+}

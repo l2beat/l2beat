@@ -1,8 +1,8 @@
-import type { DaTechnology, DacDaLayer } from '../../../types'
+import type { DaLayer, DaTechnology } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
 import { DAC, type DacTemplateVars } from './dac-template'
 
-export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
+export function PolygoncdkDAC(template: DacTemplateVars): DaLayer {
   const bridgeTechnology: DaTechnology = {
     description: `
     ## DA Bridge Architecture
@@ -25,15 +25,10 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
     ],
   }
 
-  const bridgeRisks = {
-    upgradeability:
-      template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(0),
-  }
-
   const layerTechnology: DaTechnology = {
     description: `
     ## Architecture
-    ![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture${template.bridge.membersCount}.png#center)
+    ![polygoncdk architecture](/images/da-layer-technology/polygoncdk/architecture${template.bridge.dac.membersCount}.png#center)
 
     Polygon CDK validiums utilize a data availability solution that relies on a Data Availability Committee (DAC) to ensure data integrity and manage off-chain transaction data. 
     This architecture comprises the following components:
@@ -64,8 +59,8 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
       technology: bridgeTechnology,
     },
     risks: {
+      upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0),
       ...template.risks,
-      ...bridgeRisks,
     },
   })
 }

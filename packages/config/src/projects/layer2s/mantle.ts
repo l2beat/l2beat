@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { DacDaLayer } from '../../types'
+import type { DaLayer } from '../../types'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
@@ -40,13 +40,10 @@ const requiredStakeFormatted = parseFloat(
   utils.formatEther(requiredStake),
 ).toLocaleString()
 
-const mantleDataAvailabilitySolution: DacDaLayer = {
-  display: {
-    name: 'Mantle DA',
-    description:
-      'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
-  },
-  type: 'DaLayer',
+const mantleDataAvailabilitySolution: DaLayer = {
+  name: 'Mantle DA',
+  description:
+    'Mantle DA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
   kind: 'DAC',
   systemCategory: 'custom',
   challengeMechanism: 'None',
@@ -62,11 +59,17 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       To become members of the DA network, node operators are required to stake ${requiredStakeFormatted} MNT tokens, and can only be registered by an authorized entity. There is no slashing mechanism in place for misbehaving nodes.
       `,
   },
-  bridge: {
-    addedAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
-    type: 'IntegratedDacBridge',
-    technology: {
-      description: `
+  bridges: [
+    {
+      addedAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
+      type: 'IntegratedDacBridge',
+      display: {
+        name: 'DAC',
+        slug: 'dac',
+        description: '',
+      },
+      technology: {
+        description: `
       
       ![MantleDA bridge](/images/da-bridge-technology/mantleda/architecture.png#center)
 
@@ -76,18 +79,21 @@ const mantleDataAvailabilitySolution: DacDaLayer = {
       The sequencer then posts the signatures to the DataLayrServiceManager contract on Ethereum through a confirmDataStore() transaction.
       The confirmDataStore() function verify the signatures and if the quorum is reached, the data is considered available.
         `,
+      },
+      dac: {
+        requiredMembers: threshold,
+        membersCount: committeeMembers,
+      },
+      risks: {
+        committeeSecurity: DaCommitteeSecurityRisk.NoDiversityCommitteeSecurity(
+          `${threshold}/${committeeMembers}`,
+        ),
+        upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
+        relayerFailure: DaRelayerFailureRisk.NoMechanism,
+      },
+      usedIn: [],
     },
-    transactionDataType: 'Transaction data',
-    requiredMembers: threshold,
-    membersCount: committeeMembers,
-    risks: {
-      committeeSecurity: DaCommitteeSecurityRisk.NoDiversityCommitteeSecurity(
-        `${threshold}/${committeeMembers}`,
-      ),
-      upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
-      relayerFailure: DaRelayerFailureRisk.NoMechanism,
-    },
-  },
+  ],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

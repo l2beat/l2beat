@@ -3,7 +3,6 @@ import {
   type ContractsVerificationStatuses,
   ProjectId,
 } from '@l2beat/shared-pure'
-import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -261,7 +260,7 @@ export async function getL2ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.dataAvailabilitySolution?.description,
       },
     })
   }
@@ -346,9 +345,8 @@ export async function getL2ProjectDetails({
   }
 
   if (permissionsSection) {
-    const permissionedEntities = project.dataAvailabilitySolution
-      ? getPermissionedEntities(project.dataAvailabilitySolution.bridge)
-      : undefined
+    const bridge = project.dataAvailabilitySolution?.bridges[0]
+    const permissionedEntities = bridge?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',

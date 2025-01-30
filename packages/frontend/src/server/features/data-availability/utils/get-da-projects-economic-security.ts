@@ -24,33 +24,27 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
   )
 
-  const arr = [...daLayers, ethereumDaLayer].map((daLayer) => {
-    if (
-      !(
-        daLayer.kind === 'PublicBlockchain' ||
-        daLayer.kind === 'EthereumDaLayer'
-      ) ||
-      !daLayer.economicSecurity
-    ) {
+  const arr = [...daLayers, ethereumDaLayer].map((project) => {
+    if (!project.daLayer.economicSecurity) {
       return undefined
     }
 
-    const thresholdStake = stakes[daLayer.economicSecurity.name]
+    const thresholdStake = stakes[project.daLayer.economicSecurity.name]
 
     if (!thresholdStake) {
       return undefined
     }
 
     const currentPrice =
-      currentPrices[daLayer.economicSecurity.token.coingeckoId]
+      currentPrices[project.daLayer.economicSecurity.token.coingeckoId]
 
     if (!currentPrice) {
       return undefined
     }
     const economicSecurity =
       Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
-      10 ** daLayer.economicSecurity.token.decimals
-    return [daLayer.id, economicSecurity] as const
+      10 ** project.daLayer.economicSecurity.token.decimals
+    return [project.id, economicSecurity] as const
   })
 
   return Object.fromEntries(arr.filter(notUndefined))
@@ -59,11 +53,11 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
 function getMockProjectsEconomicSecurityData(): ProjectsEconomicSecurity {
   return Object.fromEntries(
     daLayers
-      .map((daLayer) => {
-        if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+      .map((project) => {
+        if (!project.daLayer.economicSecurity) {
           return undefined
         }
-        return [daLayer.id, 100000] as const
+        return [project.id, 100000] as const
       })
       .filter(notUndefined),
   )

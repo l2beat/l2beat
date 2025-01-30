@@ -27,13 +27,6 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   usedIn: [
     // no project integrates it for state validation
   ],
-  display: {
-    links: {
-      documentation: ['https://docs.celestia.org/developers/blobstream'],
-      repositories: ['https://github.com/succinctlabs/blobstreamx'],
-      explorers: ['https://etherscan.io/'],
-    },
-  },
   technology: {
     description: `
      The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.

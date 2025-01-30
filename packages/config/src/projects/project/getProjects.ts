@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ProjectLivenessInfo,
@@ -24,7 +24,7 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(bridges.map(bridgeToProject))
-    .concat(daLayers.map(daLayerToProject))
+    .concat(daLayers.map(daToProject))
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
@@ -161,9 +161,9 @@ function bridgeToProject(p: Bridge): BaseProject {
   }
 }
 
-function daLayerToProject(p: DaLayer): BaseProject {
+function daToProject(p: DaProject): BaseProject {
   return {
-    id: ProjectId(`${p.id}-da-layer`),
+    id: p.id,
     slug: p.display.slug,
     name: p.display.name,
     shortName: undefined,
@@ -175,7 +175,7 @@ function daLayerToProject(p: DaLayer): BaseProject {
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
     },
-    daBridges: p.bridges,
+    daBridges: p.daLayer.bridges,
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
