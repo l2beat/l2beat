@@ -444,8 +444,8 @@ export const zklinknova: Layer3 = {
       references: [],
     },
     exitMechanisms: [
-      EXITS.REGULAR('zk', 'merkle proof'),
-      EXITS.FORCED('forced-withdrawals'),
+      EXITS.REGULAR_MESSAGING('zk'),
+      EXITS.FORCED_MESSAGING('forced-messages'),
     ],
     otherConsiderations: [
       {
@@ -708,122 +708,145 @@ export const zklinknova: Layer3 = {
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...lineaDiscovery.getMultisigPermission(
-      'LineaOwner',
-      'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-    ),
-    {
-      name: 'Validators',
-      accounts: lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
-      chain: 'linea',
-      description:
-        'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
-    },
-  ],
-  nativePermissions: {
-    optimism: [
-      optimismDiscovery.contractAsPermissioned(
-        optimismDiscovery.getContract('OptimismProxyAdmin'),
-        'Owner of the L1ERC20Bridge on OP Mainnet.',
-      ),
-      ...optimismDiscovery.getMultisigPermission(
-        'OptimismOwner',
-        'Admin of the zkLink contract on OP Mainnet and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    arbitrum: [
-      arbitrumDiscovery.contractAsPermissioned(
-        arbitrumDiscovery.getContract('ArbitrumProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Arbitrum One.',
-      ),
-      ...arbitrumDiscovery.getMultisigPermission(
-        'ArbitrumOwner',
-        'Admin of the zkLink contract on Arbitrum One and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    base: [
-      baseDiscovery.contractAsPermissioned(
-        baseDiscovery.getContract('BaseProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Base.',
-      ),
-      ...baseDiscovery.getMultisigPermission(
-        'BaseOwner',
-        'Admin of the zkLink contract on Base and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    mantapacific: [
-      mantapacificDiscovery.contractAsPermissioned(
-        mantapacificDiscovery.getContract('MantaProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Manta Pacific.',
+  permissions: {
+    actors: [
+      ...lineaDiscovery.getMultisigPermission(
+        'LineaOwner',
+        'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
       ),
       {
-        name: 'MantaOwner',
-        accounts: [
-          mantapacificDiscovery.getPermissionedAccount(
-            'MantaProxyAdmin',
-            'owner',
-          ),
-        ],
+        name: 'Validators',
+        accounts: lineaDiscovery.getPermissionedAccounts(
+          'zkLink',
+          'validators',
+        ),
+        chain: 'linea',
         description:
-          'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
+          'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
       },
-      /* unverified contract
+    ],
+  },
+  nativePermissions: {
+    optimism: {
+      actors: [
+        optimismDiscovery.contractAsPermissioned(
+          optimismDiscovery.getContract('OptimismProxyAdmin'),
+          'Owner of the L1ERC20Bridge on OP Mainnet.',
+        ),
+        ...optimismDiscovery.getMultisigPermission(
+          'OptimismOwner',
+          'Admin of the zkLink contract on OP Mainnet and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    arbitrum: {
+      actors: [
+        arbitrumDiscovery.contractAsPermissioned(
+          arbitrumDiscovery.getContract('ArbitrumProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Arbitrum One.',
+        ),
+        ...arbitrumDiscovery.getMultisigPermission(
+          'ArbitrumOwner',
+          'Admin of the zkLink contract on Arbitrum One and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    base: {
+      actors: [
+        baseDiscovery.contractAsPermissioned(
+          baseDiscovery.getContract('BaseProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Base.',
+        ),
+        ...baseDiscovery.getMultisigPermission(
+          'BaseOwner',
+          'Admin of the zkLink contract on Base and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    mantapacific: {
+      actors: [
+        mantapacificDiscovery.contractAsPermissioned(
+          mantapacificDiscovery.getContract('MantaProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Manta Pacific.',
+        ),
+        {
+          name: 'MantaOwner',
+          accounts: [
+            mantapacificDiscovery.getPermissionedAccount(
+              'MantaProxyAdmin',
+              'owner',
+            ),
+          ],
+          description:
+            'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
+        },
+        /* unverified contract
       ...mantapacificDiscovery.getMultisigPermission(
         'MantaOwner',
         'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
       ),
       */
-    ],
-    mantle: [
-      mantleDiscovery.contractAsPermissioned(
-        mantleDiscovery.getContract('MantleProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Mantle.',
-      ),
-      ...mantleDiscovery.getMultisigPermission(
-        'MantleOwner',
-        'Admin of the zkLink contract on Mantle and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    scroll: [
-      scrollDiscovery.contractAsPermissioned(
-        scrollDiscovery.getContract('ScrollProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Scroll.',
-      ),
-      ...scrollDiscovery.getMultisigPermission(
-        'AdminMultisig',
-        'Admin of the zkLink contract on Scroll and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    blast: [
-      blastDiscovery.contractAsPermissioned(
-        blastDiscovery.getContract('BlastProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Blast.',
-      ),
-      ...blastDiscovery.getMultisigPermission(
-        'BlastOwner',
-        'Admin of the zkLink contract on Blast and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    zksync2: [
-      zksync2Discovery.contractAsPermissioned(
-        zksync2Discovery.getContract('EraProxyAdmin'),
-        'Owner of the L1ERC20Bridge on ZKsync Era.',
-      ),
-      ...zksync2Discovery.getMultisigPermission(
-        'EraOwner',
-        'Admin of the zkLink contract on ZKsync Era and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
-    ethereum: [
-      ethereumDiscovery.contractAsPermissioned(
-        ethereumDiscovery.getContract('EthereumProxyAdmin'),
-        'Owner of the L1ERC20Bridge on Ethereum.',
-      ),
-      ...ethereumDiscovery.getMultisigPermission(
-        'EthereumOwner',
-        'Admin of the zkLink contract on Ethereum and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-    ],
+      ],
+    },
+    mantle: {
+      actors: [
+        mantleDiscovery.contractAsPermissioned(
+          mantleDiscovery.getContract('MantleProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Mantle.',
+        ),
+        ...mantleDiscovery.getMultisigPermission(
+          'MantleOwner',
+          'Admin of the zkLink contract on Mantle and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    scroll: {
+      actors: [
+        scrollDiscovery.contractAsPermissioned(
+          scrollDiscovery.getContract('ScrollProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Scroll.',
+        ),
+        ...scrollDiscovery.getMultisigPermission(
+          'AdminMultisig',
+          'Admin of the zkLink contract on Scroll and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    blast: {
+      actors: [
+        blastDiscovery.contractAsPermissioned(
+          blastDiscovery.getContract('BlastProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Blast.',
+        ),
+        ...blastDiscovery.getMultisigPermission(
+          'BlastOwner',
+          'Admin of the zkLink contract on Blast and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    zksync2: {
+      actors: [
+        zksync2Discovery.contractAsPermissioned(
+          zksync2Discovery.getContract('EraProxyAdmin'),
+          'Owner of the L1ERC20Bridge on ZKsync Era.',
+        ),
+        ...zksync2Discovery.getMultisigPermission(
+          'EraOwner',
+          'Admin of the zkLink contract on ZKsync Era and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
+    ethereum: {
+      actors: [
+        ethereumDiscovery.contractAsPermissioned(
+          ethereumDiscovery.getContract('EthereumProxyAdmin'),
+          'Owner of the L1ERC20Bridge on Ethereum.',
+        ),
+        ...ethereumDiscovery.getMultisigPermission(
+          'EthereumOwner',
+          'Admin of the zkLink contract on Ethereum and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
+        ),
+      ],
+    },
   },
 }

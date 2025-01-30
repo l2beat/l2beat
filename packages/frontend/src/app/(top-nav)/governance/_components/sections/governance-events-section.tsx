@@ -3,7 +3,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
-import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
+import type { GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
 
 interface Props {

@@ -1,8 +1,8 @@
 import { ProjectService } from '@l2beat/config'
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Breadcrumbs } from '~/components/breadcrumbs'
 import {
   Tooltip,
@@ -21,10 +21,8 @@ import { ProjectHeader } from './_components/project-header'
 import { RequiredTools } from './_components/required-tools'
 import { VerifiedCountWithDetails } from './_components/verified-count-with-details'
 import { Verifiers } from './_components/verifiers'
-import {
-  type ZkCatalogProjectDetails,
-  getZkCatalogProjectDetails,
-} from './_utils/get-zk-catalog-project-details'
+import type { ZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
+import { getZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
 
 interface Params {
   slug: string

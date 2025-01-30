@@ -1,5 +1,5 @@
-import { type Layer2 } from '@l2beat/config'
-import { type IndexerConfigurationRecord } from '@l2beat/database'
+import type { Layer2 } from '@l2beat/config'
+import type { IndexerConfigurationRecord } from '@l2beat/database'
 import { notUndefined } from '@l2beat/shared-pure'
 import { toTrackedTxConfig } from '../scaling/costs/utils/to-tracked-tx-config'
 import { getConfigurationsSyncedUntil } from './get-configurations-synced-until'

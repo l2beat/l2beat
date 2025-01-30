@@ -45,6 +45,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -144,7 +145,7 @@ interface OrbitStackConfigCommon {
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
@@ -315,6 +316,9 @@ function defaultStateValidation(
 const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
+
+// TO DO: Add blobstream delay when timelock is enabled
+const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
@@ -508,7 +512,7 @@ function orbitStackCommon(
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('optimistic'),
           references: [
             {
               title: 'Transaction lifecycle - Arbitrum documentation',
@@ -545,12 +549,14 @@ function orbitStackCommon(
     },
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          sequencers,
-          validators,
-          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            sequencers,
+            validators,
+            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nativePermissions,
@@ -659,7 +665,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      (isUsingValidBlobstreamWmr
+        ? pickWorseRisk(
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -1034,7 +1045,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        (isUsingValidBlobstreamWmr
+          ? pickWorseRisk(
+              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+            )
+          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
       sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),

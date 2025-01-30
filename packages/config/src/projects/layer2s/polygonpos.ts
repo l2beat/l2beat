@@ -256,12 +256,14 @@ export const polygonpos: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'PolygonMultisig',
-      'Can propose and execute code upgrades.',
-    ),
-  ],
+  permissions: {
+    actors: [
+      ...discovery.getMultisigPermission(
+        'PolygonMultisig',
+        'Can propose and execute code upgrades.',
+      ),
+    ],
+  },
   knowledgeNuggets: [
     {
       title: 'Is Polygon a side-chain?',

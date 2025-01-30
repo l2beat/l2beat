@@ -107,9 +107,9 @@ export interface ScalingProject {
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
   /** List of permissioned addresses */
-  permissions?: ScalingProjectPermission[] | 'UnderReview'
+  permissions?: ScalingProjectPermissions | 'UnderReview'
   /** List of permissioned addresses on the chain itself */
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -314,6 +314,13 @@ export interface ProjectLinks {
   rollupCodes?: string
 }
 
+export interface ScalingProjectPermissions {
+  /** List of roles */
+  roles?: ScalingProjectPermission[]
+  /** List of actors */
+  actors?: ScalingProjectPermission[]
+}
+
 export interface ScalingProjectPermission {
   /** List of the accounts */
   accounts: ScalingProjectPermissionedAccount[]
@@ -327,8 +334,6 @@ export interface ScalingProjectPermission {
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
   participants?: ScalingProjectPermissionedAccount[]
-  /** Indicates whether the permission comes from a role like Proposer or Guardian */
-  fromRole?: boolean
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
@@ -735,8 +740,8 @@ export interface Bridge {
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ScalingProjectContracts
-  permissions?: ScalingProjectPermission[] | 'UnderReview'
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  permissions?: ScalingProjectPermissions | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -939,7 +944,7 @@ export type EnshrinedBridge = CommonDaBridge & {
 export type OnChainDaBridge = CommonDaBridge & {
   type: 'OnChainBridge'
   /** Data about related permissions - preferably from discovery. */
-  permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  permissions: Record<string, ScalingProjectPermissions> | 'UnderReview'
   /** Data about the validation type of the bridge */
   validation: {
     type: string
@@ -993,7 +998,7 @@ export type StandaloneDacBridge = CommonDaBridge &
      * It makes less sense to have permissions for NoBridge, but it's here in case we need to
      * add some complementary information.
      */
-    permissions: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+    permissions: Record<string, ScalingProjectPermissions> | 'UnderReview'
     /**
      * Data about the contracts used in the bridge - preferably from discovery.
      * It makes less sense to have contracts for NoBridge, but it's here in case we need to
@@ -1143,7 +1148,10 @@ export interface StageConfigured {
   missing?: MissingStageRequirements
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
-  notice?: string
+  additionalConsiderations?: {
+    short: string
+    long: string
+  }
 }
 
 export interface StageConfiguredMessage {
@@ -1224,6 +1232,7 @@ export interface ProjectBridgeInfo {
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ScalingProjectCategory
+  capability: ScalingProjectCapability
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined

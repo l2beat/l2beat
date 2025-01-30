@@ -6,7 +6,7 @@ import { DetailedOnHover } from '~/components/detailed-on-hover'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { useCostsMetricContext } from './costs-metric-context'
 import { useCostsUnitContext } from './costs-unit-context'
-import { type CostsData } from './table/columns'
+import type { CostsData } from './table/columns'
 
 interface Props {
   data: CostsData

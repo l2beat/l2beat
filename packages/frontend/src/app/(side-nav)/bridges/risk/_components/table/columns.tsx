@@ -6,7 +6,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
+import type { BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 
 const columnHelper = createColumnHelper<BridgesRiskEntry>()
 

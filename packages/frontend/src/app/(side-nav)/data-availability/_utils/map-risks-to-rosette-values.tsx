@@ -1,5 +1,5 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { DaBridge, DaLayer } from '@l2beat/config'
+import type { RosetteValue } from '~/components/rosette/types'
 
 export function mapLayerRisksToRosetteValues(
   risks: DaLayer['risks'],
@@ -15,7 +15,6 @@ export function mapLayerRisksToRosetteValues(
       },
     ]
   }
-
   return [
     {
       name: 'Economic security',

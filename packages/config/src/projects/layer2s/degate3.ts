@@ -71,7 +71,7 @@ const timelockUpgrades2 = {
 export const degate3: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate3'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
@@ -258,7 +258,7 @@ export const degate3: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Withdraw - DeGate design doc',
@@ -267,7 +267,7 @@ export const degate3: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'Forced Request Handling - DeGate design doc',
@@ -362,58 +362,60 @@ export const degate3: Layer2 = {
       ],
     },
   },
-  permissions: [
-    {
-      name: 'BlockVerifier Owner',
-      description: 'This address is the owner of the BlockVerifier contract.',
-      accounts: [discovery.getPermissionedAccount('BlockVerifier', 'owner')],
-    },
-    {
-      name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccounts(
-        'LoopringIOExchangeOwner',
-        'blockSubmitters',
-      ),
-      description:
-        'Actors who can submit new blocks, updating the L2 state on L1.',
-    },
-    {
-      name: 'Degate HomeDAO2 Multisig',
-      accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
-      description: (() => {
-        const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
-        const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
-        assert(owner1 === owner2, 'The owners are different')
-
-        const ownerDepositContract = discovery.getAddressFromValue(
-          'DefaultDepositContract',
-          'owner',
-        )
-        const ownerIOExchange = discovery.getAddressFromValue(
+  permissions: {
+    actors: [
+      {
+        name: 'BlockVerifier Owner',
+        description: 'This address is the owner of the BlockVerifier contract.',
+        accounts: [discovery.getPermissionedAccount('BlockVerifier', 'owner')],
+      },
+      {
+        name: 'Block Submitters',
+        accounts: discovery.getPermissionedAccounts(
           'LoopringIOExchangeOwner',
-          'owner',
-        )
-        const ownerV3 = discovery.getAddressFromValue('LoopringV3', 'owner')
+          'blockSubmitters',
+        ),
+        description:
+          'Actors who can submit new blocks, updating the L2 state on L1.',
+      },
+      {
+        name: 'Degate HomeDAO2 Multisig',
+        accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
+        description: (() => {
+          const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
+          const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
+          assert(owner1 === owner2, 'The owners are different')
 
-        // making sure that the description is correct
-        assert(
-          ownerDepositContract === ownerIOExchange &&
-            ownerIOExchange === ownerV3 &&
-            ownerV3 === owner1,
-          'DeGate: owners structure changed, update description',
-        )
+          const ownerDepositContract = discovery.getAddressFromValue(
+            'DefaultDepositContract',
+            'owner',
+          )
+          const ownerIOExchange = discovery.getAddressFromValue(
+            'LoopringIOExchangeOwner',
+            'owner',
+          )
+          const ownerV3 = discovery.getAddressFromValue('LoopringV3', 'owner')
 
-        const permissionedAccount =
-          discovery.formatPermissionedAccount(ownerDepositContract)
+          // making sure that the description is correct
+          assert(
+            ownerDepositContract === ownerIOExchange &&
+              ownerIOExchange === ownerV3 &&
+              ownerV3 === owner1,
+            'DeGate: owners structure changed, update description',
+          )
 
-        assert(
-          permissionedAccount.type !== 'EOA',
-          'DeGate: found unexpected EOA',
-        )
-        return `Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts. This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`
-      })(),
-    },
-  ],
+          const permissionedAccount =
+            discovery.formatPermissionedAccount(ownerDepositContract)
+
+          assert(
+            permissionedAccount.type !== 'EOA',
+            'DeGate: found unexpected EOA',
+          )
+          return `Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts. This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`
+        })(),
+      },
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('ExchangeV3', {

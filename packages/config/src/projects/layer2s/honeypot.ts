@@ -172,7 +172,7 @@ export const honeypot: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
@@ -210,14 +210,16 @@ export const honeypot: Layer2 = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Authority owner',
-      description:
-        'The Authority owner can submit claims to the Honeypot DApp.',
-      accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Authority owner',
+        description:
+          'The Authority owner can submit claims to the Honeypot DApp.',
+        accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Honeypot announcement',

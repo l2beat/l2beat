@@ -1,4 +1,5 @@
-import { type Layer3, layer2s } from '@l2beat/config'
+import type { Layer3 } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 
 export function getHostChain(project: Layer3) {
   const layer2 = layer2s.find((l) => l.id === project.hostChain)

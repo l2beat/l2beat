@@ -871,6 +871,20 @@
       "supply": "zero"
     },
     {
+      "name": "Capsule Coin",
+      "coingeckoId": "coin-capsule",
+      "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
+      "symbol": "CAPS",
+      "decimals": 18,
+      "deploymentTimestamp": 1614363963,
+      "coingeckoListingTimestamp": 1622419200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Cartesi Token",
       "coingeckoId": "cartesi",
       "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",

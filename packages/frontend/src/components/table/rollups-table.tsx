@@ -1,9 +1,10 @@
-import { type Row, type Table } from '@tanstack/react-table'
+import type { Row, Table } from '@tanstack/react-table'
 import React from 'react'
 import { featureFlags } from '~/consts/feature-flags'
-import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
-import { BasicTable, type BasicTableProps, BasicTableRow } from './basic-table'
+import type { BasicTableProps } from './basic-table'
+import { BasicTable, BasicTableRow } from './basic-table'
 
 interface BasicEntry extends CommonProjectEntry {
   stageOrder: number

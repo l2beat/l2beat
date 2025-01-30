@@ -472,9 +472,9 @@ export const linea: Layer2 = {
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
+        ...EXITS.REGULAR_MESSAGING('zk'),
         description:
-          EXITS.REGULAR('zk', 'merkle proof').description +
+          EXITS.REGULAR_MESSAGING('zk').description +
           ' Note that withdrawal requests can be censored by the Sequencer. ' +
           withdrawalLimitString +
           ' Users can (eventually, after 6 months of inactivity from the centralized Operator) exit by replacing the Operator. In such a case they need to self-propose and prove their new state on the base layer with the required software which is currently not made available.',
@@ -494,33 +494,35 @@ export const linea: Layer2 = {
       },
     ],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'LineaAdminMultisig',
-      'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
-    ),
-    {
-      accounts: zodiacPausers,
-      name: 'Pauser',
-      description:
-        'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
-    },
-    {
-      accounts: discovery.getAccessControlRolePermission(
-        'LineaRollup',
-        'OPERATOR_ROLE',
+  permissions: {
+    actors: [
+      ...discovery.getMultisigPermission(
+        'LineaAdminMultisig',
+        'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
       ),
-      name: 'Operators',
-      description:
-        'The operators are allowed to prove blocks and post the corresponding transaction data.',
-    },
-    {
-      accounts: zodiacPausers,
-      name: 'Pauser',
-      description:
-        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
-    },
-  ],
+      {
+        accounts: zodiacPausers,
+        name: 'Pauser',
+        description:
+          'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
+      },
+      {
+        accounts: discovery.getAccessControlRolePermission(
+          'LineaRollup',
+          'OPERATOR_ROLE',
+        ),
+        name: 'Operators',
+        description:
+          'The operators are allowed to prove blocks and post the corresponding transaction data.',
+      },
+      {
+        accounts: zodiacPausers,
+        name: 'Pauser',
+        description:
+          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
+      },
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('LineaRollup', {

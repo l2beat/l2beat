@@ -3,16 +3,14 @@ import type { ReferenceLink, UsedInProject } from '@l2beat/config'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import { ProjectDetailsRelatedProjectBanner } from '~/components/project-details-related-project-banner'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
-import { RiskList, type TechnologyRisk } from '../risk-list'
-import { type ProjectSectionId } from '../types'
+import type { TechnologyRisk } from '../risk-list'
+import { RiskList } from '../risk-list'
+import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
 

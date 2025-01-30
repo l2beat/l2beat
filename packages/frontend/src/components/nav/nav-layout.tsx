@@ -1,5 +1,5 @@
 import compact from 'lodash/compact'
-import { type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { BridgesIcon } from '~/icons/pages/bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/data-availability'
 import { ScalingIcon } from '~/icons/pages/scaling'
@@ -9,7 +9,7 @@ import { MobileNavProvider } from './mobile-nav-context'
 import { MobileNavbar } from './mobile-navbar'
 import { NavSidebar } from './nav-sidebar'
 import { TopNavbar } from './top-navbar'
-import { type NavGroup } from './types'
+import type { NavGroup } from './types'
 
 interface Props {
   children: ReactNode

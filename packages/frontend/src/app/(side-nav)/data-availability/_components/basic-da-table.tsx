@@ -1,13 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
-import {
-  type Column,
-  type Header,
-  type Row,
-  type Table as TanstackTable,
-  flexRender,
+import type {
+  Column,
+  Header,
+  Row,
+  Table as TanstackTable,
 } from '@tanstack/react-table'
+import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
-import { type CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
 import React from 'react'
 import {
   getBasicTableGroupParams,
@@ -182,7 +182,13 @@ export function BasicDaTable<T extends BasicEntry>({
         {table.getRowModel().rows.map((row) => {
           return (
             <React.Fragment key={row.id}>
-              <TableRow className={cn(getRowTypeClassNames())}>
+              <TableRow
+                className={cn(
+                  getRowTypeClassNames({
+                    isEthereum: row.original.slug === 'ethereum',
+                  }),
+                )}
+              >
                 {row.getVisibleCells().map((cell) => {
                   const { meta } = cell.column.columnDef
                   const groupParams = getBasicTableGroupParams(cell.column)
@@ -273,8 +279,11 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
   )
 }
 
-export function getRowTypeClassNames() {
-  return 'hover:shadow-none'
+export function getRowTypeClassNames({ isEthereum }: { isEthereum?: boolean }) {
+  return cn(
+    'hover:shadow-none',
+    isEthereum && 'bg-blue-500/35 dark:bg-blue-700/25',
+  )
 }
 
 function getRowTypeClassNamesWithoutOpacity() {

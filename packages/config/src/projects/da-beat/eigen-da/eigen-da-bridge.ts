@@ -1,31 +1,15 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import { toUsedInProject } from '../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('eigenda')
-const eigenDiscovery = new ProjectDiscovery('shared-eigenlayer')
 
-const upgrades = {
-  upgradableBy: ['EigenDAProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const EigenTimelockUpgradeDelay = eigenDiscovery.getContractValue<number>(
+const EIGENUpgradeDelay = discovery.getContractValue<number>(
   'TimelockControllerOwning',
   'getMinDelay',
 )
-
-const eigenLayerUpgrades = {
-  upgradableBy: [
-    'EigenLayerCommunityMultisig',
-    'EigenLayerOperationsMultisig',
-    'EigenLayerOperationsMultisig2',
-  ],
-  upgradeDelay: `${formatSeconds(EigenTimelockUpgradeDelay)} delay via EigenLayerOperationsMultisig, no delay via EigenLayerCommunityMultisig.`,
-}
 
 const quorumThresholds = discovery.getContractValue<string>(
   'EigenDAServiceManager',
@@ -75,26 +59,6 @@ const operatorSetParamsQuorum2 = discovery.getContractValue<number[]>(
   'operatorSetParamsQuorum2',
 )
 
-const batchConfirmers = discovery.getContractValue<string[]>(
-  'EigenDAServiceManager',
-  'batchConfirmers',
-)
-
-const pausers = eigenDiscovery.getContractValue<string[]>(
-  'PauserRegistry',
-  'pausers',
-)
-
-const churnApprover = discovery.getContractValue<string>(
-  'RegistryCoordinator',
-  'churnApprover',
-)
-
-const ejectors = discovery.getContractValue<string[]>(
-  'EjectionManager',
-  'ejectors',
-)
-
 const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
   'RegistryCoordinator',
   'registeredOperators',
@@ -113,74 +77,7 @@ export const eigenDAbridge = {
   },
   contracts: {
     addresses: {
-      ethereum: [
-        {
-          ...discovery.getContractDetails('EigenDAServiceManager', {
-            description:
-              'The EigenDAServiceManager contract is the bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.',
-          }),
-          ...upgrades,
-        },
-        {
-          ...discovery.getContractDetails('RegistryCoordinator', {
-            description: `Contract used by operators to register with the EigenDA AVS. The coordinator has three registries: a StakeRegistry that keeps track of operators' stakes, a BLSApkRegistry that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, and an IndexRegistry that keeps track of an ordered list of operators for each quorum.`,
-          }),
-          ...upgrades,
-        },
-        {
-          ...discovery.getContractDetails('StakeRegistry', {
-            description:
-              'The StakeRegistry contract keeps track of the total stake of each operator.',
-          }),
-          ...upgrades,
-        },
-        {
-          ...discovery.getContractDetails('BLSApkRegistry', {
-            description:
-              'The BLSApkRegistry contract keeps track of the BLS public keys of each operator and the quorum aggregated keys.',
-          }),
-          ...upgrades,
-        },
-        {
-          ...discovery.getContractDetails('EjectionManager', {
-            description:
-              'The EjectionManager contract is responsible for ejecting operators from a quorum for violating the Service Legal Agreement (SLA).',
-          }),
-          ...upgrades,
-        },
-        {
-          ...eigenDiscovery.getContractDetails('PauserRegistry', {
-            description:
-              'Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.',
-          }),
-        },
-        {
-          ...eigenDiscovery.getContractDetails('DelegationManager', {
-            description: `The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.`,
-          }),
-          ...eigenLayerUpgrades,
-        },
-        {
-          ...eigenDiscovery.getContractDetails('StrategyManager', {
-            description:
-              'The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.',
-          }),
-          ...eigenLayerUpgrades,
-        },
-        {
-          ...discovery.getContractDetails('EigenStrategy', {
-            description: `The EigenStrategy contract is responsible for managing the bEIGEN token strategy, representing the stake for the second EigenDA quorum.`,
-          }),
-          ...eigenLayerUpgrades,
-        },
-        {
-          ...eigenDiscovery.getContractDetails('EIGEN token', {
-            description: `The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults).
-              EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.`,
-          }),
-          ...eigenLayerUpgrades,
-        },
-      ],
+      ethereum: discovery.getDiscoveredContracts(),
     },
     risks: [
       {
@@ -189,7 +86,11 @@ export const eigenDAbridge = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'EigenLayer core contracts (DelegationManager, StrategyManager, EIGEN token) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',
@@ -248,102 +149,12 @@ export const eigenDAbridge = {
     ],
   },
   permissions: {
-    ethereum: [
-      {
-        name: 'EigenDAProxyAdmin',
-        description: `The contract authorized to upgrade the core EigenDA contracts.`,
-        accounts: [
-          {
-            address: discovery.getContract('eigenDAProxyAdmin').address,
-            type: 'Contract',
-          },
-        ],
-        participants: [
-          {
-            address: EthereumAddress(
-              discovery.getContractValue<string>('eigenDAProxyAdmin', 'owner'),
-            ),
-            type: 'MultiSig',
-          },
-        ],
-      },
-      {
-        name: 'BatchConfirmers',
-        description: `The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.`,
-        accounts: batchConfirmers.map((batchConfirmer) => ({
-          address: EthereumAddress(batchConfirmer),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Pausers',
-        description: `The list of addresses authorized to pause the EigenDAServiceManager contract.`,
-        accounts: pausers.map((pauser) => ({
-          address: EthereumAddress(pauser),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'ChurnApprover',
-        description: `The address authorized to approve the replacement of churned EigenDA operators from a quorum.`,
-        accounts: [
-          {
-            address: EthereumAddress(churnApprover),
-            type: 'EOA',
-          },
-        ],
-      },
-      {
-        name: 'Ejectors',
-        description: `The list of addresses authorized to eject EigenDA operators from a quorum.`,
-        accounts: ejectors.map((ejectors) => ({
-          address: EthereumAddress(ejectors),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'EigenLayerProxyAdmin',
-        description: `The contract authorized to upgrade the core EigenLayer contracts.`,
-        accounts: [
-          {
-            address: eigenDiscovery.getContract('EigenLayerProxyAdmin').address,
-            type: 'Contract',
-          },
-        ],
-        participants: [
-          {
-            address: EthereumAddress(
-              eigenDiscovery.getContractValue<string>(
-                'EigenLayerProxyAdmin',
-                'owner',
-              ),
-            ),
-            type: 'MultiSig',
-          },
-        ],
-      },
-      ...eigenDiscovery.getMultisigPermission(
-        'EigenLayerOwningMultisig',
-        'The proxy contract authorized to unpause the EigenDAServiceManager contract and upgrade core contracts through the EigenDAProxyAdmin contract.',
-      ),
-      ...eigenDiscovery.getMultisigPermission(
-        'EigenLayerOperationsMultisig',
-        'This multisig is the owner of the EigenDAServiceManager contract. It holds the power to change the contract state and upgrade the bridge.',
-      ),
-      ...eigenDiscovery.getMultisigPermission(
-        'EigenLayerCommunityMultisig',
-        'This multisig is one of the owners of EigenLayerExecutorMultisig and can upgrade EigenLayer core contracts without delay.',
-      ),
-      eigenDiscovery.contractAsPermissioned(
-        eigenDiscovery.getContract('TimelockControllerOwning'),
-        'The timelock contract for upgrading EigenLayer core contracts via EigenLayerOperationsMultisigs.',
-      ),
-    ],
+    ethereum: discovery.getDiscoveredPermissions(),
   },
   requiredMembers: 0, // currently 0 since threshold is not enforced
   membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   transactionDataType: 'Transaction data',
-  usedIn: toUsedInProject([]),
+  usedIn: [],
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',

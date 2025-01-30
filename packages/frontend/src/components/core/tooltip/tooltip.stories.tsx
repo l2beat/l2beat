@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { expect, userEvent, waitFor, within } from '@storybook/test'
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'

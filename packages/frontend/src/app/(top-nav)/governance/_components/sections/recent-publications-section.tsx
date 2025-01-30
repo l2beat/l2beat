@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
-import { type GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
+import type { GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
 import { GovernanceCard, GovernanceCardHeader } from '../governance-card'
 
 interface Props {

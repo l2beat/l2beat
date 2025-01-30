@@ -1,4 +1,4 @@
-import { type ActivityRecord } from '@l2beat/database'
+import type { ActivityRecord } from '@l2beat/database'
 import { countPerSecond } from './count-per-second'
 
 export function getLastDayUops(records: ActivityRecord[], daysAgo = 0) {

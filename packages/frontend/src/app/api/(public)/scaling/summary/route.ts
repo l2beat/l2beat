@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getScalingApiEntries } from '~/server/features/scaling/summary/get-scaling-api-entries'
-import { getTvlChart } from '~/server/features/scaling/tvl/get-tvl-chart-data'
+import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
 
 export async function GET() {
   const data = await getCachedData()
@@ -12,7 +12,7 @@ export async function GET() {
 const getCachedData = cache(
   async () => {
     const entries = await getScalingApiEntries()
-    const data = await getTvlChart({
+    const data = await getTvsChart({
       range: '30d',
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },

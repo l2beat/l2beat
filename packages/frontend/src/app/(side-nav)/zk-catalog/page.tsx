@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import { MainPageHeader } from '~/components/main-page-header'
 import { ChevronIcon } from '~/icons/chevron'
@@ -16,10 +16,8 @@ import { VerifiedCountWithDetails } from './[slug]/_components/verified-count-wi
 import { DetailsItem } from './_components/details-item'
 import { DetailsLink } from './_components/details-link'
 import { VerifierCard } from './_components/verifier-card'
-import {
-  type ZkCatalogEntry,
-  getZkCatalogEntries,
-} from './_utils/get-zk-catalog-entries'
+import type { ZkCatalogEntry } from './_utils/get-zk-catalog-entries'
+import { getZkCatalogEntries } from './_utils/get-zk-catalog-entries'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',

@@ -1,9 +1,6 @@
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
@@ -14,7 +11,7 @@ export interface PermissionsSectionProps extends ProjectSectionProps {
     { roles: TechnologyContract[]; actors: TechnologyContract[] }
   >
   daSolution?: DaSolutionWith<{
-    permissions: TechnologyContract[]
+    permissions: { roles: TechnologyContract[]; actors: TechnologyContract[] }
   }>
   permissionedEntities?: { name: string; href: string; key?: string }[]
 }
@@ -80,7 +77,15 @@ export function PermissionsSection({
           permissions on the {daSolution.hostChain}:
         </h3>
       )}
-      {daSolution?.permissions?.map((permission) => (
+      {daSolution?.permissions.roles?.map((permission) => (
+        <ContractEntry
+          key={technologyContractKey(permission)}
+          contract={permission}
+          className="my-4"
+          type="permission"
+        />
+      ))}
+      {daSolution?.permissions.actors?.map((permission) => (
         <ContractEntry
           key={technologyContractKey(permission)}
           contract={permission}

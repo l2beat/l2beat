@@ -5,7 +5,7 @@ import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type Entries } from 'type-fest'
+import type { Entries } from 'type-fest'
 import {
   Command,
   CommandDialog,
@@ -19,15 +19,10 @@ import {
 import { useTracking } from '~/hooks/use-custom-event'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useRouterWithProgressBar } from '../progress-bar'
-import {
-  type SearchBarCategory,
-  searchBarCategories,
-} from './search-bar-categories'
+import type { SearchBarCategory } from './search-bar-categories'
+import { searchBarCategories } from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'
-import {
-  type AnySearchBarEntry,
-  type SearchBarProject,
-} from './search-bar-entry'
+import type { AnySearchBarEntry, SearchBarProject } from './search-bar-entry'
 import { searchBarPages } from './search-bar-pages'
 interface Props {
   allProjects: SearchBarProject[]

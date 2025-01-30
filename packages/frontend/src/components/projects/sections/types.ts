@@ -1,26 +1,25 @@
-import { type ChartSectionProps } from './chart-section'
-import { type ContractsSectionProps } from './contracts/contracts-section'
-import { type MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
-import { type DaRiskSummarySectionProps } from './da-risk-summary-section'
-import { type DetailedDescriptionSectionProps } from './detailed-description-section'
-import { type GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
-import { type GroupSectionProps } from './group-section'
-import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
-import { type L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
-import { type MarkdownSectionProps } from './markdown-section'
-import { type MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
-import { type MultichainPermissionsSectionProps } from './permissions/multichain-permissions-section'
-import { type PermissionsSectionProps } from './permissions/permissions-section'
-import { type ExtendedProjectSectionProps } from './project-section'
-import { type RiskAnalysisSectionProps } from './risk-analysis-section'
-import { type RiskSummarySectionProps } from './risk-summary-section'
-import { type StageSectionProps } from './stage-section'
-import { type StateDerivationSectionProps } from './state-derivation-section'
-import { type StateValidationSectionProps } from './state-validation-section'
-import { type TechnologySectionProps } from './technology-section'
+import type { ChartSectionProps } from './chart-section'
+import type { ContractsSectionProps } from './contracts/contracts-section'
+import type { MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
+import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
+import type { DetailedDescriptionSectionProps } from './detailed-description-section'
+import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
+import type { GroupSectionProps } from './group-section'
+import type { KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
+import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
+import type { MarkdownSectionProps } from './markdown-section'
+import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
+import type { PermissionsSectionProps } from './permissions/permissions-section'
+import type { ExtendedProjectSectionProps } from './project-section'
+import type { RiskAnalysisSectionProps } from './risk-analysis-section'
+import type { RiskSummarySectionProps } from './risk-summary-section'
+import type { StageSectionProps } from './stage-section'
+import type { StateDerivationSectionProps } from './state-derivation-section'
+import type { StateValidationSectionProps } from './state-validation-section'
+import type { TechnologySectionProps } from './technology-section'
 
 type SectionId =
-  | 'tvl'
+  | 'tvs'
   | 'activity'
   | 'onchain-costs'
   | 'detailed-description'
@@ -116,11 +115,6 @@ interface ProjectDetailsPermissionsSection {
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
-interface ProjectDetailsMultichainPermissionsSection {
-  type: 'MultichainPermissionsSection'
-  props: ProjectDetailsProps<MultichainPermissionsSectionProps>
-}
-
 interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
   props: ProjectDetailsProps<ContractsSectionProps>
@@ -168,7 +162,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
-  | ProjectDetailsMultichainPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsMultiChainContractsSection
   | ProjectDetailsKnowledgeNuggetsSection

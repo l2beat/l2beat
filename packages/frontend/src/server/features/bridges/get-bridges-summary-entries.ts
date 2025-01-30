@@ -1,28 +1,22 @@
-import {
-  type BridgeDisplay,
-  type Project,
-  ProjectService,
-  type TableReadyValue,
-  type WarningWithSentiment,
+import type {
+  BridgeDisplay,
+  Project,
+  TableReadyValue,
+  WarningWithSentiment,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { compact } from 'lodash'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../projects-change-report/get-projects-change-report'
-import { compareTvl } from '../scaling/tvl/utils/compare-tvl'
-import {
-  type LatestTvl,
-  get7dTokenBreakdown,
-} from '../scaling/tvl/utils/get-7d-token-breakdown'
-import { getAssociatedTokenWarning } from '../scaling/tvl/utils/get-associated-token-warning'
-import {
-  type CommonBridgesEntry,
-  getCommonBridgesEntry,
-} from './get-common-bridges-entry'
+import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
+import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
+import type { LatestTvs } from '../scaling/tvs/utils/get-7d-token-breakdown'
+import { get7dTokenBreakdown } from '../scaling/tvs/utils/get-7d-token-breakdown'
+import { getAssociatedTokenWarning } from '../scaling/tvs/utils/get-associated-token-warning'
+import type { CommonBridgesEntry } from './get-common-bridges-entry'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export async function getBridgesSummaryEntries() {
-  const [tvl7dBreakdown, projectsChangeReport, projects] = await Promise.all([
+  const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([
     get7dTokenBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
@@ -37,20 +31,20 @@ export async function getBridgesSummaryEntries() {
       getBridgesSummaryEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl7dBreakdown.projects[project.id.toString()],
+        tvs7dBreakdown.projects[project.id.toString()],
       ),
     )
-    .sort(compareTvl)
+    .sort(compareTvs)
 }
 
 export interface BridgesSummaryEntry extends CommonBridgesEntry {
   type: BridgeDisplay['category']
-  tvl: TvlData
+  tvs: TvsData
   validatedBy: TableReadyValue
-  tvlOrder: number
+  tvsOrder: number
 }
 
-interface TvlData {
+interface TvsData {
   breakdown:
     | {
         total: number
@@ -68,13 +62,13 @@ interface TvlData {
 function getBridgesSummaryEntry(
   project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks' | 'tvlInfo'>,
   changes: ProjectChanges,
-  bridgeTvl: LatestTvl['projects'][string] | undefined,
+  bridgeTvs: LatestTvs['projects'][string] | undefined,
 ) {
   const associatedTokenWarning =
-    bridgeTvl && bridgeTvl.breakdown.total > 0
+    bridgeTvs && bridgeTvs.breakdown.total > 0
       ? getAssociatedTokenWarning({
           associatedRatio:
-            bridgeTvl.breakdown.associated / bridgeTvl.breakdown.total,
+            bridgeTvs.breakdown.associated / bridgeTvs.breakdown.total,
           name: project.name,
           associatedTokens: project.tvlInfo.associatedTokens,
         })
@@ -83,9 +77,9 @@ function getBridgesSummaryEntry(
   return {
     ...getCommonBridgesEntry({ project, changes }),
     type: project.bridgeInfo.category,
-    tvl: {
-      breakdown: bridgeTvl?.breakdown,
-      change: bridgeTvl?.change,
+    tvs: {
+      breakdown: bridgeTvs?.breakdown,
+      change: bridgeTvs?.change,
       associatedTokens: project.tvlInfo.associatedTokens,
       associatedTokenWarning,
       warnings: compact([
@@ -93,6 +87,6 @@ function getBridgesSummaryEntry(
       ]),
     },
     validatedBy: project.bridgeRisks.validatedBy,
-    tvlOrder: bridgeTvl?.breakdown.total ?? -1,
+    tvsOrder: bridgeTvs?.breakdown.total ?? -1,
   }
 }

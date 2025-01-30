@@ -11,7 +11,8 @@
     "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBDecent", // Decent omnichain service (LayerZero)
     "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge", // EOA Bridge / Liquidity network https://relay.link/transactions/
     "0xDb8E759859058952c34953c8469f464109826e52": "OrbitERC20OFTAdapter",
-    "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2": "OftAdapterEOA"
+    "0x3C12B77aE8B7DD1FEB63D1D6a2A819AcdA0a41d2": "OftAdapterEOA",
+    "0xc207cbC35DD3CD172059730380A45aE14eb0e403": "DegenFastConfirmerMultisig"
   },
   "overrides": {
     "OrbitERC20OFTAdapter": {

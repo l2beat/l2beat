@@ -1,10 +1,6 @@
-import {
-  type DaBridge,
-  type DaLayer,
-  type ScalingProjectRisk,
-} from '@l2beat/config'
-import { type DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
+import type { DaBridge, DaLayer, ScalingProjectRisk } from '@l2beat/config'
+import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(

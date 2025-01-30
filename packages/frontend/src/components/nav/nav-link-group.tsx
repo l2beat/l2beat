@@ -13,7 +13,7 @@ import {
 } from '../core/collapsible'
 import { NavDivider } from './nav-divider'
 import { NavLink } from './nav-link'
-import { type NavGroup } from './types'
+import type { NavGroup } from './types'
 
 export interface NavLinkGroupProps {
   group: NavGroup

@@ -24,7 +24,7 @@ export class BalanceProvider {
       holderAddress,
     ])
 
-    const response = await rpc.callWithMulticall(
+    const response = await rpc.call(
       { to: tokenAddress, data: Bytes.fromHex(calldata) },
       blockNumber,
     )

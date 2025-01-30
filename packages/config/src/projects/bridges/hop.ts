@@ -147,12 +147,14 @@ export const hop: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'Hop Multisig',
-      'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
-    ),
-  ],
+  permissions: {
+    actors: [
+      ...discovery.getMultisigPermission(
+        'Hop Multisig',
+        'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
+      ),
+    ],
+  },
   knowledgeNuggets: [
     {
       title: 'Hop protocol deep dive',

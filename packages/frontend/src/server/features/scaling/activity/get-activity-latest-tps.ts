@@ -1,4 +1,4 @@
-import { type Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'

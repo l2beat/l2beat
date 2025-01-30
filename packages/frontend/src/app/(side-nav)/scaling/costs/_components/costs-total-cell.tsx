@@ -1,4 +1,4 @@
-import { type WarningWithSentiment } from '@l2beat/config'
+import type { WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -16,7 +16,7 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { useCostsMetricContext } from './costs-metric-context'
 import { useCostsUnitContext } from './costs-unit-context'
-import { type CostsData } from './table/columns'
+import type { CostsData } from './table/columns'
 
 interface CellProps {
   data: CostsData

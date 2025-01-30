@@ -1,4 +1,4 @@
-import { type CollectionEntry } from '~/content/get-collection'
+import type { CollectionEntry } from '~/content/get-collection'
 import { ChiliIcon } from '~/icons/chili'
 import { cn } from '~/utils/cn'
 

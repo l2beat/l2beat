@@ -1,23 +1,16 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectRiskView,
-} from '@l2beat/config'
+import type { Project, ScalingProjectRiskView } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingRiskEntries() {
-  const [tvl, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvlUsd(),
+  const [tvs, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
@@ -31,27 +24,27 @@ export async function getScalingRiskEntries() {
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
-    .sort(compareStageAndTvl)
+    .sort(compareStageAndTvs)
 
   return groupByTabs(entries)
 }
 
 export interface ScalingRiskEntry extends CommonScalingEntry {
   risks: ScalingProjectRiskView
-  tvlOrder: number
+  tvsOrder: number
 }
 
 function getScalingRiskEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ): ScalingRiskEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvlOrder: tvl ?? -1,
+    tvsOrder: tvs ?? -1,
   }
 }

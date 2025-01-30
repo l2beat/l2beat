@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { type ComponentPropsWithRef } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 
 export function LinkWithOnHoverPrefetch(
   props: Omit<ComponentPropsWithRef<typeof Link>, 'prefetch'>,

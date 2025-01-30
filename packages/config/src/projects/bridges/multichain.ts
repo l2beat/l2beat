@@ -123,35 +123,37 @@ export const multichain: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Multichain "Liquidity Tool"',
-      description:
-        'Privileged account that received funds from Ethereum source escrow without corresponding burn on the destination chain. These funds were bridged to different chains and used to supply liquidity\
+  permissions: {
+    actors: [
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Multichain "Liquidity Tool"',
+        description:
+          'Privileged account that received funds from Ethereum source escrow without corresponding burn on the destination chain. These funds were bridged to different chains and used to supply liquidity\
         for various anyTokens. Users have to trust this account that it never tries to redeem held anyTokens for the underlying canonical token.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Multichain MPC',
-      description:
-        'Account controlled by the MPC nodes. Can set minters for anyTokens. Can access liquidity in anyTokens.',
-    },
-  ],
+      },
+      {
+        accounts: [
+          {
+            address: EthereumAddress(
+              '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
+            ),
+            type: 'EOA',
+          },
+        ],
+        name: 'Multichain MPC',
+        description:
+          'Account controlled by the MPC nodes. Can set minters for anyTokens. Can access liquidity in anyTokens.',
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Anyswap rebrands to Multichain',

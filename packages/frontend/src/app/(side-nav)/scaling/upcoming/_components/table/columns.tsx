@@ -4,7 +4,7 @@ import {
   TypeExplanationTooltip,
 } from '~/components/table/cells/type-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
 

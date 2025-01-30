@@ -5,7 +5,7 @@ import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 
 interface Props {
   values: RosetteValue[]

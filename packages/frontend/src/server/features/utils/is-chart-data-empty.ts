@@ -1,7 +1,7 @@
-import { type ActivityChartData } from '../scaling/activity/get-activity-chart'
-import { type TvlChartData } from '../scaling/tvl/get-tvl-chart-data'
+import type { ActivityChartData } from '../scaling/activity/get-activity-chart'
+import type { TvsChartData } from '../scaling/tvs/get-tvs-chart-data'
 
-export function isTvlChartDataEmpty(data: TvlChartData) {
+export function isTvsChartDataEmpty(data: TvsChartData) {
   return data.every(
     ([_, native, canonical, external]) =>
       native === 0 && canonical === 0 && external === 0,

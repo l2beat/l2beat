@@ -17,7 +17,7 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
   const evaluatedRisks = getDaRisks(
     project.dataAvailabilitySolution,
     project.dataAvailabilitySolution.bridge,
-    0, // TODO: getTVL
+    0, // TODO: getTVS
   )
 
   const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)

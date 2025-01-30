@@ -52,6 +52,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -134,6 +135,7 @@ interface OpStackConfigCommon {
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
+  disputeGameFactory?: ContractParameters
   portal?: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
   stateValidation?: ScalingProjectStateValidation
@@ -141,7 +143,7 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
@@ -336,16 +338,18 @@ function opStackCommon(
     technology: getTechnology(templateVars, explorerUrl),
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          ...templateVars.discovery.getOpStackPermissions({
-            batcherHash: 'Sequencer',
-            PROPOSER: 'Proposer',
-            GUARDIAN: 'Guardian',
-            CHALLENGER: 'Challenger',
-            ...(templateVars.roleOverrides ?? {}),
-          }),
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            ...templateVars.discovery.getOpStackPermissions({
+              batcherHash: 'Sequencer',
+              PROPOSER: 'Proposer',
+              GUARDIAN: 'Guardian',
+              CHALLENGER: 'Challenger',
+              ...(templateVars.roleOverrides ?? {}),
+            }),
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nonTemplateNativePermissions,
@@ -983,9 +987,8 @@ function getTechnologyExitMechanism(
         templateVars.discovery.getContract('L2OutputOracle')
 
       result.push({
-        ...EXITS.REGULAR(
+        ...EXITS.REGULAR_MESSAGING(
           'optimistic',
-          'merkle proof',
           getFinalizationPeriod(templateVars),
         ),
         references: explorerReferences(explorerUrl, [
@@ -1060,7 +1063,7 @@ function getTechnologyExitMechanism(
   }
 
   result.push({
-    ...EXITS.FORCED('all-withdrawals'),
+    ...EXITS.FORCED_MESSAGING('all-messages'),
     references: [
       {
         title: 'Forced withdrawal from an OP Stack blockchain',
@@ -1166,17 +1169,15 @@ function getTrackedTxs(
   templateVars: OpStackConfigCommon,
 ): Layer2TxConfig[] | undefined {
   const fraudProofType = getFraudProofType(templateVars)
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
+  const sequencerAddress = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+
   switch (fraudProofType) {
     case 'None': {
-      const sequencerInbox = EthereumAddress(
-        templateVars.discovery.getContractValue(
-          'SystemConfig',
-          'sequencerInbox',
-        ),
-      )
-      const sequencerAddress = EthereumAddress(
-        templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
-      )
       const l2OutputOracle =
         templateVars.l2OutputOracle ??
         templateVars.discovery.getContract('L2OutputOracle')
@@ -1215,7 +1216,40 @@ function getTrackedTxs(
         ]
       )
     }
-    case 'Permissioned':
+    case 'Permissioned': {
+      const disputeGameFactory =
+        templateVars.disputeGameFactory ??
+        templateVars.discovery.getContract('DisputeGameFactory')
+
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: disputeGameFactory.address,
+            selector: '0x82ecf2f6',
+            functionSignature:
+              'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
     case 'Permissionless':
       return undefined
   }

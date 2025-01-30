@@ -1,5 +1,6 @@
-import { type VariantProps, cva } from 'class-variance-authority'
-import { type SvgIconProps } from './svg-icon'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
+import type { SvgIconProps } from './svg-icon'
 
 interface Props extends SvgIconProps, VariantProps<typeof iconVariants> {}
 
