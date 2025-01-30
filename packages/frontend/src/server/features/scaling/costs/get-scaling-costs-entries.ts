@@ -49,10 +49,11 @@ function getScalingCostEntry(
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
 ): ScalingCostsEntry {
-  let costPerUop = Infinity
-  if (costs?.uopsCount && costs.usd.total) {
-    costPerUop = costs.usd.total / costs.uopsCount
-  }
+  const costPerUop =
+    costs?.uopsCount && costs.usd.total
+      ? costs.usd.total / costs.uopsCount
+      : Infinity
+
   return {
     ...getCommonScalingEntry({ project, changes }),
     href: `/scaling/projects/${project.slug}#onchain-costs`,
