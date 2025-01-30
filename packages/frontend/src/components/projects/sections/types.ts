@@ -39,6 +39,7 @@ type SectionId =
   | 'permissions'
   | 'contracts'
   | 'knowledge-nuggets'
+  | 'sequencing'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
