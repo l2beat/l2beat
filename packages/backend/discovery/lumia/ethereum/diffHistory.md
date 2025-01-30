@@ -7,7 +7,7 @@ Generated with discovered.json: 0xe105f706e2bb89bb43f7820bb1b3f756dba47bd6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: PolygonCDK type 4 validium (DAC) with custom gastoken LUMIA.
 
 ## Initial discovery
 
