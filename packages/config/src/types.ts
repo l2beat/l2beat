@@ -882,7 +882,7 @@ export interface DaBridge {
   display: DaBridgeDisplay
   isUnderReview?: boolean
   technology: DaTechnology
-  usedIn: UsedInProject[] | 'self'
+  usedIn: UsedInProject[]
   otherConsiderations?: ProjectTechnologyChoice[]
   risks: DaBridgeRisks
   /** Replaces risk grissini */

@@ -54,9 +54,7 @@ describe('verification status', () => {
       for (const bridge of project.daLayer.bridges) {
         for (const chain of chains) {
           it(`${bridge.id ?? 'bridge'} of ${chain}`, () => {
-            const projectIds = Array.isArray(bridge.usedIn)
-              ? bridge.usedIn.map((u) => u.id.toString())
-              : []
+            const projectIds = bridge.usedIn.map((u) => u.id.toString())
             if (bridge.id) {
               projectIds.push(bridge.id)
             }

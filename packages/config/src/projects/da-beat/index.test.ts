@@ -46,9 +46,7 @@ describe('DA-BEAT', () => {
 
       const daBeatProjectIds = daLayers.flatMap((project) =>
         project.daLayer.bridges.flatMap((bridge) =>
-          Array.isArray(bridge.usedIn)
-            ? bridge.usedIn.map((usedIn) => usedIn.id)
-            : [],
+          bridge.usedIn.map((usedIn) => usedIn.id),
         ),
       )
 

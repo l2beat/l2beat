@@ -130,7 +130,7 @@ export const redstone: Layer2 = opStackL2({
           upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
           relayerFailure: DaRelayerFailureRisk.NoMechanism,
         },
-        usedIn: 'self',
+        usedIn: [],
       },
     ],
     risks: {

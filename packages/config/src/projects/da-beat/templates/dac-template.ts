@@ -82,8 +82,8 @@ export function DAC(template: DacTemplateVars): DaLayer {
       relayerFailure:
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
-    usedIn: 'self',
     otherConsiderations: template.bridge.otherConsiderations,
+    usedIn: [],
   }
 
   // DAC "DA-Layer"

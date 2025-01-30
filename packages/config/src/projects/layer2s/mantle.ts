@@ -91,7 +91,7 @@ const mantleDataAvailabilitySolution: DaLayer = {
         upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(), // no delay
         relayerFailure: DaRelayerFailureRisk.NoMechanism,
       },
-      usedIn: 'self',
+      usedIn: [],
     },
   ],
   risks: {
