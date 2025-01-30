@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "LUMIA",
+      "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+      "coingeckoId": "lumia"
+    },
+    {
       "symbol": "CAPS",
       "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2"
     },

@@ -44,21 +44,24 @@ export const lumia: Layer2 = polygonCDKStack({
   display: {
     name: 'Lumia',
     slug: 'lumia',
-    description: 'Lumia is a modular L2 aiming at leveraging Polygon CDK, EigenDA, and AggLayer to achieve enhanced functionality in DeFi applications.',
+    description:
+      'Lumia is a Validium built on the PolygonCDK stack focusing on Real World Assets, restaking and account abstraction.',
     links: {
       websites: ['https://lumia.org/'],
       apps: ['https://bridge.lumia.org/'],
       explorers: ['https://explorer.lumia.org/', 'https://lens.lumia.org/'],
       documentation: ['https://docs.lumia.org/'],
-      repositories: ['https://github.com/orionprotocol/cdk-validium-permissionless-node'],
+      repositories: [
+        'https://github.com/orionprotocol/cdk-validium-permissionless-node',
+      ],
       socialMedia: [
         'https://x.com/BuildOnLumia',
         'https://t.me/lumia_community',
-        'https://discord.gg/Lumia'
+        'https://discord.gg/Lumia',
       ],
     },
   },
-  rpcUrl: '', // successfully tested at 5k/min
+  rpcUrl: 'https://mainnet-rpc.lumia.org',
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -72,7 +75,8 @@ export const lumia: Layer2 = polygonCDKStack({
     }),
     technology: {
       name: 'Data is not stored on chain',
-      description: 'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
+      description:
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the Sequencer, after being signed by the DAC members.',
       risks: [
         {
           category: 'Funds can be lost if',
@@ -82,8 +86,9 @@ export const lumia: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          title: 'PolygonValidiumEtrog.sol - Etherscan source code, sequenceBatchesValidium function',
-          url: 'https://etherscan.io/address//0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F#code#F1#L91',
+          title:
+            'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          url: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -95,7 +100,7 @@ export const lumia: Layer2 = polygonCDKStack({
     name: 'lumia',
     chainId: 994873017,
     explorerUrl: '',
-    minTimestampForTvl: new UnixTime(),
+    minTimestampForTvl: new UnixTime(1719499031),
   },
   nonTemplateEscrows: [
     shared.getEscrowDetails({
@@ -105,9 +110,9 @@ export const lumia: Layer2 = polygonCDKStack({
         type: 'AggLayer',
         nativeAsset: 'etherWrapped',
         wethAddress: EthereumAddress(
-          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c'
+          '0x5A77f1443D16ee5761d310e38b62f77f726bC71c',
         ),
-        tokensToAssignFromL1: ['CAPS'],
+        tokensToAssignFromL1: ['LUMIA'],
       },
     }),
   ],
@@ -117,10 +122,13 @@ export const lumia: Layer2 = polygonCDKStack({
     },
   },
   stateDerivation: {
-    nodeSoftware: 'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',
+    nodeSoftware:
+      'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',
     compressionScheme: 'No compression scheme yet.',
-    genesisState: 'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot(5,0)` method of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
-    dataFormat: 'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
+    genesisState:
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot(5,0)` method of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
+    dataFormat:
+      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
 
   nonTemplatePermissions: [
@@ -128,24 +136,27 @@ export const lumia: Layer2 = polygonCDKStack({
       name: 'LocalAdmin',
       accounts: [
         discovery.formatPermissionedAccount(
-          discovery.getContractValue('LumiaValidium', 'admin')
+          discovery.getContractValue('LumiaValidium', 'admin'),
         ),
       ],
-      description: 'Admin and ForceBatcher of the LumiaValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the LumiaDAC contract.',
+      description:
+        'Admin and ForceBatcher of the LumiaValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the LumiaDAC contract.',
     },
     {
       name: 'LumiaDAC Upgrader',
       accounts: [
         discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner')
+          discovery.getContractValue('DACProxyAdmin', 'owner'),
         ),
       ],
-      description: 'Can upgrade the LumiaDAC contract and thus change the data availability rules any time.',
+      description:
+        'Can upgrade the LumiaDAC contract and thus change the data availability rules any time.',
     },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('LumiaDAC', {
-      description: 'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
+      description:
+        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
       ...upgradeability,
     }),
   ],
@@ -158,5 +169,5 @@ export const lumia: Layer2 = polygonCDKStack({
       transactionDataType: 'Transaction data',
     },
   }),
-  milestones: []
+  milestones: [],
 })
