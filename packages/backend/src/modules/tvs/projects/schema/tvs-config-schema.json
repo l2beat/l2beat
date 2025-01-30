@@ -1,0 +1,212 @@
+{
+  "$ref": "#/definitions/TvsConfig",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AmountFormula": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BalanceOfEscrowAmountFormula"
+        },
+        {
+          "$ref": "#/definitions/TotalSupplyAmountFormula"
+        },
+        {
+          "$ref": "#/definitions/CirculatingSupplyAmountFormula"
+        }
+      ]
+    },
+    "BalanceOfEscrowAmountFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "chain": {
+          "type": "string"
+        },
+        "decimals": {
+          "type": "number"
+        },
+        "escrowAddress": {
+          "type": "string"
+        },
+        "type": {
+          "const": "balanceOfEscrow",
+          "type": "string"
+        }
+      },
+      "required": ["type", "address", "chain", "escrowAddress", "decimals"],
+      "type": "object"
+    },
+    "CalculationFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/CalculationFormula"
+              },
+              {
+                "$ref": "#/definitions/ValueFormula"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "operator": {
+          "$ref": "#/definitions/Operator"
+        },
+        "type": {
+          "const": "calculation",
+          "type": "string"
+        }
+      },
+      "required": ["type", "operator", "arguments"],
+      "type": "object"
+    },
+    "CirculatingSupplyAmountFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "ticker": {
+          "type": "string"
+        },
+        "type": {
+          "const": "circulatingSupply",
+          "type": "string"
+        }
+      },
+      "required": ["type", "ticker"],
+      "type": "object"
+    },
+    "Operator": {
+      "enum": ["sum", "diff"],
+      "type": "string"
+    },
+    "Token": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/AmountFormula"
+        },
+        "category": {
+          "enum": ["ether", "stablecoin", "other"],
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "isAssociated": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sinceTimestamp": {
+          "type": "number"
+        },
+        "source": {
+          "enum": ["canonical", "external", "native"],
+          "type": "string"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "string"
+        },
+        "untilTimestamp": {
+          "type": "number"
+        },
+        "valueForProject": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CalculationFormula"
+            },
+            {
+              "$ref": "#/definitions/ValueFormula"
+            }
+          ]
+        },
+        "valueForTotal": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CalculationFormula"
+            },
+            {
+              "$ref": "#/definitions/ValueFormula"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "ticker",
+        "symbol",
+        "name",
+        "amount",
+        "sinceTimestamp",
+        "category",
+        "source",
+        "isAssociated"
+      ],
+      "type": "object"
+    },
+    "TotalSupplyAmountFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "chain": {
+          "type": "string"
+        },
+        "decimals": {
+          "type": "number"
+        },
+        "type": {
+          "const": "totalSupply",
+          "type": "string"
+        }
+      },
+      "required": ["type", "address", "chain", "decimals"],
+      "type": "object"
+    },
+    "TvsConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "type": "string"
+        },
+        "projectId": {
+          "type": "string"
+        },
+        "tokens": {
+          "items": {
+            "$ref": "#/definitions/Token"
+          },
+          "type": "array"
+        }
+      },
+      "required": ["projectId", "tokens"],
+      "type": "object"
+    },
+    "ValueFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/AmountFormula"
+        },
+        "ticker": {
+          "type": "string"
+        },
+        "type": {
+          "const": "value",
+          "type": "string"
+        }
+      },
+      "required": ["type", "amount", "ticker"],
+      "type": "object"
+    }
+  }
+}
