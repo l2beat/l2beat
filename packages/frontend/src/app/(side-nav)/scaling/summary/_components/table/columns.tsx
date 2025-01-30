@@ -19,7 +19,7 @@ import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
-import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
+import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -68,18 +68,18 @@ export const scalingSummaryColumns = [
   ),
   columnHelper.accessor(
     (e) => {
-      return e.tvl?.breakdown?.total
+      return e.tvs?.breakdown?.total
     },
     {
       id: 'total',
       header: 'Total value secured',
       cell: (ctx) => {
-        const value = ctx.row.original.tvl
+        const value = ctx.row.original.tvs
 
         return (
           <TotalCell
             associatedTokenSymbols={value.associatedTokens}
-            tvlWarnings={value.warnings}
+            tvsWarnings={value.warnings}
             breakdown={value.breakdown}
             change={value.change}
           />

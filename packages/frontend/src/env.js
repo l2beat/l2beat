@@ -33,7 +33,7 @@ export const env = createEnv({
     VERCEL_URL: z.string().optional(),
     VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
     EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
-    EXCLUDED_TVL_PROJECTS: stringArray.optional(),
+    EXCLUDED_TVS_PROJECTS: stringArray.optional(),
   },
 
   /**
@@ -64,7 +64,7 @@ export const env = createEnv({
     VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
-    EXCLUDED_TVL_PROJECTS: process.env.EXCLUDED_TVL_PROJECTS,
+    EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,

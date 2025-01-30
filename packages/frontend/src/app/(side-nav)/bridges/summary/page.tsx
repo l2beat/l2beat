@@ -1,4 +1,4 @@
-import { BridgesTvlChart } from '~/components/chart/tvl/bridges-tvl-chart'
+import { BridgesTvsChart } from '~/components/chart/tvs/bridges-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
@@ -17,7 +17,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [entries] = await Promise.all([
     getBridgesSummaryEntries(),
-    api.tvl.chart.prefetch({
+    api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
@@ -31,7 +31,7 @@ export default async function Page() {
           <MainPageHeader>Summary</MainPageHeader>
           <BridgesMvpWarning className="md:mb-3" sidebar />
           <PrimaryCard>
-            <BridgesTvlChart />
+            <BridgesTvsChart />
           </PrimaryCard>
           <PrimaryCard className="md:mt-6">
             <BridgesSummaryTable entries={entries} />
