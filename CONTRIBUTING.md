@@ -56,6 +56,8 @@ Running the website with data requires a database. Setting up that database is c
 
 If you are a member of the L2Beat organization on GitHub, opening a pull request will prompt [vercel](https://vercel.com) to run a container including live data. Vercel will comment on your PR with the container's URL. NB: Vercel's post-commit hook will also respond to _draft_ PRs so you may wish to use a draft PR to avoid spamming administrators until you are ready for their review.
 
+The website will be available on http://localhost:3000/
+
 ## Add tokens to a project
 
 If while adding your project you find that some of the tokens locked in it are missing from our
