@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xe704c9cba535eba911b076fa63103f9ea517858e
+
+# Diff at Thu, 30 Jan 2025 10:48:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21723792
+- current block number: 21736831
+
+## Description
+
+DVN in ulnConfig for sfrxETH changed: Google Cloud replaced with Horizen.
+
+## Watched changes
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
++++ description: The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_sfrxETH.4.1:
+-        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
++        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++++ description: The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])
+      values.ulnConfig_sfrxETH.4.0:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "0x380275805876Ff19055EA900CDb2B46a94ecF20D"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@21723792/GoogleCloudDVN.sol => /dev/null | 1667 --------------------
+ .../.flat@21723792/VerifierFeeLib.sol => /dev/null |  948 -----------
+ 2 files changed, 2615 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723792 (main branch discovery), not current.
+
+```diff
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: None
+      name:
+-        "DVN"
++        "HorizenDVN"
+    }
+```
+
 Generated with discovered.json: 0x6db8d30c7c448a7921f171e4a4ca093a4f1b08f9
 
 # Diff at Tue, 28 Jan 2025 15:04:02 GMT:
