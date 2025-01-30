@@ -34,39 +34,31 @@ export function MultichainPermissionsSection({
 
       <div className="my-4">
         {Object.entries(permissions).map(([chainName, permissions]) => {
-          if (permissions.roles.length > 0) {
+          if (permissions.roles.length > 0 || permissions.actors.length > 0) {
             return (
               <div key={chainName}>
                 <h3 className="font-bold">
                   The system consists of the following permissions on{' '}
                   {chainName}:
                 </h3>
-                {permissions.roles.map((permission) => (
-                  <ContractEntry
-                    key={technologyContractKey(permission)}
-                    contract={permission}
-                    className="my-4"
-                    type="permission"
-                  />
-                ))}
-              </div>
-            )
-          }
-          if (permissions.actors.length > 0) {
-            return (
-              <div key={chainName}>
-                <h3 className="font-bold">
-                  The system consists of the following permissions on{' '}
-                  {chainName}:
-                </h3>
-                {permissions.actors.map((permission) => (
-                  <ContractEntry
-                    key={technologyContractKey(permission)}
-                    contract={permission}
-                    className="my-4"
-                    type="permission"
-                  />
-                ))}
+                {permissions.roles.length > 0 &&
+                  permissions.roles.map((permission) => (
+                    <ContractEntry
+                      key={technologyContractKey(permission)}
+                      contract={permission}
+                      className="my-4"
+                      type="permission"
+                    />
+                  ))}
+                {permissions.actors.length > 0 &&
+                  permissions.actors.map((permission) => (
+                    <ContractEntry
+                      key={technologyContractKey(permission)}
+                      contract={permission}
+                      className="my-4"
+                      type="permission"
+                    />
+                  ))}
               </div>
             )
           }
