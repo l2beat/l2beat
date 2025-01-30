@@ -61,6 +61,7 @@ export function getPermissionsSection(
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): PermissionSection | undefined {
   if (
+    projectParams.permissions !== 'UnderReview' &&
     Object.values(projectParams.permissions).every((p) =>
       permissionsAreEmpty(p),
     ) &&

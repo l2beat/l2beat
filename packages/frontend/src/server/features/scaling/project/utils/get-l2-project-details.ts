@@ -1,7 +1,7 @@
 import type { Layer2 } from '@l2beat/config'
 import {
-  ProjectId,
   type ContractsVerificationStatuses,
+  ProjectId,
 } from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -11,6 +11,7 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
+import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -23,7 +24,6 @@ import { getScalingTechnologySection } from '~/utils/project/technology/get-tech
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
-import { mergePermissions } from '~/server/features/utils/merge-permissions'
 
 interface Params {
   project: Layer2

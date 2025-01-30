@@ -1,7 +1,7 @@
 import type { Bridge } from '@l2beat/config'
 import {
-  ProjectId,
   type ContractsVerificationStatuses,
+  ProjectId,
 } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'

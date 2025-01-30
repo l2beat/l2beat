@@ -1,5 +1,6 @@
 import type { ScalingProjectPermissions } from '@l2beat/config'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 
 // TODO(radomski): This is temporary, config will export the same type as
 // nativePermissions. There is really not reason for it to be seperated

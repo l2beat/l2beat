@@ -1,8 +1,5 @@
-import type { Layer2, Layer3, ScalingProjectPermissions } from '@l2beat/config'
-import type {
-  ContractsVerificationStatuses,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import type { Layer2, Layer3 } from '@l2beat/config'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -11,6 +8,7 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
+import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -23,7 +21,6 @@ import { getScalingTechnologySection } from '~/utils/project/technology/get-tech
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
-import { mergePermissions } from '~/server/features/utils/merge-permissions'
 
 interface Params {
   project: Layer3
