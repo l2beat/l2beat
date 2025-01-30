@@ -1,9 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import type { DaBridge } from '../types'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -24,12 +24,8 @@ export const vector = {
     slug: 'vector',
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
     links: {
-      websites: [],
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
     },
   },
   validation: validation,

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const zklighter: Layer2 = upcomingL2({
   id: 'zklighter',
@@ -16,10 +16,7 @@ export const zklighter: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://zk.lighter.xyz'],
-      apps: [],
       documentation: ['https://zk.lighter.xyz/developers'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/lighter_xyz'],
     },
   },

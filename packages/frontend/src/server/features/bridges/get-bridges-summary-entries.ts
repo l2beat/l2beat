@@ -2,7 +2,7 @@ import {
   type BridgeDisplay,
   type Project,
   ProjectService,
-  type ScalingProjectRiskViewEntry,
+  type TableReadyValue,
   type WarningWithSentiment,
 } from '@l2beat/config'
 import { compact } from 'lodash'
@@ -46,7 +46,7 @@ export async function getBridgesSummaryEntries() {
 export interface BridgesSummaryEntry extends CommonBridgesEntry {
   type: BridgeDisplay['category']
   tvl: TvlData
-  validatedBy: ScalingProjectRiskViewEntry
+  validatedBy: TableReadyValue
   tvlOrder: number
 }
 

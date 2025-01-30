@@ -17,7 +17,10 @@
     {
       "name": "WitnessValidium",
       "address": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-      "unverified": true,
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+      ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1718558735,
@@ -278,6 +281,16 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
+    ],
+    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

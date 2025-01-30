@@ -74,7 +74,7 @@ function Warning({ warning }: { warning: WarningWithSentiment }) {
               sentiment={warning.sentiment}
             />
           }
-          body={warning.content}
+          body={warning.value}
         />
       </TooltipContent>
     </Tooltip>

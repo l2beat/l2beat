@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const socialnetwork: Layer2 = upcomingL2({
   id: 'socialnetwork',
@@ -16,10 +16,6 @@ export const socialnetwork: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://social.network/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/socialnetworkL2'],
     },
   },

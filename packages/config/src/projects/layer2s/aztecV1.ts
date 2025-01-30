@@ -17,8 +17,8 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aztec')
 
@@ -65,8 +65,6 @@ export const aztecV1: Layer2 = {
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',

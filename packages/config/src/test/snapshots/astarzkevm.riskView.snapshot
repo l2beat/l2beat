@@ -2,14 +2,14 @@
 
 {
   dataAvailability: {
-    definingMetric: 0.6
     description: "Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC) with a threshold of 3/5 that is tasked with protecting and supplying the data."
+    orderHint: 0.6
     sentiment: "bad"
     value: "External (DAC)"
   }
   exitWindow: {
-    definingMetric: -432000
     description: "Even though there is a 10d Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to 15d."
+    orderHint: -432000
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -30,8 +30,8 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
     value: "ZK proofs (ST, SN)"

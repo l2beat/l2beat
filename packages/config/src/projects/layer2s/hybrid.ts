@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const hybrid: Layer2 = upcomingL2({
   id: 'hybrid',
@@ -16,9 +16,7 @@ export const hybrid: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://buildonhybrid.com/'],
-      apps: [],
       documentation: ['https://docs.buildonhybrid.com'],
-      explorers: [],
       repositories: ['https://github.com/buildonhybrid'],
       socialMedia: [
         'https://x.com/BuildOnHybrid',

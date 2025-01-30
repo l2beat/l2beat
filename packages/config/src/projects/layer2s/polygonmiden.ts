@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const polygonmiden: Layer2 = upcomingL2({
   id: 'polygon-miden',
@@ -16,9 +16,7 @@ export const polygonmiden: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
-      apps: [],
       documentation: ['https://docs.polygon.technology/miden/'],
-      explorers: [],
       repositories: ['https://github.com/0xPolygonMiden'],
       socialMedia: [
         'https://x.com/0xPolygon',

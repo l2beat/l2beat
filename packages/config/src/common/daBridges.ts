@@ -1,35 +1,38 @@
-import type { DataAvailabilityBridge } from '../types'
+import { probabilityOfCompromise } from '../projects/da-beat/common'
+import type { TableReadyValue } from '../types'
 import { getDacSentiment } from './dataAvailability'
 
-const NONE: DataAvailabilityBridge = {
+const NONE: TableReadyValue = {
   value: 'None',
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available.',
+  orderHint: -2,
 }
 
-const NONE_WITH_DA_CHALLENGES: DataAvailabilityBridge = {
+const NONE_WITH_DA_CHALLENGES: TableReadyValue = {
   value: 'None + DA challenges',
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge the unavailability of data.',
+  orderHint: -1,
 }
 
-const ENSHRINED: DataAvailabilityBridge = {
+const ENSHRINED: TableReadyValue = {
   value: 'Enshrined',
   sentiment: 'good',
   description:
     'The validating bridge has access to all the data, as it is posted onchain.',
 }
 
-const OPTIMISTIC: DataAvailabilityBridge = {
+const OPTIMISTIC: TableReadyValue = {
   value: 'Optimistic',
   sentiment: 'bad',
   description:
     'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
 }
 
-const BLOBSTREAM: DataAvailabilityBridge = {
+const BLOBSTREAM: TableReadyValue = {
   value: 'Blobstream',
   sentiment: 'warning',
   description:
@@ -42,7 +45,7 @@ function DAC_MEMBERS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): DataAvailabilityBridge {
+}): TableReadyValue {
   return {
     value: requiredSignatures
       ? `${requiredSignatures}/${membersCount} DAC Members`
@@ -54,6 +57,7 @@ function DAC_MEMBERS({
     description: requiredSignatures
       ? `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`
       : `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 
@@ -63,11 +67,12 @@ function STAKED_OPERATORS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): DataAvailabilityBridge {
+}): TableReadyValue {
   return {
     value: `${requiredSignatures}/${membersCount} Staked Operators`,
     sentiment: 'warning',
     description: `There is a threshold of ${requiredSignatures}/${membersCount} of staked operators that must sign and attest that the data has been made available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 

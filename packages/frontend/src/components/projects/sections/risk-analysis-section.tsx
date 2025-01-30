@@ -98,7 +98,7 @@ export function SingleRisk({
       ) : (
         <>
           <SentimentText
-            sentiment={value.sentiment}
+            sentiment={value.sentiment ?? 'neutral'}
             className="block text-xl font-medium md:text-2xl"
             vibrant
           >

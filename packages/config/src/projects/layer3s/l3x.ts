@@ -3,10 +3,10 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
@@ -33,7 +33,6 @@ export const l3x: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.l3x.com/'],
       explorers: ['https://explorer.l3x.com/'],
-      repositories: [],
       socialMedia: ['https://t.me/l3x_protocol', 'https://x.com/l3x_protocol'],
     },
   },

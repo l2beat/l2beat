@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 import { vector } from './vector'
 
 export const avail: BlockchainDaLayer = {
@@ -140,4 +140,13 @@ export const avail: BlockchainDaLayer = {
       coingeckoId: 'avail',
     },
   },
+  milestones: [
+    {
+      title: 'Mainnet launch',
+      url: 'https://blog.availproject.org/avail-da-mainnet-is-live/',
+      date: '2024-07-23T00:00:00Z',
+      description: 'Avail mainnet and the AVAIL token launch.',
+      type: 'general',
+    },
+  ],
 }
