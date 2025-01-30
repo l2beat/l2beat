@@ -56,6 +56,8 @@ export type PermissionType =
   | 'upgrade'
   | 'act'
   | 'validateZkStack'
+  | 'validateBridge'
+  | 'relay'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress

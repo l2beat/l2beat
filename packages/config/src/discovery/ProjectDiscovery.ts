@@ -863,6 +863,8 @@ export class ProjectDiscovery {
       operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
       validateZkStack: 'A Validator',
+      relay: 'A Relayer',
+      validateBridge: 'A Validator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -930,6 +932,8 @@ export class ProjectDiscovery {
       operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
       validateZkStack: 'Can act as a Validator',
+      relay: 'Can act as a Relayer',
+      validateBridge: 'Can act as a Validator',
     }
 
     return Object.entries(
@@ -1208,6 +1212,16 @@ const roleDescriptions: {
     name: 'Validator',
     description:
       'Actors permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
+  },
+  validateBridge: {
+    name: 'Validator',
+    description:
+      'Actors permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
+  },
+  relay: {
+    name: 'Relayer',
+    description:
+      'Actors permissioned to relay messages that are then verified onchain.',
   },
 }
 

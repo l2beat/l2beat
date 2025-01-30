@@ -1935,6 +1935,20 @@
       "supply": "zero"
     },
     {
+      "name": "Euro Coin",
+      "coingeckoId": "euro-coin",
+      "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1652995438,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Euro Tether",
       "coingeckoId": "tether-eurt",
       "address": "0xC581b735A1688071A1746c968e0798D642EDE491",
