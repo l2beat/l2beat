@@ -52,7 +52,7 @@ export const degate2: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate2'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
@@ -203,7 +203,7 @@ export const degate2: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Withdraw - DeGate design doc',
@@ -212,7 +212,7 @@ export const degate2: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'Forced Request Handling - DeGate design doc',

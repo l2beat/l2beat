@@ -1,4 +1,4 @@
-import { type ActivityRecord } from '@l2beat/database'
+import type { ActivityRecord } from '@l2beat/database'
 
 export function sumUopsCount(records: ActivityRecord[]) {
   return records.reduce((acc, record) => {

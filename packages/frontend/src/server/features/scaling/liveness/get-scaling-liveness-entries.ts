@@ -1,33 +1,25 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
-  type TableReadyValue,
+import type {
+  Project,
+  ScalingProjectCategory,
+  ScalingProjectStack,
+  TableReadyValue,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 import { getLiveness } from './get-liveness'
-import {
-  type LivenessAnomaly,
-  type LivenessDetails,
-  type LivenessProject,
-} from './types'
+import type { LivenessAnomaly, LivenessDetails, LivenessProject } from './types'
 import { getLivenessSyncWarning } from './utils/is-liveness-synced'
 
 export async function getScalingLivenessEntries() {
-  const [tvl, projectsChangeReport, liveness, projects] = await Promise.all([
-    getProjectsLatestTvlUsd(),
+  const [tvs, projectsChangeReport, liveness, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     getLiveness(),
     ProjectService.STATIC.getProjects({
@@ -44,11 +36,11 @@ export async function getScalingLivenessEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         liveness[project.id.toString()],
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
     .filter((x) => x !== undefined)
-    .sort(compareStageAndTvl)
+    .sort(compareStageAndTvs)
 
   return groupByTabs(entries)
 }
@@ -60,14 +52,14 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
   dataAvailabilityMode: TableReadyValue | undefined
-  tvlOrder: number
+  tvsOrder: number
 }
 
 function getScalingLivenessEntry(
   project: Project<'scalingInfo' | 'statuses' | 'livenessInfo', 'scalingDa'>,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ): ScalingLivenessEntry | undefined {
   if (!liveness) {
     return undefined
@@ -84,7 +76,7 @@ function getScalingLivenessEntry(
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,
     dataAvailabilityMode: project.scalingDa?.mode,
-    tvlOrder: tvl ?? -1,
+    tvsOrder: tvs ?? -1,
   }
 }
 

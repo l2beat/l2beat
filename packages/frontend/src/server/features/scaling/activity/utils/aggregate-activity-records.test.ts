@@ -1,4 +1,4 @@
-import { type ActivityRecord } from '@l2beat/database'
+import type { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 

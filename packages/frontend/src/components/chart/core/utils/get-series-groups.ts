@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { type ChartColumn } from '../chart-context'
+import type { ChartColumn } from '../chart-context'
 
 export function getSeriesGroups(columns: ChartColumn[], seriesIndex: number) {
   return columns.reduce<{ value: number; dashed?: boolean }[][]>(

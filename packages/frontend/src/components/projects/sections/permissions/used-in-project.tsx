@@ -1,4 +1,4 @@
-import { type ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 import Image from 'next/image'
 import {
   Tooltip,

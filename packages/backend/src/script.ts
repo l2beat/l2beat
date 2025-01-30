@@ -1,6 +1,12 @@
 import { writeFileSync } from 'fs'
 import path from 'path'
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import {
+  type Env,
+  LogFormatterPretty,
+  type LogLevel,
+  Logger,
+  getEnv,
+} from '@l2beat/backend-tools'
 import {
   BlockProvider,
   CoingeckoClient,
@@ -10,13 +16,18 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { kintoConfig } from './modules/tvs/projects/kinto'
+import { bobConfig } from './modules/tvs/projects/bob'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
 import { RpcClientPOC } from './modules/tvs/providers/RpcClientPOC'
 import { TotalSupplyProvider } from './modules/tvs/providers/TotalSupplyProvider'
-import type { Token, TokenValue, TvsBreakdown } from './modules/tvs/types'
+import type {
+  Token,
+  TokenValue,
+  TvsBreakdown,
+  TvsConfig,
+} from './modules/tvs/types'
 
 main()
   .catch((e: unknown) => {
@@ -26,67 +37,23 @@ main()
 
 async function main() {
   const env = getEnv()
-  const http = new HttpClient()
-  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
-  const logger = Logger.INFO
+  const logger = initLogger(env)
+  const localExecutor = initLocalExecutor(env, logger)
 
-  const coingeckoClient = new CoingeckoClient({
-    apiKey: coingeckoApiKey,
-    retryStrategy: 'RELIABLE',
-    logger,
-    callsPerMinute: coingeckoApiKey ? 400 : 10,
-    http,
-    sourceName: 'coingecko',
-  })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-  const priceProvider = new PriceProvider(coingeckoQueryService)
-  const circulatingSupplyProvider = new CirculatingSupplyProvider(
-    coingeckoQueryService,
-  )
+  const config = bobConfig
 
-  const chains = ['ethereum', 'arbitrum', 'kinto', 'base']
-  const rpcs = new Map<string, RpcClientPOC>()
-  const blockProviders = new Map<string, BlockProvider>()
+  const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+  const tvs = await localExecutor.run(config, [timestamp], false)
 
-  for (const chain of chains) {
-    const url = env.string(`${chain.toUpperCase()}_RPC_URL`)
-    const rpc = new RpcClient({
-      url,
-      http,
-      logger,
-      retryStrategy: 'RELIABLE',
-      sourceName: chain,
-      callsPerMinute: 12000,
-    })
-    rpcs.set(
-      chain,
-      new RpcClientPOC(rpc, logger, {
-        multicallV3: EthereumAddress(
-          '0xcA11bde05977b3631167028862bE2a173976CA11',
-        ),
-      }),
-    )
-    blockProviders.set(chain, new BlockProvider(chain, [rpc]))
-  }
+  outputTVS(tvs, timestamp, config, logger)
+}
 
-  const totalSupplyProvider = new TotalSupplyProvider(rpcs)
-  const balanceProvider = new BalanceProvider(rpcs)
-
-  const localExecutor = new LocalExecutor(
-    priceProvider,
-    circulatingSupplyProvider,
-    blockProviders,
-    totalSupplyProvider,
-    balanceProvider,
-    logger,
-  )
-
-  const config = kintoConfig
-
-  // const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
-  const timestamp = UnixTime.now()
-  const tvs = await localExecutor.run(config, [timestamp], true)
-
+function outputTVS(
+  tvs: Map<number, TokenValue[]>,
+  timestamp: UnixTime,
+  config: TvsConfig,
+  logger: Logger,
+) {
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
 
@@ -175,7 +142,16 @@ async function main() {
   // dump individualTokens to file
   writeFileSync(
     path.join(__dirname, 'token-breakdown.json'),
-    JSON.stringify(tokenBreakdown, null, 2),
+    JSON.stringify(
+      tokenBreakdown,
+      (k, v) => {
+        if (['value', 'valueForProject', 'valueForTotal'].includes(k)) {
+          return `$${(v as number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        }
+        return v
+      },
+      2,
+    ),
   )
 
   // dump filtered config to file
@@ -183,6 +159,120 @@ async function main() {
     path.join(__dirname, 'token-config.json'),
     JSON.stringify(filteredConfig, null, 2),
   )
+}
+
+function initLocalExecutor(env: Env, logger: Logger) {
+  const http = new HttpClient()
+
+  const coingeckoQueryService = initCoingecko(env, logger, http)
+  const { rpcs, blockProviders } = initChains(env, http, logger)
+
+  const priceProvider = new PriceProvider(coingeckoQueryService)
+  const circulatingSupplyProvider = new CirculatingSupplyProvider(
+    coingeckoQueryService,
+  )
+  const totalSupplyProvider = new TotalSupplyProvider(rpcs)
+  const balanceProvider = new BalanceProvider(rpcs)
+
+  return new LocalExecutor(
+    priceProvider,
+    circulatingSupplyProvider,
+    blockProviders,
+    totalSupplyProvider,
+    balanceProvider,
+    logger,
+  )
+}
+
+function initLogger(env: Env) {
+  const logLevel = env.string('LOG_LEVEL', 'INFO') as LogLevel
+  const logger = new Logger({
+    logLevel: logLevel,
+    transports: [
+      {
+        transport: console,
+        formatter: new LogFormatterPretty(),
+      },
+    ],
+  })
+  return logger
+}
+
+function initCoingecko(env: Env, logger: Logger, http: HttpClient) {
+  const coingeckoApiKey = env.optionalString('COINGECKO_API_KEY')
+  const coingeckoClient = new CoingeckoClient({
+    apiKey: coingeckoApiKey,
+    retryStrategy: 'RELIABLE',
+    logger,
+    callsPerMinute: coingeckoApiKey ? 400 : 10,
+    http,
+    sourceName: 'coingecko',
+  })
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+  return coingeckoQueryService
+}
+
+function initChains(env: Env, http: HttpClient, logger: Logger) {
+  // https://www.multicall3.com/deployments
+  const chains = [
+    {
+      name: 'ethereum',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+      callsPerMinute: 12000,
+    },
+    {
+      name: 'arbitrum',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+      callsPerMinute: 12000,
+    },
+    {
+      name: 'base',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+      callsPerMinute: 12000,
+    },
+    {
+      name: 'kinto',
+      callsPerMinute: 1000,
+      batchingEnabled: true,
+    },
+    {
+      name: 'bob',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+      callsPerMinute: 12000,
+    },
+  ]
+
+  const rpcs = new Map<string, RpcClientPOC>()
+  const blockProviders = new Map<string, BlockProvider>()
+
+  for (const chain of chains) {
+    const url = env.string(`${chain.name.toUpperCase()}_RPC_URL`)
+    const rpc = new RpcClient({
+      url,
+      http,
+      logger,
+      retryStrategy: 'RELIABLE',
+      sourceName: chain.name,
+      callsPerMinute: chain.callsPerMinute,
+    })
+    rpcs.set(
+      chain.name,
+      new RpcClientPOC(rpc, chain.name, logger, {
+        multicallV3: chain.multicallV3,
+        batchingEnabled: chain.batchingEnabled,
+      }),
+    )
+    blockProviders.set(chain.name, new BlockProvider(chain.name, [rpc]))
+  }
+  return { rpcs, blockProviders }
 }
 
 function toDollarString(value: number) {

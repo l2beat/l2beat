@@ -8,7 +8,7 @@ import { AboutSection } from '~/components/projects/sections/about-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
-import { type BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { BridgesProjectStats } from './bridges-project-stats'
 

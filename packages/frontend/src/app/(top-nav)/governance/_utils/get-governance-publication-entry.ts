@@ -1,12 +1,8 @@
-import {
-  type CollectionEntry,
-  getCollectionEntry,
-} from '~/content/get-collection'
+import type { CollectionEntry } from '~/content/get-collection'
+import { getCollectionEntry } from '~/content/get-collection'
 import { formatPublicationDate } from '~/utils/dates'
-import {
-  type GovernanceAuthorEntry,
-  getGovernanceAuthorEntry,
-} from './get-governance-author-entry'
+import type { GovernanceAuthorEntry } from './get-governance-author-entry'
+import { getGovernanceAuthorEntry } from './get-governance-author-entry'
 
 export interface GovernancePublicationEntry {
   id: string

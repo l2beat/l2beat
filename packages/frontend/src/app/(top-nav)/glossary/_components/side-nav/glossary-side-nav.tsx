@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useRef } from 'react'
 import { glossarySectionTreshold } from '~/components/nav/consts'
-import { type CollectionEntry } from '~/content/get-collection'
+import type { CollectionEntry } from '~/content/get-collection'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
 import { GlossarySideNavItem } from './glossary-side-nav-item'

@@ -1,15 +1,11 @@
-import {
-  type Bridge,
-  type TableReadyValue,
-  getContractsVerificationStatuses,
-  isVerified,
-} from '@l2beat/config'
+import type { Bridge, TableReadyValue } from '@l2beat/config'
+import { getContractsVerificationStatuses, isVerified } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
-import { getTvlProjectStats } from '../../scaling/tvl/get-tvl-project-stats'
-import { getAssociatedTokenWarning } from '../../scaling/tvl/utils/get-associated-token-warning'
+import { getTvsProjectStats } from '../../scaling/tvs/get-tvs-project-stats'
+import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/get-associated-token-warning'
 import { getBridgeProjectDetails } from './utils/get-bridge-project-details'
 
 export type BridgesProjectEntry = Awaited<
@@ -48,7 +44,7 @@ export async function getBridgesProjectEntry(project: Bridge) {
 }
 
 async function getHeader(project: Bridge) {
-  const tvlProjectStats = await getTvlProjectStats(project)
+  const tvsProjectStats = await getTvsProjectStats(project)
 
   const associatedTokens = project.config.associatedTokens ?? []
 
@@ -56,23 +52,23 @@ async function getHeader(project: Bridge) {
     description: project.display.description,
     warning: project.display.warning,
     links: getProjectLinks(project.display.links),
-    tvl: tvlProjectStats
+    tvs: tvsProjectStats
       ? {
           tokenBreakdown: {
-            ...tvlProjectStats.tokenBreakdown,
+            ...tvsProjectStats.tokenBreakdown,
             warnings: compact([
-              tvlProjectStats.tokenBreakdown.total > 0 &&
+              tvsProjectStats.tokenBreakdown.total > 0 &&
                 getAssociatedTokenWarning({
                   associatedRatio:
-                    tvlProjectStats.tokenBreakdown.associated /
-                    tvlProjectStats.tokenBreakdown.total,
+                    tvsProjectStats.tokenBreakdown.associated /
+                    tvsProjectStats.tokenBreakdown.total,
                   name: project.display.name,
                   associatedTokens,
                 }),
             ]),
             associatedTokens,
           },
-          tvlBreakdown: tvlProjectStats.tvlBreakdown,
+          tvsBreakdown: tvsProjectStats.tvsBreakdown,
         }
       : undefined,
     destination: getDestination(project.technology.destination),

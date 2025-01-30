@@ -1,6 +1,6 @@
-import { type DaLayer, type ProjectLinks } from '@l2beat/config'
+import type { DaLayer, ProjectLinks } from '@l2beat/config'
 import { compact } from 'lodash'
-import { type ProjectLink } from '~/components/projects/links/types'
+import type { ProjectLink } from '~/components/projects/links/types'
 
 export function getDataAvailabilityProjectLinks(
   daLayer: DaLayer,

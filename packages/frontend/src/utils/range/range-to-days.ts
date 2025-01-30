@@ -1,5 +1,5 @@
-import { type StringWithAutocomplete } from '@l2beat/shared-pure'
-import { type TimeRange } from './range'
+import type { StringWithAutocomplete } from '@l2beat/shared-pure'
+import type { TimeRange } from './range'
 
 export function rangeToDays(range: StringWithAutocomplete<TimeRange>) {
   if (range === 'max') return null

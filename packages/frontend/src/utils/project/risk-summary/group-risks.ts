@@ -1,6 +1,6 @@
-import {
-  type ScalingProjectRisk,
-  type ScalingProjectRiskCategory,
+import type {
+  ScalingProjectRisk,
+  ScalingProjectRiskCategory,
 } from '@l2beat/config'
 
 export function groupRisks(

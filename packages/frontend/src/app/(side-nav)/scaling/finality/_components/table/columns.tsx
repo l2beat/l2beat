@@ -1,5 +1,6 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import { type Row, createColumnHelper } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
@@ -11,7 +12,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
 
 const sortFinality =

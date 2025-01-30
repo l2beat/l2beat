@@ -1,5 +1,5 @@
 import { chains } from '@l2beat/config'
-import { type ChainId } from '@l2beat/shared-pure'
+import type { ChainId } from '@l2beat/shared-pure'
 
 export function getExplorerUrlByChainId(chainId: ChainId): string | undefined {
   const chain = chains.find((c) => c.chainId === chainId.valueOf())

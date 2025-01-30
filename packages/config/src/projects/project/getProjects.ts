@@ -53,6 +53,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
+      capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
@@ -93,12 +94,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
 }
 
 function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
-  if (
-    p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
-    p.config.trackedTxs !== undefined
-  ) {
+  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return p.display.liveness ?? {}
   }
 }

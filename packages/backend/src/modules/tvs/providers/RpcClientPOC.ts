@@ -20,6 +20,7 @@ export class RpcClientPOC {
 
   constructor(
     private readonly rpcClient: RpcClient,
+    private chain: string,
     private logger: Logger,
     /** If Multicall configured all the calls will be batched*/
     private params: {
@@ -27,6 +28,8 @@ export class RpcClientPOC {
       batchingEnabled?: boolean
     },
   ) {
+    this.logger = logger.for(this).tag({ tag: chain })
+
     if (params.multicallV3) {
       setInterval(() => this.flushMulticall(), 1000)
     }
@@ -66,7 +69,7 @@ export class RpcClientPOC {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const id = randomUUID()
-    this.logger.debug(`Adding to multicall pool ${id}`)
+    this.logger.trace(`Adding to multicall pool ${id}`)
     assert(callParams.data)
     this.multicallPool.push({
       id,
@@ -79,7 +82,7 @@ export class RpcClientPOC {
 
     let response = this.multicallResponses.get(id)
     while (response === undefined) {
-      this.logger.debug(`Waiting ${id}`)
+      this.logger.trace(`Waiting ${id}`)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       response = this.multicallResponses.get(id)
       this.multicallResponses.delete(id)
@@ -92,29 +95,34 @@ export class RpcClientPOC {
     assert(this.params.multicallV3, `Missing MulticallV3 address`)
 
     if (this.multicallPool.length === 0) {
-      this.logger.debug('Nothing to flush...')
+      this.logger.trace('Nothing to flush...')
       return
     }
 
-    this.logger.debug(`Flushing multicall [${this.pool.length}]...`)
+    this.logger.trace(`Flushing multicall [${this.pool.length}]...`)
     const queries = [...this.multicallPool]
     this.multicallPool = []
 
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
     const promises = batches.map(async (batch, index) => {
-      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
       const blockNumber = batch[0].blockNumber
+      this.logger.trace(
+        `Fetching batch [${index}] of ${batch.length} calls for block ${blockNumber}`,
+      )
+      // TODO: add pools per block number
       const encoded = encodeBatch(batch.map((b) => b.params))
+      this.logger.trace(`encoded [${index}] ${encoded}`)
       assert(this.params.multicallV3, `Missing MulticallV3 address`)
       const response = await this.rpcClient.call(
         { to: this.params.multicallV3, data: encoded },
         blockNumber,
       )
-      const r = decodeBatch(response)
+      const decoded = decodeBatch(response)
+      this.logger.trace(`decoded [${index}] ${decoded}`)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
-        this.multicallResponses.set(query.id, r[index].data)
+        this.logger.trace(`Setting ${query.id} - ${decoded[index].data}`)
+        this.multicallResponses.set(query.id, decoded[index].data)
       }
     })
 
@@ -134,12 +142,12 @@ export class RpcClientPOC {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const id = randomUUID()
-    this.logger.debug(`Adding to pool ${id}`)
+    this.logger.trace(`Adding to pool ${id}`)
     this.pool.push({ id, params: callParams, blockNumber })
 
     let response = this.responses.get(id)
     while (response === undefined) {
-      this.logger.debug(`Waiting ${id}`)
+      this.logger.trace(`Waiting ${id}`)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       response = this.responses.get(id)
       this.responses.delete(id)
@@ -150,21 +158,21 @@ export class RpcClientPOC {
 
   async flush() {
     if (this.pool.length === 0) {
-      this.logger.debug('Nothing to flush...')
+      this.logger.trace('Nothing to flush...')
       return
     }
 
-    this.logger.debug(`Flushing [${this.pool.length}]...`)
+    this.logger.trace(`Flushing [${this.pool.length}]...`)
     const queries = [...this.pool]
     this.pool = []
 
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
     const promises = batches.map(async (batch, index) => {
-      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
+      this.logger.trace(`Fetching batch [${index}] of ${batch.length} calls`)
       const r = await this.rpcClient.batchCall(batch)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
+        this.logger.trace(`Setting ${query.id} - ${r[index]}`)
         this.responses.set(query.id, r[index])
       }
     })

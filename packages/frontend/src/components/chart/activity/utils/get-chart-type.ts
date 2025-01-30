@@ -1,6 +1,6 @@
-import { type ScalingProjectCategory } from '@l2beat/config'
+import type { ScalingProjectCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { type ActivityChartType } from '../use-activity-chart-render-params'
+import type { ActivityChartType } from '../use-activity-chart-render-params'
 
 export function getChartType(category?: ScalingProjectCategory) {
   switch (category) {

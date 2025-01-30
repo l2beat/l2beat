@@ -43,7 +43,7 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
-  capability: 'appchain',
+  capability: 'universal',
   addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS],
@@ -217,8 +217,8 @@ export const fuel: Layer2 = {
       ],
     },
     exitMechanisms: [
-      EXITS.REGULAR('optimistic', 'merkle proof'),
-      EXITS.FORCED('all-withdrawals'),
+      EXITS.REGULAR_MESSAGING('optimistic'),
+      EXITS.FORCED_MESSAGING('all-messages'),
     ],
     otherConsiderations: [
       {

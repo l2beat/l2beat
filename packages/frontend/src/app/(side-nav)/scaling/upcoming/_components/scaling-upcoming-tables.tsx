@@ -14,8 +14,8 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -44,6 +44,7 @@ export function ScalingUpcomingTables(
     id: '#',
     desc: false,
   }
+  const showOthers = checked || entries.others.length > 0
 
   return (
     <>
@@ -64,7 +65,7 @@ export function ScalingUpcomingTables(
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -82,7 +83,7 @@ export function ScalingUpcomingTables(
             <ScalingUpcomingTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />

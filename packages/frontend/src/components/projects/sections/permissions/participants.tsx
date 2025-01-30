@@ -2,7 +2,7 @@ import { TooltipTrigger } from '@radix-ui/react-tooltip'
 import { Tooltip, TooltipContent } from '~/components/core/tooltip/tooltip'
 import { HighlightableLink } from '~/components/link/highlightable/highlightable-link'
 import { UnverifiedIcon } from '~/icons/unverified'
-import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
+import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 
 export interface Participant {
   name: string

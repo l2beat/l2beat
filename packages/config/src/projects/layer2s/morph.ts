@@ -230,7 +230,7 @@ export const morph: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof', challengeWindow),
+        ...EXITS.REGULAR_MESSAGING('optimistic', challengeWindow),
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {

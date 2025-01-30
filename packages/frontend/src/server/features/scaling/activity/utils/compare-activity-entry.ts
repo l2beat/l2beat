@@ -1,6 +1,6 @@
-import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { featureFlags } from '~/consts/feature-flags'
-import { type ScalingActivityEntry } from '../get-scaling-activity-entries'
+import type { ScalingActivityEntry } from '../get-scaling-activity-entries'
 
 export function compareActivityEntry(
   a: ScalingActivityEntry,

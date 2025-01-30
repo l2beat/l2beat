@@ -182,7 +182,7 @@ export const metis: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_MESSAGING('optimistic'),
         references: [
           {
             title: 'Withdrawing from Metis - Metis documentation',
@@ -191,7 +191,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
-      EXITS.FORCED('forced-withdrawals'),
+      EXITS.FORCED_MESSAGING('forced-messages'),
     ],
     otherConsiderations: [
       {

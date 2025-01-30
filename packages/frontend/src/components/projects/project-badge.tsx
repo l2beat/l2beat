@@ -1,4 +1,5 @@
-import { type BadgeId, badges } from '@l2beat/config'
+import type { BadgeId } from '@l2beat/config'
+import { badges } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,

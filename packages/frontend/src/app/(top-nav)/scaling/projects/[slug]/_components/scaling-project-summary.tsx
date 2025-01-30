@@ -9,11 +9,11 @@ import { BadgesSection } from '~/components/projects/sections/badges-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
-import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { ScalingProjectRosette } from './scaling-project-rosette'
 import { ScalingProjectStats } from './scaling-project-stats'
-import { ValueLockedSummary } from './value-locked-summary'
+import { ValueSecuredSummary } from './value-secured-summary'
 
 interface Props {
   project: ScalingProjectEntry
@@ -58,8 +58,8 @@ export function ScalingProjectSummary({ project }: Props) {
               <DesktopProjectLinks projectLinks={project.header.links} />
             </div>
             <div className="grid w-full md:grid-cols-3 md:gap-4">
-              <ValueLockedSummary
-                tvl={project.header.tvl}
+              <ValueSecuredSummary
+                tvs={project.header.tvs}
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
                 isArchived={project.isArchived}
               />
