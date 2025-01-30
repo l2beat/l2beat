@@ -97,6 +97,12 @@ export const ternoa: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('TernoaValidium'),
   rollupVerifierContract: discovery.getContract('Verifier'),
   isForcedBatchDisallowed,
+  chainConfig: {
+    name: 'ternoa',
+    chainId: 752025,
+    explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network/',
+    minTimestampForTvl: new UnixTime(1735650935),
+  },
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
