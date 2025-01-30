@@ -24,10 +24,14 @@ To do any development work, even simple config changes you probably want to have
 locally. To install dependencies do the following.
 
 1. Install [node.js](https://nodejs.org/en/) version 18. To easily manage node versions we recommend
-   [fnm](https://github.com/Schniz/fnm)
-2. Install [pnpm](https://pnpm.io/installation#using-corepack), preferably using Corepack
+   [fnm](https://github.com/Schniz/fnm).
+2. In the repository root, run `node --version > .node-version` to set the node version. Please do not commit this file.
+3. Install [pnpm](https://pnpm.io/installation#using-corepack), preferably using Corepack
    `corepack enable pnpm`
-3. In the repository root run `pnpm install` to install project specific dependencies
+4. In the repository root, run `pnpm install` to install project specific dependencies.
+5. In the repository root, run `pnpm build:dependencies` to build the dependencies.
+
+Please note that you will want to run `pnpm install` after you perform a `git pull` on your cloned repository. You may also need to run `pnpm build:dependencies` if new dependencies have been added. Failure to do this may result in errors that are difficult to diagnose.
 
 ## Running the website locally
 
@@ -41,6 +45,16 @@ pnpm build:dependencies
 cd packages/frontend
 pnpm dev:mock
 ```
+
+Once you have the frontend website running, you will probably wish to explore the `discovery` tool described in its [README](packages/discovery/README.md).
+
+To explore the projects currently tracked, see the TypeScript files under [packages/config/src/projects](packages/config/src/projects).
+
+## Running the website with data
+
+Running the website with data requires a database. Setting up that database is complicated and underdocumented for the moment. Please raise an issue or contact L2Beat support if you require assistance.
+
+If you are a member of the L2Beat organization on GitHub, opening a pull request will prompt [vercel](https://vercel.com) to run a container including live data. Vercel will comment on your PR with the container's URL. NB: Vercel's post-commit hook will also respond to _draft_ PRs so you may wish to use a draft PR to avoid spamming administrators until you are ready for their review.
 
 ## Add tokens to a project
 
