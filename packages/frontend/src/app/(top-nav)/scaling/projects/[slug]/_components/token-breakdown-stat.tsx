@@ -52,7 +52,7 @@ export function TokenBreakdownStat({ tokenTvl }: Props) {
                 <WarningBar
                   key={`tvl-warning-${i}`}
                   icon={RoundedWarningIcon}
-                  text={warning.content}
+                  text={warning.value}
                   color={sentimentToWarningBarColor(warning.sentiment)}
                   // Cell itself is a href.
                   // Markdown might contain links - nesting them in a tooltip

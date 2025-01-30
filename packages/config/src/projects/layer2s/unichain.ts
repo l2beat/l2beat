@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const unichain: Layer2 = upcomingL2({
   id: 'unichain',
@@ -19,7 +19,6 @@ export const unichain: Layer2 = upcomingL2({
       apps: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
       explorers: ['https://unichain-sepolia.blockscout.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/unichain',
         'https://discord.com/invite/uniswap',

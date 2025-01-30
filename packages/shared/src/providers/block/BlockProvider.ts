@@ -10,7 +10,19 @@ export class BlockProvider {
     assert(clients.length > 0, 'Clients cannot be empty')
   }
 
-  async getBlockWithTransactions(x: number): Promise<Block> {
+  async getLatestBlockNumber(): Promise<number> {
+    for (const [index, client] of this.clients.entries()) {
+      try {
+        return await client.getLatestBlockNumber()
+      } catch (error) {
+        if (index === this.clients.length - 1) throw error
+      }
+    }
+
+    throw new Error(`Missing ${this.chain.toUpperCase()}_RPC_URL`)
+  }
+
+  async getBlockWithTransactions(x: number | 'latest'): Promise<Block> {
     for (const [index, client] of this.clients.entries()) {
       try {
         const block = await client.getBlockWithTransactions(x)

@@ -14,9 +14,9 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
@@ -36,7 +36,6 @@ export const fuelv1: Layer2 = {
 
     links: {
       websites: ['https://fuel.sh/'],
-      apps: [],
       documentation: ['https://docs.fuel.sh/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
@@ -147,7 +146,7 @@ export const fuelv1: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [
           {
             title: 'Withdraw.yulp#L40 - Fuel documentation',

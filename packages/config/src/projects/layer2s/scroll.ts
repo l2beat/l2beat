@@ -23,10 +23,10 @@ import {
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -385,7 +385,7 @@ export const scroll: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_MESSAGING('zk'),
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {

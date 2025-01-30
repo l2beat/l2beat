@@ -30,10 +30,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -84,7 +84,6 @@ export const rhinofi: Layer2 = {
         'https://support.rhino.fi/en/',
         'https://docs.starkware.co/starkex/index.html',
       ],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/rhinofi',

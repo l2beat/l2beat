@@ -3,20 +3,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
   isArchived: true,
   addedAt: new UnixTime(1690446197), // 2023-07-27T08:23:17Z
-  additionalBadges: [
-    Badge.DA.Celestia,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [

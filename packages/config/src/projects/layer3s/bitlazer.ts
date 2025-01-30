@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const bitlazer: Layer3 = underReviewL3({
   id: 'bitlazer',
@@ -31,7 +31,6 @@ export const bitlazer: Layer3 = underReviewL3({
       ],
       documentation: ['https://bitlazer.gitbook.io/bitlazer'],
       explorers: ['https://bitlazer.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/bitlazer', 'https://t.me/bitlazer_io'],
     },
   },

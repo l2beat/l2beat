@@ -8,8 +8,8 @@ import { utils } from 'ethers'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())

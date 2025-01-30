@@ -3,9 +3,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
 
@@ -27,7 +27,6 @@ export const karak: Layer2 = opStackL2({
       apps: ['https://karak.network/karak-xp/'],
       documentation: ['https://docs.karak.network/'],
       explorers: ['https://explorer.karak.network/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Karak_Network',
         'https://t.me/Karak_Network',

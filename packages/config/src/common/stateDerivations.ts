@@ -7,6 +7,11 @@ type SupportedOPStackChains =
   | 'PGN'
   | 'MODE'
   | 'LISK'
+  | 'HASHKEY'
+  | 'ARENAZ'
+  | 'SONEIUM'
+  | 'SWELL'
+  | 'WORLD'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -28,11 +33,31 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   ],
   MODE: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.toml',
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/mode.json.gz',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/mode.json.zst',
   ],
   LISK: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/lisk.toml',
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/lisk.json.gz',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/lisk.json.zst',
+  ],
+  HASHKEY: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/hashkeychain.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/hashkeychain.json.zst',
+  ],
+  ARENAZ: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/arena-z.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/arena-z.json.zst',
+  ],
+  SONEIUM: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/soneium.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/soneium.json.zst',
+  ],
+  SWELL: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/swell.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/swell.json.zst',
+  ],
+  WORLD: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/worldchain.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/worldchain.json.zst',
   ],
 }
 

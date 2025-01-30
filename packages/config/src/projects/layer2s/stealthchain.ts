@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const stealthchain: Layer2 = upcomingL2({
   id: 'stealthchain',
@@ -15,7 +15,6 @@ export const stealthchain: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://stealthchain.org'],
-      apps: [],
       documentation: ['https://docs.stealthchain.org'],
       explorers: [
         'https://test.stealthscan.xyz/',

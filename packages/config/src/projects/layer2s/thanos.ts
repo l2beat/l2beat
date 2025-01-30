@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const thanos: Layer2 = upcomingL2({
   id: 'thanos',
@@ -16,7 +16,6 @@ export const thanos: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://tokamak.network/'],
-      apps: [],
       documentation: ['https://docs.tokamak.network/'],
       explorers: ['https://explorer.thanos-sepolia.tokamak.network/'],
       repositories: ['https://github.com/tokamak-network/tokamak-thanos'],

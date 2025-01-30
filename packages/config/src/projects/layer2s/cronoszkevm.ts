@@ -2,9 +2,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -30,7 +30,6 @@ export const cronoszkevm: Layer2 = zkStackL2({
       apps: ['https://zkevm.cronos.org/bridge'],
       documentation: ['https://docs-zkevm.cronos.org/'],
       explorers: ['https://explorer.zkevm.cronos.org/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/cronos_chain',
         'https://discord.com/invite/cronos',

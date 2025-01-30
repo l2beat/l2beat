@@ -196,11 +196,9 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'c29d12840de6',
           ticker: 'ARB',
         },
         {
-          id: '7aac1877cd8b',
           ticker: 'ATH',
         },
       ],
@@ -303,11 +301,9 @@ describe(extractPricesAndAmounts.name, () => {
       ],
       prices: [
         {
-          id: 'aa65c34f8046',
           ticker: 'WBTC',
         },
         {
-          id: '3eb7e84f0423',
           ticker: 'SolvBTC',
         },
       ],
