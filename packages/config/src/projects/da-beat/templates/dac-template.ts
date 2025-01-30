@@ -62,6 +62,12 @@ export function DAC(template: DacTemplateVars): DaLayer {
       description: bridgeTechnology,
       risks: template.bridge.technology?.risks,
     },
+    display: {
+      name: 'DAC',
+      slug: 'dac',
+      description: '',
+      ...template.bridge.display,
+    },
     risks: {
       committeeSecurity:
         template.risks?.committeeSecurity ??

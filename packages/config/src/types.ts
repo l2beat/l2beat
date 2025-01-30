@@ -879,7 +879,7 @@ export interface DaBridge {
     | 'StandaloneDacBridge'
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
-  display?: DaBridgeDisplay
+  display: DaBridgeDisplay
   isUnderReview?: boolean
   technology: DaTechnology
   usedIn: UsedInProject[] | 'self'

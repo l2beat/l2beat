@@ -63,6 +63,11 @@ const mantleDataAvailabilitySolution: DaLayer = {
     {
       addedAt: new UnixTime(1723022143), // 2024-08-07T09:15:43Z
       type: 'IntegratedDacBridge',
+      display: {
+        name: 'DAC',
+        slug: 'dac',
+        description: '',
+      },
       technology: {
         description: `
       

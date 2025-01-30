@@ -139,6 +139,11 @@ export const fraxtal: Layer2 = opStackL2({
       {
         addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
         type: 'NoDacBridge',
+        display: {
+          name: 'DAC',
+          slug: 'dac',
+          description: '',
+        },
         technology: {
           description: `The SequencerInbox only stores IPFS hash commitments posted by the sequencer. It is not possible to verify blob inclusion against the data commitments onchain.
       Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.There is no committee attesting to the availability of the data. For L2 chain derivation, the system relies on sequencer commitments to an L1 onchain inbox. See DA layer technology section for more details.\n`,

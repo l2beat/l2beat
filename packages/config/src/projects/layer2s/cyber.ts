@@ -138,6 +138,11 @@ export const cyber: Layer2 = opStackL2({
       {
         addedAt: new UnixTime(1723022143), // 2024-04-03T10:08:59Z
         type: 'IntegratedDacBridge',
+        display: {
+          name: 'DAC',
+          slug: 'dac',
+          description: '',
+        },
         technology: {
           description: `Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.
           However, there is a mechanism that allows users to challenge unavailability of data. \n`,
