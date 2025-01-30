@@ -10,11 +10,10 @@ import {
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
+  TypeCell,
   TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/type-info'
+} from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
@@ -41,16 +40,7 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TwoRowCell>
-        <TwoRowCell.First>
-          <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
-        </TwoRowCell.First>
-        {ctx.row.original.capability === 'appchain' && (
-          <TwoRowCell.Second>
-            {ctx.row.original.purposes.sort().join(', ')}
-          </TwoRowCell.Second>
-        )}
-      </TwoRowCell>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,

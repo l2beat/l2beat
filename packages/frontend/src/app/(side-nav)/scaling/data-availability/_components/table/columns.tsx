@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
+  TypeCell,
   TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/type-info'
+} from '~/components/table/cells/type-cell'
 import {
   adjustTableValue,
   sortTableValues,
@@ -21,7 +21,7 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     sortingFn: (a, b) => {
       const categoryCompare = a.original.category.localeCompare(

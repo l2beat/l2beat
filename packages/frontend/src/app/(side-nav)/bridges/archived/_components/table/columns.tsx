@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
-import { TypeInfo } from '~/components/table/cells/type-info'
+import { TypeCell } from '~/components/table/cells/type-cell'
 import {
   adjustTableValue,
   sortTableValues,
@@ -26,7 +26,7 @@ export const bridgesArchivedColumns = [
   }),
   columnHelper.accessor('type', {
     header: 'Type',
-    cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
+    cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
     meta: {
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',

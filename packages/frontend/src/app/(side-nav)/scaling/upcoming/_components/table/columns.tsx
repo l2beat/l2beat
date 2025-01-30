@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import {
+  TypeCell,
   TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/type-info'
+} from '~/components/table/cells/type-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
@@ -13,7 +13,7 @@ export const scalingUpcomingColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,

@@ -4,9 +4,9 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
+  TypeCell,
   TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/type-info'
+} from '~/components/table/cells/type-cell'
 import {
   adjustTableValue,
   sortTableValues,
@@ -34,7 +34,7 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,

@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { TypeInfo } from '~/components/table/cells/type-info'
+import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
@@ -80,7 +80,7 @@ export function ScalingProjectStats({ project, className }: Props) {
       ) : null}
       <ProjectStat
         title="Type"
-        value={<TypeInfo>{project.header.category}</TypeInfo>}
+        value={<TypeCell>{project.header.category}</TypeCell>}
       />
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}
