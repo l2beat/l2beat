@@ -806,6 +806,8 @@ export type EthereumDaLayer = CommonDaLayer & {
   throughput?: DaLayerThroughput
   /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
+  /** Data availability tracking config */
+  daTracking?: DaLayerTrackingConfig
 }
 
 export type DacDaLayer = Omit<CommonDaLayer, 'id' | 'display'> & {
