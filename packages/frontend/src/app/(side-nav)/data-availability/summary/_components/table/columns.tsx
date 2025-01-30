@@ -9,7 +9,6 @@ import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-val
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
-import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -85,7 +84,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
 
     return (
       <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-        <DaEconomicSecurityCell value={value} />
+        {formatDollarValueNumber(value ?? 0)}
       </div>
     )
   },
@@ -203,20 +202,8 @@ function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
   rowB: Row<DaSummaryEntry>,
 ) {
-  const rowAValue = slashableStakeToValue(rowA.original)
-  const rowBValue = slashableStakeToValue(rowB.original)
+  const rowAValue = rowA.original.economicSecurity ?? 0
+  const rowBValue = rowB.original.economicSecurity ?? 0
 
   return rowBValue - rowAValue
-}
-
-function slashableStakeToValue(entry: DaSummaryEntry) {
-  if (entry.risks.economicSecurity.type === 'Unknown') {
-    return 0
-  }
-
-  if (!entry.economicSecurity || entry.economicSecurity.status !== 'Synced') {
-    return 0
-  }
-
-  return entry.economicSecurity.economicSecurity
 }

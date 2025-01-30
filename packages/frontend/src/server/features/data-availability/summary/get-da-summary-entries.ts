@@ -19,7 +19,6 @@ import {
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
-import type { EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -45,13 +44,13 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
   return [
     ...dacEntries,
     ...entries,
-    getEthereumEntry(economicSecurity, getTvs),
+    getEthereumEntry(economicSecurity[ethereumDaLayer.id], getTvs),
   ].sort((a, b) => b.tvs - a.tvs)
 }
 
 export interface DaSummaryEntry extends CommonProjectEntry {
   isPublic: boolean
-  economicSecurity: EconomicSecurityData | undefined
+  economicSecurity: number | undefined
   risks: RosetteValue[]
   fallback: DataAvailabilityLayer | undefined
   challengeMechanism: DaChallengeMechanism | undefined
@@ -77,7 +76,7 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 
 function getDaSummaryEntry(
   daLayer: BlockchainDaLayer | DaServiceDaLayer,
-  economicSecurity: EconomicSecurityData | undefined,
+  economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
   const bridges = daLayer.bridges
@@ -207,7 +206,7 @@ function getDacEntries(
 }
 
 function getEthereumEntry(
-  economicSecurity: Record<string, EconomicSecurityData>,
+  economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
   const bridge = ethereumDaLayer.bridges[0]
@@ -220,7 +219,7 @@ function getEthereumEntry(
     nameSecondLine: kindToType(ethereumDaLayer.kind),
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
     statuses: {},
-    economicSecurity: economicSecurity[ethereumDaLayer.id],
+    economicSecurity: economicSecurity,
     tvs: getTvs(
       ethereumDaLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
