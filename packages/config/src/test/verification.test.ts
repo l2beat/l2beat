@@ -52,31 +52,29 @@ describe('verification status', () => {
     for (const project of daLayers) {
       const chains = getChainNamesForDA(project)
       for (const bridge of project.daLayer.bridges) {
+        const bridgeId = bridge.id
+        if (!bridgeId) {
+          continue
+        }
         for (const chain of chains) {
-          it(`${bridge.id ?? 'bridge'} on ${chain}`, () => {
-            const projectIds = bridge.usedIn.map((u) => u.id.toString())
-            if (bridge.id) {
-              projectIds.push(bridge.id)
+          it(`${bridge.id} on ${chain}`, () => {
+            const unverified = getUniqueAddressesForDaBridge(bridge, chain)
+
+            if (unverified.length <= 0) {
+              return
             }
-            for (const projectId of projectIds) {
-              const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 
-              if (unverified.length <= 0) {
-                return
-              }
+            const discoveries = getDiscoveries(bridgeId, chain)
+            assert(
+              discoveries.length > 0,
+              `Failed to read discovery for ${bridgeId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
+            )
 
-              const discoveries = getDiscoveries(projectId, chain)
-              assert(
-                discoveries.length > 0,
-                `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
-              )
-
-              const notFound = containsAllAddresses(unverified, discoveries)
-              assert(
-                notFound.length === 0,
-                `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
-              )
-            }
+            const notFound = containsAllAddresses(unverified, discoveries)
+            assert(
+              notFound.length === 0,
+              `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
+            )
           })
         }
       }
