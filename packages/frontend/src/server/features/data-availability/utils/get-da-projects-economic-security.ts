@@ -1,6 +1,6 @@
 import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { compact, keyBy, round } from 'lodash'
+import { round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 
@@ -50,10 +50,10 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     const economicSecurity =
       Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
       10 ** daLayer.economicSecurity.token.decimals
-    return economicSecurity
+    return [daLayer.id, economicSecurity] as const
   })
 
-  return keyBy(compact(arr), 'id')
+  return Object.fromEntries(arr.filter(notUndefined))
 }
 
 function getMockProjectsEconomicSecurityData(): ProjectsEconomicSecurity {

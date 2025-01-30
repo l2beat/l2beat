@@ -37,7 +37,7 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
     getDaProjectsTvs(uniqueProjectsInUse),
   ])
   const getTvs = pickTvsForProjects(tvsPerProject)
-
+  console.log(economicSecurity)
   const dacEntries = getDacEntries(getTvs)
   const entries = daLayers.map((daLayer) =>
     getDaSummaryEntry(daLayer, economicSecurity[daLayer.id], getTvs),
