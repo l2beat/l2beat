@@ -1,4 +1,4 @@
-import type { ScalingProjectRiskView } from '@l2beat/config'
+import { ScalingProjectRiskView } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
 
 export function getScalingRosetteValues(

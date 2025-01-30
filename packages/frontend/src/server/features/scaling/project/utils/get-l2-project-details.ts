@@ -1,5 +1,8 @@
 import type { Layer2 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  type ContractsVerificationStatuses,
+} from '@l2beat/shared-pure'
 import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -20,6 +23,7 @@ import { getScalingTechnologySection } from '~/utils/project/technology/get-tech
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
+import { mergePermissions } from '~/server/features/utils/merge-permissions'
 
 interface Params {
   project: Layer2
@@ -44,8 +48,11 @@ export async function getL2ProjectDetails({
           id: project.id,
           type: project.type,
           isUnderReview: !!project.isUnderReview,
-          permissions: project.permissions,
-          nativePermissions: project.nativePermissions,
+          permissions: mergePermissions(
+            project.permissions,
+            project.nativePermissions,
+            ProjectId.ETHEREUM,
+          ),
           daSolution,
         },
         contractsVerificationStatuses,
