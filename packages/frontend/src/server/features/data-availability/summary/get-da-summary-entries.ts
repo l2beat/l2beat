@@ -37,7 +37,6 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
     getDaProjectsTvs(uniqueProjectsInUse),
   ])
   const getTvs = pickTvsForProjects(tvsPerProject)
-  console.log(economicSecurity)
   const dacEntries = getDacEntries(getTvs)
   const entries = daLayers.map((daLayer) =>
     getDaSummaryEntry(daLayer, economicSecurity[daLayer.id], getTvs),
@@ -213,7 +212,7 @@ function getEthereumEntry(
 ): DaSummaryEntry {
   const bridge = ethereumDaLayer.bridges[0]
   assert(bridge, 'Ethereum DA layer has no bridges')
-  mapBridgeRisksToRosetteValues(bridge.risks)
+
   return {
     id: ProjectId.ETHEREUM,
     slug: ethereumDaLayer.display.slug,
