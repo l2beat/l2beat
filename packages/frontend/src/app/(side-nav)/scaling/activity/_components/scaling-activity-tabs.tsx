@@ -30,19 +30,14 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
   milestones: Milestone[]
 }
 
-export function ScalingActivityTabs({
-  rollups,
-  validiumsAndOptimiums,
-  others,
-  milestones,
-}: Props) {
+export function ScalingActivityTabs(props: Props) {
   const includeFilters = useScalingFilter()
   const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
-    rollups: rollups.filter(includeFilters),
-    validiumsAndOptimiums: validiumsAndOptimiums.filter(includeFilters),
-    others: others.filter(includeFilters),
+    rollups: props.rollups.filter(includeFilters),
+    validiumsAndOptimiums: props.validiumsAndOptimiums.filter(includeFilters),
+    others: props.others.filter(includeFilters),
   }
 
   const entries = checked
@@ -104,8 +99,8 @@ export function ScalingActivityTabs({
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-5">
             <ActivityChart
-              milestones={milestones}
-              entries={rollups}
+              entries={entries.rollups}
+              milestones={props.milestones}
               type="Rollups"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
@@ -116,8 +111,8 @@ export function ScalingActivityTabs({
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
             <ActivityChart
-              milestones={milestones}
-              entries={validiumsAndOptimiums}
+              entries={entries.validiumsAndOptimiums}
+              milestones={props.milestones}
               hideScalingFactor
               type="ValidiumsAndOptimiums"
             />
@@ -130,8 +125,8 @@ export function ScalingActivityTabs({
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others" className="pt-5">
               <ActivityChart
-                milestones={milestones}
-                entries={others ?? []}
+                entries={entries.others}
+                milestones={props.milestones}
                 hideScalingFactor
                 type="Others"
               />

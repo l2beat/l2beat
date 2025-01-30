@@ -3,10 +3,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvlChartUnitControls } from '~/components/chart/tvl/tvl-chart-unit-controls'
@@ -38,7 +35,6 @@ export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
     useScalingAssociatedTokensContext()
 
   const filters = useScalingFilterValues()
-  const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useState<TvlChartRange>('1y')
 
   const [unit, setUnit] = useLocalStorage<ChartUnit>('scaling-tvl-unit', 'usd')
@@ -51,9 +47,9 @@ export function ScalingStackedTvlChart({ milestones, entries, tab }: Props) {
     }
     return {
       type: 'projects',
-      projectIds: entries.filter(includeFilter).map((project) => project.id),
+      projectIds: entries.map((project) => project.id),
     }
-  }, [entries, filters.isEmpty, includeFilter, tab])
+  }, [entries, filters.isEmpty, tab])
 
   const { data, isLoading } = api.tvl.chart.useQuery({
     range: timeRange,

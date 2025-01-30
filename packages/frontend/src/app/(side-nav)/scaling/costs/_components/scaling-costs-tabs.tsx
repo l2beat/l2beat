@@ -95,7 +95,7 @@ export function ScalingCostsTabs(props: Props) {
           <DirectoryTabsContent value="rollups" className="pt-5">
             <ScalingCostsChart
               tab="rollups"
-              entries={props.rollups}
+              entries={entries.rollups}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
@@ -108,7 +108,7 @@ export function ScalingCostsTabs(props: Props) {
             <DirectoryTabsContent value="others" className="pt-5">
               <ScalingCostsChart
                 tab="others"
-                entries={props.others ?? []}
+                entries={entries.others}
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="my-5" />

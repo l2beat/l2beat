@@ -98,8 +98,8 @@ export function ScalingTvlTabs(props: Props) {
           <DirectoryTabsContent value="rollups" className="pt-5">
             <ScalingStackedTvlChart
               tab="rollups"
+              entries={entries.rollups}
               milestones={props.milestones}
-              entries={props.rollups}
             />
             <HorizontalSeparator className="my-5" />
             <RollupsInfo />
@@ -110,8 +110,8 @@ export function ScalingTvlTabs(props: Props) {
           <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
             <ScalingStackedTvlChart
               tab="validiumsAndOptimiums"
+              entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
-              entries={props.validiumsAndOptimiums}
             />
             <HorizontalSeparator className="my-5" />
             <ValidiumsAndOptimiumsInfo />
@@ -122,8 +122,8 @@ export function ScalingTvlTabs(props: Props) {
           <DirectoryTabsContent value="others" className="pt-5">
             <ScalingStackedTvlChart
               tab="others"
+              entries={entries.others}
               milestones={props.milestones}
-              entries={props.others ?? []}
             />
             <HorizontalSeparator className="my-5" />
             <OthersInfo />
