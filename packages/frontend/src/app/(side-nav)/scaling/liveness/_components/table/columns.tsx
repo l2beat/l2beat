@@ -5,9 +5,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import {
+  TypeCell,
   TypeExplanationTooltip,
-  TypeInfo,
-} from '~/components/table/cells/type-info'
+} from '~/components/table/cells/type-cell'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import { InfoIcon } from '~/icons/info'
@@ -68,7 +68,7 @@ export const columns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,

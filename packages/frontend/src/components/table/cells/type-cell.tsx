@@ -17,12 +17,12 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
 
-export interface TypeInfoProps {
+export interface TypeCellProps {
   children: string | undefined
   stack?: ScalingProjectStack
 }
 
-export function TypeInfo({ stack, children }: TypeInfoProps) {
+export function TypeCell({ stack, children }: TypeCellProps) {
   const providerProps = stack ? providerMap[stack] : undefined
 
   return (
