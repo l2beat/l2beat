@@ -8,16 +8,16 @@ import {
   layer3s,
 } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
 } from '../../projects-change-report/get-projects-change-report'
 import {
-  type LatestTvl,
+  type LatestTvs,
   get7dTokenBreakdown,
-} from '../tvl/utils/get-7d-token-breakdown'
+} from '../tvs/utils/get-7d-token-breakdown'
 import { getHostChain } from '../utils/get-host-chain'
 
 export interface ScalingApiEntry {
@@ -36,7 +36,7 @@ export interface ScalingApiEntry {
   badges: { category: string; name: string }[]
   stage: string
   risks: RosetteValue[]
-  tvl: {
+  tvs: {
     breakdown: {
       total: number
       ether: number
@@ -52,27 +52,27 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
   const projects = [...layer2s, ...layer3s].filter(
     (project) => !project.isUpcoming && !project.isArchived,
   )
-  const [projectsChangeReport, tvl] = await Promise.all([
+  const [projectsChangeReport, tvs] = await Promise.all([
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
   ])
 
   return projects
     .map((project) => {
-      const latestTvl = tvl.projects[project.id.toString()]
+      const latestTvs = tvs.projects[project.id.toString()]
       return getScalingApiEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        latestTvl,
+        latestTvs,
       )
     })
-    .sort((a, b) => b.tvl.breakdown.total - a.tvl.breakdown.total)
+    .sort((a, b) => b.tvs.breakdown.total - a.tvs.breakdown.total)
 }
 
 function getScalingApiEntry(
   project: Layer2 | Layer3,
   changes: ProjectChanges,
-  latestTvl: LatestTvl['projects'][string] | undefined,
+  latestTvs: LatestTvs['projects'][string] | undefined,
 ): ScalingApiEntry {
   return {
     id: project.id.toString(),
@@ -98,14 +98,14 @@ function getScalingApiEntry(
       })) ?? [],
     stage: getStage(project.stage),
     risks: getL2Risks(project.riskView),
-    tvl: {
-      breakdown: latestTvl?.breakdown ?? {
+    tvs: {
+      breakdown: latestTvs?.breakdown ?? {
         total: 0,
         associated: 0,
         ether: 0,
         stablecoin: 0,
       },
-      change7d: latestTvl?.change ?? 0,
+      change7d: latestTvs?.change ?? 0,
       associatedTokens: project.config.associatedTokens ?? [],
     },
   }

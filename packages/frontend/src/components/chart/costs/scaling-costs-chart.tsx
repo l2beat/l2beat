@@ -2,10 +2,7 @@
 
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import {
   type CostsMetric,
   useCostsMetricContext,
@@ -54,13 +51,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     }
   }
 
-  const includeFilters = useScalingFilter()
   const resolution = rangeToResolution(range)
-
-  const filteredEntries = useMemo(
-    () => entries.filter((item) => includeFilters(item)),
-    [entries, includeFilters],
-  )
 
   const filter = useMemo<CostsProjectsFilter>(() => {
     if (filters.isEmpty) {
@@ -71,9 +62,9 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 
     return {
       type: 'projects',
-      projectIds: filteredEntries.map((project) => project.id),
+      projectIds: entries.map((project) => project.id),
     }
-  }, [filteredEntries, filters.isEmpty, tab])
+  }, [entries, filters.isEmpty, tab])
 
   const { data, isLoading } = api.costs.chart.useQuery({
     range,

@@ -15,8 +15,8 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -34,24 +34,20 @@ export function ScalingRiskTables(props: Props) {
     others: props.others.filter(includeFilters),
   }
   const entries = checked
-    ? getRecategorisedEntries(props, (a, b) => b.tvlOrder - a.tvlOrder)
+    ? getRecategorisedEntries(props, (a, b) => b.tvsOrder - a.tvsOrder)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(
     () =>
       checked
         ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
+        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
             .filter((project) => project.statuses?.countdowns?.otherMigration)
             .map((project) => ({
               slug: project.slug,
               name: project.name,
             })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
+    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
   )
 
   const initialSort = {
@@ -79,11 +75,9 @@ export function ScalingRiskTables(props: Props) {
             Validiums & Optimiums
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -97,18 +91,16 @@ export function ScalingRiskTables(props: Props) {
             <ScalingRiskTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingRiskTable entries={entries.others} />
-              <OtherMigrationTabNotice
-                projectsToBeMigrated={projectToBeMigratedToOthers}
-                className="mt-2"
-              />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingRiskTable entries={entries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

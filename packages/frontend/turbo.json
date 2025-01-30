@@ -7,7 +7,7 @@
         "CI",
         "CRON_SECRET",
         "DATABASE_URL",
-        "EXCLUDED_TVL_PROJECTS",
+        "EXCLUDED_TVS_PROJECTS",
         "EXCLUDED_ACTIVITY_PROJECTS",
         "ETHEREUM_RPC_URL",
         "FEATURE_FLAG_GITCOIN_OPTION",
