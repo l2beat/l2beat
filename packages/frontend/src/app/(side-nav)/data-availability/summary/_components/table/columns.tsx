@@ -9,11 +9,6 @@ import type { DaSummaryEntry } from '~/server/features/data-availability/summary
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '../../../_utils/map-risks-to-rosette-values'
-import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -32,9 +27,7 @@ const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
-    const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
-
-    return <GrissiniCell values={risks} />
+    return <GrissiniCell values={ctx.row.original.risks} />
   },
   meta: {
     align: 'center',
@@ -50,11 +43,12 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!firstBridge) {
       return EM_DASH
     }
-
-    const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
-
+    console.log(firstBridge.risks.values)
     return (
-      <GrissiniCell values={risks} hasNoBridge={firstBridge.risks.isNoBridge} />
+      <GrissiniCell
+        values={firstBridge.risks.values}
+        hasNoBridge={firstBridge.risks.isNoBridge}
+      />
     )
   },
   meta: {
@@ -80,18 +74,10 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
-    // TODO: This feels very wrong!
-    if (ctx.row.original.risks.economicSecurity.value === 'None') {
-      return (
-        <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatDollarValueNumber(0)}
-        </div>
-      )
-    }
 
     return (
       <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-        <DaEconomicSecurityCell value={value} />
+        {formatDollarValueNumber(value ?? 0)}
       </div>
     )
   },
@@ -211,21 +197,8 @@ function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
   rowB: Row<DaSummaryEntry>,
 ) {
-  const rowAValue = slashableStakeToValue(rowA.original)
-  const rowBValue = slashableStakeToValue(rowB.original)
+  const rowAValue = rowA.original.economicSecurity ?? 0
+  const rowBValue = rowB.original.economicSecurity ?? 0
 
   return rowBValue - rowAValue
-}
-
-function slashableStakeToValue(entry: DaSummaryEntry) {
-  // TODO: This feels very wrong!
-  if (entry.risks.economicSecurity.value === 'None') {
-    return 0
-  }
-
-  if (!entry.economicSecurity || entry.economicSecurity.status !== 'Synced') {
-    return 0
-  }
-
-  return entry.economicSecurity.economicSecurity
 }

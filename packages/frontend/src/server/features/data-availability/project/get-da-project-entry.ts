@@ -31,7 +31,6 @@ import {
 } from '../utils/get-da-projects-tvs'
 import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
-import type { EconomicSecurityData } from './utils/get-da-project-economic-security'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
 
 interface CommonDaProjectPageEntry {
@@ -71,7 +70,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     daBridgeGrissiniValues: RosetteValue[]
     tvs: number
     links: ProjectLink[]
-    economicSecurity: EconomicSecurityData | undefined
+    economicSecurity: number | undefined
     durationStorage: number | undefined
     throughput: DaLayerThroughput | undefined
     usedIn: UsedInProject[]
@@ -83,7 +82,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
   header: {
     links: ProjectLink[]
     tvs: number
-    economicSecurity: EconomicSecurityData | undefined
+    economicSecurity: number | undefined
     durationStorage: number
     throughput: DaLayerThroughput | undefined
     usedIn: UsedInProject[]
