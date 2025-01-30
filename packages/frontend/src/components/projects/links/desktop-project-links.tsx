@@ -14,7 +14,7 @@ import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
-import { type ProjectLink } from './types'
+import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]

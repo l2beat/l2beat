@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type MarkdownIt from 'markdown-it'
-import { type GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
+import type { GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
 
 export function linkGlossaryTerms(
   glossary: GlossaryTermWithoutDescription[],

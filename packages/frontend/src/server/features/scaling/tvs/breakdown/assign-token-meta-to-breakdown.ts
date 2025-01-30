@@ -1,7 +1,7 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
-import { type AssetId, type ChainId } from '@l2beat/shared-pure'
+import type { AssetId, ChainId } from '@l2beat/shared-pure'
 import { getExplorerUrlByChainId } from '~/utils/get-explorer-url'
-import { type SortedBreakdown } from './record-to-sorted-breakdown'
+import type { SortedBreakdown } from './record-to-sorted-breakdown'
 
 export function assignTokenMetaToBreakdown({
   canonical,

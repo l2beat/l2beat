@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { DaRiskSummarySection } from './da-risk-summary-section'
-import { type RiskGroup } from './risk-summary-section'
+import type { RiskGroup } from './risk-summary-section'
 
 const meta = {
   title: 'Components/Projects/Sections/DA Risk Summary',

@@ -1,4 +1,4 @@
-import { type OnchainVerifier, type RequiredTool } from '@l2beat/config'
+import type { OnchainVerifier, RequiredTool } from '@l2beat/config'
 
 export interface ZkCatalogProofVerification {
   /** Short version of the description shown on the summary page and before long description on the detail page */

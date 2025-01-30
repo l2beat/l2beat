@@ -1,4 +1,4 @@
-import { type ValueRecord } from '@l2beat/database'
+import type { ValueRecord } from '@l2beat/database'
 
 export interface SumValuesPerSourceOptions {
   forTotal: boolean

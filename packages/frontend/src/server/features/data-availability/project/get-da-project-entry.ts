@@ -1,15 +1,15 @@
-import {
-  type BlockchainDaLayer,
-  type DaBridge,
-  type DaLayer,
-  type DaLayerThroughput,
-  type DaServiceDaLayer,
-  type EthereumDaLayer,
-  type NoDaBridge,
-  type OnChainDaBridge,
-  type StandaloneDacBridge,
-  isDaBridgeVerified,
+import type {
+  BlockchainDaLayer,
+  DaBridge,
+  DaLayer,
+  DaLayerThroughput,
+  DaServiceDaLayer,
+  EthereumDaLayer,
+  NoDaBridge,
+  OnChainDaBridge,
+  StandaloneDacBridge,
 } from '@l2beat/config'
+import { isDaBridgeVerified } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
 import type { UsedInProject } from '@l2beat/config'
 import {
@@ -31,10 +31,8 @@ import {
 } from '../utils/get-da-projects-tvs'
 import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
-import {
-  type EconomicSecurityData,
-  getDaProjectEconomicSecurity,
-} from './utils/get-da-project-economic-security'
+import type { EconomicSecurityData } from './utils/get-da-project-economic-security'
+import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
 
 interface CommonDaProjectPageEntry {
   isVerified: boolean

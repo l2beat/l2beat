@@ -1,8 +1,8 @@
-import {
-  type BlockchainDaLayer,
-  type DaServiceDaLayer,
-  type DacDaLayer,
-  type EthereumDaLayer,
+import type {
+  BlockchainDaLayer,
+  DaServiceDaLayer,
+  DacDaLayer,
+  EthereumDaLayer,
 } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 

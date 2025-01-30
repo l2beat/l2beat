@@ -1,4 +1,4 @@
-import { type SvgIconProps } from '~/icons/svg-icon'
+import type { SvgIconProps } from '~/icons/svg-icon'
 import { cn } from '~/utils/cn'
 
 export interface LogoProps extends SvgIconProps {

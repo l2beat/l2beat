@@ -6,7 +6,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { bridgesSummaryActiveColumns } from './columns'
 
-import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 

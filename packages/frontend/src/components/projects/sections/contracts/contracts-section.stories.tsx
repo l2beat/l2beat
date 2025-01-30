@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { ContractsSection } from './contracts-section'
 

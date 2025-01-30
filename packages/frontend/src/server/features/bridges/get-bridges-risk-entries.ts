@@ -1,20 +1,16 @@
-import {
-  type BridgeDisplay,
-  type BridgeRiskView,
-  type Project,
-  ProjectService,
-  type Sentiment,
+import type {
+  BridgeDisplay,
+  BridgeRiskView,
+  Project,
+  Sentiment,
 } from '@l2beat/config'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../projects-change-report/get-projects-change-report'
+import { ProjectService } from '@l2beat/config'
+import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
 import { getProjectsLatestTvsUsd } from '../scaling/tvs/utils/get-latest-tvs-usd'
-import {
-  type CommonBridgesEntry,
-  getCommonBridgesEntry,
-} from './get-common-bridges-entry'
+import type { CommonBridgesEntry } from './get-common-bridges-entry'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export async function getBridgeRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([

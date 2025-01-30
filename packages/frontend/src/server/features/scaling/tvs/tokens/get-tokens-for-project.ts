@@ -1,15 +1,11 @@
 import { chainConverter, toBackendProject } from '@l2beat/backend-shared'
-import {
-  type Bridge,
-  type Layer2,
-  type Layer3,
-  safeGetTokenByAssetId,
-} from '@l2beat/config'
+import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import { safeGetTokenByAssetId } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import {
   assert,
   AssetId,
   EthereumAddress,
-  type ProjectId,
   UnixTime,
   asNumber,
   notUndefined,

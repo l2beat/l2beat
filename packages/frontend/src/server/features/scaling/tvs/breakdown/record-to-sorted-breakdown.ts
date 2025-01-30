@@ -1,8 +1,8 @@
-import {
-  type BreakdownRecord,
-  type CanonicalAssetBreakdownData,
-  type ExternalAssetBreakdownData,
-  type NativeAssetBreakdownData,
+import type {
+  BreakdownRecord,
+  CanonicalAssetBreakdownData,
+  ExternalAssetBreakdownData,
+  NativeAssetBreakdownData,
 } from './types'
 
 export type SortedBreakdown = {

@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'

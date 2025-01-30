@@ -1,5 +1,6 @@
-import { type TrackedTxConfigEntry } from '@l2beat/shared'
-import { type SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import type { SavedConfiguration } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 export function getConfigurationsSyncedUntil(

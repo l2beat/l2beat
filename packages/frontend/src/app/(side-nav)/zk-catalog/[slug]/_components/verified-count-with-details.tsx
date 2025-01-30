@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { VerifiedIcon } from '~/icons/verified'
-import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
+import type { ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 
 interface Props {
   verifiers: ZkCatalogProjectDetails['verifiers']

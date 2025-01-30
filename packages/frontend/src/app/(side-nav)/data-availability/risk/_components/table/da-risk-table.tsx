@@ -1,14 +1,11 @@
 'use client'
-import {
-  type Row,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import {
   BasicDaTable,
   getRowTypeClassNames,

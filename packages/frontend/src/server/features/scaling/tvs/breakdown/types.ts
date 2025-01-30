@@ -1,8 +1,8 @@
-import {
-  type AssetId,
-  type ChainId,
-  type EthereumAddress,
-  type TokenBridgedUsing,
+import type {
+  AssetId,
+  ChainId,
+  EthereumAddress,
+  TokenBridgedUsing,
 } from '@l2beat/shared-pure'
 
 type BaseAssetBreakdownData = {

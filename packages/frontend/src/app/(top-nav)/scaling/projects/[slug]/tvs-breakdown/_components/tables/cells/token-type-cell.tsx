@@ -1,4 +1,4 @@
-import { type Token } from '@l2beat/shared-pure'
+import type { Token } from '@l2beat/shared-pure'
 
 interface Props {
   supply: Token['supply']

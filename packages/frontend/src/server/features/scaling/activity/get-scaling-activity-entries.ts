@@ -1,19 +1,14 @@
-import { type Project, ProjectService } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import {
-  type ActivityProjectTableData,
-  getActivityTable,
-} from './get-activity-table-data'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import type { ActivityProjectTableData } from './get-activity-table-data'
+import { getActivityTable } from './get-activity-table-data'
 import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivitySyncWarning } from './utils/is-activity-synced'
 

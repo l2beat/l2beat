@@ -1,9 +1,9 @@
-import { type Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import { getCollectionEntry } from '~/content/get-collection'
-import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
+import type { VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from '../../_utils/get-proof-verification'
 import { getTrustedSetup } from '../../_utils/get-trusted-setup'
-import { type ZkCatalogProofVerification } from '../../_utils/types'
+import type { ZkCatalogProofVerification } from '../../_utils/types'
 
 export interface ZkCatalogProjectDetails extends ZkCatalogProofVerification {
   title: string

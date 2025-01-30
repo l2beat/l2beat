@@ -1,9 +1,5 @@
-import {
-  type Bridge,
-  type TableReadyValue,
-  getContractsVerificationStatuses,
-  isVerified,
-} from '@l2beat/config'
+import type { Bridge, TableReadyValue } from '@l2beat/config'
+import { getContractsVerificationStatuses, isVerified } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'

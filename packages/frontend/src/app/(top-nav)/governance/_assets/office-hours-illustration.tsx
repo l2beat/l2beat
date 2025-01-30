@@ -1,4 +1,4 @@
-import { type SvgIconProps } from '~/icons/svg-icon'
+import type { SvgIconProps } from '~/icons/svg-icon'
 
 export function OfficeHoursIllustration(props: SvgIconProps) {
   return (

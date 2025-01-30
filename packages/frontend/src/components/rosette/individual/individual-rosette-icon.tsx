@@ -3,7 +3,7 @@ import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { useIndividualRosetteTooltipContext } from './individual-rosette-tooltip-context'
 
 export type RosetteValueTuple = [

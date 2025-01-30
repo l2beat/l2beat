@@ -1,24 +1,24 @@
-import {
-  CONTRACTS,
-  type DaBridgeContracts,
-  type ReferenceLink,
-  type ScalingProjectContract,
-  type UsedInProject,
+import type {
+  DaBridgeContracts,
+  ReferenceLink,
+  ScalingProjectContract,
+  UsedInProject,
 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  type EthereumAddress,
+import { CONTRACTS } from '@l2beat/config'
+import type {
+  ContractsVerificationStatuses,
+  EthereumAddress,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
-import { type MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
-import { type ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
+import type { MultiChainContractsSectionProps } from '~/components/projects/sections/contracts/multichain-contracts-section'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import {
-  type TechnologyContract,
-  type TechnologyContractAddress,
+import type {
+  TechnologyContract,
+  TechnologyContractAddress,
 } from '../../../components/projects/sections/contract-entry'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getUsedInProjects } from './get-used-in-projects'

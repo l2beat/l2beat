@@ -1,11 +1,13 @@
+import type {
+  BlockchainDaLayer,
+  DaBridgeRisks,
+  DaChallengeMechanism,
+  DaLayerRisks,
+  DaServiceDaLayer,
+  TableReadyValue,
+  UsedInProject,
+} from '@l2beat/config'
 import {
-  type BlockchainDaLayer,
-  type DaBridgeRisks,
-  type DaChallengeMechanism,
-  type DaLayerRisks,
-  type DaServiceDaLayer,
-  type TableReadyValue,
-  type UsedInProject,
   daLayers,
   ethereumDaLayer,
   isDaBridgeVerified,

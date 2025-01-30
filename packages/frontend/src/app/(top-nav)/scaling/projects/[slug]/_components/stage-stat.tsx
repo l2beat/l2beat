@@ -1,6 +1,6 @@
 'use client'
 
-import { type StageConfig } from '@l2beat/config'
+import type { StageConfig } from '@l2beat/config'
 import {
   StageBadge,
   getStageTextClassname,

@@ -1,5 +1,6 @@
-import { type BadgeId, BadgeType, badges } from '@l2beat/config'
-import { type StoryObj } from '@storybook/react'
+import type { BadgeId } from '@l2beat/config'
+import { BadgeType, badges } from '@l2beat/config'
+import type { StoryObj } from '@storybook/react'
 import { ProjectBadge } from './project-badge'
 
 const meta = {

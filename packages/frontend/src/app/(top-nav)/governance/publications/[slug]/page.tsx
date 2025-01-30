@@ -9,10 +9,8 @@ import { env } from '~/env'
 import { roboto_serif } from '~/fonts'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
-import {
-  type GovernancePublicationEntry,
-  getGovernancePublicationEntry,
-} from '../../_utils/get-governance-publication-entry'
+import type { GovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
+import { getGovernancePublicationEntry } from '../../_utils/get-governance-publication-entry'
 
 interface Props {
   params: Promise<{

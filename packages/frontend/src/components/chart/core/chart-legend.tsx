@@ -1,4 +1,4 @@
-import { type ClassNameValue } from 'tailwind-merge'
+import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 
 interface ChartLegendProps {

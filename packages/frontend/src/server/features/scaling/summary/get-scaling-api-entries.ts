@@ -1,23 +1,12 @@
-import {
-  type Layer2,
-  type Layer3,
-  type StageConfig,
-  badges,
-  isUnderReview,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import type { Layer2, Layer3, StageConfig } from '@l2beat/config'
+import { badges, isUnderReview, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type LatestTvs,
-  get7dTokenBreakdown,
-} from '../tvs/utils/get-7d-token-breakdown'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { LatestTvs } from '../tvs/utils/get-7d-token-breakdown'
+import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
 import { getHostChain } from '../utils/get-host-chain'
 
 export interface ScalingApiEntry {

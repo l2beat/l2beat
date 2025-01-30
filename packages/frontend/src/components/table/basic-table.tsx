@@ -1,14 +1,14 @@
 import { assert } from '@l2beat/shared-pure'
-import {
-  type Column,
-  type Header,
-  type Row,
-  type Table as TanstackTable,
-  flexRender,
+import type {
+  Column,
+  Header,
+  Row,
+  Table as TanstackTable,
 } from '@tanstack/react-table'
+import { flexRender } from '@tanstack/react-table'
 import { range } from 'lodash'
 import React from 'react'
-import { type CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {

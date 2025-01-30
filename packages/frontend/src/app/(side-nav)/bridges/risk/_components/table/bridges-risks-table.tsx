@@ -6,7 +6,7 @@ import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { bridgesRisksColumns } from './columns'
 
-import { type BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
+import type { BridgesRiskEntry } from '~/server/features/bridges/get-bridges-risk-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 

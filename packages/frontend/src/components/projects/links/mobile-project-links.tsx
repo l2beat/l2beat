@@ -9,7 +9,7 @@ import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'
-import { type ProjectLink } from './types'
+import type { ProjectLink } from './types'
 
 export function MobileProjectLinks({
   projectLinks,

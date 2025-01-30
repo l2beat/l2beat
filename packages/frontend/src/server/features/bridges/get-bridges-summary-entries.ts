@@ -1,25 +1,19 @@
-import {
-  type BridgeDisplay,
-  type Project,
-  ProjectService,
-  type TableReadyValue,
-  type WarningWithSentiment,
+import type {
+  BridgeDisplay,
+  Project,
+  TableReadyValue,
+  WarningWithSentiment,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { compact } from 'lodash'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../projects-change-report/get-projects-change-report'
+import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
-import {
-  type LatestTvs,
-  get7dTokenBreakdown,
-} from '../scaling/tvs/utils/get-7d-token-breakdown'
+import type { LatestTvs } from '../scaling/tvs/utils/get-7d-token-breakdown'
+import { get7dTokenBreakdown } from '../scaling/tvs/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../scaling/tvs/utils/get-associated-token-warning'
-import {
-  type CommonBridgesEntry,
-  getCommonBridgesEntry,
-} from './get-common-bridges-entry'
+import type { CommonBridgesEntry } from './get-common-bridges-entry'
+import { getCommonBridgesEntry } from './get-common-bridges-entry'
 
 export async function getBridgesSummaryEntries() {
   const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([

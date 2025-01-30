@@ -1,8 +1,8 @@
 import { getPremintedIndexerId } from '@l2beat/backend-shared'
-import {
-  type AmountConfigEntry,
-  type PremintedEntry,
-  type UnixTime,
+import type {
+  AmountConfigEntry,
+  PremintedEntry,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { getStatus } from './get-status'
 

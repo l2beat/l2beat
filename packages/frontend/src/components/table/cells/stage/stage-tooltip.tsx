@@ -1,4 +1,4 @@
-import { type Stage, type StageConfig } from '@l2beat/config'
+import type { Stage, StageConfig } from '@l2beat/config'
 import {
   StageBadge,
   getStageTextClassname,

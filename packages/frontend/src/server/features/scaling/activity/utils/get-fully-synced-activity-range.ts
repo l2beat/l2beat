@@ -1,6 +1,7 @@
-import { type StringWithAutocomplete, UnixTime } from '@l2beat/shared-pure'
+import type { StringWithAutocomplete } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
-import { type TimeRange } from '~/utils/range/range'
+import type { TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 
 /**

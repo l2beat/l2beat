@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 
 export function getDefaultMetadata(metadata?: Metadata): Metadata {
   const { openGraph, twitter, ...rest } = metadata ?? {}

@@ -1,11 +1,13 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
 import { safeGetTokenByAssetId } from '@l2beat/config'
+import type {
+  AmountConfigEntry,
+  AssetId,
+  EthereumAddress,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import {
   assert,
-  type AmountConfigEntry,
-  type AssetId,
-  type EthereumAddress,
-  type ProjectId,
   UnixTime,
   asNumber,
   assertUnreachable,

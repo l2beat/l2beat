@@ -19,7 +19,7 @@ import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
-import { type ProjectDetailsSection } from './sections/types'
+import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
 export interface ProjectDetailsProps {
