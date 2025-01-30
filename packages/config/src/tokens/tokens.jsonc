@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "LUMIA",
+      "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+      "coingeckoId": "lumia"
+    },
+    {
       "symbol": "EURC",
       "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
     },

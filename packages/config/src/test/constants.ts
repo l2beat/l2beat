@@ -34,6 +34,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'lightlink',
   'linea',
   'loopring',
+  'lumia',
   'metis',
   'morph',
   'myria',

@@ -3153,6 +3153,20 @@
       "supply": "zero"
     },
     {
+      "name": "Lumia Token",
+      "coingeckoId": "lumia",
+      "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+      "symbol": "LUMIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1719267095,
+      "coingeckoListingTimestamp": 1729296000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "LUSD Stablecoin",
       "coingeckoId": "liquity-usd",
       "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
