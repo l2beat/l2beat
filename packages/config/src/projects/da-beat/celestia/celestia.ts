@@ -18,8 +18,15 @@ export const celestia: DaProject = {
       'Celestia is a modular data availability network that allows L2s to post arbitrary data as blobs.',
     links: {
       websites: ['https://celestia.org/'],
-      documentation: ['https://docs.celestia.org/'],
-      repositories: ['https://github.com/celestiaorg'],
+      documentation: [
+        'https://docs.celestia.org/',
+        'https://docs.celestia.org/developers/blobstream',
+      ],
+      repositories: [
+        'https://github.com/celestiaorg',
+        'https://github.com/succinctlabs/sp1-blobstream',
+        'https://github.com/succinctlabs/blobstreamx',
+      ],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/CelestiaOrg',

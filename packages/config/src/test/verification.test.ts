@@ -53,7 +53,7 @@ describe('verification status', () => {
       const chains = getChainNamesForDA(project)
       for (const bridge of project.daLayer.bridges) {
         for (const chain of chains) {
-          it(`${bridge.id ?? 'bridge'} of ${chain}`, () => {
+          it(`${bridge.id ?? 'bridge'} on ${chain}`, () => {
             const projectIds = bridge.usedIn.map((u) => u.id.toString())
             if (bridge.id) {
               projectIds.push(bridge.id)

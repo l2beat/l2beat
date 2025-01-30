@@ -1,20 +1,15 @@
-import type { DaBridge, ProjectLinks } from '../../../types'
+import type { DaBridge } from '../../../types'
 
 type TemplateVars = Pick<
   DaBridge,
   'addedAt' | 'contracts' | 'permissions' | 'usedIn' | 'technology' | 'risks'
-> & {
-  display: {
-    links: ProjectLinks
-  }
-}
+>
 
 export function CELESTIA_BLOBSTREAM(base: TemplateVars): DaBridge {
   const display = {
     name: `Blobstream`,
     slug: `blobstream`,
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
-    links: base.display.links,
   }
 
   const validation = {

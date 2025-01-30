@@ -6,7 +6,7 @@ import { NO_BRIDGE } from '../templates/no-bridge-template'
 
 export const near: DaProject = {
   type: 'DaLayer',
-  id: ProjectId('near'),
+  id: ProjectId('near-da'), // TODO: merge with near bridge in the future
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   display: {
     name: 'NEAR DA',

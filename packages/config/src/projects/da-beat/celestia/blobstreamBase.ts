@@ -23,13 +23,6 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamBase = CELESTIA_BLOBSTREAM({
   addedAt: new UnixTime(1719930680), // 2024-07-02T14:31:20Z
-  display: {
-    links: {
-      documentation: ['https://docs.celestia.org/developers/blobstream'],
-      repositories: ['https://github.com/succinctlabs/blobstreamx'],
-      explorers: ['https://basescan.org/'],
-    },
-  },
   technology: {
     description: `
       The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Base.
