@@ -45,7 +45,7 @@ export const lumia: Layer2 = polygonCDKStack({
     name: 'Lumia Prism',
     slug: 'lumia',
     description:
-      'Lumia is a Validium built on the PolygonCDK stack focusing on Real World Assets, restaking and account abstraction.',
+      'Lumia is a Validium built on the PolygonCDK stack focusing on real world assets, restaking and account abstraction.',
     links: {
       websites: ['https://lumia.org/'],
       apps: ['https://bridge.lumia.org/'],
