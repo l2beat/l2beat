@@ -42,6 +42,8 @@ cd packages/frontend
 pnpm dev:mock
 ```
 
+The website will be avaiable on http://localhost:3000/
+
 ## Add tokens to a project
 
 If while adding your project you find that some of the tokens locked in it are missing from our
