@@ -6,7 +6,6 @@ import type {
   ScalingProjectPermissions,
 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import type { MultichainPermissionsSectionProps } from '~/components/projects/sections/permissions/multichain-permissions-section'
 import type { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -39,7 +38,7 @@ export function getMultichainPermissionsSection(
   const hasAnyPermissions =
     Object.values(projectParams.permissions).flat().length > 0
 
-  const permissionedEntities = getPermissionedEntities(projectParams.bridge)
+  const permissionedEntities = projectParams.bridge.dac?.knownMembers
 
   if (!hasAnyPermissions && !permissionedEntities) {
     return undefined

@@ -1,6 +1,5 @@
 import type { Layer2 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -340,7 +339,7 @@ export async function getL2ProjectDetails({
 
   if (permissionsSection) {
     const bridge = project.dataAvailabilitySolution?.bridges[0]
-    const permissionedEntities = bridge && getPermissionedEntities(bridge)
+    const permissionedEntities = bridge?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',

@@ -13,7 +13,6 @@ import { getMultichainPermissionsSection } from '~/utils/project/contracts-and-p
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
-import { getPermissionedEntities } from './get-permissioned-entities'
 
 type RegularDetailsParams = {
   daLayer: DaProject
@@ -139,7 +138,7 @@ export function getRegularDaProjectSections({
       type: 'MultichainPermissionsSection',
       props: {
         ...permissionsSection,
-        permissionedEntities: getPermissionedEntities(daBridge),
+        permissionedEntities: daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
       },
