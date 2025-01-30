@@ -1,18 +1,7 @@
-import type {
-  BlockchainDaLayer,
-  DaServiceDaLayer,
-  DacDaLayer,
-  EthereumDaLayer,
-} from '@l2beat/config'
+import type { DaLayer } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 
-type LayerKind =
-  | BlockchainDaLayer
-  | EthereumDaLayer
-  | DaServiceDaLayer
-  | DacDaLayer
-
-export function kindToType(kind: LayerKind['kind']) {
+export function kindToType(kind: DaLayer['kind']) {
   switch (kind) {
     case 'PublicBlockchain':
     case 'EthereumDaLayer':

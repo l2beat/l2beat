@@ -8,7 +8,9 @@ import { getDaRisks } from '~/server/features/data-availability/utils/get-da-ris
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  if (!project.dataAvailabilitySolution) {
+  // TODO: more than one bridge?
+  const bridge = project.dataAvailabilitySolution?.bridges[0]
+  if (!project.dataAvailabilitySolution || !bridge) {
     return
   }
 
@@ -16,7 +18,7 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
 
   const evaluatedRisks = getDaRisks(
     project.dataAvailabilitySolution,
-    project.dataAvailabilitySolution.bridge,
+    bridge,
     0, // TODO: getTVS
   )
 
@@ -45,17 +47,16 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         slug: project.display.slug,
       },
       content: project.dataAvailabilitySolution.technology.description.concat(
-        project.dataAvailabilitySolution.bridge.technology.description,
+        bridge.technology.description,
       ),
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: project.dataAvailabilitySolution.technology.risks
-        ?.concat(project.dataAvailabilitySolution.bridge.technology.risks ?? [])
+        ?.concat(bridge.technology.risks ?? [])
         .map(toTechnologyRisk),
       references:
         project.dataAvailabilitySolution.technology.references?.concat(
-          ...(project.dataAvailabilitySolution.bridge.technology.references ??
-            []),
+          ...(bridge.technology.references ?? []),
         ),
     },
   })

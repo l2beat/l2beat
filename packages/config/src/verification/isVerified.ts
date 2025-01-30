@@ -4,9 +4,7 @@ export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaProject,
 ): boolean {
   if (project.type === 'DaLayer') {
-    return project.daLayer.bridges.every((bridge) =>
-      isDaBridgeVerified(project, bridge),
-    )
+    return project.daLayer.bridges.every((bridge) => isDaBridgeVerified(bridge))
   }
 
   const contractsVerification =
@@ -25,7 +23,7 @@ export function isVerified(
   return newVerification
 }
 
-export function isDaBridgeVerified(_: DaProject, daBridge: DaBridge): boolean {
+export function isDaBridgeVerified(daBridge: DaBridge): boolean {
   let verification = true
 
   if ('contracts' in daBridge) {

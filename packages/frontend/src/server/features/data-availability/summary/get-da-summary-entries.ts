@@ -1,7 +1,6 @@
 import type {
-  BlockchainDaLayer,
   DaChallengeMechanism,
-  DaServiceDaLayer,
+  DaProject,
   TableReadyValue,
   UsedInProject,
 } from '@l2beat/config'
@@ -76,25 +75,21 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaSummaryEntry(
-  daLayer: BlockchainDaLayer | DaServiceDaLayer,
+  project: DaProject,
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
-  const bridges = daLayer.bridges
+  const bridges = project.daLayer.bridges
     .map((daBridge): DaBridgeSummaryEntry => {
       const bridgeRisks = getDaBridgeRisks(daBridge)
       return {
         name: daBridge.display.name,
         slug: daBridge.display.slug,
-        href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
+        href: `/data-availability/projects/${project.display.slug}/${daBridge.display.slug}`,
         statuses: {
-          yellowWarning: daBridge.display.warning,
-          redWarning: daBridge.display.redWarning,
-          verificationWarning: isDaBridgeVerified(daLayer, daBridge)
-            ? undefined
-            : true,
+          verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
           underReview:
-            !!daLayer.isUnderReview || daBridge.isUnderReview
+            !!project.isUnderReview || daBridge.isUnderReview
               ? 'config'
               : undefined,
         },
@@ -105,12 +100,13 @@ function getDaSummaryEntry(
         },
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
         dacInfo:
-          daBridge.type === 'StandaloneDacBridge' && !daBridge.hideMembers
+          daBridge.dac && !daBridge.dac.hideMembers
             ? {
-                memberCount: daBridge.membersCount,
-                requiredMembers: daBridge.requiredMembers,
+                memberCount: daBridge.dac.membersCount,
+                requiredMembers: daBridge.dac.requiredMembers,
                 membersArePublic:
-                  !!daBridge.knownMembers && daBridge.knownMembers.length > 0,
+                  !!daBridge.dac.knownMembers &&
+                  daBridge.dac.knownMembers.length > 0,
               }
             : undefined,
       }
@@ -118,25 +114,25 @@ function getDaSummaryEntry(
     .sort((a, b) => b.tvs - a.tvs)
 
   const usedIn = uniq(
-    daLayer.bridges.flatMap((bridge) =>
+    project.daLayer.bridges.flatMap((bridge) =>
       bridge.usedIn.map((project) => project.id),
     ),
   )
   const tvs = usedIn.length === 0 ? 0 : getTvs(usedIn)
 
   return {
-    id: ProjectId(daLayer.id),
-    slug: daLayer.display.slug,
-    name: daLayer.display.name,
-    nameSecondLine: kindToType(daLayer.kind),
+    id: ProjectId(project.id),
+    slug: project.display.slug,
+    name: project.display.name,
+    nameSecondLine: kindToType(project.daLayer.kind),
     href: bridges[0]?.href,
     statuses: {
-      underReview: !!daLayer.isUnderReview ? 'config' : undefined,
+      underReview: !!project.isUnderReview ? 'config' : undefined,
     },
-    isPublic: daLayer.systemCategory === 'public',
+    isPublic: project.daLayer.systemCategory === 'public',
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
-      getDaLayerRisks(daLayer, tvs, economicSecurity),
+      getDaLayerRisks(project.daLayer, tvs, economicSecurity),
     ),
     fallback: undefined,
     challengeMechanism: undefined,
@@ -152,77 +148,82 @@ function getDacEntries(
     .filter((project) => project.dataAvailabilitySolution)
     .map((project) => ({
       parentProject: project,
-      daLayer: project.dataAvailabilitySolution!,
+      daLayer: project.dataAvailabilitySolution,
+      bridge: project.dataAvailabilitySolution?.bridges[0],
     }))
 
-  return projects.map(({ parentProject, daLayer }) => {
-    const usedIn = toUsedInProject([parentProject])
-    const tvs = getTvs([parentProject.id])
-    const dacInfo =
-      daLayer.bridge.type === 'IntegratedDacBridge' &&
-      !daLayer.bridge.hideMembers
-        ? {
-            memberCount: daLayer.bridge.membersCount,
-            requiredMembers: daLayer.bridge.requiredMembers,
-            membersArePublic:
-              !!daLayer.bridge.knownMembers &&
-              daLayer.bridge.knownMembers.length > 0,
-          }
-        : undefined
+  return projects
+    .map(({ parentProject, daLayer, bridge }) => {
+      if (!daLayer || !bridge) {
+        return undefined
+      }
 
-    const bridgeRisks = getDaBridgeRisks(daLayer.bridge)
-    const bridgeEntry: DaBridgeSummaryEntry = {
-      name: daLayer.display?.name ?? `${parentProject.display.name} DAC`,
-      slug: parentProject.display.slug,
-      href: `/scaling/projects/${parentProject.display.slug}`,
-      statuses: {},
-      tvs,
-      risks: {
-        isNoBridge: bridgeRisks.isNoBridge,
-        values: mapBridgeRisksToRosetteValues(bridgeRisks),
-      },
-      dacInfo,
-      usedIn,
-    }
-    const daLayerRisks = getDaLayerRisks(daLayer, tvs)
+      const usedIn = toUsedInProject([parentProject])
+      const tvs = getTvs([parentProject.id])
+      const dacInfo =
+        bridge.dac && !bridge.dac.hideMembers
+          ? {
+              memberCount: bridge.dac.membersCount,
+              requiredMembers: bridge.dac.requiredMembers,
+              membersArePublic:
+                !!bridge.dac.knownMembers && bridge.dac.knownMembers.length > 0,
+            }
+          : undefined
 
-    const projectEntry: DaSummaryEntry = {
-      id: parentProject.id,
-      slug: parentProject.display.slug,
-      name: daLayer.display?.name ?? `${parentProject.display.name} DAC`,
-      nameSecondLine: kindToType(daLayer.kind),
-      href: `/scaling/projects/${parentProject.display.slug}#da-layer`,
-      statuses: {},
-      risks: mapLayerRisksToRosetteValues(daLayerRisks),
-      fallback: daLayer.fallback,
-      challengeMechanism: daLayer.challengeMechanism,
-      isPublic: daLayer.systemCategory === 'public',
-      economicSecurity: undefined,
-      tvs,
-      bridges: [bridgeEntry],
-    }
+      const bridgeRisks = getDaBridgeRisks(bridge)
+      const bridgeEntry: DaBridgeSummaryEntry = {
+        name: daLayer.name ?? `${parentProject.display.name} DAC`,
+        slug: parentProject.display.slug,
+        href: `/scaling/projects/${parentProject.display.slug}`,
+        statuses: {},
+        tvs,
+        risks: {
+          isNoBridge: bridgeRisks.isNoBridge,
+          values: mapBridgeRisksToRosetteValues(bridgeRisks),
+        },
+        dacInfo,
+        usedIn,
+      }
+      const daLayerRisks = getDaLayerRisks(daLayer, tvs)
 
-    return projectEntry
-  })
+      const projectEntry: DaSummaryEntry = {
+        id: parentProject.id,
+        slug: parentProject.display.slug,
+        name: daLayer.name ?? `${parentProject.display.name} DAC`,
+        nameSecondLine: kindToType(daLayer.kind),
+        href: `/scaling/projects/${parentProject.display.slug}#da-layer`,
+        statuses: {},
+        risks: mapLayerRisksToRosetteValues(daLayerRisks),
+        fallback: daLayer.fallback,
+        challengeMechanism: daLayer.challengeMechanism,
+        isPublic: daLayer.systemCategory === 'public',
+        economicSecurity: undefined,
+        tvs,
+        bridges: [bridgeEntry],
+      }
+
+      return projectEntry
+    })
+    .filter((x) => x !== undefined)
 }
 
 function getEthereumEntry(
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
-  const bridge = ethereumDaLayer.bridges[0]
+  const bridge = ethereumDaLayer.daLayer.bridges[0]
   assert(bridge, 'Ethereum DA layer has no bridges')
 
   return {
     id: ProjectId.ETHEREUM,
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
-    nameSecondLine: kindToType(ethereumDaLayer.kind),
-    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.bridges[0].display.slug}`,
+    nameSecondLine: kindToType(ethereumDaLayer.daLayer.kind),
+    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.daLayer.bridges[0]?.display.slug}`,
     statuses: {},
     economicSecurity: economicSecurity,
     tvs: getTvs(
-      ethereumDaLayer.bridges
+      ethereumDaLayer.daLayer.bridges
         .flatMap((bridge) => bridge.usedIn)
         .map((usedIn) => usedIn.id),
     ),
@@ -233,7 +234,7 @@ function getEthereumEntry(
         href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${bridge.display.slug}`,
         statuses: {},
         tvs: getTvs(
-          ethereumDaLayer.bridges
+          ethereumDaLayer.daLayer.bridges
             .flatMap((bridge) => bridge.usedIn)
             .map((usedIn) => usedIn.id),
         ),
@@ -242,12 +243,14 @@ function getEthereumEntry(
           isNoBridge: false,
         },
         dacInfo: undefined,
-        usedIn: ethereumDaLayer.bridges.flatMap((bridge) => bridge.usedIn),
+        usedIn: ethereumDaLayer.daLayer.bridges.flatMap(
+          (bridge) => bridge.usedIn,
+        ),
       },
     ],
     isPublic: true,
     challengeMechanism: undefined,
     fallback: undefined,
-    risks: mapLayerRisksToRosetteValues(ethereumDaLayer.risks),
+    risks: mapLayerRisksToRosetteValues(ethereumDaLayer.daLayer.risks),
   }
 }

@@ -254,7 +254,7 @@ export async function getL2ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.dataAvailabilitySolution?.description,
       },
     })
   }
@@ -339,9 +339,8 @@ export async function getL2ProjectDetails({
   }
 
   if (permissionsSection) {
-    const permissionedEntities = project.dataAvailabilitySolution
-      ? getPermissionedEntities(project.dataAvailabilitySolution.bridge)
-      : undefined
+    const bridge = project.dataAvailabilitySolution?.bridges[0]
+    const permissionedEntities = bridge && getPermissionedEntities(bridge)
 
     items.push({
       type: 'PermissionsSection',

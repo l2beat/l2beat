@@ -20,7 +20,7 @@ export type DaSolutionWith<T> = Common & T
 
 export function getDaSolution(project: ScalingProject): DaSolution | undefined {
   const layerBridgePairs = daLayers.flatMap((layer) =>
-    layer.bridges.flatMap((bridge) => ({ layer, bridge })),
+    layer.daLayer.bridges.flatMap((bridge) => ({ layer, bridge })),
   )
 
   const daSolution = layerBridgePairs.find((pair) =>
@@ -48,7 +48,7 @@ export function getDaSolution(project: ScalingProject): DaSolution | undefined {
       ? allDaBridgePermissions?.[hostChainSelector]
       : undefined
 
-  const daBridgeContracts = allDaBridgeContracts.addresses[hostChainSelector]
+  const daBridgeContracts = allDaBridgeContracts?.addresses[hostChainSelector]
 
   return {
     layerName: daSolution.layer.display.name,

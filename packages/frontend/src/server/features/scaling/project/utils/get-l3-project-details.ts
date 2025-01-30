@@ -284,7 +284,7 @@ export async function getL3ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.dataAvailabilitySolution?.description,
       },
     })
   }

@@ -773,6 +773,19 @@ export interface BridgeTechnology {
   isUnderReview?: boolean
 }
 
+// I HATE THIS
+export type EthereumDaProject = Omit<DaProject, 'daLayer'> & {
+  daLayer: Omit<DaLayer, 'risks' | 'bridges'> & {
+    risks: TableReadyValue
+    bridges: EthereumDaBridge[]
+  }
+}
+export type EthereumDaBridge = Omit<DaBridge, 'risks'> & {
+  risks: TableReadyValue
+  /** Replaces risk grissini */
+  callout: string
+}
+
 export interface DaProject {
   type: 'DaLayer'
   id: ProjectId
@@ -885,8 +898,6 @@ export interface DaBridge {
   usedIn: UsedInProject[]
   otherConsiderations?: ProjectTechnologyChoice[]
   risks: DaBridgeRisks
-  /** Replaces risk grissini */
-  callout?: string
   /** Data about related permissions - preferably from discovery. */
   permissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Data about the validation type of the bridge */

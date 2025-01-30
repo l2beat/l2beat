@@ -1,19 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type {
-  DaBridge,
-  DaLayer,
-  DaProject,
-  TableReadyValue,
-} from '../../../types'
+import type { EthereumDaProject } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
 
-export const ethereum: Omit<DaProject, 'daLayer'> & {
-  daLayer: Omit<DaLayer, 'risks' | 'bridges'> & {
-    risks: TableReadyValue
-    bridges: (Omit<DaBridge, 'risks'> & { risks: TableReadyValue })[]
-  }
-} = {
+export const ethereum: EthereumDaProject = {
   type: 'DaLayer',
   id: ProjectId('ethereum'),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
