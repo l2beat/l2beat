@@ -1,9 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type {
+  DaBridge,
+  DaLayer,
+  DaProject,
+  TableReadyValue,
+} from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
 
-export const ethereum: DaProject = {
+export const ethereum: Omit<DaProject, 'daLayer'> & {
+  daLayer: Omit<DaLayer, 'risks' | 'bridges'> & {
+    risks: TableReadyValue
+    bridges: (Omit<DaBridge, 'risks'> & { risks: TableReadyValue })[]
+  }
+} = {
   type: 'DaLayer',
   id: ProjectId('ethereum'),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
@@ -101,7 +111,7 @@ export const ethereum: DaProject = {
         },
       ],
     },
-    bridges: [enshrinedBridge] as const,
+    bridges: [enshrinedBridge],
     consensusAlgorithm: {
       name: 'Gasper',
       description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.

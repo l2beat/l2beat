@@ -52,15 +52,14 @@ describe('verification status', () => {
     for (const project of daLayers) {
       const chains = getChainNamesForDA(project)
       for (const bridge of project.daLayer.bridges) {
-        const bridgeId = bridge.id ?? 'missing-id'
         for (const chain of chains) {
-          it(`${bridgeId}:${chain}`, () => {
-            const projectIds =
-              project.daLayer.kind === 'PublicBlockchain'
-                ? [bridge.id ?? '']
-                : Array.isArray(bridge.usedIn)
-                  ? bridge.usedIn.map((u) => u.id.toString())
-                  : []
+          it(`${bridge.id ?? 'bridge'} of ${chain}`, () => {
+            const projectIds = Array.isArray(bridge.usedIn)
+              ? bridge.usedIn.map((u) => u.id.toString())
+              : []
+            if (bridge.id) {
+              projectIds.push(bridge.id)
+            }
             for (const projectId of projectIds) {
               const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 

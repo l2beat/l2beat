@@ -10,10 +10,9 @@ type TemplateVars = Pick<
 }
 
 export function CELESTIA_BLOBSTREAM(base: TemplateVars): DaBridge {
-  const id = `blobstream`
   const display = {
     name: `Blobstream`,
-    slug: id,
+    slug: `blobstream`,
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
     links: base.display.links,
   }
@@ -26,7 +25,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): DaBridge {
 
   return {
     type: 'OnChainBridge',
-    id,
+    id: `blobstream`,
     addedAt: base.addedAt,
     display,
     risks: base.risks,

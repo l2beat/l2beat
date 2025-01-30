@@ -792,7 +792,7 @@ export interface DaLayer {
   kind: 'DA Service' | 'DAC' | 'No DAC' | 'EthereumDaLayer' | 'PublicBlockchain'
   systemCategory: 'public' | 'custom'
   bridges: DaBridge[]
-  risks: DaLayerRisks | TableReadyValue
+  risks: DaLayerRisks
   technology: DaTechnology
 
   fallback?: TableReadyValue
@@ -868,7 +868,7 @@ export interface DaTechnology {
 }
 
 export interface DaBridge {
-  /** Unique identifier of the data availability bridge. */
+  /** Optional: Unique identifier of the data availability bridge. */
   id?: string
   type:
     | 'Enshrined'
@@ -884,7 +884,7 @@ export interface DaBridge {
   technology: DaTechnology
   usedIn: UsedInProject[] | 'self'
   otherConsiderations?: ProjectTechnologyChoice[]
-  risks: DaBridgeRisks | TableReadyValue
+  risks: DaBridgeRisks
   /** Replaces risk grissini */
   callout?: string
   /** Data about related permissions - preferably from discovery. */
