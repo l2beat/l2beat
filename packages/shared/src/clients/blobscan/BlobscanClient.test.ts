@@ -3,7 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { BlobScanClient } from './BlobscanClient'
 
-describe.only(BlobScanClient.name, () => {
+describe(BlobScanClient.name, () => {
   describe(BlobScanClient.prototype.getBlobs.name, () => {
     it('handles single-page responses', async () => {
       const blob = mockBlob()
