@@ -1241,7 +1241,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   daLayer: string
   stage: ScalingProjectStage
-  purposes: string[]
+  purposes: ScalingProjectPurpose[]
 }
 
 export type ScalingProjectStage =

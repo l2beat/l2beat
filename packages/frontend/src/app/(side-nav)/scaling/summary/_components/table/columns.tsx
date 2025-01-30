@@ -40,7 +40,13 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeCell
+        stack={ctx.row.original.stack}
+        isAppchain={ctx.row.original.capability === 'appchain'}
+        purposes={ctx.row.original.purposes}
+      >
+        {ctx.getValue()}
+      </TypeCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,

@@ -1,4 +1,4 @@
-import type { ScalingProjectStack } from '@l2beat/config'
+import type { ScalingProjectPurpose, ScalingProjectStack } from '@l2beat/config'
 import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
@@ -16,28 +16,41 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
+import { TwoRowCell } from './two-row-cell'
 
 export interface TypeCellProps {
   children: string | undefined
   stack?: ScalingProjectStack
+  isAppchain?: boolean
+  purposes?: ScalingProjectPurpose[]
 }
 
-export function TypeCell({ stack, children }: TypeCellProps) {
+export function TypeCell({
+  stack,
+  children,
+  isAppchain,
+  purposes,
+}: TypeCellProps) {
   const providerProps = stack ? providerMap[stack] : undefined
 
   return (
-    <span>
-      {children ?? EM_DASH}
-      {providerProps ? (
-        <TypeTooltip
-          Icon={providerProps.Icon}
-          text={
-            providerProps.text ??
-            `This project is based on ${stack}'s code base.`
-          }
-        />
-      ) : null}
-    </span>
+    <TwoRowCell>
+      <TwoRowCell.First>
+        {children ?? EM_DASH}
+        {providerProps ? (
+          <TypeTooltip
+            Icon={providerProps.Icon}
+            text={
+              providerProps.text ??
+              `This project is based on ${stack}'s code base.`
+            }
+          />
+        ) : null}
+      </TwoRowCell.First>
+      {isAppchain && (
+        <TwoRowCell.Second>{purposes?.join(', ')}</TwoRowCell.Second>
+      )}
+    </TwoRowCell>
   )
 }
 
