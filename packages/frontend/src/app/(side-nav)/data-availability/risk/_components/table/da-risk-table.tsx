@@ -32,7 +32,12 @@ export function DaRiskTable({
     return (
       <>
         {remainingBridges.map((bridge) => (
-          <TableRow key={bridge.href} className={getRowTypeClassNames()}>
+          <TableRow
+            key={bridge.href}
+            className={getRowTypeClassNames({
+              isEthereum: false,
+            })}
+          >
             <BridgeCells excludeBridge={excludeBridge} bridge={bridge} />
           </TableRow>
         ))}
