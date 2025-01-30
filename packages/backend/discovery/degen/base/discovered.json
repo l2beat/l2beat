@@ -1,8 +1,8 @@
 {
   "name": "degen",
   "chain": "base",
-  "blockNumber": 25417259,
-  "configHash": "0x47b27c0f7a0137cfbde55b2e7eae47daade484a20abdc6f3ee234cc10ba29ce8",
+  "blockNumber": 25722659,
+  "configHash": "0xc6405e241a1239b24939e4a43b671320200bbfe5bbb4b259830d5aab28a4d8e0",
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -167,7 +167,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 32953,
+        "batchCount": 33134,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xc98A32DdD1b30B3788670C9992f3B18EF83Da491"],
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -199,7 +199,7 @@
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 148395,
+        "totalDelayedMessagesRead": 148412,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -396,7 +396,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -480,6 +480,43 @@
       }
     },
     {
+      "name": "DegenFastConfirmerMultisig",
+      "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        },
+        {
+          "permission": "validate",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1737507257,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": ["0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"],
+        "$threshold": 1,
+        "domainSeparator": "0x4441bb251f30b22eb0115f71e426b36f2325e01673875e975ec0ba5cc054f121",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 67,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
       "name": "RollupProxy",
       "address": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
       "template": "orbitstack/RollupProxy_fastConfirm",
@@ -498,6 +535,12 @@
           "via": [{ "address": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028" }]
         },
         {
+          "permission": "fastconfirm",
+          "to": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
+        },
+        {
           "permission": "upgrade",
           "to": "0x871e290d5447b958131F6d44f915F10032436ee6",
           "via": [{ "address": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028" }]
@@ -507,6 +550,12 @@
           "to": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -540,7 +589,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "0x0000000000000000000000000000000000000000",
+        "anyTrustFastConfirmer": "0xc207cbC35DD3CD172059730380A45aE14eb0e403",
         "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
@@ -550,12 +599,12 @@
         "confirmPeriodBlocks": 241920,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2541,
+        "firstUnresolvedNode": 2763,
         "inbox": "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
         "isERC20Enabled": false,
         "lastStakeBlock": 23492774,
-        "latestConfirmed": 2540,
-        "latestNodeCreated": 2673,
+        "latestConfirmed": 2762,
+        "latestNodeCreated": 2828,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
@@ -564,12 +613,15 @@
         "rollupDeploymentBlock": 11649047,
         "rollupEventInbox": "0x766DD3A13d17C6D175975C89225bde89F052dBc4",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "setValidatorCount": 3,
+        "setValidatorCount": 4,
         "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"],
+        "validators": [
+          "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
+          "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+        ],
         "validatorUtils": "0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51",
         "validatorWalletCreator": "0xB546310EA2De84220811a03BCD5CeE96D251fA7D",
         "validatorWhitelistDisabled": false,
@@ -766,12 +818,12 @@
           "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da",
           "0xDb8E759859058952c34953c8469f464109826e52"
         ],
-        "delayedMessageCount": 148395,
+        "delayedMessageCount": 148412,
         "nativeToken": "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed",
         "rollup": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
         "sequencerInbox": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-        "sequencerMessageCount": 32953,
-        "sequencerReportedSubMessageCount": 25307572
+        "sequencerMessageCount": 33134,
+        "sequencerReportedSubMessageCount": 25378208
       }
     },
     {
@@ -826,11 +878,6 @@
           "permission": "configure",
           "from": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
           "description": "Add/remove batchPosters (Sequencers)."
-        },
-        {
-          "permission": "fastconfirm",
-          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
         }
       ]
     },
@@ -850,6 +897,18 @@
     {
       "address": "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0xc207cbC35DD3CD172059730380A45aE14eb0e403" }]
+        },
         {
           "permission": "validate",
           "from": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
@@ -1445,6 +1504,9 @@
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
     ],
+    "0xc207cbC35DD3CD172059730380A45aE14eb0e403": [
+      "constructor(address _singleton)"
+    ],
     "0xcA00Db0289131B71A6624f62666bd54305697BB2": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -1569,6 +1631,56 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xFB48D385Fa3da33762B350e1d705b9E46054E677": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
