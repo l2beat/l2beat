@@ -1143,7 +1143,10 @@ export interface StageConfigured {
   missing?: MissingStageRequirements
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
-  notice?: string
+  additionalConsiderations?: {
+    short: string
+    long: string
+  }
 }
 
 export interface StageConfiguredMessage {
@@ -1224,6 +1227,7 @@ export interface ProjectBridgeInfo {
 export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ScalingProjectCategory
+  capability: ScalingProjectCapability
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined

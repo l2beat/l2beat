@@ -39,6 +39,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
   const common = {
     type: project.type,
+    capability: project.capability,
     name: project.display.name,
     slug: project.display.slug,
     underReviewStatus: getUnderReviewStatus({

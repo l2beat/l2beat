@@ -95,6 +95,11 @@ export const kinto: Layer2 = orbitStackL2({
         'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
       securityCouncilReference:
         'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+      additionalConsiderations: {
+        short:
+          'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contract creation.',
+        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all contract calls by EOAs and new contract creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.',
+      },
     },
   ),
   nonTemplateTechnology: {

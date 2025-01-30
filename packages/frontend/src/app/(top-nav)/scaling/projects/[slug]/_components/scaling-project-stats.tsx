@@ -1,20 +1,19 @@
 import { pluralize } from '@l2beat/shared-pure'
 import type { ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
-import { StageBadge } from '~/components/badge/stage-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { StageTooltip } from '~/components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/components/table/cells/type-cell'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
+import { StageStat } from './stage-stat'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
@@ -23,6 +22,11 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const isAppchain = project.capability === 'appchain'
+  const hasNotice =
+    project.stageConfig.stage !== 'UnderReview' &&
+    project.stageConfig.stage !== 'NotApplicable' &&
+    !!project.stageConfig.additionalConsiderations
   return (
     <div
       className={cn(
@@ -66,19 +70,11 @@ export function ScalingProjectStats({ project, className }: Props) {
         <ProjectStat
           title="Stage"
           value={
-            <span className="relative -top-0.5 flex items-center">
-              <a href="#stage">
-                <StageBadge stage={project.stageConfig.stage} />
-              </a>
-              <Tooltip>
-                <TooltipTrigger className="inline-block px-2">
-                  <InfoIcon className="size-4" variant="gray" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <StageTooltip stageConfig={project.stageConfig} />
-                </TooltipContent>
-              </Tooltip>
-            </span>
+            <StageStat
+              stageConfig={project.stageConfig}
+              isAppchain={isAppchain}
+              hasNotice={hasNotice}
+            />
           }
         />
       ) : null}

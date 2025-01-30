@@ -256,6 +256,11 @@ export async function getL3ProjectDetails({
         icon: `/icons/${project.display.slug}.png`,
         type: project.display.category,
         isUnderReview: project.isUnderReview,
+        isAppchain: project.capability === 'appchain',
+        additionalConsiderations:
+          project.stage.stage !== 'UnderReview'
+            ? project.stage.additionalConsiderations
+            : undefined,
       },
     })
   }
