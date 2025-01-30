@@ -8,7 +8,6 @@ import { RiskCell } from '~/components/table/cells/risk-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -70,7 +69,7 @@ function BridgeCells({
   bridge,
   excludeBridge = false,
 }: {
-  bridge: (DaRiskEntry | DaSummaryEntry)['bridges'][number]
+  bridge: DaRiskEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
   return (

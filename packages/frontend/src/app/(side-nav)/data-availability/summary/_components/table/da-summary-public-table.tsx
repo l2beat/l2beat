@@ -16,7 +16,6 @@ import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../_components/basic-da-table'
-import { mapBridgeRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { publicSystemsColumns } from './columns'
 import { ProjectsUsedIn } from './projects-used-in'
 
@@ -69,8 +68,6 @@ function BridgeCells({
   bridge: DaBridgeSummaryEntry
   excludeBridge?: boolean
 }) {
-  const bridgeRisks = mapBridgeRisksToRosetteValues(bridge.risks)
-
   return (
     <>
       <TableCell
@@ -84,7 +81,7 @@ function BridgeCells({
         className="flex items-center justify-center pl-4"
       >
         <GrissiniCell
-          values={bridgeRisks}
+          values={bridge.risks.values}
           hasNoBridge={bridge.risks.isNoBridge}
         />
       </TableCell>

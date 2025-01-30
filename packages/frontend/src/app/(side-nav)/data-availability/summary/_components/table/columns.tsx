@@ -9,10 +9,6 @@ import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-val
 import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
@@ -32,9 +28,7 @@ const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
-    const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
-
-    return <GrissiniCell values={risks} />
+    return <GrissiniCell values={ctx.row.original.risks} />
   },
   meta: {
     align: 'center',
@@ -50,11 +44,12 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!firstBridge) {
       return EM_DASH
     }
-
-    const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
-
+    console.log(firstBridge.risks.values)
     return (
-      <GrissiniCell values={risks} hasNoBridge={firstBridge.risks.isNoBridge} />
+      <GrissiniCell
+        values={firstBridge.risks.values}
+        hasNoBridge={firstBridge.risks.isNoBridge}
+      />
     )
   },
   meta: {
@@ -80,13 +75,13 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
-    if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-      return (
-        <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatDollarValueNumber(0)}
-        </div>
-      )
-    }
+    // if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
+    //   return (
+    //     <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
+    //       {formatDollarValueNumber(0)}
+    //     </div>
+    //   )
+    // }
 
     return (
       <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">

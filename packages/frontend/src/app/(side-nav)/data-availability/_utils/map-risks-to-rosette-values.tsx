@@ -15,7 +15,6 @@ export function mapLayerRisksToRosetteValues(
       },
     ]
   }
-
   return [
     {
       name: 'Economic security',
