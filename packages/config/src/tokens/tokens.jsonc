@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "CAPS",
+      "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2"
+    },
+    {
       "symbol": "KNINE",
       "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE"
     },

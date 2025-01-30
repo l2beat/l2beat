@@ -51,6 +51,7 @@ export const NON_DISCOVERY_DRIVEN_PROJECTS: string[] = [
   'starknet',
   'swell',
   'taiko',
+  'ternoa',
   'treasure',
   'brine',
   'termstructure',
