@@ -1,12 +1,12 @@
-import { type ScalingProjectStateValidation } from '@l2beat/config'
+import type { ScalingProjectStateValidation } from '@l2beat/config'
 import { DiagramImage } from '~/components/diagram-image'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { HorizontalSeparator } from '../../core/horizontal-separator'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'
 import { RiskList } from './risk-list'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined

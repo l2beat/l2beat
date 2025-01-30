@@ -1,4 +1,5 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import type { Layer2 } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { isProjectOther } from '../../utils/is-project-other'

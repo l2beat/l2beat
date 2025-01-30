@@ -172,14 +172,14 @@ export function extractPricesAndAmounts(config: TvsConfig): {
       amount: token.amount,
       ticker: token.ticker,
     } as ValueFormula)
-    prices.set(price.id, price)
+    prices.set(price.ticker, price)
 
     if (token.valueForProject) {
       const { formulaAmounts, formulaPrices } = processFormula(
         token.valueForProject,
       )
       formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.id, p))
+      formulaPrices.forEach((p) => prices.set(p.ticker, p))
     }
 
     if (token.valueForTotal) {
@@ -187,7 +187,7 @@ export function extractPricesAndAmounts(config: TvsConfig): {
         token.valueForTotal,
       )
       formulaAmounts.forEach((a) => amounts.set(a.id, a))
-      formulaPrices.forEach((p) => prices.set(p.id, p))
+      formulaPrices.forEach((p) => prices.set(p.ticker, p))
     }
   }
 
@@ -230,7 +230,6 @@ export function createAmountConfig(formula: AmountFormula): AmountConfig {
 
 export function createPriceConfig(formula: ValueFormula): PriceConfig {
   return {
-    id: hash([formula.ticker]),
     ticker: formula.ticker,
   }
 }

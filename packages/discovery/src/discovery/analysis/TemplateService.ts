@@ -5,6 +5,7 @@ import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256, type json } from '@l2beat/shared-pure'
 import {
   flattenFirstSource,
+  flatteningHash,
   formatIntoHashable,
   sha2_256bit,
 } from '../../flatten/utils'
@@ -144,7 +145,7 @@ export class TemplateService {
     const allTemplates = this.listAllTemplates()
     for (const [templateId, shapeFilePaths] of Object.entries(allTemplates)) {
       const haystackHashes = shapeFilePaths.paths.map((p) =>
-        sha2_256bit(formatIntoHashable(readFileSync(p, 'utf8'))),
+        flatteningHash(readFileSync(p, 'utf8')),
       )
       result[templateId] = {
         criteria: shapeFilePaths.criteria,

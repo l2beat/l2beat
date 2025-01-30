@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zeronetwork')
 const discovery_ZKstackGovL2 = new ProjectDiscovery(
@@ -14,7 +14,6 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const zeronetwork: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  validatorsKey: 'zeronetworkValidators',
   additionalBadges: [Badge.RaaS.Caldera],
   addedAt: new UnixTime(1721214420), // 2024-07-17T11:07:00Z
   display: {
@@ -33,7 +32,6 @@ export const zeronetwork: Layer2 = zkStackL2({
         'https://explorer.zero.network/',
         'https://zero-network.calderaexplorer.xyz/',
       ],
-      repositories: [],
       socialMedia: [
         'https://x.com/ZEROdotnetwork',
         'https://zero.network/blog',

@@ -1,12 +1,12 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { type ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
-import { type ActivityChartType } from './use-activity-chart-render-params'
+import type { ActivityChartType } from './use-activity-chart-render-params'
 
 interface Props {
   timestamp: number

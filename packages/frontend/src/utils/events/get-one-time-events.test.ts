@@ -1,7 +1,8 @@
 import { expect } from 'earl'
 import { reset, set } from 'mockdate'
 
-import { type RecurringEvent, getOneTimeEvents } from './get-one-time-events'
+import type { RecurringEvent } from './get-one-time-events'
+import { getOneTimeEvents } from './get-one-time-events'
 import { oneTimeEventMock, recurringEventMock } from './mocks'
 
 describe(getOneTimeEvents.name, () => {

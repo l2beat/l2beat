@@ -1,14 +1,11 @@
 'use client'
-import {
-  type Row,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import type { Row } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -86,13 +83,13 @@ function BridgeCells({
         </TableCell>
       )}
       <TableCell href={bridge.href} className="pl-6">
-        <RiskCell risk={bridge.risks.committeeSecurity} />
+        <TableValueCell value={bridge.risks.committeeSecurity} />
       </TableCell>
       <TableCell href={bridge.href}>
-        <RiskCell risk={bridge.risks.upgradeability} />
+        <TableValueCell value={bridge.risks.upgradeability} />
       </TableCell>
       <TableCell href={bridge.href}>
-        <RiskCell risk={bridge.risks.relayerFailure} />
+        <TableValueCell value={bridge.risks.relayerFailure} />
       </TableCell>
     </>
   )

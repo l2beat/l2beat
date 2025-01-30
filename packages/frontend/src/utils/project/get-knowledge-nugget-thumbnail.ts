@@ -1,4 +1,4 @@
-import { type KnowledgeNugget } from '@l2beat/config'
+import type { KnowledgeNugget } from '@l2beat/config'
 
 const THUMBNAILS_FOLDER = '/images/thumbnails/'
 const DEFAULT_THUMBNAIL = THUMBNAILS_FOLDER + 'default.jpg'

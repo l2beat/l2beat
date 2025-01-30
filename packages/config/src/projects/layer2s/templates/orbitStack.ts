@@ -29,9 +29,18 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  ChainConfig,
+  DacDaLayer,
+  KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+  Layer3,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
+  ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectDisplay,
@@ -43,25 +52,12 @@ import type {
   ScalingProjectStateValidation,
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
+  StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import type {
-  ChainConfig,
-  KnowledgeNugget,
-  ReasonForBeingInOther,
-} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
-import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
@@ -320,6 +316,9 @@ const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
 
+// TO DO: Add blobstream delay when timelock is enabled
+const BLOBSTREAM_DELAY_SECONDS = 0
+
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
@@ -512,7 +511,7 @@ function orbitStackCommon(
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('optimistic'),
           references: [
             {
               title: 'Transaction lifecycle - Arbitrum documentation',
@@ -663,7 +662,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      (isUsingValidBlobstreamWmr
+        ? pickWorseRisk(
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -1038,7 +1042,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        (isUsingValidBlobstreamWmr
+          ? pickWorseRisk(
+              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+            )
+          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
       sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),

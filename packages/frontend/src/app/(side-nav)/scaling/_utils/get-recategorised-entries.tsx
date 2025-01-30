@@ -1,6 +1,6 @@
 import { partition } from 'lodash'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 
 export function getRecategorisedEntries<T extends CommonScalingEntry>(
   entries: TabbedScalingEntries<T>,

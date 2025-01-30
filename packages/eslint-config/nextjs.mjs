@@ -44,7 +44,7 @@ const typescriptConfigs = tsEslint.config(
         'warn',
         {
           prefer: 'type-imports',
-          fixStyle: 'inline-type-imports',
+          fixStyle: 'separate-type-imports',
         },
       ],
 

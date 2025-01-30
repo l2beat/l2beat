@@ -3,8 +3,9 @@ import { WarningBar } from '~/components/warning-bar'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { ProjectSection } from './project-section'
-import { EnumeratedRisks, type RiskGroup } from './risk-summary-section'
-import { type ProjectSectionProps } from './types'
+import type { RiskGroup } from './risk-summary-section'
+import { EnumeratedRisks } from './risk-summary-section'
+import type { ProjectSectionProps } from './types'
 
 export interface DaRiskSummarySectionProps extends ProjectSectionProps {
   layer: {

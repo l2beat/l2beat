@@ -2,10 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
@@ -32,7 +32,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
       ],
       documentation: ['https://docs.sx.technology/'],
       explorers: ['https://explorerl2.sx.technology/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/SX_Network',
         'https://discord.com/invite/sxnetwork',

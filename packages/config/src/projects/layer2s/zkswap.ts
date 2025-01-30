@@ -15,7 +15,7 @@ import {
   addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('zkswap')
 
@@ -125,7 +125,7 @@ export const zkswap: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Make Transaction',
@@ -134,7 +134,7 @@ export const zkswap: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'ZkSync.sol#L404 - ZKSwap source code',

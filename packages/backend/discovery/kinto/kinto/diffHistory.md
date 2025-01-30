@@ -1,3 +1,125 @@
+Generated with discovered.json: 0x68917d42ab13a865428082dbaf7e25fdf942701e
+
+# Diff at Wed, 29 Jan 2025 09:53:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5741cb966172a3b26ba8279dd9fe4323805a53c2 block: 715537
+- current block number: 715537
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 715537 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"}
+      receivedPermissions.4.from:
+-        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
++        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.3.from:
+-        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.3.description:
++        "transfer KYC NFTs to a different address."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.2.from:
+-        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.2.description:
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      issuedPermissions.9:
++        {"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}
+      issuedPermissions.8:
++        {"permission":"configure","to":"0xb539019776eF803E89EC062Ad54cA24D1Fdb008a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.7.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.7.to:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+      issuedPermissions.7.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      issuedPermissions.6.to:
+-        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
++        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
+      issuedPermissions.5.to:
+-        "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
++        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
+      issuedPermissions.4.to:
+-        "0x6E31039abF8d248aBed57E307C9E1b7530c269E4"
++        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
+      issuedPermissions.3.to:
+-        "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.3.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "transfer KYC NFTs to a different address."
+      issuedPermissions.2.to:
+-        "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      issuedPermissions.2.description:
+-        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+    }
+```
+
+Generated with discovered.json: 0x7a1cb8aa68644700fdd613745f9578b0e0d306a3
+
+# Diff at Tue, 28 Jan 2025 14:56:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b60bc0e936cb7b213e24f14ed69abaff22493651 block: 696015
+- current block number: 715537
+
+## Description
+
+flagged this with mat, i cannot see any upgrade from here on blockscout.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 696015 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
 Generated with discovered.json: 0x1e4b495aeaa68ce66965abedeae0ad84c3cef489
 
 # Diff at Mon, 27 Jan 2025 08:46:07 GMT:

@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const playchain: Layer2 = upcomingL2({
   id: 'playchain',
@@ -16,7 +16,6 @@ export const playchain: Layer2 = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://playfi.ai/'],
-      apps: [],
       documentation: ['https://docs.playfi.ai/'],
       explorers: ['https://albireo-explorer.playfi.ai/'],
       repositories: ['https://github.com/playFi-Labs'],

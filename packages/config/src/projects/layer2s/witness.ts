@@ -7,15 +7,12 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('witness')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
   'WitnessValidiumDAC',
@@ -38,6 +35,7 @@ const upgradeability = {
 
 export const witness: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
+  isArchived: true,
   discovery,
   additionalBadges: [Badge.DA.DAC],
   additionalPurposes: ['IoT', 'Oracles'],
@@ -73,6 +71,8 @@ export const witness: Layer2 = polygonCDKStack({
   },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
+    headerWarning:
+      'The operator has stopped servicing this Validium (the last batch was posted on 2024-12-18).',
     name: 'Witness Chain',
     slug: 'witness',
     description:
@@ -97,15 +97,16 @@ export const witness: Layer2 = polygonCDKStack({
   },
   rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
-      address: bridge.address,
-      tokens: '*',
-      sharedEscrow: {
-        type: 'AggLayer',
-        nativeAsset: 'etherPreminted',
-        premintedAmount: '340282366920938463463374607431768211455',
-      },
-    }),
+    // TVS was 31 doler on 2025-01-28 when this was archived
+    // shared.getEscrowDetails({
+    //   address: bridge.address,
+    //   tokens: '*',
+    //   sharedEscrow: {
+    //     type: 'AggLayer',
+    //     nativeAsset: 'etherPreminted',
+    //     premintedAmount: '340282366920938463463374607431768211455',
+    //   },
+    // }),
   ],
   milestones: [
     {

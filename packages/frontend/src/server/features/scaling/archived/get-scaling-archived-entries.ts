@@ -1,28 +1,22 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
+import type {
+  Project,
+  ScalingProjectCategory,
+  ScalingProjectStack,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import { compareTvl } from '../tvl/utils/compare-tvl'
-import {
-  type LatestTvl,
-  get7dTokenBreakdown,
-} from '../tvl/utils/get-7d-token-breakdown'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { compareTvs } from '../tvs/utils/compare-tvs'
+import type { LatestTvs } from '../tvs/utils/get-7d-token-breakdown'
+import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
 
 export async function getScalingArchivedEntries() {
-  const [projectsChangeReport, tvl, projects] = await Promise.all([
+  const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
     ProjectService.STATIC.getProjects({
@@ -35,11 +29,11 @@ export async function getScalingArchivedEntries() {
     getScalingArchivedEntry(
       project,
       projectsChangeReport.getChanges(project.id),
-      tvl.projects[project.id.toString()],
+      tvs.projects[project.id.toString()],
     ),
   )
 
-  return groupByTabs(entries.sort(compareTvl))
+  return groupByTabs(entries.sort(compareTvs))
 }
 
 export interface ScalingArchivedEntry extends CommonScalingEntry {
@@ -47,14 +41,14 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
   purposes: string[]
   stack: ScalingProjectStack | undefined
   risks: RosetteValue[] | undefined
-  totalTvl: number | undefined
-  tvlOrder: number
+  totalTvs: number | undefined
+  tvsOrder: number
 }
 
 function getScalingArchivedEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
-  latestTvl: LatestTvl['projects'][string] | undefined,
+  latestTvs: LatestTvs['projects'][string] | undefined,
 ): ScalingArchivedEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
@@ -64,7 +58,7 @@ function getScalingArchivedEntry(
     risks: getL2Risks(
       project.scalingRisks.stacked ?? project.scalingRisks.self,
     ),
-    totalTvl: latestTvl?.breakdown.total,
-    tvlOrder: latestTvl?.breakdown.total ?? -1,
+    totalTvs: latestTvs?.breakdown.total,
+    tvsOrder: latestTvs?.breakdown.total ?? -1,
   }
 }

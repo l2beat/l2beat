@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('layer2finance')
 
@@ -25,7 +25,6 @@ export const layer2finance: Layer2 = {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],
       documentation: ['https://docs.l2.finance/'],
-      explorers: [],
       repositories: [
         'https://github.com/celer-network/layer2-finance-contracts',
       ],

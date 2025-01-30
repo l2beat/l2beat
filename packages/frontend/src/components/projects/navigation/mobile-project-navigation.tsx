@@ -1,11 +1,12 @@
 'use client'
 
-import { type RefObject, useCallback, useEffect, useRef } from 'react'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
-import { type ProjectNavigationSection } from './types'
+import type { ProjectNavigationSection } from './types'
 
 interface Props {
   sections: ProjectNavigationSection[]

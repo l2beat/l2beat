@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const align: Layer2 = upcomingL2({
   id: 'align',
@@ -16,9 +16,7 @@ export const align: Layer2 = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://align.network/'],
-      apps: [],
       documentation: ['https://docs.align.network/docs/getting-started'],
-      explorers: [],
       repositories: ['https://github.com/alignnetwork'],
       socialMedia: [
         'https://x.com/align_network',

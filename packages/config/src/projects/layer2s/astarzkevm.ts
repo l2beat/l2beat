@@ -7,10 +7,10 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
 
@@ -79,7 +79,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       "Astar zkEVM is a Validium that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     links: {
       websites: ['https://astar.network/blog/astar-evolution-phase-1-56'],
-      apps: [],
       documentation: ['https://docs.astar.network/docs/build/zkEVM/'],
       explorers: ['https://astar-zkevm.explorer.startale.com/'],
       repositories: ['https://github.com/AstarNetwork'],

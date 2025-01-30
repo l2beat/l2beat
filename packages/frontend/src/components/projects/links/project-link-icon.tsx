@@ -7,7 +7,7 @@ import { RollupCodesIcon } from '~/icons/products/rollup-codes'
 import { SearchIcon } from '~/icons/search'
 import { UserIcon } from '~/icons/user'
 import { cn } from '~/utils/cn'
-import { type LinkName } from './types'
+import type { LinkName } from './types'
 
 export interface LinkNameIconProps {
   name: LinkName

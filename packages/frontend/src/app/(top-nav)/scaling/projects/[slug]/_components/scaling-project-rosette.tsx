@@ -3,8 +3,9 @@ import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
-import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { RosetteSelector, type RosetteType } from './rosette-selector'
+import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import type { RosetteType } from './rosette-selector'
+import { RosetteSelector } from './rosette-selector'
 
 interface Props {
   project: ScalingProjectEntry

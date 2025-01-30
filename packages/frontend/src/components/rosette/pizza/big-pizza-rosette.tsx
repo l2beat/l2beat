@@ -13,7 +13,7 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
@@ -99,7 +99,7 @@ function RosetteTooltipContent() {
     >
       <p className="font-medium text-primary">{selectedRisk.name}</p>
       <SentimentText
-        sentiment={selectedRisk.sentiment}
+        sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
         className="mb-2 flex items-center gap-1 text-lg font-bold"
       >

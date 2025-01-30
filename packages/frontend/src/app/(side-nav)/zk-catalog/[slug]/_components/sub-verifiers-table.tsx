@@ -7,7 +7,7 @@ import { CustomLink } from '~/components/link/custom-link'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
-import { type ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
+import type { ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 
 interface Props {
   verifier: ZkCatalogProjectDetails['verifiers'][number]

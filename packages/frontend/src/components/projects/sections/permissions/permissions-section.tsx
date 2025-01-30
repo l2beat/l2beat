@@ -1,9 +1,6 @@
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'

@@ -1,14 +1,12 @@
-import { type ScalingProjectRiskCategory } from '@l2beat/config'
-import {
-  HostChainRisksWarning,
-  type HostChainRisksWarningProps,
-} from '~/components/host-chain-risks-warning'
+import type { ScalingProjectRiskCategory } from '@l2beat/config'
+import type { HostChainRisksWarningProps } from '~/components/host-chain-risks-warning'
+import { HostChainRisksWarning } from '~/components/host-chain-risks-warning'
 import { WarningBar } from '~/components/warning-bar'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface RiskSummarySectionProps extends ProjectSectionProps {
   riskGroups: RiskGroup[]

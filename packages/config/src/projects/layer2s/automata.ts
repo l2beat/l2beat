@@ -2,6 +2,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import {
   DaCommitteeSecurityRisk,
@@ -11,7 +12,6 @@ import {
   DaUpgradeabilityRisk,
 } from '../da-beat/common'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('automata')
 
@@ -31,11 +31,7 @@ const daResolveWindow = formatSeconds(
 
 export const automata: Layer2 = opStackL2({
   addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  additionalBadges: [
-    Badge.DA.CustomDA,
-    Badge.Infra.Superchain,
-    Badge.RaaS.AltLayer,
-  ],
+  additionalBadges: [Badge.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

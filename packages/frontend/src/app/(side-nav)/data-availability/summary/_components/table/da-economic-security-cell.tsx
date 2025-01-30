@@ -1,5 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 export function DaEconomicSecurityCell({

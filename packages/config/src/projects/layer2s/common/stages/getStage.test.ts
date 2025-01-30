@@ -27,12 +27,18 @@ describe(getStage.name, () => {
       },
       {
         rollupNodeLink: 'randomlink',
-        notice: 'notice',
+        additionalConsiderations: {
+          short: 'short notice',
+          long: 'long notice',
+        },
       },
     )
     expect(result).toEqual({
       message: undefined,
-      notice: 'notice',
+      additionalConsiderations: {
+        short: 'short notice',
+        long: 'long notice',
+      },
       missing: {
         nextStage: 'Stage 2',
         requirements: [

@@ -27,12 +27,12 @@ export function SingleGrissiniDetails({
     <div
       className={cn(
         'flex h-12 flex-row items-stretch rounded md:h-[5.125rem]',
-        sentimentToTransparentBgColor(sentiment),
+        sentimentToTransparentBgColor(sentiment ?? 'neutral'),
         className,
       )}
     >
       <SingleGrissini
-        sentiment={sentiment}
+        sentiment={sentiment ?? 'neutral'}
         className="h-full shrink-0 max-md:w-1"
       />
       <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
@@ -42,7 +42,7 @@ export function SingleGrissiniDetails({
         <div
           className={cn(
             'text-sm font-bold !leading-none md:text-lg',
-            sentimentToTextColor(sentiment, { vibrant: true }),
+            sentimentToTextColor(sentiment ?? 'neutral', { vibrant: true }),
           )}
         >
           {value}

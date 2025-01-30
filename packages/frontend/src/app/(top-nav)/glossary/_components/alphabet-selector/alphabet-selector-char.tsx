@@ -1,5 +1,5 @@
 'use client'
-import { type RefObject } from 'react'
+import type { RefObject } from 'react'
 import { cn } from '~/utils/cn'
 
 interface CharProps {

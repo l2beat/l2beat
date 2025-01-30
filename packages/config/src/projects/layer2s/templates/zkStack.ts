@@ -12,6 +12,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  type DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
@@ -23,43 +24,37 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  ChainConfig,
+  KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
   Milestone,
   ProjectEscrow,
   ProjectTechnologyChoice,
+  ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
   ScalingProjectTechnology,
+  StageConfig,
+  TableReadyValue,
   TransactionApiConfig,
-} from '../../../types'
-import type {
-  ChainConfig,
-  KnowledgeNugget,
-  ReasonForBeingInOther,
 } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
 import { mergeBadges } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
   fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
-  bridge: DataAvailabilityBridge
+  bridge: TableReadyValue
 }
 
 export interface ZkStackConfigCommon {
@@ -67,7 +62,6 @@ export interface ZkStackConfigCommon {
   capability?: ScalingProjectCapability
   discovery: ProjectDiscovery
   discovery_ZKstackGovL2: ProjectDiscovery
-  validatorsKey: string
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   daProvider?: DAProvider
   upgradeability?: {
@@ -222,40 +216,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       upgradeDelayWithScApprovalS,
     )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
   }
-
-  /**
-   * Fetches Validators from ValidatorTimelock events:
-   * It is more complicated to accommodate the case in which
-   * a validator is added and removed more than once.
-   */
-  // const validators = () => {
-  //   const validatorsAdded = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.added,
-  //   )
-  //   const validatorsRemoved = discovery.getContractValue<string[]>(
-  //     'ValidatorTimelock',
-  //     templateVars.validatorsEvents.removed,
-  //   )
-
-  //   // Create a map to track the net state of each validator (added or removed)
-  //   const validatorStates = new Map<string, number>()
-
-  //   // Increment for added validators
-  //   validatorsAdded.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  //   })
-
-  //   // Decrement for removed validators
-  //   validatorsRemoved.forEach((validator) => {
-  //     validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  //   })
-
-  //   // Filter validators that have a net positive state (added more times than removed)
-  //   return Array.from(validatorStates.entries())
-  //     .filter(([_, state]) => state > 0)
-  //     .map(([validator, _]) => validator)
-  // }
 
   return {
     type: 'layer2',
@@ -417,7 +377,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('zk', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('zk'),
           references: [
             {
               title: 'Withdrawing funds - ZKsync documentation',
@@ -425,7 +385,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           ],
         },
-        EXITS.FORCED('forced-withdrawals'),
+        EXITS.FORCED_MESSAGING('forced-messages'),
       ],
     },
     upgradesAndGovernance: (() => {

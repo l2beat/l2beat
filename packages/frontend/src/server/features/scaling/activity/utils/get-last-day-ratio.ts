@@ -1,4 +1,4 @@
-import { type ActivityRecord } from '@l2beat/database'
+import type { ActivityRecord } from '@l2beat/database'
 
 export function getLastDayRatio(records: ActivityRecord[], daysAgo = 0) {
   const lastRecord = records.at(-(1 + daysAgo))

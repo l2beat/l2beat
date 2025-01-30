@@ -1,5 +1,6 @@
 import { cn } from '~/utils/cn'
-import { SvgIcon, type SvgIconProps } from '../svg-icon'
+import type { SvgIconProps } from '../svg-icon'
+import { SvgIcon } from '../svg-icon'
 
 export function ZkCatalogIcon({ className, ...props }: SvgIconProps) {
   return (

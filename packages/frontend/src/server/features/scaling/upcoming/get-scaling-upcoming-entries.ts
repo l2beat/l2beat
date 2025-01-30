@@ -1,14 +1,12 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
+import type {
+  Project,
+  ScalingProjectCategory,
+  ScalingProjectStack,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export async function getScalingUpcomingEntries() {
   const projects = await ProjectService.STATIC.getProjects({

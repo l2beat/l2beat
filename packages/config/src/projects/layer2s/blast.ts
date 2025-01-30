@@ -4,8 +4,8 @@ import { EXITS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -27,7 +27,7 @@ export const blast: Layer2 = opStackL2({
       socialMedia: ['https://twitter.com/blast', 'https://discord.gg/blast-l2'],
     },
     tvlWarning: {
-      content: 'The TVS does account for rehypothecated tokens.',
+      value: 'The TVS does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
   },
@@ -61,7 +61,7 @@ export const blast: Layer2 = opStackL2({
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',

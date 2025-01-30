@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const solo: Layer2 = upcomingL2({
   id: 'solo',
@@ -19,7 +19,6 @@ export const solo: Layer2 = upcomingL2({
       apps: ['https://solo-testnet.bridge.caldera.xyz'],
       documentation: ['https://docs.solo.tech/'],
       explorers: ['https://solo-testnet.explorer.caldera.xyz/'],
-      repositories: [],
       socialMedia: ['https://x.com/SoloDePIN', 'https://t.me/SoloDePIN'],
     },
   },

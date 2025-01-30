@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const nil: Layer2 = upcomingL2({
   id: '=nil;',
@@ -15,7 +15,6 @@ export const nil: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://nil.foundation/'],
-      apps: [],
       documentation: ['https://docs.nil.foundation/'],
       explorers: ['https://explore.nil.foundation'],
       repositories: ['https://github.com/nilfoundation'],

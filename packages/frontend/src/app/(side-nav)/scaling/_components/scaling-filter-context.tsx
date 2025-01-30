@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean

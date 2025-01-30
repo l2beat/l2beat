@@ -26,10 +26,10 @@ import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProjectPermissionedAccount } from '../../types'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('linea')
 
@@ -472,9 +472,9 @@ export const linea: Layer2 = {
     forceTransactions: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
+        ...EXITS.REGULAR_MESSAGING('zk'),
         description:
-          EXITS.REGULAR('zk', 'merkle proof').description +
+          EXITS.REGULAR_MESSAGING('zk').description +
           ' Note that withdrawal requests can be censored by the Sequencer. ' +
           withdrawalLimitString +
           ' Users can (eventually, after 6 months of inactivity from the centralized Operator) exit by replacing the Operator. In such a case they need to self-propose and prove their new state on the base layer with the required software which is currently not made available.',

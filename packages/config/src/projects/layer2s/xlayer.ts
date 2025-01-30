@@ -7,10 +7,10 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('xlayer')
 
@@ -92,12 +92,10 @@ export const xlayer: Layer2 = polygonCDKStack({
       'X Layer is Validium by OKX with seamless integration with OKX products. It is powered by the Polygon CDK.',
     links: {
       websites: ['https://okx.com/xlayer'],
-      apps: [],
       documentation: [
         'https://okx.com/xlayer/docs/users/welcome/about-x-layer',
       ],
       explorers: ['https://okx.com/explorer/xlayer'],
-      repositories: [],
       socialMedia: ['https://twitter.com/XLayerOfficial'],
     },
   },

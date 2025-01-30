@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const arithmic: Layer2 = upcomingL2({
   id: 'arithmic',
@@ -15,12 +15,9 @@ export const arithmic: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://arithmic.com'],
-      apps: [],
       documentation: [
         'https://arithmic-labs.gitbook.io/arithmic-documentation/',
       ],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://x.com/ArithmicNetwork'],
     },
   },

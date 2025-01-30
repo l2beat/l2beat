@@ -5,7 +5,7 @@ import { useEventListener } from '~/hooks/use-event-listener'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { SingleGrissini } from './single-grissini'
 
 interface Props {
@@ -36,7 +36,9 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
     >
       {values.map((value, i) => (
         <SingleGrissini
-          sentiment={hasNoBridge ? 'UnderReview' : value.sentiment}
+          sentiment={
+            hasNoBridge ? 'UnderReview' : (value.sentiment ?? 'neutral')
+          }
           key={i}
           onMouseEnter={() => selectRisk(value)}
         />

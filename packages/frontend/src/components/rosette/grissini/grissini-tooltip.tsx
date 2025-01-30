@@ -1,5 +1,5 @@
 import { UnderReviewBadge } from '../../badge/under-review-badge'
-import { type GrissiniCellProps } from './grissini-cell'
+import type { GrissiniCellProps } from './grissini-cell'
 import { GrissiniDetails } from './grissini-details'
 
 export function GrissiniTooltip({

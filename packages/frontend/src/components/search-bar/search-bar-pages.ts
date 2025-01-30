@@ -1,4 +1,4 @@
-import { type SearchBarPage } from './search-bar-entry'
+import type { SearchBarPage } from './search-bar-entry'
 
 export const searchBarPages = withIndex([
   {
@@ -16,7 +16,7 @@ export const searchBarPages = withIndex([
   {
     category: 'scaling',
     name: 'Value Secured',
-    tags: ['pages', 'scaling', 'tvl'],
+    tags: ['pages', 'scaling', 'tvs', 'tvl'],
     href: '/scaling/tvs',
   },
   {

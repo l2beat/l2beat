@@ -1,9 +1,9 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import type { Layer2, Layer3 } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getDaRisks } from '~/server/features/data-availability/utils/get-da-risks'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
@@ -17,16 +17,11 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
   const evaluatedRisks = getDaRisks(
     project.dataAvailabilitySolution,
     project.dataAvailabilitySolution.bridge,
-    0, // TODO: getTVL
+    0, // TODO: getTVS
   )
 
   const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
-
-  const evaluatedGrissiniValues = [
-    ...layerGrissiniValues,
-    ...bridgeGrissiniValues,
-  ]
 
   daSubsections.push({
     type: 'GrissiniRiskAnalysisSection',
@@ -35,7 +30,8 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
       title: 'Risk analysis',
       isUnderReview: undefined,
       isVerified: undefined,
-      grissiniValues: evaluatedGrissiniValues,
+      layerGrissiniValues,
+      bridgeGrissiniValues,
     },
   })
 

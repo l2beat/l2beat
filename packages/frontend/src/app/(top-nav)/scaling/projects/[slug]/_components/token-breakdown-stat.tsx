@@ -16,13 +16,13 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 
 interface Props {
-  tokenTvl:
-    | NonNullable<ScalingProjectEntry['header']['tvl']>['tokens']
+  tokenTvs:
+    | NonNullable<ScalingProjectEntry['header']['tvs']>['tokens']
     | undefined
 }
 
-export function TokenBreakdownStat({ tokenTvl }: Props) {
-  const tokenWarnings = tokenTvl?.warnings ?? []
+export function TokenBreakdownStat({ tokenTvs }: Props) {
+  const tokenWarnings = tokenTvs?.warnings ?? []
   const anyBadWarnings = tokenWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tokenWarnings.some(
     (w) => w.sentiment === 'warning',
@@ -33,7 +33,7 @@ export function TokenBreakdownStat({ tokenTvl }: Props) {
       ? 'warning'
       : 'neutral'
 
-  if (!tokenTvl?.breakdown || tokenTvl?.breakdown.total === 0) {
+  if (!tokenTvs?.breakdown || tokenTvs?.breakdown.total === 0) {
     return tokenWarnings.length === 0 ? (
       <NoDataBadge />
     ) : (
@@ -50,9 +50,9 @@ export function TokenBreakdownStat({ tokenTvl }: Props) {
             <TooltipContent className="space-y-2">
               {tokenWarnings?.map((warning, i) => (
                 <WarningBar
-                  key={`tvl-warning-${i}`}
+                  key={`tvs-warning-${i}`}
                   icon={RoundedWarningIcon}
-                  text={warning.content}
+                  text={warning.value}
                   color={sentimentToWarningBarColor(warning.sentiment)}
                   // Cell itself is a href.
                   // Markdown might contain links - nesting them in a tooltip
@@ -71,23 +71,23 @@ export function TokenBreakdownStat({ tokenTvl }: Props) {
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
         <TokenBreakdown
-          total={tokenTvl.breakdown.total}
-          associated={tokenTvl.breakdown.associated}
-          ether={tokenTvl.breakdown.ether}
-          stablecoin={tokenTvl.breakdown.stablecoin}
+          total={tokenTvs.breakdown.total}
+          associated={tokenTvs.breakdown.associated}
+          ether={tokenTvs.breakdown.ether}
+          stablecoin={tokenTvs.breakdown.stablecoin}
         />
-        {tokenTvl.warnings.length > 0 && (
+        {tokenTvs.warnings.length > 0 && (
           <RoundedWarningIcon sentiment={warningSentiment} />
         )}
       </TooltipTrigger>
       <TooltipContent>
         <TokenBreakdownTooltipContent
-          total={tokenTvl.breakdown.total}
-          associated={tokenTvl.breakdown.associated}
-          ether={tokenTvl.breakdown.ether}
-          stablecoin={tokenTvl.breakdown.stablecoin}
-          associatedTokenSymbols={tokenTvl.associatedTokens}
-          tvlWarnings={tokenTvl.warnings}
+          total={tokenTvs.breakdown.total}
+          associated={tokenTvs.breakdown.associated}
+          ether={tokenTvs.breakdown.ether}
+          stablecoin={tokenTvs.breakdown.stablecoin}
+          associatedTokenSymbols={tokenTvs.associatedTokens}
+          tvsWarnings={tokenTvs.warnings}
         />
       </TooltipContent>
     </Tooltip>

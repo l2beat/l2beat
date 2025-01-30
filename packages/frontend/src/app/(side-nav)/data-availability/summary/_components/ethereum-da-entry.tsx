@@ -7,7 +7,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { InfoIcon } from '~/icons/info'
-import { type DaSummaryEthereumEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaSummaryEthereumEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { DaEconomicSecurityCell } from './table/da-economic-security-cell'
 import { ProjectsUsedIn } from './table/projects-used-in'
