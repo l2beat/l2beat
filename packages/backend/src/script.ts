@@ -16,7 +16,7 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { LocalExecutor } from './modules/tvs/LocalExecutor'
-import { kintoConfig } from './modules/tvs/projects/kinto'
+import { bobConfig } from './modules/tvs/projects/bob'
 import { BalanceProvider } from './modules/tvs/providers/BalanceProvider'
 import { CirculatingSupplyProvider } from './modules/tvs/providers/CirculatingSupplyProvider'
 import { PriceProvider } from './modules/tvs/providers/PriceProvider'
@@ -53,11 +53,10 @@ async function main() {
     logger,
   )
 
-  const config = kintoConfig
+  const config = bobConfig
 
-  // const timestamp = new UnixTime(1738047600) //UnixTime.now().toStartOf('hour')
-  const timestamp = UnixTime.now()
-  const tvs = await localExecutor.run(config, [timestamp], true)
+  const timestamp = UnixTime.now().toStartOf('hour').add(-3, 'hours')
+  const tvs = await localExecutor.run(config, [timestamp], false)
 
   const tokens = tvs.get(timestamp.toNumber())
   assert(tokens, 'No data for timestamp')
@@ -213,6 +212,13 @@ function initChains(env: Env, http: HttpClient, logger: Logger) {
       name: 'kinto',
       callsPerMinute: 1000,
       batchingEnabled: true,
+    },
+    {
+      name: 'bob',
+      multicallV3: EthereumAddress(
+        '0xcA11bde05977b3631167028862bE2a173976CA11',
+      ),
+      callsPerMinute: 12000,
     },
   ]
 
