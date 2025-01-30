@@ -1,4 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -8,11 +9,11 @@ import { getDaRisks } from '~/server/features/data-availability/utils/get-da-ris
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  // TODO: more than one bridge?
   const bridge = project.dataAvailabilitySolution?.bridges[0]
   if (!project.dataAvailabilitySolution || !bridge) {
     return
   }
+  assert(project.dataAvailabilitySolution.bridges.length === 1)
 
   const daSubsections: ProjectDetailsSection[] = []
 
