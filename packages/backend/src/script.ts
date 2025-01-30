@@ -146,7 +146,16 @@ async function main() {
   // dump individualTokens to file
   writeFileSync(
     path.join(__dirname, 'token-breakdown.json'),
-    JSON.stringify(tokenBreakdown, null, 2),
+    JSON.stringify(
+      tokenBreakdown,
+      (k, v) => {
+        if (['value', 'valueForProject', 'valueForTotal'].includes(k)) {
+          return `$${(v as number).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+        }
+        return v
+      },
+      2,
+    ),
   )
 
   // dump filtered config to file
