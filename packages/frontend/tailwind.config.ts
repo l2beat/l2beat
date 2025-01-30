@@ -203,8 +203,8 @@ const config: Config = {
     },
     zIndex: {
       1: '1',
-      10: '10', // Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
-      20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
+      10: '10', // Chart logo and Y axis, Borders (TvsActivityToggle and DesktopTabs)
+      20: '20', // Chart canvas and loader, Items (DesktopTabs, TvsActivityToggle)
       25: '25',
       30: '30', // Chart hover line
       40: '40', // Milestones, Chart hover line point (squares and circles)

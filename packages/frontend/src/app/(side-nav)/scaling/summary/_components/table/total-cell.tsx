@@ -1,4 +1,4 @@
-import { type WarningWithSentiment } from '@l2beat/config'
+import type { WarningWithSentiment } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
@@ -28,15 +28,15 @@ export interface TotalCellProps {
     | undefined
   associatedTokenSymbols: string[]
   change?: number
-  tvlWarnings?: WarningWithSentiment[]
+  tvsWarnings?: WarningWithSentiment[]
 }
 
 export function TotalCell(data: TotalCellProps) {
-  const tvlWarnings = data.tvlWarnings ?? []
-  const anyBadWarnings = tvlWarnings.some((w) => w.sentiment === 'bad')
-  const anyWarningWarnings = tvlWarnings.some((w) => w.sentiment === 'warning')
+  const tvsWarnings = data.tvsWarnings ?? []
+  const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
+  const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')
 
-  const icon = tvlWarnings.length ? (
+  const icon = tvsWarnings.length ? (
     <RoundedWarningIcon
       className="mr-1 size-4"
       sentiment={
@@ -53,9 +53,9 @@ export function TotalCell(data: TotalCellProps) {
         </TooltipTrigger>
         <TooltipContent className="space-y-2">
           <span>Data is not available for this project.</span>
-          {tvlWarnings?.map((warning, i) => (
+          {tvsWarnings?.map((warning, i) => (
             <WarningBar
-              key={`tvl-warning-${i}`}
+              key={`tvs-warning-${i}`}
               icon={RoundedWarningIcon}
               text={warning.value}
               color={sentimentToWarningBarColor(warning.sentiment)}
@@ -70,7 +70,7 @@ export function TotalCell(data: TotalCellProps) {
     )
   }
 
-  const totalTvl = data.breakdown.total
+  const totalTvs = data.breakdown.total
 
   return (
     <Tooltip>
@@ -79,7 +79,7 @@ export function TotalCell(data: TotalCellProps) {
           <div className="flex items-center">
             {icon}
             <ValueWithPercentageChange change={data.change}>
-              {formatDollarValueNumber(totalTvl)}
+              {formatDollarValueNumber(totalTvs)}
             </ValueWithPercentageChange>
           </div>
           <TokenBreakdown
@@ -97,7 +97,7 @@ export function TotalCell(data: TotalCellProps) {
           associated={data.breakdown.associated}
           ether={data.breakdown.ether}
           stablecoin={data.breakdown.stablecoin}
-          tvlWarnings={tvlWarnings}
+          tvsWarnings={tvsWarnings}
           associatedTokenSymbols={data.associatedTokenSymbols}
         />
       </TooltipContent>

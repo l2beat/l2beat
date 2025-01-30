@@ -12,12 +12,12 @@ import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingRiskEntries() {
-  const [tvl, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvlUsd(),
+  const [tvs, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
@@ -31,27 +31,27 @@ export async function getScalingRiskEntries() {
       getScalingRiskEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
-    .sort(compareStageAndTvl)
+    .sort(compareStageAndTvs)
 
   return groupByTabs(entries)
 }
 
 export interface ScalingRiskEntry extends CommonScalingEntry {
   risks: ScalingProjectRiskView
-  tvlOrder: number
+  tvsOrder: number
 }
 
 function getScalingRiskEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
   changes: ProjectChanges,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ): ScalingRiskEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
-    tvlOrder: tvl ?? -1,
+    tvsOrder: tvs ?? -1,
   }
 }

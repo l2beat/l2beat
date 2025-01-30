@@ -1,5 +1,5 @@
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
-import { ScalingSummaryTvlChart } from '~/components/chart/tvl/scaling-summary-tvl-chart'
+import { ScalingSummaryTvsChart } from '~/components/chart/tvs/scaling-summary-tvs-chart'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -22,7 +22,7 @@ const UNIT = 'usd'
 export default async function Page() {
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
-    api.tvl.recategorisedChart.prefetch({
+    api.tvs.recategorisedChart.prefetch({
       range: TIME_RANGE,
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
@@ -44,7 +44,7 @@ export default async function Page() {
       <MainPageHeader>Summary</MainPageHeader>
       <div className="grid grid-cols-2 gap-4 max-lg:hidden">
         <PrimaryCard>
-          <ScalingSummaryTvlChart unit={UNIT} timeRange={TIME_RANGE} />
+          <ScalingSummaryTvsChart unit={UNIT} timeRange={TIME_RANGE} />
         </PrimaryCard>
         <PrimaryCard>
           <ScalingSummaryActivityChart timeRange={TIME_RANGE} />

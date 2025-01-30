@@ -2,14 +2,14 @@ import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
-import { getTvlBreakdownForProject } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
-import { get7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-7d-tvl-breakdown'
+import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { RequestTokenBox } from './_components/request-token-box'
 import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
 import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
 import { NativelyMintedTable } from './_components/tables/natively-minted-table'
-import { TvlBreakdownPageHeader } from './_components/tvl-breakdown-page-header'
+import { TvsBreakdownPageHeader } from './_components/tvs-breakdown-page-header'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -44,11 +44,11 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
-  if (!project || env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())) {
+  if (!project || env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())) {
     notFound()
   }
 
-  const projects7dData = await get7dTvlBreakdown()
+  const projects7dData = await get7dTvsBreakdown()
   const project7dData = projects7dData.projects[project.id.toString()]!
   if (!project7dData) {
     notFound()
@@ -57,16 +57,16 @@ export default async function Page(props: Props) {
   const {
     dataTimestamp,
     breakdown: { canonical, native, external },
-  } = await getTvlBreakdownForProject(project)
+  } = await getTvsBreakdownForProject(project)
 
   return (
     <>
-      <TvlBreakdownPageHeader
+      <TvsBreakdownPageHeader
         title={project.display.name}
         slug={project.display.slug}
-        tvl={project7dData}
-        tvlWarning={project.display.tvlWarning}
-        tvlBreakdownTimestamp={dataTimestamp}
+        tvs={project7dData}
+        tvsWarning={project.display.tvlWarning}
+        tvsBreakdownTimestamp={dataTimestamp}
       />
       <div className="md:mt-6 md:space-y-6">
         {native.length > 0 && (

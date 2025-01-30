@@ -1,11 +1,11 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { MainPageHeader } from '~/components/main-page-header'
-import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
+import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingAssociatedTokensContextProvider } from '../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../_components/scaling-filter-context'
-import { ScalingTvlTabs } from './_components/scaling-tvl-tabs'
+import { ScalingTvsTabs } from './_components/scaling-tvs-tabs'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -14,9 +14,9 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const entries = await getScalingTvlEntries()
+  const entries = await getScalingTvsEntries()
 
-  await api.tvl.chart.prefetch({
+  await api.tvs.chart.prefetch({
     filter: {
       type: 'rollups',
     },
@@ -30,7 +30,7 @@ export default async function Page() {
       <ScalingFilterContextProvider>
         <ScalingAssociatedTokensContextProvider>
           <MainPageHeader>Value Secured</MainPageHeader>
-          <ScalingTvlTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
+          <ScalingTvsTabs {...entries} milestones={HOMEPAGE_MILESTONES} />
         </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>

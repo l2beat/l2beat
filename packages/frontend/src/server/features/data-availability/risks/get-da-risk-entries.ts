@@ -9,19 +9,19 @@ import {
   layer3s,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { type CommonProjectEntry } from '../../utils/get-common-project-entry'
+import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import {
-  getDaProjectsTvl,
-  pickTvlForProjects,
-} from '../utils/get-da-projects-tvl'
+  getDaProjectsTvs,
+  pickTvsForProjects,
+} from '../utils/get-da-projects-tvs'
 import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
-  const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
-  const getTvs = pickTvlForProjects(tvlPerProject)
+  const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
+  const getTvs = pickTvsForProjects(tvsPerProject)
 
   const entries = daLayers
     .map((daLayer) => getDaRiskEntry(daLayer, getTvs))

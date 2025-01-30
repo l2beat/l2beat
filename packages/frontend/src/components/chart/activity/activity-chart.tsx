@@ -15,16 +15,16 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
-import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
+import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { type ChartScale } from '../types'
+import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
 import {
@@ -51,7 +51,7 @@ export function ActivityChart({
   const { metric } = useActivityMetricContext()
   const filter = useScalingFilterValues()
   const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-tvl-scale',
+    'scaling-tvs-scale',
     'lin',
   )
 
