@@ -170,28 +170,30 @@ export const bugbuster: Layer3 = {
     ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  permissions: [
-    {
-      name: 'BugBuster Owner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('BugBuster', 'owner'),
-        ),
-      ],
-      description:
-        'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
-    },
-    {
-      name: 'Authority Owner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('Authority', 'owner'),
-        ),
-      ],
-      description:
-        'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'BugBuster Owner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('BugBuster', 'owner'),
+          ),
+        ],
+        description:
+          'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
+      },
+      {
+        name: 'Authority Owner',
+        accounts: [
+          discovery.formatPermissionedAccount(
+            discovery.getContractValue('Authority', 'owner'),
+          ),
+        ],
+        description:
+          'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
+      },
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('BugBuster', {

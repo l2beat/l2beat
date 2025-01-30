@@ -85,32 +85,34 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
     ],
   },
   permissions: {
-    ethereum: [
-      ...discovery.getMultisigPermission(
-        'BlobstreamMultisig',
-        'This multisig is the admin of the BlobstreamX contract. It holds the power to change the contract state and upgrade the bridge.',
-      ),
-      ...discovery.getMultisigPermission(
-        'SuccinctGatewayMultisig',
-        'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
-      ),
-      {
-        name: 'headerRangeProvers',
-        description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the headerRange function ID of BlobstreamX.`,
-        accounts: headerRangeProvers.map((headerRangeProver) => ({
-          address: EthereumAddress(headerRangeProver),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'nextHeaderProvers',
-        description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the nextHeader function ID of BlobstreamX.`,
-        accounts: nextHeaderProvers.map((nextHeaderProver) => ({
-          address: EthereumAddress(nextHeaderProver),
-          type: 'EOA',
-        })),
-      },
-    ],
+    ethereum: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'BlobstreamMultisig',
+          'This multisig is the admin of the BlobstreamX contract. It holds the power to change the contract state and upgrade the bridge.',
+        ),
+        ...discovery.getMultisigPermission(
+          'SuccinctGatewayMultisig',
+          'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+        ),
+        {
+          name: 'headerRangeProvers',
+          description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the headerRange function ID of BlobstreamX.`,
+          accounts: headerRangeProvers.map((headerRangeProver) => ({
+            address: EthereumAddress(headerRangeProver),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'nextHeaderProvers',
+          description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the nextHeader function ID of BlobstreamX.`,
+          accounts: nextHeaderProvers.map((nextHeaderProver) => ({
+            address: EthereumAddress(nextHeaderProver),
+            type: 'EOA',
+          })),
+        },
+      ],
+    },
   },
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.RobustAndDiverseCommittee(

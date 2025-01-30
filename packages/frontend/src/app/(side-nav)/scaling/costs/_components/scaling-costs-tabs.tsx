@@ -15,6 +15,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { compareCosts } from '~/server/features/scaling/costs/utils/compare-stage-and-cost'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
@@ -36,10 +37,7 @@ export function ScalingCostsTabs(props: Props) {
     others: props.others.filter(includeFilters),
   }
   const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.tvsOrder - a.tvsOrder,
-      )
+    ? getRecategorisedEntries(filteredEntries, compareCosts)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(
@@ -60,7 +58,7 @@ export function ScalingCostsTabs(props: Props) {
   )
 
   const initialSort = {
-    id: '#',
+    id: 'total-cost',
     desc: false,
   }
 

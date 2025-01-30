@@ -40,10 +40,11 @@ export function getScalingCostsColumns(metric: CostsMetric) {
   return [
     ...getScalingCommonProjectColumns(columnHelper),
     columnHelper.group({
-      id: 'total-cost',
+      id: 'total-cost-group',
       header: undefined,
       columns: [
         columnHelper.accessor('data.total', {
+          id: 'total-cost',
           header: metric === 'total' ? 'Total cost' : 'Avg PER L2 User op',
           cell: (ctx) => (
             <SyncStatusWrapper

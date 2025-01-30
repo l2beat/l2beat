@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function CostsMetricContextProvider({ children }: Props) {
-  const [metric, setMetric] = useState<CostsMetric>('total')
+  const [metric, setMetric] = useState<CostsMetric>('per-l2-uop')
   return (
     <CostsMetricContext.Provider
       value={{

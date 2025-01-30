@@ -235,9 +235,11 @@ function getDaBridgePermissionsForChain(
   if (!bridge.permissions || bridge.permissions === 'UnderReview') {
     return []
   }
+
   return Object.values(bridge.permissions)
-    .flatMap((perChain) =>
-      perChain.flatMap((p) =>
+    .flatMap((perChain) => {
+      const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
+      return all.flatMap((p) =>
         p.accounts.flatMap((a) => {
           if (!p.chain) {
             return []
@@ -247,15 +249,22 @@ function getDaBridgePermissionsForChain(
             address: a.address,
           }
         }),
-      ),
-    )
+      )
+    })
     .filter((p) => p.chain === chain)
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
-  const permissions =
-    project.permissions === 'UnderReview' ? [] : (project.permissions ?? [])
-  return permissions
+  if (project.permissions === 'UnderReview') {
+    return []
+  }
+
+  const all = [
+    ...(project.permissions?.roles ?? []),
+    ...(project.permissions?.actors ?? []),
+  ]
+
+  return all
     .filter((p) => isContractOnChain(p.chain, chain, project))
     .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
     .filter((p) => p.type !== 'EOA')

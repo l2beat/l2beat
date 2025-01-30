@@ -86,11 +86,13 @@ export const sollet: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      accounts: [discovery.getPermissionedAccount('SplTokenSwap', 'owner')],
-      name: 'Sollet Bridge Owner (EOA)',
-      description: 'Can withdraw funds from the bridge',
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        accounts: [discovery.getPermissionedAccount('SplTokenSwap', 'owner')],
+        name: 'Sollet Bridge Owner (EOA)',
+        description: 'Can withdraw funds from the bridge',
+      },
+    ],
+  },
 }

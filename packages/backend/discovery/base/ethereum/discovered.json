@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21628432,
+  "blockNumber": 21736764,
   "configHash": "0x16d8d981a09564b61a7f74896e3d14d89d641b5a33dcb999e1d56410280fc835",
   "contracts": [
     {
@@ -195,6 +195,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
           "0xe32868ec7762650DdE723e945D638A05900974F4",
           "0x5468985B560D966dEDEa2DAF493f5756101137DC",
           "0x26c72586FB396325F58718152FEFA94E93Cf177b",
@@ -211,8 +212,8 @@
         "domainSeparator": "0xf3474c66ee08325b410c3f442c878d01ec97dd55a415a307e9d7d2ea24336289",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 11 (27%)",
-        "nonce": 47,
+        "multisigThreshold": "3 of 12 (25%)",
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -337,7 +338,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 52,
+        "nonce": 54,
         "VERSION": "1.3.0"
       }
     },
@@ -371,7 +372,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1833,
+        "gameCount": 2193,
         "gameImpls": [
           "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
           "0xF62c15e2F99d4869A925B8F57076cD85335832A2",
@@ -441,8 +442,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 21628432
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 21736764
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -537,7 +538,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -676,7 +677,7 @@
         "batchInbox": "0xFf00000000000000000000000000000000008453",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-        "gasLimit": 240000000,
+        "gasLimit": 264000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -866,7 +867,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -911,7 +912,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292980248",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292990905",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1108,7 +1109,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 98,
+        "nonce": 100,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1287,7 +1288,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 10,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1573,6 +1574,7 @@
     { "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50" },
     { "address": "0x73565876170a336Fa02fDe34EeD03E3121f70bA6" },
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
+    { "address": "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },

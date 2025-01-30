@@ -12,8 +12,13 @@ export interface ApiProjectResponse {
 }
 
 export interface ApiPreviewResponse {
-  permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
+  permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   contractsPerChain: { chain: string; contracts: ApiPreviewContract[] }[]
+}
+
+export interface ApiPreviewPermissions {
+  roles: ApiPreviewPermission[]
+  actors: ApiPreviewPermission[]
 }
 
 export interface ApiPreviewPermission {

@@ -33,6 +33,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
+  ScalingProjectPermissions,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -822,7 +823,6 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts,
-        fromRole: true,
       })
     }
     return result
@@ -994,11 +994,10 @@ export class ProjectDiscovery {
     return s
   }
 
-  getDiscoveredPermissions(): ScalingProjectPermission[] {
+  getDiscoveredPermissions(): ScalingProjectPermissions {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
-    const result: ScalingProjectPermission[] = []
 
     const relevantContracts = [
       ...contracts.filter(
@@ -1016,13 +1015,13 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    result.push(...this.describeRolePermissions(relevantContracts))
-    result.push(...this.describeRolePermissions(eoas))
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
+    const actors: ScalingProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
-        result.push(
+        actors.push(
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -1031,7 +1030,7 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        result.push(
+        actors.push(
           this.contractAsPermissioned(
             contract,
             formatAsBulletPoints(descriptions),
@@ -1047,7 +1046,7 @@ export class ProjectDiscovery {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
-      result.push({
+      actors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: [this.formatPermissionedAccount(eoa.address)],
         chain: this.chain,
@@ -1055,12 +1054,22 @@ export class ProjectDiscovery {
       })
     }
 
-    result.forEach((permission) => {
+    actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
     })
-    return result.map((p) => ({ ...p, discoveryDrivenData: true }))
+
+    roles.forEach((permission) => {
+      permission.description = this.replaceAddressesWithNames(
+        permission.description,
+      )
+    })
+
+    return {
+      roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+      actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+    }
   }
 
   getDiscoveredContracts(): ScalingProjectContract[] {
