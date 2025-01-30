@@ -1,7 +1,10 @@
-import type { Bridge } from '../projects/bridges'
-import type { DaLayer } from '../projects/da-beat'
-import type { Layer2 } from '../projects/layer2s'
-import type { Layer3 } from '../projects/layer3s'
+import type {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
+  ScalingProjectContract,
+} from '../types'
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -19,12 +22,14 @@ export function getChainNames(
 }
 
 function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
-  const escrowContracts = project.config.escrows.flatMap((escrow) => {
-    if (!escrow.newVersion) {
-      return []
-    }
-    return { address: escrow.address, ...escrow.contract }
-  })
+  const escrowContracts = project.config.escrows.flatMap(
+    (escrow): ScalingProjectContract[] => {
+      if (!escrow.contract) {
+        return []
+      }
+      return [{ address: escrow.address, ...escrow.contract }]
+    },
+  )
   const permissions =
     project.permissions !== 'UnderReview'
       ? project.permissions?.filter((p) => {

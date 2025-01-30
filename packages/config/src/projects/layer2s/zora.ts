@@ -3,16 +3,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
 export const zora: Layer2 = opStackL2({
-  createdAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
+  addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
-  additionalBadges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
+  additionalBadges: [Badge.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -22,7 +22,6 @@ export const zora: Layer2 = opStackL2({
       'Zora is a fast, cost-efficient, and scalable Layer 2 built to help bring media onchain, powered by the OP Stack.',
     links: {
       websites: ['https://zora.energy/', 'https://zora.co/'],
-      apps: [],
       documentation: ['https://docs.zora.co/docs/zora-network/intro'],
       explorers: [
         'https://explorer.zora.energy/',
@@ -72,15 +71,15 @@ export const zora: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
-      name: 'Zora starts using blobs',
-      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      title: 'Zora starts using blobs',
+      url: 'https://twitter.com/Optimism/status/1768235284494450922',
       date: '2024-03-14T00:00:00Z',
       description: 'Zora starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Zora Network Launch',
-      link: 'https://twitter.com/ourZORA/status/1671602234994622464',
+      title: 'Zora Network Launch',
+      url: 'https://twitter.com/ourZORA/status/1671602234994622464',
       date: '2023-06-21T00:00:00Z',
       description: 'Zora Network is live on mainnet.',
       type: 'general',

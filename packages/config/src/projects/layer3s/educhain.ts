@@ -2,15 +2,15 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
 export const educhain: Layer3 = orbitStackL3({
-  createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
   additionalBadges: [
     Badge.DA.DAC,
@@ -69,8 +69,8 @@ export const educhain: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   milestones: [
     {
-      name: 'Mainnet launch',
-      link: 'https://medium.com/edu-chain', //TODO
+      title: 'Mainnet launch',
+      url: 'https://medium.com/edu-chain', //TODO
       date: '2025-01-17T00:00:00Z',
       description: 'Educhain L3 opens its mainnet to all users.',
       type: 'general',
@@ -78,7 +78,7 @@ export const educhain: Layer3 = orbitStackL3({
   ],
   dataAvailabilitySolution: AnytrustDAC({
     bridge: {
-      createdAt: new UnixTime(1737096804),
+      addedAt: new UnixTime(1737096804),
     },
     discovery,
   }),

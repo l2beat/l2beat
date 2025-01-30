@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
@@ -33,7 +33,7 @@ const pausable = {
 export const omni: Bridge = {
   type: 'bridge',
   id: ProjectId('omni'),
-  createdAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  addedAt: new UnixTime(1662628329), // 2022-09-08T09:12:09Z
   display: {
     name: 'Omnibridge',
     slug: 'omni',
@@ -82,14 +82,6 @@ export const omni: Bridge = {
       value: 'Third Party',
       description: `${validatorsString} Validator MultiSig`,
       sentiment: 'bad',
-      sources: [
-        {
-          contract: 'ForeignAMB',
-          references: [
-            'https://etherscan.io/address/0x098f51bdfb5D6d319DD4FDf06b64773d25bD1316#code#F14#L94',
-          ],
-        },
-      ],
     },
     sourceUpgradeability: {
       value: 'Yes',
@@ -118,8 +110,8 @@ export const omni: Bridge = {
       description: `Incoming messages to Ethereum are managed by the Arbitrary Message Bridge (AMB), a trusted message relaying mechanism currently validated by a ${validatorsString} Validator MultiSig. The GovernanceMultisig is used for updating validator set, signature thresholds, bridge parameters and bridge contracts. For Omnibridge, messages are passed between "Mediator" contracts deployed on both chains. When user deposits a token to Mediator escrow on Ethereum, an AMB message is passed to Mediator on Gnosis chain, which mints a "representation token", optionally deploying a necessary token contract on Gnosis chain if this is the first time this token is transferred. Transfers from Gnosis chain to Ethereum use the same mechanism in the opposite direction but tokens on Gnosis are burned and tokens on Ethereum are released from escrow. Outgoing messages are verified on the Gnosis chain using a ZK Ethereum light client.`,
       references: [
         {
-          text: 'Omnibridge documentation',
-          href: 'https://docs.gnosischain.com/bridges/tokenbridge/omnibridge',
+          title: 'Omnibridge documentation',
+          url: 'https://docs.gnosischain.com/bridges/tokenbridge/omnibridge',
         },
       ],
       risks: [

@@ -1,5 +1,5 @@
+import type { DaTechnology, DacDaLayer } from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
-import type { DaTechnology, DacDaLayer } from '../types'
 import { DAC, type DacTemplateVars } from './dac-template'
 
 export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
@@ -48,8 +48,8 @@ export function PolygoncdkDAC(template: DacTemplateVars): DacDaLayer {
     `,
     references: [
       {
-        text: 'Polygon CDK Validium Documentation',
-        href: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
+        title: 'Polygon CDK Validium Documentation',
+        url: 'https://docs.polygon.technology/cdk/architecture/cdk-validium/#data-availability-committee-dac',
       },
     ],
   }

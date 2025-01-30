@@ -4,26 +4,18 @@
   dataAvailability: {
     description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "zkLink"
-        references: [
-          "https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code"
-        ]
-      }
-    ]
     value: "External"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
@@ -33,17 +25,9 @@
     value: "Enqueue via L2"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "zkLink"
-        references: [
-          "https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code"
-        ]
-      }
-    ]
     value: "ZK proofs (ST, SN)"
   }
 }
@@ -57,15 +41,15 @@
     value: "External"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
@@ -75,8 +59,8 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on Linea and finally on Ethereum."
+    orderHint: Infinity
     sentiment: "good"
     value: "ZK proofs"
   }

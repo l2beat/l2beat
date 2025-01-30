@@ -2,14 +2,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lisk')
 
 export const lisk: Layer2 = opStackL2({
-  createdAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
+  addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],

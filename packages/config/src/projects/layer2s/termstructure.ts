@@ -14,9 +14,9 @@ import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('termstructure')
 
@@ -50,7 +50,8 @@ const vaultWeight =
 
 export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
-  createdAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
+  capability: 'appchain',
+  addedAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_CALLDATA],
     bridge: DA_BRIDGES.ENSHRINED,
@@ -68,7 +69,7 @@ export const termstructure: Layer2 = {
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
     purposes: ['Payments', 'Exchange', 'Lending'],
     category: 'ZK Rollup',
-    provider: 'ZKsync Lite',
+    stack: 'ZKsync Lite',
     links: {
       websites: ['https://ts.finance/'],
       apps: ['https://app.ts.finance/'],
@@ -148,28 +149,8 @@ export const termstructure: Layer2 = {
   },
   type: 'layer2',
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'Verifier',
-          references: [
-            'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'RollupFacet',
-          references: [
-            'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#writeContract',
-          ],
-        },
-      ],
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, expirationPeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(expirationPeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_ZK,
@@ -199,8 +180,9 @@ export const termstructure: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'RollupFacet.sol - Etherscan source code, verifyOneBlock function',
-          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+          title:
+            'RollupFacet.sol - Etherscan source code, verifyOneBlock function',
+          url: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
         },
       ],
     },
@@ -208,12 +190,12 @@ export const termstructure: Layer2 = {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
       references: [
         {
-          text: 'Verifier.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
+          title: 'Verifier.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
         },
         {
-          text: 'EvacuVerifier.sol - Etherscan source code',
-          href: 'https://etherscan.io/address/0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467#code',
+          title: 'EvacuVerifier.sol - Etherscan source code',
+          url: 'https://etherscan.io/address/0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467#code',
         },
       ],
     },
@@ -221,8 +203,9 @@ export const termstructure: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
-          text: 'RollupFacet.sol - Etherscan source code, _commitOneBlock function',
-          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+          title:
+            'RollupFacet.sol - Etherscan source code, _commitOneBlock function',
+          url: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
         },
       ],
     },
@@ -230,8 +213,9 @@ export const termstructure: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'RollupFacet.sol - Etherscan source code, onlyRole in commit, verify, execute functions',
-          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+          title:
+            'RollupFacet.sol - Etherscan source code, onlyRole in commit, verify, execute functions',
+          url: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
         },
       ],
     },
@@ -239,39 +223,43 @@ export const termstructure: Layer2 = {
       ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
       references: [
         {
-          text: 'AccountFacet.sol - Etherscan source code, forceWithdraw function',
-          href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+          title:
+            'AccountFacet.sol - Etherscan source code, forceWithdraw function',
+          url: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
         },
         {
-          text: 'Force Withdrawal and Evacuation Mode - Term Structure documentation',
-          href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode',
+          title:
+            'Force Withdrawal and Evacuation Mode - Term Structure documentation',
+          url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode',
         },
       ],
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
-            text: 'AccountFacet.sol - Etherscan source code, withdraw function',
-            href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+            title:
+              'AccountFacet.sol - Etherscan source code, withdraw function',
+            url: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
           },
           {
-            text: 'Withdraw - Term Structure documentation',
-            href: 'https://docs.ts.finance/protocol-spec/general/withdraw',
+            title: 'Withdraw - Term Structure documentation',
+            url: 'https://docs.ts.finance/protocol-spec/general/withdraw',
           },
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
-            text: 'AccountFacet.sol - Etherscan source code, forceWithdraw function',
-            href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+            title:
+              'AccountFacet.sol - Etherscan source code, forceWithdraw function',
+            url: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
           },
           {
-            text: 'Forced Withdrawal - Term Structure documentation',
-            href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#forced-withdrawal',
+            title: 'Forced Withdrawal - Term Structure documentation',
+            url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#forced-withdrawal',
           },
         ],
       },
@@ -279,8 +267,8 @@ export const termstructure: Layer2 = {
         ...EXITS.EMERGENCY('Evacuation Mode', 'zero knowledge proof'),
         references: [
           {
-            text: 'Evacuation Mode - Term Structure documentation',
-            href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#evacuation-mode',
+            title: 'Evacuation Mode - Term Structure documentation',
+            url: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#evacuation-mode',
           },
         ],
       },
@@ -292,8 +280,9 @@ export const termstructure: Layer2 = {
           'The protocol allows flashloans with the funds locked with the bridge, for a fee.',
         references: [
           {
-            text: 'FlashloanFacet.sol - Etherscan source code, flashLoan function',
-            href: 'https://etherscan.io/address/0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c#code',
+            title:
+              'FlashloanFacet.sol - Etherscan source code, flashLoan function',
+            url: 'https://etherscan.io/address/0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c#code',
           },
         ],
         risks: [

@@ -15,8 +15,8 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -33,7 +33,8 @@ const withdrawalDelay = discovery.getContractValue<number>(
 export const immutablezkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablezkevm'),
-  createdAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
+  capability: 'universal',
+  addedAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
   badges: [Badge.VM.EVM, Badge.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -48,10 +49,7 @@ export const immutablezkevm: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
-      apps: [],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/Immutable'],
     },
   },

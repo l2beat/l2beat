@@ -2,13 +2,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lambda')
 
 export const lambda: Layer2 = opStackL2({
-  createdAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
+  addedAt: new UnixTime(1718703383), // 2024-06-18T09:36:23Z
   discovery,
   additionalPurposes: ['Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
@@ -38,8 +38,8 @@ export const lambda: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
-      name: 'Lambda Chain Mainnet Launch',
-      link: 'https://lambdanetwork.medium.com/lambda-is-about-to-launch-a-permanent-storage-da-network-leveraging-das-technology-to-provide-data-cdc80c8f69d1',
+      title: 'Lambda Chain Mainnet Launch',
+      url: 'https://lambdanetwork.medium.com/lambda-is-about-to-launch-a-permanent-storage-da-network-leveraging-das-technology-to-provide-data-cdc80c8f69d1',
       date: '2024-04-17T00:00:00.00Z',
       description: 'Lambda Chain is live on mainnet.',
       type: 'general',

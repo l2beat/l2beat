@@ -8,7 +8,7 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
 export const deri = orbitStackL3({
-  createdAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
+  addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   additionalBadges: [Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
@@ -20,7 +20,6 @@ export const deri = orbitStackL3({
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
     links: {
       websites: ['https://deri.io/'],
-      apps: [],
       documentation: ['https://docs.deri.io/'],
       explorers: ['https://explorer-dchain.deri.io/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],

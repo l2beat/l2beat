@@ -1,14 +1,10 @@
+import type { ReferenceLink } from '@l2beat/config'
 import { CustomLink } from '~/components/link/custom-link'
 import { cn } from '~/utils/cn'
 
 export interface ReferenceListProps {
-  references: Reference[]
+  references: ReferenceLink[]
   tight?: boolean
-}
-
-export interface Reference {
-  text: string
-  href: string
 }
 
 export function ReferenceList({ references, tight }: ReferenceListProps) {
@@ -19,7 +15,7 @@ export function ReferenceList({ references, tight }: ReferenceListProps) {
     <ol className={cn('text-xs', tight ? 'mt-2' : 'mt-4 md:mt-6')}>
       {references.map((reference, i) => (
         <li key={i}>
-          <CustomLink href={reference.href}>{reference.text}</CustomLink>
+          <CustomLink href={reference.url}>{reference.title}</CustomLink>
         </li>
       ))}
     </ol>

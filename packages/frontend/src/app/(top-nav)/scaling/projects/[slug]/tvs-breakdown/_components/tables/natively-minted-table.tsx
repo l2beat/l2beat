@@ -1,13 +1,13 @@
 'use client'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { TokenTable } from '~/components/table/token-breakdown-table'
-import { type ProjectTvlBreakdown } from '~/server/features/scaling/tvl/breakdown/get-tvl-breakdown-for-project'
+import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
 import { nativelyMintedColumns } from './columns/natively-minted-columns'
 import { sumTokensValue } from './sum-tokens-value'
 import { TableSum } from './table-sum'
 
 export type NativelyMintedTokenEntry =
-  ProjectTvlBreakdown['breakdown']['native'][number]
+  ProjectTvsBreakdown['breakdown']['native'][number]
 
 interface Props {
   tokens: NativelyMintedTokenEntry[]

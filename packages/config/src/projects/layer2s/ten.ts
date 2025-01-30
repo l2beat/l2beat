@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const ten: Layer2 = upcomingL2({
   id: 'ten',
-  createdAt: new UnixTime(1705390051), // 2024-01-16T07:27:31Z
+  capability: 'universal',
+  addedAt: new UnixTime(1705390051), // 2024-01-16T07:27:31Z
   display: {
     name: 'Ten',
     slug: 'ten',
@@ -14,7 +15,6 @@ export const ten: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://ten.xyz'],
-      apps: [],
       documentation: [
         'https://docs.ten.xyz',
         'https://ten.xyz/litepaper',

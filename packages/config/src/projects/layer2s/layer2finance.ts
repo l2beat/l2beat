@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('layer2finance')
 
@@ -10,7 +10,8 @@ export const layer2finance: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('layer2finance'),
-  createdAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   display: {
     name: 'Layer2.Finance',
     slug: 'layer2finance',
@@ -24,7 +25,6 @@ export const layer2finance: Layer2 = {
       websites: ['https://layer2.finance/'],
       apps: ['https://app.l2.finance/'],
       documentation: ['https://docs.l2.finance/'],
-      explorers: [],
       repositories: [
         'https://github.com/celer-network/layer2-finance-contracts',
       ],
@@ -66,8 +66,8 @@ export const layer2finance: Layer2 = {
     ],
     references: [
       {
-        text: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
-        href: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
+        title: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
+        url: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
       },
     ],
   },

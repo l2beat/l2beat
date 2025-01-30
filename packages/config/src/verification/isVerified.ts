@@ -1,7 +1,4 @@
-import type { Bridge } from '../projects/bridges'
-import type { DaBridge, DaLayer } from '../projects/da-beat'
-import type { Layer2 } from '../projects/layer2s'
-import type { Layer3 } from '../projects/layer3s'
+import type { Bridge, DaBridge, DaLayer, Layer2, Layer3 } from '../types'
 
 export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaLayer,
@@ -20,7 +17,7 @@ export function isVerified(
         return true
       }
 
-      return e.contract.isVerified
+      return e.contract?.isVerified
     }) ?? true
 
   const newVerification = escrowVerifications && contractsVerification

@@ -1,11 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const huddle01: Layer3 = underReviewL3({
   id: 'huddle01',
-  createdAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469443), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const huddle01: Layer3 = underReviewL3({
     name: 'Huddle01',
     slug: 'huddle01',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Huddle01 is an Orbit stack L3 powering the dRTC protocol, a decentralized Real Time Communication Network operating an algorithmic prosumer marketplace for real-time data.',
     purposes: ['Information'],
@@ -27,7 +28,6 @@ export const huddle01: Layer3 = underReviewL3({
       apps: ['https://huddle01.bridge.caldera.xyz/', 'https://huddle01.app/'],
       documentation: ['https://docs.huddle01.com/docs'],
       explorers: ['https://huddle01.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/huddle01com',
         'https://discord.gg/hkYx393Sps',

@@ -1,7 +1,7 @@
-import { type FC } from 'react'
-
-import { type Sentiment, assertUnreachable } from '@l2beat/shared-pure'
+import type { Sentiment } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { cva } from 'class-variance-authority'
+import { type FC } from 'react'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { ShieldIcon } from '~/icons/shield'
 import { cn } from '~/utils/cn'

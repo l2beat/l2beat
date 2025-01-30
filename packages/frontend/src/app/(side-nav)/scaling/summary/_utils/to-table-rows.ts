@@ -1,4 +1,4 @@
-import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 
 export function toTableRows({
   projects,
@@ -10,23 +10,23 @@ export function toTableRows({
   return projects.map((project) => {
     return {
       ...project,
-      tvl: {
-        ...project.tvl,
+      tvs: {
+        ...project.tvs,
         warnings: excludeAssociatedTokens
-          ? project.tvl.associatedTokensExcludedWarnings
-          : project.tvl.warnings,
+          ? project.tvs.associatedTokensExcludedWarnings
+          : project.tvs.warnings,
         change: excludeAssociatedTokens
-          ? project.tvl.associatedTokensExcludedChange
-          : project.tvl.change,
-        breakdown: project?.tvl.breakdown
+          ? project.tvs.associatedTokensExcludedChange
+          : project.tvs.change,
+        breakdown: project?.tvs.breakdown
           ? {
-              ...project.tvl.breakdown,
+              ...project.tvs.breakdown,
               total: excludeAssociatedTokens
-                ? project.tvl.breakdown.total - project.tvl.breakdown.associated
-                : project.tvl.breakdown.total,
+                ? project.tvs.breakdown.total - project.tvs.breakdown.associated
+                : project.tvs.breakdown.total,
               associated: excludeAssociatedTokens
                 ? 0
-                : project.tvl.breakdown.associated,
+                : project.tvs.breakdown.associated,
             }
           : undefined,
       },

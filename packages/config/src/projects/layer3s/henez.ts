@@ -1,11 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const henez: Layer3 = underReviewL3({
   id: 'henez',
-  createdAt: new UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469444), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const henez: Layer3 = underReviewL3({
     name: 'Henez',
     slug: 'henez',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       'Henez is an Orbit stack L3 with AnyTrust DA powering chain- and account-abstracted DeFi applications.',
     purposes: ['Universal'],
@@ -27,7 +28,6 @@ export const henez: Layer3 = underReviewL3({
       apps: ['https://henez.bridge.caldera.xyz/'],
       documentation: ['https://docs.henez.fi/'],
       explorers: ['https://henez.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/HenezFinance',
         'https://mirror.xyz/0xFCA778F8DC17E130E91c03843275939595DD9930',

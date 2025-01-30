@@ -829,6 +829,20 @@
       "supply": "zero"
     },
     {
+      "name": "BONE SHIBASWAP",
+      "coingeckoId": "bone-shibaswap",
+      "address": "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+      "symbol": "BONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1625542925,
+      "coingeckoListingTimestamp": 1625616000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Brokoli Token",
       "coingeckoId": "brokoli",
       "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8",
@@ -1567,6 +1581,20 @@
       "coingeckoListingTimestamp": 1601424000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/12651/large/dodo_logo.png?1696512458",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "DOGE KILLER",
+      "coingeckoId": "leash",
+      "address": "0x27C70Cd1946795B66be9d954418546998b546634",
+      "symbol": "LEASH",
+      "decimals": 18,
+      "deploymentTimestamp": 1598998068,
+      "coingeckoListingTimestamp": 1621900800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2770,6 +2798,20 @@
       "coingeckoListingTimestamp": 1612396800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/13876/large/JASMY200x200.jpg?1696513620",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "K9 Finance DAO",
+      "coingeckoId": "k9-finance-dao",
+      "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE",
+      "symbol": "KNINE",
+      "decimals": 18,
+      "deploymentTimestamp": 1708949747,
+      "coingeckoListingTimestamp": 1709856000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -8270,6 +8312,50 @@
       "chainId": 1996,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "usd-coin",
+      "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1734639568,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDT",
+      "coingeckoId": "tether",
+      "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1734648290,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "name": "USD Coin",

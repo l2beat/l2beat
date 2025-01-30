@@ -2,50 +2,34 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "RollupFacet"
-        references: [
-          "https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#writeContract"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: -1209600
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -1209600
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: Infinity
     description: "Users are able to trustlessly exit by submitting a zero knowledge proof of funds."
+    orderHint: Infinity
     sentiment: "good"
     value: "Use escape hatch"
   }
   sequencerFailure: {
-    definingMetric: 1209600
     description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for  for more than 14d, users can use the exit hatch to withdraw their funds."
+    orderHint: 1209600
     sentiment: "good"
     value: "Force via L1"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "Verifier"
-        references: [
-          "https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE"
-        ]
-      }
-    ]
     value: "ZK proofs (SN)"
   }
 }

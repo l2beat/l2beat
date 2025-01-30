@@ -21,9 +21,9 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -50,7 +50,8 @@ const proofWindow = discovery.getContractValue<number>(
 export const morph: Layer2 = {
   type: 'layer2',
   id: ProjectId('morph'),
-  createdAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
+  capability: 'universal',
+  addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
@@ -152,56 +153,10 @@ export const morph: Layer2 = {
       sentiment: 'bad',
       secondLine: formatChallengePeriod(challengeWindow),
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
-    exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'L1MessageQueueWithGasPriceOracle',
-          references: [
-            'https://etherscan.io/address/0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA#code',
-          ],
-        },
-        {
-          contract: 'EnforcedTxGateway',
-          references: [
-            'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-      sources: [
-        {
-          contract: 'MorphRollup',
-          references: [
-            'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   technology: {
     newCryptography: {
@@ -215,8 +170,9 @@ export const morph: Layer2 = {
           If the valid proof is delivered, the Challenger loses the challenge bond. The MorphAdminMSig can override any batch (both unfinalized and finalized), potentially preventing the ability to provide valid ZK proofs.`,
       references: [
         {
-          text: 'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
-          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A',
+          title:
+            'Rollup.sol - Etherscan source code, commitBatch(), challengeState(), proveState() functions',
+          url: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A',
         },
       ],
       risks: [
@@ -234,8 +190,9 @@ export const morph: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
-          text: 'Rollup.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
-          href: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278#code',
+          title:
+            'Rollup.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+          url: 'https://etherscan.io/address/0x073403e147a8e607b80985fe458c0b527287278#code',
         },
       ],
     },
@@ -246,8 +203,9 @@ export const morph: Layer2 = {
         consensus after Petra upgrade.`,
       references: [
         {
-          text: 'L1Staking.sol - Etherscan source code, verifySignature() function',
-          href: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
+          title:
+            'L1Staking.sol - Etherscan source code, verifySignature() function',
+          url: 'https://etherscan.io/address/0xDb0734109051DaAB5c32E45e9a5ad0548B2df714#code',
         },
       ],
       risks: [FRONTRUNNING_RISK],
@@ -256,27 +214,29 @@ export const morph: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
-          href: 'https://etherscan.io/address//0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7#readProxyContract#F7',
+          title: 'EnforcedTxGateway proxy - PAUSED - Etherscan source code',
+          url: 'https://etherscan.io/address//0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7#readProxyContract#F7',
         },
         {
-          text: 'EnforcedTxGateway.sol implementation - Etherscan source code',
-          href: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
+          title: 'EnforcedTxGateway.sol implementation - Etherscan source code',
+          url: 'https://etherscan.io/address/0xCb13746Fc891fC2e7D824870D00a26F43fE6123e#code',
         },
         {
-          text: 'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
-          href: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code#F1#L534',
+          title:
+            'Rollup.sol - Sequencer decides if / how many transactions to dequeue',
+          url: 'https://etherscan.io/address/0x43190DfD1F572Cb56B1942B44482d1774151D77A#code#F1#L534',
         },
       ],
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof', challengeWindow),
+        ...EXITS.REGULAR_MESSAGING('optimistic', challengeWindow),
         risks: [EXITS.OPERATOR_CENSORS_WITHDRAWAL],
         references: [
           {
-            text: 'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
-            href: 'https://etherscan.io/address/0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c#code',
+            title:
+              'L1ETHGateway.sol - Etherscan source code, finalizeWithdrawETH function',
+            url: 'https://etherscan.io/address/0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c#code',
           },
         ],
       },

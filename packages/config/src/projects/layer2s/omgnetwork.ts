@@ -9,7 +9,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
@@ -18,7 +18,8 @@ const upgradeDelay = 0
 export const omgnetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('omgnetwork'),
-  createdAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'OMG Network',
@@ -30,7 +31,6 @@ export const omgnetwork: Layer2 = {
 
     links: {
       websites: ['https://omg.network'],
-      apps: [],
       documentation: ['https://docs.omg.network/'],
       explorers: ['https://blockexplorer.mainnet.v1.omg.network/'],
       repositories: ['https://github.com/omgnetwork/plasma-contracts'],

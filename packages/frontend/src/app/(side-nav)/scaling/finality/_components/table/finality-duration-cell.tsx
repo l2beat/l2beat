@@ -1,5 +1,4 @@
-import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
-
+import type { WarningWithSentiment } from '@l2beat/config'
 import {
   Tooltip,
   TooltipContent,
@@ -16,7 +15,7 @@ import { SyncStatusWrapper } from './sync-status-wrapper'
 
 type BaseProps = {
   isSynced: boolean
-  warning?: WarningValueWithSentiment
+  warning?: WarningWithSentiment
 }
 
 type Props =

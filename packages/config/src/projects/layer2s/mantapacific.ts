@@ -2,14 +2,14 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
 export const mantapacific: Layer2 = opStackL2({
-  createdAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
+  addedAt: new UnixTime(1693907285), // 2023-09-05T09:48:05Z
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   reasonsForBeingOther: [
@@ -78,8 +78,8 @@ export const mantapacific: Layer2 = opStackL2({
   discoveryDrivenData: true,
   milestones: [
     {
-      name: 'Manta Pacific Network Launch',
-      link: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
+      title: 'Manta Pacific Network Launch',
+      url: 'https://mantanetwork.medium.com/manta-pacific-mainnet-alpha-launch-743c6bc2b95e',
       date: '2023-09-12T00:00:00Z',
       description: 'Manta Pacific is live on mainnet.',
       type: 'general',

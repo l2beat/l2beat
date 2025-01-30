@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { BlockchainDaLayer } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
 
 export const near: BlockchainDaLayer = {
   id: 'near',
@@ -22,7 +22,6 @@ export const near: BlockchainDaLayer = {
         'https://github.com/near',
         'https://github.com/Nuffle-Labs/data-availability',
       ],
-      apps: [],
       explorers: ['https://nearblocks.io/'],
       socialMedia: [
         'https://x.com/NEARProtocol',
@@ -103,24 +102,24 @@ export const near: BlockchainDaLayer = {
   `,
     references: [
       {
-        text: 'Near Nightshade Consensus',
-        href: 'https://pages.near.org/downloads/Nightshade.pdf',
+        title: 'Near Nightshade Consensus',
+        url: 'https://pages.near.org/downloads/Nightshade.pdf',
       },
       {
-        text: 'Near Doomslug Finality Gadget',
-        href: 'https://discovery-domain.org/papers/doomslug.pdf',
+        title: 'Near Doomslug Finality Gadget',
+        url: 'https://discovery-domain.org/papers/doomslug.pdf',
       },
       {
-        text: 'Near documentation',
-        href: 'https://dev.near.org/documentation/',
+        title: 'Near documentation',
+        url: 'https://dev.near.org/documentation/',
       },
       {
-        text: 'Near Core - Architecture',
-        href: 'https://near.github.io/nearcore/',
+        title: 'Near Core - Architecture',
+        url: 'https://near.github.io/nearcore/',
       },
       {
-        text: 'Blob Store contract - Nuffle Labs',
-        href: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
+        title: 'Blob Store contract - Nuffle Labs',
+        url: 'https://github.com/Nuffle-Labs/data-availability/blob/5026b81aa5d941aaf4dd1b23bc219b9150e84405/contracts/blob-store/src/lib.rs',
       },
     ],
     risks: [
@@ -132,7 +131,7 @@ export const near: BlockchainDaLayer = {
   },
   bridges: [
     NO_BRIDGE({
-      createdAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
+      addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
       layer: 'NearDA',
       technology: {
         description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
@@ -156,4 +155,21 @@ export const near: BlockchainDaLayer = {
       coingeckoId: 'near',
     },
   },
+  milestones: [
+    {
+      title: 'Near mainnet launch',
+      url: 'https://near.org/blog/near-mainnet-genesis',
+      date: '2020-04-22T00:00:00Z',
+      description: 'Near mainnet launches.',
+      type: 'general',
+    },
+    {
+      title: 'Near Foundation launches Near DA',
+      url: 'https://medium.com/nearprotocol/near-foundation-launches-near-da-to-offer-secure-cost-effective-data-availability-for-eth-rollups-2d26beeb4cd8',
+      date: '2023-11-08T00:00:00Z',
+      description:
+        'Near Foundation proposes Near DA as a data availability layer for Ethereum L2s.',
+      type: 'general',
+    },
+  ],
 }

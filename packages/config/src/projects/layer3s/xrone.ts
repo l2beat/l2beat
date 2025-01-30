@@ -1,11 +1,12 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const xrone: Layer3 = underReviewL3({
   id: 'xrone',
-  createdAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
+  capability: 'universal',
+  addedAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.RaaS.Caldera,
@@ -18,7 +19,7 @@ export const xrone: Layer3 = underReviewL3({
     name: 'XR One',
     slug: 'xrone',
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     description:
       "XR One is an Orbit stack L3 with AnyTrust DA built by DeMoN Labs and partnered with Saltwater Games. It is designed to power unique PvP and AI-enhanced applications that spark user's imaginations through mechanics that reward risk-takers.",
     purposes: ['Gaming'],
@@ -30,7 +31,6 @@ export const xrone: Layer3 = underReviewL3({
       ],
       documentation: ['https://xr-one.gitbook.io/xr'],
       explorers: ['https://xr-one.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/XR_Foundation',
         'https://discord.com/invite/W4BdM6N8xb',

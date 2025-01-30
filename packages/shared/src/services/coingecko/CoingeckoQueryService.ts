@@ -1,15 +1,17 @@
 import {
   assert,
   type CoingeckoId,
-  EthereumAddress,
   UnixTime,
   getHourlyTimestamps,
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
 import { Logger } from '@l2beat/backend-tools'
-import type { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
-import type { CoinMarketChartRangeData } from '../../clients/coingecko/types'
+import { CoingeckoClient } from '../../clients/coingecko/CoingeckoClient'
+import type {
+  CoinMarketChartRangeData,
+  CoinsMarketResultData,
+} from '../../clients/coingecko/types'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
 const SECONDS_IN_DAY = 24 * 60 * 60
@@ -135,21 +137,6 @@ export class CoingeckoQueryService {
     return combineResults(results)
   }
 
-  async getCoinIds(): Promise<Map<EthereumAddress, CoingeckoId>> {
-    const coinsList = await this.coingeckoClient.getCoinList({
-      includePlatform: true,
-    })
-
-    const result = new Map()
-
-    coinsList.map((coin) => {
-      if (coin.platforms.ethereum)
-        result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
-    })
-
-    return result
-  }
-
   assertCoingeckoApiResponse(
     coingeckoId: CoingeckoId,
     range: { from: UnixTime; to: UnixTime },
@@ -180,6 +167,45 @@ export class CoingeckoQueryService {
     return to.gt(from.add(maxDaysForOneCall, 'days'))
       ? from.add(maxDaysForOneCall, 'days')
       : to
+  }
+
+  async getLatestMarketData(coingeckoIds: CoingeckoId[]) {
+    const prices: CoinsMarketResultData = []
+
+    for (
+      let i = 0;
+      coingeckoIds.length > i * CoingeckoClient.COINS_MARKET_PAGE_SIZE;
+      i++
+    ) {
+      const p = await this.coingeckoClient.getCoinsMarket(
+        coingeckoIds.slice(
+          i * CoingeckoClient.COINS_MARKET_PAGE_SIZE,
+          (i + 1) * CoingeckoClient.COINS_MARKET_PAGE_SIZE,
+        ),
+        'usd',
+      )
+      prices.push(...p)
+    }
+
+    const result = new Map<
+      CoingeckoId,
+      { price: number; circulating: number }
+    >()
+
+    for (const c of coingeckoIds) {
+      const p = prices.find((p) => p.id === c)
+      if (p === undefined) {
+        this.logger.error(`${c}: Price not found, assuming 0`)
+        result.set(c, { price: 0, circulating: 0 })
+      } else {
+        result.set(c, {
+          price: p.current_price,
+          circulating: p.circulating_supply,
+        })
+      }
+    }
+
+    return result
   }
 }
 

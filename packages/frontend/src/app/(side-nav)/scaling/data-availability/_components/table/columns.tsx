@@ -1,14 +1,13 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SentimentText } from '~/components/sentiment-text'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   TypeCell,
   TypeExplanationTooltip,
-  providerMap,
 } from '~/components/table/cells/type-cell'
-import { sortByDacMembers } from '~/components/table/sorting/functions/sort-by-dac-members'
-import { sortBySentiment } from '~/components/table/sorting/functions/sort-by-sentiment'
-import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
@@ -22,112 +21,64 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
     ),
-    sortingFn: ({ original: a }, { original: b }) =>
-      sortTwoRowCell(
-        {
-          value: a.category ?? '',
-          secondLine: a.provider && providerMap[a.provider]?.text,
-        },
-        {
-          value: b.category ?? '',
-          secondLine: b.provider && providerMap[b.provider]?.text,
-        },
-      ),
+    sortingFn: (a, b) => {
+      const categoryCompare = a.original.category.localeCompare(
+        b.original.category,
+      )
+      if (categoryCompare !== 0) {
+        return categoryCompare
+      }
+
+      const stackCompare = (a.original.stack ?? '').localeCompare(
+        b.original.stack ?? '',
+      )
+      return stackCompare
+    },
   }),
-  columnHelper.accessor('dataAvailability.layer.value', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.layer), {
     header: 'DA Layer',
     meta: {
       tooltip:
         'The data availability layer where the data (transaction data or state diffs) is published.',
     },
-    cell: (ctx) => {
-      const data = ctx.row.original.dataAvailability.layer
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            <SentimentText
-              sentiment={data.sentiment}
-              description={data.description}
-            >
-              {ctx.getValue()}
-            </SentimentText>
-          </TwoRowCell.First>
-          {data.secondLine && (
-            <TwoRowCell.Second>{data.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.layer} />
+    ),
     sortDescFirst: true,
-    sortingFn: (a, b) => {
-      const sentimentResult = sortBySentiment(
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(
         a.original.dataAvailability.layer,
         b.original.dataAvailability.layer,
-      )
-      if (sentimentResult !== 0) {
-        return sentimentResult
-      }
-
-      return sortTwoRowCell(
-        a.original.dataAvailability.layer,
-        b.original.dataAvailability.layer,
-      )
-    },
+      ),
   }),
-  columnHelper.accessor('dataAvailability.bridge.value', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.bridge), {
     header: 'DA Bridge',
     meta: {
       tooltip:
         'The DA bridge used for informing Ethereum contracts if data has been made available.',
     },
-    cell: (ctx) => {
-      const data = ctx.row.original.dataAvailability.bridge
-      return (
-        <SentimentText
-          sentiment={data.sentiment}
-          description={data.description}
-        >
-          {ctx.getValue()}
-        </SentimentText>
-      )
-    },
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.bridge} />
+    ),
     sortDescFirst: true,
-    sortingFn: (a, b) => {
-      const bridgeA = a.original.dataAvailability.bridge
-      const bridgeB = b.original.dataAvailability.bridge
-      const sentimentResult = sortBySentiment(bridgeA, bridgeB)
-      if (sentimentResult !== 0) {
-        return sentimentResult
-      }
-
-      const dacMembersResult = sortByDacMembers(bridgeA, bridgeB)
-      if (dacMembersResult !== 0) {
-        return dacMembersResult
-      }
-
-      return (bridgeA?.value ?? '').localeCompare(bridgeB?.value ?? '')
-    },
-  }),
-  columnHelper.accessor('dataAvailability.mode.value', {
-    header: 'Type of data',
-    cell: (ctx) => {
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>
-            {ctx.row.original.dataAvailability.mode.value}
-          </TwoRowCell.First>
-          {ctx.row.original.dataAvailability.mode.secondLine && (
-            <TwoRowCell.Second>
-              {ctx.row.original.dataAvailability.mode.secondLine}
-            </TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortTwoRowCell(
+      sortTableValues(
+        a.original.dataAvailability.bridge,
+        b.original.dataAvailability.bridge,
+      ),
+  }),
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailability.mode), {
+    header: 'Type of data',
+    cell: (ctx) => (
+      <TableValueCell value={ctx.row.original.dataAvailability.mode} />
+    ),
+    sortUndefined: 'last',
+    sortingFn: (a, b) =>
+      sortTableValues(
         a.original.dataAvailability.mode,
         b.original.dataAvailability.mode,
       ),

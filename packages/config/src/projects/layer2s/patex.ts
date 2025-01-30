@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const patex: Layer2 = upcomingL2({
   id: 'patex',
-  createdAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
+  capability: 'universal',
+  addedAt: new UnixTime(1707313169), // 2024-02-07T13:39:29Z
   display: {
     category: 'Optimistic Rollup',
     name: 'Patex Network',

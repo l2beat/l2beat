@@ -19,9 +19,9 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -43,7 +43,8 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
-  createdAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
+  capability: 'universal',
+  addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.ETH_BLOBS],
     bridge: DA_BRIDGES.ENSHRINED,
@@ -178,12 +179,12 @@ export const fuel: Layer2 = {
       ],
       references: [
         {
-          text: 'FuelChainState.sol - Etherscan source code, commit function',
-          href: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
+          title: 'FuelChainState.sol - Etherscan source code, commit function',
+          url: 'https://etherscan.io/address/0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130#code',
         },
         {
-          text: 'Fuel docs - Hybrid proving',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
+          title: 'Fuel docs - Hybrid proving',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#hybrid-proving',
         },
       ],
     },
@@ -191,12 +192,12 @@ export const fuel: Layer2 = {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'Sequencer - Etherscan address',
-          href: `https://etherscan.io/address/${sequencerAddress}`,
+          title: 'Sequencer - Etherscan address',
+          url: `https://etherscan.io/address/${sequencerAddress}`,
         },
         {
-          text: 'Fuel docs - Blobs',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#blobs',
+          title: 'Fuel docs - Blobs',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#blobs',
         },
       ],
     },
@@ -205,18 +206,19 @@ export const fuel: Layer2 = {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [
         {
-          text: 'FuelMessagePortalV3.sol - Etherscan source code, sendMessage function',
-          href: 'https://etherscan.io/address/0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf#code',
+          title:
+            'FuelMessagePortalV3.sol - Etherscan source code, sendMessage function',
+          url: 'https://etherscan.io/address/0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf#code',
         },
         {
-          text: 'Fuel docs - L1->L2 messaging',
-          href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#l1--l2-messaging',
+          title: 'Fuel docs - L1->L2 messaging',
+          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#l1--l2-messaging',
         },
       ],
     },
     exitMechanisms: [
-      EXITS.REGULAR('optimistic', 'merkle proof'),
-      EXITS.FORCED('all-withdrawals'),
+      EXITS.REGULAR_MESSAGING('optimistic'),
+      EXITS.FORCED_MESSAGING('all-messages'),
     ],
     otherConsiderations: [
       {
@@ -225,8 +227,8 @@ export const fuel: Layer2 = {
           'The FuelVM makes use of the UTXO model and a register-based design to enable parallel transaction processing. The language used is Sway and it does not support Solidity contracts.',
         references: [
           {
-            text: 'Fuel docs - FuelVM',
-            href: 'https://docs.fuel.network/docs/fuel-book/the-architecture/the-fuelvm/#the-fuelvm',
+            title: 'Fuel docs - FuelVM',
+            url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/the-fuelvm/#the-fuelvm',
           },
         ],
         risks: [],
@@ -320,9 +322,9 @@ export const fuel: Layer2 = {
   },
   milestones: [
     {
-      name: 'Fuel Ignition Mainnet is Live',
+      title: 'Fuel Ignition Mainnet is Live',
       date: '2024-10-16T00:00:00Z',
-      link: 'https://x.com/fuel_network/status/1846536888003313786',
+      url: 'https://x.com/fuel_network/status/1846536888003313786',
       description: 'Fuel Ignition announces its official launch.',
       type: 'general',
     },

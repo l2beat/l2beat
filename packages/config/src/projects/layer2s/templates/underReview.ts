@@ -1,22 +1,25 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
+  ChainConfig,
+  Layer2,
+  Layer2Display,
+  Layer3,
+  ProjectEscrow,
+  ScalingProjectCapability,
   ScalingProjectDisplay,
-  ScalingProjectEscrow,
-  ScalingProjectTransactionApi,
+  TransactionApiConfig,
 } from '../../../types'
-import type { ChainConfig } from '../../../types'
 import type { BadgeId } from '../../badges'
-import type { Layer3 } from '../../layer3s'
-import type { Layer2, Layer2Display } from '../types'
 
 interface UnderReviewConfigCommon {
   id: string
-  createdAt: UnixTime
+  addedAt: UnixTime
+  capability: ScalingProjectCapability
   rpcUrl?: string
-  escrows?: ScalingProjectEscrow[]
+  escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
-  transactionApi?: ScalingProjectTransactionApi
+  transactionApi?: TransactionApiConfig
   badges?: BadgeId[]
   isArchived?: boolean
 }
@@ -37,7 +40,8 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     isUnderReview: true,
     type: 'layer2',
     id: ProjectId(templateVars.id),
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
+    capability: templateVars.capability,
     isArchived: templateVars.isArchived ?? undefined,
     display: templateVars.display,
     stage: {
@@ -74,7 +78,8 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     type: 'layer3',
     isUnderReview: true,
     id: ProjectId(templateVars.id),
-    createdAt: templateVars.createdAt,
+    addedAt: templateVars.addedAt,
+    capability: templateVars.capability,
     isArchived: templateVars.isArchived ?? undefined,
     hostChain: templateVars.hostChain,
     display: {

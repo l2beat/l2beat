@@ -4,7 +4,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BaseProject } from '../project/BaseProject'
+import type { BaseProject } from '../../types'
 import { PERFORMED_BY } from './common/performedBy'
 import { PROOFS } from './common/proofSystems'
 

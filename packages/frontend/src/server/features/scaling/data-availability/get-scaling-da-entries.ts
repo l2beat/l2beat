@@ -14,12 +14,12 @@ import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingDaEntries() {
-  const [tvl, projectsChangeReport, projects] = await Promise.all([
-    getProjectsLatestTvlUsd(),
+  const [tvs, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ProjectService.STATIC.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingDa'],
@@ -33,11 +33,11 @@ export async function getScalingDaEntries() {
       getScalingDaEntry(
         project,
         projectsChangeReport.getChanges(project.id),
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
     .filter((entry) => entry !== undefined)
-    .sort(compareStageAndTvl)
+    .sort(compareStageAndTvs)
 
   return groupByTabs(entries)
 }
@@ -45,20 +45,20 @@ export async function getScalingDaEntries() {
 export interface ScalingDaEntry extends CommonScalingEntry {
   category: ScalingProjectCategory
   dataAvailability: ProjectDataAvailability
-  provider: ScalingProjectStack | undefined
-  tvlOrder: number
+  stack: ScalingProjectStack | undefined
+  tvsOrder: number
 }
 
 function getScalingDaEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingDa'>,
   changes: ProjectChanges,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ): ScalingDaEntry {
   return {
     ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
-    provider: project.scalingInfo.stack,
-    tvlOrder: tvl ?? -1,
+    stack: project.scalingInfo.stack,
+    tvsOrder: tvs ?? -1,
   }
 }

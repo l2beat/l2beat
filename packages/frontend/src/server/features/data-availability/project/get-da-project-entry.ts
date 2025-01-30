@@ -11,7 +11,7 @@ import {
   isDaBridgeVerified,
 } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
-import { type UsedInProject } from '@l2beat/config'
+import type { UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -20,15 +20,15 @@ import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
 } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/da-project-sections'
-import { type ProjectLink } from '~/components/projects/links/types'
-import { type ProjectDetailsSection } from '~/components/projects/sections/types'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { ProjectLink } from '~/components/projects/links/types'
+import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import type { RosetteValue } from '~/components/rosette/types'
 import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import {
-  getDaProjectsTvl,
-  pickTvlForProjects,
-} from '../utils/get-da-projects-tvl'
+  getDaProjectsTvs,
+  pickTvsForProjects,
+} from '../utils/get-da-projects-tvs'
 import { getDaRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 import {
@@ -126,20 +126,20 @@ export async function getDaProjectEntry(
 
   const [
     economicSecurity,
-    tvlPerProject,
+    tvsPerProject,
     contractsVerificationStatuses,
     projectsChangeReport,
   ] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
-    getDaProjectsTvl(uniqueProjectsInUse),
+    getDaProjectsTvs(uniqueProjectsInUse),
     getContractsVerificationStatuses(daLayer),
     getProjectsChangeReport(),
   ])
 
   const layerTvs =
-    tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
+    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
 
-  const getSumFor = pickTvlForProjects(tvlPerProject)
+  const getSumFor = pickTvsForProjects(tvsPerProject)
 
   const evaluatedRisks = getDaRisks(
     daLayer,
@@ -211,33 +211,29 @@ export async function getEthereumDaProjectEntry(
 
   const uniqueProjectsInUse = getUniqueProjectsInUse(daLayer)
 
-  const [economicSecurity, tvlPerProject] = await Promise.all([
+  const [economicSecurity, tvsPerProject] = await Promise.all([
     getDaProjectEconomicSecurity(daLayer),
-    getDaProjectsTvl(uniqueProjectsInUse),
+    getDaProjectsTvs(uniqueProjectsInUse),
   ])
 
   const layerTvs =
-    tvlPerProject.reduce((acc, value) => acc + value.tvl, 0) / 100
+    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
 
-  const layerGrissiniValue = mapLayerRisksToRosetteValues(daLayer.risks)
-  const bridgeGrissiniValue = mapBridgeRisksToRosetteValues(daBridge.risks)
+  const layerGrissiniValues = mapLayerRisksToRosetteValues(daLayer.risks)
+  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(daBridge.risks)
 
-  const evaluatedGrissiniValues = [
-    ...layerGrissiniValue,
-    ...bridgeGrissiniValue,
-  ]
-
-  const getSumFor = pickTvlForProjects(tvlPerProject)
+  const getSumFor = pickTvsForProjects(tvsPerProject)
 
   const sections = getEthereumDaProjectSections({
     daLayer,
     daBridge,
     isVerified: common.isVerified,
-    evaluatedGrissiniValues,
+    layerGrissiniValues,
+    bridgeGrissiniValues,
   })
 
   const { usedIn } = daLayer.bridges[0]
-  const usedInByTvlDesc = usedIn.sort(
+  const usedInByTvsDesc = usedIn.sort(
     (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
   )
 
@@ -249,7 +245,7 @@ export async function getEthereumDaProjectEntry(
       economicSecurity: economicSecurity,
       durationStorage: daLayer.pruningWindow,
       throughput: daLayer.throughput,
-      usedIn: usedInByTvlDesc,
+      usedIn: usedInByTvsDesc,
       bridgeName: daBridge.display.name,
       callout: {
         title: daBridge.display.name,

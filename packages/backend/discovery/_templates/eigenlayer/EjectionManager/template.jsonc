@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Contract used for ejection of operators from the RegistryCoordinator.",
+  "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
   "fields": {
     "ejectors": {
       "handler": {
@@ -14,6 +14,14 @@
           "event": "EjectorUpdated",
           "where": ["!=", "#status", true]
         }
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "can eject DA operators from a quorum."
+          }
+        ]
       }
     },
     "ejectionRateLimitWindow": {

@@ -8,8 +8,8 @@ import { utils } from 'ethers'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -26,7 +26,7 @@ const bondSymbol = discovery.getContractValue<string>('BondToken', 'symbol')
 export const acrossV3: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
-  createdAt: new UnixTime(1712746402), // 2024-04-10T10:53:22Z
+  addedAt: new UnixTime(1712746402), // 2024-04-10T10:53:22Z
   display: {
     name: 'Across V3',
     slug: 'acrossv3',
@@ -167,8 +167,8 @@ export const acrossV3: Bridge = {
         If the root remains unchallenged for ${finalizationDelay}, it is optimistically finalized and the Relayer is reimbursed. Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges.`,
       references: [
         {
-          text: 'Across V3 Architecture',
-          href: 'https://github.com/UMAprotocol/UMIPs/blob/master/UMIPs/umip-179.md',
+          title: 'Across V3 Architecture',
+          url: 'https://github.com/UMAprotocol/UMIPs/blob/master/UMIPs/umip-179.md',
         },
       ],
       risks: [
@@ -202,8 +202,8 @@ export const acrossV3: Bridge = {
       ],
       references: [
         {
-          text: 'Across V3 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/reference/security-model-and-verification',
+          title: 'Across V3 Optimistic Oracle documentation',
+          url: 'https://docs.across.to/reference/security-model-and-verification',
         },
       ],
     },

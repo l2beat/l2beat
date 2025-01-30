@@ -98,7 +98,7 @@ function ChartMilestone({ x, milestone }: Props) {
   return (
     <div className="absolute scale-75 select-none md:scale-100" style={style}>
       <a
-        href={milestone.link}
+        href={milestone.url}
         target="_blank"
         className="pointer-events-none md:pointer-events-auto"
       >

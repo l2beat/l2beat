@@ -10,8 +10,8 @@ import { addSentimentToDataAvailability } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -75,7 +75,8 @@ const CHALLENGE_FEE = utils.formatEther(
 export const lightlink: Layer2 = {
   type: 'layer2',
   id: ProjectId('lightlink'),
-  createdAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
+  capability: 'universal',
+  addedAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
   badges: [Badge.VM.EVM, Badge.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -171,12 +172,12 @@ export const lightlink: Layer2 = {
       Currently, a minimum of ${minValidatorsForConsensus} validators is required to sign off on a withdrawal.`,
       references: [
         {
-          text: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
-          href: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
+          title: 'LightLink L2 syncDeposit() - L2ERC20Predicate.sol',
+          url: 'https://phoenix.lightlink.io/address/0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9?tab=contract_code',
         },
         {
-          text: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
-          href: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
+          title: 'LightLink L1 syncWithdraw()- L1ERC20Predicate.sol',
+          url: 'https://etherscan.io/address/0xa8372d6ff00d48a25baa1af16d6a86c936708f4e#code',
         },
       ],
       risks: [
@@ -201,8 +202,8 @@ export const lightlink: Layer2 = {
           'Tokens on the destination end up as wrapped ERC20 proxies that are upgradable by the LightLinkMultisig, using EIP-1967.',
         references: [
           {
-            text: 'Token Implementation - requireMultisig()',
-            href: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
+            title: 'Token Implementation - requireMultisig()',
+            url: 'https://phoenix.lightlink.io/address/0x468b89D930ca7974196D7195033600B658011756?tab=contract',
           },
         ],
         risks: [

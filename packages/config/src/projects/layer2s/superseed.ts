@@ -1,11 +1,12 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
-import type { Layer2 } from './types'
 
 export const superseed: Layer2 = underReviewL2({
   id: 'superseed',
-  createdAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
+  capability: 'universal',
+  addedAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
   badges: [
     Badge.Infra.Superchain,
     Badge.DA.EthereumBlobs,
@@ -19,13 +20,12 @@ export const superseed: Layer2 = underReviewL2({
       'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol and redistribution of Layer 2 fees to its users.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://superseed.xyz/'],
       apps: ['https://bridge.superseed.xyz/'],
       documentation: ['https://docs.superseed.xyz/'],
       explorers: ['https://explorer.superseed.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/SuperseedXYZ',
         'https://discord.com/invite/vjDDB5S4BN',

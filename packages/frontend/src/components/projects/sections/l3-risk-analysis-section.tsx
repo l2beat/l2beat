@@ -1,4 +1,4 @@
-import { type Sentiment } from '@l2beat/shared-pure'
+import type { Sentiment } from '@l2beat/config'
 import { type ReactNode } from 'react'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
@@ -238,12 +238,12 @@ function HeaderCell({
 }
 
 function RiskCell(props: {
-  sentiment: Sentiment
+  sentiment?: Sentiment
   value: string
   backgroundFill?: boolean
   className?: string
 }) {
-  const bg = sentimentToTransparentBgColor(props.sentiment)
+  const bg = sentimentToTransparentBgColor(props.sentiment ?? 'neutral')
 
   return (
     <td
@@ -253,7 +253,7 @@ function RiskCell(props: {
         props.className,
       )}
     >
-      <SentimentText sentiment={props.sentiment} vibrant>
+      <SentimentText sentiment={props.sentiment ?? 'neutral'} vibrant>
         {props.value}
       </SentimentText>
     </td>

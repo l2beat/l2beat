@@ -29,10 +29,10 @@ import {
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
@@ -69,7 +69,8 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
-  createdAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
+  capability: 'universal',
+  addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
@@ -79,7 +80,7 @@ export const paradex: Layer2 = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
@@ -89,7 +90,6 @@ export const paradex: Layer2 = {
       websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
-      explorers: [],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: [
         'https://twitter.com/tradeparadex',
@@ -250,38 +250,10 @@ export const paradex: Layer2 = {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
       secondLine: formatExecutionDelay(finalizationPeriod),
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
     },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code',
-          ],
-        },
-      ],
-    },
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
     exitWindow: RISK_VIEW.EXIT_WINDOW(minDelay, 0),
-    sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
-      sources: [
-        {
-          contract: 'Paradex',
-          references: [
-            'https://etherscan.io/address/0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC#code#F1#L253',
-          ],
-        },
-      ],
-    },
+    sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   stage: getStage({
@@ -313,8 +285,8 @@ export const paradex: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'Censorship resistance of Starknet - Forum Discussion',
-          href: 'https://community.starknet.io/t/censorship-resistance/196',
+          title: 'Censorship resistance of Starknet - Forum Discussion',
+          url: 'https://community.starknet.io/t/censorship-resistance/196',
         },
       ],
     },
@@ -365,15 +337,15 @@ export const paradex: Layer2 = {
   ],
   milestones: [
     {
-      name: 'Paradex starts using blobs',
-      link: 'https://twitter.com/tradeparadex/status/1768306190596153799',
+      title: 'Paradex starts using blobs',
+      url: 'https://twitter.com/tradeparadex/status/1768306190596153799',
       date: '2024-03-26T00:00:00Z',
       description: 'Paradex starts publishing data to blobs.',
       type: 'general',
     },
     {
-      name: 'Open Beta Mainnet Launch',
-      link: 'https://twitter.com/tradeparadex',
+      title: 'Open Beta Mainnet Launch',
+      url: 'https://twitter.com/tradeparadex',
       date: '2023-10-01T00:00:00.00Z',
       description: 'Paradex launches Open Beta on Mainnet.',
       type: 'general',

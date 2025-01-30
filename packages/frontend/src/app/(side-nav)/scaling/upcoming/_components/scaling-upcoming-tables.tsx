@@ -44,6 +44,7 @@ export function ScalingUpcomingTables(
     id: '#',
     desc: false,
   }
+  const showOthers = checked || entries.others.length > 0
 
   return (
     <>
@@ -64,7 +65,7 @@ export function ScalingUpcomingTables(
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -82,7 +83,7 @@ export function ScalingUpcomingTables(
             <ScalingUpcomingTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />

@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 696015,
+  "blockNumber": 715537,
   "configHash": "0xe3290819b25a7b783233526f669d65593a882e85ef0c077f6737f6db3a0b5225",
   "contracts": [
     {
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1736174970,
+        "clock": 1738076014,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1736174970,
+        "clock": 1738076014,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1736174970,
+        "clock": 1738076014,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "31119676576211910575",
+        "getDeposit": "31068985285729770575",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -607,6 +607,16 @@
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         },
         {
+          "permission": "configure",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        },
+        {
+          "permission": "configure",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address."
+        },
+        {
           "permission": "upgrade",
           "from": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03"
         },
@@ -798,7 +808,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4150,
+        "getNonce": 4391,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -879,7 +889,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 9230,
+        "globalMessageCount": 11749,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1035,7 +1045,7 @@
           ]
         ],
         "$upgradeCount": 22,
-        "appCount": 73,
+        "appCount": 74,
         "getApproved": [
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
@@ -1111,7 +1121,7 @@
           "https://kinto.xyz/metadata/kintoapp/3",
           "https://kinto.xyz/metadata/kintoapp/4"
         ],
-        "totalSupply": 73
+        "totalSupply": 74
       },
       "fieldMeta": {
         "owner": { "severity": "HIGH" },
@@ -1424,7 +1434,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 68457
+        "totalWallets": 69551
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1680,16 +1690,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "414820013837398576424305",
-        "getUnclaimedLimit": "210921758009399625563908",
+        "getTotalLimit": "457057495413084570535632",
+        "getUnclaimedLimit": "244630153682319534419803",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xdd1d4aaabb18278d6523252232a52eb5af9c67e24701f6e79bef43307660a815",
+        "root": "0xc6e54f2d9762c7a66118ab2a75108682bf2c363c9bc41dc8d38ab3c937ce5aae",
         "startTime": 1718690400,
-        "totalClaimed": "203898255827998950860397",
+        "totalClaimed": "212427341730765036115829",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1717,6 +1727,18 @@
           "permission": "configure",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "transfer KYC NFTs to a different address.",
           "via": []
         },
         {
@@ -1864,7 +1886,7 @@
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
         ],
-        "lastMonitoredAt": 1736089449,
+        "lastMonitoredAt": 1738074370,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1878,7 +1900,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 68781,
+        "totalSupply": 69874,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"

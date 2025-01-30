@@ -1,10 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const zentachain: Layer2 = upcomingL2({
   id: 'zentachain',
-  createdAt: new UnixTime(1706277671), // 2024-01-26T14:01:11Z
+  capability: 'universal',
+  addedAt: new UnixTime(1706277671), // 2024-01-26T14:01:11Z
   display: {
     name: 'Zentachain',
     slug: 'zentachain',
@@ -12,7 +13,7 @@ export const zentachain: Layer2 = upcomingL2({
       'Zentachain is a privacy-focused IoT blockchain networking project that is focused on communication and data storage. Innovative and useful solutions are provided for issues of security and data ownership.',
     purposes: ['Universal', 'Privacy'],
     category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    stack: 'OP Stack',
     links: {
       websites: ['https://zentachain.io/'],
       apps: ['https://sepolia-bridge.zentachain.io/'],

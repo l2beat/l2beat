@@ -2,80 +2,34 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1."
+    orderHint: Infinity
     sentiment: "good"
-    sources: [
-      {
-        contract: "ScrollChain"
-        references: [
-          "https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code"
-        ]
-      }
-    ]
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ScrollChain"
-        references: [
-          "https://etherscan.io/address/0xa13BAF47339d63B743e7Da8741db5456DAc1E556#code#F1#L154"
-        ]
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
-    sources: [
-      {
-        contract: "ScrollChain"
-        references: [
-          "https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code"
-        ]
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
     description: "There is no mechanism to have transactions be included if the sequencer is down or censoring."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L1MessageQueue"
-        references: [
-          "https://etherscan.io/address/0x137CC585F607EDeBBc3CA6360AffCFeab507B374#code"
-        ]
-      }
-      {
-        contract: "EnforcedTxGateway"
-        references: [
-          "https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code"
-        ]
-      }
-    ]
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
-    sources: [
-      {
-        contract: "ScrollChain"
-        references: [
-          "https://etherscan.io/address/0x9bB163401E8C72573854c4Cd968aFA7A7b02D25f#code"
-        ]
-      }
-    ]
     value: "ZK proofs (SN)"
   }
 }

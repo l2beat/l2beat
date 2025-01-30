@@ -1,4 +1,4 @@
-import { type WarningWithSentiment } from '@l2beat/config'
+import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/language-join'
@@ -16,7 +16,7 @@ export interface TokenBreakdownProps {
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
-  tvlWarnings: WarningWithSentiment[]
+  tvsWarnings: WarningWithSentiment[]
 }
 
 export function TokenBreakdown(props: TokenBreakdownProps) {
@@ -45,7 +45,7 @@ export function TokenBreakdownTooltipContent({
   ether,
   stablecoin,
   associatedTokenSymbols,
-  tvlWarnings,
+  tvsWarnings,
 }: TokenBreakdownTooltipContentProps) {
   const other = total - associated - ether - stablecoin
   const values = [
@@ -92,11 +92,11 @@ export function TokenBreakdownTooltipContent({
           )}
         </div>
       )}
-      {tvlWarnings?.map((warning, i) => (
+      {tvsWarnings?.map((warning, i) => (
         <WarningBar
-          key={`tvl-warning-${i}`}
+          key={`tvs-warning-${i}`}
           icon={RoundedWarningIcon}
-          text={warning.content}
+          text={warning.value}
           color={sentimentToWarningBarColor(warning.sentiment)}
           // Cell itself is a href.
           // Markdown might contain links - nesting them in a tooltip

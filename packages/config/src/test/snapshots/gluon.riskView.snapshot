@@ -7,21 +7,21 @@
     value: "External"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: Infinity
     description: "Users are able to trustlessly exit by submitting a Merkle proof of funds."
+    orderHint: Infinity
     sentiment: "good"
     value: "Use escape hatch"
   }
   sequencerFailure: {
-    definingMetric: undefined
     description: "Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for , users can use the exit hatch to withdraw their funds."
+    orderHint: undefined
     sentiment: "good"
     value: "Force via L1"
   }

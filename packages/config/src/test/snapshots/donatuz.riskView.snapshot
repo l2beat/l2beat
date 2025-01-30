@@ -4,55 +4,31 @@
   dataAvailability: {
     description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "External"
   }
   exitWindow: {
-    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -604800
     secondLine: undefined
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L2OutputOracle"
-        references: []
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    definingMetric: 43200
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 12h delay on this operation."
+    orderHint: 43200
     secondLine: "12h delay"
     sentiment: "good"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"
@@ -65,42 +41,30 @@
   dataAvailability: {
     description: "Proof construction and state derivation fully rely on data that is posted on EigenDA. Sequencer transaction data roots are not checked against the ServiceManager DA bridge data roots onchain."
     sentiment: "bad"
-    sources: [
-      {
-        contract: "OptimismPortal"
-        references: []
-      }
-    ]
     value: "External"
   }
   exitWindow: {
-    definingMetric: -604800
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: -604800
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
-    sources: [
-      {
-        contract: "L2OutputOracle"
-        references: []
-      }
-    ]
     value: "Cannot withdraw"
   }
   sequencerFailure: {
-    definingMetric: 86400
     description: "In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1. There can be up to a 1d delay on this operation."
+    orderHint: 86400
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"

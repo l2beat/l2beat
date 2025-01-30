@@ -1,13 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../common'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 export const reddiozkvm: Layer2 = {
   isUpcoming: true,
   type: 'layer2',
   id: ProjectId('reddiozkvm'),
-  createdAt: new UnixTime(1704460390), // 2024-01-05T13:13:10Z
+  capability: 'universal',
+  addedAt: new UnixTime(1704460390), // 2024-01-05T13:13:10Z
   display: {
     name: 'Reddio zkVM',
     slug: 'reddiozkvm',
@@ -16,14 +17,12 @@ export const reddiozkvm: Layer2 = {
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
 
-    provider: 'SN Stack',
+    stack: 'SN Stack',
     links: {
       websites: ['https://reddio.com'],
-      apps: [],
       documentation: [
         'https://docs.reddio.com/guide/starknet/smart-contracts/overview.html',
       ],
-      explorers: [],
       repositories: ['https://github.com/reddio-com/starknet-appchain-utils'],
       socialMedia: [
         'https://twitter.com/reddio_com',

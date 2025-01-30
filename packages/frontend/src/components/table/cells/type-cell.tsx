@@ -19,11 +19,11 @@ import {
 
 export interface TypeCellProps {
   children: string | undefined
-  provider?: ScalingProjectStack
+  stack?: ScalingProjectStack
 }
 
-export function TypeCell({ provider, children }: TypeCellProps) {
-  const providerProps = provider ? providerMap[provider] : undefined
+export function TypeCell({ stack, children }: TypeCellProps) {
+  const providerProps = stack ? providerMap[stack] : undefined
 
   return (
     <span>
@@ -33,7 +33,7 @@ export function TypeCell({ provider, children }: TypeCellProps) {
           Icon={providerProps.Icon}
           text={
             providerProps.text ??
-            `This project is based on ${provider}'s code base.`
+            `This project is based on ${stack}'s code base.`
           }
         />
       ) : null}

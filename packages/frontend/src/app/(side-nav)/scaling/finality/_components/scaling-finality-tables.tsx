@@ -11,8 +11,8 @@ import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -34,7 +34,7 @@ export function ScalingFinalityTables(props: Props) {
   const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
-        (a, b) => b.tvlOrder - a.tvlOrder,
+        (a, b) => b.tvsOrder - a.tvsOrder,
       )
     : filteredEntries
 
@@ -66,6 +66,7 @@ export function ScalingFinalityTables(props: Props) {
     }
   }, [checked, entries.others, tab])
 
+  const showOthers = checked || entries.others.length > 0
   return (
     <>
       <ScalingFilters
@@ -80,7 +81,7 @@ export function ScalingFinalityTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -92,7 +93,7 @@ export function ScalingFinalityTables(props: Props) {
             <ScalingFinalityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />

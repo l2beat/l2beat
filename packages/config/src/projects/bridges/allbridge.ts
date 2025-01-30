@@ -1,15 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('allbridge')
 
 export const allbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('allbridge'),
-  createdAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
+  addedAt: new UnixTime(1675164709), // 2023-01-31T11:31:49Z
   display: {
     name: 'Allbridge',
     slug: 'allbridge',
@@ -125,8 +125,8 @@ export const allbridge: Bridge = {
       The crosschain messages in this case are passed via either Allbridge AMB or Wormhole.`,
       references: [
         {
-          text: 'Docs: Wormhole architecture',
-          href: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
+          title: 'Docs: Wormhole architecture',
+          url: 'https://docs.wormhole.com/wormhole/explore-wormhole/components',
         },
       ],
       risks: [],
@@ -137,16 +137,16 @@ export const allbridge: Bridge = {
         'Validation process takes place in external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
       references: [
         {
-          text: 'AllbridgeMessenger contract: function receiveMessage()',
-          href: 'https://etherscan.io/address/0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA#code#F1#L97',
+          title: 'AllbridgeMessenger contract: function receiveMessage()',
+          url: 'https://etherscan.io/address/0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA#code#F1#L97',
         },
         {
-          text: 'WormholeCore contract: function verifyVM()',
-          href: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
+          title: 'WormholeCore contract: function verifyVM()',
+          url: 'https://etherscan.io/address/0x3c3d457f1522d3540ab3325aa5f1864e34cba9d0#code#F9#L28',
         },
         {
-          text: 'CCTP Risk Management Network',
-          href: 'https://docs.chain.link/ccip/concepts#risk-management-network',
+          title: 'CCTP Risk Management Network',
+          url: 'https://docs.chain.link/ccip/concepts#risk-management-network',
         },
       ],
       risks: [

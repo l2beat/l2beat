@@ -1,10 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const superposition: Layer3 = underReviewL3({
   id: 'superposition',
-  createdAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
+  capability: 'universal',
+  addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Superposition',
@@ -13,7 +14,7 @@ export const superposition: Layer3 = underReviewL3({
       'Superposition is a Layer 3 powered by Arbitrum Orbit. It is a yield centric blockchain that pays users and developers to use it. Superposition offers novel incentive mechanisms such as Utility Mining and Super Assets and a native onchain order book built using Stylus that provides shared liquidity for the ecosystem.',
     purposes: ['Universal'],
     category: 'Optimium',
-    provider: 'Arbitrum',
+    stack: 'Arbitrum',
     links: {
       websites: ['https://superposition.so/'],
       apps: [
@@ -21,7 +22,6 @@ export const superposition: Layer3 = underReviewL3({
       ],
       documentation: ['https://docs.superposition.so/'],
       explorers: ['https://explorer.superposition.so/'],
-      repositories: [],
       socialMedia: ['https://x.com/Superpositionso'],
     },
   },

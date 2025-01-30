@@ -1,11 +1,4 @@
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import {
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
-  DaFraudDetectionRisk,
-  DaUpgradeabilityRisk,
-} from '../common'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import type {
   DaBridgeRisks,
   DaChallengeMechanism,
@@ -13,8 +6,15 @@ import type {
   DacDaLayer,
   DacTransactionDataType,
   IntegratedDacBridge,
-} from '../types'
-import type { DaLinks } from '../types'
+  ProjectLinks,
+} from '../../../types'
+import {
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
+  DaFraudDetectionRisk,
+  DaUpgradeabilityRisk,
+} from '../common'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 
 type TemplateSpecific = {
   /** DAC display settings */
@@ -27,7 +27,7 @@ type Optionals = {
   /** Overwrite some of the risks, check defaults below */
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
   /** Links for given DAC, defaults to Project's main links */
-  links?: Partial<DaLinks>
+  links?: ProjectLinks
   /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
   layer?: {
     technology?: DacDaLayer['technology']
@@ -40,7 +40,7 @@ type Optionals = {
     technology?: IntegratedDacBridge['technology']
   } & Pick<
     IntegratedDacBridge,
-    | 'createdAt'
+    | 'addedAt'
     | 'membersCount'
     | 'knownMembers'
     | 'requiredMembers'
@@ -59,7 +59,7 @@ export type DacTemplateVars = Optionals & TemplateSpecific
 export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
   bridge: Pick<
     IntegratedDacBridge,
-    'createdAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
+    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
   > & {
     membersCount?: number
     requiredMembers?: number
@@ -92,7 +92,12 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
     },
     risks: {
       committeeSecurity:
-        template.risks?.committeeSecurity ?? DaCommitteeSecurityRisk.Auto(),
+        template.risks?.committeeSecurity ??
+        DaCommitteeSecurityRisk.AutoDAC({
+          requiredMembers: template.bridge.requiredMembers,
+          membersCount: template.bridge.membersCount,
+          knownMembers: template.bridge.knownMembers,
+        }),
       // TODO: make it required and remove the default
       upgradeability:
         template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,

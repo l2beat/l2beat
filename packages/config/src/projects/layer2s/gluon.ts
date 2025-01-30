@@ -10,7 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const upgradeDelay = 0
 const discovery = new ProjectDiscovery('gluon')
@@ -18,7 +18,8 @@ const discovery = new ProjectDiscovery('gluon')
 export const gluon: Layer2 = {
   type: 'layer2',
   id: ProjectId('gluon'),
-  createdAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
+  capability: 'universal',
+  addedAt: new UnixTime(1623332638), // 2021-06-10T13:43:58Z
   isArchived: true,
   display: {
     name: 'Gluon',
@@ -34,7 +35,6 @@ export const gluon: Layer2 = {
       apps: ['https://live.leverj.io/'],
       documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Leverj_io',
         'https://t.me/leverj',
