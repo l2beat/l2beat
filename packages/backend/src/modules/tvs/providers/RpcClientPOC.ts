@@ -69,7 +69,7 @@ export class RpcClientPOC {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const id = randomUUID()
-    this.logger.debug(`Adding to multicall pool ${id}`)
+    this.logger.trace(`Adding to multicall pool ${id}`)
     assert(callParams.data)
     this.multicallPool.push({
       id,
@@ -82,7 +82,7 @@ export class RpcClientPOC {
 
     let response = this.multicallResponses.get(id)
     while (response === undefined) {
-      this.logger.debug(`Waiting ${id}`)
+      this.logger.trace(`Waiting ${id}`)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       response = this.multicallResponses.get(id)
       this.multicallResponses.delete(id)
@@ -95,11 +95,11 @@ export class RpcClientPOC {
     assert(this.params.multicallV3, `Missing MulticallV3 address`)
 
     if (this.multicallPool.length === 0) {
-      this.logger.debug('Nothing to flush...')
+      this.logger.trace('Nothing to flush...')
       return
     }
 
-    this.logger.debug(`Flushing multicall [${this.pool.length}]...`)
+    this.logger.trace(`Flushing multicall [${this.pool.length}]...`)
     const queries = [...this.multicallPool]
     this.multicallPool = []
 
@@ -107,7 +107,7 @@ export class RpcClientPOC {
 
     const promises = batches.map(async (batch, index) => {
       const blockNumber = batch[0].blockNumber
-      this.logger.debug(
+      this.logger.trace(
         `Fetching batch [${index}] of ${batch.length} calls for block ${blockNumber}`,
       )
       // TODO: add pools per block number
@@ -121,7 +121,7 @@ export class RpcClientPOC {
       const decoded = decodeBatch(response)
       this.logger.trace(`decoded [${index}] ${decoded}`)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${decoded[index].data}`)
+        this.logger.trace(`Setting ${query.id} - ${decoded[index].data}`)
         this.multicallResponses.set(query.id, decoded[index].data)
       }
     })
@@ -142,12 +142,12 @@ export class RpcClientPOC {
     blockNumber: number | 'latest',
   ): Promise<Bytes> {
     const id = randomUUID()
-    this.logger.debug(`Adding to pool ${id}`)
+    this.logger.trace(`Adding to pool ${id}`)
     this.pool.push({ id, params: callParams, blockNumber })
 
     let response = this.responses.get(id)
     while (response === undefined) {
-      this.logger.debug(`Waiting ${id}`)
+      this.logger.trace(`Waiting ${id}`)
       await new Promise((resolve) => setTimeout(resolve, 1000))
       response = this.responses.get(id)
       this.responses.delete(id)
@@ -158,21 +158,21 @@ export class RpcClientPOC {
 
   async flush() {
     if (this.pool.length === 0) {
-      this.logger.debug('Nothing to flush...')
+      this.logger.trace('Nothing to flush...')
       return
     }
 
-    this.logger.debug(`Flushing [${this.pool.length}]...`)
+    this.logger.trace(`Flushing [${this.pool.length}]...`)
     const queries = [...this.pool]
     this.pool = []
 
     const batches = toBatches(queries, MAX_BATCH_SIZE)
 
     const promises = batches.map(async (batch, index) => {
-      this.logger.debug(`Fetching batch [${index}] of ${batch.length} calls`)
+      this.logger.trace(`Fetching batch [${index}] of ${batch.length} calls`)
       const r = await this.rpcClient.batchCall(batch)
       for (const [index, query] of batch.entries()) {
-        this.logger.debug(`Setting ${query.id} - ${r[index]}`)
+        this.logger.trace(`Setting ${query.id} - ${r[index]}`)
         this.responses.set(query.id, r[index])
       }
     })
