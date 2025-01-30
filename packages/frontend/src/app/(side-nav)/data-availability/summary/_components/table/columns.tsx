@@ -144,7 +144,6 @@ export const customColumns = [
   membersColumn,
   fallbackColumn,
   challengeMechanismColumn,
-  slashableStakeColumn,
 ]
 
 const daLayerGroup = columnHelper.group({
