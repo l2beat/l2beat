@@ -136,7 +136,7 @@ async function getHeader(project: ScalingProject) {
         ? (layer2s.find((l) => l.id === project.hostChain)?.display.name ??
           project.hostChain)
         : undefined,
-    tvs: !env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())
+    tvs: !env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())
       ? {
           breakdown: tvsProjectStats?.tvsBreakdown,
           warning: project.display.tvlWarning,

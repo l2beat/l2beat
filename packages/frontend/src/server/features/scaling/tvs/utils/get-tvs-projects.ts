@@ -86,7 +86,7 @@ export function getTvsProjects(
     .filter((p) => filter(p))
     .map(toBackendProject)
     .filter(
-      (project) => !env.EXCLUDED_TVL_PROJECTS?.includes(project.projectId),
+      (project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.projectId),
     )
 
   const tvsAmounts = getTvlAmountsConfig(backendProjects)

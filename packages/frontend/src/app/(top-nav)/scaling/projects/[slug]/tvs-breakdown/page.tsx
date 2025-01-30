@@ -44,7 +44,7 @@ export default async function Page(props: Props) {
   const params = await props.params
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
-  if (!project || env.EXCLUDED_TVL_PROJECTS?.includes(project.id.toString())) {
+  if (!project || env.EXCLUDED_TVS_PROJECTS?.includes(project.id.toString())) {
     notFound()
   }
 
