@@ -1,5 +1,5 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { BlobSizeData } from '../providers/DaProvider'
+import type { BlobSizeData } from '@l2beat/shared'
 
 export function aggregatePerDay(
   project: string,

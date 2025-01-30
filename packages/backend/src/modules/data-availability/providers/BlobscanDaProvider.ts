@@ -1,11 +1,10 @@
+import type { BlobScanClient, BlobSizeData, DaProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { BlobScanClient } from '../clients/BlobscanClient'
-import type { BlobSizeData, BlobsProvider } from './DaProvider'
 
 // each blob is 128 KiB so 131,072 B
 const BLOB_SIZE_BYTES = 131072n
 
-export class BlobScanDaProvider implements BlobsProvider {
+export class BlobScanDaProvider implements DaProvider {
   constructor(private readonly client: BlobScanClient) {}
 
   async getBlobsByAddress(

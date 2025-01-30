@@ -1,6 +1,6 @@
+import type { BlobSizeData } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { BlobSizeData } from '../providers/DaProvider'
 import { aggregatePerDay } from './aggregatePerDay'
 
 describe('aggregatePerDay', () => {

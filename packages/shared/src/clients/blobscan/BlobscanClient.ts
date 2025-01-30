@@ -1,14 +1,11 @@
 import type { json } from '@l2beat/shared-pure'
-import {
-  ClientCore,
-  type ClientCoreDependencies,
-} from '@l2beat/shared/build/clients/ClientCore'
 import type { RequestInit } from 'node-fetch'
+import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   type BlobSchema,
   GetBlobsResponseSchema,
   GetTransactionsWithBlobsSchema,
-} from './blobscan-model'
+} from './types'
 
 // API does not limit it in anyway, so arbitrary limit
 const MAX_PER_PAGE = 500

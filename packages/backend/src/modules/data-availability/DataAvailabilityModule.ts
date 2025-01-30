@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
@@ -11,10 +10,8 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from '../activity/indexers/BlockTargetIndexer'
 import { DataAvailabilityDependencies } from './DataAvailabilityDependencies'
-import { BlobScanClient } from './clients/BlobscanClient'
 import { EthereumDaIndexer } from './indexers/EthereumDaIndexer'
 import type { DataAvailabilityIndexer } from './indexers/types'
-import { BlobScanDaProvider } from './providers/BlobscanDaProvider'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -74,29 +71,11 @@ function createDaLayerIndexers(
   const indexers: DataAvailabilityIndexer[] = config.layers.flatMap((layer) => {
     if (layer === 'ethereum') {
       const blockTimestampProvider =
-        providers.block.timestampProviders.get(layer)
+        providers.block.getBlockTimestampProvider(layer)
 
-      const blockProvider = providers.block.blockProviders.get(layer)
+      const blockProvider = providers.block.getBlockProvider(layer)
 
-      const httpClient = new HttpClient()
-
-      const blobscanClient = new BlobScanClient({
-        baseUrl: 'https://api.blobscan.com/',
-        http: httpClient,
-        logger,
-        sourceName: 'blobscan',
-        callsPerMinute: 300,
-        timeout: 30_000,
-        retryStrategy: 'UNRELIABLE',
-      })
-
-      const blobsProvider = new BlobScanDaProvider(blobscanClient)
-
-      if (!blockTimestampProvider || !blockProvider) {
-        throw new Error(
-          `Block timestamp or block provider for ${layer} not found`,
-        )
-      }
+      const daProvider = providers.getDaProviders().getDaProvider(layer)
 
       const blockTargetIndexer = new BlockTargetIndexer(
         logger,
@@ -106,16 +85,17 @@ function createDaLayerIndexers(
       )
 
       const indexer = new EthereumDaIndexer({
-        parents: [blockTargetIndexer],
-        indexerService,
         logger,
-        batchSize: 2500,
+        indexerService,
         selector: layer,
-        blobsProvider: blobsProvider,
-        blockProvider: blockProvider,
         db: dependencies.database,
-        minHeight: 19426618, // duncan
+        daProvider,
+        blockProvider,
+        parents: [blockTargetIndexer],
+        batchSize: config.ethereum.batchSize,
+        minHeight: config.ethereum.minHeight,
       })
+
       return [blockTargetIndexer, indexer]
     }
 

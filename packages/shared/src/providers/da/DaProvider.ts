@@ -5,7 +5,7 @@ export type BlobSizeData = {
   size: bigint
 }
 
-export interface BlobsProvider {
+export interface DaProvider {
   getBlobs(from: number, to: number): Promise<BlobSizeData[]>
   getBlobsByAddress(
     from: number,

@@ -1,17 +1,16 @@
 import type { Database } from '@l2beat/database'
-import type { BlockProvider } from '@l2beat/shared'
+import type { BlobSizeData, BlockProvider, DaProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import type { BlobSizeData, BlobsProvider } from '../providers/DaProvider'
 import { aggregatePerDay } from '../utils/aggregatePerDay'
 
 export interface EthereumDaIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  blobsProvider: BlobsProvider
+  daProvider: DaProvider
   blockProvider: BlockProvider
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
@@ -38,7 +37,7 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
 
     this.logger.info('Fetching blobs', { from, to: adjustedTo })
 
-    const blobs = await this.$.blobsProvider.getBlobs(from, adjustedTo)
+    const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
 
     // Since we bucket by hour and index by blocks
     // we need to get a reference timestamp since some update range may overlap with the previous hour

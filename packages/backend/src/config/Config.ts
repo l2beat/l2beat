@@ -194,6 +194,15 @@ export interface DABeatConfig {
 }
 
 export interface DataAvailabilityTrackingConfig {
+  readonly blobscan: {
+    readonly baseUrl: string
+    readonly callsPerMinute: number
+    readonly timeout: number
+  }
+  readonly ethereum: {
+    readonly minHeight: number
+    readonly batchSize: number
+  }
   readonly layers: DaLayerTrackingConfig[]
   readonly projects: {
     id: ProjectId
