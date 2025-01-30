@@ -30,7 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   ChainConfig,
-  DacDaLayer,
+  DaLayer,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -150,7 +150,7 @@ interface OrbitStackConfigCommon {
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }

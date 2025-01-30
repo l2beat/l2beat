@@ -1,28 +1,14 @@
 import type {
-  BlockchainDaLayer,
+  DaBridge,
   DaBridgeRisks,
+  DaLayer,
   DaLayerRisks,
-  DaServiceDaLayer,
-  DacDaLayer,
-  IntegratedDacBridge,
-  NoDaBridge,
-  NoDacBridge,
-  OnChainDaBridge,
-  StandaloneDacBridge,
   TableReadyValue,
 } from '@l2beat/config'
 
-type Layer = BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
-type Bridge =
-  | NoDaBridge
-  | OnChainDaBridge
-  | StandaloneDacBridge
-  | IntegratedDacBridge
-  | NoDacBridge
-
 export function getDaRisks(
-  daLayer: Layer,
-  daBridge: Bridge,
+  daLayer: DaLayer,
+  daBridge: DaBridge,
   totalValueSecured: number,
   economicSecurity?: number,
 ): DaBridgeRisks & DaLayerRisks {
@@ -33,7 +19,7 @@ export function getDaRisks(
 }
 
 export function getDaLayerRisks(
-  daLayer: Layer,
+  daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: number,
 ) {
@@ -47,7 +33,7 @@ export function getDaLayerRisks(
   }
 }
 
-export function getDaBridgeRisks(daBridge: Bridge) {
+export function getDaBridgeRisks(daBridge: DaBridge) {
   return {
     isNoBridge: daBridge.type === 'NoBridge' || daBridge.type === 'NoDacBridge',
     relayerFailure: daBridge.risks.relayerFailure,
@@ -57,10 +43,10 @@ export function getDaBridgeRisks(daBridge: Bridge) {
 }
 
 function getEconomicSecurity(
-  daLayer: Layer,
+  daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: number,
-) {
+): TableReadyValue {
   // TODO: This feels wrong!
   const shouldCalculate =
     daLayer.risks.economicSecurity.value === 'Staked assets'
@@ -75,7 +61,7 @@ function getEconomicSecurity(
   return {
     ...daLayer.risks.economicSecurity,
     sentiment,
-  } as TableReadyValue
+  }
 }
 
 function adjustSentiment(totalValueSecured: number, slashableFunds: number) {

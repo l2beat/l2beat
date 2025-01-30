@@ -11,7 +11,7 @@ import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ScalingProjectContract,
@@ -21,13 +21,8 @@ import type {
 type CommonProject = Layer2 | Layer3 | Bridge
 
 type Params =
-  | {
-      type: (Layer2 | Bridge | DaLayer)['type']
-    }
-  | {
-      type: Layer3['type']
-      hostChain: string
-    }
+  | { type: (Layer2 | Bridge | DaProject)['type'] }
+  | { type: Layer3['type']; hostChain: string }
 
 export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {

@@ -1,6 +1,6 @@
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ScalingProjectPermission,
@@ -28,7 +28,7 @@ type ProjectParams = {
   daSolution?: DaSolution
   isUnderReview: boolean
 } & (
-  | { type: (Layer2 | Bridge | DaLayer)['type'] }
+  | { type: (Layer2 | Bridge | DaProject)['type'] }
   | { type: Layer3['type']; hostChain: string }
 )
 

@@ -25,6 +25,8 @@ export const RolePermissionEntries = [
   'operateLinea',
   'fastconfirm',
   'validateZkStack',
+  'validateBridge',
+  'relay',
 ] as const
 
 export const Permission = z.enum([

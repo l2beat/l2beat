@@ -8,8 +8,8 @@ export function getUniqueProjectsInUse() {
   return [
     ...new Set(
       [...daLayers, ethereumDaLayer]
-        .map((daLayer) =>
-          daLayer.bridges.map((bridge) =>
+        .map((project) =>
+          project.daLayer.bridges.map((bridge) =>
             bridge.usedIn.map((project) => project.id),
           ),
         )

@@ -25,7 +25,7 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  id: string
+  id?: string
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
@@ -62,8 +62,9 @@ export function getMultiChainContractsSection(
               contract,
               contractsVerificationStatuses,
             )
-            const projectChangeReport =
-              projectsChangeReport?.projects[projectParams.id]
+            const projectChangeReport = projectParams.id
+              ? projectsChangeReport?.projects[projectParams.id]
+              : undefined
             return makeTechnologyContract(
               contract,
               projectParams,
@@ -183,8 +184,9 @@ function makeTechnologyContract(
       getAddress({ address: implementation }),
     ) ?? []
 
+  // TODO: Investigate, this is currently doing NOTHING!
   const usedInProjects = getUsedInProjects(
-    { ...projectParams, type: 'DaLayer' },
+    { id: '', ...projectParams, type: 'DaLayer' },
     mainAddresses,
     implementationAddresses,
   )

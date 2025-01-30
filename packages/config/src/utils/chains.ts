@@ -1,6 +1,6 @@
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ScalingProjectContract,
@@ -53,21 +53,21 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   return devIds
 }
 
-export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
-  return daLayers
+export function getChainNamesForDA(...projects: DaProject[]): string[] {
+  return projects
     .flatMap(getProjectDevIdsForDA)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
-  const bridges = daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
+function getProjectDevIdsForDA(p: DaProject): string[] {
+  const bridges = p.daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
   const addresses = bridges.flatMap((b) =>
-    Object.values(b.contracts.addresses).flat(),
+    Object.values(b.contracts?.addresses ?? {}).flat(),
   )
 
   const permissions = bridges.flatMap((b) => {
     const result = []
-    if (b.permissions !== 'UnderReview') {
+    if (b.permissions && b.permissions !== 'UnderReview') {
       const values = Object.values(b.permissions)
         .flatMap((p) => [...(p?.roles ?? []), ...(p?.actors ?? [])])
         .filter((p) => {

@@ -32,7 +32,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
-  DacDaLayer,
+  DaLayer,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -120,7 +120,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {

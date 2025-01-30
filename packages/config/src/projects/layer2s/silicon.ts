@@ -163,9 +163,10 @@ export const silicon: Layer2 = polygonCDKStack({
   dataAvailabilitySolution: PolygoncdkDAC({
     bridge: {
       addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignaturesDAC,
-      membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
+      dac: {
+        requiredMembers: requiredSignaturesDAC,
+        membersCount: membersCountDAC,
+      },
     },
   }),
 })

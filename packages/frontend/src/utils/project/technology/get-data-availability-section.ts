@@ -1,4 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
+import { assert } from '@l2beat/shared-pure'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -8,15 +9,17 @@ import { getDaRisks } from '~/server/features/data-availability/utils/get-da-ris
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  if (!project.dataAvailabilitySolution) {
+  const bridge = project.dataAvailabilitySolution?.bridges[0]
+  if (!project.dataAvailabilitySolution || !bridge) {
     return
   }
+  assert(project.dataAvailabilitySolution.bridges.length === 1)
 
   const daSubsections: ProjectDetailsSection[] = []
 
   const evaluatedRisks = getDaRisks(
     project.dataAvailabilitySolution,
-    project.dataAvailabilitySolution.bridge,
+    bridge,
     0, // TODO: getTVS
   )
 
@@ -45,17 +48,16 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         slug: project.display.slug,
       },
       content: project.dataAvailabilitySolution.technology.description.concat(
-        project.dataAvailabilitySolution.bridge.technology.description,
+        bridge.technology.description,
       ),
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: project.dataAvailabilitySolution.technology.risks
-        ?.concat(project.dataAvailabilitySolution.bridge.technology.risks ?? [])
+        ?.concat(bridge.technology.risks ?? [])
         .map(toTechnologyRisk),
       references:
         project.dataAvailabilitySolution.technology.references?.concat(
-          ...(project.dataAvailabilitySolution.bridge.technology.references ??
-            []),
+          ...(bridge.technology.references ?? []),
         ),
     },
   })
