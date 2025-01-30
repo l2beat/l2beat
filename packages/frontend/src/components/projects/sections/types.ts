@@ -9,7 +9,6 @@ import type { KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import type { MarkdownSectionProps } from './markdown-section'
 import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
-import type { MultichainPermissionsSectionProps } from './permissions/multichain-permissions-section'
 import type { PermissionsSectionProps } from './permissions/permissions-section'
 import type { ExtendedProjectSectionProps } from './project-section'
 import type { RiskAnalysisSectionProps } from './risk-analysis-section'
@@ -116,11 +115,6 @@ interface ProjectDetailsPermissionsSection {
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
-interface ProjectDetailsMultichainPermissionsSection {
-  type: 'MultichainPermissionsSection'
-  props: ProjectDetailsProps<MultichainPermissionsSectionProps>
-}
-
 interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
   props: ProjectDetailsProps<ContractsSectionProps>
@@ -168,7 +162,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
-  | ProjectDetailsMultichainPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsMultiChainContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
