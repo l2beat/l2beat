@@ -193,21 +193,26 @@ function initChains(env: Env, http: HttpClient, logger: Logger) {
       multicallV3: EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',
       ),
+      callsPerMinute: 12000,
     },
     {
       name: 'arbitrum',
       multicallV3: EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',
       ),
+      callsPerMinute: 12000,
     },
     {
       name: 'base',
       multicallV3: EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',
       ),
+      callsPerMinute: 12000,
     },
     {
       name: 'kinto',
+      callsPerMinute: 1000,
+      batchingEnabled: true,
     },
   ]
 
@@ -222,12 +227,13 @@ function initChains(env: Env, http: HttpClient, logger: Logger) {
       logger,
       retryStrategy: 'RELIABLE',
       sourceName: chain.name,
-      callsPerMinute: 12000,
+      callsPerMinute: chain.callsPerMinute,
     })
     rpcs.set(
       chain.name,
       new RpcClientPOC(rpc, chain.name, logger, {
         multicallV3: chain.multicallV3,
+        batchingEnabled: chain.batchingEnabled,
       }),
     )
     blockProviders.set(chain.name, new BlockProvider(chain.name, [rpc]))
