@@ -45,17 +45,13 @@ export function ScalingDaTables(props: Props) {
     () =>
       checked
         ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
+        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
             .filter((project) => project.statuses?.countdowns?.otherMigration)
             .map((project) => ({
               slug: project.slug,
               name: project.name,
             })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
+    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
   )
 
   const initialSort = {
@@ -82,11 +78,9 @@ export function ScalingDaTables(props: Props) {
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -100,18 +94,16 @@ export function ScalingDaTables(props: Props) {
             <ScalingDaTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingDaTable entries={entries.others} />
-              <OtherMigrationTabNotice
-                projectsToBeMigrated={projectToBeMigratedToOthers}
-                className="mt-2"
-              />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingDaTable entries={entries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

@@ -50,17 +50,13 @@ export function ScalingTvlTabs(props: Props) {
     () =>
       checked
         ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
+        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
             .filter((project) => project.statuses?.countdowns?.otherMigration)
             .map((project) => ({
               slug: project.slug,
               name: project.name,
             })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
+    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
   )
 
   const initialSort = {
@@ -88,11 +84,9 @@ export function ScalingTvlTabs(props: Props) {
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-5">

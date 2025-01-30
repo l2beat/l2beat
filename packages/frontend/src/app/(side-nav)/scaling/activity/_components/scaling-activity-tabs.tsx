@@ -1,6 +1,5 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ActivityChart } from '~/components/chart/activity/activity-chart'
@@ -49,27 +48,19 @@ export function ScalingActivityTabs(props: Props) {
     () =>
       checked
         ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
+        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
             .filter((project) => project.statuses?.countdowns?.otherMigration)
             .map((project) => ({
               slug: project.slug,
               name: project.name,
             })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
+    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
   )
 
   const initialSort = {
     id: 'data_pastDayCount',
     desc: true,
   }
-
-  const showOthers =
-    filteredEntries.others.length > 0 &&
-    !filteredEntries.others.every((e) => !e.data || e.id === ProjectId.ETHEREUM)
 
   return (
     <>
@@ -90,11 +81,9 @@ export function ScalingActivityTabs(props: Props) {
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-5">
@@ -121,25 +110,23 @@ export function ScalingActivityTabs(props: Props) {
             <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others" className="pt-5">
-              <ActivityChart
-                entries={entries.others}
-                milestones={props.milestones}
-                hideScalingFactor
-                type="Others"
-              />
-              <HorizontalSeparator className="mb-3 mt-5" />
-              <OthersInfo />
-              <ScalingActivityTable entries={entries.others} />
-              <OtherMigrationTabNotice
-                projectsToBeMigrated={projectToBeMigratedToOthers}
-                className="mt-2"
-              />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others" className="pt-5">
+            <ActivityChart
+              entries={entries.others}
+              milestones={props.milestones}
+              hideScalingFactor
+              type="Others"
+            />
+            <HorizontalSeparator className="mb-3 mt-5" />
+            <OthersInfo />
+            <ScalingActivityTable entries={entries.others} />
+            <OtherMigrationTabNotice
+              projectsToBeMigrated={projectToBeMigratedToOthers}
+              className="mt-2"
+            />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )
