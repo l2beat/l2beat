@@ -86,6 +86,7 @@ export interface PolygonCDKStackConfig {
   gasTokens?: string[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  architectureImage?: string
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -171,6 +172,11 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      architectureImage:
+        (templateVars.architectureImage ??
+        templateVars.daProvider !== undefined)
+          ? 'polygon-zkevm-validium'
+          : 'polygon-zkevm-rollup',
       stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
