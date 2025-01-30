@@ -1,12 +1,33 @@
-# How to run discovery?
+# What is discovery?
 
-- `pnpm discover [chain] [project]` run discovery for the project
+Discovery is a tool to explore contracts and their dependencies associated with a project.
+
+To view the current state of discovery, see [https://update-monitor-prod.l2beat.com/status/discovery](https://update-monitor-prod.l2beat.com/status/discovery)
+
+Discovery also includes a user interface. See below for instructions on how to run that locally.
+
+# To run discovery
+
+Running discovery will update the information for a given project.
+
+To run discovery, first change to the repository root directory, then to the `packages/backend` directory.
+
+You MUST install an environment file called `.env` in the `packages/backend` directory for discovery to work. See the *RPC configuration* section below for information about the environment file.
+
+- `pnpm discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
 - `pnpm discover --help` print out all the possible switches for discovery
 - `pnpm invert [chain] [project] --mermaid` builds a mermaid graph of the project
 
 A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
 If you misspell the chain name, a list of all possible chains is printed
 In the case you have discovery of the same project on multiple chains, you can discover all of them for a single project running: `pnpm discover all [project]`.
+
+# To run the discovery UI
+
+To run the discovery UI locally:
+- Navigate to the `l2beat/packages/l2b` directory
+- `pnpm l2bup` # Will build the l2b command
+- `l2b ui` # Will run the discovery UI on http://localhost:2021/ui
 
 # RPC configuration
 
@@ -36,6 +57,10 @@ ETHEREUM_EVENT_RPC_URL_FOR_DISCOVERY=<RPC_URL_THAT_SUPPORTS_UNLIMITED_RANGE> # (
 ARBITRUM_RPC_URL_FOR_DISCOVERY=<RPC_URL>
 ARBITRUM_ETHERSCAN_API_KEY=<API_KEY>
 ```
+
+Tips:
+- DO NOT commit your RPC keys to GitHub :)
+- Please raise a ticket if you require assistance.
 
 # Discovery documentation
 
