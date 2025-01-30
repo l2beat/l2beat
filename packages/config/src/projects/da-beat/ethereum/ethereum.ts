@@ -125,4 +125,5 @@ export const ethereum = {
       coingeckoId: 'ethereum',
     },
   },
+  daTracking: 'ethereum',
 } satisfies EthereumDaLayer

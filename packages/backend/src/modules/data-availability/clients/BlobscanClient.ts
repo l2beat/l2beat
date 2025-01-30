@@ -136,7 +136,6 @@ export class BlobScanClient extends ClientCore {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      timeout: this.$.timeout,
       ...options,
     })
   }

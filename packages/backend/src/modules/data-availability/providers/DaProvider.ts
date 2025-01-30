@@ -2,7 +2,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 
 export type BlobSizeData = {
   blockTimestamp: UnixTime
-  size: number
+  size: bigint
 }
 
 export interface BlobsProvider {

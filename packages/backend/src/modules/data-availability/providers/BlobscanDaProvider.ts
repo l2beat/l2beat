@@ -3,7 +3,7 @@ import type { BlobScanClient } from '../clients/BlobscanClient'
 import type { BlobSizeData, BlobsProvider } from './DaProvider'
 
 // each blob is 128 KiB so 131,072 B
-const BLOB_SIZE_BYTES = 131072
+const BLOB_SIZE_BYTES = 131072n
 
 export class BlobScanDaProvider implements BlobsProvider {
   constructor(private readonly client: BlobScanClient) {}

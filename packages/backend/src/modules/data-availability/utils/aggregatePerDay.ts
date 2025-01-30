@@ -11,7 +11,7 @@ export function aggregatePerDay(
     const timestamp = blob.blockTimestamp.toStartOf('day')
     const record = result.get(timestamp.toNumber())
 
-    const sizeToReduce = (record?.totalSize ?? 0) + blob.size
+    const sizeToReduce = (record?.totalSize ?? 0n) + BigInt(blob.size)
 
     result.set(timestamp.toNumber(), {
       timestamp,
