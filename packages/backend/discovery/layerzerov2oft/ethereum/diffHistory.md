@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe704c9cba535eba911b076fa63103f9ea517858e
+Generated with discovered.json: 0xb6b2b747c1b2a44ee28c7c472a0df02c219ec78f
 
-# Diff at Thu, 30 Jan 2025 10:48:21 GMT:
+# Diff at Thu, 30 Jan 2025 11:09:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21723792
@@ -24,26 +24,6 @@ DVN in ulnConfig for sfrxETH changed: Google Cloud replaced with Horizen.
 -        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
 +        "0x380275805876Ff19055EA900CDb2B46a94ecF20D"
     }
-```
-
-```diff
--   Status: DELETED
-    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
-    +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../.flat@21723792/GoogleCloudDVN.sol => /dev/null | 1667 --------------------
- .../.flat@21723792/VerifierFeeLib.sol => /dev/null |  948 -----------
- 2 files changed, 2615 deletions(-)
 ```
 
 ## Config/verification related changes

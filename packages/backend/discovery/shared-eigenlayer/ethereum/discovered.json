@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21723741,
+  "blockNumber": 21736968,
   "configHash": "0x915d88d9ad25ca6ebdb1555163946ca20f30eb04658ee6e11880edc500e614e3",
   "contracts": [
     {
@@ -61,7 +61,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1737594011,
+        "latestPress": 1738198811,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -189,7 +189,8 @@
           "0x42F15F9E4dF4994317453477e80e24797CC1A929",
           "0x35DebC00531Ac8771be5dbEf015feFD084efA958",
           "0x6201bc0A699e3b10f324204e6F8EcdD0983De227",
-          "0x6f943318b05AD7c6EE596A220510A6D64B518dd8"
+          "0x6f943318b05AD7c6EE596A220510A6D64B518dd8",
+          "0x0328635BA5FF28476118595234b5b7236b906c0B"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "DOMAIN_TYPEHASH": "0x8cad95687ba82c2ce50e74f7b754645e5117c3a5bec8151c0726d5857980a866",
@@ -875,7 +876,7 @@
         "name": "Backing Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1704544760622222953846153871",
+        "totalSupply": "1705832181136288076923076949",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1089,7 +1090,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32882,
+        "numPods": 32901,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -1618,7 +1619,7 @@
         "name": "Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1704544760622222953846153871",
+        "totalSupply": "1705832181136288076923076949",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -2690,7 +2691,7 @@
     "eigenlayer/DelegationManager": "0x0b175e41427b8f36011bf976432888f9a1298e1857cdd39380ec3b0de868ae5f",
     "eigenlayer/EIGEN token": "0xa47d59e05f42fc2ca6509d9ae33c4f00491666cdf2c18f6fd94097dd0872dec7",
     "eigenlayer/EigenPod": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
-    "eigenlayer/EigenPodManager": "0xfb9d9a1a90563e724c2c9ff62f77a84028b86c44c2a5d6b80f510cb9bf56c069",
+    "eigenlayer/EigenPodManager": "0x2eaa14ace892bf14414b3835528e312e63863672d98a081e2addada43b2c6d4e",
     "eigenlayer/PauserRegistry": "0x4072012c2d9a6dcc9bcaac6075469c96090c7279b8ec8a2ae07c519449010ede",
     "eigenlayer/RewardAllStakersActionGenerator": "0x94d0582365138af9de269527f03b2992790929bcab7b7d1ba5ee668a781975f9",
     "eigenlayer/Strategy": "0x71321a46497c0ac4a17b9917628308552c987d4e032def7a0e7c7412f8350a23",
