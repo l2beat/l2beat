@@ -53,10 +53,10 @@ const AVAILABLE_COLUMNS_RAW = [
     header: 'TVL',
     id: 'ig',
     align: 'right',
-    fn: (project: DiscoLupeProject) => formatNumber(project.tvl),
+    fn: (project: DiscoLupeProject) => formatNumber(project.tvs),
     displayFn: DivContainer,
     sortComparator: (p1: DiscoLupeProject, p2: DiscoLupeProject) => {
-      return p1.tvl - p2.tvl
+      return p1.tvs - p2.tvs
     },
   },
   {
