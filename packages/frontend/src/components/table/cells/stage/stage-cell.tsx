@@ -9,7 +9,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useIsMobile } from '~/hooks/use-breakpoint'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
@@ -20,23 +19,14 @@ export interface StageCellProps {
 }
 
 export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
-  const isMobile = useIsMobile()
-
-  if (stageConfig.stage === 'NotApplicable' || isMobile) {
-    return (
-      <StageBadge
-        stage={stageConfig.stage}
-        isAppchain={isAppchain}
-        className="pb-[5px] pt-2"
-      />
-    )
-  }
   const hasNotice =
     stageConfig.stage !== 'UnderReview' &&
+    stageConfig.stage !== 'NotApplicable' &&
     !!stageConfig.additionalConsiderations
+
   return (
     <Tooltip>
-      <TooltipTrigger className="flex gap-1">
+      <TooltipTrigger className="flex gap-1" disabledOnMobile>
         <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
         {hasNotice && (
           <CircleQuestionMarkIcon
