@@ -17,7 +17,7 @@ export function LoadingState() {
   const messages = [
     'Initializing L2 protocols...',
     'Syncing blockchain data...',
-    'Calculating TVL...',
+    'Calculating TVS...',
     'Analyzing gas fees...',
     'Optimizing rollups...',
     'Verifying zero-knowledge proofs...',
@@ -34,7 +34,12 @@ export function LoadingState() {
         setProgress((prevProgress) => prevProgress + 1)
       }
       if (progress % 20 === 0) {
-        setMessageIndex((prevIndex) => (prevIndex + 1) % messages.length)
+        setMessageIndex((prevIndex) => {
+          const nextIndex = Math.floor(Math.random() * messages.length)
+          return nextIndex === prevIndex
+            ? (nextIndex + 1) % messages.length
+            : nextIndex
+        })
       }
     }, 150)
 
