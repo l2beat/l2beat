@@ -378,7 +378,7 @@ export const zkfair: Layer2 = {
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: PolygoncdkDAC({
+  customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,

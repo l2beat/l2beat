@@ -57,5 +57,5 @@ export const alienx: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

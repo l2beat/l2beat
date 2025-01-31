@@ -69,7 +69,7 @@ export const gmnetwork: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1717656409),
   rpcUrl: 'https://rpc.gmnetwork.ai/',
   discoveryDrivenData: true,
-  dataAvailabilitySolution: {
+  customDa: {
     type: 'DA Challenges',
     name: 'GM Network DA',
     description:

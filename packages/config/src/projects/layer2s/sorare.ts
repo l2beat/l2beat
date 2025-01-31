@@ -187,5 +187,5 @@ export const sorare: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({ discovery }),
+  customDa: StarkexDAC({ discovery }),
 }

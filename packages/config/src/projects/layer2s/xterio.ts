@@ -67,7 +67,7 @@ export const xterio: Layer2 = opStackL2({
   discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1716537433),
   rpcUrl: 'https://xterio-eth.alt.technology/',
-  dataAvailabilitySolution: {
+  customDa: {
     type: 'DA Challenges',
     name: 'XterioDA',
     description:

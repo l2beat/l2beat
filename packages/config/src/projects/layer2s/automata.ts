@@ -68,7 +68,7 @@ export const automata: Layer2 = opStackL2({
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   discoveryDrivenData: true,
-  dataAvailabilitySolution: {
+  customDa: {
     type: 'DA Challenges',
     name: 'Automata DA',
     description:

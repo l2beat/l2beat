@@ -104,7 +104,7 @@ export const xai: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
+  customDa: AnytrustDAC({
     dac: {
       knownMembers: [
         {

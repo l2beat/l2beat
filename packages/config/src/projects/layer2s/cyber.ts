@@ -91,7 +91,7 @@ export const cyber: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1713428569),
   isNodeAvailable: 'UnderReview',
   rpcUrl: 'https://cyber.alt.technology/',
-  dataAvailabilitySolution: {
+  customDa: {
     type: 'DA Challenges',
     name: 'CyberDA',
     description:

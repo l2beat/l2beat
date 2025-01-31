@@ -233,5 +233,5 @@ export const rhinofi: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({ discovery }),
+  customDa: StarkexDAC({ discovery }),
 }

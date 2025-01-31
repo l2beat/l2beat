@@ -42,5 +42,5 @@ export const hychain: Layer2 = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.hychain.com/http',
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

@@ -145,10 +145,10 @@ function getDacEntries(
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry[] {
   const projects = [...layer2s, ...layer3s]
-    .filter((project) => project.dataAvailabilitySolution)
+    .filter((project) => project.customDa)
     .map((project) => ({
       parentProject: project,
-      daLayer: project.dataAvailabilitySolution,
+      daLayer: project.customDa,
     }))
 
   return projects

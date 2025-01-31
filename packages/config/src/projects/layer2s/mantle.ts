@@ -192,5 +192,5 @@ export const mantle: Layer2 = opStackL2({
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
-  dataAvailabilitySolution: mantleDa,
+  customDa: mantleDa,
 })

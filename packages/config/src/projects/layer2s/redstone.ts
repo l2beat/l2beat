@@ -64,7 +64,7 @@ export const redstone: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',
   rpcUrl: 'https://rpc.redstonechain.com',
-  dataAvailabilitySolution: {
+  customDa: {
     type: 'DA Challenges',
     name: 'RedstoneDA',
     description:

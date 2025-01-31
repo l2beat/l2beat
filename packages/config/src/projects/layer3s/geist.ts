@@ -59,5 +59,5 @@ export const geist: Layer3 = orbitStackL3({
   gasTokens: ['GHST'],
   discovery,
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

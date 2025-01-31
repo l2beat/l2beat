@@ -86,5 +86,5 @@ export const sanko: Layer3 = orbitStackL3({
     },
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

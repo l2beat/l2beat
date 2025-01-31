@@ -94,5 +94,5 @@ export const l3x: Layer3 = orbitStackL3({
       chain: 'blast',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

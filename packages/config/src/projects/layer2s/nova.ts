@@ -388,7 +388,7 @@ export const nova: Layer2 = orbitStackL2({
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
-  dataAvailabilitySolution: DAC({
+  customDa: DAC({
     technology: {
       description: `
 ## Architecture

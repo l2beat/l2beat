@@ -160,7 +160,7 @@ export const silicon: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
+  customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,

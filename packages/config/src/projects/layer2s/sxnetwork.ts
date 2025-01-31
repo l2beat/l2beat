@@ -68,5 +68,5 @@ export const sxnetwork: Layer2 = orbitStackL2({
         "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

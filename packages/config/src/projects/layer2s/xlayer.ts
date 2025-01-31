@@ -173,7 +173,7 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
-  dataAvailabilitySolution: PolygoncdkDAC({
+  customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,

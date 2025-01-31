@@ -59,5 +59,5 @@ export const xchain: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

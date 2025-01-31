@@ -56,5 +56,5 @@ export const playblock: Layer3 = orbitStackL3({
         'This contract can upgrade the implementations of the rollup proxies.',
     }),
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

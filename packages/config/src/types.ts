@@ -92,8 +92,8 @@ export interface ScalingProject {
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
-  /** Data availability solution */
-  dataAvailabilitySolution?: CustomDa
+  /** Details about the custom availability solution */
+  customDa?: CustomDa
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

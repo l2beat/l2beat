@@ -209,7 +209,7 @@ export const immutablex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
+  customDa: StarkexDAC({
     dac: {
       knownMembers: [
         {

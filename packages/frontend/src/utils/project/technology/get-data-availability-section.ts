@@ -7,17 +7,17 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  if (!project.dataAvailabilitySolution) {
+  if (!project.customDa) {
     return
   }
 
   const daSubsections: ProjectDetailsSection[] = []
 
   const layerGrissiniValues = mapLayerRisksToRosetteValues(
-    project.dataAvailabilitySolution.risks,
+    project.customDa.risks,
   )
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
-    project.dataAvailabilitySolution.risks,
+    project.customDa.risks,
   )
 
   daSubsections.push({
@@ -41,13 +41,11 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         type: 'da-layer-technology',
         slug: project.display.slug,
       },
-      content: project.dataAvailabilitySolution.technology.description,
+      content: project.customDa.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: (project.dataAvailabilitySolution.technology.risks ?? []).map(
-        toTechnologyRisk,
-      ),
-      references: project.dataAvailabilitySolution.technology.references,
+      risks: (project.customDa.technology.risks ?? []).map(toTechnologyRisk),
+      references: project.customDa.technology.references,
     },
   })
 

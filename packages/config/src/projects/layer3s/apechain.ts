@@ -46,5 +46,5 @@ export const apechain: Layer3 = orbitStackL3({
   gasTokens: ['APE'],
   overrideEscrows: [],
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

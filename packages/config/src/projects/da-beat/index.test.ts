@@ -41,7 +41,7 @@ describe('DA-BEAT', () => {
         )
         .filter(
           // If project has custom DA described in the project, it will be listed on the DA-BEAT automatically
-          (project) => !project.dataAvailabilitySolution,
+          (project) => !project.customDa,
         )
 
       const daBeatProjectIds = daLayers.flatMap((project) =>

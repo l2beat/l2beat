@@ -64,5 +64,5 @@ export const popapex: Layer3 = orbitStackL3({
       type: 'incident',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

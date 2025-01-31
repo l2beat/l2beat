@@ -89,5 +89,5 @@ export const degen: Layer3 = orbitStackL3({
       type: 'incident',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

@@ -54,5 +54,5 @@ export const popboss: Layer3 = orbitStackL3({
     adjustCount: { type: 'SubtractOne' },
   },
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

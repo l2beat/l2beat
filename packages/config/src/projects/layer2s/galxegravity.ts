@@ -69,5 +69,5 @@ export const galxegravity: Layer2 = orbitStackL2({
     ],
   },
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery }),
 })

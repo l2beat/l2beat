@@ -300,7 +300,7 @@ export const apex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
+  customDa: StarkexDAC({
     dac: {
       requiredMembers: dacConfig.requiredSignatures,
       membersCount: dacConfig.membersCount,

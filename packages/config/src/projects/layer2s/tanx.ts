@@ -186,5 +186,5 @@ export const tanx: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({ discovery }),
+  customDa: StarkexDAC({ discovery }),
 }
