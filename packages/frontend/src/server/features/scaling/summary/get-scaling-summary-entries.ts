@@ -4,6 +4,7 @@ import type {
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectCategory,
+  ScalingProjectPurpose,
   ScalingProjectStack,
   StageConfig,
   WarningWithSentiment,
@@ -57,6 +58,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   capability: ScalingProjectCapability
   stage: StageConfig
   category: ScalingProjectCategory
+  purposes: ScalingProjectPurpose[]
   stack: ScalingProjectStack | undefined
   dataAvailability: ProjectDataAvailability | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
@@ -124,6 +126,7 @@ function getScalingSummaryEntry(
     category: project.scalingInfo.type,
     stack: project.scalingInfo.stack,
     dataAvailability: project.scalingDa,
+    purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     tvs: {
       breakdown: latestTvs?.breakdown,

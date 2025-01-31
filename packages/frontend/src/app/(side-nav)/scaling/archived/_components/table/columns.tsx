@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
-import { TypeCell } from '~/components/table/cells/type-cell'
+import { TypeExplanationTooltip } from '~/components/table/cells/type-info'
+import { TypeInfo } from '~/components/table/cells/type-info'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
@@ -34,7 +34,7 @@ export const scalingArchivedColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,

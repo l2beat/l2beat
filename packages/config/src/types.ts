@@ -369,6 +369,7 @@ export type ScalingProjectPurpose =
   | 'Identity'
   | 'Information'
   | 'Interoperability'
+  | 'KYC-ed DeFi'
   | 'Launchpad'
   | 'Lending'
   | 'Music'
@@ -1148,7 +1149,7 @@ export interface ProjectScalingInfo {
   raas: string | undefined
   daLayer: string
   stage: ScalingProjectStage
-  purposes: string[]
+  purposes: ScalingProjectPurpose[]
 }
 
 export type ScalingProjectStage =
