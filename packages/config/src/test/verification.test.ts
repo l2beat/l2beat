@@ -94,9 +94,9 @@ function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
   }
 
   const result = [discovery]
-  const config = configReader.readConfig(project, chain)
-  if (config.sharedModules.length > 0) {
-    for (const sharedModule of config.sharedModules) {
+  const sharedModules = discovery.sharedModules ?? []
+  if (sharedModules.length > 0) {
+    for (const sharedModule of sharedModules) {
       result.push(configReader.readDiscovery(sharedModule, chain))
     }
   }
@@ -234,22 +234,19 @@ function getDaBridgePermissionsForChain(
     return []
   }
 
-  return Object.values(bridge.permissions)
-    .flatMap((perChain) => {
-      const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
-      return all.flatMap((p) =>
-        p.accounts.flatMap((a) => {
-          if (!p.chain) {
-            return []
-          }
-          return {
-            chain: p.chain.toString(),
-            address: a.address,
-          }
-        }),
-      )
-    })
-    .filter((p) => p.chain === chain)
+  const perChain = bridge.permissions?.[chain] ?? {}
+  const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
+  return all.flatMap((p) =>
+    p.accounts.flatMap((a) => {
+      if (!p.chain) {
+        return []
+      }
+      return {
+        chain: p.chain.toString(),
+        address: a.address,
+      }
+    }),
+  )
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
@@ -258,10 +255,9 @@ function getPermissionedAddressesForChain(project: Project, chain: string) {
   }
 
   const all = []
-  for (const perChain of Object.values(project.permissions ?? {})) {
-    all.push(...(perChain.roles ?? []))
-    all.push(...(perChain.actors ?? []))
-  }
+  const perChain = project.permissions?.[chain] ?? {}
+  all.push(...(perChain.roles ?? []))
+  all.push(...(perChain.actors ?? []))
 
   return all
     .filter((p) => isContractOnChain(p.chain, chain, project))

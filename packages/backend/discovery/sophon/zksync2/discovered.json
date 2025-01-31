@@ -1,0 +1,11 @@
+{
+  "name": "sophon",
+  "chain": "zksync2",
+  "blockNumber": 54950318,
+  "configHash": "0x77ee2d5ce61ce6c2a6a7ffed1433af31a9a82f6a51ccc514aa272bec8cf1500e",
+  "sharedModules": ["shared-zk-stack"],
+  "contracts": [],
+  "eoas": [],
+  "abis": {},
+  "usedTemplates": {}
+}

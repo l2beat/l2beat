@@ -1,0 +1,11 @@
+{
+  "name": "abstract",
+  "chain": "zksync2",
+  "blockNumber": 54950674,
+  "configHash": "0x65c5b8a33923dfeb008aabb8c8900c48630abb9f0a017ff93481351d8e1abe8d",
+  "sharedModules": ["shared-zk-stack"],
+  "contracts": [],
+  "eoas": [],
+  "abis": {},
+  "usedTemplates": {}
+}
