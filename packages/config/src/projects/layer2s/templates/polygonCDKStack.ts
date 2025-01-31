@@ -83,6 +83,7 @@ export interface PolygonCDKStackConfig {
   associatedTokens?: string[]
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -169,7 +170,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
       architectureImage:
