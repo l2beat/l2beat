@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
 import type {
   Bridge,
   DaProject,
@@ -20,9 +19,6 @@ export function getContractsVerificationStatuses(
   const result: Record<string, Record<string, boolean>> = {}
   for (const chain in contracts) {
     for (const c of contracts[chain]) {
-      const computedChain = c.chain ?? 'ethereum'
-      // TODO(radomski): Remove, only for testing
-      assert(computedChain === chain)
       result[chain] ??= {}
       result[chain][c.address.toString()] = c.isVerified
     }

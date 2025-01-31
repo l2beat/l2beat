@@ -54,7 +54,7 @@ export function mergeContracts(
 
   for (const [key, value] of Object.entries(pushed)) {
     result[key] ??= []
-    result[key] = (result[key] ?? []).concat(value)
+    result[key] = unionBy(value, result[key] ?? [], 'address')
   }
 
   return result
