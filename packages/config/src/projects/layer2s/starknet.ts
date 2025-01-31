@@ -245,6 +245,7 @@ export const starknet: Layer2 = {
   id: ProjectId('starknet'),
   capability: 'universal',
   addedAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
+  isUnderReview: true,
   display: {
     name: 'Starknet',
     slug: 'starknet',
