@@ -8,7 +8,7 @@ export const DiscoLupeProject = z.object({
     stack: z.string().optional(),
     category: z.string(),
   }),
-  tvl: z.number(),
+  tvs: z.number(),
   type: z.string(),
   arePermissionsDiscoveryDriven: z.boolean(),
   areContractsDiscoveryDriven: z.boolean(),
