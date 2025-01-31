@@ -1,8 +1,5 @@
 import type { Layer2 } from '@l2beat/config'
-import {
-  type ContractsVerificationStatuses,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -10,7 +7,6 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
-import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -48,11 +44,7 @@ export async function getL2ProjectDetails({
           id: project.id,
           type: project.type,
           isUnderReview: !!project.isUnderReview,
-          permissions: mergePermissions(
-            project.permissions,
-            project.nativePermissions,
-            ProjectId.ETHEREUM,
-          ),
+          permissions: project.permissions,
           daSolution,
         },
         contractsVerificationStatuses,

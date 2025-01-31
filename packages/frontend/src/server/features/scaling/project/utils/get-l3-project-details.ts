@@ -8,7 +8,6 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
-import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -55,11 +54,7 @@ export async function getL3ProjectDetails({
           type: project.type,
           hostChain: project.hostChain,
           isUnderReview: !!project.isUnderReview,
-          permissions: mergePermissions(
-            project.permissions,
-            project.nativePermissions,
-            project.hostChain,
-          ),
+          permissions: project.permissions,
           daSolution,
         },
         contractsVerificationStatuses,
