@@ -1,9 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import { ProjectCostsChart } from '~/components/chart/costs/project-costs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { TrackedTransactionsByType } from '~/utils/project/costs/get-tracked-transactions'
+
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
-import type { TrackedTransactionsByType } from '~/utils/project/costs/get-tracked-transactions'
 import { TrackedTransactions } from './tracked-transactions'
 
 export interface CostsSectionProps extends ProjectSectionProps {
