@@ -9,6 +9,7 @@ import {
 import { Switch } from '~/components/core/switch'
 import { EtherscanLink } from '~/components/etherscan-link'
 import { ChevronIcon } from '~/icons/chevron'
+import { formatTimestamp } from '~/utils/dates'
 import type {
   TrackedTransaction,
   TrackedTransactionsByType,
@@ -67,6 +68,7 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
             <TransactionGroup
               title="Batch submissions"
               transactions={transactions.batchSubmissions}
+              showHistoricalTransactions={showHistoricalTransactions}
             />
           )}
         {transactions.proofSubmissions &&
@@ -74,12 +76,14 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
             <TransactionGroup
               title="Proof submissions"
               transactions={transactions.proofSubmissions}
+              showHistoricalTransactions={showHistoricalTransactions}
             />
           )}
         {transactions.stateUpdates && transactions.stateUpdates.length > 0 && (
           <TransactionGroup
             title="State updates"
             transactions={transactions.stateUpdates}
+            showHistoricalTransactions={showHistoricalTransactions}
           />
         )}
       </CollapsibleContent>
@@ -90,12 +94,21 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
 function TransactionGroup({
   title,
   transactions,
-}: { title: string; transactions: TrackedTransaction[] }) {
+  showHistoricalTransactions,
+}: {
+  title: string
+  transactions: TrackedTransaction[]
+  showHistoricalTransactions: boolean
+}) {
   return (
     <div className="mb-6">
       <h2 className="mb-3 text-base font-medium text-secondary">{title}</h2>
       {transactions.map((transaction, index) => (
-        <TransactionDetails key={index} transaction={transaction} />
+        <TransactionDetails
+          key={index}
+          transaction={transaction}
+          showHistoricalTransactions={showHistoricalTransactions}
+        />
       ))}
     </div>
   )
@@ -103,20 +116,43 @@ function TransactionGroup({
 
 function TransactionDetails({
   transaction,
-}: { transaction: TrackedTransaction }) {
+  showHistoricalTransactions,
+}: {
+  transaction: TrackedTransaction
+  showHistoricalTransactions: boolean
+}) {
   return (
     <div className="mb-4">
-      <div className="mb-2 flex items-center gap-2 ">
-        <p className="text-xs font-medium capitalize">{transaction.formula}</p>
-        {transaction.isHistorical ? (
-          <Badge type="gray" size="small">
-            Historical
-          </Badge>
-        ) : (
-          <Badge type="pink" size="small">
-            Currently used
-          </Badge>
-        )}
+      <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-medium capitalize">
+            {transaction.formula}
+          </p>
+          {showHistoricalTransactions ? (
+            transaction.isHistorical ? (
+              <Badge type="gray" size="small">
+                Historical
+              </Badge>
+            ) : (
+              <Badge type="pink" size="small">
+                Currently used
+              </Badge>
+            )
+          ) : null}
+        </div>
+        <p className="text-xs text-secondary">
+          {formatTimestamp(transaction.sinceTimestamp, {
+            mode: 'datetime',
+            longMonthName: false,
+          })}{' '}
+          -{' '}
+          {transaction.untilTimestamp
+            ? formatTimestamp(transaction.untilTimestamp, {
+                mode: 'datetime',
+                longMonthName: false,
+              })
+            : 'Now'}
+        </p>
       </div>
 
       <div className="border-l-2 border-divider pl-3">
