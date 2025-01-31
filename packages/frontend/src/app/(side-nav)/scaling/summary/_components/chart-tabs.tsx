@@ -17,8 +17,8 @@ interface Props {
 export function ChartTabs({ unit, timeRange, className }: Props) {
   return (
     <PrimaryCard className={cn(className, 'pb-1')}>
-      <Tabs.Root defaultValue="tvsOrder">
-        <Tabs.Content value="tvsOrder">
+      <Tabs.Root defaultValue="tvs">
+        <Tabs.Content value="tvs">
           <ScalingSummaryTvsChart unit={unit} timeRange={timeRange} />
         </Tabs.Content>
         <Tabs.Content value="activity">
