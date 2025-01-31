@@ -486,7 +486,7 @@ export class ProjectDiscovery {
       return eoas[0]
     }
 
-    const eoa = this.getEntryByAddress(identifier)
+    const eoa = this.getEOAByAddress(identifier)
     assert(eoa, `No eoa of ${identifier} address found (${this.projectName})`)
 
     return eoa
@@ -726,6 +726,15 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     return contracts.find(
+      (contract) => contract.address === EthereumAddress(address.toString()),
+    )
+  }
+
+  getEOAByAddress(
+    address: string | EthereumAddress,
+  ): EoaParameters | undefined {
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.find(
       (contract) => contract.address === EthereumAddress(address.toString()),
     )
   }
