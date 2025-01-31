@@ -26,6 +26,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  CustomDa,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -44,7 +45,6 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
-import type { DaLayer } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
@@ -61,7 +61,7 @@ export interface PolygonCDKStackConfig {
   addedAt: UnixTime
   capability?: ScalingProjectCapability
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DaLayer
+  dataAvailabilitySolution?: CustomDa
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string

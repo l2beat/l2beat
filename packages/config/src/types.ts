@@ -93,7 +93,7 @@ export interface ScalingProject {
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
   /** Data availability solution */
-  dataAvailabilitySolution?: DaLayer
+  dataAvailabilitySolution?: CustomDa
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -793,6 +793,18 @@ export type EthereumDaBridge = Omit<DaBridge, 'risks'> & {
   risks: TableReadyValue
   /** Replaces risk grissini */
   callout: string
+}
+
+export interface CustomDa {
+  /** Will show the project name if not provided. */
+  name?: string
+  description?: string
+  type: string
+  risks: DaLayerRisks & DaBridgeRisks
+  technology: DaTechnology
+  dac?: DacInfo
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
 }
 
 export interface DaProject {

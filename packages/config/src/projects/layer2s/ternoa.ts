@@ -173,12 +173,9 @@ export const ternoa: Layer2 = polygonCDKStack({
   ],
   knowledgeNuggets: [],
   dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1738245814), // 2025-01-30T14:03:34+00:00
-      dac: {
-        requiredMembers: requiredSignaturesDAC,
-        membersCount: membersCountDAC,
-      },
+    dac: {
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
     },
   }),
 })

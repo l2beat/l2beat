@@ -199,10 +199,5 @@ export const myria: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    },
-    discovery,
-  }),
+  dataAvailabilitySolution: StarkexDAC({ discovery }),
 }

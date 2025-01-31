@@ -107,10 +107,5 @@ export const corn: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1737096804),
-    },
-    discovery,
-  }),
+  dataAvailabilitySolution: AnytrustDAC({ discovery }),
 })
