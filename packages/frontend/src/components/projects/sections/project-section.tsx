@@ -33,12 +33,12 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
         id={props.id}
         sectionOrder={props.sectionOrder}
         nested={props.nested}
-        className="mb-6"
+        className="mb-4"
       />
       {props.isUnderReview ? (
         props.includeChildrenIfUnderReview ? (
           <>
-            <UnderReviewCallout className="mb-6" />
+            <UnderReviewCallout className="mb-4" />
             {props.children}
           </>
         ) : (

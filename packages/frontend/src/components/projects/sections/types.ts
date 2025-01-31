@@ -1,6 +1,7 @@
 import type { ChartSectionProps } from './chart-section'
 import type { ContractsSectionProps } from './contracts/contracts-section'
 import type { MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
+import type { CostsSectionProps } from './costs/costs-section'
 import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
 import type { DetailedDescriptionSectionProps } from './detailed-description-section'
 import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
@@ -54,6 +55,11 @@ type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 interface ProjectDetailsChartSection {
   type: 'ChartSection'
   props: ProjectDetailsProps<ChartSectionProps>
+}
+
+interface ProjectDetailsCostsSection {
+  type: 'CostsSection'
+  props: ProjectDetailsProps<CostsSectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -151,6 +157,7 @@ export type ProjectDetailsSection = {
   sideNavTitle?: string
 } & (
   | ProjectDetailsChartSection
+  | ProjectDetailsCostsSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesAndIncidentsSection
   | ProjectDetailsRiskSummarySection

@@ -10,6 +10,7 @@ import {
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getTrackedTransactions } from '~/utils/project/costs/get-tracked-transactions'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-scaling-risk-summary'
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
@@ -74,6 +75,7 @@ export async function getL2ProjectDetails({
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
   const sequencingSection = getSequencingSection(project)
+  const trackedTransactions = getTrackedTransactions(project)
 
   await Promise.all([
     api.tvs.chart.prefetch({
@@ -145,13 +147,13 @@ export async function getL2ProjectDetails({
 
   if (!project.isUpcoming && costsChartData.length > 0) {
     items.push({
-      type: 'ChartSection',
+      type: 'CostsSection',
       props: {
         id: 'onchain-costs',
         title: 'Onchain costs',
         projectId: project.id,
         milestones: sortedMilestones,
-        projectName: project.display.name,
+        trackedTransactions,
       },
     })
   }
