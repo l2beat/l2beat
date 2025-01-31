@@ -116,7 +116,6 @@ export const ternoa: Layer2 = polygonCDKStack({
         ),
         tokensToAssignFromL1: ['CAPS'],
       },
-      excludedTokens: ['DVF'],
     }),
   ],
   nonTemplateTechnology: {

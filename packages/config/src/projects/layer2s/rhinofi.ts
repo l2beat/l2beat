@@ -101,7 +101,6 @@ export const rhinofi: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    associatedTokens: ['DVF'],
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
