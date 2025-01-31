@@ -59,6 +59,7 @@ export const sonicgateway: Bridge = {
     category: 'Token Bridge',
   },
   config: {
+    associatedTokens: ['FTM'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20'),

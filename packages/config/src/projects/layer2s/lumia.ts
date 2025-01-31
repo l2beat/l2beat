@@ -102,6 +102,7 @@ export const lumia: Layer2 = polygonCDKStack({
     explorerUrl: 'https://explorer.lumia.org/',
     minTimestampForTvl: new UnixTime(1719499031),
   },
+  associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,

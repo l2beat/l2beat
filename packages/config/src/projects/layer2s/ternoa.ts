@@ -103,6 +103,7 @@ export const ternoa: Layer2 = polygonCDKStack({
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network/',
     minTimestampForTvl: new UnixTime(1735650935),
   },
+  associatedTokens: ['CAPS'],
   nonTemplateEscrows: [
     shared.getEscrowDetails({
       address: bridge.address,
