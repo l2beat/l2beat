@@ -827,7 +827,6 @@ export interface DaLayer {
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   daTracking?: DaLayerTrackingConfig
-  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
@@ -905,15 +904,10 @@ export interface DaBridge {
   isUnderReview?: boolean
   technology: DaTechnology
   usedIn: UsedInProject[]
-  otherConsiderations?: ProjectTechnologyChoice[]
   risks: DaBridgeRisks
+  dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
   permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
-  /** Data about the validation type of the bridge */
-  validation?: {
-    type: string
-  }
-  dac?: DacInfo
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts?: DaBridgeContracts
 }

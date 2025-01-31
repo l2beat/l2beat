@@ -9,7 +9,6 @@ import type {
   DaLayerRisks,
   DaTechnology,
   DacInfo,
-  ProjectTechnologyChoice,
   TableReadyValue,
 } from '../../../types'
 import {
@@ -28,11 +27,9 @@ export interface DacTemplateVars {
     dac: DacInfo
     display?: DaBridgeDisplay
     usedIn?: DaBridge['usedIn']
-    otherConsiderations?: ProjectTechnologyChoice[]
   }
   layer?: {
     technology: DaTechnology
-    otherConsiderations?: ProjectTechnologyChoice[]
   }
   fallback?: TableReadyValue
   challengeMechanism?: DaChallengeMechanism
@@ -82,7 +79,6 @@ export function DAC(template: DacTemplateVars): DaLayer {
       relayerFailure:
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
-    otherConsiderations: template.bridge.otherConsiderations,
     usedIn: [],
   }
 
@@ -115,7 +111,6 @@ export function DAC(template: DacTemplateVars): DaLayer {
       fraudDetection:
         template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
     },
-    otherConsiderations: template.layer?.otherConsiderations,
   }
 
   return dacLayer
