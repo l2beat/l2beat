@@ -1,20 +1,26 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { DaBridge, DacDaLayer, IntegratedDacBridge } from '../../../types'
-import type { DaTechnology } from '../../../types'
+import type {
+  DaBridge,
+  DaBridgeRisks,
+  DaLayer,
+  DaLayerRisks,
+  DaTechnology,
+  DacInfo,
+} from '../../../types'
 import { DaUpgradeabilityRisk } from '../common'
-import { DAC, type DacTemplateVars } from './dac-template'
+import { DAC } from './dac-template'
 
-type TemplateVars = Omit<DacTemplateVars, 'bridge'> & {
+interface TemplateVars {
   bridge: {
-    technology?: IntegratedDacBridge['technology']
-  } & Pick<
-    IntegratedDacBridge,
-    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
-  >
+    addedAt: UnixTime
+    knownMembers?: DacInfo['knownMembers']
+  }
+  risks?: Partial<DaLayerRisks & DaBridgeRisks>
   discovery: ProjectDiscovery
 }
 
-export function AnytrustDAC(template: TemplateVars): DacDaLayer {
+export function AnytrustDAC(template: TemplateVars): DaLayer {
   const dac = template.discovery.getContractValue<{
     membersCount: number
     requiredSignatures: number
@@ -80,14 +86,14 @@ export function AnytrustDAC(template: TemplateVars): DacDaLayer {
     bridge: {
       ...template.bridge,
       technology: anytrustBridgeTechnology,
-      transactionDataType: 'Transaction data (compressed)',
-      membersCount,
-      requiredMembers: requiredSignatures,
+      dac: {
+        membersCount,
+        requiredMembers: requiredSignatures,
+      },
     },
     risks: {
+      upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(),
       ...template.risks,
-      upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.LowOrNoDelay(),
     },
   })
 }

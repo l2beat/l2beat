@@ -10,11 +10,9 @@ import { aggregateActivityRecords } from './utils/aggregate-activity-records'
 import { getActivityProjects } from './utils/get-activity-projects'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
 import { getActivitySyncWarning } from './utils/is-activity-synced'
-import {
-  type ActivityProjectFilter,
-  createActivityProjectsFilter,
-} from './utils/project-filter-utils'
-import { type ActivityTimeRange } from './utils/range'
+import type { ActivityProjectFilter } from './utils/project-filter-utils'
+import { createActivityProjectsFilter } from './utils/project-filter-utils'
+import type { ActivityTimeRange } from './utils/range'
 
 /**
  * A function that computes values for chart data of the activity over time.

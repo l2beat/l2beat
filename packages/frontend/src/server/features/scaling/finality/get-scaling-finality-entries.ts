@@ -1,20 +1,16 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
-  type TableReadyValue,
-  type WarningWithSentiment,
+import type {
+  Project,
+  ScalingProjectCategory,
+  ScalingProjectStack,
+  TableReadyValue,
+  WarningWithSentiment,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 import { getFinality } from './get-finality'

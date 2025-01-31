@@ -8,6 +8,7 @@ import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
+import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -16,6 +17,7 @@ import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-s
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
@@ -53,8 +55,11 @@ export async function getL3ProjectDetails({
           type: project.type,
           hostChain: project.hostChain,
           isUnderReview: !!project.isUnderReview,
-          permissions: project.permissions,
-          nativePermissions: project.nativePermissions,
+          permissions: mergePermissions(
+            project.permissions,
+            project.nativePermissions,
+            project.hostChain,
+          ),
           daSolution,
         },
         contractsVerificationStatuses,
@@ -87,6 +92,7 @@ export async function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const sequencingSection = getSequencingSection(project)
 
   await Promise.all([
     api.tvs.chart.prefetch({
@@ -284,7 +290,7 @@ export async function getL3ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.dataAvailabilitySolution?.description,
       },
     })
   }
@@ -322,6 +328,17 @@ export async function getL3ProjectDetails({
         title: 'Operator',
         ...operatorSection,
         hostChainWarning,
+      },
+    })
+  }
+
+  if (sequencingSection) {
+    items.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
       },
     })
   }

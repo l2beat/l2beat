@@ -9,7 +9,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 

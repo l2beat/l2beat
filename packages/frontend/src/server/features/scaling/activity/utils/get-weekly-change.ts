@@ -1,4 +1,4 @@
-import { type ActivityRecord } from '@l2beat/database'
+import type { ActivityRecord } from '@l2beat/database'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getLastDayTps, getLastDayUops } from './get-last-day'
 

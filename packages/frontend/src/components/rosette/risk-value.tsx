@@ -3,7 +3,7 @@ import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../badge/under-review-badge'
 import { SentimentText } from '../sentiment-text'
-import { type RosetteValue } from './types'
+import type { RosetteValue } from './types'
 
 export function RiskValue(props: RosetteValue) {
   return (

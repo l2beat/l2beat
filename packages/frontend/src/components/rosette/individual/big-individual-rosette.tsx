@@ -10,10 +10,8 @@ import {
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { PizzaRosetteLabels } from '../pizza/pizza-rosette-labels'
-import {
-  IndividualPizzaRosetteIcon,
-  type RosetteValueTuple,
-} from './individual-rosette-icon'
+import type { RosetteValueTuple } from './individual-rosette-icon'
+import { IndividualPizzaRosetteIcon } from './individual-rosette-icon'
 import {
   IndividualRosetteTooltipContextProvider,
   useIndividualRosetteTooltipContext,

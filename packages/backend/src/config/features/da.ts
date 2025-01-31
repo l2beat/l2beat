@@ -1,4 +1,4 @@
-import { daLayers, ethereumDaLayer, layer2s, layer3s } from '@l2beat/config'
+import { daLayers, layer2s, layer3s } from '@l2beat/config'
 
 import type { Env } from '@l2beat/backend-tools'
 import type {
@@ -33,9 +33,9 @@ export function getDaTrackingConfig(
 function getDaLayers(): DaLayerTrackingConfig[] {
   return [
     ...new Set(
-      [ethereumDaLayer, ...daLayers]
-        .filter((daLayer) => daLayer.kind !== 'DA Service')
-        .flatMap(({ daTracking }) => daTracking ?? []),
+      daLayers
+        .filter((project) => project.daLayer.kind === 'PublicBlockchain')
+        .flatMap((project) => project.daLayer.daTracking ?? []),
     ),
   ]
 }

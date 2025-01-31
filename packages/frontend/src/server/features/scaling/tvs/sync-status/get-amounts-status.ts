@@ -1,4 +1,4 @@
-import { type AmountConfigEntry, type UnixTime } from '@l2beat/shared-pure'
+import type { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { getCirculatingSupplyStatus } from './get-circulating-supply-status'
 import { getConfigurationsStatus } from './get-configurations-status'
 import { getPremintedStatus } from './get-preminted-status'

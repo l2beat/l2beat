@@ -1,8 +1,8 @@
-import {
-  type AmountConfigEntry,
-  type CoingeckoPriceConfigEntry,
-  UnixTime,
+import type {
+  AmountConfigEntry,
+  CoingeckoPriceConfigEntry,
 } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { getConfigurations } from './get-configuration'
 import { getExclusionBoundary } from './get-exclusion-boundary'
 

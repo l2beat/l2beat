@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useTracking } from '~/hooks/use-custom-event'
-import { type FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { FilterableScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { cn } from '~/utils/cn'
 import { ScalingFilters } from './scaling-filters'
 

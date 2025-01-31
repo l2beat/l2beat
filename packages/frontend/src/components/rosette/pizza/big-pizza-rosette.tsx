@@ -13,7 +13,7 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
 

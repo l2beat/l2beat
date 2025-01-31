@@ -1,4 +1,4 @@
-import { type UsableStageConfig } from '@l2beat/config'
+import type { UsableStageConfig } from '@l2beat/config'
 
 import Image from 'next/image'
 import {
@@ -19,7 +19,7 @@ import { Callout } from '../../callout'
 import { Markdown } from '../../markdown/markdown'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string

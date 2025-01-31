@@ -4,7 +4,7 @@ import { TokenNameCell } from '../cells/token-name-cell'
 import { TokenSimpleAmountCell } from '../cells/token-simple-amount-cell'
 import { TokenSimpleValueCell } from '../cells/token-simple-value-cell'
 import { TokenTypeCell } from '../cells/token-type-cell'
-import { type NativelyMintedTokenEntry } from '../natively-minted-table'
+import type { NativelyMintedTokenEntry } from '../natively-minted-table'
 
 const columnHelper = createColumnHelper<NativelyMintedTokenEntry>()
 

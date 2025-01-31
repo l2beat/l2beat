@@ -13,11 +13,8 @@ import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getConfigMapping } from '../utils/get-config-mapping'
-import {
-  TvsChartRange,
-  type TvsChartResolution,
-  rangeToResolution,
-} from '../utils/range'
+import type { TvsChartResolution } from '../utils/range'
+import { TvsChartRange, rangeToResolution } from '../utils/range'
 import { calculateValue } from './utils/calculate-value'
 import { getTokenAmounts } from './utils/get-token-amounts'
 import { getTokenPrices } from './utils/get-token-prices'

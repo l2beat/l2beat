@@ -32,7 +32,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
-  DacDaLayer,
+  DaLayer,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -52,6 +52,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -119,7 +120,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -142,7 +143,7 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
@@ -161,6 +162,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
   usingAltVm?: boolean
@@ -279,7 +281,10 @@ function opStackCommon(
     capability: templateVars.capability ?? 'universal',
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
@@ -337,16 +342,18 @@ function opStackCommon(
     technology: getTechnology(templateVars, explorerUrl),
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          ...templateVars.discovery.getOpStackPermissions({
-            batcherHash: 'Sequencer',
-            PROPOSER: 'Proposer',
-            GUARDIAN: 'Guardian',
-            CHALLENGER: 'Challenger',
-            ...(templateVars.roleOverrides ?? {}),
-          }),
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            ...templateVars.discovery.getOpStackPermissions({
+              batcherHash: 'Sequencer',
+              PROPOSER: 'Proposer',
+              GUARDIAN: 'Guardian',
+              CHALLENGER: 'Challenger',
+              ...(templateVars.roleOverrides ?? {}),
+            }),
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nonTemplateNativePermissions,

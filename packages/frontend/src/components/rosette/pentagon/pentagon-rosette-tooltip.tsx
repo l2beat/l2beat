@@ -1,6 +1,6 @@
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { RiskValue } from '../risk-value'
-import { type PentagonRosetteCellProps } from './pentagon-rosette-cell'
+import type { PentagonRosetteCellProps } from './pentagon-rosette-cell'
 import { PentagonRosetteIcon } from './pentagon-rosette-icon'
 import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 

@@ -871,6 +871,20 @@
       "supply": "zero"
     },
     {
+      "name": "Capsule Coin",
+      "coingeckoId": "coin-capsule",
+      "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
+      "symbol": "CAPS",
+      "decimals": 18,
+      "deploymentTimestamp": 1614363963,
+      "coingeckoListingTimestamp": 1622419200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/15921/large/e55393fa-7b4d-40f5-9f36-9a8a6bdcb570.png?1696515534",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Cartesi Token",
       "coingeckoId": "cartesi",
       "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
@@ -1916,6 +1930,20 @@
       "coingeckoListingTimestamp": 1636675200,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Euro Coin",
+      "coingeckoId": "euro-coin",
+      "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+      "symbol": "EURC",
+      "decimals": 6,
+      "deploymentTimestamp": 1652995438,
+      "coingeckoListingTimestamp": 1656547200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3120,6 +3148,20 @@
       "coingeckoListingTimestamp": 1590105600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/11423/large/LYX.png?1696511335",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Lumia Token",
+      "coingeckoId": "lumia",
+      "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+      "symbol": "LUMIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1719267095,
+      "coingeckoListingTimestamp": 1729296000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50867/large/lumia.jpg?1729321993",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import { type GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
+import type { GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
 import { glossaryPlugin, linkGlossaryTerms } from './glossary-plugin'
 
 describe(linkGlossaryTerms.name, () => {

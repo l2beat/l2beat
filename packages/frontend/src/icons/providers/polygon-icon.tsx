@@ -1,6 +1,7 @@
 import { useId } from 'react'
 import { cn } from '~/utils/cn'
-import { SvgIcon, type SvgIconProps } from '../svg-icon'
+import type { SvgIconProps } from '../svg-icon'
+import { SvgIcon } from '../svg-icon'
 
 export function PolygonIcon(props: SvgIconProps) {
   const gradientId = useId()

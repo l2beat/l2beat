@@ -1,4 +1,4 @@
-import { type ScalingProjectDisplay } from '@l2beat/config'
+import type { ScalingProjectDisplay } from '@l2beat/config'
 import { ProjectDetailsRelatedProjectBanner } from './project-details-related-project-banner'
 
 export type HostChainRisksWarningProps = {

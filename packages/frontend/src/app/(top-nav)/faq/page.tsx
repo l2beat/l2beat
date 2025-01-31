@@ -1,5 +1,5 @@
 import { isArray } from 'lodash'
-import { type Metadata } from 'next'
+import type { Metadata } from 'next'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { FullPageHeader } from '~/components/full-page-header'
 import { Markdown } from '~/components/markdown/markdown'

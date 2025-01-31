@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { type ValueRecord } from '@l2beat/database'
+import type { ValueRecord } from '@l2beat/database'
 import { getTokenBreakdown } from './get-token-breakdown'
 
 describe(getTokenBreakdown.name, () => {

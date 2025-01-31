@@ -1,22 +1,13 @@
-import {
-  type Project,
-  ProjectService,
-  type WarningWithSentiment,
-} from '@l2beat/config'
+import type { Project, WarningWithSentiment } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
-import {
-  type ProjectSevenDayTvsBreakdown,
-  get7dTvsBreakdown,
-} from './utils/get-7d-tvs-breakdown'
+import type { ProjectSevenDayTvsBreakdown } from './utils/get-7d-tvs-breakdown'
+import { get7dTvsBreakdown } from './utils/get-7d-tvs-breakdown'
 
 export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([

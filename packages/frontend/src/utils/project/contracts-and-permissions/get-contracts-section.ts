@@ -1,20 +1,19 @@
-import {
-  type Bridge,
-  CONTRACTS,
-  type DaLayer,
-  type Layer2,
-  type Layer3,
-  type ProjectEscrow,
-  type ReferenceLink,
-  type ScalingProjectContract,
-  type ScalingProjectContracts,
-  layer2s,
+import type {
+  Bridge,
+  DaProject,
+  Layer2,
+  Layer3,
+  ProjectEscrow,
+  ReferenceLink,
+  ScalingProjectContract,
+  ScalingProjectContracts,
 } from '@l2beat/config'
-import {
-  assert,
-  type ContractsVerificationStatuses,
-  type EthereumAddress,
+import { CONTRACTS, layer2s } from '@l2beat/config'
+import type {
+  ContractsVerificationStatuses,
+  EthereumAddress,
 } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -43,7 +42,7 @@ type ProjectParams = {
   escrows: ProjectEscrow[] | undefined
 } & (
   | {
-      type: (Layer2 | Bridge | DaLayer)['type']
+      type: (Layer2 | Bridge | DaProject)['type']
     }
   | {
       type: Layer3['type']

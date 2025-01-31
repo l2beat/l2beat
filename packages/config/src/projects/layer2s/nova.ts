@@ -200,12 +200,14 @@ export const nova: Layer2 = orbitStackL2({
     ),
   ],
   nativePermissions: {
-    nova: [
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilEmergency',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-      ),
-    ],
+    nova: {
+      actors: [
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilEmergency',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+        ),
+      ],
+    },
   },
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {
@@ -415,41 +417,42 @@ export const nova: Layer2 = orbitStackL2({
     },
     bridge: {
       addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      requiredMembers: requiredSignatures,
-      membersCount: membersCount,
-      transactionDataType: 'Transaction data (compressed)',
-      knownMembers: [
-        {
-          external: true,
-          name: 'ConsenSys Software Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          external: true,
-          name: 'QuickNode, Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          external: true,
-          name: 'P2P.org',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          external: true,
-          name: 'Google Cloud',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          external: false,
-          name: 'Offchain Labs, Inc.',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-        {
-          external: true,
-          name: 'Opensea Innovation Labs Private Limited',
-          href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
-        },
-      ],
+      dac: {
+        requiredMembers: requiredSignatures,
+        membersCount: membersCount,
+        knownMembers: [
+          {
+            external: true,
+            name: 'ConsenSys Software Inc.',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+          {
+            external: true,
+            name: 'QuickNode, Inc.',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+          {
+            external: true,
+            name: 'P2P.org',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+          {
+            external: true,
+            name: 'Google Cloud',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+          {
+            external: false,
+            name: 'Offchain Labs, Inc.',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+          {
+            external: true,
+            name: 'Opensea Innovation Labs Private Limited',
+            href: 'https://docs.arbitrum.foundation/state-of-progressive-decentralization#data-availability-committee-members',
+          },
+        ],
+      },
       technology: {
         description: `
 ## DA Bridge Architecture

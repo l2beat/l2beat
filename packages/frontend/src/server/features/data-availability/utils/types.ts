@@ -1,4 +1,4 @@
-import { type DaBridgeRisks, type DaLayerRisks } from '@l2beat/config'
+import type { DaBridgeRisks, DaLayerRisks } from '@l2beat/config'
 
 export type DaEntryRisk =
   | (DaLayerRisks & Record<keyof DaBridgeRisks, undefined>)

@@ -1,16 +1,21 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
-import { type TechnologySectionProps } from '~/components/projects/sections/technology-section'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
+import type {
+  DaBridge,
+  DaProject,
+  EthereumDaBridge,
+  EthereumDaProject,
+} from '@l2beat/config'
+import type { TechnologySectionProps } from '~/components/projects/sections/technology-section'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { makeTechnologyChoice } from '~/utils/project/technology/make-technology-section'
 
 export function getDaOtherConsiderationsSection(
-  layer: DaLayer,
-  bridge: DaBridge,
+  project: DaProject | EthereumDaProject,
+  bridge: DaBridge | EthereumDaBridge,
 ): Omit<
   TechnologySectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
 > {
-  const layerConsiderations = layer.otherConsiderations ?? []
+  const layerConsiderations = project.daLayer.otherConsiderations ?? []
   const bridgeConsiderations = bridge.otherConsiderations ?? []
   const items = layerConsiderations
     .concat(bridgeConsiderations)

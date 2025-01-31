@@ -33,6 +33,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
+  ScalingProjectPermissions,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -822,7 +823,6 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts,
-        fromRole: true,
       })
     }
     return result
@@ -863,6 +863,8 @@ export class ProjectDiscovery {
       operateLinea: 'An Operator',
       fastconfirm: 'A FastConfirmer',
       validateZkStack: 'A Validator',
+      relay: 'A Relayer',
+      validateBridge: 'A Validator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -930,6 +932,8 @@ export class ProjectDiscovery {
       operateLinea: 'Can act as an Operator',
       fastconfirm: 'Can act as a FastConfirmer',
       validateZkStack: 'Can act as a Validator',
+      relay: 'Can act as a Relayer',
+      validateBridge: 'Can act as a Validator',
     }
 
     return Object.entries(
@@ -994,11 +998,10 @@ export class ProjectDiscovery {
     return s
   }
 
-  getDiscoveredPermissions(): ScalingProjectPermission[] {
+  getDiscoveredPermissions(): ScalingProjectPermissions {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
-    const result: ScalingProjectPermission[] = []
 
     const relevantContracts = [
       ...contracts.filter(
@@ -1016,13 +1019,13 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    result.push(...this.describeRolePermissions(relevantContracts))
-    result.push(...this.describeRolePermissions(eoas))
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
+    const actors: ScalingProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
-        result.push(
+        actors.push(
           ...this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -1031,7 +1034,7 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        result.push(
+        actors.push(
           this.contractAsPermissioned(
             contract,
             formatAsBulletPoints(descriptions),
@@ -1047,7 +1050,7 @@ export class ProjectDiscovery {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
-      result.push({
+      actors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: [this.formatPermissionedAccount(eoa.address)],
         chain: this.chain,
@@ -1055,12 +1058,22 @@ export class ProjectDiscovery {
       })
     }
 
-    result.forEach((permission) => {
+    actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
     })
-    return result.map((p) => ({ ...p, discoveryDrivenData: true }))
+
+    roles.forEach((permission) => {
+      permission.description = this.replaceAddressesWithNames(
+        permission.description,
+      )
+    })
+
+    return {
+      roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+      actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+    }
   }
 
   getDiscoveredContracts(): ScalingProjectContract[] {
@@ -1199,6 +1212,16 @@ const roleDescriptions: {
     name: 'Validator',
     description:
       'Actors permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
+  },
+  validateBridge: {
+    name: 'Validator',
+    description:
+      'Actors permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
+  },
+  relay: {
+    name: 'Relayer',
+    description:
+      'Actors permissioned to relay messages that are then verified onchain.',
   },
 }
 

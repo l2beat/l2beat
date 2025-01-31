@@ -15,7 +15,7 @@ import { MilestoneIcon } from '~/icons/milestone'
 import { cn } from '~/utils/cn'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionProps } from './types'
+import type { ProjectSectionProps } from './types'
 
 export interface MilestonesAndIncidentsSectionProps
   extends ProjectSectionProps {

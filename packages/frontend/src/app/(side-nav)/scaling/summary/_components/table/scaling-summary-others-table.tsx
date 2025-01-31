@@ -6,7 +6,7 @@ import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_com
 import { BasicTable } from '~/components/table/basic-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { toTableRows } from '../../_utils/to-table-rows'
 import { scalingSummaryOthersColumns } from './columns'
 

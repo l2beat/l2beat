@@ -1,12 +1,16 @@
-import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { UnixTime } from '@l2beat/shared-pure'
 import type {
+  DaBridge,
+  DaBridgeDisplay,
   DaBridgeRisks,
   DaChallengeMechanism,
+  DaLayer,
+  DaLayerDisplay,
   DaLayerRisks,
-  DacDaLayer,
-  DacTransactionDataType,
-  IntegratedDacBridge,
-  ProjectLinks,
+  DaTechnology,
+  DacInfo,
+  ProjectTechnologyChoice,
+  TableReadyValue,
 } from '../../../types'
 import {
   DaCommitteeSecurityRisk,
@@ -16,56 +20,24 @@ import {
 } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 
-type TemplateSpecific = {
-  /** DAC display settings */
-  display?: {
-    description?: string
-  }
-}
-
-type Optionals = {
-  /** Overwrite some of the risks, check defaults below */
-  risks?: Partial<DaLayerRisks & DaBridgeRisks>
-  /** Links for given DAC, defaults to Project's main links */
-  links?: ProjectLinks
-  /** Optional layer description and technology, defaults to generic ones. Other considerations will be passed through. */
-  layer?: {
-    technology?: DacDaLayer['technology']
-    otherConsiderations?: DacDaLayer['otherConsiderations']
-  }
-  /**
-   * Optional bridge technology, defaults to generic ones
-   */
+export interface DacTemplateVars {
   bridge: {
-    technology?: IntegratedDacBridge['technology']
-  } & Pick<
-    IntegratedDacBridge,
-    | 'addedAt'
-    | 'membersCount'
-    | 'knownMembers'
-    | 'requiredMembers'
-    | 'transactionDataType'
-    | 'isUnderReview'
-    | 'otherConsiderations'
-  >
-  /** Optional challenge mechanism, defaults to undefined */
-  challengeMechanism?: DaChallengeMechanism
-  /** Optional fallback, defaults to undefined */
-  fallback?: DacDaLayer['fallback']
-}
-
-export type DacTemplateVars = Optionals & TemplateSpecific
-
-export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
-  bridge: Pick<
-    IntegratedDacBridge,
-    'addedAt' | 'isUnderReview' | 'otherConsiderations' | 'knownMembers'
-  > & {
-    membersCount?: number
-    requiredMembers?: number
-    transactionDataType?: DacTransactionDataType
+    id?: string
+    addedAt: UnixTime
+    technology?: DaTechnology
+    dac: DacInfo
+    display?: DaBridgeDisplay
+    usedIn?: DaBridge['usedIn']
+    otherConsiderations?: ProjectTechnologyChoice[]
   }
-  discovery?: ProjectDiscovery
+  layer?: {
+    technology: DaTechnology
+    otherConsiderations?: ProjectTechnologyChoice[]
+  }
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
+  display?: DaLayerDisplay
+  risks?: Partial<DaLayerRisks & DaBridgeRisks>
 }
 
 /**
@@ -74,29 +46,35 @@ export type DacTemplateVarsWithDiscovery = Omit<DacTemplateVars, 'bridge'> & {
  * creating DA-LAYER and DA-BRIDGE without the need to manually
  * duplicate code and files.
  */
-export function DAC(template: DacTemplateVars): DacDaLayer {
+export function DAC(template: DacTemplateVars): DaLayer {
   // "Bridge" backfill for DAC
   const bridgeTechnology =
     template.bridge.technology?.description ??
     `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.requiredMembers}/${template.bridge.membersCount} threshold of signatures to be met before the data commitment is accepted.
+    The bridge requires a ${template.bridge.dac.requiredMembers}/${template.bridge.dac.membersCount} threshold of signatures to be met before the data commitment is accepted.
   `
 
-  const dacBridge: IntegratedDacBridge = {
-    type: 'IntegratedDacBridge',
+  const dacBridge: DaBridge = {
     ...template.bridge,
+    type: 'IntegratedDacBridge',
     technology: {
       description: bridgeTechnology,
       risks: template.bridge.technology?.risks,
+    },
+    display: {
+      name: 'DAC',
+      slug: 'dac',
+      description: '',
+      ...template.bridge.display,
     },
     risks: {
       committeeSecurity:
         template.risks?.committeeSecurity ??
         DaCommitteeSecurityRisk.AutoDAC({
-          requiredMembers: template.bridge.requiredMembers,
-          membersCount: template.bridge.membersCount,
-          knownMembers: template.bridge.knownMembers,
+          requiredMembers: template.bridge.dac.requiredMembers,
+          membersCount: template.bridge.dac.membersCount,
+          knownMembers: template.bridge.dac.knownMembers,
         }),
       // TODO: make it required and remove the default
       upgradeability:
@@ -105,6 +83,7 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
         template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
     },
     otherConsiderations: template.bridge.otherConsiderations,
+    usedIn: [],
   }
 
   // DAC "DA-Layer"
@@ -117,14 +96,11 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
   their operational transparency, and the mechanisms in place to handle disputes and failures.
   `
 
-  const dacLayer: DacDaLayer = {
-    display: {
-      description:
-        template.display?.description ??
-        'Set of parties responsible for signing and attesting to the availability of data.',
-    },
+  const dacLayer: DaLayer = {
+    description:
+      template.display?.description ??
+      'Set of parties responsible for signing and attesting to the availability of data.',
     kind: 'DAC',
-    type: 'DaLayer',
     systemCategory: 'custom',
     fallback: template.fallback,
     challengeMechanism: template.challengeMechanism ?? 'None',
@@ -132,7 +108,7 @@ export function DAC(template: DacTemplateVars): DacDaLayer {
       ...template.layer?.technology,
       description: layerTechnology,
     },
-    bridge: dacBridge,
+    bridges: [dacBridge],
     risks: {
       economicSecurity:
         template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,

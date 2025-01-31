@@ -1,4 +1,4 @@
-import { type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 
 const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 

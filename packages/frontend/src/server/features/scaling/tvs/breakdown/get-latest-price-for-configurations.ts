@@ -1,8 +1,5 @@
-import {
-  assert,
-  type PriceConfigEntry,
-  type UnixTime,
-} from '@l2beat/shared-pure'
+import type { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { getDb } from '~/server/database'
 import { getConfigurationsStatus } from '../sync-status/get-configurations-status'
 

@@ -1,6 +1,6 @@
-import { type ChartColumn } from '../chart-context'
+import type { ChartColumn } from '../chart-context'
 import { FIRST_LABEL_HEIGHT_PX } from '../chart-labels'
-import { type SeriesStyle } from '../styles'
+import type { SeriesStyle } from '../styles'
 import { getMilestoneHoverIndex } from './get-milestone-hover-index'
 
 interface Props {

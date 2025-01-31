@@ -1,9 +1,9 @@
-import { type KnowledgeNugget } from '@l2beat/config'
+import type { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 import { getKnowledgeNuggetThumbnail } from '~/utils/project/get-knowledge-nugget-thumbnail'
 import { LinkWithThumbnail } from '../../link-with-thumbnail'
 import { ProjectSection } from './project-section'
-import { type ProjectSectionId } from './types'
+import type { ProjectSectionId } from './types'
 
 export interface KnowledgeNuggetsSectionProps {
   title: string

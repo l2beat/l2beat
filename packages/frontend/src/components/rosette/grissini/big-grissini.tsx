@@ -14,7 +14,7 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { GrissiniIcon } from './grissini-icon'
 
 export interface BigGrissiniProps {

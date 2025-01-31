@@ -101,6 +101,8 @@
             "validate",
             "operateLinea",
             "validateZkStack",
+            "validateBridge",
+            "relay",
             "sequence",
             "guard",
             "fastconfirm",

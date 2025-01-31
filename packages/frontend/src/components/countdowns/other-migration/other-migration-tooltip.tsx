@@ -1,6 +1,6 @@
 import { CloseIcon } from '~/icons/close'
 import { StopwatchIcon } from '~/icons/stopwatch'
-import { type ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
+import type { ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { Callout } from '../../callout'
 import {
   Tooltip,

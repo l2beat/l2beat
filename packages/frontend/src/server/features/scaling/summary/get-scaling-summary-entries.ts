@@ -1,35 +1,27 @@
-import {
-  type Project,
-  type ProjectDataAvailability,
-  ProjectService,
-  type ReasonForBeingInOther,
-  type ScalingProjectCapability,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
-  type StageConfig,
-  type WarningWithSentiment,
+import type {
+  Project,
+  ProjectDataAvailability,
+  ReasonForBeingInOther,
+  ScalingProjectCapability,
+  ScalingProjectCategory,
+  ScalingProjectStack,
+  StageConfig,
+  WarningWithSentiment,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type ActivityLatestUopsData,
-  getActivityLatestUops,
-} from '../activity/get-activity-latest-tps'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { ActivityLatestUopsData } from '../activity/get-activity-latest-tps'
+import { getActivityLatestUops } from '../activity/get-activity-latest-tps'
 import { getActivitySyncWarning } from '../activity/utils/is-activity-synced'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import {
-  type LatestTvs,
-  get7dTokenBreakdown,
-} from '../tvs/utils/get-7d-token-breakdown'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import type { LatestTvs } from '../tvs/utils/get-7d-token-breakdown'
+import { get7dTokenBreakdown } from '../tvs/utils/get-7d-token-breakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-warning'
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 

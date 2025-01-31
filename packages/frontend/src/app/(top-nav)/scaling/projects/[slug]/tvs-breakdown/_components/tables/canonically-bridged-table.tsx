@@ -1,7 +1,7 @@
 'use client'
 
+import type { ExpandedState } from '@tanstack/react-table'
 import {
-  type ExpandedState,
   getCoreRowModel,
   getExpandedRowModel,
   useReactTable,

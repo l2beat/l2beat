@@ -1,5 +1,5 @@
 import type { Sentiment } from '@l2beat/config'
-import { type HTMLAttributes } from 'react'
+import type { HTMLAttributes } from 'react'
 import { cn } from '~/utils/cn'
 import { sentimentToOpaqueBgColor } from '~/utils/sentiment'
 

@@ -12,7 +12,12 @@ export function arePermissionsDiscoveryDriven(
       return true
     }
 
-    return project.permissions.every((p) => p.discoveryDrivenData === true)
+    const all = [
+      ...(project.permissions?.roles ?? []),
+      ...(project.permissions?.actors ?? []),
+    ]
+
+    return all.every((p) => p.discoveryDrivenData === true)
   }
 
   const checkNativePermissions = (project: Layer2 | Layer3): boolean => {
@@ -24,9 +29,10 @@ export function arePermissionsDiscoveryDriven(
       return true
     }
 
-    return Object.values(project.nativePermissions).every((e) =>
-      e.every((p) => p.discoveryDrivenData === true),
-    )
+    return Object.values(project.nativePermissions).every((e) => {
+      const all = [...(e?.roles ?? []), ...(e?.actors ?? [])]
+      return all.every((p) => p.discoveryDrivenData === true)
+    })
   }
 
   const arePermissionedDiscoveryDriven = checkPermissions(project)

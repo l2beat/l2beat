@@ -1,5 +1,5 @@
-import { type StageConfig } from '@l2beat/config'
-import { type Row } from '@tanstack/react-table'
+import type { StageConfig } from '@l2beat/config'
+import type { Row } from '@tanstack/react-table'
 
 export function sortStages<TData extends { stage: StageConfig }>(
   rowA: Row<TData>,
