@@ -132,12 +132,16 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'LocalAdmin',
-      'Admin of the AstarValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
-    ),
-  ],
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'LocalAdmin',
+          'Admin of the AstarValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
+        ),
+      ],
+    },
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('AstarValidiumDAC', {
       description:

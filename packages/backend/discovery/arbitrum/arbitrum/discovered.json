@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 295612328,
-  "configHash": "0x3e672dc01fb01684fbe5ae20d46a881b026a7bb6f94c8979ecaa551a12e7bc29",
+  "configHash": "0x2a898dfc0f1486f37894b511fcb13e77417bba0efdfd494d62dfb40c93b038ea",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -1066,6 +1066,7 @@
     { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
     { "address": "0xf6B6F07862A02C85628B3A9688beae07fEA9C863" },
     {
+      "name": "L1Timelock",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "receivedPermissions": [
         {

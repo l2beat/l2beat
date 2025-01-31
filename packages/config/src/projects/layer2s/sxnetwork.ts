@@ -52,21 +52,5 @@ export const sxnetwork: Layer2 = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  nonTemplatePermissions: [
-    {
-      name: 'SX Network Admin EOA',
-      accounts: [
-        {
-          address: discovery.getAccessControlField(
-            'UpgradeExecutor',
-            'EXECUTOR_ROLE',
-          ).members[0],
-          type: 'EOA',
-        },
-      ],
-      description:
-        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    },
-  ],
   customDa: AnytrustDAC({ discovery }),
 })

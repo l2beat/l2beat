@@ -31,6 +31,7 @@ import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
+import { generateDiscoveryDrivenPermissions } from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -534,10 +535,7 @@ export const optimism: Layer2 = {
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  permissions: discovery.getDiscoveredPermissions(),
-  nativePermissions: {
-    optimism: l2Discovery.getDiscoveredPermissions(),
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery, l2Discovery]),
   contracts: {
     addresses: discovery.getDiscoveredContracts(),
     nativeAddresses: {

@@ -106,10 +106,8 @@ export interface ScalingProject {
   stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
-  /** List of permissioned addresses */
-  permissions?: ScalingProjectPermissions | 'UnderReview'
-  /** List of permissioned addresses on the chain itself */
-  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  /** List of permissioned addresses on a given chain */
+  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -745,8 +743,7 @@ export interface Bridge {
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ScalingProjectContracts
-  permissions?: ScalingProjectPermissions | 'UnderReview'
-  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }

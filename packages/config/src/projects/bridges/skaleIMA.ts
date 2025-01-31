@@ -132,11 +132,13 @@ export const skaleIMA: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'ProxyAdminOwner',
-        'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
-      ),
-    ],
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'ProxyAdminOwner',
+          'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
+        ),
+      ],
+    },
   },
 }

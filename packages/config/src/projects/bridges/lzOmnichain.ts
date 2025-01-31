@@ -141,28 +141,30 @@ export const lzOmnichain: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    actors: [
-      {
-        accounts: RELAYERS.map((address) =>
-          discovery.formatPermissionedAccount(address),
+    [discovery.chain]: {
+      actors: [
+        {
+          accounts: RELAYERS.map((address) =>
+            discovery.formatPermissionedAccount(address),
+          ),
+          name: 'Default Relayer',
+          description:
+            'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+        },
+        {
+          accounts: ORACLES.map((address) =>
+            discovery.formatPermissionedAccount(address),
+          ),
+          name: 'Default Oracles',
+          description:
+            'Contracts that submit source chain block hashes to the destination chain.',
+        },
+        ...discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
         ),
-        name: 'Default Relayer',
-        description:
-          'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
-      },
-      {
-        accounts: ORACLES.map((address) =>
-          discovery.formatPermissionedAccount(address),
-        ),
-        name: 'Default Oracles',
-        description:
-          'Contracts that submit source chain block hashes to the destination chain.',
-      },
-      ...discovery.getMultisigPermission(
-        'LayerZero Multisig',
-        'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
-      ),
-    ],
+      ],
+    },
   },
   knowledgeNuggets: [
     {

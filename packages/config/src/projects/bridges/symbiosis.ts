@@ -136,12 +136,14 @@ export const symbiosis: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    actors: [
-      discovery.contractAsPermissioned(
-        discovery.getContract('Multisig'),
-        'This multisig can upgrade the BridgeV2 and Portal contracts.',
-      ),
-    ],
+    [discovery.chain]: {
+      actors: [
+        discovery.contractAsPermissioned(
+          discovery.getContract('Multisig'),
+          'This multisig can upgrade the BridgeV2 and Portal contracts.',
+        ),
+      ],
+    },
   },
   knowledgeNuggets: [
     {

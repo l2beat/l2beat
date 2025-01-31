@@ -59,8 +59,16 @@ import type {
 import { Badge, type BadgeId, badges } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  generateDiscoveryDrivenPermissions,
+  generateDiscoveryDrivenSections,
+} from './generateDiscoveryDrivenSections'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -126,7 +134,7 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateContracts?: ScalingProjectContract[]
@@ -145,7 +153,6 @@ interface OrbitStackConfigCommon {
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
@@ -330,7 +337,11 @@ function orbitStackCommon(
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
+  const discoveryDrivenContrats = templateVars.discoveryDrivenData
     ? generateDiscoveryDrivenSections(
         templateVars.discovery,
         nativeContractRisks,
@@ -425,19 +436,17 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
-      : {
-          addresses: unionBy(
-            [
-              ...(templateVars.nonTemplateContracts ?? []),
-              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            ],
-            'address',
-          ),
-          nativeAddresses: templateVars.nativeAddresses,
-          risks: nativeContractRisks,
-        },
+    contracts: discoveryDrivenContrats ?? {
+      addresses: unionBy(
+        [
+          ...(templateVars.nonTemplateContracts ?? []),
+          ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
+        ],
+        'address',
+      ),
+      nativeAddresses: templateVars.nativeAddresses,
+      risks: nativeContractRisks,
+    },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:
@@ -548,19 +557,21 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
-      : {
-          actors: [
-            sequencers,
-            validators,
-            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
-        },
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nativePermissions,
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
+      : mergePermissions(
+          {
+            [templateVars.discovery.chain]: {
+              actors: [
+                sequencers,
+                validators,
+                ...templateVars.discovery.resolveOrbitStackTemplates()
+                  .permissions,
+              ],
+            },
+          },
+          templateVars.nonTemplatePermissions ?? {},
+        ),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??

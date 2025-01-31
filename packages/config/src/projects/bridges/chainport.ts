@@ -137,17 +137,19 @@ export const chainport: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Congress members',
-        accounts: discovery.getPermissionedAccounts(
-          'ChainportCongressMembersRegistry',
-          'allMembers',
-        ),
-        description: 'Members of the Chainport Congress.',
-      },
-      ...discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
-      ...discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Congress members',
+          accounts: discovery.getPermissionedAccounts(
+            'ChainportCongressMembersRegistry',
+            'allMembers',
+          ),
+          description: 'Members of the Chainport Congress.',
+        },
+        ...discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
+        ...discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
+      ],
+    },
   },
 }

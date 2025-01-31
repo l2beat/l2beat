@@ -163,18 +163,20 @@ export const portal: Bridge = {
   },
 
   permissions: {
-    actors: [
-      {
-        name: 'Guardian Network',
-        description:
-          'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-        accounts: discovery.getPermissionedAccounts(
-          'WormholeCore',
-          'guardianSet',
-          0,
-        ),
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Guardian Network',
+          description:
+            'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
+          accounts: discovery.getPermissionedAccounts(
+            'WormholeCore',
+            'guardianSet',
+            0,
+          ),
+        },
+      ],
+    },
   },
   milestones: [
     {

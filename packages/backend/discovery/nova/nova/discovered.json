@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 81620827,
-  "configHash": "0x473e5aa6f21150f35182157cce40d099851fca764dc8565dcb189d2e44b3e9ce",
+  "configHash": "0xcfe9045c04b36c2cac9d6467251d8f73ad12ae98e51fed1df903c44d0e2ad156",
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -638,6 +638,7 @@
     { "address": "0xE4E2121b479017955Be0b175305B35f312330BaE" },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
     {
+      "name": "L1Timelock",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "receivedPermissions": [
         {

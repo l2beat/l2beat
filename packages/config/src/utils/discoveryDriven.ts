@@ -3,42 +3,18 @@ import type { Layer2, Layer3 } from '../'
 export function arePermissionsDiscoveryDriven(
   project: Layer2 | Layer3,
 ): boolean {
-  const checkPermissions = (project: Layer2 | Layer3): boolean => {
-    if (project.permissions === undefined) {
-      return true
-    }
+  if (project.permissions === undefined) {
+    return true
+  }
 
-    if (project.permissions === 'UnderReview') {
-      return true
-    }
+  if (project.permissions === 'UnderReview') {
+    return true
+  }
 
-    const all = [
-      ...(project.permissions?.roles ?? []),
-      ...(project.permissions?.actors ?? []),
-    ]
-
+  return Object.values(project.permissions).every((e) => {
+    const all = [...(e?.roles ?? []), ...(e?.actors ?? [])]
     return all.every((p) => p.discoveryDrivenData === true)
-  }
-
-  const checkNativePermissions = (project: Layer2 | Layer3): boolean => {
-    if (project.nativePermissions === undefined) {
-      return true
-    }
-
-    if (project.nativePermissions === 'UnderReview') {
-      return true
-    }
-
-    return Object.values(project.nativePermissions).every((e) => {
-      const all = [...(e?.roles ?? []), ...(e?.actors ?? [])]
-      return all.every((p) => p.discoveryDrivenData === true)
-    })
-  }
-
-  const arePermissionedDiscoveryDriven = checkPermissions(project)
-  const areNativePermissionsDiscoveryDriven = checkNativePermissions(project)
-
-  return arePermissionedDiscoveryDriven && areNativePermissionsDiscoveryDriven
+  })
 }
 
 export function areContractsDiscoveryDriven(project: Layer2 | Layer3): boolean {

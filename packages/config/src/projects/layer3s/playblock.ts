@@ -39,17 +39,21 @@ export const playblock: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: [
-    {
-      name: 'RollupOwnerEOA',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'RollupOwnerEOA',
+          accounts: discovery.getAccessControlRolePermission(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
+        },
+      ],
     },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('ProxyAdmin', {
       description:

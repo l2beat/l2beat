@@ -134,38 +134,42 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('XLayerValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('XLayerValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+        },
+        {
+          name: 'RollupManager',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('XLayerValidium', 'rollupManager'),
+            ),
+          ],
+          description:
+            'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
+        },
+        {
+          name: 'DACProxyAdminOwner',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('ProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+        },
       ],
-      description:
-        'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
     },
-    {
-      name: 'RollupManager',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('XLayerValidium', 'rollupManager'),
-        ),
-      ],
-      description:
-        'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
-    },
-    {
-      name: 'DACProxyAdminOwner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('ProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('XLayerValidiumDAC', {
       description:

@@ -468,6 +468,30 @@ export class ProjectDiscovery {
     return contract !== undefined
   }
 
+  getEOA(identifier: string): EoaParameters {
+    try {
+      identifier = utils.getAddress(identifier)
+    } catch {
+      const eoas = this.getEOAByName(identifier)
+
+      assert(
+        !(eoas.length > 1),
+        `Found more than one eoas of ${identifier} name (${this.projectName})`,
+      )
+      assert(
+        eoas.length === 1,
+        `Found no eoa of ${identifier} name (${this.projectName})`,
+      )
+
+      return eoas[0]
+    }
+
+    const eoa = this.getEOAByAddress(identifier)
+    assert(eoa, `No eoa of ${identifier} address found (${this.projectName})`)
+
+    return eoa
+  }
+
   getContractValueOrUndefined<T extends ContractValue>(
     contractIdentifier: string,
     key: string,
@@ -604,6 +628,27 @@ export class ProjectDiscovery {
     }
   }
 
+  eoaAsPermissioned(
+    eoa: EoaParameters,
+    description: string,
+  ): ScalingProjectPermission {
+    return {
+      name: eoa.name ?? eoa.address,
+      accounts: [
+        {
+          address: eoa.address,
+          type: 'EOA',
+        },
+      ],
+      chain: this.chain,
+      references: eoa.references?.map((x) => ({
+        title: x.text,
+        url: x.href,
+      })),
+      description,
+    }
+  }
+
   getMultisigStats(contractIdentifier: string) {
     const threshold = this.getContractValue<number>(
       contractIdentifier,
@@ -685,6 +730,15 @@ export class ProjectDiscovery {
     )
   }
 
+  getEOAByAddress(
+    address: string | EthereumAddress,
+  ): EoaParameters | undefined {
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.find(
+      (contract) => contract.address === EthereumAddress(address.toString()),
+    )
+  }
+
   getEntryByAddress(
     address: string | EthereumAddress,
   ): EoaParameters | ContractParameters | undefined {
@@ -718,6 +772,11 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     return contracts.filter((contract) => contract.name === name)
+  }
+
+  private getEOAByName(name: string): EoaParameters[] {
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.filter((eoa) => eoa.name === name)
   }
 
   getContractsAndEoas(): (ContractParameters | EoaParameters)[] {

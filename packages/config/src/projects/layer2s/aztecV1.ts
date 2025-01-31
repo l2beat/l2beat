@@ -4,7 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -294,19 +293,21 @@ export const aztecV1: Layer2 = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Rollup Providers',
-        description: `Addresses that can propose new blocks during regular rollup operation. Since the private key of one of them is public (first Anvil address), anyone can in principle resume regular operations. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
-        accounts: getRollupProviders().map((account) =>
-          discovery.formatPermissionedAccount(account),
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Rollup Providers',
+          description: `Addresses that can propose new blocks during regular rollup operation. Since the private key of one of them is public (first Anvil address), anyone can in principle resume regular operations. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
+          accounts: getRollupProviders().map((account) =>
+            discovery.formatPermissionedAccount(account),
+          ),
+        },
+        ...discovery.getMultisigPermission(
+          'AztecMultisig',
+          "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism, but it can halt regular operations by setting a reimbursement constant that is too high.",
         ),
-      },
-      ...discovery.getMultisigPermission(
-        'AztecMultisig',
-        "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism, but it can halt regular operations by setting a reimbursement constant that is too high.",
-      ),
-    ],
+      ],
+    },
   },
   milestones: [
     {

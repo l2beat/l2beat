@@ -794,60 +794,62 @@ export const fraxferry: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Bridge Owner',
-        description:
-          'Address authorized to pause and unpause the bridge, remove posted batches, set the challenge period, and change the bridge `Captain`, `First Officer` and `Crew Members`. It is also allowed to set fees and transfer tokens from the bridge escrow. Note that there are over 60 frax ferry bridges smart contracts, each with its own owner. Please check the owner() method of the specific escrow smart contract you are interested in.',
-        accounts: [
-          discovery.getPermissionedAccount(
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Bridge Owner',
+          description:
+            'Address authorized to pause and unpause the bridge, remove posted batches, set the challenge period, and change the bridge `Captain`, `First Officer` and `Crew Members`. It is also allowed to set fees and transfer tokens from the bridge escrow. Note that there are over 60 frax ferry bridges smart contracts, each with its own owner. Please check the owner() method of the specific escrow smart contract you are interested in.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'FRAX Ferry Bridge (Fraxtal)',
+              'owner',
+            ),
+          ],
+        },
+        {
+          name: 'FPI Bridge Owner',
+          description:
+            'Has the same permissions as the above Bridge Owner, but only for the FPI and FPIS bridge contracts.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'FPI Ferry Bridge (Fraxtal)',
+              'owner',
+            ),
+          ],
+        },
+        {
+          name: 'Captain',
+          description:
+            'Address authorized to post batch transaction data from the origin chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `Captain`. Please check the captain() method of the specific escrow smart contract you are interested in.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'FRAX Ferry Bridge (Fraxtal)',
+              'captain',
+            ),
+          ],
+        },
+        {
+          name: 'First Officer',
+          description:
+            'Address authorized to distribute funds on the destination chain once the challenge period has passed. Note that there are over 60 frax ferry bridges smart contracts, each with its own `firstOfficer`. Please check the firstOfficer() method of the specific escrow smart contract you are interested in.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'FRAX Ferry Bridge (Fraxtal)',
+              'firstOfficer',
+            ),
+          ],
+        },
+        {
+          name: 'Crew Members',
+          description:
+            'Addresses authorized to dispute batch transaction data on the destination chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `crew members`. Please check the crewmember() method of the specific escrow smart contract you are interested in.',
+          accounts: discovery.getPermissionedAccounts(
             'FRAX Ferry Bridge (Fraxtal)',
-            'owner',
+            'crewmembers',
           ),
-        ],
-      },
-      {
-        name: 'FPI Bridge Owner',
-        description:
-          'Has the same permissions as the above Bridge Owner, but only for the FPI and FPIS bridge contracts.',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'FPI Ferry Bridge (Fraxtal)',
-            'owner',
-          ),
-        ],
-      },
-      {
-        name: 'Captain',
-        description:
-          'Address authorized to post batch transaction data from the origin chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `Captain`. Please check the captain() method of the specific escrow smart contract you are interested in.',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'FRAX Ferry Bridge (Fraxtal)',
-            'captain',
-          ),
-        ],
-      },
-      {
-        name: 'First Officer',
-        description:
-          'Address authorized to distribute funds on the destination chain once the challenge period has passed. Note that there are over 60 frax ferry bridges smart contracts, each with its own `firstOfficer`. Please check the firstOfficer() method of the specific escrow smart contract you are interested in.',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'FRAX Ferry Bridge (Fraxtal)',
-            'firstOfficer',
-          ),
-        ],
-      },
-      {
-        name: 'Crew Members',
-        description:
-          'Addresses authorized to dispute batch transaction data on the destination chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `crew members`. Please check the crewmember() method of the specific escrow smart contract you are interested in.',
-        accounts: discovery.getPermissionedAccounts(
-          'FRAX Ferry Bridge (Fraxtal)',
-          'crewmembers',
-        ),
-      },
-    ],
+        },
+      ],
+    },
   },
 }

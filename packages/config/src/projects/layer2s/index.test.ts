@@ -294,20 +294,21 @@ describe('layer2s', () => {
 
           if (layer2.permissions === 'UnderReview') continue
 
-          const all = [
-            ...(layer2.permissions?.roles ?? []),
-            ...(layer2.permissions?.actors ?? []),
-          ]
-          for (const { name, references } of all) {
-            const referencedAddresses = getAddressFromReferences(references)
-            if (referencedAddresses.length === 0) continue
+          for (const perChain of Object.values(layer2.permissions ?? {})) {
+            const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
+            for (const { name, references } of all) {
+              const referencedAddresses = getAddressFromReferences(references)
+              if (referencedAddresses.length === 0) continue
 
-            it(`${layer2.id.toString()} : ${name}`, () => {
-              const contractAddresses = discovery.getAllContractAddresses()
-              expect(
-                contractAddresses.some((a) => referencedAddresses.includes(a)),
-              ).toEqual(true)
-            })
+              it(`${layer2.id.toString()} : ${name}`, () => {
+                const contractAddresses = discovery.getAllContractAddresses()
+                expect(
+                  contractAddresses.some((a) =>
+                    referencedAddresses.includes(a),
+                  ),
+                ).toEqual(true)
+              })
+            }
           }
         } catch {
           continue

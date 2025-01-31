@@ -138,33 +138,35 @@ export const opticsV2: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Governor',
-        accounts: [],
-        description:
-          'A multisig on Celo Network that manages all Optics V1 bridge components.',
-      },
-      ...discovery.getMultisigPermission(
-        'RecoveryManager',
-        'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
-      ),
-      {
-        name: 'Updater',
-        accounts: [
-          discovery.getPermissionedAccount('UpdaterManager', 'updater'),
-        ],
-        description: 'Permissioned account that can update message roots.',
-      },
-      {
-        name: 'XAppConnectionManager Watchers',
-        accounts: discovery.getPermissionedAccounts(
-          'XAppConnectionManager',
-          'watchers',
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Governor',
+          accounts: [],
+          description:
+            'A multisig on Celo Network that manages all Optics V1 bridge components.',
+        },
+        ...discovery.getMultisigPermission(
+          'RecoveryManager',
+          'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
         ),
-        description:
-          'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
-      },
-    ],
+        {
+          name: 'Updater',
+          accounts: [
+            discovery.getPermissionedAccount('UpdaterManager', 'updater'),
+          ],
+          description: 'Permissioned account that can update message roots.',
+        },
+        {
+          name: 'XAppConnectionManager Watchers',
+          accounts: discovery.getPermissionedAccounts(
+            'XAppConnectionManager',
+            'watchers',
+          ),
+          description:
+            'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
+        },
+      ],
+    },
   },
 }

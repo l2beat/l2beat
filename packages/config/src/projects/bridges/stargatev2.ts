@@ -355,37 +355,41 @@ export const stargatev2: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      ...(() => {
-        assert(
-          discoveredOAppOwners[0].address === discoveredOAppOwners[1].address &&
-            discoveredOAppOwners[1].address ===
-              discoveredDelegates[0].address &&
-            discoveredDelegates[0].address === discoveredDelegates[1].address &&
-            discoveredDelegates[1].address ===
-              discovery.getContract('Stargate Multisig').address,
-          'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
-        )
-        return [
-          ...discovery.getMultisigPermission(
-            'Stargate Multisig',
-            'Owner of all pools and the associated OApps, can create new pools and endpoints, set fees and modify the OApp configuration to change DVNs and executors.',
-          ),
-        ]
-      })(),
-      ...discovery.getMultisigPermission(
-        'LayerZero Multisig',
-        'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
-      ),
-      {
-        name: 'Planner',
-        accounts: [
-          discovery.getPermissionedAccount('CreditMessaging', 'planner'),
-        ],
-        description:
-          'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        ...(() => {
+          assert(
+            discoveredOAppOwners[0].address ===
+              discoveredOAppOwners[1].address &&
+              discoveredOAppOwners[1].address ===
+                discoveredDelegates[0].address &&
+              discoveredDelegates[0].address ===
+                discoveredDelegates[1].address &&
+              discoveredDelegates[1].address ===
+                discovery.getContract('Stargate Multisig').address,
+            'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
+          )
+          return [
+            ...discovery.getMultisigPermission(
+              'Stargate Multisig',
+              'Owner of all pools and the associated OApps, can create new pools and endpoints, set fees and modify the OApp configuration to change DVNs and executors.',
+            ),
+          ]
+        })(),
+        ...discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
+        ),
+        {
+          name: 'Planner',
+          accounts: [
+            discovery.getPermissionedAccount('CreditMessaging', 'planner'),
+          ],
+          description:
+            'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

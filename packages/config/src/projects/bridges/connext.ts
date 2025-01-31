@@ -106,15 +106,17 @@ export const connext: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Owner of TransactionManager',
-        description: 'Can add and remove Routers and supported assets.',
-        accounts: [
-          discovery.getPermissionedAccount('TransactionManager', 'owner'),
-        ],
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Owner of TransactionManager',
+          description: 'Can add and remove Routers and supported assets.',
+          accounts: [
+            discovery.getPermissionedAccount('TransactionManager', 'owner'),
+          ],
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

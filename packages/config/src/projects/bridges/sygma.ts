@@ -150,30 +150,32 @@ export const sygma: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'Admin Multisig',
-        'The admin multisig covers a set of administrative privileges, \
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'Admin Multisig',
+          'The admin multisig covers a set of administrative privileges, \
     including ability to configure handlers that contain logic for handling deposits/withdrawals for specific chains and assets.',
-      ),
-      ...discovery.getMultisigPermission(
-        'Community Multisig',
-        'This multisig has the ability to manually withdraw tokens from the bridge using adminWithdraw() method.',
-      ),
-      {
-        accounts: [
-          {
-            address: EthereumAddress(
-              '0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
-            ),
-            type: 'EOA',
-          },
-        ],
-        name: 'Pauser/Unpauser',
-        description:
-          'EOA address with the permission to pause/unpause the bridge.',
-      },
-    ],
+        ),
+        ...discovery.getMultisigPermission(
+          'Community Multisig',
+          'This multisig has the ability to manually withdraw tokens from the bridge using adminWithdraw() method.',
+        ),
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
+              ),
+              type: 'EOA',
+            },
+          ],
+          name: 'Pauser/Unpauser',
+          description:
+            'EOA address with the permission to pause/unpause the bridge.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

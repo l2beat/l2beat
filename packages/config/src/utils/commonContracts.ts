@@ -229,20 +229,19 @@ function getPermissionContainingAddress(
     return undefined
   }
 
-  const all = [
-    ...(project.permissions?.roles ?? []),
-    ...(project.permissions?.actors ?? []),
-  ]
+  for (const perChain of Object.values(project.permissions)) {
+    const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
 
-  for (const permission of all) {
-    if (permission.accounts.length > 1) {
-      continue
-    }
+    for (const permission of all) {
+      if (permission.accounts.length > 1) {
+        continue
+      }
 
-    if (
-      permission.accounts.map((a) => a.address.toString()).includes(address)
-    ) {
-      return permission
+      if (
+        permission.accounts.map((a) => a.address.toString()).includes(address)
+      ) {
+        return permission
+      }
     }
   }
 

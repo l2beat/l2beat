@@ -4,7 +4,7 @@ import {
 } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
-import type { ReferenceLink } from '../../../types'
+import type { ReferenceLink, ScalingProjectPermissions } from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
@@ -19,6 +19,27 @@ export function mergeBadges(
     (b) => badges[b].type !== 'Other' && badges[b].type !== 'VM',
   )
   return unionBy(rest, (b) => badges[b].type).concat(allowDuplicates)
+}
+
+export function mergePermissions(
+  base: Record<string, ScalingProjectPermissions>,
+  pushed: Record<string, ScalingProjectPermissions>,
+): Record<string, ScalingProjectPermissions> {
+  const result: Record<string, ScalingProjectPermissions> =
+    structuredClone(base)
+
+  for (const [key, value] of Object.entries(pushed)) {
+    result[key] ??= {}
+    if (value.roles !== undefined) {
+      result[key].roles = (result[key].roles ?? []).concat(value.roles)
+    }
+
+    if (value.actors !== undefined) {
+      result[key].actors = (result[key].actors ?? []).concat(value.actors)
+    }
+  }
+
+  return result
 }
 
 export function safeGetImplementation(
