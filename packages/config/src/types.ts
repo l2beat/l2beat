@@ -230,6 +230,8 @@ export interface ScalingProjectDisplay {
   stateValidationImage?: string
   /** Name of the upgrades and governance image to show in the upgrades and governance section if present, otherwise use slug */
   upgradesAndGovernanceImage?: string
+  /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
+  sequencingImage?: string
 }
 
 export interface ProjectEscrow {
@@ -464,6 +466,8 @@ export interface ScalingProjectTechnology {
   dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
+  /** What are the details about project sequencing */
+  sequencing?: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */

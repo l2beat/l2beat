@@ -19,6 +19,7 @@ import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-s
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
@@ -80,6 +81,7 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const sequencingSection = getSequencingSection(project)
 
   await Promise.all([
     api.tvs.chart.prefetch({
@@ -300,6 +302,17 @@ export async function getL2ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
+      },
+    })
+  }
+
+  if (sequencingSection) {
+    items.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
       },
     })
   }
