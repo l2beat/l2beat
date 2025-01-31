@@ -92,8 +92,8 @@ export interface ScalingProject {
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
-  /** Data availability solution */
-  dataAvailabilitySolution?: DaLayer
+  /** Details about the custom availability solution */
+  customDa?: CustomDa
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -796,6 +796,19 @@ export type EthereumDaBridge = Omit<DaBridge, 'risks'> & {
   callout: string
 }
 
+export interface CustomDa {
+  /** Will show the project name if not provided. */
+  name?: string
+  description?: string
+  type: string
+  isNoBridge?: boolean
+  risks: DaLayerRisks & DaBridgeRisks
+  technology: DaTechnology
+  dac?: DacInfo
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
+}
+
 export interface DaProject {
   type: 'DaLayer'
   id: ProjectId
@@ -828,7 +841,6 @@ export interface DaLayer {
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
   daTracking?: DaLayerTrackingConfig
-  otherConsiderations?: ProjectTechnologyChoice[]
 }
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
@@ -906,15 +918,10 @@ export interface DaBridge {
   isUnderReview?: boolean
   technology: DaTechnology
   usedIn: UsedInProject[]
-  otherConsiderations?: ProjectTechnologyChoice[]
   risks: DaBridgeRisks
+  dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
   permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
-  /** Data about the validation type of the bridge */
-  validation?: {
-    type: string
-  }
-  dac?: DacInfo
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts?: DaBridgeContracts
 }

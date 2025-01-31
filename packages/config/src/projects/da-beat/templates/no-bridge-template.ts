@@ -12,7 +12,6 @@ export interface TemplateVars {
   usedIn?: DaBridge['usedIn']
   description?: string
   technology?: DaBridge['technology']
-  otherConsiderations?: DaBridge['otherConsiderations']
 }
 
 export function NO_BRIDGE(template: TemplateVars): DaBridge {
@@ -52,6 +51,5 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
     risks,
     technology,
     usedIn,
-    otherConsiderations: template.otherConsiderations,
   }
 }

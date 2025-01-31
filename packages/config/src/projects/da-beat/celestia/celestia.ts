@@ -21,6 +21,7 @@ export const celestia: DaProject = {
       documentation: [
         'https://docs.celestia.org/',
         'https://docs.celestia.org/developers/blobstream',
+        'https://hackmd.io/@succinctlabs/HJE7XRrup',
       ],
       repositories: [
         'https://github.com/celestiaorg',

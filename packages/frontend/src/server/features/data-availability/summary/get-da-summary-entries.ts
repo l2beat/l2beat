@@ -145,32 +145,29 @@ function getDacEntries(
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry[] {
   const projects = [...layer2s, ...layer3s]
-    .filter((project) => project.dataAvailabilitySolution)
+    .filter((project) => project.customDa)
     .map((project) => ({
       parentProject: project,
-      daLayer: project.dataAvailabilitySolution,
-      bridge: project.dataAvailabilitySolution?.bridges[0],
+      daLayer: project.customDa,
     }))
 
   return projects
-    .map(({ parentProject, daLayer, bridge }) => {
-      if (!daLayer || !bridge) {
+    .map(({ parentProject, daLayer }) => {
+      if (!daLayer) {
         return undefined
       }
 
       const usedIn = toUsedInProject([parentProject])
       const tvs = getTvs([parentProject.id])
-      const dacInfo =
-        bridge.dac && !bridge.dac.hideMembers
-          ? {
-              memberCount: bridge.dac.membersCount,
-              requiredMembers: bridge.dac.requiredMembers,
-              membersArePublic:
-                !!bridge.dac.knownMembers && bridge.dac.knownMembers.length > 0,
-            }
-          : undefined
+      const dacInfo = daLayer.dac
+        ? {
+            memberCount: daLayer.dac.membersCount,
+            requiredMembers: daLayer.dac.requiredMembers,
+            membersArePublic:
+              !!daLayer.dac.knownMembers && daLayer.dac.knownMembers.length > 0,
+          }
+        : undefined
 
-      const bridgeRisks = getDaBridgeRisks(bridge)
       const bridgeEntry: DaBridgeSummaryEntry = {
         name: daLayer.name ?? `${parentProject.display.name} DAC`,
         slug: parentProject.display.slug,
@@ -178,25 +175,24 @@ function getDacEntries(
         statuses: {},
         tvs,
         risks: {
-          isNoBridge: bridgeRisks.isNoBridge,
-          values: mapBridgeRisksToRosetteValues(bridgeRisks),
+          isNoBridge: !!daLayer.isNoBridge,
+          values: mapBridgeRisksToRosetteValues(daLayer.risks),
         },
         dacInfo,
         usedIn,
       }
-      const daLayerRisks = getDaLayerRisks(daLayer, tvs)
 
       const projectEntry: DaSummaryEntry = {
         id: parentProject.id,
         slug: parentProject.display.slug,
         name: daLayer.name ?? `${parentProject.display.name} DAC`,
-        nameSecondLine: kindToType(daLayer.kind),
+        nameSecondLine: daLayer.type,
         href: `/scaling/projects/${parentProject.display.slug}#da-layer`,
         statuses: {},
-        risks: mapLayerRisksToRosetteValues(daLayerRisks),
+        risks: mapLayerRisksToRosetteValues(daLayer.risks),
         fallback: daLayer.fallback,
-        challengeMechanism: daLayer.challengeMechanism,
-        isPublic: daLayer.systemCategory === 'public',
+        challengeMechanism: daLayer.challengeMechanism ?? 'None',
+        isPublic: false,
         economicSecurity: undefined,
         tvs,
         bridges: [bridgeEntry],

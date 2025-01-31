@@ -104,9 +104,8 @@ export const xai: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: AnytrustDAC({
+    dac: {
       knownMembers: [
         {
           external: false,

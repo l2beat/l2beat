@@ -76,10 +76,5 @@ export const educhain: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1737096804),
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })

@@ -209,53 +209,50 @@ export const immutablex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      dac: {
-        knownMembers: [
-          {
-            external: false,
-            name: 'Immutable',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'StarkWare',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Deversifi',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Consensys',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Nethermind',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Iqlusion',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Infura',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-          {
-            external: true,
-            name: 'Cephalopod',
-            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-          },
-        ],
-      },
+  customDa: StarkexDAC({
+    dac: {
+      knownMembers: [
+        {
+          external: false,
+          name: 'Immutable',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'StarkWare',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Deversifi',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Consensys',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Nethermind',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Iqlusion',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Infura',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+        {
+          external: true,
+          name: 'Cephalopod',
+          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+        },
+      ],
     },
     discovery,
     risks: {

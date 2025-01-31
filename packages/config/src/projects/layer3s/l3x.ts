@@ -94,10 +94,5 @@ export const l3x: Layer3 = orbitStackL3({
       chain: 'blast',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })
