@@ -2,7 +2,7 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21738270,
-  "configHash": "0x3057e04e210b7a206147c0b907df7780a317d84a18c350e7a5e0d05304f01fa2",
+  "configHash": "0x0e024ee17c6f84c9c215af9a88293a9c45c09905112dac0c7215218a505219a8",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -325,6 +325,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

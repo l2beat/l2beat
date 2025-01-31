@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21737758,
-  "configHash": "0x11d3a8cbb5b097d8062dfd68674f21ee6ac8118c70937530f2cdf431f06af364",
+  "configHash": "0x78909a4c6c4ad4404f492074cc41fa97686aebe17de0e52e529653ad084aeca0",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -322,6 +322,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

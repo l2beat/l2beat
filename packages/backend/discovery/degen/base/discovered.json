@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 25722659,
-  "configHash": "0xc6405e241a1239b24939e4a43b671320200bbfe5bbb4b259830d5aab28a4d8e0",
+  "configHash": "0x9428f51b3b365ee9de27fb1e0285dfe5ecd1cd16d46b474c738e87956c8bf301",
   "contracts": [
     {
       "name": "OneStepProofEntry",
