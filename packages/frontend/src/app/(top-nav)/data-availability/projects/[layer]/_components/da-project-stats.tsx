@@ -131,11 +131,8 @@ export function getCommonDaProjectStats(
     value: // EC not set
       project.header.economicSecurity
         ? // EC set but not synced
-          project.header.economicSecurity.status === 'Synced'
-          ? formatCurrency(
-              project.header.economicSecurity.economicSecurity,
-              'usd',
-            )
+          project.header.economicSecurity !== undefined
+          ? formatCurrency(project.header.economicSecurity, 'usd')
           : 'Not synced'
         : EM_DASH,
     tooltip:

@@ -30,7 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   ChainConfig,
-  DacDaLayer,
+  DaLayer,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -45,6 +45,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -144,12 +145,13 @@ interface OrbitStackConfigCommon {
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
-  dataAvailabilitySolution?: DacDaLayer
+  dataAvailabilitySolution?: DaLayer
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -548,12 +550,14 @@ function orbitStackCommon(
     },
     permissions: discoveryDrivenSections
       ? discoveryDrivenSections.permissions
-      : [
-          sequencers,
-          validators,
-          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
+      : {
+          actors: [
+            sequencers,
+            validators,
+            ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
+        },
     nativePermissions: discoveryDrivenSections
       ? discoveryDrivenSections.nativePermissions
       : templateVars.nativePermissions,
@@ -741,7 +745,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -922,7 +929,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,

@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import type { DaServiceDaLayer } from '../../../types'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { DaProject } from '../../../types'
 import { aevo } from '../../layer2s/aevo'
 import { soon } from '../../layer2s/soon'
 import { donatuz } from '../../layer3s/donatuz'
@@ -8,11 +8,10 @@ import { NO_BRIDGE } from '../templates/no-bridge-template'
 import { toUsedInProject } from '../utils/to-used-in-project'
 import { eigenDAbridge } from './eigen-da-bridge'
 
-export const eigenDA: DaServiceDaLayer = {
-  id: 'eigen-da',
+export const eigenDA: DaProject = {
   type: 'DaLayer',
-  kind: 'DA Service',
-  systemCategory: 'public',
+  id: ProjectId('eigen-da'),
+  addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   display: {
     name: 'EigenDA',
     slug: 'eigenda',
@@ -26,8 +25,11 @@ export const eigenDA: DaServiceDaLayer = {
       socialMedia: ['https://x.com/eigen_da'],
     },
   },
-  technology: {
-    description: `
+  daLayer: {
+    kind: 'DA Service',
+    systemCategory: 'public',
+    technology: {
+      description: `
 
     ## Architecture
 
@@ -63,43 +65,44 @@ export const eigenDA: DaServiceDaLayer = {
     The EigenDARollupUtils.sol library's verifyBlob() function can then be used by L2s to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
     This function is not used by the EigenDAServiceManager contract itself, but rather by L2 systems to prove inclusion of the blob in the EigenDAServiceManager contract, and that their trust assumptions (i.e., batch confirmation threshold) were as expected.
   `,
-    references: [
-      {
-        title: 'EigenDA - Documentation',
-        url: 'https://docs.eigenda.xyz/overview',
-      },
-      {
-        title: 'EigenDA Disperser - Source Code',
-        url: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
-      },
-      {
-        title: 'EigenDA Rollup Utils - Source Code',
-        url: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
-      },
+      references: [
+        {
+          title: 'EigenDA - Documentation',
+          url: 'https://docs.eigenda.xyz/overview',
+        },
+        {
+          title: 'EigenDA Disperser - Source Code',
+          url: 'https://github.com/Layr-Labs/eigenda/blob/2ed86a0c1dd730b56c8235031c19e08a9837bde8/disperser/batcher/batcher.go',
+        },
+        {
+          title: 'EigenDA Rollup Utils - Source Code',
+          url: 'https://github.com/Layr-Labs/eigenda-utils/blob/c4cbc9ec078aeca3e4a04bd278e2fb136bf3e6de/src/libraries/EigenDARollupUtils.sol',
+        },
+      ],
+      risks: [
+        {
+          category: 'Users can be censored if',
+          text: 'the disperser does not distribute data to EigenDA operators.',
+        },
+      ],
+    },
+    bridges: [
+      NO_BRIDGE({
+        addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
+        layer: 'EigenDA',
+        description:
+          'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
+        technology: {
+          description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
+        },
+        usedIn: toUsedInProject([donatuz, aevo, soon]),
+      }),
+      eigenDAbridge,
     ],
-    risks: [
-      {
-        category: 'Users can be censored if',
-        text: 'the disperser does not distribute data to EigenDA operators.',
-      },
-    ],
-  },
-  bridges: [
-    NO_BRIDGE({
-      addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
-      layer: 'EigenDA',
-      description:
-        'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
-      technology: {
-        description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
-      },
-      usedIn: toUsedInProject([donatuz, aevo, soon]),
-    }),
-    eigenDAbridge,
-  ],
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
+      fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    },
   },
   milestones: [
     {

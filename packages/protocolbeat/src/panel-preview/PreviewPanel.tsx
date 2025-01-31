@@ -6,7 +6,7 @@ import { getPreview } from '../api/api'
 import type {
   AddressFieldValue,
   ApiPreviewContract,
-  ApiPreviewPermission,
+  ApiPreviewPermissions,
 } from '../api/types'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
@@ -72,22 +72,45 @@ function OptionsPanel(props: {
 }
 
 function PermissionsPreview(props: {
-  permissionsPerChain: { chain: string; permissions: ApiPreviewPermission[] }[]
+  permissionsPerChain: { chain: string; permissions: ApiPreviewPermissions }[]
   selectedAddress: string | undefined
   showOnlySelected: boolean
 }) {
   return props.permissionsPerChain
     .filter(({ permissions }) =>
       applyShowOnlySelectedFilter(
-        permissions.flatMap((p) => p.addresses),
+        [
+          ...permissions.roles.flatMap((p) => p.addresses),
+          ...permissions.actors.flatMap((p) => p.addresses),
+        ],
         props.selectedAddress,
         props.showOnlySelected,
       ),
     )
     .map(({ chain, permissions }) => (
       <div key={chain} className="border-b border-b-coffee-600 pb-2">
-        <SectionHeader title={`Permissions on ${chain}:`} />
-        {permissions.map((permission, idx) => {
+        <SectionHeader title={`Roles on ${chain}:`} />
+        {permissions.roles.map((permission, idx) => {
+          const isSelected = includesAddress(
+            permission.addresses,
+            props.selectedAddress,
+          )
+          if (props.showOnlySelected && !isSelected) {
+            return null
+          }
+          return (
+            <PreviewItem
+              key={idx}
+              name={permission.name}
+              addresses={permission.addresses}
+              multisigParticipants={permission.multisigParticipants}
+              description={permission.description}
+              isHighlighted={isSelected}
+            />
+          )
+        })}
+        <SectionHeader title={`Actors on ${chain}:`} />
+        {permissions.actors.map((permission, idx) => {
           const isSelected = includesAddress(
             permission.addresses,
             props.selectedAddress,

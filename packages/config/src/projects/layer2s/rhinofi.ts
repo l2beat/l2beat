@@ -183,32 +183,37 @@ export const rhinofi: Layer2 = {
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
-    },
-    ...discovery.getMultisigPermission(
-      'GovernanceMultisig',
-      'Has full power to upgrade the bridge implementation as a Governor.',
-    ),
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-    },
-    discovery.contractAsPermissioned(
-      // this multisig does not get recognized as such (because of the old proxy?)
-      discovery.getContract('DeversiFiTreasuryMultisig'),
-      'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
-    ),
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Governors',
+        accounts: getProxyGovernance(discovery, 'StarkExchange'),
+        description:
+          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+          delayDescriptionFromString(upgradeDelay),
+      },
+      ...discovery.getMultisigPermission(
+        'GovernanceMultisig',
+        'Has full power to upgrade the bridge implementation as a Governor.',
+      ),
+      committee,
+      ...getSHARPVerifierGovernors(discovery, verifierAddress),
+      {
+        name: 'Operators',
+        accounts: discovery.getPermissionedAccounts(
+          'StarkExchange',
+          'OPERATORS',
+        ),
+        description:
+          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
+      },
+      discovery.contractAsPermissioned(
+        // this multisig does not get recognized as such (because of the old proxy?)
+        discovery.getContract('DeversiFiTreasuryMultisig'),
+        'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
+      ),
+    ],
+  },
   milestones: [
     {
       title: 'Rebranding',

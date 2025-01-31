@@ -138,23 +138,28 @@ export const canvasconnect: Layer2 = {
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
-    },
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update state of the system. When Operator is down the state cannot be updated.',
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Governors',
+        accounts: getProxyGovernance(discovery, 'StarkExchange'),
+        description:
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+          delayDescriptionFromString(upgradeDelay),
+      },
+      committee,
+      ...getSHARPVerifierGovernors(discovery, verifierAddress),
+      {
+        name: 'Operators',
+        accounts: discovery.getPermissionedAccounts(
+          'StarkExchange',
+          'OPERATORS',
+        ),
+        description:
+          'Allowed to update state of the system. When Operator is down the state cannot be updated.',
+      },
+    ],
+  },
   milestones: [],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

@@ -35,6 +35,7 @@ import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
 import { socket } from './socket'
 import { sollet } from './sollet'
+import { sonicgateway } from './sonicgateway'
 import { stargate } from './stargate'
 import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
@@ -80,6 +81,7 @@ export const bridges: Bridge[] = [
   skaleIMA,
   socket,
   sollet,
+  sonicgateway,
   stargate,
   stargatev2,
   sygma,

@@ -282,16 +282,18 @@ export const arbitrum: Layer2 = orbitStackL2({
     ),
   ],
   nativePermissions: {
-    arbitrum: [
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilEmergency',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-      ),
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilPropose',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
-      ),
-    ],
+    arbitrum: {
+      actors: [
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilEmergency',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+        ),
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilPropose',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
+        ),
+      ],
+    },
   },
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {

@@ -1,23 +1,19 @@
 import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { compact, keyBy, round } from 'lodash'
+import { round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import type { EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
-export async function getDaProjectsEconomicSecurity(): Promise<
-  Record<string, EconomicSecurityData>
-> {
+export async function getDaProjectsEconomicSecurity(): Promise<ProjectsEconomicSecurity> {
   if (env.MOCK) {
     return getMockProjectsEconomicSecurityData()
   }
   return getProjectsEconomicSecurityData()
 }
 
-type ProjectsEconomicSecurity = Awaited<
-  ReturnType<typeof getProjectsEconomicSecurityData>
->
-async function getProjectsEconomicSecurityData() {
+type ProjectsEconomicSecurity = Record<string, number | undefined>
+
+async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
   // TODO: It's probably better to not fetch all data at once
   const db = getDb()
   const stakes = Object.fromEntries(
@@ -28,58 +24,40 @@ async function getProjectsEconomicSecurityData() {
     (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
   )
 
-  const arr = [...daLayers, ethereumDaLayer].map((daLayer) => {
-    if (
-      !(
-        daLayer.kind === 'PublicBlockchain' ||
-        daLayer.kind === 'EthereumDaLayer'
-      ) ||
-      !daLayer.economicSecurity
-    ) {
+  const arr = [...daLayers, ethereumDaLayer].map((project) => {
+    if (!project.daLayer.economicSecurity) {
       return undefined
     }
 
-    const id = daLayer.id
-    const thresholdStake = stakes[daLayer.economicSecurity.name]
+    const thresholdStake = stakes[project.daLayer.economicSecurity.name]
 
     if (!thresholdStake) {
-      return { id, status: 'StakeNotSynced' as const }
+      return undefined
     }
 
     const currentPrice =
-      currentPrices[daLayer.economicSecurity.token.coingeckoId]
+      currentPrices[project.daLayer.economicSecurity.token.coingeckoId]
 
     if (!currentPrice) {
-      return { id, status: 'CurrentPriceNotSynced' as const }
+      return undefined
     }
-    return {
-      id,
-      status: 'Synced' as const,
-      // We're intentionally trading precision for ease of use in Client Components
-      economicSecurity:
-        Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
-        10 ** daLayer.economicSecurity.token.decimals,
-    }
+    const economicSecurity =
+      Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
+      10 ** project.daLayer.economicSecurity.token.decimals
+    return [project.id, economicSecurity] as const
   })
 
-  return keyBy(compact(arr), 'id')
+  return Object.fromEntries(arr.filter(notUndefined))
 }
 
 function getMockProjectsEconomicSecurityData(): ProjectsEconomicSecurity {
   return Object.fromEntries(
     daLayers
-      .map((daLayer) => {
-        if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+      .map((project) => {
+        if (!project.daLayer.economicSecurity) {
           return undefined
         }
-        return [
-          daLayer.id,
-          {
-            id: daLayer.id,
-            status: 'Synced' as const,
-            economicSecurity: 100000,
-          },
-        ] as const
+        return [project.id, 100000] as const
       })
       .filter(notUndefined),
   )

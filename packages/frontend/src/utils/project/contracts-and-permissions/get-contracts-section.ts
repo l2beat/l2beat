@@ -1,6 +1,6 @@
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ProjectEscrow,
@@ -42,7 +42,7 @@ type ProjectParams = {
   escrows: ProjectEscrow[] | undefined
 } & (
   | {
-      type: (Layer2 | Bridge | DaLayer)['type']
+      type: (Layer2 | Bridge | DaProject)['type']
     }
   | {
       type: Layer3['type']

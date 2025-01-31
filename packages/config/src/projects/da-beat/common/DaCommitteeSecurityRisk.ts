@@ -1,4 +1,4 @@
-import type { IntegratedDacBridge, TableReadyValue } from '../../../types'
+import type { DacInfo, TableReadyValue } from '../../../types'
 
 function RobustAndDiverseCommittee(value?: string): TableReadyValue {
   return {
@@ -75,7 +75,7 @@ const NoBridge: TableReadyValue = {
 function AutoDAC(params: {
   membersCount: number
   requiredMembers: number
-  knownMembers: IntegratedDacBridge['knownMembers']
+  knownMembers: DacInfo['knownMembers']
 }): TableReadyValue {
   const sentiment = getDacSentiment(params)
   return {
@@ -96,7 +96,7 @@ function AutoDAC(params: {
 function getDacSentiment(params: {
   membersCount: number
   requiredMembers: number
-  knownMembers: IntegratedDacBridge['knownMembers']
+  knownMembers: DacInfo['knownMembers']
 }) {
   if (!params.knownMembers) return 'bad'
 

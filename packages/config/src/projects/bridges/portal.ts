@@ -162,18 +162,20 @@ export const portal: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 
-  permissions: [
-    {
-      name: 'Guardian Network',
-      description:
-        'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-      accounts: discovery.getPermissionedAccounts(
-        'WormholeCore',
-        'guardianSet',
-        0,
-      ),
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Guardian Network',
+        description:
+          'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
+        accounts: discovery.getPermissionedAccounts(
+          'WormholeCore',
+          'guardianSet',
+          0,
+        ),
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Wormhole introduces NTT for $W',

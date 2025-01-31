@@ -27,7 +27,7 @@ export function StageStat({
   const isMobile = useIsMobile()
 
   const content = (
-    <a href="#stage">
+    <a href="#stage" className="flex gap-2">
       <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
       {hasNotice && (
         <CircleQuestionMarkIcon
@@ -46,7 +46,7 @@ export function StageStat({
 
   return (
     <Tooltip>
-      <TooltipTrigger className="relative flex gap-2">{content}</TooltipTrigger>
+      <TooltipTrigger asChild>{content}</TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
       </TooltipContent>
