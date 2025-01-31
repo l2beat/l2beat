@@ -1,7 +1,7 @@
 {
   "name": "grvt",
   "chain": "zksync2",
-  "blockNumber": 54950317,
+  "blockNumber": 54952355,
   "configHash": "0xed839875460dbdb054581ad8b7f01fc2eb917feeec6d4178d0d9cc20706e1587",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [],

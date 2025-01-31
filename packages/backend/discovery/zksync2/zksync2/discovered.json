@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "zksync2",
-  "blockNumber": 54950139,
+  "blockNumber": 54952335,
   "configHash": "0xa4dd10b1a1692a20d411c7183f3606d0b891543544f80a2b450ddb0fc8c4f11c",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [],

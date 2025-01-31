@@ -87,16 +87,19 @@ export async function updateDiffHistory(
   const { content: historyFileFromMainBranch } =
     getFileVersionOnMainBranch(diffHistoryPath)
 
-  if (diff.length > 0 || configRelatedDiff.length > 0) {
-    let previousDescription = undefined
-    if (existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()) {
-      const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
-      previousDescription = findDescription(
-        diskDiffHistory,
-        historyFileFromMainBranch,
-      )
-    }
+  let previousDescription = undefined
+  const diffHistoryExists =
+    existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()
+  if (diffHistoryExists) {
+    const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
+    previousDescription = findDescription(
+      diskDiffHistory,
+      historyFileFromMainBranch,
+    )
+  }
 
+  const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
+  if (!diffHistoryExists || anyDiffs) {
     const newHistoryEntry = generateDiffHistoryMarkdown(
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
