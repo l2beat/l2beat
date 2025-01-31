@@ -30,7 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   ChainConfig,
-  DaLayer,
+  CustomDa,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -151,7 +151,7 @@ interface OrbitStackConfigCommon {
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
-  dataAvailabilitySolution?: DaLayer
+  customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -577,7 +577,7 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }

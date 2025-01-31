@@ -11,7 +11,6 @@ import type { ProjectsChangeReport } from '~/server/features/projects-change-rep
 import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
-import { getDaOtherConsiderationsSection } from './get-da-other-considerations-section'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 
 type RegularDetailsParams = {
@@ -63,11 +62,6 @@ export function getRegularDaProjectSections({
     daLayer,
     daBridge,
     isVerified,
-  )
-
-  const otherConsiderationsSection = getDaOtherConsiderationsSection(
-    daLayer,
-    daBridge,
   )
 
   const daLayerItems: ProjectDetailsSection[] = []
@@ -213,17 +207,6 @@ export function getRegularDaProjectSections({
     })
   }
 
-  if (otherConsiderationsSection.items.length > 0) {
-    items.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'other-considerations',
-        title: 'Other considerations',
-        ...otherConsiderationsSection,
-      },
-    })
-  }
-
   return items
 }
 
@@ -299,22 +282,6 @@ export function getEthereumDaProjectSections({
       ),
     },
   })
-
-  const otherConsiderationsSection = getDaOtherConsiderationsSection(
-    daLayer,
-    daBridge,
-  )
-
-  if (otherConsiderationsSection.items.length > 0) {
-    items.push({
-      type: 'TechnologySection',
-      props: {
-        id: 'other-considerations',
-        title: 'Other considerations',
-        ...otherConsiderationsSection,
-      },
-    })
-  }
 
   return items
 }

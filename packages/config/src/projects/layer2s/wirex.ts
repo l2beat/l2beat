@@ -168,13 +168,10 @@ export const wirex: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      dac: {
-        requiredMembers: requiredSignaturesDAC,
-        membersCount: membersCountDAC,
-      },
+  customDa: PolygoncdkDAC({
+    dac: {
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
     },
   }),
 })
