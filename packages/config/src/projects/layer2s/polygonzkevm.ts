@@ -227,7 +227,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ],
       verifiers: [
         {
-          name: 'PolygonZkEvmVerifier (current RollupType 5)',
+          name: 'PolygonZkEvmVerifier (old RollupType 5 and current RollupType 6)',
           description:
             'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
           verified: 'no',
