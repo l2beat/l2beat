@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -215,7 +214,7 @@ export const metis: Layer2 = {
     ],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Sequencer',

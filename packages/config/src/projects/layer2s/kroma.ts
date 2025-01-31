@@ -5,7 +5,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -397,7 +396,7 @@ export const kroma: Layer2 = {
       'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://specs.kroma.network/protocol/rollup-node.html#derivation).',
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Spectrum EOA Admin',

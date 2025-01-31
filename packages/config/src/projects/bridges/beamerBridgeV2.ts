@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
@@ -143,7 +142,7 @@ export const beamerbridgev2: Bridge = {
     risks: [],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Owner',

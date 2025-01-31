@@ -5,7 +5,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { ethereum } from '../../chains/ethereum'
 import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { addSentimentToDataAvailability } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -241,7 +240,7 @@ export const lightlink: Layer2 = {
     risks: [],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Validators',

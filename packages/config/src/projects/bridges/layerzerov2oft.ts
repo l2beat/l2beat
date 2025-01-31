@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -349,7 +348,7 @@ export const layerzerov2oft: Bridge = {
     ],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'LayerZero Multisig',

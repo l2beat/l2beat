@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -122,7 +121,7 @@ export const silicon: Layer2 = polygonCDKStack({
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the SiliconValidium contract.',
   },
   nonTemplatePermissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'LocalAdmin',

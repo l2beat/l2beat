@@ -1,6 +1,4 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-
-import { ethereum } from '../../chains/ethereum'
 import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -263,7 +261,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     l2TreasuryQuorumPercent,
   ),
   nonTemplatePermissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'SecurityCouncil',

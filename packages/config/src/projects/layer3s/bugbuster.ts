@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -172,7 +171,7 @@ export const bugbuster: Layer3 = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'BugBuster Owner',

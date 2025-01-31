@@ -6,7 +6,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DATA_ON_CHAIN,
@@ -483,7 +482,7 @@ export const taiko: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'TaikoAdmin',

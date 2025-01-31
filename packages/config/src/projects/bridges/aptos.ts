@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -119,7 +118,7 @@ export const aptos: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'Aptos Multisig',

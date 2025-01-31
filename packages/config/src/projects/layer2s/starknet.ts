@@ -7,7 +7,6 @@ import {
   formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -1097,7 +1096,7 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
     return description
   })(),
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Starknet Proxy Governors',

@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -297,7 +296,7 @@ export const termstructure: Layer2 = {
     ],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Admins',

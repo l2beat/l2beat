@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -137,7 +136,7 @@ export const symbiosis: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         discovery.contractAsPermissioned(
           discovery.getContract('Multisig'),

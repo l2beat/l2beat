@@ -5,7 +5,6 @@ import {
   formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -308,7 +307,7 @@ export const paradex: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'Paradex owner',

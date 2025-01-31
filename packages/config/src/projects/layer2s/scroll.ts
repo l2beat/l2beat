@@ -5,7 +5,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import {
   DA_BRIDGES,
@@ -700,7 +699,7 @@ export const scroll: Layer2 = {
     risks: [],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'ScrollOpsMultisig',

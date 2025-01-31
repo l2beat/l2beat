@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { ethereum } from '../../chains/ethereum'
 import { Badge } from '../badges'
 
 import {
@@ -248,7 +247,7 @@ export const degate2: Layer2 = {
     ],
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'DefaultDepositContract Owner',

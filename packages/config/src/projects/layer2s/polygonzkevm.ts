@@ -4,8 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
-import { ethereum } from '../../chains/ethereum'
 import {
   NEW_CRYPTOGRAPHY,
   NUGGETS,
@@ -90,7 +88,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     ],
   },
   nonTemplatePermissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         ...discovery.getMultisigPermission(
           'EscrowsAdmin',

@@ -7,7 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { ethereum } from '../../chains/ethereum'
 
 import {
   DA_BRIDGES,
@@ -364,7 +363,7 @@ export const degate3: Layer2 = {
     },
   },
   permissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'BlockVerifier Owner',

@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -129,7 +128,7 @@ export const witness: Layer2 = polygonCDKStack({
     },
   },
   nonTemplatePermissions: {
-    [ethereum.name]: {
+    [discovery.chain]: {
       actors: [
         {
           name: 'LocalAdmin',

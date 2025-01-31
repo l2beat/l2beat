@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import type { Bridge } from '../../types'
@@ -147,7 +146,7 @@ export const avalanche: Bridge = {
     risks: [],
   },
   permissions: {
-    [ethereum.name]: {
+    ethereum: {
       actors: [
         {
           name: 'Bridge Wardens',
