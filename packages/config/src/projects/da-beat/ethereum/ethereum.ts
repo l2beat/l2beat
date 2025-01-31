@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject, EthereumDaProject } from '../../../types'
+import type { EthereumDaProject } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
 
@@ -129,4 +129,4 @@ This method allows ZK rollups to prove that the data used in their validity proo
     },
     daTracking: 'ethereum',
   },
-} satisfies DaProject
+}
