@@ -1,10 +1,10 @@
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useCallback, useMemo } from 'react'
-import { type RecategorisedActivityChartData } from '~/server/features/scaling/activity/get-recategorised-activity-chart'
+import type { RecategorisedActivityChartData } from '~/server/features/scaling/activity/get-recategorised-activity-chart'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { getFirstTwoNonZeroPrecision } from '~/utils/get-first-two-non-zero-precision'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
-import { type SeriesStyle } from '../core/styles'
+import type { SeriesStyle } from '../core/styles'
 import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 

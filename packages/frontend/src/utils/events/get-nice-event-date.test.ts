@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { getNiceEventDate } from './get-nice-event-date'
-import { type OneTimeEvent } from './get-one-time-events'
+import type { OneTimeEvent } from './get-one-time-events'
 import { oneTimeEventMock } from './mocks'
 
 describe(getNiceEventDate.name, () => {

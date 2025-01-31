@@ -1,4 +1,36 @@
-Generated with discovered.json: 0x6eb2cda8a6d2b2f210c4a16c258bcfc4e69c5d44
+Generated with discovered.json: 0x0579d4ebfd325a928960fe5c53a7b9fed1742756
+
+# Diff at Thu, 30 Jan 2025 10:24:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 19825348
+- current block number: 21736735
+
+## Description
+
+Updates progHash, not found online, added to the library.
+
+## Watched changes
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      values.globalConfigurationHash:
+-        "0x01897348c8e7a04145727a7d369a76c01711a828d58afeca4c3e7d86596b85ba"
++        "0x0274c9dc2096cfe79c5f28f5bfb3a95b3bd0692430b4f9ba79f871068611804a"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953) {
+    +++ description: None
+      values.programHash:
+-        "3114724292040200590153042023978438629733352741898912919152162079752811928849"
++        "2530337539466159944237001094809327283009177793361359619481044346150483328860"
+    }
+```
+
+Generated with discovered.json: 0x9efaa4125824a49cd3c3eba891f97f65c0d9b99f
 
 # Diff at Mon, 20 Jan 2025 11:09:15 GMT:
 

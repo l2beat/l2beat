@@ -1,4 +1,62 @@
-Generated with discovered.json: 0x2ea23dfcebf2b10086b30016328fbc73da2c0446
+Generated with discovered.json: 0x41d55559d7cca352f8e83dfa0eaa1a1a08c7719e
+
+# Diff at Thu, 30 Jan 2025 10:30:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21628432
+- current block number: 21736764
+
+## Description
+
+One signer added to BaseMultisig2.
+
+## Watched changes
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.11:
++        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.$members.10:
+-        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
++        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
+      values.$members.9:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
+      values.$members.8:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+      values.$members.7:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.6:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
+      values.$members.5:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.$members.4:
+-        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
++        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+      values.$members.3:
+-        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
++        "0x26c72586FB396325F58718152FEFA94E93Cf177b"
+      values.$members.2:
+-        "0x26c72586FB396325F58718152FEFA94E93Cf177b"
++        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
+      values.$members.1:
+-        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
++        "0xe32868ec7762650DdE723e945D638A05900974F4"
+      values.$members.0:
+-        "0xe32868ec7762650DdE723e945D638A05900974F4"
++        "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E"
+      values.multisigThreshold:
+-        "3 of 11 (27%)"
++        "3 of 12 (25%)"
+    }
+```
+
+Generated with discovered.json: 0x09c4c15f9f3d239b189fbd7735a8ace022d54351
 
 # Diff at Tue, 21 Jan 2025 11:19:01 GMT:
 

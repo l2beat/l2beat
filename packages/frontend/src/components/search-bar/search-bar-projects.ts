@@ -1,5 +1,6 @@
-import { type Project, ProjectService } from '@l2beat/config'
-import { type SearchBarProject } from './search-bar-entry'
+import type { Project } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
+import type { SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
   const projects = await ProjectService.STATIC.getProjects({

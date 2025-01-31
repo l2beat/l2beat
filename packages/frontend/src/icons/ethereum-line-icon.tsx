@@ -1,5 +1,5 @@
 import { cn } from '~/utils/cn'
-import { type SvgIconProps } from './svg-icon'
+import type { SvgIconProps } from './svg-icon'
 
 export function EthereumLineIcon({ className, ...props }: SvgIconProps) {
   return (

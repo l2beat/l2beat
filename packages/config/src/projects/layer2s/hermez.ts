@@ -130,9 +130,9 @@ export const hermez: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         description:
-          EXITS.REGULAR('zk', 'merkle proof').description +
+          EXITS.REGULAR_WITHDRAWAL('zk').description +
           ' This operation cannot be performed if the withdrawal exceeds certain threshold.',
         risks: [],
         references: [

@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
-import { type BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 import { bridgesArchivedColumns } from './columns'

@@ -1,8 +1,8 @@
-import {
-  type ScalingProjectContract,
-  type ScalingProjectPermission,
-  daLayers,
+import type {
+  ScalingProjectContract,
+  ScalingProjectPermissions,
 } from '@l2beat/config'
+import { daLayers } from '@l2beat/config'
 import type { ScalingProject } from './get-scaling-project-entry'
 
 type Common = {
@@ -12,7 +12,7 @@ type Common = {
 }
 
 export type DaSolution = Common & {
-  permissions: ScalingProjectPermission[] | undefined
+  permissions: ScalingProjectPermissions | undefined
   contracts: ScalingProjectContract[] | undefined
 }
 
@@ -20,7 +20,7 @@ export type DaSolutionWith<T> = Common & T
 
 export function getDaSolution(project: ScalingProject): DaSolution | undefined {
   const layerBridgePairs = daLayers.flatMap((layer) =>
-    layer.bridges.flatMap((bridge) => ({ layer, bridge })),
+    layer.daLayer.bridges.flatMap((bridge) => ({ layer, bridge })),
   )
 
   const daSolution = layerBridgePairs.find((pair) =>
@@ -48,7 +48,7 @@ export function getDaSolution(project: ScalingProject): DaSolution | undefined {
       ? allDaBridgePermissions?.[hostChainSelector]
       : undefined
 
-  const daBridgeContracts = allDaBridgeContracts.addresses[hostChainSelector]
+  const daBridgeContracts = allDaBridgeContracts?.addresses[hostChainSelector]
 
   return {
     layerName: daSolution.layer.display.name,

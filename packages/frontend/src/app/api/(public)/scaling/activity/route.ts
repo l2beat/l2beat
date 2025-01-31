@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
-import { type NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 

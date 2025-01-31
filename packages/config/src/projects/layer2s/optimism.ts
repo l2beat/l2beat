@@ -435,7 +435,7 @@ export const optimism: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',

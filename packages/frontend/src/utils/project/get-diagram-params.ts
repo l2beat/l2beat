@@ -8,6 +8,7 @@ export type DiagramType =
   | 'finality'
   | 'da-layer-technology'
   | 'da-bridge-technology'
+  | 'sequencing'
 
 const diagramTypeToCaption: Record<DiagramType, string> = {
   architecture: 'A diagram of the smart contract architecture',
@@ -16,6 +17,7 @@ const diagramTypeToCaption: Record<DiagramType, string> = {
   finality: 'A diagram of the finality',
   'da-layer-technology': 'A diagram of the DA layer technology',
   'da-bridge-technology': 'A diagram of the DA bridge technology',
+  sequencing: 'A diagram of the sequencing technology',
 }
 
 export interface DiagramParams {

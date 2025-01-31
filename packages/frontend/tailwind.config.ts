@@ -173,6 +173,8 @@ const config: Config = {
         invert: 'hsl(var(--primary-invert))',
       },
       secondary: 'hsl(var(--secondary))',
+      positive: 'hsl(var(--positive))',
+      warning: 'hsl(var(--warning))',
       negative: 'hsl(var(--negative))',
       brand: 'hsl(var(--brand))',
       background: 'hsl(var(--background))',
@@ -190,7 +192,6 @@ const config: Config = {
         'hsl(var(--indicator-validiums-optimiums))',
       'indicator-others': 'hsl(var(--indicator-others))',
       'indicator-ethereum': 'hsl(var(--indicator-ethereum))',
-      positive: 'hsl(var(--positive))',
       'link-stroke': 'hsl(var(--link-stroke))',
       link: 'hsl(var(--link))',
     },
@@ -203,8 +204,8 @@ const config: Config = {
     },
     zIndex: {
       1: '1',
-      10: '10', // Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
-      20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
+      10: '10', // Chart logo and Y axis, Borders (TvsActivityToggle and DesktopTabs)
+      20: '20', // Chart canvas and loader, Items (DesktopTabs, TvsActivityToggle)
       25: '25',
       30: '30', // Chart hover line
       40: '40', // Milestones, Chart hover line point (squares and circles)

@@ -15,8 +15,8 @@ import {
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -38,7 +38,7 @@ export function ScalingArchivedTables(
   const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
-        (a, b) => b.tvlOrder - a.tvlOrder,
+        (a, b) => b.tvsOrder - a.tvsOrder,
       )
     : filteredEntries
 
@@ -53,6 +53,7 @@ export function ScalingArchivedTables(
     }
   }, [checked, entries.others, tab])
 
+  const showOthers = checked || entries.others.length > 0
   return (
     <>
       <ScalingUpcomingAndArchivedFilters
@@ -72,7 +73,7 @@ export function ScalingArchivedTables(
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -90,7 +91,7 @@ export function ScalingArchivedTables(
             <ScalingArchivedTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />

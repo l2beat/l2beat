@@ -168,23 +168,28 @@ export const immutablex: Layer2 = {
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governor',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
-    },
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update the state. When the Operator is down the state cannot be updated.',
-    },
-  ],
+  permissions: {
+    actors: [
+      {
+        name: 'Governor',
+        accounts: getProxyGovernance(discovery, 'StarkExchange'),
+        description:
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+          delayDescriptionFromString(upgradeDelay),
+      },
+      committee,
+      ...getSHARPVerifierGovernors(discovery, verifierAddress),
+      {
+        name: 'Operators',
+        accounts: discovery.getPermissionedAccounts(
+          'StarkExchange',
+          'OPERATORS',
+        ),
+        description:
+          'Allowed to update the state. When the Operator is down the state cannot be updated.',
+      },
+    ],
+  },
   milestones: [
     {
       title: 'Trading is live on Immutable X Marketplace',
@@ -207,48 +212,50 @@ export const immutablex: Layer2 = {
   dataAvailabilitySolution: StarkexDAC({
     bridge: {
       addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      knownMembers: [
-        {
-          external: false,
-          name: 'Immutable',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'StarkWare',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Deversifi',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Consensys',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Nethermind',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Iqlusion',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Infura',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-        {
-          external: true,
-          name: 'Cephalopod',
-          href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
-        },
-      ],
+      dac: {
+        knownMembers: [
+          {
+            external: false,
+            name: 'Immutable',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'StarkWare',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Deversifi',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Consensys',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Nethermind',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Iqlusion',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Infura',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+          {
+            external: true,
+            name: 'Cephalopod',
+            href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+          },
+        ],
+      },
     },
     discovery,
     risks: {

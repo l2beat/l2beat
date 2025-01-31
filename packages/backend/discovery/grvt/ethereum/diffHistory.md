@@ -1,4 +1,33 @@
-Generated with discovered.json: 0xf4379e5ea6066030901fc0a6cf152147242dc8cc
+Generated with discovered.json: 0xc269ffe9b44d3c480924ca91db8f5e5c8cecb94e
+
+# Diff at Thu, 30 Jan 2025 10:43:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21721209
+- current block number: 21736827
+
+## Description
+
+upgrade completed.
+
+## Watched changes
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        533
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        533
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0xd736970d8df850999330f41ea339a8663e282877
 
 # Diff at Wed, 29 Jan 2025 09:51:57 GMT:
 

@@ -1,9 +1,13 @@
 import type { Bridge } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import {
+  type ContractsVerificationStatuses,
+  ProjectId,
+} from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
-import { getTokensForProject } from '~/server/features/scaling/tvl/tokens/get-tokens-for-project'
-import { isTvlChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
+import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import { isTvsChartDataEmpty } from '~/server/features/utils/is-chart-data-empty'
+import { mergePermissions } from '~/server/features/utils/merge-permissions'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
@@ -22,8 +26,11 @@ export async function getBridgeProjectDetails(
           id: bridge.id,
           type: bridge.type,
           isUnderReview: !!bridge.isUnderReview,
-          permissions: bridge.permissions,
-          nativePermissions: bridge.nativePermissions,
+          permissions: mergePermissions(
+            bridge.permissions,
+            bridge.nativePermissions,
+            ProjectId.ETHEREUM,
+          ),
         },
         contractsVerificationStatuses,
       )
@@ -46,13 +53,13 @@ export async function getBridgeProjectDetails(
   const riskSummary = getBridgesRiskSummarySection(bridge, isVerified)
   const technologySection = getBridgeTechnologySection(bridge)
 
-  await api.tvl.chart.prefetch({
+  await api.tvs.chart.prefetch({
     range: '1y',
     filter: { type: 'projects', projectIds: [bridge.id] },
     excludeAssociatedTokens: false,
   })
-  const [tvlChartData, tokens] = await Promise.all([
-    api.tvl.chart({
+  const [tvsChartData, tokens] = await Promise.all([
+    api.tvs.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [bridge.id] },
       excludeAssociatedTokens: false,
@@ -62,11 +69,11 @@ export async function getBridgeProjectDetails(
 
   const items: ProjectDetailsSection[] = []
 
-  if (!bridge.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
+  if (!bridge.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
-        id: 'tvl',
+        id: 'tvs',
         title: 'Value Secured',
         projectId: bridge.id,
         tokens: tokens,

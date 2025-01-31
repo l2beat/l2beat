@@ -1,4 +1,72 @@
-Generated with discovered.json: 0xefba5cdca4bf5addd1b4b773d8e62009cde3cc31
+Generated with discovered.json: 0x67cfd123c63c29007f7a3b487b3ed8baa94de9c9
+
+# Diff at Thu, 30 Jan 2025 10:58:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 25417259
+- current block number: 25722659
+
+## Description
+
+Add 1/1 fastConfirmer.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","to":"0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xc207cbC35DD3CD172059730380A45aE14eb0e403"}]}
+      issuedPermissions.3:
++        {"permission":"validate","to":"0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.to:
+-        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.2.via.0:
++        {"address":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028"}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "fastconfirm"
+      issuedPermissions.1.to:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
+      issuedPermissions.1.via.0.address:
+-        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+      issuedPermissions.1.description:
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.1:
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DegenFastConfirmerMultisig (0xc207cbC35DD3CD172059730380A45aE14eb0e403)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DegenFastConfirmerMultisig/GnosisSafeL2.sol    | 1032 ++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
+Generated with discovered.json: 0x6c53dc37c04560e441e33841b7872f63689aa38e
 
 # Diff at Fri, 24 Jan 2025 10:54:05 GMT:
 

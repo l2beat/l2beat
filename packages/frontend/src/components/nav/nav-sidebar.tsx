@@ -10,7 +10,7 @@ import { NavLinkGroup } from './nav-link-group'
 import { NavSideBarWrapper } from './nav-sidebar-wrapper'
 import { NavSmallLink } from './nav-small-link'
 import { NavSmallLinkGroup } from './nav-small-link-group'
-import { type NavGroup } from './types'
+import type { NavGroup } from './types'
 
 interface Props {
   groups: NavGroup[]

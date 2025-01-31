@@ -1,32 +1,47 @@
-import { type StageConfig } from '@l2beat/config'
+import type { StageConfig } from '@l2beat/config'
 
-import { StageBadge } from '~/components/badge/stage-badge'
+import {
+  StageBadge,
+  getStageTextClassname,
+} from '~/components/badge/stage-badge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { useIsMobile } from '~/hooks/use-breakpoint'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
   stageConfig: StageConfig
+  isAppchain: boolean
 }
 
-export function StageCell({ stageConfig }: StageCellProps) {
-  const isMobile = useIsMobile()
-
-  if (stageConfig.stage === 'NotApplicable' || isMobile) {
-    return <StageBadge stage={stageConfig.stage} />
-  }
+export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
+  const hasNotice =
+    stageConfig.stage !== 'UnderReview' &&
+    stageConfig.stage !== 'NotApplicable' &&
+    !!stageConfig.additionalConsiderations
 
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <StageBadge stage={stageConfig.stage} />
+      <TooltipTrigger
+        className="flex gap-1 max-md:pb-[5px] max-md:pt-2"
+        disabledOnMobile
+      >
+        <StageBadge stage={stageConfig.stage} isAppchain={isAppchain} />
+        {hasNotice && (
+          <CircleQuestionMarkIcon
+            className={cn(
+              'mt-px size-5 fill-current',
+              getStageTextClassname(stageConfig.stage),
+            )}
+          />
+        )}
       </TooltipTrigger>
-      <TooltipContent>
-        <StageTooltip stageConfig={stageConfig} />
+      <TooltipContent className="max-w-[360px]">
+        <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />
       </TooltipContent>
     </Tooltip>
   )

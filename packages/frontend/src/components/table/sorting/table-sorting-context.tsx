@@ -1,13 +1,8 @@
 'use client'
 
-import { type ColumnSort, type SortingState } from '@tanstack/react-table'
-import {
-  type Dispatch,
-  type SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from 'react'
+import type { ColumnSort, SortingState } from '@tanstack/react-table'
+import type { Dispatch, SetStateAction } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const TableSortingContext = createContext<{
   sorting: SortingState

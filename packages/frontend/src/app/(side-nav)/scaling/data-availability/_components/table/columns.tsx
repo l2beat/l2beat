@@ -1,15 +1,15 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
-  TypeCell,
   TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
+  TypeInfo,
+} from '~/components/table/cells/type-info'
 import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
+import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 
@@ -21,7 +21,7 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
     ),
     sortingFn: (a, b) => {
       const categoryCompare = a.original.category.localeCompare(

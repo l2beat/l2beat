@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { StageTooltip } from './stage-tooltip'
 
 const meta = {
@@ -20,6 +20,22 @@ export const Default: Story = {
       message: undefined,
       summary: [],
     },
+    isAppchain: false,
+  },
+}
+
+export const Appchain: Story = {
+  args: {
+    stageConfig: {
+      stage: 'Stage 1',
+      missing: {
+        nextStage: 'Stage 2',
+        requirements: ['A requirement'],
+      },
+      message: undefined,
+      summary: [],
+    },
+    isAppchain: true,
   },
 }
 
@@ -37,6 +53,7 @@ export const WithWarning: Story = {
       },
       summary: [],
     },
+    isAppchain: false,
   },
 }
 
@@ -54,5 +71,6 @@ export const WithUnderReview: Story = {
       },
       summary: [],
     },
+    isAppchain: false,
   },
 }

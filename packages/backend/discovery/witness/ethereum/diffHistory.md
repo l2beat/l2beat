@@ -1,4 +1,32 @@
-Generated with discovered.json: 0xf4a2ba2fd94a56f138e3f7046ea71111b26ee9aa
+Generated with discovered.json: 0x78986379d539a0aa69ee08fbe20a6905566ab50a
+
+# Diff at Thu, 30 Jan 2025 10:51:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21715800
+- current block number: 21736867
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715800 (main branch discovery), not current.
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      sourceHashes:
+-        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+      unverified:
++        true
+    }
+```
+
+Generated with discovered.json: 0x3085d9b67acb58b979c0dcf47d1a8c4a37ec9a67
 
 # Diff at Wed, 29 Jan 2025 09:52:46 GMT:
 

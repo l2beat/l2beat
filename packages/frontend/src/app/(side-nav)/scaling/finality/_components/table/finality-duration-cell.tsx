@@ -9,7 +9,7 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
+import type { FinalityDataPoint } from '~/server/features/scaling/finality/schema'
 import { DurationCell } from './duration-cell'
 import { SyncStatusWrapper } from './sync-status-wrapper'
 

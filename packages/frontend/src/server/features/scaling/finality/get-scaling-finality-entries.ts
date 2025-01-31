@@ -1,24 +1,20 @@
-import {
-  type Project,
-  ProjectService,
-  type ScalingProjectCategory,
-  type ScalingProjectStack,
-  type TableReadyValue,
-  type WarningWithSentiment,
+import type {
+  Project,
+  ScalingProjectCategory,
+  ScalingProjectStack,
+  TableReadyValue,
+  WarningWithSentiment,
 } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { groupByTabs } from '~/utils/group-by-tabs'
-import {
-  type ProjectChanges,
-  getProjectsChangeReport,
-} from '../../projects-change-report/get-projects-change-report'
-import {
-  type CommonScalingEntry,
-  getCommonScalingEntry,
-} from '../get-common-scaling-entry'
-import { getProjectsLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
-import { compareStageAndTvl } from '../utils/compare-stage-and-tvl'
+import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
+import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import type { CommonScalingEntry } from '../get-common-scaling-entry'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getProjectsLatestTvsUsd } from '../tvs/utils/get-latest-tvs-usd'
+import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 import { getFinality } from './get-finality'
-import { type FinalityProjectData } from './schema'
+import type { FinalityProjectData } from './schema'
 import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
@@ -35,9 +31,9 @@ export async function getFinalityProjects() {
 export async function getScalingFinalityEntries() {
   const projects = await getFinalityProjects()
 
-  const [finality, tvl, projectsChangeReport] = await Promise.all([
+  const [finality, tvs, projectsChangeReport] = await Promise.all([
     getFinality(projects),
-    getProjectsLatestTvlUsd(),
+    getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
   ])
 
@@ -47,11 +43,11 @@ export async function getScalingFinalityEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         finality[project.id.toString()],
-        tvl[project.id],
+        tvs[project.id],
       ),
     )
     .filter((x) => x !== undefined)
-    .sort(compareStageAndTvl)
+    .sort(compareStageAndTvs)
 
   return groupByTabs(entries)
 }
@@ -76,14 +72,14 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
     isSynced: boolean
   }
   finalizationPeriod: number | undefined
-  tvlOrder: number
+  tvsOrder: number
 }
 
 function getScalingFinalityEntry(
   project: Project<'scalingInfo' | 'statuses' | 'finalityInfo', 'scalingDa'>,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
-  tvl: number | undefined,
+  tvs: number | undefined,
 ): ScalingFinalityEntry | undefined {
   if (!finalityProjectData) {
     return
@@ -113,6 +109,6 @@ function getScalingFinalityEntry(
       isSynced: !syncWarning,
     },
     finalizationPeriod: project.finalityInfo.finalizationPeriod,
-    tvlOrder: tvl ?? -1,
+    tvsOrder: tvs ?? -1,
   }
 }

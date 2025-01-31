@@ -1,31 +1,16 @@
 import type {
-  BlockchainDaLayer,
+  DaBridge,
   DaBridgeRisks,
+  DaLayer,
   DaLayerRisks,
-  DaServiceDaLayer,
-  DacDaLayer,
-  IntegratedDacBridge,
-  NoDaBridge,
-  NoDacBridge,
-  OnChainDaBridge,
-  StandaloneDacBridge,
   TableReadyValue,
 } from '@l2beat/config'
-import type { EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
-
-type Layer = BlockchainDaLayer | DacDaLayer | DaServiceDaLayer
-type Bridge =
-  | NoDaBridge
-  | OnChainDaBridge
-  | StandaloneDacBridge
-  | IntegratedDacBridge
-  | NoDacBridge
 
 export function getDaRisks(
-  daLayer: Layer,
-  daBridge: Bridge,
+  daLayer: DaLayer,
+  daBridge: DaBridge,
   totalValueSecured: number,
-  economicSecurity?: EconomicSecurityData,
+  economicSecurity?: number,
 ): DaBridgeRisks & DaLayerRisks {
   return {
     ...getDaLayerRisks(daLayer, totalValueSecured, economicSecurity),
@@ -34,9 +19,9 @@ export function getDaRisks(
 }
 
 export function getDaLayerRisks(
-  daLayer: Layer,
+  daLayer: DaLayer,
   totalValueSecured: number,
-  economicSecurity?: EconomicSecurityData,
+  economicSecurity?: number,
 ) {
   return {
     economicSecurity: getEconomicSecurity(
@@ -48,7 +33,7 @@ export function getDaLayerRisks(
   }
 }
 
-export function getDaBridgeRisks(daBridge: Bridge) {
+export function getDaBridgeRisks(daBridge: DaBridge) {
   return {
     isNoBridge: daBridge.type === 'NoBridge' || daBridge.type === 'NoDacBridge',
     relayerFailure: daBridge.risks.relayerFailure,
@@ -58,28 +43,25 @@ export function getDaBridgeRisks(daBridge: Bridge) {
 }
 
 function getEconomicSecurity(
-  daLayer: Layer,
+  daLayer: DaLayer,
   totalValueSecured: number,
-  economicSecurity?: EconomicSecurityData,
-) {
+  economicSecurity?: number,
+): TableReadyValue {
   // TODO: This feels wrong!
   const shouldCalculate =
     daLayer.risks.economicSecurity.value === 'Staked assets'
-  const hasData = economicSecurity?.status === 'Synced' && totalValueSecured > 0
+  const hasData = economicSecurity !== undefined && totalValueSecured > 0
 
   if (!shouldCalculate || !hasData) {
     return daLayer.risks.economicSecurity
   }
 
-  const sentiment = adjustSentiment(
-    totalValueSecured,
-    economicSecurity.economicSecurity,
-  )
+  const sentiment = adjustSentiment(totalValueSecured, economicSecurity)
 
   return {
     ...daLayer.risks.economicSecurity,
     sentiment,
-  } as TableReadyValue
+  }
 }
 
 function adjustSentiment(totalValueSecured: number, slashableFunds: number) {

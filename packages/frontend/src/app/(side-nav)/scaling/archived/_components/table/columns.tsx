@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
-import { TypeExplanationTooltip } from '~/components/table/cells/type-cell'
-import { TypeCell } from '~/components/table/cells/type-cell'
+import { TypeExplanationTooltip } from '~/components/table/cells/type-info'
+import { TypeInfo } from '~/components/table/cells/type-info'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
-import { type ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
@@ -34,7 +34,7 @@ export const scalingArchivedColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
@@ -44,7 +44,7 @@ export const scalingArchivedColumns = [
     header: 'Purpose',
     cell: (ctx) => ctx.row.original.purposes.join(', '),
   }),
-  columnHelper.accessor('totalTvl', {
+  columnHelper.accessor('totalTvs', {
     id: 'total',
     header: 'Total value secured',
     cell: (ctx) => {
@@ -60,14 +60,14 @@ export const scalingArchivedColumns = [
       )
     },
     sortingFn: ({ original: a }, { original: b }) => {
-      const aTvl = a.totalTvl ?? 0
-      const bTvl = b.totalTvl ?? 0
+      const aTvs = a.totalTvs ?? 0
+      const bTvs = b.totalTvs ?? 0
 
-      if (aTvl === bTvl) {
+      if (aTvs === bTvs) {
         return b.name.localeCompare(a.name)
       }
 
-      return aTvl - bTvl
+      return aTvs - bTvs
     },
     meta: {
       align: 'right',

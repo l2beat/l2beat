@@ -10,10 +10,14 @@ import {
 } from '~/components/core/directory-tabs'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { type TabbedScalingEntries } from '~/utils/group-by-tabs'
+import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
@@ -37,7 +41,7 @@ export function ScalingLivenessTables(props: Props) {
   const entries = checked
     ? getRecategorisedEntries(
         filteredEntries,
-        (a, b) => b.tvlOrder - a.tvlOrder,
+        (a, b) => b.tvsOrder - a.tvsOrder,
       )
     : filteredEntries
 
@@ -69,6 +73,8 @@ export function ScalingLivenessTables(props: Props) {
     }
   }, [checked, entries.others, tab])
 
+  const showOthers = checked || entries.others.length > 0
+
   return (
     <>
       <Controls
@@ -83,7 +89,11 @@ export function ScalingLivenessTables(props: Props) {
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.others.length > 0 && (
+          <DirectoryTabsTrigger value="validiumsAndOptimiums">
+            Validiums & Optimiums{' '}
+            <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          {showOthers && (
             <DirectoryTabsTrigger value="others">
               Others <CountBadge>{entries.others.length}</CountBadge>
             </DirectoryTabsTrigger>
@@ -95,7 +105,13 @@ export function ScalingLivenessTables(props: Props) {
             <ScalingLivenessTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {entries.others.length > 0 && (
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="validiumsAndOptimiums">
+            <ValidiumsAndOptimiumsInfo />
+            <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />

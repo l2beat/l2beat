@@ -316,6 +316,46 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
+  describe(ActivityRepository.prototype.getLatestProcessedBlock.name, () => {
+    it('should return the latest processed block for a project', async () => {
+      const projectId = ProjectId('a')
+      const timestamp = UnixTime.now()
+
+      await repository.upsertMany([
+        record(projectId.toString(), timestamp, 1, null, 1, 100),
+        record(
+          projectId.toString(),
+          timestamp.add(1, 'days'),
+          2,
+          null,
+          101,
+          200,
+        ),
+        record(
+          projectId.toString(),
+          timestamp.add(2, 'days'),
+          3,
+          null,
+          201,
+          300,
+        ),
+        record(ProjectId('other'), timestamp.add(3, 'days'), 4, null, 301, 400),
+      ])
+
+      const latestBlock = await repository.getLatestProcessedBlock(projectId)
+
+      expect(latestBlock).toEqual(300)
+    })
+
+    it('should return undefined if no records exist for the project', async () => {
+      const projectId = ProjectId('b')
+
+      const latestBlock = await repository.getLatestProcessedBlock(projectId)
+
+      expect(latestBlock).toEqual(undefined)
+    })
+  })
+
   afterEach(async function () {
     await repository.deleteAll()
   })

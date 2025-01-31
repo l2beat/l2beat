@@ -3,7 +3,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
 import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
 

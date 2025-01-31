@@ -4,7 +4,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 import { GrissiniIcon } from './grissini-icon'
 import { GrissiniTooltip } from './grissini-tooltip'
 

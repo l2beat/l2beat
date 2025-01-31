@@ -115,6 +115,11 @@ const nextConfig = {
         destination: '/scaling/projects/:name/tvs-breakdown',
         permanent: true,
       },
+      {
+        source: '/data-availability/projects/:name/dac',
+        destination: '/scaling/projects/:name',
+        permanent: true,
+      },
     ]
   },
   // biome-ignore lint/suspicious/useAwait: rewrites must be async

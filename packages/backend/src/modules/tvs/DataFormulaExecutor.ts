@@ -170,7 +170,7 @@ export class DataFormulaExecutor {
       return prices.map(async (price) => {
         const cachedValue = await this.storage.getPrice(price.ticker, timestamp)
         if (cachedValue !== undefined) {
-          this.logger.info(`Cached value found for ${price.ticker}`)
+          this.logger.debug(`Cached value found for ${price.ticker}`)
           return
         }
         const v = await this.fetchPrice(price, timestamp)
@@ -256,7 +256,7 @@ export class DataFormulaExecutor {
     for (const chain of chains) {
       const block = this.blockProviders.get(chain)
       assert(block, `${chain}: No BlockProvider configured`)
-      this.logger.info(
+      this.logger.debug(
         `Fetching latest block number for timestamp ${timestamp.toNumber()} on ${chain}`,
       )
       const latestBlock = await block.getLatestBlockNumber()

@@ -1,6 +1,6 @@
 import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
-import { type LivenessTimeRange } from '~/server/features/scaling/liveness/types'
+import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
 
 interface Props {

@@ -23,7 +23,7 @@ const discovery = new ProjectDiscovery('fuelv1')
 export const fuelv1: Layer2 = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
@@ -146,7 +146,7 @@ export const fuelv1: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [
           {
             title: 'Withdraw.yulp#L40 - Fuel documentation',

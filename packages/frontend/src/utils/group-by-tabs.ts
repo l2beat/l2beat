@@ -1,4 +1,4 @@
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import type { CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type TabbedScalingEntries<T extends CommonScalingEntry> = {
   rollups: T[]

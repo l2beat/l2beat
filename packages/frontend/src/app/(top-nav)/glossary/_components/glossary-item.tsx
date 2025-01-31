@@ -1,5 +1,5 @@
 import { CopyButton } from '~/components/copy-button'
-import { type CollectionEntry } from '~/content/get-collection'
+import type { CollectionEntry } from '~/content/get-collection'
 import { ChiliIcon } from '~/icons/chili'
 
 interface Props {

@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import matter from 'gray-matter'
-import { type z } from 'zod'
+import type { z } from 'zod'
 
 import { startsWithLetterOrNumber } from '~/utils/starts-with-letter-or-number'
 import { collections } from './collections'

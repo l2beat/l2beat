@@ -1,4 +1,5 @@
-import { type VariantProps, cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import NextLink from 'next/link'
 import React from 'react'
 

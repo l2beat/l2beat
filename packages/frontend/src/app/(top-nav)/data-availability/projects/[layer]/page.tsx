@@ -14,7 +14,7 @@ export default async function RedirectPage(props: Props) {
   const project = [...daLayers, ethereumDaLayer].find(
     (p) => p.display.slug === layer,
   )
-  const firstBridge = project?.bridges[0]
+  const firstBridge = project?.daLayer.bridges[0]
   if (!project || !firstBridge) {
     return notFound()
   }

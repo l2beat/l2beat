@@ -10,16 +10,17 @@ import {
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
+import { TwoRowCell } from '~/components/table/cells/two-row-cell'
 import {
-  TypeCell,
   TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
+  TypeInfo,
+} from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/sort-stages'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
-import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
+import type { ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -40,7 +41,16 @@ export const scalingSummaryColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell stack={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TwoRowCell>
+        <TwoRowCell.First>
+          <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+        </TwoRowCell.First>
+        {ctx.row.original.capability === 'appchain' && (
+          <TwoRowCell.Second>
+            {ctx.row.original.purposes.sort().join(', ')}
+          </TwoRowCell.Second>
+        )}
+      </TwoRowCell>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip />,
@@ -58,7 +68,12 @@ export const scalingSummaryColumns = [
     },
     {
       id: 'stage',
-      cell: (ctx) => <StageCell stageConfig={ctx.row.original.stage} />,
+      cell: (ctx) => (
+        <StageCell
+          stageConfig={ctx.row.original.stage}
+          isAppchain={ctx.row.original.capability === 'appchain'}
+        />
+      ),
       sortingFn: sortStages,
       sortUndefined: 'last',
       meta: {
@@ -68,18 +83,18 @@ export const scalingSummaryColumns = [
   ),
   columnHelper.accessor(
     (e) => {
-      return e.tvl?.breakdown?.total
+      return e.tvs?.breakdown?.total
     },
     {
       id: 'total',
       header: 'Total value secured',
       cell: (ctx) => {
-        const value = ctx.row.original.tvl
+        const value = ctx.row.original.tvs
 
         return (
           <TotalCell
             associatedTokenSymbols={value.associatedTokens}
-            tvlWarnings={value.warnings}
+            tvsWarnings={value.warnings}
             breakdown={value.breakdown}
             change={value.change}
           />

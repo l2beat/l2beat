@@ -1,6 +1,8 @@
-import { type VariantProps, cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import { cn } from '~/utils/cn'
-import { SvgIcon, type SvgIconProps } from './svg-icon'
+import type { SvgIconProps } from './svg-icon'
+import { SvgIcon } from './svg-icon'
 
 const infoVariants = cva(undefined, {
   variants: {

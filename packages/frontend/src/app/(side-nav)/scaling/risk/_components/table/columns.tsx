@@ -5,7 +5,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 

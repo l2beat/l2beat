@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
-import { type LivenessTimeRange } from '~/server/features/scaling/liveness/types'
+import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 
 interface Props {
   timeRange: LivenessTimeRange

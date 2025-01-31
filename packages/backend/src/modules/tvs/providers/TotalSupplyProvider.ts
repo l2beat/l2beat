@@ -21,7 +21,7 @@ export class TotalSupplyProvider {
 
     const calldata = erc20Interface.encodeFunctionData('totalSupply', [])
 
-    const response = await rpc.callWithMulticall(
+    const response = await rpc.call(
       { to: address, data: Bytes.fromHex(calldata) },
       blockNumber,
     )

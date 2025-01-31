@@ -18,14 +18,6 @@ export const HotShotLightClient = {
     name: 'HotShot Light Client',
     slug: 'hotshot',
     description: `The HotShot Light Client is a data availability bridge using Zero-Knowledge proofs to verify Espresso HotShot data availability attestations on Ethereum.`,
-    links: {
-      documentation: [
-        'https://docs.espressosys.com/network/espresso-architecture/the-espresso-network/internal-functionality/light-client',
-      ],
-      repositories: [
-        'https://github.com/EspressoSystems/espresso-sequencer/tree/main/contracts',
-      ],
-    },
   },
   contracts: {
     addresses: {
@@ -75,127 +67,128 @@ export const HotShotLightClient = {
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
-  requiredMembers: 67, // 2/3 + 1
-  membersCount: 100, // max allowed node operators
-  knownMembers: [
-    // key mapping: https://docs.google.com/spreadsheets/d/1GB9HYE7T25QLJQoa2TuA4c43oHk-t8uWkychRNuMcpg/edit?gid=0#gid=0
-    {
-      external: true,
-      name: '01node Validator',
-      href: 'https://x.com/EspressoSys/status/1861106651471978614',
-    },
-    {
-      external: true,
-      name: 'Blockdaemon',
-      href: 'https://x.com/EspressoSys/status/1861106663354442095',
-    },
-    {
-      external: true,
-      name: 'BlockPI',
-      href: 'https://x.com/EspressoSys/status/1861106675278848329',
-    },
-    {
-      external: true,
-      name: 'ChorusOne',
-      href: 'https://x.com/EspressoSys/status/1861106687115173990',
-    },
-    {
-      external: true,
-      name: 'deNodes',
-      href: 'https://x.com/EspressoSys/status/1861106698825670830',
-    },
-    {
-      external: true,
-      name: 'Figment',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Finoa Consensus Services (FCS)',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Imperator.co',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Informal Systems',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Kiln',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'KudasaiJP',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'LinkPool',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Luganodes',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Nethermind',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Node Guardians',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'P2P Validator',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Pier Two',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Staked',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Sub7',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Treasure DAO',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Unit 410',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'Validation Cloud',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-    {
-      external: true,
-      name: 'ZKV',
-      href: 'https://x.com/EspressoSys/status/1861106639690178610',
-    },
-  ],
-  transactionDataType: 'Transaction data',
+  dac: {
+    requiredMembers: 67, // 2/3 + 1
+    membersCount: 100, // max allowed node operators
+    knownMembers: [
+      // key mapping: https://docs.google.com/spreadsheets/d/1GB9HYE7T25QLJQoa2TuA4c43oHk-t8uWkychRNuMcpg/edit?gid=0#gid=0
+      {
+        external: true,
+        name: '01node Validator',
+        href: 'https://x.com/EspressoSys/status/1861106651471978614',
+      },
+      {
+        external: true,
+        name: 'Blockdaemon',
+        href: 'https://x.com/EspressoSys/status/1861106663354442095',
+      },
+      {
+        external: true,
+        name: 'BlockPI',
+        href: 'https://x.com/EspressoSys/status/1861106675278848329',
+      },
+      {
+        external: true,
+        name: 'ChorusOne',
+        href: 'https://x.com/EspressoSys/status/1861106687115173990',
+      },
+      {
+        external: true,
+        name: 'deNodes',
+        href: 'https://x.com/EspressoSys/status/1861106698825670830',
+      },
+      {
+        external: true,
+        name: 'Figment',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Finoa Consensus Services (FCS)',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Imperator.co',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Informal Systems',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Kiln',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'KudasaiJP',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'LinkPool',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Luganodes',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Nethermind',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Node Guardians',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'P2P Validator',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Pier Two',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Staked',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Sub7',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Treasure DAO',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Unit 410',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'Validation Cloud',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+      {
+        external: true,
+        name: 'ZKV',
+        href: 'https://x.com/EspressoSys/status/1861106639690178610',
+      },
+    ],
+  },
   usedIn: [],
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(

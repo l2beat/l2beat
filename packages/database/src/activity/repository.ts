@@ -241,4 +241,15 @@ export class ActivityRepository extends BaseRepository {
       timestamp: UnixTime.fromDate(row.timestamp),
     }))
   }
+
+  async getLatestProcessedBlock(projectId: ProjectId) {
+    const latestRecord = await this.db
+      .selectFrom('Activity')
+      .select(selectActivity)
+      .where('projectId', '=', projectId)
+      .orderBy('timestamp', 'desc')
+      .executeTakeFirst()
+
+    return latestRecord?.end
+  }
 }
