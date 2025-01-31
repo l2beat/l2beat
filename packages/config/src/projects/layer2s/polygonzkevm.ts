@@ -87,26 +87,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       },
     ],
   },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        ...discovery.getMultisigPermission(
-          'EscrowsAdmin',
-          'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
-        ),
-        {
-          name: 'LocalAdmin',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('PolygonZkEVMEtrog', 'admin'),
-            ),
-          ],
-          description:
-            'Admin of the PolygonZkEVMEtrog contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode. In the case on Polygon zkEVM, this is also the RollupManagerAdminMultisig.',
-        },
-      ],
-    },
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
