@@ -191,7 +191,7 @@ function getDacEntries(
         statuses: {},
         risks: mapLayerRisksToRosetteValues(daLayer.risks),
         fallback: daLayer.fallback,
-        challengeMechanism: daLayer.challengeMechanism,
+        challengeMechanism: daLayer.challengeMechanism ?? 'None',
         isPublic: false,
         economicSecurity: undefined,
         tvs,
