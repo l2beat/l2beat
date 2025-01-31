@@ -498,7 +498,27 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
-  it('two actors, three contracts', () => {
+  it("two actors, three contracts, one final node can't act independently", () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('upgrade', 'timelock')]),
+      node('timelock', [edge('act', 'proxy')]),
+      node('proxy', [edge('act', 'actorA'), edge('act', 'noOpStub')]),
+      node('actorA'),
+      node('noOpStub', undefined, { canActIndependently: false }),
+    ]
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        path: [
+          pathElem({ address: 'vault', gives: 'upgrade' }),
+          pathElem({ address: 'timelock', gives: 'act' }),
+          pathElem({ address: 'proxy', gives: 'act' }),
+          pathElem({ address: 'actorA' }),
+        ],
+      },
+    ])
+  })
+
+  it('two actors, three contracts, proxy can act independently', () => {
     const graph: Node<string>[] = [
       node('vault', [edge('upgrade', 'timelock')]),
       node('timelock', [edge('act', 'proxy')]),
@@ -1136,7 +1156,7 @@ function node(
     delay: 0,
     threshold: 1,
     edges: edges ?? [],
-    canActIndependently: false,
+    canActIndependently: undefined,
     ...options,
   }
 }

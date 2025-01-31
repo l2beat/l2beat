@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 21730951,
-  "configHash": "0x7b77c91475a27363f324dd717ac35e6f81843ffba7763a742a2ac808e01ea3eb",
+  "configHash": "0x60add72f0d3ab2922134d169c94880b6a0f651203fd31a586f7c4073c1ac6fa6",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -888,6 +888,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

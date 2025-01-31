@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 21736634,
-  "configHash": "0x0eccd0dc7c815e665ee55270d185bab69a005d29ae8eaefad59f92e254bab254",
+  "configHash": "0xd888faaca9119dea378feb847995a128f7decdba06977a9eab613a21f66d26bf",
   "contracts": [
     {
       "name": "Zora_Adapter",
@@ -1699,7 +1699,7 @@
     ]
   },
   "usedTemplates": {
-    "acrossv3/adapter": "0x722ec1ddbac29cba90c5e6706af614ab59d193db130e076d2911c1cdb55da605",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "acrossv3/adapter": "0x22a4a0f560107180f5c0e5fc6eda364c7ed85f885dc000257cdb7c943aa35d36",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

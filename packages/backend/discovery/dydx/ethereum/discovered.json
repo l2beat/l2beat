@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0xd5a2060dd10473a40baa54f47877a1ca12140af5836c99494b139bc073af56b6",
+  "configHash": "0x94b9478ffda982ac9ab7cb4933e72eb36101fb45407c9d472d67ef96edaeda79",
   "contracts": [
     {
       "name": "MerkleDistributor",

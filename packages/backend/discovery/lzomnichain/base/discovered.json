@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "base",
   "blockNumber": 25643771,
-  "configHash": "0xd5a4d587e52bbc531a2f4dfafc05b77285bb751b27cc974b8e1ec7479d0179c5",
+  "configHash": "0x27d0d2266b48ab4ed032f51b489dbffeccbdf3277ffd12758c3cc4bcafd45725",
   "contracts": [
     {
       "name": "LayerZero Multisig",
@@ -1641,6 +1641,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

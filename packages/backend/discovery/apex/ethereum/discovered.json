@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21736735,
-  "configHash": "0x3d1fdfc99f2044bbaa42f4026f6f57fdfd74dfa5caa83cdc851bdf4d95b3eb36",
+  "configHash": "0xa4b75f61d0a63fb34ec59e1aa98fe7af447fc9772628387ec77bf5d23a1384a9",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -1252,6 +1252,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

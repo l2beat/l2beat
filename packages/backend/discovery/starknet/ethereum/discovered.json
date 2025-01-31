@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21715743,
-  "configHash": "0xeb2736b5a23e55e0c96155217f7e32af852d30797153f143e5116665c0e9dc6b",
+  "configHash": "0x94f474d67df5cc288c8e4cde9a6d7000c6d40718a3254e499d9546e7e349de3e",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -2771,6 +2771,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

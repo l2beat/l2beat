@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "polygonzkevm",
   "blockNumber": 19516552,
-  "configHash": "0x737ceaf86e4f35f8897670a83634ca06220c9d81b6a6fa06ca78453a9cf0c35e",
+  "configHash": "0x5431ef445e0e00f97a85ed79d0c9d2a253ab7cbbc32974df5f4c946e241e62a8",
   "contracts": [
     {
       "name": "",
@@ -1587,6 +1587,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }
