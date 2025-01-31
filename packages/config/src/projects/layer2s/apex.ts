@@ -199,40 +199,42 @@ export const apex: Layer2 = {
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'StarkExchangeUSDC',
-        'Main contract of ApeX exchange for USDC collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-      ),
-      discovery.getContractDetails(
-        'StarkExchangeUSDT',
-        'Main contract of ApeX exchange for USDT collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-      ),
-      discovery.getContractDetails(
-        'CommitteeUSDC',
-        'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      discovery.getContractDetails(
-        'CommitteeUSDT',
-        'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      discovery.getContractDetails('MultiSigPoolUSDC', {
-        description:
-          'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-      }),
-      discovery.getContractDetails('MultiSigPoolUSDT', {
-        description:
-          'Allows deposits in different tokens and swaps them to USDT. Allows fast withdrawals after the agreement of at least 2 designated signers.',
-      }),
-      discovery.getContractDetails('PerpetualEscapeVerifier', {
-        description:
-          'Contract responsible for validating force withdrawal requests. Used by both USDC and USDT StarkEx instances.',
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddressUSDC),
-      ...(verifierAddressUSDT !== verifierAddressUSDC
-        ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
-        : []),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'StarkExchangeUSDC',
+          'Main contract of ApeX exchange for USDC collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+        ),
+        discovery.getContractDetails(
+          'StarkExchangeUSDT',
+          'Main contract of ApeX exchange for USDT collateral. Updates state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+        ),
+        discovery.getContractDetails(
+          'CommitteeUSDC',
+          'Data Availability Committee (DAC) contract for USDC StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        discovery.getContractDetails(
+          'CommitteeUSDT',
+          'Data Availability Committee (DAC) contract for USDT StarkEx instance, verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        discovery.getContractDetails('MultiSigPoolUSDC', {
+          description:
+            'Allows deposits in different tokens and swaps them to USDC. Allows fast withdrawals after the agreement of at least 2 designated signers.',
+        }),
+        discovery.getContractDetails('MultiSigPoolUSDT', {
+          description:
+            'Allows deposits in different tokens and swaps them to USDT. Allows fast withdrawals after the agreement of at least 2 designated signers.',
+        }),
+        discovery.getContractDetails('PerpetualEscapeVerifier', {
+          description:
+            'Contract responsible for validating force withdrawal requests. Used by both USDC and USDT StarkEx instances.',
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddressUSDC),
+        ...(verifierAddressUSDT !== verifierAddressUSDC
+          ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
+          : []),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,

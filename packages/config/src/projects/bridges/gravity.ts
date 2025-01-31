@@ -80,12 +80,14 @@ export const gravity: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Gravity',
-        'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Gravity',
+          'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
+        ),
+      ],
+    },
     risks: [],
     isIncomplete: true,
   },

@@ -1,24 +1,31 @@
+import { assert } from '@l2beat/shared-pure'
 import type {
   Bridge,
   DaProject,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
 } from '../types'
 
 export function getContractsVerificationStatuses(
   project: Layer2 | Layer3 | Bridge | DaProject,
 ) {
-  const contracts: ScalingProjectContract[] = []
-  if ('contracts' in project) {
-    contracts.push(...(project.contracts?.addresses ?? []))
+  if (!('contracts' in project)) {
+    return {}
   }
 
+  const contracts: Record<string, ProjectContract[]> =
+    project.contracts?.addresses ?? {}
+
   const result: Record<string, Record<string, boolean>> = {}
-  for (const c of contracts) {
-    const chain = c.chain ?? 'ethereum'
-    result[chain] ??= {}
-    result[chain][c.address.toString()] = c.isVerified
+  for (const chain in contracts) {
+    for (const c of contracts[chain]) {
+      const computedChain = c.chain ?? 'ethereum'
+      // TODO(radomski): Remove, only for testing
+      assert(computedChain === chain)
+      result[chain] ??= {}
+      result[chain][c.address.toString()] = c.isVerified
+    }
   }
 
   return result

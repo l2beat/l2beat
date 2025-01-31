@@ -103,21 +103,23 @@ export const hyphen: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('LiquidityPool'),
-      discovery.getContractDetails(
-        'TokenManager',
-        'Configures limits and other aspects of supported assets.',
-      ),
-      discovery.getContractDetails(
-        'ExecutorManager',
-        'Manages a list of addresses with Executor role.',
-      ),
-      discovery.getContractDetails(
-        'LiquidityProviders',
-        'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('LiquidityPool'),
+        discovery.getContractDetails(
+          'TokenManager',
+          'Configures limits and other aspects of supported assets.',
+        ),
+        discovery.getContractDetails(
+          'ExecutorManager',
+          'Manages a list of addresses with Executor role.',
+        ),
+        discovery.getContractDetails(
+          'LiquidityProviders',
+          'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

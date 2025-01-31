@@ -34,7 +34,7 @@ export function getPreview(
   }[] = []
   const contractsPerChain: {
     chain: string
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   }[] = []
 
   const metaPerChain: { [chain: string]: ContractsMeta } = {}
@@ -96,7 +96,7 @@ function getPermissionsPreview(
 }
 
 function getContractsPreview(
-  contractsPerChain: { chain: string; contracts: ScalingProjectContract[] }[],
+  contractsPerChain: { chain: string; contracts: ProjectContract[] }[],
   metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; contracts: ApiPreviewContract[] }[] {
   return contractsPerChain.map(({ chain, contracts }) => ({

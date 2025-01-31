@@ -187,19 +187,21 @@ export const hermez: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('HermezAuctionProtocol'),
-      discovery.getContractDetails('Hermez'),
-      discovery.getContractDetails(
-        'ProxyAdmin',
-        'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
-      ),
-      discovery.getContractDetails('WithdrawalDelayer'),
-      discovery.getContractDetails(
-        'Timelock',
-        'Enforces a 7 day delay on upgrades.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('HermezAuctionProtocol'),
+        discovery.getContractDetails('Hermez'),
+        discovery.getContractDetails(
+          'ProxyAdmin',
+          'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
+        ),
+        discovery.getContractDetails('WithdrawalDelayer'),
+        discovery.getContractDetails(
+          'Timelock',
+          'Enforces a 7 day delay on upgrades.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
 }

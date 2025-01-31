@@ -6,7 +6,7 @@ import type {
   ProjectEscrow,
   ReferenceLink,
   ScalingProjectContract,
-  ScalingProjectContracts,
+  ProjectContracts,
 } from '@l2beat/config'
 import { CONTRACTS, layer2s } from '@l2beat/config'
 import type {
@@ -32,12 +32,12 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  id: string
+  id?: string
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
-  contracts: ScalingProjectContracts
+  contracts: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
 } & (
@@ -66,7 +66,9 @@ export function getContractsSection(
   ) {
     return undefined
   }
-  const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
+  const projectChangeReport = projectParams.id
+    ? projectsChangeReport?.projects[projectParams.id]
+    : undefined
 
   const contracts = projectParams.contracts.addresses.map((contract) => {
     const isUnverified = isContractUnverified(

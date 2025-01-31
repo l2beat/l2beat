@@ -135,16 +135,18 @@ export const xdai: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'SDaiForeignBridge',
-        'Bridge Contract and Escrow for (s)DAI.',
-      ),
-      discovery.getContractDetails(
-        'BridgeValidators',
-        'Validator Management Contract.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'SDaiForeignBridge',
+          'Bridge Contract and Escrow for (s)DAI.',
+        ),
+        discovery.getContractDetails(
+          'BridgeValidators',
+          'Validator Management Contract.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

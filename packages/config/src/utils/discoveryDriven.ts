@@ -18,22 +18,9 @@ export function arePermissionsDiscoveryDriven(
 }
 
 export function areContractsDiscoveryDriven(project: Layer2 | Layer3): boolean {
-  const checkContracts = (project: Layer2 | Layer3): boolean => {
-    return project.contracts.addresses.every(
-      (a) => a.discoveryDrivenData === true,
-    )
-  }
-
-  const checkNativeContracts = (project: Layer2 | Layer3): boolean => {
-    return Object.values(project.contracts.nativeAddresses ?? {}).every((e) =>
-      e.every((a) => a.discoveryDrivenData === true),
-    )
-  }
-
-  const areContractsDiscoveryDriven = checkContracts(project)
-  const areNativeContractsDiscoveryDriven = checkNativeContracts(project)
-
-  return areContractsDiscoveryDriven && areNativeContractsDiscoveryDriven
+  return Object.values(project.contracts.addresses ?? {}).every((e) =>
+    e.every((a) => a.discoveryDrivenData === true),
+  )
 }
 
 export function isDiscoveryDriven(project: Layer2 | Layer3): boolean {

@@ -12,6 +12,7 @@ import { getMultiChainContractsSection } from '~/utils/project/contracts-and-per
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 
 type RegularDetailsParams = {
   daLayer: DaProject
@@ -46,7 +47,7 @@ export function getRegularDaProjectSections({
 
   const contractsSection =
     daBridge.contracts &&
-    getMultiChainContractsSection(
+    getContractsSection(
       {
         id: daBridge.id,
         isVerified,
@@ -141,7 +142,7 @@ export function getRegularDaProjectSections({
 
   if (contractsSection) {
     daBridgeItems.push({
-      type: 'MultichainContractsSection',
+      type: 'ContractsSection',
       props: {
         ...contractsSection,
         id: 'da-bridge-contracts',

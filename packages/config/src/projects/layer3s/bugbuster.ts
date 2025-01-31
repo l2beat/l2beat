@@ -197,27 +197,29 @@ export const bugbuster: Layer3 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('BugBuster', {
-        description:
-          'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
-      }),
-      discovery.getContractDetails('InputBox', {
-        description:
-          'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
-      }),
-      discovery.getContractDetails('ERC20Portal', {
-        description:
-          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps (like e.g. Bug Buster).',
-      }),
-      discovery.getContractDetails('Authority', {
-        description:
-          'Simple consensus model controlled by a single address, the owner.',
-      }),
-      discovery.getContractDetails('History', {
-        description: 'Contract that stores claims for Cartesi DApps.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('BugBuster', {
+          description:
+            'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
+        }),
+        discovery.getContractDetails('InputBox', {
+          description:
+            'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
+        }),
+        discovery.getContractDetails('ERC20Portal', {
+          description:
+            'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps (like e.g. Bug Buster).',
+        }),
+        discovery.getContractDetails('Authority', {
+          description:
+            'Simple consensus model controlled by a single address, the owner.',
+        }),
+        discovery.getContractDetails('History', {
+          description: 'Contract that stores claims for Cartesi DApps.',
+        }),
+      ],
+    },
     risks: [],
   },
 }

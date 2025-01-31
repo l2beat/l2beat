@@ -111,16 +111,18 @@ export const multichain: Bridge = {
   },
   contracts: {
     isIncomplete: true,
-    addresses: [
-      discovery.getContractDetails(
-        'AnyswapV4Router',
-        'Multichain Liquidity Network Router V4.',
-      ),
-      discovery.getContractDetails(
-        'AnyswapV6Router',
-        'Multichain Liquidity Network Router V6.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'AnyswapV4Router',
+          'Multichain Liquidity Network Router V4.',
+        ),
+        discovery.getContractDetails(
+          'AnyswapV6Router',
+          'Multichain Liquidity Network Router V6.',
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {

@@ -184,40 +184,42 @@ export const allbridge: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'LPBridge',
-        'The main contract for the Allbridge liquidity network.',
-      ),
-      discovery.getContractDetails(
-        'TokenBridge',
-        'The main contract for the Allbridge token bridge.',
-      ),
-      discovery.getContractDetails(
-        'Validator',
-        'This contract is responsible for validating incoming messages to the token bridge.',
-      ),
-      discovery.getContractDetails(
-        'FeeOracle',
-        'This contract is responsible for calculating bridge fees.',
-      ),
-      discovery.getContractDetails(
-        'GasOracle',
-        'This contract is responsible for calculating crosschain gas fees.',
-      ),
-      discovery.getContractDetails(
-        'AllbridgeMessenger',
-        'Contract used to receive messages via allbridge AMB.',
-      ),
-      discovery.getContractDetails(
-        'WormholeMessenger',
-        'Contract used to receive messages via Wormhole AMB.',
-      ),
-      discovery.getContractDetails(
-        'CctpBridge',
-        'Contract used to receive messages via Circle CCTP.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'LPBridge',
+          'The main contract for the Allbridge liquidity network.',
+        ),
+        discovery.getContractDetails(
+          'TokenBridge',
+          'The main contract for the Allbridge token bridge.',
+        ),
+        discovery.getContractDetails(
+          'Validator',
+          'This contract is responsible for validating incoming messages to the token bridge.',
+        ),
+        discovery.getContractDetails(
+          'FeeOracle',
+          'This contract is responsible for calculating bridge fees.',
+        ),
+        discovery.getContractDetails(
+          'GasOracle',
+          'This contract is responsible for calculating crosschain gas fees.',
+        ),
+        discovery.getContractDetails(
+          'AllbridgeMessenger',
+          'Contract used to receive messages via allbridge AMB.',
+        ),
+        discovery.getContractDetails(
+          'WormholeMessenger',
+          'Contract used to receive messages via Wormhole AMB.',
+        ),
+        discovery.getContractDetails(
+          'CctpBridge',
+          'Contract used to receive messages via Circle CCTP.',
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {

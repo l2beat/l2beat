@@ -4,7 +4,11 @@ import {
 } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddress'
 import { unionBy } from 'lodash'
-import type { ReferenceLink, ScalingProjectPermissions } from '../../../types'
+import type {
+  ProjectContracts,
+  ReferenceLink,
+  ScalingProjectPermissions,
+} from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
 export function mergeBadges(
@@ -37,6 +41,20 @@ export function mergePermissions(
     if (value.actors !== undefined) {
       result[key].actors = (result[key].actors ?? []).concat(value.actors)
     }
+  }
+
+  return result
+}
+
+export function mergeContracts(
+  base: ProjectContracts['addresses'],
+  pushed: ProjectContracts['addresses'],
+): ProjectContracts['addresses'] {
+  const result: ProjectContracts['addresses'] = structuredClone(base)
+
+  for (const [key, value] of Object.entries(pushed)) {
+    result[key] ??= []
+    result[key] = (result[key] ?? []).concat(value)
   }
 
   return result

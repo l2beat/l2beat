@@ -301,36 +301,38 @@ export const layerzerov2oft: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'EndpointV2',
-        'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
-      ),
-      discovery.getContractDetails(
-        'SendUln302',
-        'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). It also accumulates fees configured by the OApp owners via the Treasury contract. New libraries can be added by the LayerZero Multisig.',
-      ),
-      discovery.getContractDetails(
-        'ReceiveUln302',
-        'The default receive library for the LayerZero EndpointV2. This contract defines a framework and configuration options for receiving messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig.',
-      ),
-      discovery.getContractDetails(
-        'LayerZeroDVN',
-        'The LayerZero Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'GoogleCloudDVN',
-        'The GoogleCloud Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'PolyhedraDVN',
-        'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'Treasury',
-        'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'EndpointV2',
+          'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
+        ),
+        discovery.getContractDetails(
+          'SendUln302',
+          'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). It also accumulates fees configured by the OApp owners via the Treasury contract. New libraries can be added by the LayerZero Multisig.',
+        ),
+        discovery.getContractDetails(
+          'ReceiveUln302',
+          'The default receive library for the LayerZero EndpointV2. This contract defines a framework and configuration options for receiving messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig.',
+        ),
+        discovery.getContractDetails(
+          'LayerZeroDVN',
+          'The LayerZero Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'GoogleCloudDVN',
+          'The GoogleCloud Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'PolyhedraDVN',
+          'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'Treasury',
+          'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
+        ),
+      ],
+    },
     risks: [],
     references: [
       {

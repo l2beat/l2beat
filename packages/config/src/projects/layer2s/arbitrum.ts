@@ -300,53 +300,53 @@ export const arbitrum: Layer2 = orbitStackL2({
       ],
     },
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('RollupProxy', {
-      description:
-        'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('Bridge', {
-      description:
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('SequencerInbox', {
-      description:
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('Inbox', {
-      description:
-        'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractFromValue('RollupProxy', 'outbox', {
-      description:
-        "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('UpgradeExecutor', {
-      description:
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('L1Timelock', {
-      description:
-        'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('L1GatewayRouter', {
-      description: 'Router managing token <--> gateway mapping.',
-      ...upgradeExecutorUpgradeability,
-    }),
-    discovery.getContractDetails('ChallengeManager', {
-      description:
-        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
-      ...upgradeExecutorUpgradeability,
-    }),
-  ],
-  nativeAddresses: {
+  nonTemplateContracts: {
+    [discovery.chain]: [
+      discovery.getContractDetails('RollupProxy', {
+        description:
+          'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('Bridge', {
+        description:
+          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('SequencerInbox', {
+        description:
+          'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('Inbox', {
+        description:
+          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractFromValue('RollupProxy', 'outbox', {
+        description:
+          "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('UpgradeExecutor', {
+        description:
+          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('L1Timelock', {
+        description:
+          'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('L1GatewayRouter', {
+        description: 'Router managing token <--> gateway mapping.',
+        ...upgradeExecutorUpgradeability,
+      }),
+      discovery.getContractDetails('ChallengeManager', {
+        description:
+          'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
+        ...upgradeExecutorUpgradeability,
+      }),
+    ],
     arbitrum: [
       l2Discovery.getContractDetails('CoreGovernor', {
         description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent}% quorum for proposals.`,
@@ -432,7 +432,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
     ],
   },
-
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
