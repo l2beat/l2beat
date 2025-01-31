@@ -61,7 +61,7 @@
 
 @layer base {
   :root {
-    --header-height: 4rem;
+    --header-height: 2.5rem;
   }
 
   :root:has(.header-height-glossary) {
