@@ -21,6 +21,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { excludeRedundantNoBridge } from '../utils/exclude-redundant-nobridge'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
@@ -154,17 +155,19 @@ export async function getDaProjectEntry(
       type: daBridge.type,
       grissiniValues: bridgeGrissiniValues,
     },
-    bridges: project.daLayer.bridges.map((bridge) => ({
-      id: bridge.id ?? 'unknown',
-      name: bridge.display.name,
-      slug: bridge.display.slug,
-      grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
-      tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
-      type: bridge.type,
-      usedIn: bridge.usedIn.sort(
-        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
-      ),
-    })),
+    bridges: project.daLayer.bridges
+      .filter(excludeRedundantNoBridge)
+      .map((bridge) => ({
+        id: bridge.id ?? 'unknown',
+        name: bridge.display.name,
+        slug: bridge.display.slug,
+        grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
+        tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
+        type: bridge.type,
+        usedIn: bridge.usedIn.sort(
+          (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+        ),
+      })),
     header: {
       links: getProjectLinks(project.display.links),
       daLayerGrissiniValues: layerGrissiniValues,

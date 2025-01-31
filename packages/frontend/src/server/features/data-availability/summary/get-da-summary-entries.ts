@@ -12,7 +12,7 @@ import {
   layer3s,
   toUsedInProject,
 } from '@l2beat/config'
-import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import {
   mapBridgeRisksToRosetteValues,
@@ -20,6 +20,7 @@ import {
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { excludeRedundantNoBridge } from '../utils/exclude-redundant-nobridge'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -80,14 +81,8 @@ function getDaSummaryEntry(
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
   const bridges = project.daLayer.bridges
-    .map((daBridge): DaBridgeSummaryEntry | undefined => {
-      if (
-        project.daLayer.bridges.some((b) => b.type !== 'NoBridge') &&
-        daBridge.type === 'NoBridge' &&
-        daBridge.usedIn.length === 0
-      )
-        return undefined
-
+    .filter(excludeRedundantNoBridge)
+    .map((daBridge): DaBridgeSummaryEntry => {
       const bridgeRisks = getDaBridgeRisks(daBridge)
       return {
         name: daBridge.display.name,
@@ -118,7 +113,6 @@ function getDaSummaryEntry(
             : undefined,
       }
     })
-    .filter(notUndefined)
     .sort((a, b) => b.tvs - a.tvs)
 
   const usedIn = uniq(

@@ -2,6 +2,7 @@ import type { DaBridgeRisks, DaLayerRisks, DaProject } from '@l2beat/config'
 import { daLayers, isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { excludeRedundantNoBridge } from '../utils/exclude-redundant-nobridge'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import {
   getDaProjectsTvs,
@@ -41,6 +42,7 @@ function getDaRiskEntry(
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
   const bridges = project.daLayer.bridges
+    .filter(excludeRedundantNoBridge)
     .map((daBridge): DaBridgeRiskEntry => {
       const tvs = getTvs(daBridge.usedIn.map((project) => project.id))
 
