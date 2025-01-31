@@ -6,8 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
-import { merge } from 'lodash'
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
@@ -48,7 +46,12 @@ import type {
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
-import { explorerReferences, mergeBadges, mergePermissions, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer

@@ -7,7 +7,6 @@ import {
   type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { merge } from 'lodash'
 import {
   CONTRACTS,
   DA_BRIDGES,

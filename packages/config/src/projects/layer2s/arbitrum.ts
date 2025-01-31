@@ -49,8 +49,8 @@ const upgradeExecutorUpgradeability = {
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
   upgradableBy: [
-    'SecurityCouncilEmergency',
-    'SecurityCouncilPropose',
+    'L2SecurityCouncilEmergency',
+    'L2SecurityCouncilPropose',
     'L1Timelock',
   ],
   upgradeDelay: `${formatSeconds(
@@ -295,6 +295,10 @@ export const arbitrum: Layer2 = orbitStackL2({
           'L2SecurityCouncilPropose',
           'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
         ),
+        l2Discovery.eoaAsPermissioned(
+          l2Discovery.getEOA('L1Timelock'),
+          'Alias of the L1Timelock contract on L1.',
+        ),
       ],
     },
   },
@@ -422,11 +426,11 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('L2DAIGateway', {
         description:
-          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2',
+          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.',
       }),
       l2Discovery.getContractDetails('L2LPTGateway', {
         description:
-          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2',
+          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.',
       }),
     ],
   },

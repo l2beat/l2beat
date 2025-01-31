@@ -56,7 +56,7 @@ const upgradeExecutorUpgradeability = {
 }
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: ['SecurityCouncilEmergency', 'L1Timelock'],
+  upgradableBy: ['L2SecurityCouncilEmergency', 'L1Timelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by the Security Council`,
@@ -208,6 +208,10 @@ export const nova: Layer2 = orbitStackL2({
         ...l2Discovery.getMultisigPermission(
           'L2SecurityCouncilEmergency',
           'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+        ),
+        l2Discovery.eoaAsPermissioned(
+          l2Discovery.getEOA('L1Timelock'),
+          'Alias of the L1Timelock contract on L1.',
         ),
       ],
     },

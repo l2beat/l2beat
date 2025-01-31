@@ -1066,6 +1066,7 @@
     { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
     { "address": "0xf6B6F07862A02C85628B3A9688beae07fEA9C863" },
     {
+      "name": "L1Timelock",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "receivedPermissions": [
         {

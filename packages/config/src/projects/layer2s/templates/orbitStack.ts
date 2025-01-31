@@ -7,7 +7,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { merge, mergeWith, unionBy } from 'lodash'
+import { unionBy } from 'lodash'
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
@@ -63,7 +63,12 @@ import {
   generateDiscoveryDrivenPermissions,
   generateDiscoveryDrivenSections,
 } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, mergePermissions, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
