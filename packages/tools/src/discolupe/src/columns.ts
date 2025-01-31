@@ -50,7 +50,7 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: DivContainer,
   },
   {
-    header: 'TVL',
+    header: 'TVS',
     id: 'ig',
     align: 'right',
     fn: (project: DiscoLupeProject) => formatNumber(project.tvs),
