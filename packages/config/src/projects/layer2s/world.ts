@@ -5,7 +5,7 @@ import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('worldchain')
-const genesisTimestamp = new UnixTime(1719432935)
+const genesisTimestamp = new UnixTime(1719335639)
 
 export const world = opStackL2({
   addedAt: new UnixTime(1729586060), // 2024-10-22T08:34:20Z
