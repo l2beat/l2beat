@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xe61fb30c6922d0705a3e14573a5806ed3e6c7f19
+
+# Diff at Fri, 31 Jan 2025 11:49:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21679947
+- current block number: 21744313
+
+## Description
+
+GnosisBridgeGovernanceMultisig changes (4 members changed).
+
+## Watched changes
+
+```diff
+    contract GnosisBridgeGovernanceMultisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      values.$members.15:
+-        "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "0x544cE64C3Fc6Da72CEB2456CC4cF19E7c7972eFA"
+      values.$members.13:
+-        "0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9"
++        "0xb2a33ae0E07fD2ca8DBdE9545F6ce0b3234dc4e8"
+      values.$members.6:
+-        "0x0101016044726994aFd16f4A99f0d960090D35e7"
++        "0xcF9ebF877688Ed88a7479A6e63457Fd78D4275cE"
+      values.$members.5:
+-        "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9"
++        "0x329c54289Ff5D6B7b7daE13592C6B1EDA1543eD4"
+    }
+```
+
 Generated with discovered.json: 0x8150257e3f6253d9cf5dc8644cb7135e0b44b266
 
 # Diff at Wed, 22 Jan 2025 12:12:13 GMT:

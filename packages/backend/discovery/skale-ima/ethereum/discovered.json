@@ -1,7 +1,7 @@
 {
   "name": "skale-ima",
   "chain": "ethereum",
-  "blockNumber": 21285734,
+  "blockNumber": 21744185,
   "configHash": "0x2a724992922ab9e2f64d73b73daf6a5b96e6e63c5d84e846918f95aa94574b6d",
   "contracts": [
     {
@@ -21,7 +21,7 @@
         "$members": [
           "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
           "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
-          "0x60f66a4056852d0Bd6D5BF6FF5D2eBeb474cd587",
+          "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
           "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
           "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
         ],
@@ -30,7 +30,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 377,
+        "nonce": 382,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -661,8 +661,8 @@
   "eoas": [
     { "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18" },
     { "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245" },
-    { "address": "0x60f66a4056852d0Bd6D5BF6FF5D2eBeb474cd587" },
     { "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F" },
+    { "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd" },
     { "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e" },
     { "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A" }
   ],
