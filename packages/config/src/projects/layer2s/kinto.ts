@@ -16,7 +16,7 @@ export const kinto: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
   additionalBadges: [Badge.RaaS.Caldera],
-  additionalPurposes: ['RWA'],
+  overridingPurposes: ['RWA'],
   // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
   display: {
     name: 'Kinto',

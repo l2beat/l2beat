@@ -95,6 +95,7 @@ export interface ZkStackConfigCommon {
   additionalBadges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
@@ -233,7 +234,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       templateVars.additionalBadges ?? [],
     ),
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
       stack: 'ZK Stack',
