@@ -65,7 +65,7 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
         {transactions.batchSubmissions &&
           transactions.batchSubmissions.length > 0 && (
             <TransactionGroup
-              title="Calldata"
+              title="Batch submissions"
               transactions={transactions.batchSubmissions}
             />
           )}
@@ -168,9 +168,9 @@ function TransactionDetails({
         {transaction.formula === 'sharedBridge' && (
           <>
             <div className="mb-1 text-sm">
-              This project is using a shared bridge so we filter out
-              transactions with chain ID equal to project&apos;s chain ID (
-              {transaction.chainId})
+              This project is using a shared bridge so the tracked function
+              calls are those ones with chain ID equal to project&apos;s chain
+              ID ({transaction.chainId})
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Address: </span>
