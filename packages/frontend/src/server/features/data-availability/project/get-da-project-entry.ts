@@ -181,10 +181,12 @@ export async function getDaProjectEntry(
         .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
-    projectVariants: project.daLayer.bridges.map((bridge) => ({
-      title: bridge.display.name,
-      href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
-    })),
+    projectVariants: project.daLayer.bridges
+      .filter(excludeRedundantNoBridge)
+      .map((bridge) => ({
+        title: bridge.display.name,
+        href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
+      })),
   }
 }
 
