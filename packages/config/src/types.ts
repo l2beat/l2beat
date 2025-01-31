@@ -369,6 +369,7 @@ export type ScalingProjectPurpose =
   | 'Identity'
   | 'Information'
   | 'Interoperability'
+  | 'KYC-ed DeFi'
   | 'Launchpad'
   | 'Lending'
   | 'Music'
