@@ -137,6 +137,7 @@ Projects not integrating with a functional DA bridge rely only on the data avail
         },
       ],
     },
+    isNoBridge: true,
     risks: {
       economicSecurity: DaEconomicSecurityRisk.Unknown,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

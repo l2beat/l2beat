@@ -358,8 +358,8 @@ export async function getL2ProjectDetails({
   }
 
   if (permissionsSection) {
-    const bridge = project.dataAvailabilitySolution?.bridges[0]
-    const permissionedEntities = bridge?.dac?.knownMembers
+    const permissionedEntities =
+      project.dataAvailabilitySolution?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',

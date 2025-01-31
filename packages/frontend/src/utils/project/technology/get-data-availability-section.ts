@@ -1,30 +1,24 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getDaRisks } from '~/server/features/data-availability/utils/get-da-risks'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  const bridge = project.dataAvailabilitySolution?.bridges[0]
-  if (!project.dataAvailabilitySolution || !bridge) {
+  if (!project.dataAvailabilitySolution) {
     return
   }
-  assert(project.dataAvailabilitySolution.bridges.length === 1)
 
   const daSubsections: ProjectDetailsSection[] = []
 
-  const evaluatedRisks = getDaRisks(
-    project.dataAvailabilitySolution,
-    bridge,
-    0, // TODO: getTVS
+  const layerGrissiniValues = mapLayerRisksToRosetteValues(
+    project.dataAvailabilitySolution.risks,
   )
-
-  const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)
-  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
+  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
+    project.dataAvailabilitySolution.risks,
+  )
 
   daSubsections.push({
     type: 'GrissiniRiskAnalysisSection',
@@ -47,18 +41,13 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         type: 'da-layer-technology',
         slug: project.display.slug,
       },
-      content: project.dataAvailabilitySolution.technology.description.concat(
-        bridge.technology.description,
-      ),
+      content: project.dataAvailabilitySolution.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: project.dataAvailabilitySolution.technology.risks
-        ?.concat(bridge.technology.risks ?? [])
-        .map(toTechnologyRisk),
-      references:
-        project.dataAvailabilitySolution.technology.references?.concat(
-          ...(bridge.technology.references ?? []),
-        ),
+      risks: (project.dataAvailabilitySolution.technology.risks ?? []).map(
+        toTechnologyRisk,
+      ),
+      references: project.dataAvailabilitySolution.technology.references,
     },
   })
 

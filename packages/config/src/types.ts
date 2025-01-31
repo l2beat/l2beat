@@ -800,6 +800,7 @@ export interface CustomDa {
   name?: string
   description?: string
   type: string
+  isNoBridge?: boolean
   risks: DaLayerRisks & DaBridgeRisks
   technology: DaTechnology
   dac?: DacInfo
