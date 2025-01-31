@@ -709,7 +709,7 @@ export const zklinknova: Layer3 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    linea: {
+    [lineaDiscovery.chain]: {
       actors: [
         ...lineaDiscovery.getMultisigPermission(
           'LineaOwner',
