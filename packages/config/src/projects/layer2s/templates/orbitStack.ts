@@ -147,6 +147,7 @@ interface OrbitStackConfigCommon {
   nativeAddresses?: Record<string, ScalingProjectContract[]>
   nativePermissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
@@ -744,7 +745,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -925,7 +929,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
