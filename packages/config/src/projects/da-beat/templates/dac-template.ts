@@ -36,6 +36,8 @@ The DA bridge is a smart contract verifying a data availability claim from DAC M
   return {
     name: template.name,
     type: template.type ?? 'Data Availability Committee',
+    description:
+      'Set of parties responsible for signing and attesting to the availability of data.',
     dac: template.dac,
     technology: {
       ...template.technology,
