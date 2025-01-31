@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -148,21 +149,23 @@ export const xdai: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'GnosisBridgeGovernanceMultisig',
-        'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
-      ),
-      {
-        accounts: [
-          ...discovery.getPermissionedAccounts(
-            'BridgeValidators',
-            'validatorList',
-          ),
-        ],
-        name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
-        description: 'Bridge Validators.',
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'GnosisBridgeGovernanceMultisig',
+          'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
+        ),
+        {
+          accounts: [
+            ...discovery.getPermissionedAccounts(
+              'BridgeValidators',
+              'validatorList',
+            ),
+          ],
+          name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
+          description: 'Bridge Validators.',
+        },
+      ],
+    },
   },
 }

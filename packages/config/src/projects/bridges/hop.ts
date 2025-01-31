@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -148,12 +149,14 @@ export const hop: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'Hop Multisig',
-        'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
-      ),
-    ],
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'Hop Multisig',
+          'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
+        ),
+      ],
+    },
   },
   knowledgeNuggets: [
     {

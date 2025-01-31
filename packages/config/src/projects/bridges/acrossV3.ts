@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -282,17 +283,19 @@ export const acrossV3: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'HubPool Multisig',
-        'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
-      ),
-      {
-        name: 'BondToken transfer proposers',
-        accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-        description: 'Allowed to propose BondToken transfers.',
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'HubPool Multisig',
+          'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
+        ),
+        {
+          name: 'BondToken transfer proposers',
+          accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
+          description: 'Allowed to propose BondToken transfers.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

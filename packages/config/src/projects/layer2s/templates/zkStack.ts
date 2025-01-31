@@ -48,7 +48,8 @@ import type {
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { mergeBadges } from './utils'
+import { generateDiscoveryDrivenPermissions } from './generateDiscoveryDrivenSections'
+import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -82,7 +83,7 @@ export interface ZkStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermissions
+  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
   nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
@@ -219,6 +220,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
   }
 
+  const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -455,13 +457,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     `
       return description
     })(),
-    permissions: merge(
-      discovery.getDiscoveredPermissions(),
-      templateVars.nonTemplatePermissions ?? [],
+    permissions: mergePermissions(
+      generateDiscoveryDrivenPermissions(allDiscoveries),
+      templateVars.nonTemplatePermissions ?? {},
     ),
-    nativePermissions: {
-      zksync2: discovery_ZKstackGovL2.getDiscoveredPermissions(),
-    },
     contracts: {
       addresses: discovery.getDiscoveredContracts(),
       nativeAddresses: {

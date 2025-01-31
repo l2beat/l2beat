@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -162,26 +163,28 @@ export const reddioex: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Governor',
-        accounts: getProxyGovernance(discovery, 'StarkExchange'),
-        description:
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromString(upgradeDelay),
-      },
-      committee,
-      ...getSHARPVerifierGovernors(discovery, verifierAddress),
-      {
-        name: 'Operators',
-        accounts: discovery.getPermissionedAccounts(
-          'StarkExchange',
-          'OPERATORS',
-        ),
-        description:
-          'Allowed to update the state. When the Operator is down the state cannot be updated.',
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Governor',
+          accounts: getProxyGovernance(discovery, 'StarkExchange'),
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromString(upgradeDelay),
+        },
+        committee,
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkExchange',
+            'OPERATORS',
+          ),
+          description:
+            'Allowed to update the state. When the Operator is down the state cannot be updated.',
+        },
+      ],
+    },
   },
   milestones: [
     {

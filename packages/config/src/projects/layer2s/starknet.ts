@@ -7,6 +7,7 @@ import {
   formatLargeNumber,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -1096,133 +1097,135 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
     return description
   })(),
   permissions: {
-    actors: [
-      {
-        name: 'Starknet Proxy Governors',
-        accounts: getProxyGovernance(discovery, 'Starknet'),
-        description:
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
-          delayDescriptionFromSeconds(starknetDelaySeconds),
-      },
-      ...discovery.getMultisigPermission(
-        'ProxyMultisig',
-        'One of Proxy Governors.',
-      ),
-      {
-        name: 'Starknet Implementation Governors',
-        accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
-        description:
-          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-      },
-      ...getSHARPVerifierGovernors(discovery, verifierAddress),
-      {
-        name: 'Operators',
-        accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
-        description:
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-      },
-      {
-        name: 'StarkGate ETH owner',
-        accounts: getProxyGovernance(discovery, ESCROW_ETH_ADDRESS),
-        description:
-          'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowETHDelaySeconds),
-      },
-      ...discovery.getMultisigPermission(
-        'StarkgateETHSecurityAgentMultisig',
-        'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
-      ),
-      {
-        name: 'StarkGate WBTC owner',
-        accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),
-        description:
-          'Can upgrade implementation of the WBTC escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowWBTCDelaySeconds),
-      },
-      {
-        name: 'StarkGate USDC owner',
-        accounts: getProxyGovernance(discovery, ESCROW_USDC_ADDRESS),
-        description:
-          'Can upgrade implementation of the USDC escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-      },
-      {
-        name: 'StarkGate USDT owner',
-        accounts: getProxyGovernance(discovery, ESCROW_USDT_ADDRESS),
-        description:
-          'Can upgrade implementation of the USDT escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowUSDTDelaySeconds),
-      },
-      {
-        name: 'StarkGate wstETH owner',
-        accounts: getProxyGovernance(discovery, ESCROW_WSTETH_ADDRESS),
-        description:
-          'Can upgrade implementation of the wstETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowWSTETHDelaySeconds),
-      },
-      {
-        name: 'StarkGate rETH owner',
-        accounts: getProxyGovernance(discovery, ESCROW_RETH_ADDRESS),
-        description:
-          'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowRETHDelaySeconds),
-      },
-      {
-        name: 'StarkGate UNI owner',
-        accounts: getProxyGovernance(discovery, ESCROW_UNI_ADDRESS),
-        description:
-          'Can upgrade implementation of the UNI escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowUNIDelaySeconds),
-      },
-      {
-        name: 'StarkGate FRAX owner',
-        accounts: getProxyGovernance(discovery, ESCROW_FRAX_ADDRESS),
-        description:
-          'Can upgrade implementation of the FRAX escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowFRAXDelaySeconds),
-      },
-      {
-        name: 'StarkGate FXS owner',
-        accounts: getProxyGovernance(discovery, ESCROW_FXS_ADDRESS),
-        description:
-          'Can upgrade implementation of the FXS escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowFXSDelaySeconds),
-      },
-      {
-        name: 'StarkGate sfrxETH owner',
-        accounts: getProxyGovernance(discovery, ESCROW_SFRXETH_ADDRESS),
-        description:
-          'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
-      },
-      {
-        name: 'StarkGate LUSD owner',
-        accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
-        description:
-          'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
-      },
-      {
-        name: 'StarkGate MultiBridge Admin',
-        accounts: getProxyGovernance(discovery, ESCROW_MULTIBRIDGE_ADDRESS),
-        description:
-          'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract. Additionally, the StarkgateManager and StarkgateRegistry contracts can be upgraded by this address.',
-      },
-      ...discovery.getMultisigPermission(
-        'BridgeMultisig',
-        'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
-      ),
-      {
-        name: 'StarkGate STRK owner',
-        accounts: discovery.getAccessControlRolePermission(
-          'STRKBridge',
-          'GOVERNANCE_ADMIN',
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Starknet Proxy Governors',
+          accounts: getProxyGovernance(discovery, 'Starknet'),
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
+            delayDescriptionFromSeconds(starknetDelaySeconds),
+        },
+        ...discovery.getMultisigPermission(
+          'ProxyMultisig',
+          'One of Proxy Governors.',
         ),
-        description:
-          'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
-      },
-    ],
+        {
+          name: 'Starknet Implementation Governors',
+          accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
+          description:
+            'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+        },
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
+          description:
+            'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        },
+        {
+          name: 'StarkGate ETH owner',
+          accounts: getProxyGovernance(discovery, ESCROW_ETH_ADDRESS),
+          description:
+            'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowETHDelaySeconds),
+        },
+        ...discovery.getMultisigPermission(
+          'StarkgateETHSecurityAgentMultisig',
+          'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
+        ),
+        {
+          name: 'StarkGate WBTC owner',
+          accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),
+          description:
+            'Can upgrade implementation of the WBTC escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowWBTCDelaySeconds),
+        },
+        {
+          name: 'StarkGate USDC owner',
+          accounts: getProxyGovernance(discovery, ESCROW_USDC_ADDRESS),
+          description:
+            'Can upgrade implementation of the USDC escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
+        },
+        {
+          name: 'StarkGate USDT owner',
+          accounts: getProxyGovernance(discovery, ESCROW_USDT_ADDRESS),
+          description:
+            'Can upgrade implementation of the USDT escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowUSDTDelaySeconds),
+        },
+        {
+          name: 'StarkGate wstETH owner',
+          accounts: getProxyGovernance(discovery, ESCROW_WSTETH_ADDRESS),
+          description:
+            'Can upgrade implementation of the wstETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowWSTETHDelaySeconds),
+        },
+        {
+          name: 'StarkGate rETH owner',
+          accounts: getProxyGovernance(discovery, ESCROW_RETH_ADDRESS),
+          description:
+            'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowRETHDelaySeconds),
+        },
+        {
+          name: 'StarkGate UNI owner',
+          accounts: getProxyGovernance(discovery, ESCROW_UNI_ADDRESS),
+          description:
+            'Can upgrade implementation of the UNI escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowUNIDelaySeconds),
+        },
+        {
+          name: 'StarkGate FRAX owner',
+          accounts: getProxyGovernance(discovery, ESCROW_FRAX_ADDRESS),
+          description:
+            'Can upgrade implementation of the FRAX escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowFRAXDelaySeconds),
+        },
+        {
+          name: 'StarkGate FXS owner',
+          accounts: getProxyGovernance(discovery, ESCROW_FXS_ADDRESS),
+          description:
+            'Can upgrade implementation of the FXS escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowFXSDelaySeconds),
+        },
+        {
+          name: 'StarkGate sfrxETH owner',
+          accounts: getProxyGovernance(discovery, ESCROW_SFRXETH_ADDRESS),
+          description:
+            'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
+        },
+        {
+          name: 'StarkGate LUSD owner',
+          accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
+          description:
+            'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
+        },
+        {
+          name: 'StarkGate MultiBridge Admin',
+          accounts: getProxyGovernance(discovery, ESCROW_MULTIBRIDGE_ADDRESS),
+          description:
+            'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract. Additionally, the StarkgateManager and StarkgateRegistry contracts can be upgraded by this address.',
+        },
+        ...discovery.getMultisigPermission(
+          'BridgeMultisig',
+          'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
+        ),
+        {
+          name: 'StarkGate STRK owner',
+          accounts: discovery.getAccessControlRolePermission(
+            'STRKBridge',
+            'GOVERNANCE_ADMIN',
+          ),
+          description:
+            'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
+        },
+      ],
+    },
   },
   milestones: [
     {

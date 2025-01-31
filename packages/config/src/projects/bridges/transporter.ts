@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -155,75 +156,77 @@ export const transporter: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'RBACTimelock',
-        description: (() => {
-          return `Role-based Access Control Timelock (RBACTimelock) smart contract. Onchain security-critical configuration changes and upgrades to the CCIP must pass through this contract. CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
-        })(),
-        accounts: [discovery.getPermissionedAccount('Router', 'owner')],
-      },
-      {
-        name: 'Timelock Admins',
-        accounts: (() => {
-          const timelockRoles = discovery.getAccessControlField(
-            'RBACTimelock',
-            'ADMIN_ROLE',
-          ).members
-          const members = timelockRoles.map((member) =>
-            discovery.formatPermissionedAccount(member),
-          )
-          return members
-        })(),
-        description:
-          'Admins of the RBACTimelock contract. Can modify all other roles.',
-      },
-      {
-        name: 'Timelock Proposers',
-        accounts: (() => {
-          const timelockRoles = discovery.getAccessControlField(
-            'RBACTimelock',
-            'PROPOSER_ROLE',
-          ).members
-          const members = timelockRoles.map((member) =>
-            discovery.formatPermissionedAccount(member),
-          )
-          return members
-        })(),
-        description:
-          'Proposers of the RBACTimelock contract. Can propose upgrades.',
-      },
-      {
-        name: 'Timelock Cancellers',
-        accounts: (() => {
-          const timelockRoles = discovery.getAccessControlField(
-            'RBACTimelock',
-            'CANCELLER_ROLE',
-          ).members
-          const members = timelockRoles.map((member) =>
-            discovery.formatPermissionedAccount(member),
-          )
-          return members
-        })(),
-        description:
-          'Cancellers of the RBACTimelock contract. Can cancel pending upgrades.',
-      },
-      {
-        name: 'Timelock Executors',
-        accounts: (() => {
-          const timelockRoles = discovery.getAccessControlField(
-            'RBACTimelock',
-            'EXECUTOR_ROLE',
-          ).members
-          const members = timelockRoles.map((member) =>
-            discovery.formatPermissionedAccount(member),
-          )
-          return members
-        })(),
-        description:
-          'Contract through which RBACTimelock proposals are executed. Proposals execution can be initiated by anyone.',
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'RBACTimelock',
+          description: (() => {
+            return `Role-based Access Control Timelock (RBACTimelock) smart contract. Onchain security-critical configuration changes and upgrades to the CCIP must pass through this contract. CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
+          })(),
+          accounts: [discovery.getPermissionedAccount('Router', 'owner')],
+        },
+        {
+          name: 'Timelock Admins',
+          accounts: (() => {
+            const timelockRoles = discovery.getAccessControlField(
+              'RBACTimelock',
+              'ADMIN_ROLE',
+            ).members
+            const members = timelockRoles.map((member) =>
+              discovery.formatPermissionedAccount(member),
+            )
+            return members
+          })(),
+          description:
+            'Admins of the RBACTimelock contract. Can modify all other roles.',
+        },
+        {
+          name: 'Timelock Proposers',
+          accounts: (() => {
+            const timelockRoles = discovery.getAccessControlField(
+              'RBACTimelock',
+              'PROPOSER_ROLE',
+            ).members
+            const members = timelockRoles.map((member) =>
+              discovery.formatPermissionedAccount(member),
+            )
+            return members
+          })(),
+          description:
+            'Proposers of the RBACTimelock contract. Can propose upgrades.',
+        },
+        {
+          name: 'Timelock Cancellers',
+          accounts: (() => {
+            const timelockRoles = discovery.getAccessControlField(
+              'RBACTimelock',
+              'CANCELLER_ROLE',
+            ).members
+            const members = timelockRoles.map((member) =>
+              discovery.formatPermissionedAccount(member),
+            )
+            return members
+          })(),
+          description:
+            'Cancellers of the RBACTimelock contract. Can cancel pending upgrades.',
+        },
+        {
+          name: 'Timelock Executors',
+          accounts: (() => {
+            const timelockRoles = discovery.getAccessControlField(
+              'RBACTimelock',
+              'EXECUTOR_ROLE',
+            ).members
+            const members = timelockRoles.map((member) =>
+              discovery.formatPermissionedAccount(member),
+            )
+            return members
+          })(),
+          description:
+            'Contract through which RBACTimelock proposals are executed. Proposals execution can be initiated by anyone.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [],
 }

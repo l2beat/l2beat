@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -120,28 +121,32 @@ export const silicon: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the SiliconValidium contract.',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('SiliconValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('SiliconValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
+        },
+        {
+          name: 'SiliconDAC Upgrader',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('DACProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
+        },
       ],
-      description:
-        'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
     },
-    {
-      name: 'SiliconDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('SiliconDAC', {
       description:

@@ -24,6 +24,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
+import { generateDiscoveryDrivenPermissions } from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('morph')
 
@@ -246,5 +247,5 @@ export const morph: Layer2 = {
     addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
 }

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
@@ -137,17 +138,19 @@ export const chainport: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Congress members',
-        accounts: discovery.getPermissionedAccounts(
-          'ChainportCongressMembersRegistry',
-          'allMembers',
-        ),
-        description: 'Members of the Chainport Congress.',
-      },
-      ...discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
-      ...discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Congress members',
+          accounts: discovery.getPermissionedAccounts(
+            'ChainportCongressMembersRegistry',
+            'allMembers',
+          ),
+          description: 'Members of the Chainport Congress.',
+        },
+        ...discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
+        ...discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
+      ],
+    },
   },
 }

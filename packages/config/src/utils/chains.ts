@@ -32,15 +32,14 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   )
   const permissions = []
   if (project.permissions !== 'UnderReview') {
-    const all = [
-      ...(project.permissions?.roles ?? []),
-      ...(project.permissions?.actors ?? []),
-    ]
-    const filtered = all.filter((p) => {
-      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-      return nonEoaAddresses.length > 0
-    })
-    permissions.push(...filtered)
+    for (const perChain of Object.values(project.permissions ?? {})) {
+      const all = [...(perChain?.roles ?? []), ...(perChain?.actors ?? [])]
+      const filtered = all.filter((p) => {
+        const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+        return nonEoaAddresses.length > 0
+      })
+      permissions.push(...filtered)
+    }
   }
 
   const allContracts = [

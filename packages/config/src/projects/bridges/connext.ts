@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -106,15 +107,17 @@ export const connext: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Owner of TransactionManager',
-        description: 'Can add and remove Routers and supported assets.',
-        accounts: [
-          discovery.getPermissionedAccount('TransactionManager', 'owner'),
-        ],
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Owner of TransactionManager',
+          description: 'Can add and remove Routers and supported assets.',
+          accounts: [
+            discovery.getPermissionedAccount('TransactionManager', 'owner'),
+          ],
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -149,30 +150,32 @@ export const pNetwork: Bridge = {
   },
 
   permissions: {
-    actors: [
-      {
-        name: 'PNETWORK',
-        description:
-          'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
-        accounts: [
-          discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
-          discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),
-          discovery.getPermissionedAccount('UOS Vault', 'PNETWORK'),
-        ],
-      },
-      {
-        name: 'pNetwork DAO',
-        description:
-          'A voting contract that controls the inflation withdrawal logic of PNT token.',
-        accounts: [
-          discovery.getPermissionedAccount('EthPntv2', 'inflationOwner'),
-        ],
-      },
-      ...discovery.getMultisigPermission(
-        'pNetwork Multisig',
-        'Can upgrade ERC20 Vault V2.',
-      ),
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'PNETWORK',
+          description:
+            'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
+          accounts: [
+            discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
+            discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),
+            discovery.getPermissionedAccount('UOS Vault', 'PNETWORK'),
+          ],
+        },
+        {
+          name: 'pNetwork DAO',
+          description:
+            'A voting contract that controls the inflation withdrawal logic of PNT token.',
+          accounts: [
+            discovery.getPermissionedAccount('EthPntv2', 'inflationOwner'),
+          ],
+        },
+        ...discovery.getMultisigPermission(
+          'pNetwork Multisig',
+          'Can upgrade ERC20 Vault V2.',
+        ),
+      ],
+    },
   },
 
   milestones: [

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { Badge } from '../badges'
 
+import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -370,103 +371,114 @@ export const dydx: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      // TODO: detailed breakdown of permissions
-      {
-        name: 'Operators',
-        accounts: discovery.getPermissionedAccounts(
-          'StarkPerpetual',
-          'OPERATORS',
-        ),
-        description:
-          'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
-      },
-      // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
-      {
-        name: 'Rollup Admin',
-        accounts: [
-          discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
-        ],
-        description:
-          'Controlled by dYdX Governance. Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(maxPriorityDelay),
-        references: [
-          {
-            title: 'Rollup Admin documentation',
-            url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-          },
-        ],
-      },
-      {
-        name: 'Rollup Priority Controller',
-        accounts: [
-          discovery.formatPermissionedAccount(
-            discovery.getContractValue<string[]>(
-              'PriorityExecutor',
-              'PRIORITY_CONTROLLERS',
-            )[0],
+    [ethereum.name]: {
+      actors: [
+        // TODO: detailed breakdown of permissions
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkPerpetual',
+            'OPERATORS',
           ),
-        ],
-        description: `Can decrease the delay required for the Rollup upgrade to ${formatSeconds(
-          minPriorityDelay,
-        )}.`,
-        references: [
-          {
-            title: 'dYdX governance documentation',
-            url: 'https://docs.dydx.community/dydx-governance/',
-          },
-          {
-            title: 'Priority Controller documentation',
-            url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-          },
-        ],
-      },
-      {
-        name: 'Treasury Admin',
-        accounts: [
-          discovery.getPermissionedAccount('ShortTimelockExecutor', 'getAdmin'),
-        ],
-        description:
-          'Controlled by dYdX Governance. Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
-          delayDescriptionFromSeconds(shortTimelockDelay),
-        references: [
-          {
-            title: 'Treasury Admin documentation',
-            url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-          },
-        ],
-      },
-      {
-        name: 'Safety Module Admin',
-        accounts: [
-          discovery.getPermissionedAccount('LongTimelockExecutor', 'getAdmin'),
-        ],
-        description:
-          'Controlled by dYdX Governance. Has the ability to update Governance Strategy resulting in different logic of votes counting. Can upgrade Safety Module. ' +
-          delayDescriptionFromSeconds(longTimelockDelay),
-        references: [
-          {
-            title: 'Safety Module Admin',
-            url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-          },
-        ],
-      },
-      {
-        name: 'Merkle Pauser',
-        accounts: [
-          discovery.getPermissionedAccount('MerklePauserExecutor', 'getAdmin'),
-        ],
-        description:
-          'Controlled by dYdX Governance. The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
-          delayDescriptionFromSeconds(merklePauserDelay),
-        references: [
-          {
-            title: 'Merkle Pauser documentation',
-            url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
-          },
-        ],
-      },
-    ],
+          description:
+            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+        },
+        // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
+        {
+          name: 'Rollup Admin',
+          accounts: [
+            discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
+          ],
+          description:
+            'Controlled by dYdX Governance. Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(maxPriorityDelay),
+          references: [
+            {
+              title: 'Rollup Admin documentation',
+              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+            },
+          ],
+        },
+        {
+          name: 'Rollup Priority Controller',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue<string[]>(
+                'PriorityExecutor',
+                'PRIORITY_CONTROLLERS',
+              )[0],
+            ),
+          ],
+          description: `Can decrease the delay required for the Rollup upgrade to ${formatSeconds(
+            minPriorityDelay,
+          )}.`,
+          references: [
+            {
+              title: 'dYdX governance documentation',
+              url: 'https://docs.dydx.community/dydx-governance/',
+            },
+            {
+              title: 'Priority Controller documentation',
+              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+            },
+          ],
+        },
+        {
+          name: 'Treasury Admin',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'ShortTimelockExecutor',
+              'getAdmin',
+            ),
+          ],
+          description:
+            'Controlled by dYdX Governance. Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
+            delayDescriptionFromSeconds(shortTimelockDelay),
+          references: [
+            {
+              title: 'Treasury Admin documentation',
+              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+            },
+          ],
+        },
+        {
+          name: 'Safety Module Admin',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'LongTimelockExecutor',
+              'getAdmin',
+            ),
+          ],
+          description:
+            'Controlled by dYdX Governance. Has the ability to update Governance Strategy resulting in different logic of votes counting. Can upgrade Safety Module. ' +
+            delayDescriptionFromSeconds(longTimelockDelay),
+          references: [
+            {
+              title: 'Safety Module Admin',
+              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+            },
+          ],
+        },
+        {
+          name: 'Merkle Pauser',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'MerklePauserExecutor',
+              'getAdmin',
+            ),
+          ],
+          description:
+            'Controlled by dYdX Governance. The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
+            delayDescriptionFromSeconds(merklePauserDelay),
+          references: [
+            {
+              title: 'Merkle Pauser documentation',
+              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
+            },
+          ],
+        },
+      ],
+    },
   },
   stateDerivation: {
     nodeSoftware:

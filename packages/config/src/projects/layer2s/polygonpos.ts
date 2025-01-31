@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -257,12 +258,14 @@ export const polygonpos: Layer2 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'PolygonMultisig',
-        'Can propose and execute code upgrades.',
-      ),
-    ],
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'PolygonMultisig',
+          'Can propose and execute code upgrades.',
+        ),
+      ],
+    },
   },
   knowledgeNuggets: [
     {

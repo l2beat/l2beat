@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -114,35 +115,37 @@ export const pulseChain: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Validators',
-        description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Validators',
+          description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
         are required.`,
-        accounts: discovery.getPermissionedAccounts(
-          'BridgeValidators',
-          'validatorList',
-        ),
-      },
-      {
-        name: 'Owner of Validators contract',
-        description:
-          'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
-        accounts: [
-          discovery.getPermissionedAccount('BridgeValidators', 'owner'),
-        ],
-      },
-      {
-        name: 'Upgradeability Owner of main bridge contract',
-        description:
-          'Owner of the main bridge contract, able to upgrade the contract with no notice.',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'ForeignOmnibridge',
-            'upgradeabilityOwner',
+          accounts: discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
           ),
-        ],
-      },
-    ],
+        },
+        {
+          name: 'Owner of Validators contract',
+          description:
+            'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
+          accounts: [
+            discovery.getPermissionedAccount('BridgeValidators', 'owner'),
+          ],
+        },
+        {
+          name: 'Upgradeability Owner of main bridge contract',
+          description:
+            'Owner of the main bridge contract, able to upgrade the contract with no notice.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'ForeignOmnibridge',
+              'upgradeabilityOwner',
+            ),
+          ],
+        },
+      ],
+    },
   },
 }

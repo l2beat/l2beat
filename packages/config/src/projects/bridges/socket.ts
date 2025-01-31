@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -434,41 +435,43 @@ export const socket: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    actors: [
-      {
-        name: 'socketadmin.eth EOA',
-        description:
-          'Account privileged to set up different roles in the main Socket contract.',
-        accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
-      },
-      ...discovery.getMultisigPermission(
-        'LyraMultisig',
-        'Multisig that owns the Socket Vaults associated with Lyra.',
-      ),
-      ...discovery.getMultisigPermission(
-        'KintoMultisig',
-        'Multisig that owns the Socket Vaults associated with Kinto.',
-      ),
-      {
-        name: 'KintoEOA',
-        description: 'owns some Vaults associated with Kinto.',
-        accounts: [
-          discovery.getPermissionedAccount('PAXG Vault Kinto', 'owner'),
-        ],
-      },
-      ...discovery.getMultisigPermission(
-        'LooksRareMultisig',
-        'Multisig that owns a Socket Vault associated with LOOKS token.',
-      ),
-      {
-        name: 'PolynomialEOA',
-        description:
-          'EOA that owns the Socket Vaults associated with Polynomial L2.',
-        accounts: [
-          discovery.getPermissionedAccount('USDC Vault Polynomial', 'owner'),
-        ],
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'socketadmin.eth EOA',
+          description:
+            'Account privileged to set up different roles in the main Socket contract.',
+          accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
+        },
+        ...discovery.getMultisigPermission(
+          'LyraMultisig',
+          'Multisig that owns the Socket Vaults associated with Lyra.',
+        ),
+        ...discovery.getMultisigPermission(
+          'KintoMultisig',
+          'Multisig that owns the Socket Vaults associated with Kinto.',
+        ),
+        {
+          name: 'KintoEOA',
+          description: 'owns some Vaults associated with Kinto.',
+          accounts: [
+            discovery.getPermissionedAccount('PAXG Vault Kinto', 'owner'),
+          ],
+        },
+        ...discovery.getMultisigPermission(
+          'LooksRareMultisig',
+          'Multisig that owns a Socket Vault associated with LOOKS token.',
+        ),
+        {
+          name: 'PolynomialEOA',
+          description:
+            'EOA that owns the Socket Vaults associated with Polynomial L2.',
+          accounts: [
+            discovery.getPermissionedAccount('USDC Vault Polynomial', 'owner'),
+          ],
+        },
+      ],
+    },
   },
   knowledgeNuggets: [],
 }

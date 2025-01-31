@@ -26,6 +26,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
+import { generateDiscoveryDrivenPermissions } from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('phala')
 
@@ -304,7 +305,7 @@ export const phala: Layer2 = {
       },
     ],
   },
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Phala Network Launch',

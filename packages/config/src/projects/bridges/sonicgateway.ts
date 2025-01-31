@@ -8,6 +8,7 @@ import {
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
+import { generateDiscoveryDrivenPermissions } from '../layer2s/templates/generateDiscoveryDrivenSections'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('sonicgateway')
@@ -163,7 +164,7 @@ export const sonicgateway: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
       title: 'Sonic introduces Sonic Gateway',

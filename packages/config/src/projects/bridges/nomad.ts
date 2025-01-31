@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -144,32 +145,34 @@ export const nomad: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'Governor',
-        'Manages Optics V1 bridge components via GovernanceRouter contract.',
-      ),
-      ...discovery.getMultisigPermission(
-        'RecoveryManager',
-        'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
-      ),
-      {
-        name: 'Updater',
-        accounts: [
-          discovery.getPermissionedAccount('UpdaterManager', 'updater'),
-        ],
-        description: 'Permissioned account that can update message roots.',
-      },
-      {
-        name: 'XAppConnectionManager Watchers',
-        accounts: discovery.getPermissionedAccounts(
-          'XAppConnectionManager',
-          'watchers',
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'Governor',
+          'Manages Optics V1 bridge components via GovernanceRouter contract.',
         ),
-        description:
-          'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
-      },
-    ],
+        ...discovery.getMultisigPermission(
+          'RecoveryManager',
+          'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
+        ),
+        {
+          name: 'Updater',
+          accounts: [
+            discovery.getPermissionedAccount('UpdaterManager', 'updater'),
+          ],
+          description: 'Permissioned account that can update message roots.',
+        },
+        {
+          name: 'XAppConnectionManager Watchers',
+          accounts: discovery.getPermissionedAccounts(
+            'XAppConnectionManager',
+            'watchers',
+          ),
+          description:
+            'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
+        },
+      ],
+    },
   },
   milestones: [
     {

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -121,28 +122,32 @@ export const hyphen: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      {
-        name: 'ProxyAdmin owner',
-        description:
-          'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-        accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
-      },
-      {
-        name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
-        description:
-          'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-        accounts: [discovery.getPermissionedAccount('LiquidityPool', 'owner')],
-      },
-      {
-        name: 'Executors',
-        description: 'Executor is able to release funds from LiquidityPool.',
-        accounts: discovery.getPermissionedAccounts(
-          'ExecutorManager',
-          'getAllExecutors',
-        ),
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'ProxyAdmin owner',
+          description:
+            'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
+          accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+        },
+        {
+          name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
+          description:
+            'Can pause contracts, change configuration and change proxy admin or update Executor list.',
+          accounts: [
+            discovery.getPermissionedAccount('LiquidityPool', 'owner'),
+          ],
+        },
+        {
+          name: 'Executors',
+          description: 'Executor is able to release funds from LiquidityPool.',
+          accounts: discovery.getPermissionedAccounts(
+            'ExecutorManager',
+            'getAllExecutors',
+          ),
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

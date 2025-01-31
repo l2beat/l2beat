@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -348,18 +349,20 @@ export const layerzerov2oft: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'LayerZero Multisig',
-        'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
-      ),
-      {
-        accounts: [discovery.formatPermissionedAccount(enaExecutor)],
-        name: 'Default LayerZero Executor',
-        description:
-          'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
+        ),
+        {
+          accounts: [discovery.formatPermissionedAccount(enaExecutor)],
+          name: 'Default LayerZero Executor',
+          description:
+            'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

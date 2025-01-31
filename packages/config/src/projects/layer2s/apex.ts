@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -240,46 +241,48 @@ export const apex: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Governors for USDC StarkEx',
-        accounts: getProxyGovernance(discovery, 'StarkExchangeUSDC'),
-        description:
-          'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
-          delayDescriptionFromString(upgradeDelayUSDC),
-      },
-      {
-        name: 'Governors for USDT StarkEx',
-        accounts: getProxyGovernance(discovery, 'StarkExchangeUSDT'),
-        description:
-          'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
-          delayDescriptionFromString(upgradeDelayUSDT),
-      },
-      {
-        name: 'Operators for USDC StarkEx',
-        accounts: discovery.getPermissionedAccounts(
-          'StarkExchangeUSDC',
-          'OPERATORS',
-        ),
-        description:
-          'Allowed to update state of the system and verify DA proofs for USDC StarkEx instance. When Operator is down the state cannot be updated.',
-      },
-      {
-        name: 'Operators for USDT StarkEx',
-        accounts: discovery.getPermissionedAccounts(
-          'StarkExchangeUSDT',
-          'OPERATORS',
-        ),
-        description:
-          'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
-      },
-      usdcCommittee,
-      usdtCommittee,
-      ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),
-      ...(verifierAddressUSDT !== verifierAddressUSDC
-        ? getSHARPVerifierGovernors(discovery, verifierAddressUSDT)
-        : []),
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Governors for USDC StarkEx',
+          accounts: getProxyGovernance(discovery, 'StarkExchangeUSDC'),
+          description:
+            'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
+            delayDescriptionFromString(upgradeDelayUSDC),
+        },
+        {
+          name: 'Governors for USDT StarkEx',
+          accounts: getProxyGovernance(discovery, 'StarkExchangeUSDT'),
+          description:
+            'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
+            delayDescriptionFromString(upgradeDelayUSDT),
+        },
+        {
+          name: 'Operators for USDC StarkEx',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkExchangeUSDC',
+            'OPERATORS',
+          ),
+          description:
+            'Allowed to update state of the system and verify DA proofs for USDC StarkEx instance. When Operator is down the state cannot be updated.',
+        },
+        {
+          name: 'Operators for USDT StarkEx',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkExchangeUSDT',
+            'OPERATORS',
+          ),
+          description:
+            'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
+        },
+        usdcCommittee,
+        usdtCommittee,
+        ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),
+        ...(verifierAddressUSDT !== verifierAddressUSDC
+          ? getSHARPVerifierGovernors(discovery, verifierAddressUSDT)
+          : []),
+      ],
+    },
   },
   milestones: [
     {

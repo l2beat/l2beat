@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -121,28 +122,32 @@ export const gpt: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the GptProtocolValidium contract.',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('GptProtocolValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('GptProtocolValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
+        },
+        {
+          name: 'GptProtocolDAC Upgrader',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('DACProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            'Can upgrade the GptProtocolDAC contract and thus change the data availability rules any time.',
+        },
       ],
-      description:
-        'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
     },
-    {
-      name: 'GptProtocolDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the GptProtocolDAC contract and thus change the data availability rules any time.',
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('GptProtocolDAC', {
       description:

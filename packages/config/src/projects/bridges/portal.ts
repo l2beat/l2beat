@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -163,18 +164,20 @@ export const portal: Bridge = {
   },
 
   permissions: {
-    actors: [
-      {
-        name: 'Guardian Network',
-        description:
-          'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-        accounts: discovery.getPermissionedAccounts(
-          'WormholeCore',
-          'guardianSet',
-          0,
-        ),
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Guardian Network',
+          description:
+            'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
+          accounts: discovery.getPermissionedAccounts(
+            'WormholeCore',
+            'guardianSet',
+            0,
+          ),
+        },
+      ],
+    },
   },
   milestones: [
     {

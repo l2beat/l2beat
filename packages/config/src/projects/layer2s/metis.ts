@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import {
   CONTRACTS,
@@ -214,48 +215,50 @@ export const metis: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Sequencer',
-        accounts: [
-          {
-            address: EthereumAddress(
-              '0x1A9da0aedA630dDf2748a453BF6d92560762D914',
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Sequencer',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x1A9da0aedA630dDf2748a453BF6d92560762D914',
+              ),
+              type: 'EOA',
+            },
+          ],
+          description: 'Central actor allowed to commit transactions to L1.',
+        },
+        ...discovery.getMultisigPermission(
+          'Metis Multisig',
+          'This address is the owner of all the upgradable contracts of the system. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+        ),
+        {
+          name: 'State Root Proposer',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'Lib_AddressManager',
+              '_1088_MVM_Proposer',
             ),
-            type: 'EOA',
-          },
-        ],
-        description: 'Central actor allowed to commit transactions to L1.',
-      },
-      ...discovery.getMultisigPermission(
-        'Metis Multisig',
-        'This address is the owner of all the upgradable contracts of the system. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-      ),
-      {
-        name: 'State Root Proposer',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'Lib_AddressManager',
-            '_1088_MVM_Proposer',
-          ),
-        ],
-        description: 'Central actor to post new state roots to L1.',
-      },
-      {
-        name: 'Execution Verifiers',
-        accounts: [
-          // TODO: Verify this. This is the same address as the multisig. If this is correct, we should remove it and change multisig description.
-          {
-            address: EthereumAddress(
-              '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-            ),
-            type: 'EOA',
-          },
-        ],
-        description:
-          'Those addresses can challenge the state roots submitted by the state root proposer.',
-      },
-    ],
+          ],
+          description: 'Central actor to post new state roots to L1.',
+        },
+        {
+          name: 'Execution Verifiers',
+          accounts: [
+            // TODO: Verify this. This is the same address as the multisig. If this is correct, we should remove it and change multisig description.
+            {
+              address: EthereumAddress(
+                '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
+              ),
+              type: 'EOA',
+            },
+          ],
+          description:
+            'Those addresses can challenge the state roots submitted by the state root proposer.',
+        },
+      ],
+    },
   },
   contracts: {
     addresses: [

@@ -52,7 +52,6 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
-  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -66,7 +65,10 @@ import type {
 import { Badge, type BadgeId } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenPermissions,
+  generateDiscoveryDrivenSections,
+} from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -143,7 +145,6 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
@@ -266,7 +267,11 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
+  const discoveryDrivenContracts = templateVars.discoveryDrivenData
     ? generateDiscoveryDrivenSections(
         templateVars.discovery,
         nativeContractRisks,
@@ -340,33 +345,30 @@ function opStackCommon(
       ],
     },
     technology: getTechnology(templateVars, explorerUrl),
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
       : {
-          actors: [
-            ...templateVars.discovery.getOpStackPermissions({
-              batcherHash: 'Sequencer',
-              PROPOSER: 'Proposer',
-              GUARDIAN: 'Guardian',
-              CHALLENGER: 'Challenger',
-              ...(templateVars.roleOverrides ?? {}),
-            }),
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
+          [templateVars.discovery.chain]: {
+            actors: [
+              ...templateVars.discovery.getOpStackPermissions({
+                batcherHash: 'Sequencer',
+                PROPOSER: 'Proposer',
+                GUARDIAN: 'Guardian',
+                CHALLENGER: 'Challenger',
+                ...(templateVars.roleOverrides ?? {}),
+              }),
+              ...(templateVars.nonTemplatePermissions ?? []),
+            ],
+          },
         },
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nonTemplateNativePermissions,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
-      : {
-          addresses: [
-            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-            ...(templateVars.nonTemplateContracts ?? []),
-          ],
-          risks: nativeContractRisks,
-          nativeAddresses: templateVars.nonTemplateNativeContracts,
-        },
+    contracts: discoveryDrivenContracts ?? {
+      addresses: [
+        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
+        ...(templateVars.nonTemplateContracts ?? []),
+      ],
+      risks: nativeContractRisks,
+      nativeAddresses: templateVars.nonTemplateNativeContracts,
+    },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),

@@ -1,4 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
@@ -142,23 +143,25 @@ export const beamerbridgev2: Bridge = {
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Owner',
-        description:
-          'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-        accounts: [
-          discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
-        ],
-      },
-      {
-        name: 'Liquidity Providers',
-        description: 'Addresses allowed to fill requests.',
-        accounts: discovery.getPermissionedAccounts(
-          'EthereumFillManager',
-          'liquidityProviders',
-        ),
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Owner',
+          description:
+            'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
+          accounts: [
+            discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
+          ],
+        },
+        {
+          name: 'Liquidity Providers',
+          description: 'Addresses allowed to fill requests.',
+          accounts: discovery.getPermissionedAccounts(
+            'EthereumFillManager',
+            'liquidityProviders',
+          ),
+        },
+      ],
+    },
   },
 }

@@ -1,4 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -134,28 +135,32 @@ export const ternoa: Layer2 = polygonCDKStack({
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
 
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('TernoaValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('TernoaValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin and ForceBatcher of the TernoaValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the TernoaDAC contract.',
+        },
+        {
+          name: 'TernoaDAC Upgrader',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('DACProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            'Can upgrade the TernoaDAC contract and thus change the data availability rules any time.',
+        },
       ],
-      description:
-        'Admin and ForceBatcher of the TernoaValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the TernoaDAC contract.',
     },
-    {
-      name: 'TernoaDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the TernoaDAC contract and thus change the data availability rules any time.',
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('TernoaDAC', {
       description:

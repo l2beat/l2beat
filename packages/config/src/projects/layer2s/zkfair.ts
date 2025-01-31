@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { ethereum } from '../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -261,75 +262,77 @@ export const zkfair: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Sequencer',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'ZKFairValidium',
-            'trustedSequencer',
-          ),
-        ],
-        description:
-          'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
-      },
-      {
-        name: 'Proposer',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'ZKFairValidium',
-            'trustedAggregator',
-          ),
-        ],
-        description: `The trusted proposer (called Aggregator) provides the ZKFairValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      },
-      ...discovery.getMultisigPermission(
-        'ZKFairAdmin',
-        'Admin of the ZKFairValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state.',
-      ),
-      ...discovery.getMultisigPermission(
-        'ZKFairOwner',
-        'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
-      ),
-      ...discovery.getMultisigPermission(
-        'BridgeAdminMultiSig',
-        'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
-      ),
-      {
-        name: 'DAC members',
-        accounts: (() => {
-          // format: [ [ip, address], ... ]
-          const membersMap = discovery.getContractValue<string[][]>(
-            'ZKFairValidiumDAC',
-            'members',
-          )
-
-          const members = membersMap.map((member) =>
-            discovery.formatPermissionedAccount(EthereumAddress(member[1])),
-          )
-
-          return members
-        })(),
-        description: `Members of the Data Availability Committee. The setup is equivalent to a ${requiredSignatures}/${membersCount} multisig.`,
-      },
-      {
-        name: 'DAC Owner',
-        accounts: [
-          discovery.getPermissionedAccount('ZKFairValidiumDAC', 'owner'),
-        ],
-        description:
-          'The owner of the Data Availability Committee, can update the member set at any time.',
-      },
-      {
-        name: 'TimelockExecutor',
-        accounts: discovery.getAccessControlRolePermission(
-          'Timelock',
-          'EXECUTOR_ROLE',
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Sequencer',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'ZKFairValidium',
+              'trustedSequencer',
+            ),
+          ],
+          description:
+            'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
+        },
+        {
+          name: 'Proposer',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'ZKFairValidium',
+              'trustedAggregator',
+            ),
+          ],
+          description: `The trusted proposer (called Aggregator) provides the ZKFairValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+        },
+        ...discovery.getMultisigPermission(
+          'ZKFairAdmin',
+          'Admin of the ZKFairValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state.',
         ),
-        description:
-          'Controls the upgrades to the ZKFairValidiumDAC and ZKFairValidium contracts through the Timelock. ',
-      },
-    ],
+        ...discovery.getMultisigPermission(
+          'ZKFairOwner',
+          'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+        ),
+        ...discovery.getMultisigPermission(
+          'BridgeAdminMultiSig',
+          'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
+        ),
+        {
+          name: 'DAC members',
+          accounts: (() => {
+            // format: [ [ip, address], ... ]
+            const membersMap = discovery.getContractValue<string[][]>(
+              'ZKFairValidiumDAC',
+              'members',
+            )
+
+            const members = membersMap.map((member) =>
+              discovery.formatPermissionedAccount(EthereumAddress(member[1])),
+            )
+
+            return members
+          })(),
+          description: `Members of the Data Availability Committee. The setup is equivalent to a ${requiredSignatures}/${membersCount} multisig.`,
+        },
+        {
+          name: 'DAC Owner',
+          accounts: [
+            discovery.getPermissionedAccount('ZKFairValidiumDAC', 'owner'),
+          ],
+          description:
+            'The owner of the Data Availability Committee, can update the member set at any time.',
+        },
+        {
+          name: 'TimelockExecutor',
+          accounts: discovery.getAccessControlRolePermission(
+            'Timelock',
+            'EXECUTOR_ROLE',
+          ),
+          description:
+            'Controls the upgrades to the ZKFairValidiumDAC and ZKFairValidium contracts through the Timelock. ',
+        },
+      ],
+    },
   },
   contracts: {
     addresses: [

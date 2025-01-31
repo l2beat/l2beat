@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
@@ -90,13 +91,15 @@ export const gravity: Bridge = {
     isIncomplete: true,
   },
   permissions: {
-    actors: [
-      {
-        name: 'Cosmos Validators',
-        description:
-          'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
-        accounts: [],
-      },
-    ],
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'Cosmos Validators',
+          description:
+            'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
+          accounts: [],
+        },
+      ],
+    },
   },
 }

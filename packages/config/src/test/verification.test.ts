@@ -257,10 +257,11 @@ function getPermissionedAddressesForChain(project: Project, chain: string) {
     return []
   }
 
-  const all = [
-    ...(project.permissions?.roles ?? []),
-    ...(project.permissions?.actors ?? []),
-  ]
+  const all = []
+  for (const perChain of Object.values(project.permissions ?? {})) {
+    all.push(...(perChain.roles ?? []))
+    all.push(...(perChain.actors ?? []))
+  }
 
   return all
     .filter((p) => isContractOnChain(p.chain, chain, project))

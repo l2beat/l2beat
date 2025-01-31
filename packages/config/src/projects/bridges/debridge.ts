@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -113,20 +114,22 @@ export const debridge: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'Admin Multisig',
-        'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies through the ProxyAdmin contract.',
-      ),
-      {
-        name: 'Oracles',
-        description:
-          'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
-        accounts: discovery.getPermissionedAccounts(
-          'SignatureVerifier',
-          'oracles',
+    [ethereum.name]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'Admin Multisig',
+          'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies through the ProxyAdmin contract.',
         ),
-      },
-    ],
+        {
+          name: 'Oracles',
+          description:
+            'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
+          accounts: discovery.getPermissionedAccounts(
+            'SignatureVerifier',
+            'oracles',
+          ),
+        },
+      ],
+    },
   },
 }

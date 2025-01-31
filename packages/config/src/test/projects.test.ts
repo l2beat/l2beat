@@ -93,22 +93,24 @@ describe('projects', () => {
 
           if (project.permissions !== 'UnderReview') {
             const upgradableBy = contract.upgradableBy
-            const all = [
-              ...(project.permissions?.roles ?? []),
-              ...(project.permissions?.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
-
-            if (upgradableBy) {
-              it(`contracts[${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy)
+            for (const perChain of Object.values(project.permissions ?? {})) {
+              const all = [
+                ...(perChain.roles ?? []),
+                ...(perChain.actors ?? []),
+              ]
+              const actors = all.map((x) => {
+                if (x.name === 'EOA') {
+                  assert(x.accounts[0].type === 'EOA')
+                  return x.accounts[0].address
+                }
+                return x.name
               })
+
+              if (upgradableBy) {
+                it(`contracts[${i}].upgradableBy is valid`, () => {
+                  expect(actors).toInclude(...upgradableBy)
+                })
+              }
             }
           }
         }

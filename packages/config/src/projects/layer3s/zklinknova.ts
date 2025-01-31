@@ -709,24 +709,24 @@ export const zklinknova: Layer3 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...lineaDiscovery.getMultisigPermission(
-        'LineaOwner',
-        'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-      {
-        name: 'Validators',
-        accounts: lineaDiscovery.getPermissionedAccounts(
-          'zkLink',
-          'validators',
+    linea: {
+      actors: [
+        ...lineaDiscovery.getMultisigPermission(
+          'LineaOwner',
+          'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
-        chain: 'linea',
-        description:
-          'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
-      },
-    ],
-  },
-  nativePermissions: {
+        {
+          name: 'Validators',
+          accounts: lineaDiscovery.getPermissionedAccounts(
+            'zkLink',
+            'validators',
+          ),
+          chain: 'linea',
+          description:
+            'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
+        },
+      ],
+    },
     optimism: {
       actors: [
         optimismDiscovery.contractAsPermissioned(

@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ethereum } from '../../chains/ethereum'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
@@ -114,33 +115,35 @@ export const satellite: Bridge = {
     },
   },
   permissions: {
-    actors: [
-      {
-        name: 'MintLimiter Multisig',
-        accounts: discovery.getPermissionedAccounts(
-          'Multisig',
-          'signerAccounts',
-        ),
-        description: 'Members of the Multisig that can set mint limits.',
-      },
-      {
-        name: 'Operators',
-        accounts: [],
-        description:
-          'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
-      },
-      {
-        name: 'AxelarGasService Admin',
-        accounts: [
-          discovery.getPermissionedAccount(
-            'AxelarGasServiceOperators',
-            'owner',
+    [ethereum.name]: {
+      actors: [
+        {
+          name: 'MintLimiter Multisig',
+          accounts: discovery.getPermissionedAccounts(
+            'Multisig',
+            'signerAccounts',
           ),
-        ],
-        description:
-          'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
-      },
-    ],
+          description: 'Members of the Multisig that can set mint limits.',
+        },
+        {
+          name: 'Operators',
+          accounts: [],
+          description:
+            'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
+        },
+        {
+          name: 'AxelarGasService Admin',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'AxelarGasServiceOperators',
+              'owner',
+            ),
+          ],
+          description:
+            'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
+        },
+      ],
+    },
   },
   contracts: {
     addresses: [
