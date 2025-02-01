@@ -924,6 +924,7 @@ export class ProjectDiscovery {
       validateZkStack: 'A Validator',
       relay: 'A Relayer',
       validateBridge: 'A Validator',
+      aggregatePolygon: 'A trusted Aggregator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -993,6 +994,7 @@ export class ProjectDiscovery {
       validateZkStack: 'Can act as a Validator',
       relay: 'Can act as a Relayer',
       validateBridge: 'Can act as a Validator',
+      aggregatePolygon: 'Can act as a trusted Aggregator',
     }
 
     return Object.entries(
@@ -1281,6 +1283,11 @@ const roleDescriptions: {
     name: 'Relayer',
     description:
       'Actors permissioned to relay messages that are then verified onchain.',
+  },
+  aggregatePolygon: {
+    name: 'Trusted Aggregator (Proposer)',
+    description:
+      'Permissioned to post new state roots.',
   },
 }
 

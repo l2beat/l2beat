@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21686453,
+  "blockNumber": 21745064,
   "configHash": "0x61fa02d1be12c1bd19f6d84d3fc6f9347240d9da090c3fd0dee59b84c64184a7",
   "contracts": [
     {
@@ -111,7 +111,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x96f842c9ab212387bdd1132db30f2a9dee2e9a4fcef910be7d1a4c447085267d",
+        "getRoot": "0x011d046f51626a6b85a68761894b1e0d08dabe8c34889aea1fdd48b3222522ba",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -311,7 +311,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x84ec22821e8884b79a7cdd980980bd9e60a0c1038abc34666342cad949f97eba",
+        "getRollupExitRoot": "0xa00fca521c0fcd8a9a4af2b5cd6ec38ae8627e0f8b871cdcea4baac5f1663bcc",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -329,7 +329,7 @@
           [true],
           [true]
         ],
-        "lastAggregationTimestamp": 1737626375,
+        "lastAggregationTimestamp": 1738332791,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -450,8 +450,8 @@
             "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
           ]
         ],
-        "totalSequencedBatches": 565885,
-        "totalVerifiedBatches": 560464,
+        "totalSequencedBatches": 574255,
+        "totalVerifiedBatches": 573751,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -509,8 +509,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 52994,
-        "getRoot": "0xfc1c0498cd65195cd5c4b38c8d62ab3c1c56d5ee40940c28249b072ca975f22c",
+        "depositCount": 53325,
+        "getRoot": "0xd6a1aea456be6e177b1420df92bd5f899fdda3f03654dc2fd2ddd33035195e0b",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
