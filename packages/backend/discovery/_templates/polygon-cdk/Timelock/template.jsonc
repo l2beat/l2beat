@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Timelock",
-  "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
+  "description": "A timelock with access control. In the case of an activated emergency state in the {{polygonZkEVM}}, all transactions through this timelock are immediately executable. The current minimum delay is {{getMinDelayFormatted}}.",
   "ignoreMethods": [
     "CANCELLER_ROLE",
     "DEFAULT_ADMIN_ROLE",
@@ -24,7 +24,8 @@
           },
           {
             "type": "act",
-            "delay": "{{getMinDelay}}"
+            "delay": "{{getMinDelay}}",
+            "condition": "there is no emergency state, in which case there is no delay",
           }
         ]
       }

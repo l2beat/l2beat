@@ -67,7 +67,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         },
@@ -83,7 +84,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         },
@@ -99,7 +101,8 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         },
@@ -110,7 +113,8 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         },
@@ -121,7 +125,8 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         }
@@ -130,7 +135,8 @@
         {
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 864000
+          "delay": 864000,
+          "condition": "there is no emergency state, in which case there is no delay"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -168,7 +174,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -316,7 +323,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         },
@@ -344,7 +352,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -614,6 +623,11 @@
         "verifyBatchTimeTarget": 1800
       },
       "fieldMeta": {
+        "nondeterministicPendingState": { "severity": "HIGH" },
+        "isEmergencyState": {
+          "severity": "HIGH",
+          "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
+        },
         "rollupsData": {
           "severity": "MEDIUM",
           "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"
@@ -643,7 +657,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
           ]
@@ -727,7 +742,7 @@
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
-      "description": "A timelock with access control. The current minimum delay is 10d.",
+      "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d.",
       "issuedPermissions": [
         {
           "permission": "configure",
@@ -742,7 +757,8 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000
+              "delay": 864000,
+              "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
         }
@@ -755,7 +771,8 @@
         {
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 864000
+          "delay": 864000,
+          "condition": "there is no emergency state, in which case there is no delay"
         },
         {
           "permission": "configure",
@@ -1596,7 +1613,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonRollupManager": "0x322be7dadd0ccb48004df80a3a69451b5255a6b89a7170498af3806531ce5f44",
-    "polygon-cdk/Timelock": "0x0b572bae8d23d897078a5fedacd6601d73438668dd6dc375aa982c9fe613df69"
+    "polygon-cdk/PolygonRollupManager": "0xe81d4a43ec0714fa6cca87a7f46b456a12cb8d49df8e937150f3d102c145c6ce",
+    "polygon-cdk/Timelock": "0x80f5f7cbfcfd3a0bb40507d93218158b0615cd29def7ddc00ea7138144ed416f"
   }
 }
