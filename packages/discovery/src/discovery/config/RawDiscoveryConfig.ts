@@ -27,7 +27,7 @@ export const RolePermissionEntries = [
   'validateZkStack',
   'validateBridge',
   'relay',
-  'aggregatePolygon'
+  'aggregatePolygon',
 ] as const
 
 export const Permission = z.enum([

@@ -1287,7 +1287,7 @@ const roleDescriptions: {
   aggregatePolygon: {
     name: 'Trusted Aggregator (Proposer)',
     description:
-      'Permissioned to post new state roots.',
+      'Permissioned to post new state roots and global exit roots accompanied by ZK proofs. Can also settle verified state roots without a timeout (consolidate pending state).',
   },
 }
 

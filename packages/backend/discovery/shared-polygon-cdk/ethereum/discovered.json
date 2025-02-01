@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 21745064,
-  "configHash": "0x61fa02d1be12c1bd19f6d84d3fc6f9347240d9da090c3fd0dee59b84c64184a7",
+  "configHash": "0x101756596a3672927bc1a163f70878f0e9d222c71ca710551b5ab3bd9265ee0b",
   "contracts": [
     {
       "name": "Permit2",
@@ -54,6 +54,85 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
+        },
+        {
+          "permission": "configure",
+          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "via": [
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "via": [
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "via": [
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 864000
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678956815,
       "values": {
@@ -85,8 +164,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            },
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["getRoot"],
@@ -129,6 +214,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678429487,
       "values": {
@@ -193,16 +285,69 @@
     {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "template": "polygon-cdk/PolygonRollupManager",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by permissioned actors or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.",
       "issuedPermissions": [
         {
+          "permission": "aggregatePolygon",
+          "to": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+          "via": []
+        },
+        {
+          "permission": "aggregatePolygon",
+          "to": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "via": []
+        },
+        {
           "permission": "upgrade",
-          "to": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            },
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
+          ]
         }
       ],
       "ignoreInWatchMode": [
@@ -213,7 +358,7 @@
       ],
       "sinceTimestamp": 1679653163,
       "values": {
-        "_HALT_AGGREGATION_TIMEOUT": 604800,
+        "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d",
         "$pastUpgrades": [
@@ -308,7 +453,15 @@
           }
         },
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "createRollupAC": [
+          "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "emergencyCouncilAdminAC": [
+          "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"
+        ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
         "getRollupExitRoot": "0xa00fca521c0fcd8a9a4af2b5cd6ec38ae8627e0f8b871cdcea4baac5f1663bcc",
@@ -452,7 +605,12 @@
         ],
         "totalSequencedBatches": 574255,
         "totalVerifiedBatches": 573751,
+        "trustedAggregatorAC": [
+          "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+        ],
         "trustedAggregatorTimeout": 432000,
+        "tweakParametersAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "verifyBatchTimeTarget": 1800
       },
       "fieldMeta": {
@@ -481,8 +639,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            },
+            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["getRoot", "depositCount"],
@@ -524,6 +688,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722533147,
       "values": {
@@ -552,30 +723,49 @@
     {
       "name": "Timelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
-      "receivedPermissions": [
+      "description": "A timelock with access control. The current minimum delay is 10d.",
+      "issuedPermissions": [
         {
-          "permission": "upgrade",
-          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "via": []
         },
         {
-          "permission": "upgrade",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-          "via": [{ "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }]
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 864000
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+        },
+        {
+          "permission": "act",
+          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "delay": 864000
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+        },
+        {
+          "permission": "configure",
+          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
         }
       ],
       "sinceTimestamp": 1679653187,
@@ -607,6 +797,7 @@
           }
         },
         "getMinDelay": 864000,
+        "getMinDelayFormatted": "10d",
         "polygonZkEVM": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "scheduledTransactionsDecoded": [
           {
@@ -907,6 +1098,10 @@
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           }
+        ],
+        "timelockAdminAC": [
+          "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ]
       },
       "derivedName": "PolygonZkEVMTimelock"
@@ -916,13 +1111,29 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6" },
     { "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77" },
-    { "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE" },
+    {
+      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
     { "address": "0x21887c89368bf918346c62460e0c339113801C28" },
     { "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5" },
     { "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622" },
     { "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86" },
     { "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891" },
-    { "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab" },
+    {
+      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
     { "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496" },
     { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
     { "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227" },
@@ -1384,6 +1595,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "polygon-cdk/PolygonRollupManager": "0x322be7dadd0ccb48004df80a3a69451b5255a6b89a7170498af3806531ce5f44",
+    "polygon-cdk/Timelock": "0x0b572bae8d23d897078a5fedacd6601d73438668dd6dc375aa982c9fe613df69"
   }
 }

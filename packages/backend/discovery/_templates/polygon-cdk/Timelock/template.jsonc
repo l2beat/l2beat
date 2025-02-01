@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "Timelock",
+  "description": "A timelock with access control. The current minimum delay is {{getMinDelayFormatted}}.",
+  "ignoreMethods": [
+    "CANCELLER_ROLE",
+    "DEFAULT_ADMIN_ROLE",
+    "EXECUTOR_ROLE",
+    "PROPOSER_ROLE",
+    "TIMELOCK_ADMIN_ROLE"
+  ],
+  "fields": {
+    "timelockAdminAC": {
+      // assuming they also have PROPOSER_ROLE, EXECUTOR_ROLE, CANCELLER_ROLE roles
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
+      },
+      "target": {
+        "permissions": [
+          {
+            "type": "configure",
+            "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
+          },
+          {
+            "type": "act",
+            "delay": "{{getMinDelay}}"
+          }
+        ]
+      }
+    },
+    "getMinDelayFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "getMinDelay",
+        "args": []
+      },
+      "returnType": "(FormatSeconds)"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "scheduledTransactionsDecoded": {
+      "handler": {
+        "type": "polygoncdkScheduledTransactions"
+      }
+    }
+  }
+}

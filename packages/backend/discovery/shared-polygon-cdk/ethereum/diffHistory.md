@@ -1,4 +1,149 @@
-Generated with discovered.json: 0x66a1058bda7af88038fedf3f661ab0ec25b21ff0
+Generated with discovered.json: 0x179ac22e6020176fee19514b2761d88d6c165a85
+
+# Diff at Sat, 01 Feb 2025 19:51:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21686453
+- current block number: 21745064
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21686453 (main branch discovery), not current.
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."},{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]},{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."},{"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]},{"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles."},{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]
+    }
+```
+
+```diff
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      issuedPermissions.0.via.1:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+      issuedPermissions.0.via.0.address:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0.delay:
++        864000
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them."}]
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by permissioned actors or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.
+      issuedPermissions.7:
++        {"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}
+      issuedPermissions.6:
++        {"permission":"configure","to":"0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]}
+      issuedPermissions.5:
++        {"permission":"configure","to":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them.","via":[]}
+      issuedPermissions.4:
++        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).","via":[]}
+      issuedPermissions.3:
++        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]}
+      issuedPermissions.1:
++        {"permission":"aggregatePolygon","to":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "aggregatePolygon"
+      issuedPermissions.0.to:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+      issuedPermissions.0.via.0:
+-        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+      values._HALT_AGGREGATION_TIMEOUT:
+-        604800
++        "1 week"
+      values.createRollupAC:
++        ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"]
+      values.defaultAdminAC:
++        ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+      values.emergencyCouncilAdminAC:
++        ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+      values.trustedAggregatorAC:
++        ["0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]
+      values.tweakParametersAC:
++        ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+      template:
++        "polygon-cdk/PolygonRollupManager"
+      description:
++        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by permissioned actors or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers."
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      issuedPermissions.0.via.1:
++        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
+      issuedPermissions.0.via.0.address:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      issuedPermissions.0.via.0.delay:
++        864000
+    }
+```
+
+```diff
+    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."}]
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. The current minimum delay is 10d.
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
+      directlyReceivedPermissions.3:
++        {"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles."}
+      directlyReceivedPermissions.2:
++        {"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}
+      values.getMinDelayFormatted:
++        "10d"
+      values.timelockAdminAC:
++        ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+      template:
++        "polygon-cdk/Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 10d."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"propose, cancel and execute transactions in the timelock, manage all access control roles.","via":[]},{"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"propose, cancel and execute transactions in the timelock, manage all access control roles.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000}]}]
+    }
+```
+
+Generated with discovered.json: 0x3e3da684ccdf32711740d539c0ef960d6459bf86
 
 # Diff at Thu, 23 Jan 2025 10:00:14 GMT:
 
