@@ -1,7 +1,7 @@
 {
   "name": "silicon",
   "chain": "ethereum",
-  "blockNumber": 21628488,
+  "blockNumber": 21744175,
   "configHash": "0x0ca4696d90843c93889d76e89d54d38fba5852fa86e04bc52446ae1aa2bfc4f4",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
@@ -125,7 +125,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x940009389e1c2a9d77944bc16db31823d7835e044b918fc05710adf92fd6f0bf",
+        "lastAccInputHash": "0xfad61da99fcb475f86c931ecc8d7d493c458517a9be194ab996410636df12695",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",

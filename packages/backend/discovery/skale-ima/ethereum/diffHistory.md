@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xdf66b13568501fda02c019c3198ae28d08fdb186
+
+# Diff at Fri, 31 Jan 2025 11:23:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21285734
+- current block number: 21744185
+
+## Description
+
+Single member change.
+
+## Watched changes
+
+```diff
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      values.$members.2:
+-        "0x60f66a4056852d0Bd6D5BF6FF5D2eBeb474cd587"
++        "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd"
+    }
+```
+
 Generated with discovered.json: 0x41a350a09b26d912e1359b97fcfe29fb943fabf2
 
 # Diff at Mon, 20 Jan 2025 11:10:07 GMT:
