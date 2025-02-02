@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbf27540b7cbabb05f1d90968fbd19969919b13e4
+Generated with discovered.json: 0xeb6cb770cc2e210c292c0999e6019ae84a28e02e
 
-# Diff at Sun, 02 Feb 2025 11:57:23 GMT:
+# Diff at Sun, 02 Feb 2025 16:46:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21737758
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xbf27540b7cbabb05f1d90968fbd19969919b13e4
 
 ## Description
 
-discodrive polygon cdk stack!
+discodrive polygon cdk chains!
 
 ## Config/verification related changes
 
@@ -18,11 +18,11 @@ discovery. Values are for block 21737758 (main branch discovery), not current.
 
 ```diff
     contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
-    +++ description: Verifies ZK proofs for the PolygonRollupManager.
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
       template:
 +        "polygon-cdk/Verifier"
       description:
-+        "Verifies ZK proofs for the PolygonRollupManager."
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
     }
 ```
 

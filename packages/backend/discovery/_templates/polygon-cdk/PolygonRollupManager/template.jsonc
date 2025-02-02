@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonRollupManager",
-  "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by permissioned actors or by anyone able to prove a non-deterministic pending state or after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
+  "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the {{emergencyCouncilAdminAC}} or by anyone able to prove a non-deterministic pending state or after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
   "types": {
     "IsGreaterThanOne": {
       "typeCaster": "GreaterThan",
@@ -93,7 +93,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+            "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
           }
         ]
       }
@@ -146,7 +146,7 @@
         "permissions": [
           {
             "type": "configure",
-            "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them."
+            "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
           }
         ]
       }

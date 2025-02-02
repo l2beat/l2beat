@@ -3,7 +3,7 @@
   "displayName": "PolygonZkEVM",
   "description": "The main system contract defining the {{networkName}} Layer 2 logic. Entry point for sequencing batches.",
   "ignoreInWatchMode": ["lastAccInputHash"],
-  "ignoreRelatives": ["gasTokenAddress", "GLOBAL_EXIT_ROOT_MANAGER_L2"],
+  "ignoreRelatives": ["gasTokenAddress", "GLOBAL_EXIT_ROOT_MANAGER_L2", "pol"],
   "fields": {
     "admin": {
       "target": {

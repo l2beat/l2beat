@@ -111,7 +111,7 @@
       "sourceHashes": [
         "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
       ],
-      "description": "Verifies ZK proofs for the PolygonRollupManager.",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1729157663,
       "values": { "$immutable": true },
       "derivedName": "FflonkVerifier_12"
@@ -469,6 +469,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a",
-    "polygon-cdk/Verifier": "0xa709eded7498005c2553c87ef7c888a674d0f3829a02c2edea787b5c01742371"
+    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

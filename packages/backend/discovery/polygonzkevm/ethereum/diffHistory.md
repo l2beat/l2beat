@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x84902babc527de152aabdc1d1660fd89de985625
+Generated with discovered.json: 0x9896b512f93bf7ed5975a67c76e1000bc8883fad
 
-# Diff at Sun, 02 Feb 2025 11:42:23 GMT:
+# Diff at Sun, 02 Feb 2025 16:46:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21630127
@@ -8,21 +8,7 @@ Generated with discovered.json: 0x84902babc527de152aabdc1d1660fd89de985625
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6) {
-    +++ description: None
-      values.lastMint:
--        1736657855
-+        1737539123
-      values.totalSupply:
--        "10340648579123088615074653759"
-+        "10347786406857051263502190641"
-    }
-```
+discodrive polygon cdk chains!
 
 ## Config/verification related changes
 
@@ -32,9 +18,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
-    +++ description: Custom Bridge escrow.
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM
       description:
-+        "Custom Bridge escrow."
++        "Custom Bridge escrow for DAI bridged to PolygonZkEVM"
     }
 ```
 
@@ -56,15 +42,15 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
-    +++ description: Custom Bridge escrow.
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM
       description:
-+        "Custom Bridge escrow."
++        "Custom Bridge escrow for USDC bridged to PolygonZkEVM"
     }
 ```
 
 ```diff
     contract FflonkVerifier_11 (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
-    +++ description: Verifies ZK proofs for the PolygonRollupManager.
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
       name:
 -        "PolygonzkEVMVerifier"
 +        "FflonkVerifier_11"
@@ -73,15 +59,15 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
       displayName:
 +        "Verifier"
       description:
-+        "Verifies ZK proofs for the PolygonRollupManager."
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
     }
 ```
 
 ```diff
     contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
-    +++ description: Custom Bridge escrow.
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM.
       description:
-+        "Custom Bridge escrow."
++        "Custom Bridge escrow for wstETH bridged to PolygonZkEVM."
     }
 ```
 
@@ -98,18 +84,6 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 -        "EscrowsAdmin"
 +        "PolygonZkEvmEscrowsMultisig"
     }
-```
-
-```diff
-+   Status: CREATED
-    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
-    +++ description: None
 ```
 
 Generated with discovered.json: 0xd117f582c16d556027b84958f1a8cf9957584ac0

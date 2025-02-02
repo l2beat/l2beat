@@ -51,7 +51,7 @@
         {
           "permission": "configure",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
@@ -221,7 +221,7 @@
         {
           "permission": "configure",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them."
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -258,7 +258,7 @@
         "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by permissioned actors or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.",
+      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.",
       "issuedPermissions": [
         {
           "permission": "aggregatePolygon",
@@ -279,7 +279,7 @@
         {
           "permission": "configure",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
@@ -297,7 +297,7 @@
         {
           "permission": "configure",
           "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
-          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them.",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
           "via": []
         },
         {
@@ -611,7 +611,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonGlobalExitRootV2",
-      "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root from is synchronized to all connected Layer 2s to help with interoperability.",
+      "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -739,7 +739,7 @@
         {
           "permission": "configure",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
         },
         {
           "permission": "configure",
@@ -1491,8 +1491,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonGlobalExitRootV2": "0x0721eddd19e89fd02dac58c1ba980a9f845bd3b00d12e59bf8c061e831369a49",
-    "polygon-cdk/PolygonRollupManager": "0xdd2b502612106d865ee0d0bc0eb343ea34051be62d5b528d762d3ace7309b9fd",
+    "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
+    "polygon-cdk/PolygonRollupManager": "0x338824593f6ee99d49c55215cb82e6e68d30b52d2abe31ce04a3f3f5c7e6d6a3",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x80f5f7cbfcfd3a0bb40507d93218158b0615cd29def7ddc00ea7138144ed416f"
   }
