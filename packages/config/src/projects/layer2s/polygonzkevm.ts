@@ -29,7 +29,7 @@ const upgradeDelayString = formatSeconds(
 export const polygonzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
-  rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier_11'),
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -39,19 +39,17 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'Polygon zkEVM is an EVM-compatible ZK Rollup built by Polygon Labs.',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
-      apps: ['https://bridge.zkevm-rpc.com'],
-      documentation: [
-        'https://wiki.polygon.technology/docs/zkEVM/introduction',
-      ],
-      explorers: [
-        'https://zkevm.polygonscan.com/',
-        'https://explorer.mainnet.zkevm-test.net/',
-      ],
+      apps: ['https://portal.polygon.technology/bridge'],
+      documentation: ['https://docs.polygon.technology/zkEVM/'],
+      explorers: ['https://zkevm.polygonscan.com/'],
       repositories: ['https://github.com/0xPolygonHermez'],
       socialMedia: [
-        'https://twitter.com/0xPolygon',
-        'https://discord.gg/XvpHAxZ',
-        'https://polygon.technology/blog-tags/polygon-zk',
+        'https://x.com/0xPolygon',
+        'https://t.me/polygonofficial',
+        'https://reddit.com/r/0xPolygon/',
+        'https://discord.com/invite/0xPolygonCommunity',
+        'https://discord.com/invite/0xpolygonRnD',
+        'https://polygon.technology/blog',
       ],
       rollupCodes: 'https://rollup.codes/polygon-zkevm',
     },
@@ -180,13 +178,13 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
       'RollupManagerAdminMultisig',
     )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
-      'EscrowsAdmin',
+      'PolygonZkEvmEscrowsMultisig',
     )} multisig.`,
     `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
     `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`ProxyAdminOwner\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`ProxyAdminOwner\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
     `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`ProxyAdminOwner\` directly.`,
     `The ${discovery.getMultisigStats(
-      'SecurityCouncil',
+      'PolygonSecurityCouncil',
     )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   ].join('\n\n'),
   stateValidation: {
