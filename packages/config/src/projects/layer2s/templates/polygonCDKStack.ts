@@ -167,6 +167,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
+      upgradesAndGovernanceImage: 'polygoncdk',
       purposes: templateVars.overridingPurposes ?? [
         'Universal',
         ...(templateVars.additionalPurposes ?? []),

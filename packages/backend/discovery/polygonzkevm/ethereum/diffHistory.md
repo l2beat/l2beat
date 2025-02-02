@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9896b512f93bf7ed5975a67c76e1000bc8883fad
+Generated with discovered.json: 0x25e8f26c81aac50b062373b1e054b7ecab6e8bbf
 
-# Diff at Sun, 02 Feb 2025 16:46:26 GMT:
+# Diff at Sun, 02 Feb 2025 16:50:47 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21630127
@@ -18,9 +18,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
-    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM.
       description:
-+        "Custom Bridge escrow for DAI bridged to PolygonZkEVM"
++        "Custom Bridge escrow for DAI bridged to PolygonZkEVM."
     }
 ```
 
@@ -42,9 +42,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
-    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM.
       description:
-+        "Custom Bridge escrow for USDC bridged to PolygonZkEVM"
++        "Custom Bridge escrow for USDC bridged to PolygonZkEVM."
     }
 ```
 
