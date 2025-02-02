@@ -131,6 +131,7 @@ import { polygonpos } from './polygonpos'
 import { polygonpos2 } from './polygonpos2'
 import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
+import { prom } from './prom'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
 import { race } from './race'
@@ -330,6 +331,7 @@ export const layer2s: Layer2[] = [
   polygonpos,
   polygonpos2,
   polynomial,
+  prom,
   publicgoodsnetwork,
   puffer,
   reddioex,
