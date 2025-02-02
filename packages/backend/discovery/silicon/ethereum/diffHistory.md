@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x4a24ed7045394cfd2e098dae68bc035fc4b81f08
+
+# Diff at Sun, 02 Feb 2025 11:57:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21744175
+- current block number: 21744175
+
+## Description
+
+discodrive polygon cdk stack!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744175 (main branch discovery), not current.
+
+```diff
+    contract SiliconDAC (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","via":[{"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      displayName:
++        "PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2)."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb14ae424f86bb39f0dba3f094679923b8974709c
 
 # Diff at Mon, 20 Jan 2025 11:10:06 GMT:

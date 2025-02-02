@@ -47,11 +47,10 @@ import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import {
-  explorerReferences,
-  mergeBadges,
-  mergePermissions,
-  safeGetImplementation,
-} from './utils'
+  generateDiscoveryDrivenPermissions,
+  generateDiscoveryDrivenSections,
+} from './generateDiscoveryDrivenSections'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -108,7 +107,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   }
 
   const upgradeDelay = shared.getContractValue<number>(
-    'Timelock',
+    'PolygonZkEVMTimelock',
     'getMinDelay',
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
@@ -150,18 +149,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
   } as const
 
-  const sharedUpgradeability = {
-    upgradableBy: ['RollupManagerAdminMultisig'],
-    upgradeDelay: exitWindowRisk.value,
-    upgradeConsiderations: exitWindowRisk.description,
-  }
-
   assert(
     rollupManagerContract.address ===
       EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
-  const bridge = shared.getContract('Bridge')
+  const bridge = shared.getContract('PolygonZkEVMBridgeV2')
 
   const finalizationPeriod =
     templateVars.display.finality?.finalizationPeriod ?? 0
@@ -467,126 +460,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     stateDerivation: templateVars.stateDerivation,
     stateValidation: templateVars.stateValidation,
-    permissions: mergePermissions(
-      {
-        [templateVars.discovery.chain]: {
-          actors: [
-            {
-              name: 'Sequencer',
-              accounts: [
-                templateVars.discovery.getPermissionedAccount(
-                  templateVars.rollupModuleContract.name,
-                  'trustedSequencer',
-                ),
-              ],
-              description:
-                'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
-            },
-            {
-              name: 'Proposer (Trusted Aggregator)',
-              accounts: shared.getAccessControlRolePermission(
-                rollupManagerContract.name,
-                'TRUSTED_AGGREGATOR',
-              ),
-              description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-            },
-            ...shared.getMultisigPermission(
-              'SecurityCouncil',
-              'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
-            ),
-            {
-              name: 'Forced Batcher',
-              accounts: [
-                templateVars.discovery.getPermissionedAccount(
-                  templateVars.rollupModuleContract.name,
-                  'forceBatchAddress',
-                ),
-              ],
-              description:
-                'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
-            },
-            ...shared.getMultisigPermission(
-              'RollupManagerAdminMultisig',
-              `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${
-                templateVars.rollupModuleContract.name
-              } contracts, but are restricted by a ${formatSeconds(
-                upgradeDelay,
-              )} delay unless rollup is put in the Emergency State.`,
-            ),
-          ],
-        },
-      },
-      templateVars.nonTemplatePermissions ?? {},
-    ),
-    contracts: {
-      addresses: [
-        ...(templateVars.nonTemplateContracts ?? []),
-        templateVars.discovery.getContractDetails(
-          templateVars.rollupModuleContract.name,
-          {
-            description: `The main contract of the ${templateVars.display.name}. Contains sequenced transaction batch hashes and forced transaction logic.`,
-            ...sharedUpgradeability,
-          },
-        ),
-        templateVars.discovery.getContractDetails(
-          templateVars.rollupVerifierContract.name,
-          {
-            description:
-              'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
-          },
-        ),
-        shared.getContractDetails(rollupManagerContract.name, {
-          description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
-          ...sharedUpgradeability,
-        }),
-        shared.getContractDetails('Bridge', {
-          description:
-            'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-          ...sharedUpgradeability,
-        }),
-        shared.getContractDetails('GlobalExitRootV2', {
-          description:
-            'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
-          ...sharedUpgradeability,
-        }),
-        shared.getContractDetails(
-          'Timelock',
-          (() => {
-            const timelockAdmin = shared.getAccessControlField(
-              'Timelock',
-              'TIMELOCK_ADMIN_ROLE',
-            ).members[1]
-            const timelockProposer = shared.getAccessControlField(
-              'Timelock',
-              'PROPOSER_ROLE',
-            ).members[0]
-            const timelockExecutor = shared.getAccessControlField(
-              'Timelock',
-              'EXECUTOR_ROLE',
-            ).members[0]
-            const timelockCanceller = shared.getAccessControlField(
-              'Timelock',
-              'CANCELLER_ROLE',
-            ).members[0]
-            assert(
-              timelockAdmin === timelockProposer &&
-                timelockProposer === timelockExecutor &&
-                timelockExecutor === timelockCanceller,
-              'Timelock roles have changed, update Timelock description.',
-            )
-            return `Contract upgrades have to go through a ${upgradeDelayString} timelock unless the Emergency State is activated. It can also add rollup types that can be used to upgrade verifier contracts of existing systems. It is controlled by the ProxyAdminOwner.`
-          })(),
-        ),
-      ],
-      references: explorerReferences(explorerUrl, [
-        {
-          title:
-            'State injections - stateRoot and exitRoot are part of the validity proof input.',
-          address: safeGetImplementation(rollupManagerContract),
-        },
-      ]),
-      risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
-    },
+    permissions: generateDiscoveryDrivenPermissions([templateVars.discovery]),
+    contracts: generateDiscoveryDrivenSections(templateVars.discovery, [
+      CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString),
+    ]),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,

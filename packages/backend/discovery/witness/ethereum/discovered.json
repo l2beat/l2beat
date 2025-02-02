@@ -6,6 +6,18 @@
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
+      "name": "Permit2",
+      "address": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+      "sourceHashes": [
+        "0x84beffbcb4624fb74fab61c80beeb566023a939418284a8f44357b71cd40b63b"
+      ],
+      "sinceTimestamp": 1668647879,
+      "values": {
+        "$immutable": true,
+        "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
+      }
+    },
+    {
       "name": "FflonkVerifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "sourceHashes": [
@@ -17,10 +29,7 @@
     {
       "name": "WitnessValidium",
       "address": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
-      "sourceHashes": [
-        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
-        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
-      ],
+      "unverified": true,
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1718558735,
@@ -71,6 +80,40 @@
       "derivedName": "PolygonValidiumStorageMigration"
     },
     {
+      "name": "PolygonEcosystemToken",
+      "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+      "sourceHashes": [
+        "0xb814773e3a4cf3d1dd288afdeed9cbdc361edda62de8fa393290e5be836ffae0"
+      ],
+      "sinceTimestamp": 1698224783,
+      "values": {
+        "$immutable": true,
+        "CAP_MANAGER_ROLE": "0x027f9f680a0c6704fd9796b55c67fe885252243966ecb05a88f3e7873c845d9a",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DOMAIN_SEPARATOR": "0xb229387d8db422d84103ea5884522a783e8f8b570d17cc1e9bb39959983346f8",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Polygon Ecosystem Token",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
+        "lastMint": 1737539123,
+        "mintPerSecondCap": "13370000000000000000",
+        "name": "Polygon Ecosystem Token",
+        "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
+        "permit2Enabled": true,
+        "symbol": "POL",
+        "totalSupply": "10347786406857051263502190641",
+        "version": "1.1.0"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
       "template": "global/ProxyAdmin",
@@ -92,12 +135,21 @@
     {
       "name": "WitnessValidiumDAC",
       "address": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+      "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "PolygonDataCommittee",
+      "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
@@ -156,10 +208,52 @@
       ]
     },
     { "address": "0xcc543F5a2052eDf584216093A0547c4Acd84B80b" },
-    { "address": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b" },
+    {
+      "address": "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        }
+      ]
+    },
     { "address": "0xef5F06e5C0493601829DacFA23f2fe30303b0166" }
   ],
   "abis": {
+    "0x000000000022D473030F116dDEE9F6B43aC78BA3": [
+      "error AllowanceExpired(uint256 deadline)",
+      "error ExcessiveInvalidation()",
+      "error InsufficientAllowance(uint256 amount)",
+      "error InvalidAmount(uint256 maxAmount)",
+      "error InvalidContractSignature()",
+      "error InvalidNonce()",
+      "error InvalidSignature()",
+      "error InvalidSignatureLength()",
+      "error InvalidSigner()",
+      "error LengthMismatch()",
+      "error SignatureExpired(uint256 signatureDeadline)",
+      "event Approval(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration)",
+      "event Lockdown(address indexed owner, address token, address spender)",
+      "event NonceInvalidation(address indexed owner, address indexed token, address indexed spender, uint48 newNonce, uint48 oldNonce)",
+      "event Permit(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration, uint48 nonce)",
+      "event UnorderedNonceInvalidation(address indexed owner, uint256 word, uint256 mask)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address, address, address) view returns (uint160 amount, uint48 expiration, uint48 nonce)",
+      "function approve(address token, address spender, uint160 amount, uint48 expiration)",
+      "function invalidateNonces(address token, address spender, uint48 newNonce)",
+      "function invalidateUnorderedNonces(uint256 wordPos, uint256 mask)",
+      "function lockdown(tuple(address token, address spender)[] approvals)",
+      "function nonceBitmap(address, uint256) view returns (uint256)",
+      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce)[] details, address spender, uint256 sigDeadline) permitBatch, bytes signature)",
+      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes signature)",
+      "function permitTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes signature)",
+      "function permitTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes signature)",
+      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
+      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
+      "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
+      "function transferFrom(address from, address to, uint160 amount, address token)"
+    ],
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
@@ -282,15 +376,55 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
+    "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": [
+      "constructor(address migration, address emissionManager, address protocolCouncil, address emergencyCouncil)",
+      "error InvalidAddress()",
+      "error InvalidShortString()",
+      "error MaxMintExceeded(uint256 maxMint, uint256 mintRequested)",
+      "error StringTooLong(string str)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event MintCapUpdated(uint256 oldCap, uint256 newCap)",
+      "event Permit2AllowanceUpdated(bool enabled)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function CAP_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function EMISSION_ROLE() view returns (bytes32)",
+      "function PERMIT2() view returns (address)",
+      "function PERMIT2_REVOKER_ROLE() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function lastMint() view returns (uint256)",
+      "function mint(address to, uint256 amount)",
+      "function mintPerSecondCap() view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function permit2Enabled() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function updateMintCap(uint256 newCap)",
+      "function updatePermit2Allowance(bool enabled)",
+      "function version() pure returns (string)"
     ],
     "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -335,6 +469,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a"
   }
 }

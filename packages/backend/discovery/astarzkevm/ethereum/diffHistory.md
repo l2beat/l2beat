@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x55f06054296d2a18d20bfe68b855cc60a2452fac
+
+# Diff at Sun, 02 Feb 2025 11:57:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 20325048
+- current block number: 20325048
+
+## Description
+
+discodrive polygon cdk stack!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      displayName:
++        "PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3)."
+    }
+```
+
+```diff
+    contract LocalAdmin (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.via:
+-        [{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]
+      receivedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9b9278fd8d50544351685938921861d870430729
 
 # Diff at Mon, 20 Jan 2025 11:09:17 GMT:

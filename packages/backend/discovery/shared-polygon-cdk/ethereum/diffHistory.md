@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbcd520f01fbe32acaf9e8debf87559dd6538981a
+Generated with discovered.json: 0x214973ec9c16e9ee7b3926f4518a394507db6e99
 
-# Diff at Sat, 01 Feb 2025 20:08:13 GMT:
+# Diff at Sun, 02 Feb 2025 11:52:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21686453
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21686453
 - current block number: 21745064
 
 ## Description
@@ -17,8 +17,17 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21686453 (main branch discovery), not current.
 
 ```diff
-    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+-   Status: DELETED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
     +++ description: None
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      name:
+-        "RollupManagerAdminMultisig"
++        "PolygonAdminMultisig"
       receivedPermissions:
 +        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."},{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage all access control roles, add new rollup types, which are implementation contracts that can then be upgraded to by connected projects, update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]},{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."},{"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]},{"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles."},{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]}]
       directlyReceivedPermissions:
@@ -27,8 +36,11 @@ discovery. Values are for block 21686453 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
-    +++ description: None
+    contract PolygonZkEVMBridgeV2 (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      name:
+-        "Bridge"
++        "PolygonZkEVMBridgeV2"
       issuedPermissions.0.to:
 -        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
 +        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
@@ -41,15 +53,32 @@ discovery. Values are for block 21686453 (main branch discovery), not current.
 +        864000
       issuedPermissions.0.via.0.condition:
 +        "there is no emergency state, in which case there is no delay"
+      template:
++        "polygon-cdk/PolygonSharedBridge"
+      displayName:
++        "PolygonSharedBridge"
+      description:
++        "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages."
+      fieldMeta:
++        {"isEmergencyState":{"severity":"HIGH","description":"pauses the bridge, managed by the PolygonRollupManager."}}
     }
 ```
 
 ```diff
-    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
     +++ description: None
+      name:
+-        "SecurityCouncil"
++        "PolygonSecurityCouncil"
       receivedPermissions:
 +        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them."}]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract POL (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
 ```
 
 ```diff
@@ -102,8 +131,11 @@ discovery. Values are for block 21686453 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
-    +++ description: None
+    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root from is synchronized to all connected Layer 2s to help with interoperability.
+      name:
+-        "GlobalExitRootV2"
++        "PolygonZkEVMGlobalExitRootV2"
       issuedPermissions.0.to:
 -        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
 +        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
@@ -116,20 +148,32 @@ discovery. Values are for block 21686453 (main branch discovery), not current.
 +        864000
       issuedPermissions.0.via.0.condition:
 +        "there is no emergency state, in which case there is no delay"
+      template:
++        "polygon-cdk/PolygonGlobalExitRootV2"
+      displayName:
++        "PolygonGlobalExitRootV2"
+      description:
++        "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root from is synchronized to all connected Layer 2s to help with interoperability."
     }
 ```
 
 ```diff
-    contract CreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
     +++ description: None
+      name:
+-        "CreateRollupMultisig"
++        "PolygonCreateRollupMultisig"
       receivedPermissions:
 +        [{"permission":"configure","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."}]
     }
 ```
 
 ```diff
-    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
     +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d.
+      name:
+-        "Timelock"
++        "PolygonZkEVMTimelock"
       receivedPermissions:
 -        [{"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]},{"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}]
       directlyReceivedPermissions.3:
@@ -144,6 +188,8 @@ discovery. Values are for block 21686453 (main branch discovery), not current.
 +        ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
       template:
 +        "polygon-cdk/Timelock"
+      displayName:
++        "Timelock"
       description:
 +        "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d."
       issuedPermissions:

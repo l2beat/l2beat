@@ -1,14 +1,28 @@
-Generated with discovered.json: 0x9c14154ecf2b5e763ae032b1361b0d5b9f7f7653
+Generated with discovered.json: 0x84902babc527de152aabdc1d1660fd89de985625
 
-# Diff at Fri, 31 Jan 2025 14:06:38 GMT:
+# Diff at Sun, 02 Feb 2025 11:42:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21630127
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21630127
 - current block number: 21744722
 
 ## Description
 
 Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6) {
+    +++ description: None
+      values.lastMint:
+-        1736657855
++        1737539123
+      values.totalSupply:
+-        "10340648579123088615074653759"
++        "10347786406857051263502190641"
+    }
+```
 
 ## Config/verification related changes
 
@@ -84,6 +98,18 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 -        "EscrowsAdmin"
 +        "PolygonZkEvmEscrowsMultisig"
     }
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xd117f582c16d556027b84958f1a8cf9957584ac0

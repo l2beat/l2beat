@@ -21,9 +21,9 @@ const isForcedBatchDisallowed =
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 const upgradeDelayString = formatSeconds(
-  discovery.getContractValue<number>('Timelock', 'getMinDelay'),
+  discovery.getContractValue<number>('PolygonZkEVMTimelock', 'getMinDelay'),
 )
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
@@ -176,7 +176,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
   },
   upgradesAndGovernance: [
     `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
-      'RollupManagerAdminMultisig',
+      'PolygonAdminMultisig',
     )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
       'PolygonZkEvmEscrowsMultisig',
     )} multisig.`,

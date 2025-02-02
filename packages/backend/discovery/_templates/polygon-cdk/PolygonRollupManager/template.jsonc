@@ -32,6 +32,7 @@
     "totalSequencedBatches",
     "totalVerifiedBatches"
   ],
+  "ignoreRelatives": ["pol"],
   "fields": {
     "_HALT_AGGREGATION_TIMEOUT": {
       "handler": {
@@ -150,7 +151,7 @@
         ]
       }
     },
-    "isEmergencyState":{
+    "isEmergencyState": {
       "severity": "HIGH",
       "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
     },

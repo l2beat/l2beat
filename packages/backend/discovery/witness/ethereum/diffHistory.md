@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x37b62a30b0f3ba290bb5e5bff7bf31dc16713814
+
+# Diff at Sun, 02 Feb 2025 11:57:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21736867
+- current block number: 21736867
+
+## Description
+
+discodrive polygon cdk stack!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract WitnessValidium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: None
+      sourceHashes:
+-        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+      unverified:
++        true
+    }
+```
+
+```diff
+    contract WitnessValidiumDAC (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b"
+      issuedPermissions.0.via.0:
+-        {"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      displayName:
++        "PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1)."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x891f78b7a61900f72e2156241c12d1ab3bcc144e
 
 # Diff at Fri, 31 Jan 2025 10:39:42 GMT:

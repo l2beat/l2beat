@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xcf2b6f3853d2d48f0e13f2eac8ccc819b11b96fb
+
+# Diff at Sun, 02 Feb 2025 11:57:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21744311
+- current block number: 21744311
+
+## Description
+
+discodrive polygon cdk stack!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744311 (main branch discovery), not current.
+
+```diff
+    contract WirexPayChainDAC (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
+      issuedPermissions.0.via.0:
+-        {"address":"0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      displayName:
++        "PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1)."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb1c46d9bf0ddb845aa2e66e34c6d27da840081fa
 
 # Diff at Mon, 20 Jan 2025 11:10:20 GMT:
