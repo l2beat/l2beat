@@ -190,7 +190,7 @@ export const ronin: Bridge = {
           accounts: [
             {
               address: discovery.getContract('RoninManagerMultiSig').address,
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description:

@@ -293,7 +293,7 @@ export interface ScalingProjectPermission {
 
 export interface ScalingProjectPermissionedAccount {
   address: EthereumAddress
-  type: 'EOA' | 'MultiSig' | 'Contract'
+  type: 'EOA' | 'Contract'
 }
 
 export type ScalingProjectStack =

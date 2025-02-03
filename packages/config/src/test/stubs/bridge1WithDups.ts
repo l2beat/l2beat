@@ -113,7 +113,7 @@ export const bridge1WithDups: Bridge = {
               address: EthereumAddress(
                 '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               ),
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description: '',
@@ -124,7 +124,7 @@ export const bridge1WithDups: Bridge = {
               address: EthereumAddress(
                 '0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6',
               ),
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           name: 'Bridge Governance 7/16 MultiSig',

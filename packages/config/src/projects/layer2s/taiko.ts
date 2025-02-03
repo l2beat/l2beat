@@ -511,7 +511,7 @@ export const taiko: Layer2 = {
         {
           name: 'ChainWatchdog',
           accounts: [
-            { address: EthereumAddress(chainWatchdog), type: 'MultiSig' },
+            { address: EthereumAddress(chainWatchdog), type: 'Contract' },
           ],
           description: 'The chain watchdog role can pause proving of blocks.',
         },

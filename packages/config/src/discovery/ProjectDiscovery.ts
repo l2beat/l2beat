@@ -411,7 +411,7 @@ export class ProjectDiscovery {
         accounts: [
           {
             address: contract.address,
-            type: 'MultiSig',
+            type: 'Contract',
           },
         ],
         chain: this.chain,
@@ -548,13 +548,7 @@ export class ProjectDiscovery {
     )
     const address = EthereumAddress(account)
     const isEOA = this.isEOA(address)
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
-    const contract = contracts.find((contract) => contract.address === address)
-    const isMultisig = isMultisigLike(contract)
-
-    const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
+    const type = isEOA ? 'EOA' : 'Contract'
 
     return { address: address, type }
   }
