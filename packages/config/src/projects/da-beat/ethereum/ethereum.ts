@@ -129,5 +129,6 @@ This method allows ZK rollups to prove that the data used in their validity proo
         coingeckoId: 'ethereum',
       },
     },
+    daTracking: 'ethereum',
   },
 }
