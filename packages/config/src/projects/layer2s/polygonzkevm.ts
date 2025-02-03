@@ -1,10 +1,6 @@
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  ChainId,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
-import {
+  ESCROW,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -22,9 +18,6 @@ const isForcedBatchDisallowed =
   ) !== '0x0000000000000000000000000000000000000000'
 
 const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
-const upgradeDelayString = formatSeconds(
-  discovery.getContractValue<number>('PolygonZkEVMTimelock', 'getMinDelay'),
-)
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
@@ -141,6 +134,27 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         premintedAmount: '200000000000000000000000000',
       },
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'),
+      tokens: ['USDC'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'),
+      tokens: ['DAI', 'sDAI'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
   ],
   nonTemplateTechnology: {
     newCryptography: {
@@ -174,19 +188,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
-  upgradesAndGovernance: [
-    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
-      'PolygonAdminMultisig',
-    )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
-      'PolygonZkEvmEscrowsMultisig',
-    )} multisig.`,
-    `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
-    `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`ProxyAdminOwner\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`ProxyAdminOwner\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
-    `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`ProxyAdminOwner\` directly.`,
-    `The ${discovery.getMultisigStats(
-      'PolygonSecurityCouncil',
-    )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
-  ].join('\n\n'),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',

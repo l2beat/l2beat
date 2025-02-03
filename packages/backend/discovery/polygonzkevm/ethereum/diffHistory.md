@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x25e8f26c81aac50b062373b1e054b7ecab6e8bbf
+Generated with discovered.json: 0x29cd3cc24f09f74243239fe3b3259cf2bb640241
 
-# Diff at Sun, 02 Feb 2025 16:50:47 GMT:
+# Diff at Mon, 03 Feb 2025 05:30:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21630127
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x25e8f26c81aac50b062373b1e054b7ecab6e8bbf
 
 ## Description
 
-discodrive polygon cdk chains!
+polygon cdk discodrive!
 
 ## Config/verification related changes
 
@@ -18,9 +18,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
-    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM.
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
       description:
-+        "Custom Bridge escrow for DAI bridged to PolygonZkEVM."
++        "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract."
     }
 ```
 
@@ -42,9 +42,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
-    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM.
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
       description:
-+        "Custom Bridge escrow for USDC bridged to PolygonZkEVM."
++        "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract."
     }
 ```
 
@@ -65,9 +65,9 @@ discovery. Values are for block 21630127 (main branch discovery), not current.
 
 ```diff
     contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
-    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM.
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
       description:
-+        "Custom Bridge escrow for wstETH bridged to PolygonZkEVM."
++        "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract."
     }
 ```
 

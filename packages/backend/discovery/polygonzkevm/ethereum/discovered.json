@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0x1306731b0a77b48e63c1cb1e453843c5ae0c2696d026eaf44f9cec0711f5c293",
+  "configHash": "0xbaedab6db13baa91db4f7d1c2a3f43dc9eeeb3316eec2f8402710a42d2ccd2c9",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -13,7 +13,7 @@
         "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -153,7 +153,7 @@
         "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -202,7 +202,7 @@
         "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

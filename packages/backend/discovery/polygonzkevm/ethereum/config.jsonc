@@ -20,17 +20,17 @@
   },
   "overrides": {
     "wstETHBridge": {
-      "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["originTokenAddress", "wrappedTokenAddress"],
       "ignoreMethods": ["proxiableUUID", "getStETHByWstETH", "getWstETHByStETH"]
     },
     "usdcBridge": {
-      "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["l1USDC"],
       "ignoreMethods": ["proxiableUUID"]
     },
     "daiBridge": {
-      "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM.",
+      "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "ignoreRelatives": ["dai", "destAddress", "sdai", "beneficiary"],
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalBridgedDAI"]
