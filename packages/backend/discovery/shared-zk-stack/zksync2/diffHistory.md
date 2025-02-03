@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x60eec5b53262d973f06f6ca4f1d13d7a1bc5c4b9
+
+# Diff at Mon, 03 Feb 2025 15:07:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f48b05175a82517aba519a7273477b15b3c1ad94 block: 54882487
+- current block number: 55181277
+
+## Description
+
+[AAVE DAO Airdrop Claim Extension Request](https://www.tally.xyz/gov/zksync/proposal/57908166665921469155508302947951953966033148387652385473031300159207145997268?govId=eip155:324:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) TPP queued.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x3ac96ec7a82bd03e7013fd3b3d8c381cf7a9f3f7
 
 # Diff at Thu, 30 Jan 2025 10:59:47 GMT:

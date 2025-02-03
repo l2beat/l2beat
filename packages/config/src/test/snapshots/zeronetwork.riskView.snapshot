@@ -8,7 +8,7 @@
     value: "Onchain (SD)"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
+    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 3h."
     sentiment: "bad"
     value: "None"
   }
@@ -26,7 +26,7 @@
   stateValidation: {
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
     orderHint: Infinity
-    secondLine: "21h execution delay"
+    secondLine: "3h execution delay"
     sentiment: "good"
     value: "ZK proofs (ST, SN)"
   }
