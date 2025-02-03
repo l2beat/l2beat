@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd63083b31c120e6eaa19d4fff58d8b9323daf233
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Admin EOAs were removed from Starknet and SHARP governance. The other permissions remain the same as before (Multisigs mostly). 
 
 ## Watched changes
 
