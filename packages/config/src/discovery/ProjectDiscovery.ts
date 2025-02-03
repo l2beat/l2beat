@@ -378,7 +378,7 @@ export class ProjectDiscovery {
     description: string | string[],
     userReferences?: ReferenceLink[],
     useBulletPoints: boolean = false,
-  ): ProjectPermission[] {
+  ): ProjectPermission {
     const contract = this.getContract(identifier)
 
     const passedDescription = Array.isArray(description)
@@ -404,21 +404,19 @@ export class ProjectDiscovery {
       })),
     ]
 
-    return [
-      {
-        name: contract.name,
-        description: descriptionWithContractNames,
-        accounts: [
-          {
-            address: contract.address,
-            type: 'Contract',
-          },
-        ],
-        chain: this.chain,
-        references,
-        participants: this.getPermissionedAccounts(identifier, '$members'),
-      },
-    ]
+    return {
+      name: contract.name,
+      description: descriptionWithContractNames,
+      accounts: [
+        {
+          address: contract.address,
+          type: 'Contract',
+        },
+      ],
+      chain: this.chain,
+      references,
+      participants: this.getPermissionedAccounts(identifier, '$members'),
+    }
   }
 
   getAccessControlRolePermission(
@@ -1096,7 +1094,7 @@ export class ProjectDiscovery {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         actors.push(
-          ...this.getMultisigPermission(
+          this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
             [],

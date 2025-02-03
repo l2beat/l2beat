@@ -155,7 +155,7 @@ export const lzOmnichain: Bridge = {
           discovery.formatPermissionedAccounts(ORACLES),
           'Contracts that submit source chain block hashes to the destination chain.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LayerZero Multisig',
           'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
         ),

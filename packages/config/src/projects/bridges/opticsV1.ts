@@ -144,11 +144,11 @@ export const opticsV1: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Governor',
           'Manages Optics V1 bridge components via GovernanceRouter contract.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'RecoveryManager',
           'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
         ),

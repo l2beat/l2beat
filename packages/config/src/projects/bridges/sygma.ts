@@ -154,12 +154,12 @@ export const sygma: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Admin Multisig',
           'The admin multisig covers a set of administrative privileges, \
     including ability to configure handlers that contain logic for handling deposits/withdrawals for specific chains and assets.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Community Multisig',
           'This multisig has the ability to manually withdraw tokens from the bridge using adminWithdraw() method.',
         ),

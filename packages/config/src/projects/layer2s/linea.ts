@@ -498,7 +498,7 @@ export const linea: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LineaAdminMultisig',
           'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
         ),

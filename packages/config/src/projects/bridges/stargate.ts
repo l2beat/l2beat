@@ -187,11 +187,11 @@ export const stargate: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'StarGate Multisig',
           'Bridge owner, can create new pools, chainpaths, set fees.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LayerZero Multisig',
           'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
         ),

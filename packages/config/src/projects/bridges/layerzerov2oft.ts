@@ -352,7 +352,7 @@ export const layerzerov2oft: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LayerZero Multisig',
           'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
         ),

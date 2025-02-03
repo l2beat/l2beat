@@ -125,7 +125,7 @@ export const aptos: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Aptos Multisig',
           'Bridge owner, can setup tokens, fees, WETH token address (potentially malicious). Can withdraw all the funds from the Escrow after unlocking emergency withdrawal with 1 week delay.',
         ),
@@ -150,7 +150,7 @@ export const aptos: Bridge = {
           ]),
           'Can upgrade LayerZero oracle contract with no delay.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LayerZero Multisig',
           'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
         ),

@@ -142,7 +142,7 @@ export const synapse: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Bridge Multisig',
           "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
         ),

@@ -106,14 +106,14 @@ export const zircuit: Layer2 = opStackL2({
       ),
       'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ZircuitMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \
       It is also designated as a Challenger and SystemOwner of the L2OutputOracle, meaning it can remove L2 state roots and reconfigure \
       L2OutputOracle, including changing the Verifier contract. \
       It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ZircuitGuardianMultiSig',
       'This address is the permissioned guardian of the system, meaning it can pause all withdrawals. \
       It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',

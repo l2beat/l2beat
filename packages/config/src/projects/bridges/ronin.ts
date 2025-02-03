@@ -201,7 +201,7 @@ export const ronin: Bridge = {
           ),
           'Those are the participants of the AdminMultisig.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'RoninAdminMultisig',
           'Can upgrade the bridge and the MainchainBridgeManager instantly by being Admin of the latter. Can add and remove sentries (un-/pausers).',
         ),

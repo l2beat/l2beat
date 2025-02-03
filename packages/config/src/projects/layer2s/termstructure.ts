@@ -303,7 +303,7 @@ export const termstructure: Layer2 = {
           discovery.getAccessControlRolePermission('ZkTrueUp', 'ADMIN_ROLE'),
           'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TermStructureMultisig',
           'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
         ),
@@ -330,15 +330,15 @@ export const termstructure: Layer2 = {
           discovery.getAccessControlRolePermission('ZkTrueUp', 'EXECUTER_ROLE'),
           'Can execute blocks on L1.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'VaultMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'InsuranceMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TreasuryMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
         ),

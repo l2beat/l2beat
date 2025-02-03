@@ -441,7 +441,7 @@ export const kroma: Layer2 = {
           discovery.getPermissionedAccounts('KromaPortal', 'GUARDIAN'),
           'Actor allowed to pause withdrawals. Currently set to the Security Council.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'KromaRewardVaultMultisig',
           'Escrows a pool of KRO used as validator rewards by the AssetManager.',
         ),

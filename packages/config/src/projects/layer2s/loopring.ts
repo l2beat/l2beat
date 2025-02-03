@@ -304,7 +304,7 @@ export const loopring: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LoopringMultisig',
           'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
         ),

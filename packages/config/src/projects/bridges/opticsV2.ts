@@ -149,7 +149,7 @@ export const opticsV2: Bridge = {
           [],
           'A multisig on Celo Network that manages all Optics V1 bridge components.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'RecoveryManager',
           'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
         ),

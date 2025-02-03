@@ -217,11 +217,11 @@ export const amarok: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Connext Multisig',
           'Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Connext Fee Multisig',
           'Collects fees from the bridge. Can manage Routers through its RouterAdmin role.',
         ),

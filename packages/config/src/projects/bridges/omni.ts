@@ -178,7 +178,7 @@ export const omni: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OmniBridgeGovernance',
           'Can update the contracts and parameters of the bridge.',
         ),

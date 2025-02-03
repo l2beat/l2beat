@@ -275,7 +275,7 @@ export const fuel: Layer2 = {
           ),
           'Permissioned address that can propose new state roots.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'FuelSecurityCouncil',
           'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
         ),

@@ -397,7 +397,7 @@ export const zksynclite: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ZkSync Multisig',
           'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
         ),

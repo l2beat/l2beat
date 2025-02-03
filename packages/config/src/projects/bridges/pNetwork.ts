@@ -167,7 +167,7 @@ export const pNetwork: Bridge = {
           discovery.getPermissionedAccounts('EthPntv2', 'inflationOwner'),
           'A voting contract that controls the inflation withdrawal logic of PNT token.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'pNetwork Multisig',
           'Can upgrade ERC20 Vault V2.',
         ),

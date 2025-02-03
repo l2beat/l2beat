@@ -283,15 +283,15 @@ export const zkfair: Layer2 = {
           ),
           `The trusted proposer (called Aggregator) provides the ZKFairValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ZKFairAdmin',
           'Admin of the ZKFairValidium, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ZKFairOwner',
           'The ZkFair Owner is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'BridgeAdminMultiSig',
           'The Bridge Admin is a multisig that can be used to set bridge fees and an address into which fees are transferred.',
         ),

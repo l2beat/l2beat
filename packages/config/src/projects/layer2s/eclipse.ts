@@ -136,11 +136,11 @@ export const eclipse: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'AuthorityMultisig',
           "Can pause and upgrade the EtherBridge and Mailbox contracts and change all parameters in the 'CanonicalBridge' contract or authorize/cancel withdrawals.",
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TreasuryOwner',
           'Can upgrade and transfer funds from the Treasury.',
         ),

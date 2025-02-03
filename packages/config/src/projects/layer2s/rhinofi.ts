@@ -193,7 +193,7 @@ export const rhinofi: Layer2 = {
           'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'GovernanceMultisig',
           'Has full power to upgrade the bridge implementation as a Governor.',
         ),

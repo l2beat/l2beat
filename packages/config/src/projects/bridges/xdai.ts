@@ -152,7 +152,7 @@ export const xdai: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'GnosisBridgeGovernanceMultisig',
           'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
         ),

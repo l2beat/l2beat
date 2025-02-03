@@ -286,7 +286,7 @@ export const acrossV3: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'HubPool Multisig',
           'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
         ),

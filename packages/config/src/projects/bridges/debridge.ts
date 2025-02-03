@@ -117,7 +117,7 @@ export const debridge: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Admin Multisig',
           'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies through the ProxyAdmin contract.',
         ),

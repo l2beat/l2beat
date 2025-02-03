@@ -443,11 +443,11 @@ export const socket: Bridge = {
           discovery.getPermissionedAccounts('Socket', 'owner'),
           'Account privileged to set up different roles in the main Socket contract.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LyraMultisig',
           'Multisig that owns the Socket Vaults associated with Lyra.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'KintoMultisig',
           'Multisig that owns the Socket Vaults associated with Kinto.',
         ),
@@ -456,7 +456,7 @@ export const socket: Bridge = {
           discovery.getPermissionedAccounts('PAXG Vault Kinto', 'owner'),
           'owns some Vaults associated with Kinto.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LooksRareMultisig',
           'Multisig that owns a Socket Vault associated with LOOKS token.',
         ),
