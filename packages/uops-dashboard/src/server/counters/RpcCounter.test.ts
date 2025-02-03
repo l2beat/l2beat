@@ -8,6 +8,8 @@ import {
   EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
+  ERC20ROUTER_TRANSACTION_SELECTOR,
+  ERC20ROUTER_methods,
   ERC4337_methods,
   type EVMTransaction,
   MULTICALLV3_methods,
@@ -15,7 +17,7 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
 } from '@l2beat/shared'
-import { type Block, UnixTime } from '@l2beat/shared-pure'
+import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcCounter } from './RpcCounter'
 
@@ -290,6 +292,43 @@ describe(RpcCounter.name, () => {
       expect(result).toEqual({
         from: 'tx.from',
         type: 'Multicall v3',
+        hash: 'tx.hash',
+        operationsCount: 1,
+        includesBatch: false,
+        includesUnknown: false,
+        details: mockOperation,
+      })
+    })
+
+    it('should map ERC20Router txs', () => {
+      const counter = new RpcCounter()
+
+      const mockOperation = {
+        id: 'id',
+        level: 0,
+        methodSelector: ERC20ROUTER_TRANSACTION_SELECTOR,
+        count: 1,
+        children: [],
+      } as CountedOperation
+
+      counter.countUserOperations = mockFn().returns(mockOperation)
+
+      counter.checkOperations = mockFn().returns({
+        includesBatch: false,
+        includesUnknown: false,
+      })
+
+      const result = counter.mapTransaction({
+        from: 'tx.from',
+        to: '0x1234',
+        hash: 'tx.hash',
+        data: `${ERC20ROUTER_TRANSACTION_SELECTOR}tx.data`,
+        type: '2',
+      })
+
+      expect(result).toEqual({
+        from: 'tx.from',
+        type: 'ERC-20 Router',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
@@ -591,6 +630,78 @@ describe(RpcCounter.name, () => {
         calldata,
         'tx.to',
         MULTICALLV3_methods,
+        () => 'id',
+      )
+
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('should count ERC20Router user operations', () => {
+      const calldata =
+        '0x6e305f8000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000f70da97812cb96acdf810712aa562db8dfa3dbef0000000000000000000000007712fa47387542819d4e35a23f8116c90c18767c0000000000000000000000007df4e182da01eba2ff902b3f13b7a7b12bb87dea0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000260000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001a45ae401dc00000000000000000000000000000000000000000000000000000000679b32bd00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000e404e45aaf0000000000000000000000003439153eb7af838ad19d56e1571fbd09333c280900000000000000000000000084a71ccd554cc1b02749b35d22f684cc8ec987e100000000000000000000000000000000000000000000000000000000000001f40000000000000000000000007df4e182da01eba2ff902b3f13b7a7b12bb87dea000000000000000000000000000000000000000000000000000039c46ad842dc00000000000000000000000000000000000000000000000000000000000311220000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000443dad0c9c00000000000000000000000084a71ccd554cc1b02749b35d22f684cc8ec987e10000000000000000000000008f0e83b5d39cd05d85ced3a0ca71ad3234fc3c2d0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000ec9d5b864000000000000000000000000000000000000000000000000000039c46ad842dc0000000000000000000000000000000000000000000000000000000000000000a2ed48d5e4110f80e54a743f15664e7372614a11da71fd0a24b8316b49aea915'
+
+      const expectedResult: CountedOperation = {
+        children: [
+          {
+            children: [],
+            contractAddress: EthereumAddress(
+              '0xf70da97812CB96acDF810712Aa562db8dfA3dbEF',
+            ),
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x',
+          },
+          {
+            children: [
+              {
+                children: [],
+                contractAddress: '',
+                count: 1,
+                id: 'id',
+                level: 2,
+                methodSelector: '0x04e45aaf',
+              },
+            ],
+            contractAddress: EthereumAddress(
+              '0x7712FA47387542819d4E35A23f8116C90C18767C',
+            ),
+            contractName: 'SwapRouter',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'multicall',
+            methodSelector: '0x5ae401dc',
+            methodSignature: 'multicall(uint256,bytes[])',
+          },
+          {
+            children: [],
+            contractAddress: EthereumAddress(
+              '0x7dF4E182Da01EbA2FF902b3F13b7a7b12bB87dEa',
+            ),
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x3dad0c9c',
+          },
+        ],
+        contractAddress: 'tx.to',
+        contractName: 'ERC20Router',
+        count: 3,
+        id: 'id',
+        level: 0,
+        methodName: 'delegatecallMulticall',
+        methodSelector: '0x6e305f80',
+        methodSignature:
+          'delegatecallMulticall(address[],bytes[],uint256[],address)',
+      }
+
+      const counter = new RpcCounter()
+
+      const result = counter.countUserOperations(
+        calldata,
+        'tx.to',
+        ERC20ROUTER_methods,
         () => 'id',
       )
 

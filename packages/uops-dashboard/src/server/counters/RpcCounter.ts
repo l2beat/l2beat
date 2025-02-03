@@ -10,6 +10,8 @@ import {
   EIP712_methods,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
+  ERC20ROUTER_TRANSACTION_SELECTOR,
+  ERC20ROUTER_methods,
   ERC4337_methods,
   MULTICALLV3_methods,
   MULTICALL_V3,
@@ -20,6 +22,7 @@ import {
   SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
   SAFE_methods,
   isEip712,
+  isErc20Router,
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
@@ -96,12 +99,14 @@ export class RpcCounter implements Counter {
     const methods = ERC4337_methods.concat(SAFE_methods)
       .concat(EIP712_methods)
       .concat(MULTICALLV3_methods)
+      .concat(ERC20ROUTER_methods)
 
     if (
       isErc4337(tx) ||
       isGnosisSafe(tx) ||
       isEip712(tx) ||
-      isMulticallv3(tx)
+      isMulticallv3(tx) ||
+      isErc20Router(tx)
     ) {
       const countedOperation = this.countUserOperations(
         tx.data as string,
@@ -298,6 +303,8 @@ export class RpcCounter implements Counter {
     switch (selector) {
       case SAFE_EXEC_TRANSACTION_SELECTOR:
         return 'Safe: Singleton 1.3.0'
+      case ERC20ROUTER_TRANSACTION_SELECTOR:
+        return 'ERC-20 Router'
     }
 
     switch (type) {
