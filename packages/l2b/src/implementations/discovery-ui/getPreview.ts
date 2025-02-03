@@ -1,5 +1,5 @@
 import type {
-  ScalingProjectContract,
+  ProjectContract,
   ScalingProjectPermissions,
 } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/src/discovery/ProjectDiscovery'
