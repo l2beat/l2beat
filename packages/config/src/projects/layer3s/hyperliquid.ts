@@ -15,6 +15,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
+import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
@@ -143,43 +144,54 @@ export const hyperliquid: Layer3 = {
     },
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Hot validators',
-        accounts: hotAddresses.map((address, _) => ({ address, type: 'EOA' })),
-        description:
-          'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
-        chain: 'arbitrum',
-      },
-      {
-        name: 'Cold validators',
-        accounts: coldAddresses.map((address, _) => ({ address, type: 'EOA' })),
-        description: `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
-      },
-      {
-        name: 'Lockers',
-        accounts: [
-          ...discovery.getPermissionedAccounts('HyperliquidBridge', 'lockers'),
-          { address: constructorHotAddress, type: 'EOA' },
-        ],
-        description: `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
-      },
-      {
-        name: 'Finalizers',
-        accounts: [
-          ...discovery.getPermissionedAccounts(
-            'HyperliquidBridge',
-            'finalizers',
-          ),
-          { address: constructorHotAddress, type: 'EOA' },
-        ],
-        description:
-          'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Hot validators',
+          accounts: hotAddresses.map((address, _) => ({
+            address,
+            type: 'EOA',
+          })),
+          description:
+            'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
+          chain: 'arbitrum',
+        },
+        {
+          name: 'Cold validators',
+          accounts: coldAddresses.map((address, _) => ({
+            address,
+            type: 'EOA',
+          })),
+          description: `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
+        },
+        {
+          name: 'Lockers',
+          accounts: [
+            ...discovery.getPermissionedAccounts(
+              'HyperliquidBridge',
+              'lockers',
+            ),
+            { address: constructorHotAddress, type: 'EOA' },
+          ],
+          description: `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
+        },
+        {
+          name: 'Finalizers',
+          accounts: [
+            ...discovery.getPermissionedAccounts(
+              'HyperliquidBridge',
+              'finalizers',
+            ),
+            { address: constructorHotAddress, type: 'EOA' },
+          ],
+          description:
+            'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
+        },
+      ],
+    },
   },
 }

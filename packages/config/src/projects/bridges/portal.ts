@@ -136,45 +136,49 @@ export const portal: Bridge = {
   },
 
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'WormholeCore',
-        'Governance contract storing the current Guardian set and providing a facility to verify cross-chain messages by verifying Guardians signatures. \
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'WormholeCore',
+          'Governance contract storing the current Guardian set and providing a facility to verify cross-chain messages by verifying Guardians signatures. \
         Guardians themselves can choose a new Guardian set. Can be upgraded by Guardians.',
-      ),
-      discovery.getContractDetails(
-        'TokenBridge',
-        'Main bridge contract on Ethereum and an escrow for ETH and ERC20 tokens that were bridged to other chains. Can be upgraded by Guardians.',
-      ),
-      discovery.getContractDetails(
-        'TokenImplementation',
-        'This is the template for BridgedToken implementations minted by Portal on Ethereum.',
-      ),
-      discovery.getContractDetails(
-        'NFTBridge',
-        'NFT bridge contract and an escrow for NFTs that were bridged to other chains. Can be upgraded by Guardians.',
-      ),
-      discovery.getContractDetails(
-        'NFTImplementation',
-        'This is the template for bridged NFTs minted by Portal on Ethereum.',
-      ),
-    ],
+        ),
+        discovery.getContractDetails(
+          'TokenBridge',
+          'Main bridge contract on Ethereum and an escrow for ETH and ERC20 tokens that were bridged to other chains. Can be upgraded by Guardians.',
+        ),
+        discovery.getContractDetails(
+          'TokenImplementation',
+          'This is the template for BridgedToken implementations minted by Portal on Ethereum.',
+        ),
+        discovery.getContractDetails(
+          'NFTBridge',
+          'NFT bridge contract and an escrow for NFTs that were bridged to other chains. Can be upgraded by Guardians.',
+        ),
+        discovery.getContractDetails(
+          'NFTImplementation',
+          'This is the template for bridged NFTs minted by Portal on Ethereum.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 
   permissions: {
-    actors: [
-      {
-        name: 'Guardian Network',
-        description:
-          'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-        accounts: discovery.getPermissionedAccounts(
-          'WormholeCore',
-          'guardianSet',
-          0,
-        ),
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Guardian Network',
+          description:
+            'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
+          accounts: discovery.getPermissionedAccounts(
+            'WormholeCore',
+            'guardianSet',
+            0,
+          ),
+        },
+      ],
+    },
   },
   milestones: [
     {

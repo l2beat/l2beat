@@ -1,4 +1,105 @@
-Generated with discovered.json: 0xab3c0a75e7c9774b5a715df68694eec9ad18adf9
+Generated with discovered.json: 0x127c04e5e000ad8d8f5fd45746202639d724db0d
+
+# Diff at Mon, 03 Feb 2025 09:09:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 20325048
+- current block number: 20325048
+
+## Description
+
+discodrive polygoncdk chains!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "AstarVerifier"
++        "FflonkVerifier"
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "AstarValidium"
++        "Validium"
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"configure","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+      name:
+-        "AstarValidiumDAC"
++        "PolygonDataCommittee"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3)."
+    }
+```
+
+```diff
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      name:
+-        "LocalAdmin"
++        "AstarMultisig"
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","via":[{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]}
+      receivedPermissions.2:
++        {"permission":"configure","from":"0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0","description":"manage the members of the data availability committee and the threshold for valid commitments."}
+      receivedPermissions.1:
++        {"permission":"configure","from":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","description":"sole address that can force batches."}
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.0.from:
+-        "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"
++        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+      receivedPermissions.0.via:
+-        [{"address":"0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d"}]
+      receivedPermissions.0.description:
++        "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+      severity:
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x9b9278fd8d50544351685938921861d870430729
 
 # Diff at Mon, 20 Jan 2025 11:09:17 GMT:
 

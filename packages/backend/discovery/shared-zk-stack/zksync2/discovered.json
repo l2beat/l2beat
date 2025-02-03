@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 54882487,
-  "configHash": "0x5619e16ce2539a01ccbab55b8fd891009ff9b7311986811f48107bf109b50531",
+  "configHash": "0xcbdfd7bffd456db4f68afda070e2483816e220205312b7333ac165a3130cd90f",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -1062,9 +1062,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "shared-zk-stack/TimelockController": "0xe4789cd9831cec2e02f8b7bc5fb276c17acc1e2b76b4825e6b87553e33ee577c",
-    "shared-zk-stack/ZkGovernor": "0x5ee2a860061a926f971766161f91f72966530aff59dd15dc6f83bf23b163137d",
-    "shared-zk-stack/ZkToken": "0xaa46dbafa3e45e838e6a94305e96f1ede699f8195ad6b7626091d38c3b9e7083"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "shared-zk-stack/TimelockController": "0x38f43b8c36d40f49fb5bb1617228d17380aba0b12091b134579e30bc355e8123",
+    "shared-zk-stack/ZkGovernor": "0xc5df0dc32cd88ab7d0221d702c91c8ecde126c7f21d95e4cb5cbaa49ab70d398",
+    "shared-zk-stack/ZkToken": "0x0832f7cc461e7c92cecaf38b20aed1c119a1d91d0a01085cc260c38ad27031f1"
   }
 }

@@ -80,35 +80,38 @@ describe('projects', () => {
   describe('contracts', () => {
     for (const project of [...layer2s, ...bridges]) {
       describe(project.display.name, () => {
-        for (const [i, contract] of project.contracts?.addresses.entries() ??
-          []) {
-          const description = contract.description
-          if (description) {
-            it(`contracts[${i}].description - each line ends with a dot`, () => {
-              for (const descLine of description.trimEnd().split('\n')) {
-                expect(descLine.trimEnd().endsWith('.')).toEqual(true)
-              }
-            })
-          }
-
-          if (project.permissions !== 'UnderReview') {
-            const upgradableBy = contract.upgradableBy
-            const all = [
-              ...(project.permissions?.roles ?? []),
-              ...(project.permissions?.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
-
-            if (upgradableBy) {
-              it(`contracts[${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy)
+        const contracts = project.contracts?.addresses ?? {}
+        for (const [chain, perChain] of Object.entries(contracts)) {
+          for (const [i, contract] of perChain.entries()) {
+            const description = contract.description
+            if (description) {
+              it(`contracts[${i}].description - each line ends with a dot`, () => {
+                for (const descLine of description.trimEnd().split('\n')) {
+                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
+                }
               })
+            }
+
+            if (project.permissions !== 'UnderReview') {
+              const upgradableBy = contract.upgradableBy
+              const permissionsForChain = (project.permissions ?? {})[chain]
+              const all = [
+                ...(permissionsForChain?.roles ?? []),
+                ...(permissionsForChain?.actors ?? []),
+              ]
+              const actors = all.map((x) => {
+                if (x.name === 'EOA') {
+                  assert(x.accounts[0].type === 'EOA')
+                  return x.accounts[0].address
+                }
+                return x.name
+              })
+
+              if (upgradableBy) {
+                it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
+                  expect(actors).toInclude(...upgradableBy)
+                })
+              }
             }
           }
         }

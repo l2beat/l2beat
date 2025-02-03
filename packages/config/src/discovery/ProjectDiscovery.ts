@@ -28,9 +28,9 @@ import {
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 import type {
+  ProjectContract,
   ProjectEscrow,
   ReferenceLink,
-  ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
   ScalingProjectPermissions,
@@ -81,8 +81,8 @@ export class ProjectDiscovery {
 
   getContractDetails(
     identifier: string,
-    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
-  ): ScalingProjectContract {
+    descriptionOrOptions?: string | Partial<ProjectContract>,
+  ): ProjectContract {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
@@ -158,7 +158,7 @@ export class ProjectDiscovery {
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 
-    const options: Partial<ScalingProjectContract> = {
+    const options: Partial<ProjectContract> = {
       name,
       description,
       upgradableBy,
@@ -231,7 +231,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   } {
     return this.resolveStackTemplates(
       ORBIT_STACK_PERMISSION_TEMPLATES,
@@ -264,7 +264,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   } {
     const resolved = this.computeStackContractPermissions(
       permissionTemplates,
@@ -468,6 +468,30 @@ export class ProjectDiscovery {
     return contract !== undefined
   }
 
+  getEOA(identifier: string): EoaParameters {
+    try {
+      identifier = utils.getAddress(identifier)
+    } catch {
+      const eoas = this.getEOAByName(identifier)
+
+      assert(
+        !(eoas.length > 1),
+        `Found more than one eoas of ${identifier} name (${this.projectName})`,
+      )
+      assert(
+        eoas.length === 1,
+        `Found no eoa of ${identifier} name (${this.projectName})`,
+      )
+
+      return eoas[0]
+    }
+
+    const eoa = this.getEOAByAddress(identifier)
+    assert(eoa, `No eoa of ${identifier} address found (${this.projectName})`)
+
+    return eoa
+  }
+
   getContractValueOrUndefined<T extends ContractValue>(
     contractIdentifier: string,
     key: string,
@@ -562,8 +586,8 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
-  ): ScalingProjectContract {
+    descriptionOrOptions?: string | Partial<ProjectContract>,
+  ): ProjectContract {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
@@ -597,6 +621,27 @@ export class ProjectDiscovery {
       ],
       chain: this.chain,
       references: contract.references?.map((x) => ({
+        title: x.text,
+        url: x.href,
+      })),
+      description,
+    }
+  }
+
+  eoaAsPermissioned(
+    eoa: EoaParameters,
+    description: string,
+  ): ScalingProjectPermission {
+    return {
+      name: eoa.name ?? eoa.address,
+      accounts: [
+        {
+          address: eoa.address,
+          type: 'EOA',
+        },
+      ],
+      chain: this.chain,
+      references: eoa.references?.map((x) => ({
         title: x.text,
         url: x.href,
       })),
@@ -685,6 +730,15 @@ export class ProjectDiscovery {
     )
   }
 
+  getEOAByAddress(
+    address: string | EthereumAddress,
+  ): EoaParameters | undefined {
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.find(
+      (contract) => contract.address === EthereumAddress(address.toString()),
+    )
+  }
+
   getEntryByAddress(
     address: string | EthereumAddress,
   ): EoaParameters | ContractParameters | undefined {
@@ -697,9 +751,9 @@ export class ProjectDiscovery {
   }
 
   getOpStackContractDetails(
-    upgradesProxy: Partial<ScalingProjectContract>,
+    upgradesProxy: Partial<ProjectContract>,
     overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ScalingProjectContract[] {
+  ): ProjectContract[] {
     return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
       this.hasContract(overrides?.[d.name] ?? d.name),
     ).map((d) =>
@@ -718,6 +772,11 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     return contracts.filter((contract) => contract.name === name)
+  }
+
+  private getEOAByName(name: string): EoaParameters[] {
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return eoas.filter((eoa) => eoa.name === name)
   }
 
   getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
@@ -865,6 +924,7 @@ export class ProjectDiscovery {
       validateZkStack: 'A Validator',
       relay: 'A Relayer',
       validateBridge: 'A Validator',
+      aggregatePolygon: 'A trusted Aggregator',
     }
 
     const formatVia = (via: ResolvedPermissionPath[]) =>
@@ -934,6 +994,7 @@ export class ProjectDiscovery {
       validateZkStack: 'Can act as a Validator',
       relay: 'Can act as a Relayer',
       validateBridge: 'Can act as a Validator',
+      aggregatePolygon: 'Can act as a trusted Aggregator',
     }
 
     return Object.entries(
@@ -1076,7 +1137,7 @@ export class ProjectDiscovery {
     }
   }
 
-  getDiscoveredContracts(): ScalingProjectContract[] {
+  getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
@@ -1222,6 +1283,11 @@ const roleDescriptions: {
     name: 'Relayer',
     description:
       'Actors permissioned to relay messages that are then verified onchain.',
+  },
+  aggregatePolygon: {
+    name: 'Trusted Aggregator (Proposer)',
+    description:
+      "Permissioned to post new state roots and global exit roots accompanied by ZK proofs. Can also settle verified state roots without a timeout ('consolidate pending state').",
   },
 }
 

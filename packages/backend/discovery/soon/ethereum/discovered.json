@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21665575,
-  "configHash": "0x6e05a560d3ae8814afedc0ad545b1b9435544f9301dc4bf88e5f8495b2ce9c6a",
+  "configHash": "0xb15e0d557896531f486ce1a1358c737fb841fd6fbe2df5bcbed74f9808119a23",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -958,13 +958,13 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1StandardBridge_soon": "0xbcc1dfd0bc27c8bca431dee56013c21b809d19ee73f7f72892ca7aaa790a7352",
-    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
-    "opstack/OptimismPortal_soon": "0x0466abdee1bc81cb9c1e4c88b2dd3ef73ee4f36cb90c8aa1b9981ccbe4639cec",
-    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1StandardBridge_soon": "0x938c95c414d3b4ebb043b858ccba485a4bdb3e4d4737e75462a3192c4d2a6970",
+    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/OptimismPortal_soon": "0xdb0961d7bf84351d2c8c6a0416f0b816199451f1b98809fba45a7bf10ce4a4c1",
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"
   }
 }

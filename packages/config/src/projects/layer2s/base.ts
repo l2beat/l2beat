@@ -30,6 +30,10 @@ import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('base')
 
@@ -515,9 +519,9 @@ export const base: Layer2 = {
       type: 'general',
     },
   ],
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be stolen if',

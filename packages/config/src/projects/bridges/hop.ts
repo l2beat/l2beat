@@ -135,25 +135,29 @@ export const hop: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('USDC Bridge'),
-      discovery.getContractDetails('DAI Bridge'),
-      discovery.getContractDetails('USDT Bridge'),
-      discovery.getContractDetails('ETH Bridge'),
-      discovery.getContractDetails('MATIC Bridge'),
-      discovery.getContractDetails('WBTC Bridge'),
-      discovery.getContractDetails('SNX Bridge'),
-      discovery.getContractDetails('HOP Bridge'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('USDC Bridge'),
+        discovery.getContractDetails('DAI Bridge'),
+        discovery.getContractDetails('USDT Bridge'),
+        discovery.getContractDetails('ETH Bridge'),
+        discovery.getContractDetails('MATIC Bridge'),
+        discovery.getContractDetails('WBTC Bridge'),
+        discovery.getContractDetails('SNX Bridge'),
+        discovery.getContractDetails('HOP Bridge'),
+      ],
+    },
     risks: [],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'Hop Multisig',
-        'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
-      ),
-    ],
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'Hop Multisig',
+          'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
+        ),
+      ],
+    },
   },
   knowledgeNuggets: [
     {

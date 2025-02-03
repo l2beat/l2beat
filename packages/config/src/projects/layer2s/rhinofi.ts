@@ -169,14 +169,16 @@ export const rhinofi: Layer2 = {
     exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkExchange'),
-      discovery.getContractDetails(
-        'Committee',
-        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkExchange'),
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
@@ -184,35 +186,37 @@ export const rhinofi: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Governors',
-        accounts: getProxyGovernance(discovery, 'StarkExchange'),
-        description:
-          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromString(upgradeDelay),
-      },
-      ...discovery.getMultisigPermission(
-        'GovernanceMultisig',
-        'Has full power to upgrade the bridge implementation as a Governor.',
-      ),
-      committee,
-      ...getSHARPVerifierGovernors(discovery, verifierAddress),
-      {
-        name: 'Operators',
-        accounts: discovery.getPermissionedAccounts(
-          'StarkExchange',
-          'OPERATORS',
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Governors',
+          accounts: getProxyGovernance(discovery, 'StarkExchange'),
+          description:
+            'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromString(upgradeDelay),
+        },
+        ...discovery.getMultisigPermission(
+          'GovernanceMultisig',
+          'Has full power to upgrade the bridge implementation as a Governor.',
         ),
-        description:
-          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-      },
-      discovery.contractAsPermissioned(
-        // this multisig does not get recognized as such (because of the old proxy?)
-        discovery.getContract('DeversiFiTreasuryMultisig'),
-        'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
-      ),
-    ],
+        committee,
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkExchange',
+            'OPERATORS',
+          ),
+          description:
+            'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
+        },
+        discovery.contractAsPermissioned(
+          // this multisig does not get recognized as such (because of the old proxy?)
+          discovery.getContract('DeversiFiTreasuryMultisig'),
+          'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
+        ),
+      ],
+    },
   },
   milestones: [
     {
@@ -233,10 +237,5 @@ export const rhinofi: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    },
-    discovery,
-  }),
+  customDa: StarkexDAC({ discovery }),
 }

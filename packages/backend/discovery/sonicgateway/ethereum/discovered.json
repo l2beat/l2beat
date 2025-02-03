@@ -1,8 +1,8 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 21730951,
-  "configHash": "0x7b77c91475a27363f324dd717ac35e6f81843ffba7763a742a2ac808e01ea3eb",
+  "blockNumber": 21744201,
+  "configHash": "0xef5bfd8375fbcac1983e84dfb9428030bc566acdcccdd798e77db2aeadfa86c8",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -334,6 +334,7 @@
           "description": "update the state root."
         }
       ],
+      "ignoreInWatchMode": ["lastBlockNum"],
       "sinceTimestamp": 1734690815,
       "values": {
         "$admin": "0x0000000000000000000000000000000000000000",
@@ -387,7 +388,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 5783400,
+        "lastBlockNum": 6003900,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -414,13 +415,14 @@
           "via": []
         }
       ],
+      "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "sinceTimestamp": 1734690443,
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 5783400,
-        "lastState": "0xea48a05e87ef2f63f59a84eeed4bd44326c71881dcfc8c64725bed6555d047d6",
-        "lastUpdateTime": 1738159679,
+        "lastBlockNum": 6003900,
+        "lastState": "0x062bff595072fc6dd3a3daecfe2dc705b36b579b3a3bb3100301fa9f0c0520c6",
+        "lastUpdateTime": 1738319207,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "derivedName": "StateOracle"
@@ -888,6 +890,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

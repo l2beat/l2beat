@@ -163,115 +163,119 @@ export const cBridge: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'MessageBus',
-        'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
-      ),
-      discovery.getContractDetails('Liquidity Network', {
-        description:
-          'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
-        pausable: {
-          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
-          pausableBy: ['Full Pausers', 'Partial Pausers'],
-        },
-      }),
-      discovery.getContractDetails('OriginalTokenVault', {
-        description:
-          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-        pausable: {
-          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
-          pausableBy: ['Full Pausers', 'Partial Pausers'],
-        },
-      }),
-      discovery.getContractDetails('OriginalTokenVaultV2', {
-        description:
-          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-        pausable: {
-          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
-          pausableBy: ['Full Pausers', 'Partial Pausers'],
-        },
-      }),
-      discovery.getContractDetails('PeggedTokenBridge', {
-        description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge.',
-        pausable: {
-          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
-          pausableBy: ['Full Pausers', 'Partial Pausers'],
-        },
-      }),
-      discovery.getContractDetails('PeggedTokenBridgeV2', {
-        description:
-          'Contract minting/burning tokens when receiving a message from Token Bridge.',
-        pausable: {
-          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
-          pausableBy: ['Full Pausers', 'Partial Pausers'],
-        },
-      }),
-      discovery.getContractDetails(
-        'TransferAgent',
-        'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Sentinel',
-        'Contract storing additional governors and pausers.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'MessageBus',
+          'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
+        ),
+        discovery.getContractDetails('Liquidity Network', {
+          description:
+            'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
+          pausable: {
+            paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+            pausableBy: ['Full Pausers', 'Partial Pausers'],
+          },
+        }),
+        discovery.getContractDetails('OriginalTokenVault', {
+          description:
+            'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+          pausable: {
+            paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+            pausableBy: ['Full Pausers', 'Partial Pausers'],
+          },
+        }),
+        discovery.getContractDetails('OriginalTokenVaultV2', {
+          description:
+            'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+          pausable: {
+            paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+            pausableBy: ['Full Pausers', 'Partial Pausers'],
+          },
+        }),
+        discovery.getContractDetails('PeggedTokenBridge', {
+          description:
+            'Contract minting/burning tokens when receiving a message from Token Bridge.',
+          pausable: {
+            paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+            pausableBy: ['Full Pausers', 'Partial Pausers'],
+          },
+        }),
+        discovery.getContractDetails('PeggedTokenBridgeV2', {
+          description:
+            'Contract minting/burning tokens when receiving a message from Token Bridge.',
+          pausable: {
+            paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+            pausableBy: ['Full Pausers', 'Partial Pausers'],
+          },
+        }),
+        discovery.getContractDetails(
+          'TransferAgent',
+          'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Sentinel',
+          'Contract storing additional governors and pausers.',
+        ),
+      ],
+    },
     references: [],
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Bridge Governance',
-        description:
-          'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
-        accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
-      },
-      {
-        name: 'Bridge Governance (2)',
-        description:
-          'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
-        accounts: [
-          discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
-        ],
-      },
-      {
-        name: 'Governors',
-        description:
-          'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-        accounts: unionBy(
-          discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
-          discovery.getPermissionedAccounts('Sentinel', 'governors'),
-          JSON.stringify,
-        ),
-      },
-      {
-        name: 'Full pausers',
-        description: 'Can pause and unpause the system.',
-        accounts: unionBy(
-          discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
-          discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
-          JSON.stringify,
-        ),
-      },
-      {
-        name: 'Partial pausers',
-        description: 'Can pause the system.',
-        accounts: discovery.getPermissionedAccounts(
-          'Sentinel',
-          'pausersPauseOnly',
-        ),
-      },
-      {
-        name: 'Sentinel Admin',
-        description:
-          'Can add and remove governors and pausers from the system.',
-        accounts: [
-          discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
-        ],
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Bridge Governance',
+          description:
+            'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
+          accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
+        },
+        {
+          name: 'Bridge Governance (2)',
+          description:
+            'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
+          accounts: [
+            discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
+          ],
+        },
+        {
+          name: 'Governors',
+          description:
+            'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
+          accounts: unionBy(
+            discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
+            discovery.getPermissionedAccounts('Sentinel', 'governors'),
+            JSON.stringify,
+          ),
+        },
+        {
+          name: 'Full pausers',
+          description: 'Can pause and unpause the system.',
+          accounts: unionBy(
+            discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
+            discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
+            JSON.stringify,
+          ),
+        },
+        {
+          name: 'Partial pausers',
+          description: 'Can pause the system.',
+          accounts: discovery.getPermissionedAccounts(
+            'Sentinel',
+            'pausersPauseOnly',
+          ),
+        },
+        {
+          name: 'Sentinel Admin',
+          description:
+            'Can add and remove governors and pausers from the system.',
+          accounts: [
+            discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
+          ],
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

@@ -1,4 +1,89 @@
-Generated with discovered.json: 0xcd5e6c347866f9b8b557e681f526ac57d516b5e9
+Generated with discovered.json: 0xeafbeb5c29eb11b7dd5366982fc5c1dbf22e8117
+
+# Diff at Mon, 03 Feb 2025 09:09:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21744175
+- current block number: 21744175
+
+## Description
+
+discodrive polygoncdk chains!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744175 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "Verifier"
++        "FflonkVerifier"
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+      name:
+-        "SiliconDAC"
++        "PolygonDataCommittee"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","via":[{"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.via.0:
+-        {"address":"0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2)."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1) {
+    +++ description: None
+      name:
+-        "DACProxyAdmin"
++        "ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB) {
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "SiliconValidium"
++        "Validium"
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71","description":"sole address that can force batches.","via":[]},{"permission":"configure","to":"0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"sequence","to":"0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
+```
+
+Generated with discovered.json: 0xb14ae424f86bb39f0dba3f094679923b8974709c
 
 # Diff at Mon, 20 Jan 2025 11:10:06 GMT:
 

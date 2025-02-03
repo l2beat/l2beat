@@ -340,49 +340,51 @@ export const zksynclite: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ZkSync', {
-        description:
-          'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Verifier', {
-        description: 'Implements ZK proof verification logic.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Governance', {
-        description:
-          'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'UpgradeGatekeeper',
-        'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
-      ),
-      discovery.getContractDetails('TokenGovernance', {
-        description:
-          'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
-        upgradableBy: ['ZkSync Multisig'],
-        upgradeDelay: 'No delay',
-        references: [
-          {
-            title: 'Governance.sol#L93 - Etherscan source code',
-            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
-          },
-        ],
-      }),
-      discovery.getContractDetails('NftFactory', {
-        description: 'Allows for withdrawing NFTs minted on L2 to L1.',
-        upgradableBy: ['ZkSync Multisig'],
-        upgradeDelay: 'No delay',
-        references: [
-          {
-            title: 'Governance.sol#L205 - Etherscan source code',
-            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
-          },
-        ],
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ZkSync', {
+          description:
+            'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Verifier', {
+          description: 'Implements ZK proof verification logic.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Governance', {
+          description:
+            'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails(
+          'UpgradeGatekeeper',
+          'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
+        ),
+        discovery.getContractDetails('TokenGovernance', {
+          description:
+            'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
+          upgradableBy: ['ZkSync Multisig'],
+          upgradeDelay: 'No delay',
+          references: [
+            {
+              title: 'Governance.sol#L93 - Etherscan source code',
+              url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+            },
+          ],
+        }),
+        discovery.getContractDetails('NftFactory', {
+          description: 'Allows for withdrawing NFTs minted on L2 to L1.',
+          upgradableBy: ['ZkSync Multisig'],
+          upgradeDelay: 'No delay',
+          references: [
+            {
+              title: 'Governance.sol#L205 - Etherscan source code',
+              url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
+            },
+          ],
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   stateDerivation: {
@@ -393,44 +395,49 @@ export const zksynclite: Layer2 = {
     dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'ZkSync Multisig',
-        'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
-      ),
-      {
-        name: 'Security Council',
-        accounts: discovery.getPermissionedAccounts(
-          'ZkSync',
-          'securityCouncilMembers',
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'ZkSync Multisig',
+          'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
         ),
-        description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
-        references: [
-          {
-            title: 'Security Council Members - Etherscan source code',
-            url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
-          },
-          {
-            title: 'Security Council 2.0 - Matter Labs blog post',
-            url: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
-          },
-        ],
-      },
-      {
-        name: 'Active validators',
-        accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
-        description:
-          'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
-      },
-      {
-        name: 'Token listing beneficiary',
-        accounts: [
-          discovery.getPermissionedAccount('TokenGovernance', 'treasury'),
-        ],
-        description:
-          'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
-      },
-    ],
+        {
+          name: 'Security Council',
+          accounts: discovery.getPermissionedAccounts(
+            'ZkSync',
+            'securityCouncilMembers',
+          ),
+          description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
+          references: [
+            {
+              title: 'Security Council Members - Etherscan source code',
+              url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+            },
+            {
+              title: 'Security Council 2.0 - Matter Labs blog post',
+              url: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
+            },
+          ],
+        },
+        {
+          name: 'Active validators',
+          accounts: discovery.getPermissionedAccounts(
+            'Governance',
+            'validators',
+          ),
+          description:
+            'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
+        },
+        {
+          name: 'Token listing beneficiary',
+          accounts: [
+            discovery.getPermissionedAccount('TokenGovernance', 'treasury'),
+          ],
+          description:
+            'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
+        },
+      ],
+    },
   },
   milestones: [
     {

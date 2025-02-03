@@ -247,69 +247,76 @@ export const degate2: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      {
-        name: 'DefaultDepositContract Owner',
-        accounts: (() => {
-          const owner1 = discovery.getAddressFromValue(
-            'DefaultDepositContract',
-            'owner',
-          )
-          const owner2 = discovery.getAddressFromValue(
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'DefaultDepositContract Owner',
+          accounts: (() => {
+            const owner1 = discovery.getAddressFromValue(
+              'DefaultDepositContract',
+              'owner',
+            )
+            const owner2 = discovery.getAddressFromValue(
+              'LoopringIOExchangeOwner',
+              'owner',
+            )
+            const owner3 = discovery.getAddressFromValue('LoopringV3', 'owner')
+
+            // making sure that the description is correct
+            assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
+
+            const permissionedAccount =
+              discovery.formatPermissionedAccount(owner1)
+
+            // if it was updated, we should add multisig participants
+            assert(permissionedAccount.type === 'EOA', 'DeGate')
+
+            return [permissionedAccount]
+          })(),
+          description: `This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`,
+        },
+        {
+          name: 'BlockVerifier Owner',
+          description:
+            'This address is the owner of the BlockVerifier contract.',
+          accounts: [
+            discovery.getPermissionedAccount('BlockVerifier', 'owner'),
+          ],
+        },
+        {
+          name: 'Block Submitters',
+          accounts: discovery.getPermissionedAccounts(
             'LoopringIOExchangeOwner',
-            'owner',
-          )
-          const owner3 = discovery.getAddressFromValue('LoopringV3', 'owner')
-
-          // making sure that the description is correct
-          assert(owner1 === owner2 && owner2 === owner3 && owner3, 'DeGate')
-
-          const permissionedAccount =
-            discovery.formatPermissionedAccount(owner1)
-
-          // if it was updated, we should add multisig participants
-          assert(permissionedAccount.type === 'EOA', 'DeGate')
-
-          return [permissionedAccount]
-        })(),
-        description: `This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`,
-      },
-      {
-        name: 'BlockVerifier Owner',
-        description: 'This address is the owner of the BlockVerifier contract.',
-        accounts: [discovery.getPermissionedAccount('BlockVerifier', 'owner')],
-      },
-      {
-        name: 'Block Submitters',
-        accounts: discovery.getPermissionedAccounts(
-          'LoopringIOExchangeOwner',
-          'blockSubmitters',
-        ),
-        description:
-          'Actors who can submit new blocks, updating the L2 state on L1.',
-      },
-    ],
+            'blockSubmitters',
+          ),
+          description:
+            'Actors who can submit new blocks, updating the L2 state on L1.',
+        },
+      ],
+    },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
-      discovery.getContractDetails(
-        'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      ),
-      discovery.getContractDetails(
-        'DefaultDepositContract',
-        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      ),
-      discovery.getContractDetails(
-        'LoopringV3',
-        'Contract for setting exchange fee parameters.',
-      ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
+        discovery.getContractDetails(
+          'LoopringIOExchangeOwner',
+          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        ),
+        discovery.getContractDetails(
+          'DefaultDepositContract',
+          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+        ),
+        discovery.getContractDetails(
+          'LoopringV3',
+          'Contract for setting exchange fee parameters.',
+        ),
+        discovery.getContractDetails(
+          'BlockVerifier',
+          'zkSNARK Verifier based on ethsnarks library.',
+        ),
+      ],
+    },
     risks: [],
   },
   milestones: [

@@ -80,23 +80,27 @@ export const gravity: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Gravity',
-        'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Gravity',
+          'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
+        ),
+      ],
+    },
     risks: [],
     isIncomplete: true,
   },
   permissions: {
-    actors: [
-      {
-        name: 'Cosmos Validators',
-        description:
-          'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
-        accounts: [],
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Cosmos Validators',
+          description:
+            'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
+          accounts: [],
+        },
+      ],
+    },
   },
 }

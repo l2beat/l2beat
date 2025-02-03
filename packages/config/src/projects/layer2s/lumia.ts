@@ -13,28 +13,21 @@ import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('lumia')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'LumiaDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'LumiaDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('LumiaValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['LumiaDAC Upgrader'],
-  upgradeDelay: 'None',
-}
 
 export const lumia: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1718181773), // 2024-06-12T08:42:53Z
@@ -93,8 +86,8 @@ export const lumia: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('LumiaValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'lumia',
@@ -104,7 +97,7 @@ export const lumia: Layer2 = polygonCDKStack({
   },
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sharedEscrow: {
@@ -131,44 +124,11 @@ export const lumia: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
-
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('LumiaValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin and ForceBatcher of the LumiaValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the LumiaDAC contract.',
-    },
-    {
-      name: 'LumiaDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the LumiaDAC contract and thus change the data availability rules any time.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('LumiaDAC', {
-      description:
-        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1738252392), // 2025-01-30T15:53:12+00:00
-      dac: {
-        requiredMembers: requiredSignaturesDAC,
-        membersCount: membersCountDAC,
-      },
+  customDa: PolygoncdkDAC({
+    dac: {
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
     },
   }),
   milestones: [],

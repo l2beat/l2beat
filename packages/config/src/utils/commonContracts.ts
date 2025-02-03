@@ -14,7 +14,7 @@ import type {
   DaProject,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
   ScalingProjectPermission,
 } from '../types'
 
@@ -198,20 +198,22 @@ function pickOutReferencedEntries(
 function projectContainsAddressAsContract(
   project: Pick<CommonProject, 'contracts'>,
   address: string,
-): ScalingProjectContract | undefined {
+): ProjectContract | undefined {
   if (project.contracts === undefined) {
     return undefined
   }
 
-  for (const contract of project.contracts.addresses) {
-    if (
-      contract.address.toString() === address ||
-      (contract.upgradeability !== undefined &&
-        contract.upgradeability.implementations
-          .map((a) => a.toString())
-          .includes(address))
-    ) {
-      return contract
+  for (const chain in project.contracts.addresses ?? {}) {
+    for (const contract of (project.contracts.addresses ?? {})[chain]) {
+      if (
+        contract.address.toString() === address ||
+        (contract.upgradeability !== undefined &&
+          contract.upgradeability.implementations
+            .map((a) => a.toString())
+            .includes(address))
+      ) {
+        return contract
+      }
     }
   }
 
@@ -229,20 +231,19 @@ function getPermissionContainingAddress(
     return undefined
   }
 
-  const all = [
-    ...(project.permissions?.roles ?? []),
-    ...(project.permissions?.actors ?? []),
-  ]
+  for (const perChain of Object.values(project.permissions)) {
+    const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
 
-  for (const permission of all) {
-    if (permission.accounts.length > 1) {
-      continue
-    }
+    for (const permission of all) {
+      if (permission.accounts.length > 1) {
+        continue
+      }
 
-    if (
-      permission.accounts.map((a) => a.address.toString()).includes(address)
-    ) {
-      return permission
+      if (
+        permission.accounts.map((a) => a.address.toString()).includes(address)
+      ) {
+        return permission
+      }
     }
   }
 

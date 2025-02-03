@@ -81,18 +81,22 @@ export const sollet: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('SplTokenSwap', 'Sollet Bridge Contract.'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('SplTokenSwap', 'Sollet Bridge Contract.'),
+      ],
+    },
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        accounts: [discovery.getPermissionedAccount('SplTokenSwap', 'owner')],
-        name: 'Sollet Bridge Owner (EOA)',
-        description: 'Can withdraw funds from the bridge',
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          accounts: [discovery.getPermissionedAccount('SplTokenSwap', 'owner')],
+          name: 'Sollet Bridge Owner (EOA)',
+          description: 'Can withdraw funds from the bridge',
+        },
+      ],
+    },
   },
 }

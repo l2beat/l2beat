@@ -216,60 +216,64 @@ export const lightlink: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('CanonicalStateChain', {
-        description:
-          'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
-        ...upgradesLightLink,
-      }),
-      discovery.getContractDetails('Challenge', {
-        description:
-          'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
-        ...upgradesLightLink,
-      }),
-      discovery.getContractDetails('L1BridgeRegistry', {
-        description:
-          'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
-      }),
-      discovery.getContractDetails('ChainOracle', {
-        description:
-          'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
-        ...upgradesLightLink,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('CanonicalStateChain', {
+          description:
+            'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
+          ...upgradesLightLink,
+        }),
+        discovery.getContractDetails('Challenge', {
+          description:
+            'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
+          ...upgradesLightLink,
+        }),
+        discovery.getContractDetails('L1BridgeRegistry', {
+          description:
+            'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
+        }),
+        discovery.getContractDetails('ChainOracle', {
+          description:
+            'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
+          ...upgradesLightLink,
+        }),
+      ],
+    },
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Validators',
-        description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-        accounts: validators.map((validator) => ({
-          address: EthereumAddress(validator.addr),
-          type: 'EOA',
-        })),
-      },
-      {
-        name: 'Proposer',
-        accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
-        description:
-          'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
-      },
-      {
-        name: 'LightLinkMultisig',
-        accounts: [
-          { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
-        ],
-        description:
-          'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
-      },
-      {
-        name: 'LightLinkAdmin',
-        accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
-        description:
-          'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Validators',
+          description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+          accounts: validators.map((validator) => ({
+            address: EthereumAddress(validator.addr),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'Proposer',
+          accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
+          description:
+            'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
+        },
+        {
+          name: 'LightLinkMultisig',
+          accounts: [
+            { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
+          ],
+          description:
+            'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
+        },
+        {
+          name: 'LightLinkAdmin',
+          accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
+          description:
+            'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
+        },
+      ],
+    },
   },
 }
 

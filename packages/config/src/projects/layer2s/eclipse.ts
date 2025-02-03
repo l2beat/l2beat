@@ -116,51 +116,55 @@ export const eclipse: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('CanonicalBridge', {
-        description:
-          'Entry point to deposit ETH. It is registered as a module in the Mailbox contract.',
-      }),
-      discovery.getContractDetails('Mailbox', {
-        description:
-          'Contract receiving messages from registered modules to send to Eclipse. It doesn’t have any functionality to send messages back to Ethereum.',
-      }),
-      discovery.getContractDetails('Treasury', {
-        description: 'Holds the funds locked on Ethereum.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('CanonicalBridge', {
+          description:
+            'Entry point to deposit ETH. It is registered as a module in the Mailbox contract.',
+        }),
+        discovery.getContractDetails('Mailbox', {
+          description:
+            'Contract receiving messages from registered modules to send to Eclipse. It doesn’t have any functionality to send messages back to Ethereum.',
+        }),
+        discovery.getContractDetails('Treasury', {
+          description: 'Holds the funds locked on Ethereum.',
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'AuthorityMultisig',
-        "Can pause and upgrade the EtherBridge and Mailbox contracts and change all parameters in the 'CanonicalBridge' contract or authorize/cancel withdrawals.",
-      ),
-      ...discovery.getMultisigPermission(
-        'TreasuryOwner',
-        'Can upgrade and transfer funds from the Treasury.',
-      ),
-      {
-        name: 'WithdrawerEOA',
-        accounts: [
-          discovery.getAccessControlRolePermission(
-            'CanonicalBridge',
-            'WITHDRAW_AUTHORITY_ROLE',
-          )[1],
-        ],
-        description: `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-      },
-      {
-        name: 'PauserEOA',
-        accounts: [
-          discovery.getAccessControlRolePermission(
-            'CanonicalBridge',
-            'PAUSER_ROLE',
-          )[1],
-        ],
-        description: `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'AuthorityMultisig',
+          "Can pause and upgrade the EtherBridge and Mailbox contracts and change all parameters in the 'CanonicalBridge' contract or authorize/cancel withdrawals.",
+        ),
+        ...discovery.getMultisigPermission(
+          'TreasuryOwner',
+          'Can upgrade and transfer funds from the Treasury.',
+        ),
+        {
+          name: 'WithdrawerEOA',
+          accounts: [
+            discovery.getAccessControlRolePermission(
+              'CanonicalBridge',
+              'WITHDRAW_AUTHORITY_ROLE',
+            )[1],
+          ],
+          description: `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        },
+        {
+          name: 'PauserEOA',
+          accounts: [
+            discovery.getAccessControlRolePermission(
+              'CanonicalBridge',
+              'PAUSER_ROLE',
+            )[1],
+          ],
+          description: `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        },
+      ],
+    },
   },
 }

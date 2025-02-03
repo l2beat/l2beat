@@ -468,38 +468,38 @@ export const zklinknova: Layer3 = {
     mode: DA_MODES.STATE_DIFFS_COMPRESSED,
   }),
   contracts: {
-    addresses: [
-      lineaDiscovery.getContractDetails('L1ERC20Bridge', {
-        description:
-          'Main entry point for depositing ERC20 tokens from Linea to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
-        ...lineaUpgradability,
-      }),
-      lineaDiscovery.getContractDetails('zkLink', {
-        description:
-          'Main contract of the system where blocks are committed, proven and executed. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
-        ...lineaUpgradability,
-      }),
-      lineaDiscovery.getContractDetails('LineaL2Gateway', {
-        description:
-          "High level interface between the main zkLink contract and Linea's message service.",
-        ...lineaUpgradability,
-      }),
-      lineaDiscovery.getContractDetails('ValidatorTimelock', {
-        description: `Intermediary contract between the one of the validators and the ZKsync Era diamond that can delay block execution (ie withdrawals and other L3 --> L2 messages). Currently, the delay is set to ${formatSeconds(
-          executionDelaySeconds,
-        )}.`,
-      }),
-      lineaDiscovery.getContractDetails('Verifier', {
-        description: 'Implements ZK proof verification logic.',
-        ...lineaUpgradability,
-      }),
-      lineaDiscovery.getContractDetails('Governance', {
-        description: `Intermediary governance contract with two roles and a customizable delay. This delay is only mandatory for transactions scheduled by the Owner role and can be set by the SecurityCouncil role. The SecurityCouncil role can execute arbitrary upgrade transactions immediately. Currently the delay is set to ${formatSeconds(
-          upgradeDelaySeconds,
-        )} and the SecurityCouncil role is not used.`,
-      }),
-    ],
-    nativeAddresses: {
+    addresses: {
+      [lineaDiscovery.chain]: [
+        lineaDiscovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from Linea to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...lineaUpgradability,
+        }),
+        lineaDiscovery.getContractDetails('zkLink', {
+          description:
+            'Main contract of the system where blocks are committed, proven and executed. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
+          ...lineaUpgradability,
+        }),
+        lineaDiscovery.getContractDetails('LineaL2Gateway', {
+          description:
+            "High level interface between the main zkLink contract and Linea's message service.",
+          ...lineaUpgradability,
+        }),
+        lineaDiscovery.getContractDetails('ValidatorTimelock', {
+          description: `Intermediary contract between the one of the validators and the ZKsync Era diamond that can delay block execution (ie withdrawals and other L3 --> L2 messages). Currently, the delay is set to ${formatSeconds(
+            executionDelaySeconds,
+          )}.`,
+        }),
+        lineaDiscovery.getContractDetails('Verifier', {
+          description: 'Implements ZK proof verification logic.',
+          ...lineaUpgradability,
+        }),
+        lineaDiscovery.getContractDetails('Governance', {
+          description: `Intermediary governance contract with two roles and a customizable delay. This delay is only mandatory for transactions scheduled by the Owner role and can be set by the SecurityCouncil role. The SecurityCouncil role can execute arbitrary upgrade transactions immediately. Currently the delay is set to ${formatSeconds(
+            upgradeDelaySeconds,
+          )} and the SecurityCouncil role is not used.`,
+        }),
+      ],
       ethereum: [
         ethereumDiscovery.getContractDetails('L1ERC20Bridge', {
           description:
@@ -709,24 +709,24 @@ export const zklinknova: Layer3 = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    actors: [
-      ...lineaDiscovery.getMultisigPermission(
-        'LineaOwner',
-        'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      ),
-      {
-        name: 'Validators',
-        accounts: lineaDiscovery.getPermissionedAccounts(
-          'zkLink',
-          'validators',
+    [lineaDiscovery.chain]: {
+      actors: [
+        ...lineaDiscovery.getMultisigPermission(
+          'LineaOwner',
+          'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
-        chain: 'linea',
-        description:
-          'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
-      },
-    ],
-  },
-  nativePermissions: {
+        {
+          name: 'Validators',
+          accounts: lineaDiscovery.getPermissionedAccounts(
+            'zkLink',
+            'validators',
+          ),
+          chain: 'linea',
+          description:
+            'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
+        },
+      ],
+    },
     optimism: {
       actors: [
         optimismDiscovery.contractAsPermissioned(

@@ -1,5 +1,5 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectContracts, ScalingProjectRisk } from '../types'
+import type { ProjectContracts, ScalingProjectRisk } from '../types'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -55,8 +55,8 @@ function UPGRADE_WITH_DELAY_SECONDS_RISK(
   return UPGRADE_WITH_DELAY_RISK(delay)
 }
 
-const EMPTY: ScalingProjectContracts = {
-  addresses: [],
+const EMPTY: ProjectContracts = {
+  addresses: {},
   risks: [],
 }
 
@@ -66,7 +66,7 @@ const ARBITRUM_OLD_BRIDGE = EthereumAddress(
 
 const UNDER_REVIEW = {
   isUnderReview: true,
-  addresses: [],
+  addresses: {},
   risks: [],
 }
 

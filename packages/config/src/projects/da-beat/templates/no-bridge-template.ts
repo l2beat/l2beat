@@ -1,7 +1,5 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DaBridge, DaBridgeRisks } from '../../../types'
-import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { linkByDA } from '../utils/link-by-da'
 
 export interface TemplateVars {
@@ -12,7 +10,6 @@ export interface TemplateVars {
   usedIn?: DaBridge['usedIn']
   description?: string
   technology?: DaBridge['technology']
-  otherConsiderations?: DaBridge['otherConsiderations']
 }
 
 export function NO_BRIDGE(template: TemplateVars): DaBridge {
@@ -35,9 +32,7 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
     })
 
   const risks: DaBridgeRisks = {
-    committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
-    upgradeability: DaUpgradeabilityRisk.NoBridge,
-    relayerFailure: DaRelayerFailureRisk.NoBridge,
+    isNoBridge: true,
     ...template.risks,
   }
 
@@ -52,6 +47,5 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
     risks,
     technology,
     usedIn,
-    otherConsiderations: template.otherConsiderations,
   }
 }

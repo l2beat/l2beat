@@ -495,82 +495,86 @@ export const linea: Layer2 = {
     ],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'LineaAdminMultisig',
-        'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
-      ),
-      {
-        accounts: zodiacPausers,
-        name: 'Pauser',
-        description:
-          'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
-      },
-      {
-        accounts: discovery.getAccessControlRolePermission(
-          'LineaRollup',
-          'OPERATOR_ROLE',
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'LineaAdminMultisig',
+          'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
         ),
-        name: 'Operators',
-        description:
-          'The operators are allowed to prove blocks and post the corresponding transaction data.',
-      },
-      {
-        accounts: zodiacPausers,
-        name: 'Pauser',
-        description:
-          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
-      },
-    ],
+        {
+          accounts: zodiacPausers,
+          name: 'Pauser',
+          description:
+            'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
+        },
+        {
+          accounts: discovery.getAccessControlRolePermission(
+            'LineaRollup',
+            'OPERATOR_ROLE',
+          ),
+          name: 'Operators',
+          description:
+            'The operators are allowed to prove blocks and post the corresponding transaction data.',
+        },
+        {
+          accounts: zodiacPausers,
+          name: 'Pauser',
+          description:
+            'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
+        },
+      ],
+    },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('LineaRollup', {
-        description:
-          'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
-        ...upgradesTimelock,
-        pausable: (() => {
-          const addresses = discovery.getAccessControlField(
-            'LineaRollup',
-            'PAUSE_MANAGER',
-          ).members
-          assert(addresses.length === 1)
-          assert(
-            addresses[0] ===
-              discovery.getContract('LineaAdminMultisig').address,
-          )
-          return { pausableBy: ['LineaAdminMultisig'], paused: isPaused }
-        })(),
-        references: [
-          {
-            title:
-              'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
-          },
-        ],
-        ...upgradesTimelock,
-      }),
-      discovery.getContractDetails(
-        'Timelock',
-        `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
-      ),
-      discovery.getContractDetails('VerifierProofType3', {
-        description:
-          'Currently used smart contract verifying the proofs for the Linea zkEVM.',
-      }),
-      discovery.getContractDetails('TokenBridge', {
-        description: 'Contract used to bridge ERC20 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('USDCBridge', {
-        description: 'Contract used to bridge USDC tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('CallForwardingProxy', {
-        description:
-          'A proxy contract forwarding calls to a predefined (immutable) target contract. In this case the it is targeting the LineaRollup where it is registered as a fallback operator, allowing anyone to access operator functions when 6 months have passed since the latest finalized block.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('LineaRollup', {
+          description:
+            'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
+          ...upgradesTimelock,
+          pausable: (() => {
+            const addresses = discovery.getAccessControlField(
+              'LineaRollup',
+              'PAUSE_MANAGER',
+            ).members
+            assert(addresses.length === 1)
+            assert(
+              addresses[0] ===
+                discovery.getContract('LineaAdminMultisig').address,
+            )
+            return { pausableBy: ['LineaAdminMultisig'], paused: isPaused }
+          })(),
+          references: [
+            {
+              title:
+                'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
+              url: 'https://etherscan.io/address/0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0#code',
+            },
+          ],
+          ...upgradesTimelock,
+        }),
+        discovery.getContractDetails(
+          'Timelock',
+          `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
+        ),
+        discovery.getContractDetails('VerifierProofType3', {
+          description:
+            'Currently used smart contract verifying the proofs for the Linea zkEVM.',
+        }),
+        discovery.getContractDetails('TokenBridge', {
+          description: 'Contract used to bridge ERC20 tokens.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('USDCBridge', {
+          description: 'Contract used to bridge USDC tokens.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('CallForwardingProxy', {
+          description:
+            'A proxy contract forwarding calls to a predefined (immutable) target contract. In this case the it is targeting the LineaRollup where it is registered as a fallback operator, allowing anyone to access operator functions when 6 months have passed since the latest finalized block.',
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
   },
   stateValidation: {

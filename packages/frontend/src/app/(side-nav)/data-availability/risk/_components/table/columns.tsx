@@ -29,7 +29,10 @@ const economicSecurityColumn = columnHelper.display({
   id: 'economic-security',
   header: 'Economic\nsecurity',
   cell: (ctx) => (
-    <TableValueCell value={ctx.row.original.risks.economicSecurity} />
+    <TableValueCell
+      emptyMode="n/a"
+      value={ctx.row.original.risks.economicSecurity}
+    />
   ),
   meta: {
     tooltip:
@@ -41,7 +44,10 @@ const fraudDetectionColumn = columnHelper.display({
   id: 'fraud-detection',
   header: 'Fraud\ndetection',
   cell: (ctx) => (
-    <TableValueCell value={ctx.row.original.risks.fraudDetection} />
+    <TableValueCell
+      emptyMode="n/a"
+      value={ctx.row.original.risks.fraudDetection}
+    />
   ),
   meta: {
     tooltip:

@@ -15,23 +15,18 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 const discovery = new ProjectDiscovery('witness')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'WitnessValidiumDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'WitnessValidiumDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('WitnessValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['DACProxyAdminOwner'],
-  upgradeDelay: 'No delay',
-}
 
 export const witness: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
@@ -119,7 +114,7 @@ export const witness: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('WitnessValidium'),
+  rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
@@ -127,42 +122,10 @@ export const witness: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('WitnessValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
-    },
-    {
-      name: 'DACProxyAdminOwner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('ProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('WitnessValidiumDAC', {
-      description:
-        'Validium data availability committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-      dac: {
-        requiredMembers: requiredSignaturesDAC,
-        membersCount: membersCountDAC,
-      },
+  customDa: PolygoncdkDAC({
+    dac: {
+      requiredMembers: requiredSignaturesDAC,
+      membersCount: membersCountDAC,
     },
   }),
 })

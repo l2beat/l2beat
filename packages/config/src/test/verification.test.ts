@@ -14,7 +14,7 @@ import type {
   DaBridge,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
 } from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
@@ -94,9 +94,9 @@ function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
   }
 
   const result = [discovery]
-  const config = configReader.readConfig(project, chain)
-  if (config.sharedModules.length > 0) {
-    for (const sharedModule of config.sharedModules) {
+  const sharedModules = discovery.sharedModules ?? []
+  if (sharedModules.length > 0) {
+    for (const sharedModule of sharedModules) {
       result.push(configReader.readDiscovery(sharedModule, chain))
     }
   }
@@ -179,7 +179,7 @@ function getUniqueContractsForProject(
 }
 
 function getUniqueContractsFromList(
-  contracts: ScalingProjectContract[],
+  contracts: ProjectContract[],
 ): AddressOnChain[] {
   const mainAddresses = contracts.flatMap((c) => ({
     address: c.address,
@@ -199,9 +199,9 @@ function getUniqueContractsFromList(
 function getProjectContractsForChain(
   project: Project,
   chain: string,
-): ScalingProjectContract[] {
-  const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract.chain, chain, project),
+): ProjectContract[] {
+  const contracts = (project.contracts?.addresses[chain] ?? []).filter(
+    (contract) => isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -234,22 +234,19 @@ function getDaBridgePermissionsForChain(
     return []
   }
 
-  return Object.values(bridge.permissions)
-    .flatMap((perChain) => {
-      const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
-      return all.flatMap((p) =>
-        p.accounts.flatMap((a) => {
-          if (!p.chain) {
-            return []
-          }
-          return {
-            chain: p.chain.toString(),
-            address: a.address,
-          }
-        }),
-      )
-    })
-    .filter((p) => p.chain === chain)
+  const perChain = bridge.permissions?.[chain] ?? {}
+  const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
+  return all.flatMap((p) =>
+    p.accounts.flatMap((a) => {
+      if (!p.chain) {
+        return []
+      }
+      return {
+        chain: p.chain.toString(),
+        address: a.address,
+      }
+    }),
+  )
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
@@ -257,10 +254,10 @@ function getPermissionedAddressesForChain(project: Project, chain: string) {
     return []
   }
 
-  const all = [
-    ...(project.permissions?.roles ?? []),
-    ...(project.permissions?.actors ?? []),
-  ]
+  const all = []
+  const perChain = project.permissions?.[chain] ?? {}
+  all.push(...(perChain.roles ?? []))
+  all.push(...(perChain.actors ?? []))
 
   return all
     .filter((p) => isContractOnChain(p.chain, chain, project))

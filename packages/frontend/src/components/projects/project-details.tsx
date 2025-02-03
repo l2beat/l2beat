@@ -2,7 +2,6 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
-import { MultiChainContractsSection } from './sections/contracts/multichain-contracts-section'
 import { DaRiskSummarySection } from './sections/da-risk-summary-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
@@ -146,14 +145,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'ContractsSection':
             return (
               <ContractsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'MultichainContractsSection':
-            return (
-              <MultiChainContractsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

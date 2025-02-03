@@ -293,49 +293,53 @@ export const paradex: Layer2 = {
     exitMechanisms: EXITS.STARKNET,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Paradex', {
-        description:
-          'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-        upgradeDelay: upgradeDelaySeconds
-          ? formatSeconds(upgradeDelaySeconds)
-          : 'No delay',
-        upgradableBy: ['Paradex owner'],
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Paradex', {
+          description:
+            'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
+          upgradeDelay: upgradeDelaySeconds
+            ? formatSeconds(upgradeDelaySeconds)
+            : 'No delay',
+          upgradableBy: ['Paradex owner'],
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Paradex owner',
-        accounts: getProxyGovernance(discovery, 'Paradex'),
-        description:
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
-          delayDescriptionFromSeconds(upgradeDelaySeconds),
-      },
-      {
-        name: 'Paradex Implementation Governors',
-        accounts: discovery.getPermissionedAccounts('Paradex', 'governors'),
-        description:
-          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-      },
-      ...getSHARPVerifierGovernors(discovery, verifierAddress),
-      {
-        name: 'Operators',
-        accounts: discovery.getPermissionedAccounts('Paradex', 'operators'),
-        description:
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
-      },
-      {
-        name: 'USDC Escrow owner',
-        accounts: getProxyGovernance(discovery, 'USDC Bridge'),
-        description:
-          'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
-          delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Paradex owner',
+          accounts: getProxyGovernance(discovery, 'Paradex'),
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
+            delayDescriptionFromSeconds(upgradeDelaySeconds),
+        },
+        {
+          name: 'Paradex Implementation Governors',
+          accounts: discovery.getPermissionedAccounts('Paradex', 'governors'),
+          description:
+            'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+        },
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts('Paradex', 'operators'),
+          description:
+            'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        },
+        {
+          name: 'USDC Escrow owner',
+          accounts: getProxyGovernance(discovery, 'USDC Bridge'),
+          description:
+            'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
+        },
+      ],
+    },
   },
   milestones: [
     {

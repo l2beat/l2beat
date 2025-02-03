@@ -216,64 +216,66 @@ export const acrossV3: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'HubPool',
-        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${finalizationDelay} delay before a bundle proposal is considered finalized.`,
-      ),
-      discovery.getContractDetails(
-        'BondToken',
-        `Token (${bondSymbol}) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ${bondSymbol}.`,
-      ),
-      discovery.getContractDetails(
-        'UMAOptimisticOracle',
-        'UMA Optimistic Oracle smart contract. It registers dispute requests, status of disputes, and dispute settlement.',
-      ),
-      discovery.getContractDetails(
-        'GovernorV2',
-        'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.',
-      ),
-      discovery.getContractDetails(
-        'VotingToken',
-        'Token used to vote on UMA Optimistic Oracle governance proposals.',
-      ),
-      discovery.getContractDetails(
-        'LpTokenFactory',
-        'Factory to deploy new LP tokens for L1 tokens, used to represent a liquidity provider position in the HubPool.',
-      ),
-      discovery.getContractDetails(
-        'Finder',
-        'Provides addresses of the live contracts implementing certain interfaces, such as the whitelist interface for setting the Bond Token.',
-      ),
-      discovery.getContractDetails('Arbitrum_Adapter'),
-      discovery.getContractDetails('Base_Adapter'),
-      discovery.getContractDetails('Boba_Adapter'),
-      discovery.getContractDetails('Ethereum_Adapter'),
-      discovery.getContractDetails('Linea_Adapter'),
-      discovery.getContractDetails('Optimism_Adapter'),
-      discovery.getContractDetails('Polygon_Adapter'),
-      discovery.getContractDetails('ZkSync_Adapter'),
-      discovery.getContractDetails('Lisk_Adapter'),
-      discovery.getContractDetails('Scroll_Adapter'),
-      discovery.getContractDetails('Redstone_Adapter'),
-      discovery.getContractDetails('Zora_Adapter'),
-      discovery.getContractDetails('WorldChain_Adapter'),
-      discovery.getContractDetails('Alephzero_Adapter'),
-      discovery.getContractDetails('Ink_Adapter'),
-      discovery.getContractDetails('Soneium_Adapter'),
-      discovery.getContractDetails(
-        'Ethereum_SpokePool',
-        'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',
-      ),
-      discovery.getContractDetails(
-        'PolygonTokenBridger',
-        'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
-      ),
-      discovery.getContractDetails(
-        'AcrossConfigStore',
-        'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'HubPool',
+          `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${finalizationDelay} delay before a bundle proposal is considered finalized.`,
+        ),
+        discovery.getContractDetails(
+          'BondToken',
+          `Token (${bondSymbol}) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ${bondSymbol}.`,
+        ),
+        discovery.getContractDetails(
+          'UMAOptimisticOracle',
+          'UMA Optimistic Oracle smart contract. It registers dispute requests, status of disputes, and dispute settlement.',
+        ),
+        discovery.getContractDetails(
+          'GovernorV2',
+          'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.',
+        ),
+        discovery.getContractDetails(
+          'VotingToken',
+          'Token used to vote on UMA Optimistic Oracle governance proposals.',
+        ),
+        discovery.getContractDetails(
+          'LpTokenFactory',
+          'Factory to deploy new LP tokens for L1 tokens, used to represent a liquidity provider position in the HubPool.',
+        ),
+        discovery.getContractDetails(
+          'Finder',
+          'Provides addresses of the live contracts implementing certain interfaces, such as the whitelist interface for setting the Bond Token.',
+        ),
+        discovery.getContractDetails('Arbitrum_Adapter'),
+        discovery.getContractDetails('Base_Adapter'),
+        discovery.getContractDetails('Boba_Adapter'),
+        discovery.getContractDetails('Ethereum_Adapter'),
+        discovery.getContractDetails('Linea_Adapter'),
+        discovery.getContractDetails('Optimism_Adapter'),
+        discovery.getContractDetails('Polygon_Adapter'),
+        discovery.getContractDetails('ZkSync_Adapter'),
+        discovery.getContractDetails('Lisk_Adapter'),
+        discovery.getContractDetails('Scroll_Adapter'),
+        discovery.getContractDetails('Redstone_Adapter'),
+        discovery.getContractDetails('Zora_Adapter'),
+        discovery.getContractDetails('WorldChain_Adapter'),
+        discovery.getContractDetails('Alephzero_Adapter'),
+        discovery.getContractDetails('Ink_Adapter'),
+        discovery.getContractDetails('Soneium_Adapter'),
+        discovery.getContractDetails(
+          'Ethereum_SpokePool',
+          'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',
+        ),
+        discovery.getContractDetails(
+          'PolygonTokenBridger',
+          'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
+        ),
+        discovery.getContractDetails(
+          'AcrossConfigStore',
+          'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
+        ),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',
@@ -282,17 +284,19 @@ export const acrossV3: Bridge = {
     ],
   },
   permissions: {
-    actors: [
-      ...discovery.getMultisigPermission(
-        'HubPool Multisig',
-        'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
-      ),
-      {
-        name: 'BondToken transfer proposers',
-        accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-        description: 'Allowed to propose BondToken transfers.',
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'HubPool Multisig',
+          'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
+        ),
+        {
+          name: 'BondToken transfer proposers',
+          accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
+          description: 'Allowed to propose BondToken transfers.',
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

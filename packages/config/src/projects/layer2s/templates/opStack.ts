@@ -32,7 +32,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
-  DaLayer,
+  CustomDa,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -41,6 +41,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectContract,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -49,10 +50,8 @@ import type {
   ScalingProject,
   ScalingProjectCapability,
   ScalingProjectCategory,
-  ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
-  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -66,8 +65,16 @@ import type {
 import { Badge, type BadgeId } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './generateDiscoveryDrivenSections'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergeContracts,
+  safeGetImplementation,
+} from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -120,7 +127,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DaLayer
+  customDa?: CustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -143,9 +150,7 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermissions>
-  nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -266,14 +271,10 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
@@ -340,32 +341,38 @@ function opStackCommon(
       ],
     },
     technology: getTechnology(templateVars, explorerUrl),
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
       : {
-          actors: [
-            ...templateVars.discovery.getOpStackPermissions({
-              batcherHash: 'Sequencer',
-              PROPOSER: 'Proposer',
-              GUARDIAN: 'Guardian',
-              CHALLENGER: 'Challenger',
-              ...(templateVars.roleOverrides ?? {}),
-            }),
-            ...(templateVars.nonTemplatePermissions ?? []),
-          ],
+          [templateVars.discovery.chain]: {
+            actors: [
+              ...templateVars.discovery.getOpStackPermissions({
+                batcherHash: 'Sequencer',
+                PROPOSER: 'Proposer',
+                GUARDIAN: 'Guardian',
+                CHALLENGER: 'Challenger',
+                ...(templateVars.roleOverrides ?? {}),
+              }),
+              ...(templateVars.nonTemplatePermissions ?? []),
+            ],
+          },
         },
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nonTemplateNativePermissions,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
-      : {
-          addresses: [
-            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-            ...(templateVars.nonTemplateContracts ?? []),
-          ],
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
           risks: nativeContractRisks,
-          nativeAddresses: templateVars.nonTemplateNativeContracts,
+        }
+      : {
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.getOpStackContractDetails(
+                  upgradeability,
+                ),
+            },
+            templateVars.nonTemplateContracts ?? {},
+          ),
+          risks: nativeContractRisks,
         },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
@@ -387,7 +394,7 @@ function opStackCommon(
       },
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),

@@ -7,7 +7,6 @@ import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
@@ -51,7 +50,7 @@ function getDaRiskEntry(
         statuses: {
           verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
         },
-        risks: getDaBridgeRisks(daBridge),
+        risks: daBridge.risks,
         tvs,
       }
     })
@@ -82,16 +81,15 @@ function getDacEntries(
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaRiskEntry[] {
   const projects = [...layer2s, ...layer3s]
-    .filter((project) => project.dataAvailabilitySolution)
+    .filter((project) => project.customDa)
     .map((project) => ({
       parentProject: project,
-      daLayer: project.dataAvailabilitySolution,
-      bridge: project.dataAvailabilitySolution?.bridges[0],
+      daLayer: project.customDa,
     }))
 
   return projects
-    .map(({ parentProject, daLayer, bridge }) => {
-      if (!daLayer || !bridge) {
+    .map(({ parentProject, daLayer }) => {
+      if (!daLayer) {
         return undefined
       }
 
@@ -103,18 +101,18 @@ function getDacEntries(
         href: `/scaling/projects/${parentProject.display.slug}`,
         statuses: {},
         tvs,
-        risks: getDaBridgeRisks(bridge),
+        risks: daLayer.risks,
       }
 
       const projectEntry: DaRiskEntry = {
         id: parentProject.id,
         slug: parentProject.display.slug,
         name: daLayer.name ?? `${parentProject.display.name} DAC`,
-        nameSecondLine: kindToType(daLayer.kind),
+        nameSecondLine: daLayer.type,
         href: `/scaling/projects/${parentProject.display.slug}`,
         statuses: {},
-        risks: getDaLayerRisks(daLayer, tvs),
-        isPublic: daLayer.systemCategory === 'public',
+        risks: daLayer.risks,
+        isPublic: false,
         tvs,
         bridges: [bridgeEntry],
       }

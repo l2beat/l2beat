@@ -16,6 +16,7 @@
   "overrides": {
     "StateOracle": {
       "description": "Simple contract that saves the latest state root.",
+      "ignoreInWatchMode": ["lastBlockNum", "lastState", "lastUpdateTime"],
       "fields": {
         "owner": {
           "target": {
@@ -137,6 +138,7 @@
     "UpdateManager": {
       "description": "Entry point for state (oracle) updates.",
       "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["lastBlockNum"],
       "fields": {
         "accessControl": {
           "handler": {

@@ -3,7 +3,7 @@ import type {
   DaProject,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
 } from '../types'
 
 /**
@@ -23,7 +23,7 @@ export function getChainNames(
 
 function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   const escrowContracts = project.config.escrows.flatMap(
-    (escrow): ScalingProjectContract[] => {
+    (escrow): ProjectContract[] => {
       if (!escrow.contract) {
         return []
       }
@@ -32,20 +32,19 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   )
   const permissions = []
   if (project.permissions !== 'UnderReview') {
-    const all = [
-      ...(project.permissions?.roles ?? []),
-      ...(project.permissions?.actors ?? []),
-    ]
-    const filtered = all.filter((p) => {
-      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-      return nonEoaAddresses.length > 0
-    })
-    permissions.push(...filtered)
+    for (const perChain of Object.values(project.permissions ?? {})) {
+      const all = [...(perChain?.roles ?? []), ...(perChain?.actors ?? [])]
+      const filtered = all.filter((p) => {
+        const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+        return nonEoaAddresses.length > 0
+      })
+      permissions.push(...filtered)
+    }
   }
 
   const allContracts = [
     ...escrowContracts,
-    ...(project.contracts?.addresses ?? []),
+    ...Object.values(project.contracts?.addresses ?? {}).flat(),
     ...permissions,
   ]
   const devIds = allContracts.map((c) => c.chain ?? 'ethereum')

@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 21723800,
-  "configHash": "0xc0195befba728254c9bd8364b126e5ac0c9c6525b272d4064ebd6f1f3719109d",
+  "configHash": "0xdb7674d1ff56723d66de2a0fe8d1bb84db6be42b1004c69fc2670146f1bb51b7",
   "contracts": [
     {
       "name": "Treasurer",
@@ -1857,6 +1857,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

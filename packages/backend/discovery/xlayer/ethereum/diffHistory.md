@@ -1,4 +1,81 @@
-Generated with discovered.json: 0x840195c017aacfa4b6a66094bc3d25659296fc17
+Generated with discovered.json: 0x647058a59ed8a77ef9e86fe0f87a753c73074986
+
+# Diff at Mon, 03 Feb 2025 09:09:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21665594
+- current block number: 21764788
+
+## Description
+
+discodrive polygoncdk chains!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21665594 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+      name:
+-        "XLayerValidiumDAC"
++        "PolygonDataCommittee"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE","via":[{"address":"0x1e37EA18e9515db29b3E94A00eD31484A3130204"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
++        "0x491619874b866c3cDB7C8553877da223525ead01"
+      issuedPermissions.0.via.0:
+-        {"address":"0x1e37EA18e9515db29b3E94A00eD31484A3130204"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2)."
+    }
+```
+
+```diff
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "XLayerValidium"
++        "Validium"
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x491619874b866c3cDB7C8553877da223525ead01","description":"sole address that can force batches.","via":[]},{"permission":"configure","to":"0xa90B4C8B8807569980F6cC958c8905383136B5eA","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"sequence","to":"0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
+```
+
+```diff
+    contract FflonkVerifier_13 (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "XLayerVerifier"
++        "FflonkVerifier_13"
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+Generated with discovered.json: 0x9fe132a167297d89f06cd547302a95f9b329acdb
 
 # Diff at Mon, 20 Jan 2025 12:06:34 GMT:
 

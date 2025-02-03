@@ -148,21 +148,23 @@ export const zircuit: Layer2 = opStackL2({
       It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('Verifier', {
-      description:
-        'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('ZircuitSuperchainConfig', {
-      description:
-        'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
+  nonTemplateContracts: {
+    [discovery.chain]: [
+      discovery.getContractDetails('Verifier', {
+        description:
+          'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('ZircuitSuperchainConfig', {
+        description:
+          'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
         however this is a separate instance of the SuperChain contract. It manages the PAUSED_SLOT, a boolean value \
         indicating whether the chain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. It also defines OPERATOR and MONITOR roles\
         which are used to manage throttling (withdrawal limits) on OptimismPortal.',
-      ...upgradeability,
-    }),
-  ],
+        ...upgradeability,
+      }),
+    ],
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [

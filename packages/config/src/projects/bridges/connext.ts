@@ -93,28 +93,32 @@ export const connext: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TransactionManager',
-        'Escrow and logic for cross-chain transactions.',
-      ),
-      discovery.getContractDetails(
-        'FulfillInterpreter',
-        'Contract enabling execution of arbitrary calldata on a destination chain.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'TransactionManager',
+          'Escrow and logic for cross-chain transactions.',
+        ),
+        discovery.getContractDetails(
+          'FulfillInterpreter',
+          'Contract enabling execution of arbitrary calldata on a destination chain.',
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {
-    actors: [
-      {
-        name: 'Owner of TransactionManager',
-        description: 'Can add and remove Routers and supported assets.',
-        accounts: [
-          discovery.getPermissionedAccount('TransactionManager', 'owner'),
-        ],
-      },
-    ],
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Owner of TransactionManager',
+          description: 'Can add and remove Routers and supported assets.',
+          accounts: [
+            discovery.getPermissionedAccount('TransactionManager', 'owner'),
+          ],
+        },
+      ],
+    },
   },
   knowledgeNuggets: [
     {

@@ -6,29 +6,11 @@
     "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "names": {
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidium",
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "AstarVerifier",
-    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
-    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "LocalAdmin"
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
-  "overrides": {
-    "AstarValidiumDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 50
-          }
-        }
-      }
-    },
-    "AstarValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"]
-    }
+  "names": {
+    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AstarMultisig",
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "Validium"
   }
 }

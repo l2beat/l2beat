@@ -1,16 +1,9 @@
-import type { UnixTime } from '@l2beat/shared-pure'
 import type {
-  DaBridge,
-  DaBridgeDisplay,
+  CustomDa,
   DaBridgeRisks,
-  DaChallengeMechanism,
-  DaLayer,
-  DaLayerDisplay,
   DaLayerRisks,
   DaTechnology,
   DacInfo,
-  ProjectTechnologyChoice,
-  TableReadyValue,
 } from '../../../types'
 import {
   DaCommitteeSecurityRisk,
@@ -21,102 +14,46 @@ import {
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 
 export interface DacTemplateVars {
-  bridge: {
-    id?: string
-    addedAt: UnixTime
-    technology?: DaTechnology
-    dac: DacInfo
-    display?: DaBridgeDisplay
-    usedIn?: DaBridge['usedIn']
-    otherConsiderations?: ProjectTechnologyChoice[]
-  }
-  layer?: {
-    technology: DaTechnology
-    otherConsiderations?: ProjectTechnologyChoice[]
-  }
-  fallback?: TableReadyValue
-  challengeMechanism?: DaChallengeMechanism
-  display?: DaLayerDisplay
+  name?: string
+  type?: string
+  dac: DacInfo
+  technology: DaTechnology
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
 }
 
-/**
- * Template function for DA-BEAT DACs.
- * Coverts basic information into expected by DA-BEAT shape
- * creating DA-LAYER and DA-BRIDGE without the need to manually
- * duplicate code and files.
- */
-export function DAC(template: DacTemplateVars): DaLayer {
-  // "Bridge" backfill for DAC
-  const bridgeTechnology =
-    template.bridge.technology?.description ??
-    `## Simple DA Bridge
-    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
-    The bridge requires a ${template.bridge.dac.requiredMembers}/${template.bridge.dac.membersCount} threshold of signatures to be met before the data commitment is accepted.
-  `
+export function DAC(template: DacTemplateVars): CustomDa {
+  const description =
+    template.technology?.description ??
+    `
+## Simple Committee
 
-  const dacBridge: DaBridge = {
-    ...template.bridge,
-    type: 'IntegratedDacBridge',
-    technology: {
-      description: bridgeTechnology,
-      risks: template.bridge.technology?.risks,
-    },
-    display: {
-      name: 'DAC',
-      slug: 'dac',
-      description: '',
-      ...template.bridge.display,
-    },
-    risks: {
-      committeeSecurity:
-        template.risks?.committeeSecurity ??
-        DaCommitteeSecurityRisk.AutoDAC({
-          requiredMembers: template.bridge.dac.requiredMembers,
-          membersCount: template.bridge.dac.membersCount,
-          knownMembers: template.bridge.dac.knownMembers,
-        }),
-      // TODO: make it required and remove the default
-      upgradeability:
-        template.risks?.upgradeability ?? DaUpgradeabilityRisk.Immutable,
-      relayerFailure:
-        template.risks?.relayerFailure ?? DaRelayerFailureRisk.NoMechanism,
-    },
-    otherConsiderations: template.bridge.otherConsiderations,
-    usedIn: [],
-  }
+The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, their operational transparency, and the mechanisms in place to handle disputes and failures.
 
-  // DAC "DA-Layer"
+## Simple DA Bridge
 
-  const layerTechnology =
-    template.layer?.technology?.description ??
-    `## Simple Committee
-  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
-  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
-  their operational transparency, and the mechanisms in place to handle disputes and failures.
-  `
+The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification. The bridge requires a ${template.dac.requiredMembers}/${template.dac.membersCount} threshold of signatures to be met before the data commitment is accepted`
 
-  const dacLayer: DaLayer = {
+  return {
+    name: template.name,
+    type: template.type ?? 'Data Availability Committee',
     description:
-      template.display?.description ??
       'Set of parties responsible for signing and attesting to the availability of data.',
-    kind: 'DAC',
-    systemCategory: 'custom',
-    fallback: template.fallback,
-    challengeMechanism: template.challengeMechanism ?? 'None',
+    dac: template.dac,
     technology: {
-      ...template.layer?.technology,
-      description: layerTechnology,
+      ...template.technology,
+      description: description,
     },
-    bridges: [dacBridge],
     risks: {
-      economicSecurity:
-        template.risks?.economicSecurity ?? DaEconomicSecurityRisk.Unknown,
-      fraudDetection:
-        template.risks?.fraudDetection ?? DaFraudDetectionRisk.NoFraudDetection,
+      committeeSecurity: DaCommitteeSecurityRisk.AutoDAC({
+        requiredMembers: template.dac.requiredMembers,
+        membersCount: template.dac.membersCount,
+        knownMembers: template.dac.knownMembers,
+      }),
+      upgradeability: DaUpgradeabilityRisk.Immutable,
+      relayerFailure: DaRelayerFailureRisk.NoMechanism,
+      economicSecurity: DaEconomicSecurityRisk.Unknown,
+      fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+      ...template.risks,
     },
-    otherConsiderations: template.layer?.otherConsiderations,
   }
-
-  return dacLayer
 }

@@ -111,17 +111,19 @@ export const omgnetwork: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('EthVault'),
-      discovery.getContractDetails('Erc20Vault'),
-      discovery.getContractDetails('ETHDepositVerifier'),
-      discovery.getContractDetails('ERC20DepositVerifier'),
-      discovery.getContractDetails('PlasmaFramework'),
-      discovery.getContractDetails(
-        'PaymentExitGame',
-        'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('EthVault'),
+        discovery.getContractDetails('Erc20Vault'),
+        discovery.getContractDetails('ETHDepositVerifier'),
+        discovery.getContractDetails('ERC20DepositVerifier'),
+        discovery.getContractDetails('PlasmaFramework'),
+        discovery.getContractDetails(
+          'PaymentExitGame',
+          'The source code of the PaymentStartStandardExit library used by this contract is not verified on Etherscan.',
+        ),
+      ],
+    },
     risks: [],
   },
 }
