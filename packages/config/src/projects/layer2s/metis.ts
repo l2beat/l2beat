@@ -260,63 +260,65 @@ export const metis: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      // note: these three contracts are not used anymore - transaction batch hashes are posted to EOA. Note that these contracts are still being discovered
-      /*discovery.getContractDetails(
+    addresses: {
+      [discovery.chain]: [
+        // note: these three contracts are not used anymore - transaction batch hashes are posted to EOA. Note that these contracts are still being discovered
+        /*discovery.getContractDetails(
         'MVM_CanonicalTransaction',
         'MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.',
       ),
       */
-      discovery.getContractDetails(
-        'MVM_Verifier',
-        'This contract implements a voting scheme with which the majority of Verifiers can challenge malicious state roots proposed. There are no whitelisted verifiers, hence this contract is not used in practice.',
-      ),
+        discovery.getContractDetails(
+          'MVM_Verifier',
+          'This contract implements a voting scheme with which the majority of Verifiers can challenge malicious state roots proposed. There are no whitelisted verifiers, hence this contract is not used in practice.',
+        ),
 
-      discovery.getContractDetails(
-        'CanonicalTransactionChain',
-        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
-      ),
-      discovery.getContractDetails(
-        'StateCommitmentChain',
-        'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
-      ),
-      discovery.getContractDetails('ChainStorageContainer-CTC-batches'),
-      discovery.getContractDetails('ChainStorageContainer-CTC-queue'),
-      discovery.getContractDetails('ChainStorageContainer-SCC-batches'),
-      discovery.getContractDetails(
-        'BondManager',
-        "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
-      ),
-      discovery.getContractDetails(
-        'L1CrossDomainMessenger',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
-      ),
-      discovery.getContractDetails(
-        'MVM_DiscountOracle',
-        'Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.',
-      ),
-      discovery.getContractDetails(
-        'Lib_AddressManager',
-        'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
-      ),
+        discovery.getContractDetails(
+          'CanonicalTransactionChain',
+          'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
+        ),
+        discovery.getContractDetails(
+          'StateCommitmentChain',
+          'The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.',
+        ),
+        discovery.getContractDetails('ChainStorageContainer-CTC-batches'),
+        discovery.getContractDetails('ChainStorageContainer-CTC-queue'),
+        discovery.getContractDetails('ChainStorageContainer-SCC-batches'),
+        discovery.getContractDetails(
+          'BondManager',
+          "The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.",
+        ),
+        discovery.getContractDetails(
+          'L1CrossDomainMessenger',
+          "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
+        ),
+        discovery.getContractDetails(
+          'MVM_DiscountOracle',
+          'Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.',
+        ),
+        discovery.getContractDetails(
+          'Lib_AddressManager',
+          'This is a library that stores the mappings between names such as OVM_Sequencer, OVM_Proposer and other contracts and their addresses.',
+        ),
 
-      discovery.getContractDetails(
-        'MVM_L2ChainManagerOnL1',
-        'Contract that allows METIS_MANAGER to switch Sequencer.',
-      ),
-      discovery.getContractDetails(
-        'L1StandardBridge',
-        'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
-      ),
-      discovery.getContractDetails(
-        'LockingPool',
-        'Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.',
-      ),
-      discovery.getContractDetails(
-        'LockingInfo',
-        'Contract acting as an escrow for METIS tokens managed by LockingPool.',
-      ),
-    ],
+        discovery.getContractDetails(
+          'MVM_L2ChainManagerOnL1',
+          'Contract that allows METIS_MANAGER to switch Sequencer.',
+        ),
+        discovery.getContractDetails(
+          'L1StandardBridge',
+          'Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.',
+        ),
+        discovery.getContractDetails(
+          'LockingPool',
+          'Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.',
+        ),
+        discovery.getContractDetails(
+          'LockingInfo',
+          'Contract acting as an escrow for METIS tokens managed by LockingPool.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [

@@ -1024,33 +1024,35 @@ export const starknet: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Starknet', {
-        description:
-          'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        upgradeDelay: starknetDelaySeconds
-          ? formatSeconds(starknetDelaySeconds)
-          : 'No delay',
-        upgradableBy: ['Starknet Proxy Governors'],
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-      discovery.getContractDetails(
-        'L1DaiGateway',
-        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      ),
-      discovery.getContractDetails('StarkgateManager', {
-        description:
-          'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
-        upgradableBy: ['StarkGate MultiBridge Admin'],
-        upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
-      }),
-      discovery.getContractDetails('StarkgateRegistry', {
-        description:
-          'A central registry contract to map token addresses to their StarkGate bridge contract.',
-        upgradableBy: ['StarkGate MultiBridge Admin'],
-        upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Starknet', {
+          description:
+            'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+          upgradeDelay: starknetDelaySeconds
+            ? formatSeconds(starknetDelaySeconds)
+            : 'No delay',
+          upgradableBy: ['Starknet Proxy Governors'],
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+        discovery.getContractDetails(
+          'L1DaiGateway',
+          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+        ),
+        discovery.getContractDetails('StarkgateManager', {
+          description:
+            'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
+          upgradableBy: ['StarkGate MultiBridge Admin'],
+          upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
+        }),
+        discovery.getContractDetails('StarkgateRegistry', {
+          description:
+            'A central registry contract to map token addresses to their StarkGate bridge contract.',
+          upgradableBy: ['StarkGate MultiBridge Admin'],
+          upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   upgradesAndGovernance: (() => {

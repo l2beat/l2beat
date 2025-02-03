@@ -3,10 +3,10 @@ import type {
   DaProject,
   Layer2,
   Layer3,
+  ProjectContract,
+  ProjectContracts,
   ProjectEscrow,
   ReferenceLink,
-  ScalingProjectContract,
-  ScalingProjectContracts,
 } from '@l2beat/config'
 import { CONTRACTS, layer2s } from '@l2beat/config'
 import type {
@@ -32,12 +32,12 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  id: string
+  id?: string
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
-  contracts: ScalingProjectContracts
+  contracts: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
 } & (
@@ -61,30 +61,17 @@ export function getContractsSection(
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (
-    projectParams.contracts.addresses.length === 0 &&
+    Object.values(projectParams.contracts.addresses).flat().length === 0 &&
     projectParams.daSolution?.contracts?.length === 0
   ) {
     return undefined
   }
-  const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
+  const projectChangeReport = projectParams.id
+    ? projectsChangeReport?.projects[projectParams.id]
+    : undefined
 
-  const contracts = projectParams.contracts.addresses.map((contract) => {
-    const isUnverified = isContractUnverified(
-      contract,
-      contractsVerificationStatuses,
-    )
-
-    return makeTechnologyContract(
-      contract,
-      projectParams,
-      isUnverified,
-      contractsVerificationStatuses,
-      projectChangeReport,
-    )
-  })
-
-  const nativeContracts = Object.fromEntries(
-    Object.entries(projectParams.contracts.nativeAddresses ?? {}).map(
+  const contracts = Object.fromEntries(
+    Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
         return [
           slugToDisplayName(chainName),
@@ -176,7 +163,6 @@ export function getContractsSection(
 
   return {
     chainName,
-    nativeContracts,
     contracts,
     escrows,
     risks,
@@ -193,7 +179,7 @@ export function getContractsSection(
 }
 
 function makeTechnologyContract(
-  item: ScalingProjectContract,
+  item: ProjectContract,
   projectParams: ProjectParams,
   isUnverified: boolean,
   contractsVerificationStatuses: ContractsVerificationStatuses,
@@ -313,7 +299,7 @@ function makeTechnologyContract(
 }
 
 function getAddresses(
-  contract: ScalingProjectContract,
+  contract: ProjectContract,
   getAddress: (opts: {
     address: EthereumAddress
     name?: string
@@ -352,7 +338,7 @@ function getAddresses(
 }
 
 function isContractUnverified(
-  contract: ScalingProjectContract,
+  contract: ProjectContract,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = contract.chain ?? 'ethereum'
@@ -372,9 +358,7 @@ function isEscrowUnverified(
   )
 }
 
-function escrowToProjectContract(
-  escrow: ProjectEscrow,
-): ScalingProjectContract {
+function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   assert(escrow.contract, 'Old escrow format used') // old format misses upgradeability info
 
   const genericName =

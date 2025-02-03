@@ -41,6 +41,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectContract,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -49,7 +50,6 @@ import type {
   ScalingProject,
   ScalingProjectCapability,
   ScalingProjectCategory,
-  ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
   ScalingProjectPurpose,
@@ -66,10 +66,15 @@ import { Badge, type BadgeId } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
+  generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-  generateDiscoveryDrivenSections,
 } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergeContracts,
+  safeGetImplementation,
+} from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -145,8 +150,7 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -271,14 +275,6 @@ function opStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
-  const discoveryDrivenContracts = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
@@ -361,14 +357,23 @@ function opStackCommon(
             ],
           },
         },
-    contracts: discoveryDrivenContracts ?? {
-      addresses: [
-        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-        ...(templateVars.nonTemplateContracts ?? []),
-      ],
-      risks: nativeContractRisks,
-      nativeAddresses: templateVars.nonTemplateNativeContracts,
-    },
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+          risks: nativeContractRisks,
+        }
+      : {
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.getOpStackContractDetails(
+                  upgradeability,
+                ),
+            },
+            templateVars.nonTemplateContracts ?? {},
+          ),
+          risks: nativeContractRisks,
+        },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),

@@ -118,20 +118,22 @@ export const symbiosis: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'MetaRouter',
-        'An upgradeable contract to process funds by provided route.',
-      ),
-      discovery.getContractDetails(
-        'Bridge',
-        'A contract that generates Oracle requests for the Symbiosis relayers network.',
-      ),
-      discovery.getContractDetails(
-        'Portal',
-        'A contract that stores "bridged" liquidity.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'MetaRouter',
+          'An upgradeable contract to process funds by provided route.',
+        ),
+        discovery.getContractDetails(
+          'Bridge',
+          'A contract that generates Oracle requests for the Symbiosis relayers network.',
+        ),
+        discovery.getContractDetails(
+          'Portal',
+          'A contract that stores "bridged" liquidity.',
+        ),
+      ],
+    },
     risks: [],
     isIncomplete: true,
   },

@@ -31,7 +31,10 @@ import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import { generateDiscoveryDrivenPermissions } from './templates/generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -537,10 +540,7 @@ export const optimism: Layer2 = {
   ),
   permissions: generateDiscoveryDrivenPermissions([discovery, l2Discovery]),
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
-    nativeAddresses: {
-      optimism: l2Discovery.getDiscoveredContracts(),
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery, l2Discovery]),
     risks: [
       {
         category: 'Funds can be stolen if',

@@ -133,18 +133,20 @@ export const pNetwork: Bridge = {
 
   contracts: {
     isIncomplete: true,
-    addresses: [
-      discovery.getContractDetails(
-        'ERC20 Vault V2',
-        'Has special logic for handling inflation of PNT token.',
-      ),
-      discovery.getContractDetails('ERC20 Vault V1'),
-      discovery.getContractDetails('UOS Vault'),
-      discovery.getContractDetails(
-        'PProxyAdmin',
-        'Proxy owner of ERC20 Vault v2.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ERC20 Vault V2',
+          'Has special logic for handling inflation of PNT token.',
+        ),
+        discovery.getContractDetails('ERC20 Vault V1'),
+        discovery.getContractDetails('UOS Vault'),
+        discovery.getContractDetails(
+          'PProxyAdmin',
+          'Proxy owner of ERC20 Vault v2.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 

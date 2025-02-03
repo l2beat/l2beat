@@ -138,67 +138,72 @@ export const polynetwork: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'PolyWrapper',
-        'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 1',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 2',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 3',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 4',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 5',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 6',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 7',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails(
-        'Lock Proxy 8',
-        'Escrow and proxy contract for the Bridge.',
-      ),
-      discovery.getContractDetails('EthCrossChainManager', {
-        description:
-          'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
-        pausable: {
-          paused: discovery.getContractValue('EthCrossChainManager', 'paused'),
-          pausableBy: ['EthCrossChainManager'],
-        },
-      }),
-      discovery.getContractDetails(
-        'EthCrossChainData',
-        "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
-      ),
-      discovery.getContractDetails('EthCrossChainManagerProxy', {
-        description:
-          'Used to proxy requests from LockProxy to EthCrossChainManager.',
-        pausable: {
-          paused: discovery.getContractValue(
-            'EthCrossChainManagerProxy',
-            'paused',
-          ),
-          pausableBy: ['EthCrossChainManager'],
-        },
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'PolyWrapper',
+          'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 1',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 2',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 3',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 4',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 5',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 6',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 7',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails(
+          'Lock Proxy 8',
+          'Escrow and proxy contract for the Bridge.',
+        ),
+        discovery.getContractDetails('EthCrossChainManager', {
+          description:
+            'Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.',
+          pausable: {
+            paused: discovery.getContractValue(
+              'EthCrossChainManager',
+              'paused',
+            ),
+            pausableBy: ['EthCrossChainManager'],
+          },
+        }),
+        discovery.getContractDetails(
+          'EthCrossChainData',
+          "Used to store Keepers' signatures and other parameters used by EthCrossChainManager.",
+        ),
+        discovery.getContractDetails('EthCrossChainManagerProxy', {
+          description:
+            'Used to proxy requests from LockProxy to EthCrossChainManager.',
+          pausable: {
+            paused: discovery.getContractValue(
+              'EthCrossChainManagerProxy',
+              'paused',
+            ),
+            pausableBy: ['EthCrossChainManager'],
+          },
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

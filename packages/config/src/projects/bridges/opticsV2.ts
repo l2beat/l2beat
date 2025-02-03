@@ -108,33 +108,37 @@ export const opticsV2: Bridge = {
     destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('HomeBeaconProxy', {
-        description:
-          'Optics Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by the Updater.',
-      }),
-      discovery.getContractDetails('ReplicaBeaconProxy', {
-        description:
-          'Optics Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
-      }),
-      discovery.getContractDetails('BridgeRouterBeaconProxy', {
-        description: 'Optics Governance Router. Manages all Optics components.',
-      }),
-      discovery.getContractDetails('XAppConnectionManager', {
-        description:
-          'Contract managing list of connections to other chains (domains) and list of watchers.',
-      }),
-      discovery.getContractDetails('GovernanceRouterBeaconProxy', {
-        description: 'Optics Governance Router. Manages all Optics components.',
-      }),
-      discovery.getContractDetails('UpdaterManager', {
-        description:
-          'Contract allowing Home to slash Updater. Currently does nothing, intended for future functionality.',
-      }),
-      discovery.getContractDetails('UpgradeBeaconController', {
-        description: 'Contract managing Beacons.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('HomeBeaconProxy', {
+          description:
+            'Optics Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by the Updater.',
+        }),
+        discovery.getContractDetails('ReplicaBeaconProxy', {
+          description:
+            'Optics Replica. This contract is used to receive x-chain messages, such as withdrawal requests, from Relayers.',
+        }),
+        discovery.getContractDetails('BridgeRouterBeaconProxy', {
+          description:
+            'Optics Governance Router. Manages all Optics components.',
+        }),
+        discovery.getContractDetails('XAppConnectionManager', {
+          description:
+            'Contract managing list of connections to other chains (domains) and list of watchers.',
+        }),
+        discovery.getContractDetails('GovernanceRouterBeaconProxy', {
+          description:
+            'Optics Governance Router. Manages all Optics components.',
+        }),
+        discovery.getContractDetails('UpdaterManager', {
+          description:
+            'Contract allowing Home to slash Updater. Currently does nothing, intended for future functionality.',
+        }),
+        discovery.getContractDetails('UpgradeBeaconController', {
+          description: 'Contract managing Beacons.',
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

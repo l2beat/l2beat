@@ -135,16 +135,18 @@ export const hop: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('USDC Bridge'),
-      discovery.getContractDetails('DAI Bridge'),
-      discovery.getContractDetails('USDT Bridge'),
-      discovery.getContractDetails('ETH Bridge'),
-      discovery.getContractDetails('MATIC Bridge'),
-      discovery.getContractDetails('WBTC Bridge'),
-      discovery.getContractDetails('SNX Bridge'),
-      discovery.getContractDetails('HOP Bridge'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('USDC Bridge'),
+        discovery.getContractDetails('DAI Bridge'),
+        discovery.getContractDetails('USDT Bridge'),
+        discovery.getContractDetails('ETH Bridge'),
+        discovery.getContractDetails('MATIC Bridge'),
+        discovery.getContractDetails('WBTC Bridge'),
+        discovery.getContractDetails('SNX Bridge'),
+        discovery.getContractDetails('HOP Bridge'),
+      ],
+    },
     risks: [],
   },
   permissions: {

@@ -120,20 +120,22 @@ export const chainport: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Vault6',
-        'Escrow controlled by the Chainport Congress.',
-      ),
-      discovery.getContractDetails(
-        'ChainportCongress',
-        'Contains the logic to create proposal, vote and execute them.',
-      ),
-      discovery.getContractDetails(
-        'ChainportCongressMembersRegistry',
-        `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Vault6',
+          'Escrow controlled by the Chainport Congress.',
+        ),
+        discovery.getContractDetails(
+          'ChainportCongress',
+          'Contains the logic to create proposal, vote and execute them.',
+        ),
+        discovery.getContractDetails(
+          'ChainportCongressMembersRegistry',
+          `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {

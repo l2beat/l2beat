@@ -293,17 +293,19 @@ export const paradex: Layer2 = {
     exitMechanisms: EXITS.STARKNET,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Paradex', {
-        description:
-          'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-        upgradeDelay: upgradeDelaySeconds
-          ? formatSeconds(upgradeDelaySeconds)
-          : 'No delay',
-        upgradableBy: ['Paradex owner'],
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Paradex', {
+          description:
+            'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
+          upgradeDelay: upgradeDelaySeconds
+            ? formatSeconds(upgradeDelaySeconds)
+            : 'No delay',
+          upgradableBy: ['Paradex owner'],
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   permissions: {
