@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 export function getDaBridges(project: DaProject) {
   const bridges = [...project.daLayer.bridges]
-  if (project.daLayer.noBridgeusedIn.length > 0) {
+  if (project.daLayer.usedWithoutBridgeIn.length > 0) {
     const noBridge: DaBridge = {
       id: ProjectId('unused-no-bridge'),
       addedAt: UnixTime.ZERO,
@@ -20,7 +20,7 @@ export function getDaBridges(project: DaProject) {
         description:
           'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
       },
-      usedIn: project.daLayer.noBridgeusedIn,
+      usedIn: project.daLayer.usedWithoutBridgeIn,
     }
     bridges.unshift(noBridge)
   }
