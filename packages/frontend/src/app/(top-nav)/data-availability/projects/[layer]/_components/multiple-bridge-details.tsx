@@ -81,7 +81,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                 <div className="flex flex-1 items-center justify-center">
                   <GrissiniCell
                     values={bridge.grissiniValues}
-                    hasNoBridge={bridge.type === 'NoBridge'}
+                    hasNoBridge={bridge.isNoBridge}
                   />
                 </div>
                 <div className="flex flex-1 items-center justify-end pr-1 text-sm font-bold text-primary md:pr-12">
@@ -151,7 +151,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                         <div>
                           <GrissiniIcon
                             values={bridge.grissiniValues}
-                            hasNoBridge={bridge.type === 'NoBridge'}
+                            hasNoBridge={bridge.isNoBridge}
                           />
                         </div>
                       </label>
@@ -177,7 +177,7 @@ export function MultipleBridgeDetails({ project }: Props) {
           {project.selectedBridge.name} risks
         </div>
 
-        {project.selectedBridge.type === 'NoBridge' ? (
+        {project.selectedBridge.isNoBridge ? (
           <NoBridgeGrissiniDetailsPlaceholder />
         ) : (
           <GrissiniDetails

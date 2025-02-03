@@ -1,12 +1,11 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaBridge } from '../../../types'
 import { EthereumDaBridgeRisks } from '../common'
 import { linkByDA } from '../utils/link-by-da'
 
 export const enshrinedBridge: DaBridge = {
-  id: 'enshrined-bridge',
+  id: ProjectId('enshrined-bridge'),
   addedAt: new UnixTime(1721236013), // 2024-07-17T17:06:53Z
-  type: 'Enshrined',
   display: {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',

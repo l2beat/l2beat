@@ -766,6 +766,7 @@ export interface DaLayer {
   bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
 
   fallback?: TableReadyValue
   challengeMechanism?: DaChallengeMechanism
@@ -850,15 +851,7 @@ export interface DaTechnology {
 }
 
 export interface DaBridge {
-  /** Optional: Unique identifier of the data availability bridge. */
-  id?: string
-  type:
-    | 'Enshrined'
-    | 'NoDacBridge'
-    | 'NoBridge'
-    | 'OnChainBridge'
-    | 'IntegratedDacBridge'
-    | 'StandaloneDacBridge'
+  id: ProjectId
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   display: DaBridgeDisplay

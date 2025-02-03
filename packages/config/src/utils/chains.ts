@@ -59,12 +59,11 @@ export function getChainNamesForDA(...projects: DaProject[]): string[] {
 }
 
 function getProjectDevIdsForDA(p: DaProject): string[] {
-  const bridges = p.daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
-  const addresses = bridges.flatMap((b) =>
+  const addresses = p.daLayer.bridges.flatMap((b) =>
     Object.values(b.contracts?.addresses ?? {}).flat(),
   )
 
-  const permissions = bridges.flatMap((b) => {
+  const permissions = p.daLayer.bridges.flatMap((b) => {
     const result = []
     if (b.permissions && b.permissions !== 'UnderReview') {
       const values = Object.values(b.permissions)

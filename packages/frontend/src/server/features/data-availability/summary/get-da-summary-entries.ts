@@ -20,6 +20,7 @@ import {
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
@@ -79,7 +80,7 @@ function getDaSummaryEntry(
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
-  const bridges = project.daLayer.bridges
+  const bridges = getDaBridges(project)
     .map((daBridge): DaBridgeSummaryEntry => {
       return {
         name: daBridge.display.name,
@@ -113,7 +114,7 @@ function getDaSummaryEntry(
     .sort((a, b) => b.tvs - a.tvs)
 
   const usedIn = uniq(
-    project.daLayer.bridges.flatMap((bridge) =>
+    getDaBridges(project).flatMap((bridge) =>
       bridge.usedIn.map((project) => project.id),
     ),
   )

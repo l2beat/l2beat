@@ -1,4 +1,5 @@
 import { daLayers, ethereumDaLayer, layer2s, layer3s } from '@l2beat/config'
+import { getDaBridges } from './get-da-bridges'
 
 export function getUniqueProjectsInUse() {
   const custom = [...layer2s, ...layer3s]
@@ -9,7 +10,7 @@ export function getUniqueProjectsInUse() {
     ...new Set(
       [...daLayers, ethereumDaLayer]
         .map((project) =>
-          project.daLayer.bridges.map((bridge) =>
+          getDaBridges(project).map((bridge) =>
             bridge.usedIn.map((project) => project.id),
           ),
         )
