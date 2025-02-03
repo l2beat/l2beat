@@ -4,6 +4,11 @@ import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 
+/**
+ * This indexer is almost an exact copy of the Activity's BlockTargetIndexer.
+ * The only difference is lack of height invalidation fail-safe which is not needed for DA indexers.
+ * (at least at this point)
+ */
 export class BlockTargetIndexer extends RootIndexer {
   // used only for runtime invalidation protection
   blockHeight = 0
