@@ -3,6 +3,7 @@ import type { RequestInit } from 'node-fetch'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   type BlobSchema,
+  BlobscanErrorSchema,
   GetBlobsResponseSchema,
   GetTransactionsWithBlobsSchema,
 } from './types'
@@ -140,11 +141,19 @@ export class BlobScanClient extends ClientCore {
     })
   }
 
-  override validateResponse(_response: json): {
+  override validateResponse(response: json): {
     success: boolean
     message?: string
   } {
-    // TODO: Implement
+    const parsedError = BlobscanErrorSchema.safeParse(response)
+
+    if (parsedError.success) {
+      this.$.logger.warn(`Response validation error`, {
+        error: parsedError.data,
+      })
+      return { success: false }
+    }
+
     return { success: true }
   }
 }

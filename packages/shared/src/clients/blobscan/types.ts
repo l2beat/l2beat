@@ -63,3 +63,10 @@ export const GetTransactionsWithBlobsSchema = z.object({
 export type GetTransactionsWithBlobsSchema = z.infer<
   typeof GetTransactionsWithBlobsSchema
 >
+
+export const BlobscanErrorSchema = z.object({
+  message: z.string(),
+  code: z.string(),
+  issues: z.array(z.object({ message: z.string() })),
+})
+export type BlobscanError = z.infer<typeof BlobscanErrorSchema>
