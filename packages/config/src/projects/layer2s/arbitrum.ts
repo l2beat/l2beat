@@ -252,14 +252,16 @@ export const arbitrum: Layer2 = orbitStackL2({
     coingeckoPlatform: 'arbitrum-one',
   },
   rpcUrl: 'https://arb1.arbitrum.io/rpc',
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+    ),
+  },
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [

@@ -166,14 +166,16 @@ export const nova: Layer2 = orbitStackL2({
     coingeckoPlatform: 'arbitrum-nova',
   },
   rpcUrl: 'https://nova.arbitrum.io/rpc',
-  upgradesAndGovernance: getNitroGovernance(
-    l2CoreQuorumPercent,
-    l2TimelockDelay,
-    challengeWindowSeconds,
-    l1TimelockDelay,
-    treasuryTimelockDelay,
-    l2TreasuryQuorumPercent,
-  ),
+  upgradesAndGovernance: {
+    content: getNitroGovernance(
+      l2CoreQuorumPercent,
+      l2TimelockDelay,
+      challengeWindowSeconds,
+      l1TimelockDelay,
+      treasuryTimelockDelay,
+      l2TreasuryQuorumPercent,
+    ),
+  },
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [
