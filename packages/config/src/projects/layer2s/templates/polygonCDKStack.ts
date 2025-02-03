@@ -461,7 +461,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     stateValidation: templateVars.stateValidation,
     permissions: generateDiscoveryDrivenPermissions([templateVars.discovery]),
     contracts: generateDiscoveryDrivenSections(templateVars.discovery, [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString),
+      CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+        upgradeDelayString,
+        'PolygonSecurityCouncil',
+      ),
     ]),
     upgradesAndGovernance:
       templateVars.upgradesAndGovernance ??
