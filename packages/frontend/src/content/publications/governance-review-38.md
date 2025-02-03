@@ -294,7 +294,7 @@ You can find us to discuss all the above and more during our [L2BEAT Governance 
 
 ## **Scroll**
 
-DAostar has published a research post about Delegate Incentives Programs (DIP) from different DAOs as a segway for discussing a DIP in Scroll.
+DAostar has published a research post about Delegate Incentives Programs (DIP) from different DAOs as a segue for discussing a DIP in Scroll.
 
 
 ### **Delegate Incentive Programs [DAOstar Research]**
