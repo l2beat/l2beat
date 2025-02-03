@@ -9,6 +9,7 @@ import type { DaSummaryEntry } from '~/server/features/data-availability/summary
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
+import { RosetteValue } from '~/components/rosette/types'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -34,21 +35,21 @@ const daRisksColumn = columnHelper.display({
   },
 })
 
+const EMPTY: RosetteValue = { name: '', value: '' }
+const EMPTY_GRISSINI = [EMPTY, EMPTY, EMPTY]
 const daBridgeRisksColumn = columnHelper.display({
   id: 'bridge-risks',
   header: 'Bridge Risks',
   cell: (ctx) => {
-    const [firstBridge] = ctx.row.original.bridges
-
-    if (!firstBridge) {
+    const [bridge] = ctx.row.original.bridges
+    if (!bridge) {
       return EM_DASH
     }
-    console.log(firstBridge.risks.values)
+    const values = bridge.risks.isNoBridge
+      ? EMPTY_GRISSINI
+      : bridge.risks.values
     return (
-      <GrissiniCell
-        values={firstBridge.risks.values}
-        hasNoBridge={firstBridge.risks.isNoBridge}
-      />
+      <GrissiniCell values={values} hasNoBridge={bridge.risks.isNoBridge} />
     )
   },
   meta: {

@@ -13,10 +13,11 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
+import { NaBadge } from '~/components/badge/na-badge'
 
 interface Props {
   value: TableReadyValue | undefined
-  emptyMode?: 'em-dash' | 'no-info'
+  emptyMode?: 'em-dash' | 'no-info' | 'n/a'
 }
 
 export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
@@ -27,6 +28,9 @@ export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
           {EM_DASH}
         </div>
       )
+    }
+    if (emptyMode === 'n/a') {
+      return <NaBadge />
     }
     return <NoInfoCell />
   }

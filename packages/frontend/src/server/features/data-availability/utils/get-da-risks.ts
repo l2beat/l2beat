@@ -14,7 +14,7 @@ export function getDaRisks(
 ): DaBridgeRisks & DaLayerRisks {
   return {
     ...getDaLayerRisks(daLayer, totalValueSecured, economicSecurity),
-    ...getDaBridgeRisks(daBridge),
+    ...daBridge.risks,
   }
 }
 
@@ -33,20 +33,14 @@ export function getDaLayerRisks(
   }
 }
 
-export function getDaBridgeRisks(daBridge: DaBridge) {
-  return {
-    isNoBridge: daBridge.type === 'NoBridge' || daBridge.type === 'NoDacBridge',
-    relayerFailure: daBridge.risks.relayerFailure,
-    upgradeability: daBridge.risks.upgradeability,
-    committeeSecurity: daBridge.risks.committeeSecurity,
-  }
-}
-
 function getEconomicSecurity(
   daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: number,
-): TableReadyValue {
+): TableReadyValue | undefined {
+  if (!daLayer.risks.economicSecurity) {
+    return
+  }
   // TODO: This feels wrong!
   const shouldCalculate =
     daLayer.risks.economicSecurity.value === 'Staked assets'
