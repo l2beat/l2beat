@@ -9,7 +9,11 @@
     // mind that these addresses could not be used by the project anymore. Decide
     // for yourself whether keep them here or should they be removed or fetched
     // from some fields of other contracts.
-    "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc"
+    "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc",
+    "0x80C67432656d59144cEFf962E8fAF8926599bCF8",
+    "0x41d3D33156aE7c62c094AAe2995003aE63f587B3",
+    "0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC",
+    "0x095D2918B03b2e86D68551DCF11302121fb626c9"
   ],
   "names": {},
   "overrides": {}
