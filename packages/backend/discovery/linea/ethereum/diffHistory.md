@@ -1,3 +1,63 @@
+Generated with discovered.json: 0x03e194cfb852407363ed04e2f64b9f55a96784f7
+
+# Diff at Mon, 03 Feb 2025 15:54:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21434844
+- current block number: 21434844
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      issuedPermissions.3.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x874bd8e09d9a59b1655c8a383934c39acfab39fd
 
 # Diff at Wed, 29 Jan 2025 09:52:05 GMT:

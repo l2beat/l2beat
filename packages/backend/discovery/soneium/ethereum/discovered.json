@@ -14,7 +14,7 @@
       "description": "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x24424336F04440b1c28685a38303aC33C9D14a25",
           "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
           "via": []
@@ -93,7 +93,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
           "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d."
         }
@@ -228,7 +228,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
@@ -309,7 +309,7 @@
       "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
           "description": "set and change address mappings."
         },
@@ -376,13 +376,13 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
@@ -509,7 +509,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x509182eC226b3B71D36A3255A80EF0b1A9D43033",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -717,7 +717,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70",
           "description": "set and change address mappings."
         },
@@ -1008,7 +1008,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a" }]
@@ -1176,7 +1176,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }]
@@ -2131,8 +2131,8 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
-    "gnosisSafeModules/LivenessModule": "0xc58c2c40e841e551d5c504d8c04a2a49545992688d6bb995d818060c212cac71",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
     "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",
     "opstack/DisputeGameFactory": "0x931d104775ede2a7c3b384440bf1d16297b60b2b2bce84c5a41a77a64aaa0e58",
@@ -2145,6 +2145,6 @@
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",
     "opstack/SuperchainConfig": "0xd96c933fe77c5607dbb0bd2707b6d12a547d27638fd38932e6bbe2c83c2c12ee",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

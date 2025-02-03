@@ -142,7 +142,7 @@
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x49015545B46B07082bd7faf2633643eae87710EC",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "via": []
@@ -205,7 +205,7 @@
       "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB408a216927d31A27fd96176dbF1B825630f0301",
           "description": "manage the members of the data availability committee and the threshold for valid commitments."
         },
@@ -497,7 +497,7 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a",
+    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
     "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

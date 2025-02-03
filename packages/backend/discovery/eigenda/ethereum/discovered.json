@@ -171,13 +171,13 @@
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can add and remove strategies",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
           "description": "can approve the replacement of churned operators from a quorum",
           "via": []
@@ -498,7 +498,7 @@
       "description": "Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge"
         }
@@ -539,7 +539,7 @@
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
           "description": "can eject DA operators from a quorum.",
           "via": []
@@ -751,7 +751,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can create rewards submissions."
         }
@@ -913,7 +913,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -926,7 +926,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
           "description": "executes scheduled operations after the delay"
         },
@@ -1386,7 +1386,7 @@
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
           "description": "can pause the DA bridge",
           "via": [
@@ -1395,13 +1395,13 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A",
           "description": "can create rewards submissions.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x2E158da11961426E2A1Cc9e79f40244486b6845C",
           "description": "can pause the DA bridge",
           "via": [
@@ -1410,7 +1410,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x34D64c402cA43C1c4B368e16130C64aC245718C6",
           "description": "can pause the DA bridge",
           "via": [
@@ -1419,13 +1419,13 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
           "description": "can confirm batches to the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "description": "can pause the DA bridge",
           "via": [
@@ -1438,7 +1438,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4a3CD82B73821d075799680AcDff3e884B726777",
           "description": "can pause the DA bridge",
           "via": [
@@ -1447,7 +1447,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71",
           "description": "can pause the DA bridge",
           "via": [
@@ -1456,19 +1456,19 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "description": "can confirm batches to the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
           "description": "can confirm batches to the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4",
           "description": "can pause the DA bridge",
           "via": [
@@ -1477,7 +1477,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99",
           "description": "can pause the DA bridge",
           "via": [
@@ -1486,13 +1486,13 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can pause the DA bridge",
           "via": [{ "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can pause the DA bridge",
           "via": [
@@ -1505,13 +1505,13 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xEFca484E497a9de170Da32abfa11650957dD2a95",
           "description": "can pause the DA bridge",
           "via": [
@@ -1520,7 +1520,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xFEA47018D632A77bA579846c840d5706705Dc598",
           "description": "can pause the DA bridge",
           "via": [
@@ -1863,12 +1863,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can add and remove strategies"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -1881,18 +1881,18 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [{ "address": "0x0c431C66F4dE941d089625E5B423D00707977060" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
           "description": "can cancel scheduled operations"
         },
@@ -2097,13 +2097,13 @@
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "description": "executes scheduled operations after the delay",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can cancel scheduled operations",
           "via": []
@@ -2373,7 +2373,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2523,7 +2523,7 @@
       "address": "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2540,7 +2540,7 @@
       "address": "0x2E158da11961426E2A1Cc9e79f40244486b6845C",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2557,7 +2557,7 @@
       "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2575,7 +2575,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge."
         }
@@ -2585,7 +2585,7 @@
       "address": "0x4a3CD82B73821d075799680AcDff3e884B726777",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2599,7 +2599,7 @@
       "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2615,7 +2615,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge."
         }
@@ -2631,7 +2631,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge."
         }
@@ -2644,7 +2644,7 @@
       "address": "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2659,7 +2659,7 @@
       "address": "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -2681,7 +2681,7 @@
       "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "description": "can eject DA operators from a quorum."
         }
@@ -2692,7 +2692,7 @@
       "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can approve the replacement of churned operators from a quorum"
         }
@@ -2705,7 +2705,7 @@
       "address": "0xEFca484E497a9de170Da32abfa11650957dD2a95",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "via": [
@@ -3689,16 +3689,16 @@
     "eigenlayer/BLSApkRegistry": "0x6d6c2c3489b0f1e65ff03e76e0cd78ae79302eb52f2d033ee026030b25d56d3f",
     "eigenlayer/DelegationManager": "0x3989ce3e55a0e45043fe3508e22134f003f59c7a856eb361751e366521d85659",
     "eigenlayer/EIGEN token": "0x1e9a2d81cf9fa9df9307a3a824bd538ccb715d59330182af101846b59b53edb2",
-    "eigenlayer/EigenDAServiceManager": "0x591382bb3f9d92bd4d76aa69bd1aa1242cfc1784c1319fa5931420f2f82aa4ab",
+    "eigenlayer/EigenDAServiceManager": "0x89a99da009b7f301b78f3c1abe236757045acf13ab1aca95eb22db024ae6a602",
     "eigenlayer/EigenPod": "0x75222a20ddc23c5f5ebe0dba355b103f7a0184f0154e5e5d592ca1b077b21f76",
     "eigenlayer/EigenPodManager": "0x82bd48d55a436ba9e6ed3ced087e244b38cb48ee469af64638f0cc67348e21a5",
-    "eigenlayer/EjectionManager": "0x1fd518ab105aa7444b1c992320f8cc5b097c974ff807b59c6aa64b4e5a4095cd",
+    "eigenlayer/EjectionManager": "0xefd14633294ec02334850c391e25fa23a37982a932eb7c233adfae44a24dfcaf",
     "eigenlayer/PauserRegistry": "0x56ab118482206fa8fecb54928eaf224209310acad2247c60c77052e97e7c8338",
-    "eigenlayer/RegistryCoordinator": "0xd46e44da701f18936c7cf16a2fd83b309c06b93cd1a05bb90ccc350acfc2f3c5",
+    "eigenlayer/RegistryCoordinator": "0x661089976eb9474ad240150e85d0685e3e45f7297cc9c7dcca5a730288582b0f",
     "eigenlayer/StakeRegistry": "0x9035d48fdb6780a23bf9d245abb06de2997e21a77fcb8c90a5a7653eac5eab64",
     "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
     "eigenlayer/StrategyManager": "0x91dbd29e4171ae9cef07eed3c492622e98c1f91baf2bee399a0e72331296ac91",
-    "eigenlayer/TimelockControllerOwning": "0x523fab291192562f16433e3b73d4b71b39f88e107e6019fd44efc723e39149e7",
+    "eigenlayer/TimelockControllerOwning": "0x089a48c5958746053b46c7f052ae879ff1a8891d5c9c48e6dfe25a36ac021448",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }

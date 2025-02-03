@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xf14aad504d7595c7747da87b68f27c221a36ab72
+
+# Diff at Mon, 03 Feb 2025 15:54:47 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21716626
+- current block number: 21716626
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21716626 (main branch discovery), not current.
+
+```diff
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) {
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+      issuedPermissions.31.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract MorphOpsMultisig (0xB822319ab7848b7cC4537c8409e50f85BFb04377) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) {
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x14f7cc719378d2cf73df1be47f04f33e7e46a592
 
 # Diff at Mon, 27 Jan 2025 15:02:32 GMT:

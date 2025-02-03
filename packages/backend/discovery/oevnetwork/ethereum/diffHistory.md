@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xadfb9606627975edc0563bd511f719bf29f2965d
+
+# Diff at Mon, 03 Feb 2025 15:54:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21465199
+- current block number: 21465199
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465199 (main branch discovery), not current.
+
+```diff
+    contract OevNetworkMultisig (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x648ab6277397e52860bc2efa0ad22ff97ca2f2c9
 
 # Diff at Mon, 20 Jan 2025 11:09:49 GMT:

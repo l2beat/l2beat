@@ -8,7 +8,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "register new Elastic Chains in the shared bridge."
           }
         ]

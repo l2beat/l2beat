@@ -34,13 +34,13 @@
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }]
@@ -266,7 +266,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
@@ -298,7 +298,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }]
@@ -340,7 +340,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
         }
@@ -367,7 +367,7 @@
       "address": "0x0000000000000000000000000000000000000000",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
           "description": "set the conversion factor for gas token deposits."
         }
@@ -703,8 +703,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/ChainAdmin": "0x8ec8acbff3be82b53cdc97244336ee589a872235b0383506534d0bae9463feb9",
-    "shared-zk-stack/Diamond": "0xd62d6f07bb60c75ee3179ef73ab905abd0718aeceadc5bde7d463f43c77a41df",
+    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
+    "shared-zk-stack/Diamond": "0x1d1a0cd68f7bb4426ae4e4ece919aeb55192d8e68e4dd25bb0facd3706be11c2",
     "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
     "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
   }

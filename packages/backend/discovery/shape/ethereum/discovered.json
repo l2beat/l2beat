@@ -13,7 +13,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
           "description": "set and change address mappings."
         },
@@ -291,7 +291,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
@@ -372,7 +372,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
@@ -483,7 +483,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xee1Af3f99AF8C5b93512FbE2A3f0dD5568CE087f",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -586,17 +586,17 @@
           "from": "0x6Ef8c69CfE4635d866e3E02732068022c06e724D"
         },
         {
-          "permission": "configure",
-          "from": "0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-        },
-        {
           "permission": "guard",
           "from": "0x125664BEf08177ca43f6f301E63118b1e4cCDe09"
         },
         {
           "permission": "guard",
           "from": "0xEB06fFa16011B5628BaB98E29776361c83741dd3"
+        },
+        {
+          "permission": "interact",
+          "from": "0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ]
     },
@@ -981,7 +981,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
     "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
@@ -989,6 +989,6 @@
     "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

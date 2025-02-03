@@ -29,7 +29,7 @@
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "via": []
@@ -105,13 +105,13 @@
       "description": "The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
           "description": "sole address that can force batches.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "via": []
@@ -185,7 +185,7 @@
       "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
           "description": "sole address that can force batches."
         }
@@ -205,12 +205,12 @@
       "address": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
           "description": "manage the members of the data availability committee and the threshold for valid commitments."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
         },
@@ -405,8 +405,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a",
-    "polygon-cdk/PolygonZkEVM": "0x1b875d2c93809cbc2714ed3e0d71fa66d182e0082a816b78492fd220fe9fcd86",
+    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
+    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
     "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

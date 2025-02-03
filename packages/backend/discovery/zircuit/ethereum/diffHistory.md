@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xb0f3cada1cf73800cf4bcac358fd31b944542102
+
+# Diff at Mon, 03 Feb 2025 15:55:11 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21564418
+- current block number: 21564418
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x7487ae6fc79f0a2562d8c6a7c6cd635322f48742
 
 # Diff at Mon, 20 Jan 2025 11:10:23 GMT:

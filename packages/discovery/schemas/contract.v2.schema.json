@@ -106,7 +106,7 @@
             "sequence",
             "guard",
             "fastconfirm",
-            "configure",
+            "interact",
             "upgrade",
             "act",
             "aggregatePolygon"

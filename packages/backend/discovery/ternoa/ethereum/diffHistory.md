@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x91c539d93230213051012044f34422e07776e442
+
+# Diff at Mon, 03 Feb 2025 15:55:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21737758
+- current block number: 21737758
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21737758 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x65133cd49cd7c93be5bb74e300a20b9eee1dfc29
 
 # Diff at Mon, 03 Feb 2025 09:09:40 GMT:

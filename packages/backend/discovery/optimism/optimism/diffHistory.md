@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x69ffc05f1a50a15615bc1e7063fc1e53dfe3c01e
+
+# Diff at Mon, 03 Feb 2025 15:55:22 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 130896600
+- current block number: 130896600
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 130896600 (main branch discovery), not current.
+
+```diff
+    contract MintManagerOwner (0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract MintManager (0x5C4e7Ba1E219E47948e6e3F55019A647bA501005) {
+    +++ description: Controls the OP inflation rate, which is currently hardcoded to 2% annually.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xae91963222c9b674621fdfc1d623d287a26da936
 
 # Diff at Mon, 20 Jan 2025 16:53:06 GMT:

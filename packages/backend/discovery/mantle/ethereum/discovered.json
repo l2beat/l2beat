@@ -2,7 +2,7 @@
   "name": "mantle",
   "chain": "ethereum",
   "blockNumber": 21680644,
-  "configHash": "0xf2f9ed36f3c0b8596c1623b379ef6b60e38cec0c7812faf3f475e5126e948e06",
+  "configHash": "0x697136942f0883bfe5dfcb94d8e1b7b817ecc96e4d11e2feeee479ee22700f15",
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -12,17 +12,17 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
           "description": "defines addresses that can pause or unpause ability to invest into strategies."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xA937660031787C4408587D2c6A67Ec4B260630F5",
           "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
           "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
         }
@@ -67,61 +67,61 @@
       "description": "This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
           "description": "sign data commitments for the DA bridge.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
           "description": "sign data commitments for the DA bridge.",
           "via": []
@@ -189,7 +189,7 @@
       "description": "Contract managing different investment strategies, forked from EigenLayer StrategyManager.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
           "description": "defines addresses that can pause or unpause ability to invest into strategies.",
           "via": []
@@ -426,7 +426,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -547,12 +547,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
@@ -871,7 +871,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xca35F8338054739D138884685e08b39EE2217794" }]
@@ -990,7 +990,7 @@
       "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
           "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies.",
           "via": []
@@ -1034,7 +1034,7 @@
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "description": "can register or change status of DA node operators.",
           "via": []
@@ -1180,7 +1180,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
           "description": "set and change address mappings."
         },
@@ -1221,7 +1221,7 @@
       "description": "Basic do-nothing investment strategy.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x075a48633dc6845f92339741E9c96b88f1b2A86f",
           "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies.",
           "via": []
@@ -1348,7 +1348,7 @@
       "address": "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1358,7 +1358,7 @@
       "address": "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1368,7 +1368,7 @@
       "address": "0x207E804758e28F2b3fD6E4219671B327100b82f8",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
           "description": "can register or change status of DA node operators."
         }
@@ -1392,7 +1392,7 @@
       "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1415,7 +1415,7 @@
       "address": "0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1425,7 +1425,7 @@
       "address": "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1435,7 +1435,7 @@
       "address": "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1445,7 +1445,7 @@
       "address": "0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1457,7 +1457,7 @@
       "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1468,7 +1468,7 @@
       "address": "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -1480,7 +1480,7 @@
       "address": "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "description": "sign data commitments for the DA bridge."
         }
@@ -2384,11 +2384,11 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }
