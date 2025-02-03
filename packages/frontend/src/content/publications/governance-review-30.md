@@ -125,7 +125,7 @@ Uniswap has also been quiet over the last week, with the launch of Unichain taki
 
 **Onchain**
 
-[[Updated] Forse Analytics for Uniswap Revitalization and Growth Program](https://www.tally.xyz/gov/uniswap/proposal/72) – ends on October 26 at 15:10 UTC
+[[Updated] Force Analytics for Uniswap Revitalization and Growth Program](https://www.tally.xyz/gov/uniswap/proposal/72) – ends on October 26 at 15:10 UTC
 
 
 ### **Launch of Unichain**
