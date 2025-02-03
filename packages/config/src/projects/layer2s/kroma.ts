@@ -400,22 +400,20 @@ export const kroma: Layer2 = {
       actors: [
         {
           name: 'Spectrum EOA Admin',
-          accounts: [
-            discovery.getPermissionedAccount('SC_ProxyAdmin', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('SC_ProxyAdmin', 'owner'),
           description: (() => {
-            const scPA = discovery.getPermissionedAccount(
+            const scPA = discovery.getPermissionedAccounts(
               'SC_ProxyAdmin',
               'owner',
-            ).address
-            const shPA = discovery.getPermissionedAccount(
+            )[0].address
+            const shPA = discovery.getPermissionedAccounts(
               'SH_ProxyAdmin',
               'owner',
-            ).address
-            const spETHPA = discovery.getPermissionedAccount(
+            )[0].address
+            const spETHPA = discovery.getPermissionedAccounts(
               'spETH_ProxyAdmin',
               'owner',
-            ).address
+            )[0].address
             assert(
               scPA === shPA && shPA === spETHPA,
               'Spectrum EOA Admin permission changed, please update the .ts file.',
@@ -427,9 +425,10 @@ export const kroma: Layer2 = {
         },
         {
           name: 'SecurityCouncil',
-          accounts: [
-            discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'Colosseum',
+            'SECURITY_COUNCIL',
+          ),
           description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
         and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
         },
@@ -447,16 +446,18 @@ export const kroma: Layer2 = {
         },
         {
           name: 'Sequencer',
-          accounts: [
-            discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'SystemConfig',
+            'batcherHash',
+          ),
           description: 'Central actor allowed to commit L2 transactions on L1.',
         },
         {
           name: 'Guardian',
-          accounts: [
-            discovery.getPermissionedAccount('KromaPortal', 'GUARDIAN'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'KromaPortal',
+            'GUARDIAN',
+          ),
           description:
             'Actor allowed to pause withdrawals. Currently set to the Security Council.',
         },

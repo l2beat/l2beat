@@ -150,9 +150,10 @@ export const beamerbridgev2: Bridge = {
           name: 'Owner',
           description:
             'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-          accounts: [
-            discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'EthereumRequestManager',
+            'owner',
+          ),
         },
         {
           name: 'Liquidity Providers',

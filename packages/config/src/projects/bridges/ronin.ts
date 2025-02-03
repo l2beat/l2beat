@@ -211,12 +211,11 @@ export const ronin: Bridge = {
         ),
         {
           name: 'MainchainGatewayV3 Sentry Account',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'MainchainGateway',
-              'emergencyPauser',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'MainchainGateway',
+            'emergencyPauser',
+          ),
+
           description:
             'An address that can pause the bridge in case of emergency (can be another contract).',
         },

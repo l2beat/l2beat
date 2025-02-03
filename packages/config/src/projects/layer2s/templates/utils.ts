@@ -6,8 +6,8 @@ import type { EthereumAddress } from '@l2beat/discovery-types/dist/EthereumAddre
 import { unionBy } from 'lodash'
 import type {
   ProjectContracts,
-  ReferenceLink,
   ProjectPermissions,
+  ReferenceLink,
 } from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
@@ -29,8 +29,7 @@ export function mergePermissions(
   base: Record<string, ProjectPermissions>,
   pushed: Record<string, ProjectPermissions>,
 ): Record<string, ProjectPermissions> {
-  const result: Record<string, ProjectPermissions> =
-    structuredClone(base)
+  const result: Record<string, ProjectPermissions> = structuredClone(base)
 
   for (const [key, value] of Object.entries(pushed)) {
     result[key] ??= {}

@@ -264,23 +264,19 @@ export const zkfair: Layer2 = {
       actors: [
         {
           name: 'Sequencer',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'ZKFairValidium',
-              'trustedSequencer',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ZKFairValidium',
+            'trustedSequencer',
+          ),
           description:
             'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
         },
         {
           name: 'Proposer',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'ZKFairValidium',
-              'trustedAggregator',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ZKFairValidium',
+            'trustedAggregator',
+          ),
           description: `The trusted proposer (called Aggregator) provides the ZKFairValidium contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
         },
         ...discovery.getMultisigPermission(
@@ -314,9 +310,10 @@ export const zkfair: Layer2 = {
         },
         {
           name: 'DAC Owner',
-          accounts: [
-            discovery.getPermissionedAccount('ZKFairValidiumDAC', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ZKFairValidiumDAC',
+            'owner',
+          ),
           description:
             'The owner of the Data Availability Committee, can update the member set at any time.',
         },

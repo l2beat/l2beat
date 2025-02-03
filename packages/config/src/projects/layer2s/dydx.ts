@@ -386,9 +386,10 @@ export const dydx: Layer2 = {
         // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
         {
           name: 'Rollup Admin',
-          accounts: [
-            discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'PriorityExecutor',
+            'getAdmin',
+          ),
           description:
             'Controlled by dYdX Governance. Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(maxPriorityDelay),
@@ -425,12 +426,10 @@ export const dydx: Layer2 = {
         },
         {
           name: 'Treasury Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'ShortTimelockExecutor',
-              'getAdmin',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ShortTimelockExecutor',
+            'getAdmin',
+          ),
           description:
             'Controlled by dYdX Governance. Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
             delayDescriptionFromSeconds(shortTimelockDelay),
@@ -443,12 +442,10 @@ export const dydx: Layer2 = {
         },
         {
           name: 'Safety Module Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'LongTimelockExecutor',
-              'getAdmin',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'LongTimelockExecutor',
+            'getAdmin',
+          ),
           description:
             'Controlled by dYdX Governance. Has the ability to update Governance Strategy resulting in different logic of votes counting. Can upgrade Safety Module. ' +
             delayDescriptionFromSeconds(longTimelockDelay),
@@ -461,12 +458,10 @@ export const dydx: Layer2 = {
         },
         {
           name: 'Merkle Pauser',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'MerklePauserExecutor',
-              'getAdmin',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'MerklePauserExecutor',
+            'getAdmin',
+          ),
           description:
             'Controlled by dYdX Governance. The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
             delayDescriptionFromSeconds(merklePauserDelay),

@@ -229,15 +229,16 @@ export const cBridge: Bridge = {
           name: 'Bridge Governance',
           description:
             'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
-          accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
+          accounts: discovery.getPermissionedAccounts('MessageBus', 'owner'),
         },
         {
           name: 'Bridge Governance (2)',
           description:
             'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
-          accounts: [
-            discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'OriginalTokenVaultV2',
+            'owner',
+          ),
         },
         {
           name: 'Governors',
@@ -270,9 +271,10 @@ export const cBridge: Bridge = {
           name: 'Sentinel Admin',
           description:
             'Can add and remove governors and pausers from the system.',
-          accounts: [
-            discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'SentinelProxyAdmin',
+            'owner',
+          ),
         },
       ],
     },

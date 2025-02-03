@@ -121,9 +121,10 @@ export const zkswap2: Layer2 = {
       actors: [
         {
           name: 'zkSwap 2.0 Admin',
-          accounts: [
-            discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'UpgradeGatekeeper',
+            'getMaster',
+          ),
           description:
             'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
         },

@@ -26,14 +26,14 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, sum, uniq } from 'lodash'
+import { groupBy, isString, sum, uniq } from 'lodash'
 import type {
   ProjectContract,
   ProjectEscrow,
-  ReferenceLink,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
+  ReferenceLink,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -553,28 +553,19 @@ export class ProjectDiscovery {
     return { address: address, type }
   }
 
-  getPermissionedAccount(
-    contractIdentifier: string,
-    key: string,
-  ): ProjectPermissionedAccount {
-    const value = this.getContractValue(contractIdentifier, key)
-    return this.formatPermissionedAccount(value)
-  }
-
   getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
-    index?: number,
   ): ProjectPermissionedAccount[] {
-    let value = this.getContractValue(contractIdentifier, key)
-    assert(isArray(value), `Value of ${key} must be an array`)
-
-    if (index !== undefined) {
-      value = (value as ContractValue[])[index]
-      assert(isArray(value), `Value of ${key}[${index}] must be an array`)
+    const value = this.getContractValue(contractIdentifier, key)
+    const addresses: ContractValue[] = []
+    if (Array.isArray(value)) {
+      addresses.push(...value)
+    } else {
+      addresses.push(value)
     }
 
-    return value.map(this.formatPermissionedAccount.bind(this))
+    return addresses.map(this.formatPermissionedAccount.bind(this))
   }
 
   getContractFromValue(

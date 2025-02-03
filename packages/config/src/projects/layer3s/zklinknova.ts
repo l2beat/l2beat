@@ -771,12 +771,10 @@ export const zklinknova: Layer3 = {
         ),
         {
           name: 'MantaOwner',
-          accounts: [
-            mantapacificDiscovery.getPermissionedAccount(
-              'MantaProxyAdmin',
-              'owner',
-            ),
-          ],
+          accounts: mantapacificDiscovery.getPermissionedAccounts(
+            'MantaProxyAdmin',
+            'owner',
+          ),
           description:
             'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
         },

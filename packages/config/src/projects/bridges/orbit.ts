@@ -193,9 +193,11 @@ export const orbit: Bridge = {
         },
         {
           name: 'Policy Admin',
-          accounts: [
-            discovery.getPermissionedAccount('ETH Vault', 'policyAdmin'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ETH Vault',
+            'policyAdmin',
+          ),
+
           description:
             'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
         },

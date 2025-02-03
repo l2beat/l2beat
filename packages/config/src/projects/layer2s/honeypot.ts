@@ -219,7 +219,7 @@ export const honeypot: Layer2 = {
           name: 'Authority owner',
           description:
             'The Authority owner can submit claims to the Honeypot DApp.',
-          accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+          accounts: discovery.getPermissionedAccounts('Authority', 'owner'),
         },
       ],
     },
