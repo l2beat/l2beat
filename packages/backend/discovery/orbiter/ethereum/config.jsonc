@@ -10,10 +10,14 @@
     // for yourself whether keep them here or should they be removed or fetched
     // from some fields of other contracts.
     "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc",
-    "0x80C67432656d59144cEFf962E8fAF8926599bCF8",
-    "0x41d3D33156aE7c62c094AAe2995003aE63f587B3",
-    "0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC",
-    "0x095D2918B03b2e86D68551DCF11302121fb626c9"
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x80C67432656d59144cEFf962E8fAF8926599bCF8", // ETH escrow
+    "0x41d3D33156aE7c62c094AAe2995003aE63f587B3", // USDC escrow
+    "0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC", // USDT escrow
+    "0x095D2918B03b2e86D68551DCF11302121fb626c9" // DAI escrow
   ],
   "names": {},
   "overrides": {}
