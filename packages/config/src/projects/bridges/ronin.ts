@@ -185,21 +185,9 @@ export const ronin: Bridge = {
           ),
           `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
         ),
-        // TODO(radomski): Remake this into a multisig like
-        discovery.getPermissionDetails(
-          'RoninManagerMultiSig', // non-standard MultiSig
-          discovery.formatPermissionedAccounts([
-            discovery.getContract('RoninManagerMultiSig').address,
-          ]),
+        discovery.getMultisigPermission(
+          'RoninManagerMultiSig',
           'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
-        ),
-        discovery.getPermissionDetails(
-          'RoninManagerMultiSig participants', // non-standard MultiSig owners
-          discovery.getPermissionedAccounts(
-            'RoninManagerMultiSig',
-            'getOwners',
-          ),
-          'Those are the participants of the AdminMultisig.',
         ),
         discovery.getMultisigPermission(
           'RoninAdminMultisig',
