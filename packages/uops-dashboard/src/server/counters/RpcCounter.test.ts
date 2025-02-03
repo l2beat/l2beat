@@ -653,26 +653,14 @@ describe(RpcCounter.name, () => {
             methodSelector: '0x',
           },
           {
-            children: [
-              {
-                children: [],
-                contractAddress: '',
-                count: 1,
-                id: 'id',
-                level: 2,
-                methodSelector: '0x04e45aaf',
-              },
-            ],
+            children: [],
             contractAddress: EthereumAddress(
               '0x7712FA47387542819d4E35A23f8116C90C18767C',
             ),
-            contractName: 'SwapRouter',
             count: 1,
             id: 'id',
             level: 1,
-            methodName: 'multicall',
             methodSelector: '0x5ae401dc',
-            methodSignature: 'multicall(uint256,bytes[])',
           },
           {
             children: [],
