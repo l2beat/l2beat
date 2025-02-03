@@ -120,20 +120,22 @@ export const synapse: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'L1BridgeZap',
-        'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
-      ),
-      discovery.getContractDetails(
-        'SynapseBridge',
-        "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
-      ),
-      discovery.getContractDetails(
-        'Liquidity Pool',
-        'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'L1BridgeZap',
+          'Entry point for deposits. Acts as a relayer between user and escrow, enabling token swap feature.',
+        ),
+        discovery.getContractDetails(
+          'SynapseBridge',
+          "Main escrow contract where all the funds are being held, the address with certain privileges can perform withdraw on user's behalf.",
+        ),
+        discovery.getContractDetails(
+          'Liquidity Pool',
+          'Contract utilized as Liquidity Pool, allowing users to bridge their tokens to canonical versions on Ethereum.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('3 minutes')],
   },
 

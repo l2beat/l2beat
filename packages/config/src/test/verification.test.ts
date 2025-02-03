@@ -14,7 +14,7 @@ import type {
   DaBridge,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
 } from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
@@ -179,7 +179,7 @@ function getUniqueContractsForProject(
 }
 
 function getUniqueContractsFromList(
-  contracts: ScalingProjectContract[],
+  contracts: ProjectContract[],
 ): AddressOnChain[] {
   const mainAddresses = contracts.flatMap((c) => ({
     address: c.address,
@@ -199,9 +199,9 @@ function getUniqueContractsFromList(
 function getProjectContractsForChain(
   project: Project,
   chain: string,
-): ScalingProjectContract[] {
-  const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract.chain, chain, project),
+): ProjectContract[] {
+  const contracts = (project.contracts?.addresses[chain] ?? []).filter(
+    (contract) => isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {

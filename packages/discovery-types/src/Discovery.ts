@@ -58,6 +58,7 @@ export type PermissionType =
   | 'validateZkStack'
   | 'validateBridge'
   | 'relay'
+  | 'aggregatePolygon'
 
 export interface ResolvedPermissionPath {
   address: EthereumAddress

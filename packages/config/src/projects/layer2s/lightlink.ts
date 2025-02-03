@@ -216,27 +216,29 @@ export const lightlink: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('CanonicalStateChain', {
-        description:
-          'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
-        ...upgradesLightLink,
-      }),
-      discovery.getContractDetails('Challenge', {
-        description:
-          'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
-        ...upgradesLightLink,
-      }),
-      discovery.getContractDetails('L1BridgeRegistry', {
-        description:
-          'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
-      }),
-      discovery.getContractDetails('ChainOracle', {
-        description:
-          'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
-        ...upgradesLightLink,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('CanonicalStateChain', {
+          description:
+            'The Canonical State Chain (CSC) contract is the main contract of the LightLink network. It stores the state roots of the LightLink chain on Ethereum L1.',
+          ...upgradesLightLink,
+        }),
+        discovery.getContractDetails('Challenge', {
+          description:
+            'The Challenge contract is used to challenge block headers on the LightLink chain. Currently, data availability challenges and execution challenges are not enabled.',
+          ...upgradesLightLink,
+        }),
+        discovery.getContractDetails('L1BridgeRegistry', {
+          description:
+            'The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.',
+        }),
+        discovery.getContractDetails('ChainOracle', {
+          description:
+            'If the DAOracle is set, this contract enables any user to directly upload valid Layer 2 blocks from the data availability layer to the L1.',
+          ...upgradesLightLink,
+        }),
+      ],
+    },
     risks: [],
   },
   permissions: {

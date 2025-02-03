@@ -468,84 +468,86 @@ export const kroma: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('L2OutputOracle', {
-        description: `The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every ${formatSeconds(
-          rootsSubmissionIntervalSeconds,
-        )}.`,
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('KromaPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('SystemConfig', {
-        description:
-          'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1ERC721Bridge', {
-        description:
-          'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('L1CrossDomainMessenger', {
-        description:
-          "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('Timelock', {
-        description: `Timelock contract behind which the ProxyAdmin is. There is a ${formatSeconds(
-          timelockDefaultDelay,
-        )} delay.`,
-      }),
-      discovery.getContractDetails('SecurityCouncil', {
-        description:
-          'Contract allowed to start upgrades, dismiss challenges and delete roots. It is also designated as a guardian, meaning it can pause withdrawals.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('UpgradeGovernor', {
-        description:
-          'Controls the Timelock. It is governed using a Soulbound NFT.',
-      }),
-      discovery.getContractDetails('ProxyAdmin', {
-        description:
-          "Admin of the L2OutputOracle, Timelock, KromaPortal, SystemConfig, SecurityCouncil, L1CrossDomainMessenger, L1ERC721Bridge, ZKVerifier, Colosseum, L1StandardBridge, UpgradeGovernor, SecurityCouncilToken, ValidatorPool proxies. It's effectively controlled by the Security Council. The proxy is behind a Timelock.",
-      }),
-      discovery.getContractDetails('Colosseum', {
-        description:
-          'Contract used to challenge state roots and prove fraud. The SecurityCouncil can interfere by deleting challenges and roots.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('ValidatorPool', {
-        description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within ${formatSeconds(
-          proposerRoundDurationSecondsOLD,
-        )}, then the submission becomes open to everyone.`,
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('ValidatorManager', {
-        description: `Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within ${formatSeconds(proposerRoundDurationSeconds)}, after which anyone propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.`,
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('AssetManager', {
-        description:
-          'Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('ZKMerkleTrie', {
-        description: 'Trie contract used to prove withdrawals.',
-      }),
-      discovery.getContractDetails('ZKVerifier', {
-        description:
-          'ZK verifier used to verify the last step of a fraud proof, which corresponds to a block.',
-        ...upgradesProxy,
-      }),
-      discovery.getContractDetails('Poseidon2', {
-        description:
-          'Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('L2OutputOracle', {
+          description: `The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every ${formatSeconds(
+            rootsSubmissionIntervalSeconds,
+          )}.`,
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('KromaPortal', {
+          description:
+            'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('SystemConfig', {
+          description:
+            'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('L1ERC721Bridge', {
+          description:
+            'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('L1CrossDomainMessenger', {
+          description:
+            "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('Timelock', {
+          description: `Timelock contract behind which the ProxyAdmin is. There is a ${formatSeconds(
+            timelockDefaultDelay,
+          )} delay.`,
+        }),
+        discovery.getContractDetails('SecurityCouncil', {
+          description:
+            'Contract allowed to start upgrades, dismiss challenges and delete roots. It is also designated as a guardian, meaning it can pause withdrawals.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('UpgradeGovernor', {
+          description:
+            'Controls the Timelock. It is governed using a Soulbound NFT.',
+        }),
+        discovery.getContractDetails('ProxyAdmin', {
+          description:
+            "Admin of the L2OutputOracle, Timelock, KromaPortal, SystemConfig, SecurityCouncil, L1CrossDomainMessenger, L1ERC721Bridge, ZKVerifier, Colosseum, L1StandardBridge, UpgradeGovernor, SecurityCouncilToken, ValidatorPool proxies. It's effectively controlled by the Security Council. The proxy is behind a Timelock.",
+        }),
+        discovery.getContractDetails('Colosseum', {
+          description:
+            'Contract used to challenge state roots and prove fraud. The SecurityCouncil can interfere by deleting challenges and roots.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('ValidatorPool', {
+          description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within ${formatSeconds(
+            proposerRoundDurationSecondsOLD,
+          )}, then the submission becomes open to everyone.`,
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('ValidatorManager', {
+          description: `Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within ${formatSeconds(proposerRoundDurationSeconds)}, after which anyone propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.`,
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('AssetManager', {
+          description:
+            'Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('ZKMerkleTrie', {
+          description: 'Trie contract used to prove withdrawals.',
+        }),
+        discovery.getContractDetails('ZKVerifier', {
+          description:
+            'ZK verifier used to verify the last step of a fraud proof, which corresponds to a block.',
+          ...upgradesProxy,
+        }),
+        discovery.getContractDetails('Poseidon2', {
+          description:
+            'Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.',
+        }),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(timelockDefaultDelay)),
     ],

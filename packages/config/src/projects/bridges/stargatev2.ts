@@ -298,24 +298,26 @@ export const stargatev2: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TokenMessaging',
-        "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
-      ),
-      discovery.getContractDetails(
-        'CreditMessaging',
-        'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
-      ),
-      discovery.getContractDetails(
-        'Stargate Verifier',
-        'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-      ),
-      discovery.getContractDetails(
-        'Nethermind Verifier',
-        'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'TokenMessaging',
+          "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
+        ),
+        discovery.getContractDetails(
+          'CreditMessaging',
+          'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
+        ),
+        discovery.getContractDetails(
+          'Stargate Verifier',
+          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
+        ),
+        discovery.getContractDetails(
+          'Nethermind Verifier',
+          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
+        ),
+      ],
+    },
     ...(() => {
       assert(
         EthereumAddress(discoveredReceiveLib[0]) ===

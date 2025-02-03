@@ -6,27 +6,15 @@
     "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238", // rollupContract
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81" // verifier
   ],
-  "names": {
-    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": "WitnessValidium",
-    "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8": "WitnessValidiumDAC"
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
+  "names": {
+    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": "Validium"
+  },
   "overrides": {
-    "WitnessValidiumDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 10
-          }
-        }
-      }
-    },
-    "WitnessValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"]
+    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": {
+      "extends": "polygon-cdk/PolygonZkEVM" // temporary due to shape match bug
     }
   }
 }

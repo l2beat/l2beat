@@ -54,11 +54,13 @@ export const playblock: Layer3 = orbitStackL3({
       ],
     },
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('ProxyAdmin', {
-      description:
-        'This contract can upgrade the implementations of the rollup proxies.',
-    }),
-  ],
+  nonTemplateContracts: {
+    [discovery.chain]: [
+      discovery.getContractDetails('ProxyAdmin', {
+        description:
+          'This contract can upgrade the implementations of the rollup proxies.',
+      }),
+    ],
+  },
   customDa: AnytrustDAC({ discovery }),
 })

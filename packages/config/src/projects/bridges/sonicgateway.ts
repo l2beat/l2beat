@@ -8,7 +8,10 @@ import {
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
-import { generateDiscoveryDrivenPermissions } from '../layer2s/templates/generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../layer2s/templates/generateDiscoveryDrivenSections'
 import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('sonicgateway')
@@ -160,7 +163,7 @@ export const sonicgateway: Bridge = {
   },
 
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 

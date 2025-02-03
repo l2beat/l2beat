@@ -7,8 +7,9 @@ export function isVerified(
     return project.daLayer.bridges.every((bridge) => isDaBridgeVerified(bridge))
   }
 
-  const contractsVerification =
-    project.contracts?.addresses.every((c) => c.isVerified) ?? true
+  const contractsVerification = Object.values(
+    project.contracts?.addresses ?? {},
+  ).every((p) => p.every((c) => c.isVerified))
   const escrowVerifications =
     project.config.escrows.every((e) => {
       if (!('contract' in e)) {

@@ -17,6 +17,7 @@ import {
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingSummaryFilters } from '../../_components/scaling-summary-filters'
@@ -37,10 +38,7 @@ export function ScalingSummaryTables(props: Props) {
   }
 
   const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.tvsOrder - a.tvsOrder,
-      )
+    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(

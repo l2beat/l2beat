@@ -93,16 +93,18 @@ export const connext: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TransactionManager',
-        'Escrow and logic for cross-chain transactions.',
-      ),
-      discovery.getContractDetails(
-        'FulfillInterpreter',
-        'Contract enabling execution of arbitrary calldata on a destination chain.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'TransactionManager',
+          'Escrow and logic for cross-chain transactions.',
+        ),
+        discovery.getContractDetails(
+          'FulfillInterpreter',
+          'Contract enabling execution of arbitrary calldata on a destination chain.',
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {

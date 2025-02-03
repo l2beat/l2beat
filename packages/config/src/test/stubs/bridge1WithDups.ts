@@ -26,69 +26,81 @@ export const bridge1WithDups: Bridge = {
     destination: ['Dest chain'],
   },
   contracts: {
-    addresses: [
-      {
-        address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),
-        name: 'ForeignAMB Proxy',
-        upgradeability: {
-          proxyType: 'Custom',
-          admins: [
-            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          ],
-          implementations: [
-            EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
-          ],
+    addresses: {
+      ethereum: [
+        {
+          address: EthereumAddress(
+            '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
+          ),
+          name: 'ForeignAMB Proxy',
+          upgradeability: {
+            proxyType: 'Custom',
+            admins: [
+              EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+            ],
+            implementations: [
+              EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
+            ],
+          },
+          isVerified: true,
         },
-        isVerified: true,
-      },
-      {
-        address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),
-        name: 'Duplicate ForeignAMB Proxy',
-        upgradeability: {
-          proxyType: 'Custom',
-          admins: [
-            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          ],
-          implementations: [
-            EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
-          ],
+        {
+          address: EthereumAddress(
+            '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
+          ),
+          name: 'Duplicate ForeignAMB Proxy',
+          upgradeability: {
+            proxyType: 'Custom',
+            admins: [
+              EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+            ],
+            implementations: [
+              EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
+            ],
+          },
+          isVerified: true,
         },
-        isVerified: true,
-      },
-      {
-        address: EthereumAddress('0x88ad09518695c6c3712AC10a214bE5109a655671'),
-        name: 'ForeignBridge1bridge (Mediator Contract, Escrow)',
-        upgradeability: {
-          proxyType: 'Custom',
-          admins: [
-            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          ],
-          implementations: [
-            EthereumAddress('0x8eB3b7D8498a6716904577b2579e1c313d48E347'),
-          ],
+        {
+          address: EthereumAddress(
+            '0x88ad09518695c6c3712AC10a214bE5109a655671',
+          ),
+          name: 'ForeignBridge1bridge (Mediator Contract, Escrow)',
+          upgradeability: {
+            proxyType: 'Custom',
+            admins: [
+              EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+            ],
+            implementations: [
+              EthereumAddress('0x8eB3b7D8498a6716904577b2579e1c313d48E347'),
+            ],
+          },
+          isVerified: true,
         },
-        isVerified: true,
-      },
-      {
-        address: EthereumAddress('0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064'),
-        name: 'BridgeValidators',
-        upgradeability: {
-          proxyType: 'Custom',
-          admins: [
-            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          ],
-          implementations: [
-            EthereumAddress('0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218'),
-          ],
+        {
+          address: EthereumAddress(
+            '0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064',
+          ),
+          name: 'BridgeValidators',
+          upgradeability: {
+            proxyType: 'Custom',
+            admins: [
+              EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+            ],
+            implementations: [
+              EthereumAddress('0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218'),
+            ],
+          },
+          isVerified: true,
         },
-        isVerified: true,
-      },
-      {
-        address: EthereumAddress('0x87D48c565D0D85770406D248efd7dc3cbd41e729'),
-        name: 'AAVEInterestERC20',
-        isVerified: true,
-      },
-    ],
+        {
+          address: EthereumAddress(
+            '0x87D48c565D0D85770406D248efd7dc3cbd41e729',
+          ),
+          name: 'AAVEInterestERC20',
+          isVerified: true,
+        },
+      ],
+    },
     risks: [],
   },
   permissions: {

@@ -15,6 +15,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
+import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
@@ -143,7 +144,7 @@ export const hyperliquid: Layer3 = {
     },
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
   permissions: {

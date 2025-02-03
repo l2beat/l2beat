@@ -31,11 +31,11 @@ import type {
   Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
+  ProjectContract,
   ProjectEscrow,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
-  ScalingProjectContract,
   ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
@@ -47,7 +47,10 @@ import type {
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenPermissions } from './generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './generateDiscoveryDrivenSections'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -83,7 +86,7 @@ export interface ZkStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
-  nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
+  nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
   nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
@@ -396,9 +399,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     upgradesAndGovernance: (() => {
       const description = `
-    There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler. 
-    The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants. 
-    The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig. 
+    There are two main paths for contract upgrades in the shared ZK stack ecosystem - standard and emergency - both converging on the shared upgrade proxy contract ProtocolUpgradeHandler.
+    The standard path involves a governance proposal and voting through the DAO, multiple timelock delays and finally approval by the Guardians or ${scApprovalThreshold} SecurityCouncil participants.
+    The emergency path allows for contract upgrades without any delay by the EmergencyUpgradeBoard, which acts as a 3/3 Multisig between SecurityCouncil, Guardians and the FoundationMultisig.
     ## Standard path
     ### On ZKsync Era
     Delegates can start new proposals by reaching a threshold of ${protocolStartProposalThresholdM}M ZK tokens on the ZKsync Era Rollup's ZkProtocolGovernor contract.
@@ -407,31 +410,31 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     )} 'voting delay' after which the ${formatSeconds(protVotingPeriodS)} voting period starts. During these first two periods, the proposal can be canceled by the proposer or if it falls below the proposing threshold.
     A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK tokens) and simple majority. When it reaches quorum, the voting period is reset to ${formatSeconds(
       protVotingPeriodS,
-    )}. 
+    )}.
     In the successful case, it can be queued in the ${formatSeconds(
       protTlMinDelayS,
-    )} timelock which forwards it to Ethereum as an L2->L1 log. 
+    )} timelock which forwards it to Ethereum as an L2->L1 log.
     ### On Ethereum
     After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
       legalVetoStandardS,
     )} 'legal veto period'.
     This serves as a window in which a veto could be coordinated offchain, to be then enforced by non-approval of Guardians and SecurityCouncil. A threshold of ${guardiansExtendThreshold} Guardians can extend the veto period to ${formatSeconds(
       legalVetoExtendedS,
-    )}. 
+    )}.
     After this a proposal enters a \*waiting\* state of ${formatSeconds(
       upgradeWaitOrExpireS,
-    )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil. 
-    For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full. 
+    )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
+    For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
     A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will be expired if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of 1d, and can then be executed.
     ### Other governance tracks
-    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and 
-    2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets. 
-    The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1. 
+    There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
+    2) Governance Advisory Proposals that e.g. change the ZK Credo or other offchain Governance Procedures without onchain targets.
+    The protocol for these two other tracks is similar to the first part of the standard path described above (albeit having different quorum and timelock values), and not passing over to the Ethereum L1.
     Further customizations are that the ZkFoundationMultisig can propose to the ZkTokenGovernor without a threshold and that the Guardians' L2 alias can cancel proposals in the ZkTokenGovernor and the ZkGovOpsGovernor.
-    ## Emergency path 
+    ## Emergency path
     SecurityCouncil (${scThresholdString}), Guardians (${guardiansThresholdString}) and ZkFoundationMultisig (${discovery.getMultisigStats(
       'ZkFoundationMultisig',
-    )}) form a de-facto 3/3 Multisig 
+    )}) form a de-facto 3/3 Multisig
     by pushing an immediate upgrade proposal through the EmergencyUpgradeBoard, which circumvents all delays and executes immediately via the ProtocolUpgradeHandler.
     ## Upgrade Delays
     The cumulative duration of the upgrade paths from the moment of a voted 'successful' proposal is ${formatSeconds(
@@ -442,16 +445,16 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       upgradeDelayNoScS,
     )} for the path in which the SecurityCouncil is not approving the proposal.
     ## Freezing
-    The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager. 
+    The SecurityCouncil can freeze (pause withdrawals and settlement) all chains connected to the current StateTransitionManager.
     Either for a softFreeze of ${formatSeconds(
       softFreezeS,
-    )} or a hardFreeze of ${formatSeconds(hardFreezeS)}. 
-    After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible. 
+    )} or a hardFreeze of ${formatSeconds(hardFreezeS)}.
+    After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBoard has to be passed before subsequent freezes are possible.
     Only the SecurityCouncil can unfreeze an active freeze.
     ## Elastic Chain Operator and ChainAdmin
-    Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system: 
+    Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
     A single *Elastic Chain operator* role that governs parameters in the shared contracts and a *ChainAdmin* role (in the chain-specific diamond contract) for managing parameters of each individual Hyperchain that builds on the stack.
-    These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock. 
+    These chain-specific actions include setting a transaction filterer that can censor L1 -> L2 messages, setting fee parameters and adding / removing Validators in the ValidatorTimelock.
     ZKsync Era's ChainAdmin differs from the others as it also has the above *Elastic Chain Operator* role in the shared ZK stack contracts.
     `
       return description
@@ -461,10 +464,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       templateVars.nonTemplatePermissions ?? {},
     ),
     contracts: {
-      addresses: discovery.getDiscoveredContracts(),
-      nativeAddresses: {
-        zksync2: discovery_ZKstackGovL2.getDiscoveredContracts(),
-      },
+      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: [
         CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
           // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by Guardians), emergency)

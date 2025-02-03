@@ -115,38 +115,40 @@ export const transporter: Bridge = {
   },
   contracts: {
     // this is not a full list of contracts - there would be too many.
-    addresses: [
-      discovery.getContractDetails(
-        'Router',
-        `Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Router',
+          `Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.
         This is an example Router contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
-      ),
-      discovery.getContractDetails(
-        'OnRamp1',
-        `OnRamp for outgoing messages to Arbitrum.
+        ),
+        discovery.getContractDetails(
+          'OnRamp1',
+          `OnRamp for outgoing messages to Arbitrum.
         This is an example OnRamp contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
-      ),
-      discovery.getContractDetails(
-        'OffRamp1',
-        `OffRamp for incoming messages from Arbitrum.
+        ),
+        discovery.getContractDetails(
+          'OffRamp1',
+          `OffRamp for incoming messages from Arbitrum.
         This is an example OffRamp contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
-      ),
-      discovery.getContractDetails(
-        'CommitStore1',
-        `CommitStore for storing incoming message roots from Arbitrum.
+        ),
+        discovery.getContractDetails(
+          'CommitStore1',
+          `CommitStore for storing incoming message roots from Arbitrum.
         This is an example CommitStore contract for one of the lanes. There are many more lanes in the system, please check the specific smart contract for the lane you are interested in.`,
-      ),
-      discovery.getContractDetails(
-        'ARMProxy',
-        'The contract that manages the Risk Management Network, allowing blessing (validation) of messages and cursing (halting) the chain.',
-      ),
-      discovery.getContractDetails(
-        'RBACTimelock',
-        (() => {
-          return `CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
-        })(),
-      ),
-    ],
+        ),
+        discovery.getContractDetails(
+          'ARMProxy',
+          'The contract that manages the Risk Management Network, allowing blessing (validation) of messages and cursing (halting) the chain.',
+        ),
+        discovery.getContractDetails(
+          'RBACTimelock',
+          (() => {
+            return `CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
+          })(),
+        ),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',

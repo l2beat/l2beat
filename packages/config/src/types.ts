@@ -105,7 +105,7 @@ export interface ScalingProject {
   /** Explains how project validates state */
   stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
-  contracts: ScalingProjectContracts
+  contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
   permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
@@ -139,53 +139,6 @@ export interface ScalingProjectConfig {
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig
-}
-
-export interface ScalingProjectContracts {
-  /** List of the contracts on hosted chain */
-  addresses: ScalingProjectContract[]
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
-  /** List of the contracts on the chain itself */
-  nativeAddresses?: Record<string, ScalingProjectContract[]>
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
-}
-
-export interface ScalingProjectContract {
-  /** Address of the contract */
-  address: EthereumAddress
-  /** Verification status of the contract */
-  isVerified: boolean
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
-  /** Solidity name of the contract */
-  name: string
-  /** Description of the contract's role in the system */
-  description?: string
-  /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
-  /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
-  /** Other considerations worth mentioning about the upgrade process */
-  upgradeConsiderations?: string
-  /** Pasuable contract */
-  pausable?: {
-    /** Is it paused? **/
-    paused: boolean
-    /** Who can pause/unpause the contract */
-    pausableBy: string[]
-  }
-  /** List of references */
-  references?: ReferenceLink[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
 export interface ScalingProjectUpgradeability {
@@ -239,7 +192,7 @@ export interface ProjectEscrow {
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
   /** All the data about the escrow contract */
-  contract?: Omit<ScalingProjectContract, 'address'>
+  contract?: Omit<ProjectContract, 'address'>
   /** Timestamp of the deployment transaction of the escrow contract. */
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
@@ -742,7 +695,7 @@ export interface Bridge {
   config: BridgeConfig
   riskView: BridgeRiskView
   technology: BridgeTechnology
-  contracts?: ScalingProjectContracts
+  contracts?: ProjectContracts
   permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
@@ -917,7 +870,7 @@ export interface DaBridge {
   /** Data about related permissions - preferably from discovery. */
   permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts?: DaBridgeContracts
+  contracts?: ProjectContracts
 }
 
 export interface DacInfo {
@@ -937,19 +890,6 @@ export interface DaBridgeDisplay {
   name: string
   slug: string
   description: string
-}
-
-export interface DaBridgeContracts {
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
-  /** List of the contracts on each chain */
-  addresses: Record<string, ScalingProjectContract[]>
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
 }
 
 export interface UsedInProject {
@@ -1100,6 +1040,51 @@ export interface BaseProject {
   isUpcoming?: true
   isArchived?: true
   hasActivity?: true
+}
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: EthereumAddress
+  /** Verification status of the contract */
+  isVerified: boolean
+  /** Name of the chain of this address. Optional for backwards compatibility */
+  chain?: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** Details about upgradeability */
+  upgradeability?: ScalingProjectUpgradeability
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  upgradeDelay?: string
+  /** Which actors from permissions can upgrade */
+  upgradableBy?: string[]
+  /** Other considerations worth mentioning about the upgrade process */
+  upgradeConsiderations?: string
+  /** Pasuable contract */
+  pausable?: {
+    /** Is it paused? **/
+    paused: boolean
+    /** Who can pause/unpause the contract */
+    pausableBy: string[]
+  }
+  /** List of references */
+  references?: ReferenceLink[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
+}
+
+export interface ProjectContracts {
+  /** List of the contracts on a given chain */
+  addresses: Record<string, ProjectContract[]>
+  /** List of risks associated with the contracts */
+  risks: ScalingProjectRisk[]
+  /** List of references backing up the claim */
+  references?: ReferenceLink[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
 }
 
 export interface ProjectStatuses {
