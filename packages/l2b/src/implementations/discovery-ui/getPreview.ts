@@ -1,7 +1,4 @@
-import type {
-  ProjectContract,
-  ScalingProjectPermissions,
-} from '@l2beat/config'
+import type { ProjectContract, ScalingProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/src/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
 import { type ContractsMeta, getMeta } from './getMeta'
