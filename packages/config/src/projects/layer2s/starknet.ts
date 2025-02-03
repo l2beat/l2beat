@@ -1067,12 +1067,12 @@ export const starknet: Layer2 = {
       actors: [
         ...discovery.getMultisigPermission(
           'StarknetAdminMultisig',
-          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted.' +
+          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
         ...discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
-          'Can upgrade most of the Starkgate bridge escrows, including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
+          'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         ...discovery.getMultisigPermission(
