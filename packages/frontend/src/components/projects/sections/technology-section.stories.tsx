@@ -28,6 +28,7 @@ const meta = {
         ],
         isIncomplete: false,
         isUnderReview: false,
+        isUnderReviewHidden: false,
       },
       {
         id: 'bar',
@@ -38,6 +39,7 @@ const meta = {
         references: [],
         isIncomplete: true,
         isUnderReview: false,
+        isUnderReviewHidden: false,
       },
       {
         id: 'bar',
@@ -47,6 +49,7 @@ const meta = {
         references: [],
         isIncomplete: false,
         isUnderReview: true,
+        isUnderReviewHidden: false,
       },
     ],
   },
