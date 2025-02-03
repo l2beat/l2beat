@@ -53,7 +53,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const [committee, minSigners] = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
   isArchived: true,
@@ -120,7 +120,7 @@ export const reddioex: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.DAC],
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
+      membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
@@ -128,7 +128,7 @@ export const reddioex: Layer2 = {
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
+      membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
@@ -172,7 +172,7 @@ export const reddioex: Layer2 = {
           'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
         ),
-        committee,
+        committeePermission,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getPermissionDetails(
           'Operators',

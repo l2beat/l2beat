@@ -59,10 +59,11 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const [committee, minSigners] = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 const requiredHonestMembersPercentage = (
-  ((committee.accounts.length - minSigners + 1) / committee.accounts.length) *
+  ((committeePermission.accounts.length - minSigners + 1) /
+    committeePermission.accounts.length) *
   100
 ).toFixed(0)
 
@@ -123,7 +124,7 @@ export const immutablex: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: [DA_LAYERS.DAC],
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
+      membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
@@ -131,7 +132,7 @@ export const immutablex: Layer2 = {
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
+      membersCount: committeePermission.accounts.length,
       requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
@@ -178,7 +179,7 @@ export const immutablex: Layer2 = {
           'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
         ),
-        committee,
+        committeePermission,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getPermissionDetails(
           'Operators',
@@ -257,7 +258,7 @@ export const immutablex: Layer2 = {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       committeeSecurity:
         DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
-          `${minSigners}/${committee.accounts.length}`,
+          `${minSigners}/${committeePermission.accounts.length}`,
           requiredHonestMembersPercentage,
         ),
     },

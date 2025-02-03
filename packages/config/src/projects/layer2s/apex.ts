@@ -82,18 +82,24 @@ const minFreezeGracePeriod = Math.min(
   freezeGracePeriodUSDT,
 )
 
-const [usdcCommittee, usdcMinSigners, usdcMinAssumedHonestMembers] =
-  getCommittee(
-    discovery,
-    'CommitteeUSDC',
-    'Data Availability Committee for USDC StarkEx',
-  )
-const [usdtCommittee, usdtMinSigners, usdtMinAssumedHonestMembers] =
-  getCommittee(
-    discovery,
-    'CommitteeUSDT',
-    'Data Availability Committee for USDT StarkEx',
-  )
+const {
+  committeePermission: usdcCommittee,
+  minSigners: usdcMinSigners,
+  minAssumedHonestMembers: usdcMinAssumedHonestMembers,
+} = getCommittee(
+  discovery,
+  'CommitteeUSDC',
+  'Data Availability Committee for USDC StarkEx',
+)
+const {
+  committeePermission: usdtCommittee,
+  minSigners: usdtMinSigners,
+  minAssumedHonestMembers: usdtMinAssumedHonestMembers,
+} = getCommittee(
+  discovery,
+  'CommitteeUSDT',
+  'Data Availability Committee for USDT StarkEx',
+)
 
 const usdcDacConfig =
   usdcMinAssumedHonestMembers / usdcCommittee.accounts.length
