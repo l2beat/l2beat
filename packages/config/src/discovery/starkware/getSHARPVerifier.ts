@@ -106,8 +106,10 @@ export function getSHARPVerifierGovernors(
   verifierAddress: EthereumAddress,
 ): ScalingProjectPermission[] {
   assert(
-    verifierAddress === SHARP_VERIFIER_PROXY.address,
-    `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
+    verifierAddress === SHARP_VERIFIER_PROXY.address &&
+      getProxyGovernance(discovery, 'SHARPVerifierProxy')[0].address ===
+        discovery.getContract('SHARPVerifierAdminMultisig').address,
+    `SHARPVerifierProxy or governance address mismatch. This project probably uses a different SHARP verifier or the admin has changed (${projectDiscovery.projectName})`,
   )
 
   return [
