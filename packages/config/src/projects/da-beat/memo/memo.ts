@@ -85,6 +85,7 @@ export const memo: DaProject = {
     },
     bridges: [
       NO_BRIDGE({
+        id: ProjectId('memo-no-bridge'),
         addedAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
         layer: 'MEMO',
       }),

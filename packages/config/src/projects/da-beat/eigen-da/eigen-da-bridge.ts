@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
@@ -65,7 +65,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 ).length
 
 export const eigenDAbridge: DaBridge = {
-  id: 'eigenda-bridge',
+  id: ProjectId('eigenda-bridge'),
   addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   type: 'StandaloneDacBridge',
   display: {

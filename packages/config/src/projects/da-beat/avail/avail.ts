@@ -106,6 +106,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
     },
     bridges: [
       NO_BRIDGE({
+        id: ProjectId('avail-no-bridge'),
         addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
         layer: 'Avail',
         description:

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
@@ -10,8 +10,8 @@ const discovery = new ProjectDiscovery('vector')
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
 
-export const vector = {
-  id: 'vector',
+export const vector: DaBridge = {
+  id: ProjectId('vector'),
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   type: 'OnChainBridge',
   display: {

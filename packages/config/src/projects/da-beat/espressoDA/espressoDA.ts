@@ -1,8 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
-import { HotShotLightClient } from './HotShotLightClient'
+import { hotshot } from './hotshot'
 
 export const espressoDA: DaProject = {
   type: 'DaLayer',
@@ -80,18 +79,7 @@ After block finalization in HotShot, the relayer propagates the commitment and q
 Users can retrieve data by querying any of Espresso DA's layers, though the VID layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
  `,
     },
-    bridges: [
-      NO_BRIDGE({
-        addedAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
-        layer: 'EspressoDA',
-        description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
-        Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,
-        technology: {
-          description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
-        },
-      }),
-      HotShotLightClient,
-    ],
+    bridges: [hotshot],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,

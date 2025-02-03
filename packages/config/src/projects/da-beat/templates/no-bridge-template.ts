@@ -1,8 +1,9 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaBridge, DaBridgeRisks } from '../../../types'
 import { linkByDA } from '../utils/link-by-da'
 
 export interface TemplateVars {
+  id: ProjectId
   /** DA layer name to automatically match projects with */
   layer: string
   addedAt: UnixTime
@@ -37,6 +38,7 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
   }
 
   return {
+    id: template.id,
     type,
     addedAt: template.addedAt,
     display: {

@@ -850,8 +850,7 @@ export interface DaTechnology {
 }
 
 export interface DaBridge {
-  /** Optional: Unique identifier of the data availability bridge. */
-  id?: string
+  id: ProjectId
   type:
     | 'Enshrined'
     | 'NoDacBridge'

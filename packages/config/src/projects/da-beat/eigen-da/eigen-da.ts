@@ -88,6 +88,7 @@ export const eigenDA: DaProject = {
     },
     bridges: [
       NO_BRIDGE({
+        id: ProjectId('eigen-da-no-bridge'),
         addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
         layer: 'EigenDA',
         description:

@@ -133,6 +133,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
     },
     bridges: [
       NO_BRIDGE({
+        id: ProjectId('near-no-bridge'),
         addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
         layer: 'NearDA',
         technology: {

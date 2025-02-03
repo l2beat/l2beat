@@ -3,9 +3,7 @@ import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { NO_BRIDGE } from '../templates/no-bridge-template'
-import { SP1Blobstream } from './SP1Blobstream'
-
-export const blobstream = [SP1Blobstream]
+import { blobstream } from './blobstream'
 
 export const celestia: DaProject = {
   type: 'DaLayer',
@@ -119,6 +117,7 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
     },
     bridges: [
       NO_BRIDGE({
+        id: ProjectId('celestia-no-bridge'),
         addedAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
         layer: 'Celestia',
         description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
@@ -127,7 +126,7 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
           description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
         },
       }),
-      ...blobstream,
+      blobstream,
     ],
     /*
       Node params sources:
