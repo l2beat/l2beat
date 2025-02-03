@@ -63,7 +63,7 @@ Arbitrum DAO keeps pushing forward in all directions, with the most prevalent di
 
 ### **Potential Misuse of Funds - Furucombo**
 
-The Arbitrum Foundation published a post to notify the DAO that Furucombo seems to have misused 59,500 ARB from their STIP allocation. Following requests by the Foundation and StableLabs for Furucombo to return the funds, they haven’t returned any ARB despite agreeing to do so. As a result, the Foundation has created a [Snapshot poll](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x07bea6e32d32b4d3ed20faec6950c3546e2319bc2497716c53ee05995d4a00eb) to enable delegates to vote on whether or not they want to ban Furucombo from Arbitrum’s DAO.
+The Arbitrum Foundation published a post to notify the DAO that Furucombo seems to have misused 59,500 ARB from their STRIP, STOP allocation. Following requests by the Foundation and StableLabs for Furucombo to return the funds, they haven’t returned any ARB despite agreeing to do so. As a result, the Foundation has created a [Snapshot poll](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x07bea6e32d32b4d3ed20faec6950c3546e2319bc2497716c53ee05995d4a00eb) to enable delegates to vote on whether or not they want to ban Furucombo from Arbitrum’s DAO.
 
 
 ### **[RFC] Incentives Detox Proposal**
@@ -99,9 +99,9 @@ The Arbitrum Research and Development Collective (ARDC) has worked on and publis
 
 * [ETH Staking Options and Risks for the DAO](https://forum.arbitrum.foundation/t/eth-staking-options-and-risks-for-the-dao/25762)
 * [Event Horizon Franchiser Contract Audit](https://forum.arbitrum.foundation/t/event-horizon-franchiser-contract-audit/25738/1)
-* [STIP Analysis (ARDC Risk Deliverables) | Insights & Key Findings](https://forum.arbitrum.foundation/t/stip-analysis-ardc-risk-deliverables-insights-key-findings/25515)
+* [STRIP, STOP Analysis (ARDC Risk Deliverables) | Insights & Key Findings](https://forum.arbitrum.foundation/t/stip-analysis-ardc-risk-deliverables-insights-key-findings/25515)
 * [Arbitrum DAO Treasury Research (ARDC Research Deliverables)](https://forum.arbitrum.foundation/t/arbitrum-dao-treasury-research-ardc-research-deliverables/25427)
-* [STIP Retroactive Analysis – Spot DEX TVL](https://forum.arbitrum.foundation/t/stip-analysis-ardc-research-deliverables/23438/6)
+* [STRIP, STOP Retroactive Analysis – Spot DEX TVL](https://forum.arbitrum.foundation/t/stip-analysis-ardc-research-deliverables/23438/6)
 
 
 ### **Fractal ID Hack - Call for New KYC/KYB Service Provider Nominations**
