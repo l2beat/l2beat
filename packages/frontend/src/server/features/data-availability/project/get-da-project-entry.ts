@@ -3,7 +3,6 @@ import type {
   DaLayer,
   DaLayerThroughput,
   DaProject,
-  EthereumDaProject,
 } from '@l2beat/config'
 import { isDaBridgeVerified } from '@l2beat/config'
 import { getContractsVerificationStatuses } from '@l2beat/config'
@@ -186,7 +185,7 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
-  project: EthereumDaProject,
+  project: DaProject,
 ): Promise<EthereumDaProjectPageEntry> {
   const [daBridge] = project.daLayer.bridges
   if (!daBridge) {
@@ -242,7 +241,7 @@ export async function getEthereumDaProjectEntry(
       bridgeName: daBridge.display.name,
       callout: {
         title: daBridge.display.name,
-        description: daBridge.callout,
+        description: daBridge.risks.callout ?? '',
       },
     },
     sections,

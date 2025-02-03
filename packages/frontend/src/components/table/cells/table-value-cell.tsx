@@ -1,4 +1,5 @@
 import type { TableReadyValue } from '@l2beat/config'
+import { NaBadge } from '~/components/badge/na-badge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
@@ -16,7 +17,7 @@ import { TwoRowCell } from './two-row-cell'
 
 interface Props {
   value: TableReadyValue | undefined
-  emptyMode?: 'em-dash' | 'no-info'
+  emptyMode?: 'em-dash' | 'no-info' | 'n/a'
 }
 
 export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
@@ -27,6 +28,9 @@ export function TableValueCell({ value, emptyMode = 'no-info' }: Props) {
           {EM_DASH}
         </div>
       )
+    }
+    if (emptyMode === 'n/a') {
+      return <NaBadge />
     }
     return <NoInfoCell />
   }

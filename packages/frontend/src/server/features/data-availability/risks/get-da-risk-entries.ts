@@ -7,7 +7,6 @@ import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaBridgeRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
@@ -51,7 +50,7 @@ function getDaRiskEntry(
         statuses: {
           verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
         },
-        risks: getDaBridgeRisks(daBridge),
+        risks: daBridge.risks,
         tvs,
       }
     })

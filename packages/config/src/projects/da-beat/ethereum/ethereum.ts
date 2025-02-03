@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { EthereumDaProject } from '../../../types'
+import type { DaProject } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
 
-export const ethereum: EthereumDaProject = {
+export const ethereum: DaProject = {
   type: 'DaLayer',
   id: ProjectId('ethereum'),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
@@ -118,7 +118,9 @@ This method allows ZK rollups to prove that the data used in their validity proo
       frequency: 12, // 12 seconds
     },
     pruningWindow: 86400 * 18, // 18 days in seconds
-    risks: EthereumDaLayerRisks.SelfVerify,
+    risks: {
+      daLayer: EthereumDaLayerRisks.SelfVerify,
+    },
     economicSecurity: {
       name: 'Ethereum',
       token: {

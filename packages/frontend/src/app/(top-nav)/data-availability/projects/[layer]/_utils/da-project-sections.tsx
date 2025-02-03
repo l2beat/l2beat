@@ -1,9 +1,4 @@
-import type {
-  DaBridge,
-  DaProject,
-  EthereumDaBridge,
-  EthereumDaProject,
-} from '@l2beat/config'
+import type { DaBridge, DaProject } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -213,8 +208,8 @@ export function getRegularDaProjectSections({
 }
 
 type EthereumDetailsParams = {
-  daLayer: EthereumDaProject
-  daBridge: EthereumDaBridge
+  daLayer: DaProject
+  daBridge: DaBridge
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
