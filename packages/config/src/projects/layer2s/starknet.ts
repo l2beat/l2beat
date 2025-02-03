@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -238,6 +239,20 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 const finalizationPeriod = 0
+
+const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
+
+// big governance assert
+assert(
+  proxyGovernors[0].address ===
+    discovery.getContract('StarknetAdminMultisig').address &&
+    proxyGovernors.length === 1 &&
+    governors[0].address ===
+      discovery.getContract('StarknetOpsMultisig').address &&
+    governors.length === 1,
+  'gov has changed, review non-discodriven perms and gov section.',
+)
 
 export const starknet: Layer2 = {
   type: 'layer2',
