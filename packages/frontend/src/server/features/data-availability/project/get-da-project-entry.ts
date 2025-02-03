@@ -48,16 +48,16 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     id: string
     name: string
     slug: string
-    type: DaBridge['type']
+    isNoBridge: boolean
     grissiniValues: RosetteValue[]
   }
   bridges: {
     id: string
     name: string
     slug: string
+    isNoBridge: boolean
     grissiniValues: RosetteValue[]
     tvs: number
-    type: DaBridge['type']
     usedIn: UsedInProject[]
   }[]
   header: {
@@ -150,16 +150,16 @@ export async function getDaProjectEntry(
       id: daBridge.id ?? 'unknown',
       name: daBridge.display.name,
       slug: daBridge.display.slug,
-      type: daBridge.type,
+      isNoBridge: !!daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
     bridges: project.daLayer.bridges.map((bridge) => ({
       id: bridge.id ?? 'unknown',
       name: bridge.display.name,
       slug: bridge.display.slug,
+      isNoBridge: !!bridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
       tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
-      type: bridge.type,
       usedIn: bridge.usedIn.sort(
         (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
       ),

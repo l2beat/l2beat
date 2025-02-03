@@ -851,13 +851,6 @@ export interface DaTechnology {
 
 export interface DaBridge {
   id: ProjectId
-  type:
-    | 'Enshrined'
-    | 'NoDacBridge'
-    | 'NoBridge'
-    | 'OnChainBridge'
-    | 'IntegratedDacBridge'
-    | 'StandaloneDacBridge'
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   display: DaBridgeDisplay

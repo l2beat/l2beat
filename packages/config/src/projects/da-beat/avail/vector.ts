@@ -13,7 +13,6 @@ const updateInterval = 1.5 // hours
 export const vector: DaBridge = {
   id: ProjectId('vector'),
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-  type: 'OnChainBridge',
   display: {
     name: 'Vector',
     slug: 'vector',

@@ -29,7 +29,7 @@ export function getDaSolution(project: ScalingProject): DaSolution | undefined {
 
   if (
     !daSolution ||
-    daSolution.bridge.type === 'NoBridge' ||
+    !!daSolution.bridge.risks.isNoBridge ||
     !hostChainSelector
   ) {
     return

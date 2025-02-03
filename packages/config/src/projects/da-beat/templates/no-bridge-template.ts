@@ -14,7 +14,6 @@ export interface TemplateVars {
 }
 
 export function NO_BRIDGE(template: TemplateVars): DaBridge {
-  const type = 'NoBridge'
   const description =
     template.description ??
     'This project does not have a DA bridge on Ethereum.'
@@ -39,7 +38,6 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
 
   return {
     id: template.id,
-    type,
     addedAt: template.addedAt,
     display: {
       name: 'No bridge',

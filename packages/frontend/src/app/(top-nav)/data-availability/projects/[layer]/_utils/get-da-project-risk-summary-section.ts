@@ -11,10 +11,7 @@ export function getDaProjectRiskSummarySection(
   const bridgeSections = [
     {
       id: 'da-bridge-contracts',
-      value:
-        bridge.type === 'OnChainBridge' || bridge.type === 'StandaloneDacBridge'
-          ? bridge.contracts
-          : { risks: [] },
+      value: bridge.contracts ?? { risks: [] },
     },
     {
       id: 'da-bridge-technology',

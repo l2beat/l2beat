@@ -15,7 +15,6 @@ const baseUpdateInterval = 1 // hours
 
 export const blobstream: DaBridge = {
   id: ProjectId('blobstream'),
-  type: 'OnChainBridge',
   addedAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
   display: {
     name: 'Blobstream',

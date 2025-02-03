@@ -21,7 +21,7 @@ export function SingleBridgeDetails({ project }: Props) {
       <div className="mt-3 text-xs text-secondary md:hidden">
         DA Bridge risks
       </div>
-      {project.selectedBridge.type === 'NoBridge' ? (
+      {project.selectedBridge.isNoBridge ? (
         <InlinedNoBridgeGrissiniDetailsPlaceholder className="md:col-span-3" />
       ) : (
         project.header.daBridgeGrissiniValues.map((value) => (
