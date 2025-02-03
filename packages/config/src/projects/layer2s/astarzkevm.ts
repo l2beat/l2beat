@@ -29,11 +29,6 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('AstarValidium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const upgradeability = {
-  upgradableBy: ['LocalAdmin'],
-  upgradeDelay: 'None',
-}
-
 export const astarzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
@@ -130,23 +125,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        ...discovery.getMultisigPermission(
-          'LocalAdmin',
-          'Admin of the AstarValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
-        ),
-      ],
-    },
-  },
-  nonTemplateContracts: [
-    discovery.getContractDetails('AstarValidiumDAC', {
-      description:
-        'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'Astar zkEVM Launch',

@@ -29,11 +29,6 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('XLayerValidium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const upgradeability = {
-  upgradableBy: ['DACProxyAdminOwner'],
-  upgradeDelay: 'No delay',
-}
-
 export const xlayer: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
@@ -132,49 +127,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        {
-          name: 'LocalAdmin',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('XLayerValidium', 'admin'),
-            ),
-          ],
-          description:
-            'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
-        },
-        {
-          name: 'RollupManager',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('XLayerValidium', 'rollupManager'),
-            ),
-          ],
-          description:
-            'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
-        },
-        {
-          name: 'DACProxyAdminOwner',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('ProxyAdmin', 'owner'),
-            ),
-          ],
-          description:
-            "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-        },
-      ],
-    },
-  },
-  nonTemplateContracts: [
-    discovery.getContractDetails('XLayerValidiumDAC', {
-      description:
-        'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

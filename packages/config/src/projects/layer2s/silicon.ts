@@ -29,11 +29,6 @@ const isForcedBatchDisallowed =
   discovery.getContractValue<string>('SiliconValidium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
-const upgradeability = {
-  upgradableBy: ['SiliconDAC Upgrader'],
-  upgradeDelay: 'None',
-}
-
 export const silicon: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
   additionalBadges: [Badge.DA.DAC],
@@ -118,39 +113,6 @@ export const silicon: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the SiliconValidium contract.',
   },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        {
-          name: 'LocalAdmin',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('SiliconValidium', 'admin'),
-            ),
-          ],
-          description:
-            'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
-        },
-        {
-          name: 'SiliconDAC Upgrader',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('DACProxyAdmin', 'owner'),
-            ),
-          ],
-          description:
-            'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
-        },
-      ],
-    },
-  },
-  nonTemplateContracts: [
-    discovery.getContractDetails('SiliconDAC', {
-      description:
-        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'Silicon Mainnet Launch',
