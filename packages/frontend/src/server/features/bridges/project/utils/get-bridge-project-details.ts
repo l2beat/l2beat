@@ -38,7 +38,6 @@ export async function getBridgeProjectDetails(
           isUnderReview: bridge.isUnderReview,
           escrows: bridge.config.escrows,
         },
-        contractsVerificationStatuses,
         projectsChangeReport,
       )
     : undefined
