@@ -780,25 +780,11 @@ export interface BridgeTechnology {
   isUnderReview?: boolean
 }
 
-// I HATE THIS
-export type EthereumDaProject = Omit<DaProject, 'daLayer'> & {
-  daLayer: Omit<DaLayer, 'risks' | 'bridges'> & {
-    risks: TableReadyValue
-    bridges: EthereumDaBridge[]
-  }
-}
-export type EthereumDaBridge = Omit<DaBridge, 'risks'> & {
-  risks: TableReadyValue
-  /** Replaces risk grissini */
-  callout: string
-}
-
 export interface CustomDa {
   /** Will show the project name if not provided. */
   name?: string
   description?: string
   type: string
-  isNoBridge?: boolean
   risks: DaLayerRisks & DaBridgeRisks
   technology: DaTechnology
   dac?: DacInfo
@@ -843,8 +829,19 @@ export interface DaLayer {
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
 export interface DaLayerRisks {
-  economicSecurity: TableReadyValue
-  fraudDetection: TableReadyValue
+  daLayer?: TableReadyValue
+  economicSecurity?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
+export interface DaBridgeRisks {
+  isNoBridge?: boolean
+  /** Replaces risk grissini */
+  callout?: string
+  daBridge?: TableReadyValue
+  committeeSecurity?: TableReadyValue
+  upgradeability?: TableReadyValue
+  relayerFailure?: TableReadyValue
 }
 
 export interface DaLayerDisplay {
@@ -936,22 +933,10 @@ export interface DacInfo {
   hideMembers?: boolean
 }
 
-export type DacTransactionDataType =
-  | 'Transaction data (compressed)'
-  | 'Transaction data'
-  | 'State diffs (compressed)'
-  | 'State diffs'
-
 export interface DaBridgeDisplay {
   name: string
   slug: string
   description: string
-}
-
-export interface DaBridgeRisks {
-  committeeSecurity: TableReadyValue
-  upgradeability: TableReadyValue
-  relayerFailure: TableReadyValue
 }
 
 export interface DaBridgeContracts {

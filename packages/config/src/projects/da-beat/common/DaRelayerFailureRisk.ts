@@ -21,13 +21,6 @@ const NoMechanism: TableReadyValue = {
     'The relayer role is permissioned, and the DA bridge does not have a Security Council or a governance mechanism to propose new relayers. In case of relayer failure, the DA bridge will halt and be unable to recover without the intervention of a centralized entity.',
 }
 
-const NoBridge: TableReadyValue = {
-  value: 'N/A',
-  sentiment: 'bad',
-  description:
-    "The relayer does not contribute to the DA bridge liveness since data availability attestations are not integrated in the scaling solution's proof system.",
-}
-
 function Governance(delaySeconds: number): TableReadyValue {
   return {
     value: 'Governance',
@@ -41,5 +34,4 @@ export const DaRelayerFailureRisk = {
   Whitelist,
   Governance,
   NoMechanism,
-  NoBridge,
 }

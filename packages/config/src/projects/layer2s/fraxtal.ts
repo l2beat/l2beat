@@ -5,13 +5,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import {
-  DaCommitteeSecurityRisk,
-  DaEconomicSecurityRisk,
-  DaFraudDetectionRisk,
-  DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
-} from '../da-beat/common'
+import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../da-beat/common'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('fraxtal')
@@ -137,13 +131,10 @@ Projects not integrating with a functional DA bridge rely only on the data avail
         },
       ],
     },
-    isNoBridge: true,
     risks: {
       economicSecurity: DaEconomicSecurityRisk.Unknown,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
-      committeeSecurity: DaCommitteeSecurityRisk.NoBridge,
-      upgradeability: DaUpgradeabilityRisk.NoBridge,
-      relayerFailure: DaRelayerFailureRisk.NoBridge,
+      isNoBridge: true,
     },
   },
 })
