@@ -92,46 +92,28 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplatePermissions: [
     {
       name: 'Admins of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'DEFAULT_ADMIN_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
+      accounts: discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'DEFAULT_ADMIN_ROLE',
+      ),
       description: 'Admin of the SuperChainConfig, can configure other roles.',
     },
     /*  This role is still not set, but it is present in the code and must be uncommented in the future
     {
       name: 'Operators of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'OPERATOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
+      accounts: discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'OPERATOR_ROLE',
+      ),
       description:
         'Role set up in SuperChainConfig contract that can raise the withdrawal limit for a user.',
     }, */
     {
       name: 'Monitors of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'MONITOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
+      accounts: discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'MONITOR_ROLE',
+      ),
       description:
         'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
     },
