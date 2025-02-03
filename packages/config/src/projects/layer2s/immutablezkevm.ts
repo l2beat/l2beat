@@ -124,16 +124,18 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Bridge', {
-        description: 'Main escrow for tokens.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('RootAxelarBridgeAdaptor', {
-        description: 'Axelar adaptor contract used by the bridge.',
-        ...upgradeability,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Bridge', {
+          description: 'Main escrow for tokens.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('RootAxelarBridgeAdaptor', {
+          description: 'Axelar adaptor contract used by the bridge.',
+          ...upgradeability,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

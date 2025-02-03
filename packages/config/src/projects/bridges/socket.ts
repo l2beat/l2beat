@@ -400,36 +400,38 @@ export const socket: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Socket',
-        'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
-      ),
-      discovery.getContractDetails(
-        'FastSwitchboard',
-        'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
-      ),
-      discovery.getContractDetails(
-        'PolygonL1Switchboard',
-        'Switchboard using native Polygon message passing.',
-      ),
-      discovery.getContractDetails(
-        'OptimismSwitchboard',
-        'Switchboard using native Optimism message passing.',
-      ),
-      discovery.getContractDetails(
-        'ArbitrumL1Switchboard',
-        'Switchboard using native Arbitrum message passing.',
-      ),
-      discovery.getContractDetails(
-        'ExecutionManager',
-        'Manages crosschain execution and fees.',
-      ),
-      discovery.getContractDetails(
-        'TransmitManager',
-        'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Socket',
+          'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
+        ),
+        discovery.getContractDetails(
+          'FastSwitchboard',
+          'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
+        ),
+        discovery.getContractDetails(
+          'PolygonL1Switchboard',
+          'Switchboard using native Polygon message passing.',
+        ),
+        discovery.getContractDetails(
+          'OptimismSwitchboard',
+          'Switchboard using native Optimism message passing.',
+        ),
+        discovery.getContractDetails(
+          'ArbitrumL1Switchboard',
+          'Switchboard using native Arbitrum message passing.',
+        ),
+        discovery.getContractDetails(
+          'ExecutionManager',
+          'Manages crosschain execution and fees.',
+        ),
+        discovery.getContractDetails(
+          'TransmitManager',
+          'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },

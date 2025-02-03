@@ -94,26 +94,31 @@ export const layer2financezk: Layer2 = {
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Proxy', {
-        name: 'StarkExchange',
-      }),
-      discovery.getContractDetails('Committee'),
-      discovery.getContractDetails(
-        'Broker',
-        'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
-      ),
-      discovery.getContractDetails(
-        'StrategyCompound',
-        'It is through this contract that groups of users interact with the Compound DeFi protocol.',
-      ),
-      discovery.getContractDetails('GpsFactRegistryAdapter'),
-      discovery.getContractDetails('OrderRegistry'),
-      ...getSHARPVerifierContracts(
-        discovery,
-        discovery.getAddressFromValue('GpsFactRegistryAdapter', 'gpsContract'),
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Proxy', {
+          name: 'StarkExchange',
+        }),
+        discovery.getContractDetails('Committee'),
+        discovery.getContractDetails(
+          'Broker',
+          'Broker manages investment strategies on L1 for tokens deposited to the system. Strategies invest in specific protocols, e.g. Compound and they escrow LP tokens as custom Wrapped tokens.',
+        ),
+        discovery.getContractDetails(
+          'StrategyCompound',
+          'It is through this contract that groups of users interact with the Compound DeFi protocol.',
+        ),
+        discovery.getContractDetails('GpsFactRegistryAdapter'),
+        discovery.getContractDetails('OrderRegistry'),
+        ...getSHARPVerifierContracts(
+          discovery,
+          discovery.getAddressFromValue(
+            'GpsFactRegistryAdapter',
+            'gpsContract',
+          ),
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

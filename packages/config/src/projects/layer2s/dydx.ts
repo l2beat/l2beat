@@ -288,75 +288,77 @@ export const dydx: Layer2 = {
     },
   ),
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkPerpetual', {
-        description:
-          'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        ...priorityExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('FinalizableGpsFactAdapter', {
-        description:
-          'Contract serving as an adapter for STARK Verifier. It holds the address of the STARK Verifier and CAIRO program hash needed for verification.',
-        upgradeConsiderations:
-          'This contract is not upgradeable and the program hash cannot be updated because it is in the finalized state.',
-      }),
-      discovery.getContractDetails(
-        'GpsStatementVerifier',
-        'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
-      ),
-      discovery.getContractDetails(
-        'MemoryPageFactRegistry',
-        'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
-      ),
-      discovery.getContractDetails(
-        'FriStatementContract',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails(
-        'MerkleStatementContract',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails(
-        'CairoBootloaderProgram',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails('PerpetualEscapeVerifier', {
-        description:
-          'Contract responsible for validating force withdrawal requests.',
-      }),
-      discovery.getContractDetails('MerkleDistributor', {
-        description:
-          'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
-        ...shortTimelockUpgradeability,
-        upgradeConsiderations: `This contract can be paused by the Merkle Pauser with ${
-          formatSeconds(merklePauserDelay) === ''
-            ? 'no'
-            : formatSeconds(merklePauserDelay)
-        } delay.`,
-      }),
-      discovery.getContractDetails('LiquidityStaking', {
-        description:
-          'The Liquidity Module is a collection of smart contracts for staking and borrowing, which incentivize the allocation of USDC funds for market making purposes on the dYdX layer 2 exchange.',
-        ...shortTimelockUpgradeability,
-      }),
-      discovery.getContractDetails('SafetyModule', {
-        description:
-          'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
-        ...longTimelockUpgradeability,
-      }),
-      discovery.getContractDetails('DydxGovernor', {
-        description: 'Contract storing dYdX Governance logic.',
-      }),
-      discovery.getContractDetails('GovernanceStrategyV2', {
-        description:
-          'Contract storing logic for votes counting in dYdX Governance.',
-        upgradeConsiderations:
-          'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
-      }),
-      discovery.getContractDetails('DydxToken', {
-        description: 'Token used by the dYdX Governance for voting.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkPerpetual', {
+          description:
+            'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+          ...priorityExecutorUpgradeability,
+        }),
+        discovery.getContractDetails('FinalizableGpsFactAdapter', {
+          description:
+            'Contract serving as an adapter for STARK Verifier. It holds the address of the STARK Verifier and CAIRO program hash needed for verification.',
+          upgradeConsiderations:
+            'This contract is not upgradeable and the program hash cannot be updated because it is in the finalized state.',
+        }),
+        discovery.getContractDetails(
+          'GpsStatementVerifier',
+          'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
+        ),
+        discovery.getContractDetails(
+          'MemoryPageFactRegistry',
+          'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
+        ),
+        discovery.getContractDetails(
+          'FriStatementContract',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails(
+          'MerkleStatementContract',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails(
+          'CairoBootloaderProgram',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails('PerpetualEscapeVerifier', {
+          description:
+            'Contract responsible for validating force withdrawal requests.',
+        }),
+        discovery.getContractDetails('MerkleDistributor', {
+          description:
+            'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
+          ...shortTimelockUpgradeability,
+          upgradeConsiderations: `This contract can be paused by the Merkle Pauser with ${
+            formatSeconds(merklePauserDelay) === ''
+              ? 'no'
+              : formatSeconds(merklePauserDelay)
+          } delay.`,
+        }),
+        discovery.getContractDetails('LiquidityStaking', {
+          description:
+            'The Liquidity Module is a collection of smart contracts for staking and borrowing, which incentivize the allocation of USDC funds for market making purposes on the dYdX layer 2 exchange.',
+          ...shortTimelockUpgradeability,
+        }),
+        discovery.getContractDetails('SafetyModule', {
+          description:
+            'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
+          ...longTimelockUpgradeability,
+        }),
+        discovery.getContractDetails('DydxGovernor', {
+          description: 'Contract storing dYdX Governance logic.',
+        }),
+        discovery.getContractDetails('GovernanceStrategyV2', {
+          description:
+            'Contract storing logic for votes counting in dYdX Governance.',
+          upgradeConsiderations:
+            'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
+        }),
+        discovery.getContractDetails('DydxToken', {
+          description: 'Token used by the dYdX Governance for voting.',
+        }),
+      ],
+    },
     risks: [
       {
         ...CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(maxPriorityDelay),

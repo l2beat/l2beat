@@ -414,71 +414,75 @@ export const taiko: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('TaikoL1Contract', {
-        description:
-          'This contract provides functionalities for sequencing, proving, and verifying batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('L1RollupAddressManager', {
-        description:
-          'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('MainnetTierRouter', {
-        description:
-          'Contract managing and routing the multi-tier proof system.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SgxVerifier', {
-        description: 'Verifier contract for SGX proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('Risc0Verifier', {
-        description: 'Verifier contract for ZK-proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SP1Verifier', {
-        description: 'Verifier contract for ZK-proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('GuardianMinorityProver', {
-        description:
-          'Verifier contract for batches proven by Guardian multisig minority.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('GuardianProver', {
-        description: 'Verifier contract for Guardian multisig proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('DAOFallbackProposer', {
-        description:
-          "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SignalService', {
-        description:
-          'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('AutomataDcapV3Attestation', {
-        description: 'Contract managing SGX attestation certificates.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('TaikoToken', {
-        description:
-          "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('TaikoBridge', {
-        description: 'Shared bridge for Taiko chains for bridged ETH.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SharedERC20Vault', {
-        description: 'Shared vault for Taiko chains for bridged ERC20 tokens.',
-        ...upgradesTaikoMultisig,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('TaikoL1Contract', {
+          description:
+            'This contract provides functionalities for sequencing, proving, and verifying batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('L1RollupAddressManager', {
+          description:
+            'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('MainnetTierRouter', {
+          description:
+            'Contract managing and routing the multi-tier proof system.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SgxVerifier', {
+          description: 'Verifier contract for SGX proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('Risc0Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SP1Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('GuardianMinorityProver', {
+          description:
+            'Verifier contract for batches proven by Guardian multisig minority.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('GuardianProver', {
+          description:
+            'Verifier contract for Guardian multisig proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('DAOFallbackProposer', {
+          description:
+            "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SignalService', {
+          description:
+            'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('AutomataDcapV3Attestation', {
+          description: 'Contract managing SGX attestation certificates.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('TaikoToken', {
+          description:
+            "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('TaikoBridge', {
+          description: 'Shared bridge for Taiko chains for bridged ETH.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SharedERC20Vault', {
+          description:
+            'Shared vault for Taiko chains for bridged ERC20 tokens.',
+          ...upgradesTaikoMultisig,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

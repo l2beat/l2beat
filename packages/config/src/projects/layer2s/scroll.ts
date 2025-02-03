@@ -552,150 +552,152 @@ export const scroll: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ScrollChain', {
-        description:
-          'The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist. L1 -> L2 message processing on L2 is not enforced.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1ScrollMessenger', {
-        description:
-          'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1MessageQueue', {
-        description:
-          'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
-      }),
-      discovery.getContractDetails('Whitelist', {
-        description:
-          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
-      }),
-      discovery.getContractDetails('ScrollOwner', {
-        description:
-          'Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.',
-      }),
-      discovery.getContractDetails('TimelockSlow', {
-        description: `${formatSeconds(
-          timelockSlowDelay,
-        )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The SecurityCouncil can propose, cancel and execute transactions, and the ExecutorMultisig can execute them.`,
-      }),
-      discovery.getContractDetails('TimelockFast', {
-        description: `${formatSeconds(
-          timelockFastDelay,
-        )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollOpsMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them. Currently also has the Admin role in the ScrollOwner contract and can thus manage all roles including the ones that can upgrade all system contracts.`,
-      }),
-      discovery.getContractDetails('TimelockSC', {
-        description: `${formatSeconds(
-          timelockSCDelay,
-        )} timelock. Can upgrade all core system contracts via the ProxyAdmin. The SecurityCouncil can propose, cancel and execute transactions, and the ScrollExecutorMultisig can execute them.`,
-      }),
-      discovery.getContractDetails('TimelockEmergency', {
-        description: `${formatSeconds(
-          timelockEmergencyDelay,
-        )} timelock. Can pause system contracts, revert batches and remove sequencers. The ScrollEmergencyMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them.`,
-      }),
-      discovery.getContractDetails('MultipleVersionRollupVerifier', {
-        description:
-          'Contract used to update the verifier and keep track of current and old versions.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV0', {
-        description:
-          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.',
-      }),
-      discovery.getContractDetails('PlonkVerifierV0', {
-        description:
-          'Plonk verifier used to verify ZK proofs using calldata for DA.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV1', {
-        description:
-          'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1.',
-      }),
-      discovery.getContractDetails('PlonkVerifierV1', {
-        description:
-          'Plonk verifier used to verify ZK proofs using blobs for DA.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV1-1', {
-        description:
-          'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1-1. Added in the Curie upgrade.',
-      }),
-      discovery.getContractDetails('PlonkVerifierV1-1', {
-        description:
-          'Plonk verifier used to verify ZK proofs using blobs for DA.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV2', {
-        description:
-          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2. Added in the Darwin upgrade.',
-      }),
-      discovery.getContractDetails('PlonkVerifierV2', {
-        description: 'Plonk verifier used to verify ZK proofs for bundles.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV2-1', {
-        description:
-          'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2-1. Added in the Darwin v2 upgrade.',
-      }),
-      discovery.getContractDetails('PlonkVerifierV2-1', {
-        description: 'Plonk verifier used to verify ZK proofs for bundles.',
-      }),
-      discovery.getContractDetails('L1ETHGateway', {
-        description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1WETHGateway', {
-        description: 'Contract used to bridge WETH from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1BatchBridgeGateway', {
-        description:
-          'Contract used to efficiently bridge ETH (in batches) from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1StandardERC20Gateway', {
-        description:
-          'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1CustomERC20Gateway', {
-        description:
-          'Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1USDCGateway', {
-        description: 'Contract used to bridge USDC tokens from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1ERC721Gateway', {
-        description: 'Contract used to bridge ERC721 tokens from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1ERC1155Gateway', {
-        description: 'Contract used to bridge ERC1155 tokens from L1 to L2.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('L1GatewayRouter', {
-        description:
-          'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
-        ...upgradesSC,
-      }),
-      discovery.getContractDetails('ScrollFeeVaultMultisig', {
-        description:
-          'Multisig used to store fees collected from gateways to pay for L1 -> L2 message execution.',
-      }),
-      discovery.getContractDetails('EnforcedTxGateway', {
-        description:
-          'Contracts to force L1 -> L2 messages with the proper sender.',
-        ...upgradesSC,
-        pausable: {
-          paused: isEnforcedTxGatewayPaused,
-          pausableBy: ['ScrollOwner'],
-        },
-      }),
-      discovery.getContractDetails('OLD_L2GasPriceOracle', {
-        description:
-          'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
-        ...upgradesSC,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ScrollChain', {
+          description:
+            'The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist. L1 -> L2 message processing on L2 is not enforced.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1ScrollMessenger', {
+          description:
+            'Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1MessageQueue', {
+          description:
+            'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
+        }),
+        discovery.getContractDetails('Whitelist', {
+          description:
+            'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
+        }),
+        discovery.getContractDetails('ScrollOwner', {
+          description:
+            'Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.',
+        }),
+        discovery.getContractDetails('TimelockSlow', {
+          description: `${formatSeconds(
+            timelockSlowDelay,
+          )} timelock. Admin of the ScrollOwner contract, meaning it can assign and revoke roles. The SecurityCouncil can propose, cancel and execute transactions, and the ExecutorMultisig can execute them.`,
+        }),
+        discovery.getContractDetails('TimelockFast', {
+          description: `${formatSeconds(
+            timelockFastDelay,
+          )} timelock. Can add new sequencers and provers, update the gas oracle and permissions to update its values, the max gas limit, and gateways token mappings. The ScrollOpsMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them. Currently also has the Admin role in the ScrollOwner contract and can thus manage all roles including the ones that can upgrade all system contracts.`,
+        }),
+        discovery.getContractDetails('TimelockSC', {
+          description: `${formatSeconds(
+            timelockSCDelay,
+          )} timelock. Can upgrade all core system contracts via the ProxyAdmin. The SecurityCouncil can propose, cancel and execute transactions, and the ScrollExecutorMultisig can execute them.`,
+        }),
+        discovery.getContractDetails('TimelockEmergency', {
+          description: `${formatSeconds(
+            timelockEmergencyDelay,
+          )} timelock. Can pause system contracts, revert batches and remove sequencers. The ScrollEmergencyMultisig can propose and cancel transactions, and the ScrollExecutorMultisig can execute them.`,
+        }),
+        discovery.getContractDetails('MultipleVersionRollupVerifier', {
+          description:
+            'Contract used to update the verifier and keep track of current and old versions.',
+        }),
+        discovery.getContractDetails('ZkEvmVerifierV0', {
+          description:
+            'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.',
+        }),
+        discovery.getContractDetails('PlonkVerifierV0', {
+          description:
+            'Plonk verifier used to verify ZK proofs using calldata for DA.',
+        }),
+        discovery.getContractDetails('ZkEvmVerifierV1', {
+          description:
+            'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1.',
+        }),
+        discovery.getContractDetails('PlonkVerifierV1', {
+          description:
+            'Plonk verifier used to verify ZK proofs using blobs for DA.',
+        }),
+        discovery.getContractDetails('ZkEvmVerifierV1-1', {
+          description:
+            'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1-1. Added in the Curie upgrade.',
+        }),
+        discovery.getContractDetails('PlonkVerifierV1-1', {
+          description:
+            'Plonk verifier used to verify ZK proofs using blobs for DA.',
+        }),
+        discovery.getContractDetails('ZkEvmVerifierV2', {
+          description:
+            'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2. Added in the Darwin upgrade.',
+        }),
+        discovery.getContractDetails('PlonkVerifierV2', {
+          description: 'Plonk verifier used to verify ZK proofs for bundles.',
+        }),
+        discovery.getContractDetails('ZkEvmVerifierV2-1', {
+          description:
+            'Verifier proving bundles (group of batches), used to prepare data for the PlonkVerifierV2-1. Added in the Darwin v2 upgrade.',
+        }),
+        discovery.getContractDetails('PlonkVerifierV2-1', {
+          description: 'Plonk verifier used to verify ZK proofs for bundles.',
+        }),
+        discovery.getContractDetails('L1ETHGateway', {
+          description: 'Deprecated: Contract used to bridge ETH from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1WETHGateway', {
+          description: 'Contract used to bridge WETH from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1BatchBridgeGateway', {
+          description:
+            'Contract used to efficiently bridge ETH (in batches) from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1StandardERC20Gateway', {
+          description:
+            'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1CustomERC20Gateway', {
+          description:
+            'Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1USDCGateway', {
+          description: 'Contract used to bridge USDC tokens from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1ERC721Gateway', {
+          description: 'Contract used to bridge ERC721 tokens from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1ERC1155Gateway', {
+          description: 'Contract used to bridge ERC1155 tokens from L1 to L2.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('L1GatewayRouter', {
+          description:
+            'Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.',
+          ...upgradesSC,
+        }),
+        discovery.getContractDetails('ScrollFeeVaultMultisig', {
+          description:
+            'Multisig used to store fees collected from gateways to pay for L1 -> L2 message execution.',
+        }),
+        discovery.getContractDetails('EnforcedTxGateway', {
+          description:
+            'Contracts to force L1 -> L2 messages with the proper sender.',
+          ...upgradesSC,
+          pausable: {
+            paused: isEnforcedTxGatewayPaused,
+            pausableBy: ['ScrollOwner'],
+          },
+        }),
+        discovery.getContractDetails('OLD_L2GasPriceOracle', {
+          description:
+            'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
+          ...upgradesSC,
+        }),
+      ],
+    },
     risks: [],
   },
   permissions: {

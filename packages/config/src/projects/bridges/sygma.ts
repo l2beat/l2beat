@@ -120,28 +120,30 @@ export const sygma: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Bridge', {
-        description:
-          'The contract that facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks. The actual handling of the deposits/withdrawals is handled by a configured Handler contracts such as for example ERC20Handler.',
-      }),
-      discovery.getContractDetails('ERC20 Bridge Handler', {
-        description:
-          'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
-      }),
-      discovery.getContractDetails('FeeHandlerRouter', {
-        description:
-          'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
-      }),
-      discovery.getContractDetails('BasicFeeHandler', {
-        description:
-          'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
-      }),
-      discovery.getContractDetails('Permissionless Generic Handler', {
-        description:
-          'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Bridge', {
+          description:
+            'The contract that facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks. The actual handling of the deposits/withdrawals is handled by a configured Handler contracts such as for example ERC20Handler.',
+        }),
+        discovery.getContractDetails('ERC20 Bridge Handler', {
+          description:
+            'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
+        }),
+        discovery.getContractDetails('FeeHandlerRouter', {
+          description:
+            'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
+        }),
+        discovery.getContractDetails('BasicFeeHandler', {
+          description:
+            'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
+        }),
+        discovery.getContractDetails('Permissionless Generic Handler', {
+          description:
+            'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
+        }),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',

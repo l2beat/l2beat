@@ -116,19 +116,21 @@ export const eclipse: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('CanonicalBridge', {
-        description:
-          'Entry point to deposit ETH. It is registered as a module in the Mailbox contract.',
-      }),
-      discovery.getContractDetails('Mailbox', {
-        description:
-          'Contract receiving messages from registered modules to send to Eclipse. It doesn’t have any functionality to send messages back to Ethereum.',
-      }),
-      discovery.getContractDetails('Treasury', {
-        description: 'Holds the funds locked on Ethereum.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('CanonicalBridge', {
+          description:
+            'Entry point to deposit ETH. It is registered as a module in the Mailbox contract.',
+        }),
+        discovery.getContractDetails('Mailbox', {
+          description:
+            'Contract receiving messages from registered modules to send to Eclipse. It doesn’t have any functionality to send messages back to Ethereum.',
+        }),
+        discovery.getContractDetails('Treasury', {
+          description: 'Holds the funds locked on Ethereum.',
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

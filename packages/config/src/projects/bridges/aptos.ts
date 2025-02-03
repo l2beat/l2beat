@@ -102,18 +102,23 @@ export const aptos: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('TokenBridge', 'Aptos Token Bridge.'),
-      discovery.getContractDetails('LayerZero Relayer'),
-      discovery.getContractDetails('LayerZero Oracle'),
-      discovery.getContractDetails('Endpoint', 'LayerZero Ethereum Endpoint.'),
-      discovery.getContractDetails(
-        'UltraLightNodeV2',
-        'LayerZero UltraLight Node V2. Used by oracles to checkpoint source chain block hashes.',
-      ),
-      discovery.getContractDetails('TreasuryV2', 'LayerZero Treasury.'),
-      discovery.getContractDetails('LayerZero Proof Library'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('TokenBridge', 'Aptos Token Bridge.'),
+        discovery.getContractDetails('LayerZero Relayer'),
+        discovery.getContractDetails('LayerZero Oracle'),
+        discovery.getContractDetails(
+          'Endpoint',
+          'LayerZero Ethereum Endpoint.',
+        ),
+        discovery.getContractDetails(
+          'UltraLightNodeV2',
+          'LayerZero UltraLight Node V2. Used by oracles to checkpoint source chain block hashes.',
+        ),
+        discovery.getContractDetails('TreasuryV2', 'LayerZero Treasury.'),
+        discovery.getContractDetails('LayerZero Proof Library'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },

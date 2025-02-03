@@ -90,28 +90,30 @@ export const zkswap2: Layer2 = {
     exitMechanisms: zkswap.technology.exitMechanisms,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ZkSync',
-        'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-      ),
-      discovery.getContractDetails(
-        'ZkSyncCommitBlock',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails('ZkSyncExit'),
-      discovery.getContractDetails(
-        'Governance',
-        'Keeps a list of block producers and whitelisted tokens.',
-      ),
-      discovery.getContractDetails(
-        'UniswapV2Factory',
-        'Manages trading pairs.',
-      ),
-      discovery.getContractDetails('Verifier', 'zkSNARK Plonk Verifier.'),
-      discovery.getContractDetails('VerifierExit'),
-      discovery.getContractDetails('UpgradeGatekeeper'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ZkSync',
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+        ),
+        discovery.getContractDetails(
+          'ZkSyncCommitBlock',
+          'Additional contract to store implementation details of the main ZkSync contract.',
+        ),
+        discovery.getContractDetails('ZkSyncExit'),
+        discovery.getContractDetails(
+          'Governance',
+          'Keeps a list of block producers and whitelisted tokens.',
+        ),
+        discovery.getContractDetails(
+          'UniswapV2Factory',
+          'Manages trading pairs.',
+        ),
+        discovery.getContractDetails('Verifier', 'zkSNARK Plonk Verifier.'),
+        discovery.getContractDetails('VerifierExit'),
+        discovery.getContractDetails('UpgradeGatekeeper'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: {

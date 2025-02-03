@@ -164,7 +164,9 @@ export const fuelv1: Layer2 = {
       'The data format details are documented in the Data Structure subsection [here](https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/System%20Description%20Primer.html).',
   },
   contracts: {
-    addresses: [discovery.getContractDetails('Fuel')],
+    addresses: {
+      [discovery.chain]: [discovery.getContractDetails('Fuel')],
+    },
     risks: [],
   },
   milestones: [

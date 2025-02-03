@@ -100,16 +100,18 @@ export const debridge: Bridge = {
     destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'DeBridgeGate',
-        'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
-      ),
-      discovery.getContractDetails(
-        'SignatureVerifier',
-        'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'DeBridgeGate',
+          'The main point of cross-chain interactions, this contract allows user to send message to other chain and claim funds when bridging back to Ethereum.',
+        ),
+        discovery.getContractDetails(
+          'SignatureVerifier',
+          'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

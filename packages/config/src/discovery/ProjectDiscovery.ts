@@ -28,9 +28,9 @@ import {
 import { utils } from 'ethers'
 import { groupBy, isArray, isString, sum, uniq } from 'lodash'
 import type {
+  ProjectContract,
   ProjectEscrow,
   ReferenceLink,
-  ScalingProjectContract,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
   ScalingProjectPermissions,
@@ -81,8 +81,8 @@ export class ProjectDiscovery {
 
   getContractDetails(
     identifier: string,
-    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
-  ): ScalingProjectContract {
+    descriptionOrOptions?: string | Partial<ProjectContract>,
+  ): ProjectContract {
     const contract = this.getContract(identifier)
     if (typeof descriptionOrOptions === 'string') {
       descriptionOrOptions = { description: descriptionOrOptions }
@@ -158,7 +158,7 @@ export class ProjectDiscovery {
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
 
-    const options: Partial<ScalingProjectContract> = {
+    const options: Partial<ProjectContract> = {
       name,
       description,
       upgradableBy,
@@ -231,7 +231,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   } {
     return this.resolveStackTemplates(
       ORBIT_STACK_PERMISSION_TEMPLATES,
@@ -264,7 +264,7 @@ export class ProjectDiscovery {
     contractOverrides?: Record<string, string>,
   ): {
     permissions: ScalingProjectPermission[]
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   } {
     const resolved = this.computeStackContractPermissions(
       permissionTemplates,
@@ -586,8 +586,8 @@ export class ProjectDiscovery {
   getContractFromValue(
     contractIdentifier: string,
     key: string,
-    descriptionOrOptions?: string | Partial<ScalingProjectContract>,
-  ): ScalingProjectContract {
+    descriptionOrOptions?: string | Partial<ProjectContract>,
+  ): ProjectContract {
     const address = this.getContractValue(contractIdentifier, key)
     assert(
       isString(address) && EthereumAddress.check(address),
@@ -751,9 +751,9 @@ export class ProjectDiscovery {
   }
 
   getOpStackContractDetails(
-    upgradesProxy: Partial<ScalingProjectContract>,
+    upgradesProxy: Partial<ProjectContract>,
     overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ScalingProjectContract[] {
+  ): ProjectContract[] {
     return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
       this.hasContract(overrides?.[d.name] ?? d.name),
     ).map((d) =>
@@ -1137,7 +1137,7 @@ export class ProjectDiscovery {
     }
   }
 
-  getDiscoveredContracts(): ScalingProjectContract[] {
+  getDiscoveredContracts(): ProjectContract[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )

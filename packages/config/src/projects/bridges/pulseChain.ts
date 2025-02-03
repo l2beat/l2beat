@@ -93,24 +93,26 @@ export const pulseChain: Bridge = {
     destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ForeignOmnibridge',
-        'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
-      ),
-      discovery.getContractDetails(
-        'ForeignAMB',
-        'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
-      ),
-      discovery.getContractDetails(
-        'BridgeValidators',
-        'Contract managing the list of trusted bridge Validators.',
-      ),
-      discovery.getContractDetails(
-        'WETHOmnibridgeRouter',
-        'The Auxiliary contract that handles wrapped tokens.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ForeignOmnibridge',
+          'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
+        ),
+        discovery.getContractDetails(
+          'ForeignAMB',
+          'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
+        ),
+        discovery.getContractDetails(
+          'BridgeValidators',
+          'Contract managing the list of trusted bridge Validators.',
+        ),
+        discovery.getContractDetails(
+          'WETHOmnibridgeRouter',
+          'The Auxiliary contract that handles wrapped tokens.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

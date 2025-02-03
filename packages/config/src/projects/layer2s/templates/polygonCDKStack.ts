@@ -30,11 +30,11 @@ import type {
   Layer2Display,
   Layer2TxConfig,
   Milestone,
+  ProjectContract,
   ProjectEscrow,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
-  ScalingProjectContract,
   ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectStateDerivation,
@@ -72,7 +72,7 @@ export interface PolygonCDKStackConfig {
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
-  nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateContracts?: ProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]

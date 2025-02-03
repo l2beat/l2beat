@@ -81,9 +81,11 @@ export const sollet: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('SplTokenSwap', 'Sollet Bridge Contract.'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('SplTokenSwap', 'Sollet Bridge Contract.'),
+      ],
+    },
     risks: [],
   },
   permissions: {

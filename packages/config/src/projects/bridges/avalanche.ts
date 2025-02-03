@@ -142,7 +142,7 @@ export const avalanche: Bridge = {
     },
   },
   contracts: {
-    addresses: [],
+    addresses: {},
     risks: [],
   },
   permissions: {

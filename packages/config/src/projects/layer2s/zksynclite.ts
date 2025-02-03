@@ -340,49 +340,51 @@ export const zksynclite: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ZkSync', {
-        description:
-          'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Verifier', {
-        description: 'Implements ZK proof verification logic.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Governance', {
-        description:
-          'Keeps a list of block producers, NFT factories and whitelisted tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'UpgradeGatekeeper',
-        'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
-      ),
-      discovery.getContractDetails('TokenGovernance', {
-        description:
-          'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
-        upgradableBy: ['ZkSync Multisig'],
-        upgradeDelay: 'No delay',
-        references: [
-          {
-            title: 'Governance.sol#L93 - Etherscan source code',
-            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
-          },
-        ],
-      }),
-      discovery.getContractDetails('NftFactory', {
-        description: 'Allows for withdrawing NFTs minted on L2 to L1.',
-        upgradableBy: ['ZkSync Multisig'],
-        upgradeDelay: 'No delay',
-        references: [
-          {
-            title: 'Governance.sol#L205 - Etherscan source code',
-            url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
-          },
-        ],
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ZkSync', {
+          description:
+            'The main Rollup contract. Allows the operator to commit blocks, provide ZK proofs (validated by the Verifier) and processes withdrawals by executing blocks. Users can deposit ETH and ERC20 tokens. This contract also defines the upgrade process for all the other contracts by enforcing an upgrade delay and employing the Security Council which can shorten upgrade times.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Verifier', {
+          description: 'Implements ZK proof verification logic.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Governance', {
+          description:
+            'Keeps a list of block producers, NFT factories and whitelisted tokens.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails(
+          'UpgradeGatekeeper',
+          'This is the contract that owns Governance, Verifier and ZkSync and facilitates their upgrades. The upgrade constraints are defined by the ZkSync contract.',
+        ),
+        discovery.getContractDetails('TokenGovernance', {
+          description:
+            'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
+          upgradableBy: ['ZkSync Multisig'],
+          upgradeDelay: 'No delay',
+          references: [
+            {
+              title: 'Governance.sol#L93 - Etherscan source code',
+              url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L93',
+            },
+          ],
+        }),
+        discovery.getContractDetails('NftFactory', {
+          description: 'Allows for withdrawing NFTs minted on L2 to L1.',
+          upgradableBy: ['ZkSync Multisig'],
+          upgradeDelay: 'No delay',
+          references: [
+            {
+              title: 'Governance.sol#L205 - Etherscan source code',
+              url: 'https://etherscan.io/address/0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8#code#F1#L',
+            },
+          ],
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   stateDerivation: {

@@ -18,6 +18,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { getStage } from './common/stages/getStage'
+import { generateDiscoveryDrivenContracts } from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('aztec')
 
@@ -289,7 +290,7 @@ export const aztecV1: Layer2 = {
     ],
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
   permissions: {
