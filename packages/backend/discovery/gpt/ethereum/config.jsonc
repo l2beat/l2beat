@@ -6,31 +6,10 @@
     "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "names": {
-    "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858": "GptProtocolValidium",
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "Verifier",
-    "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8": "GptProtocolDAC",
-    "0xada59D145126A746976F0F56477aafFEB3acc8e3": "DACProxyAdmin"
-    // "0x0000": "LocalAdmin" // currently EOA
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
-  "overrides": {
-    "GptProtocolDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 50
-          }
-        }
-      }
-    },
-    "GptProtocolValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"],
-      "ignoreRelatives": ["gasTokenAddress"]
-    }
+  "names": {
+    "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858": "Validium"
   }
 }

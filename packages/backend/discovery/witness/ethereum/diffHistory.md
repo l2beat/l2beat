@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xb1fa8d245ec1fa27b719524d33d7b0ebdf6ba96e
+
+# Diff at Mon, 03 Feb 2025 09:15:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21736867
+- current block number: 21736867
+
+## Description
+
+discodrive polygoncdk chains!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238) {
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "WitnessValidium"
++        "Validium"
+      sourceHashes:
+-        ["0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4","0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"]
+      unverified:
++        true
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"configure","to":"0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x353800524721e11B453f73f523dD8840c215a213","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      name:
+-        "WitnessValidiumDAC"
++        "PolygonDataCommittee"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "0xd0676f1Ee81d7C6fe9B0F2EEf9FF74C3E984f94b"
+      issuedPermissions.0.via.0:
+-        {"address":"0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1)."
+    }
+```
+
 Generated with discovered.json: 0x891f78b7a61900f72e2156241c12d1ab3bcc144e
 
 # Diff at Fri, 31 Jan 2025 10:39:42 GMT:

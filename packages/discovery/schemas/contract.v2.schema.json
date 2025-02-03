@@ -108,7 +108,8 @@
             "fastconfirm",
             "configure",
             "upgrade",
-            "act"
+            "act",
+            "aggregatePolygon"
           ]
         },
         "delay": {
