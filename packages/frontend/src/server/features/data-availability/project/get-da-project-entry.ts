@@ -20,6 +20,7 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getDaBridges } from '../utils/get-da-bridges'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
@@ -105,7 +106,7 @@ export async function getDaProjectEntry(
     isUpcoming: project.isUpcoming ?? false,
   }
 
-  const uniqueProjectsInUse = getUniqueProjectsInUse(project.daLayer.bridges)
+  const uniqueProjectsInUse = getUniqueProjectsInUse(getDaBridges(project))
 
   const [
     economicSecurity,
@@ -153,7 +154,7 @@ export async function getDaProjectEntry(
       isNoBridge: !!daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
-    bridges: project.daLayer.bridges.map((bridge) => ({
+    bridges: getDaBridges(project).map((bridge) => ({
       id: bridge.id ?? 'unknown',
       name: bridge.display.name,
       slug: bridge.display.slug,
@@ -172,12 +173,12 @@ export async function getDaProjectEntry(
       economicSecurity,
       durationStorage: project.daLayer.pruningWindow,
       throughput: project.daLayer.throughput,
-      usedIn: project.daLayer.bridges
+      usedIn: getDaBridges(project)
         .flatMap((bridge) => bridge.usedIn)
         .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
-    projectVariants: project.daLayer.bridges.map((bridge) => ({
+    projectVariants: getDaBridges(project).map((bridge) => ({
       title: bridge.display.name,
       href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
     })),
