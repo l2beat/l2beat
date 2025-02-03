@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0a278ac2a987b39905de989c422590eca974f1d6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Removed EOA permission.
 
 ## Watched changes
 
