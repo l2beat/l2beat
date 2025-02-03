@@ -36,6 +36,7 @@ import type {
   Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
+  Layer2UpgradesAndGovernance,
   Layer3,
   Milestone,
   ProjectContract,
@@ -151,7 +152,7 @@ interface OrbitStackConfigCommon {
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: Layer2UpgradesAndGovernance
   nonTemplateContractRisks?: ScalingProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]

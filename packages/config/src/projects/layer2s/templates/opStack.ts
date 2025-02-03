@@ -39,6 +39,7 @@ import type {
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   Layer2TxConfig,
+  Layer2UpgradesAndGovernance,
   Layer3,
   Milestone,
   ProjectContract,
@@ -178,7 +179,7 @@ interface OpStackConfigCommon {
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: Layer2UpgradesAndGovernance
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }

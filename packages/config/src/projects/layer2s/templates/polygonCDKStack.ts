@@ -29,6 +29,7 @@ import type {
   Layer2,
   Layer2Display,
   Layer2TxConfig,
+  Layer2UpgradesAndGovernance,
   Milestone,
   ProjectContract,
   ProjectEscrow,
@@ -81,7 +82,7 @@ export interface PolygonCDKStackConfig {
   isForcedBatchDisallowed: boolean
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: Layer2UpgradesAndGovernance
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
   additionalBadges?: BadgeId[]
@@ -469,9 +470,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ),
       ],
     },
-    upgradesAndGovernance:
-      templateVars.upgradesAndGovernance ??
-      `
+    upgradesAndGovernance: templateVars.upgradesAndGovernance ?? {
+      content: `
     The regular upgrade process for all system contracts (shared and L2-specific) starts at the PolygonAdminMultisig. For the shared contracts, they schedule a transaction that targets the ProxyAdmin via the Timelock, wait for ${upgradeDelayString} and then execute the upgrade. An upgrade of the Layer 2 specific rollup- or validium contract requires first adding a new rollupType through the Timelock and the RollupManager (defining the new implementation and verifier contracts). Now that the rollupType is created, either the local admin or the PolygonAdminMultisig can immediately upgrade the local system contracts to it.
     
     
@@ -479,6 +479,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     
     
     Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+    },
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(

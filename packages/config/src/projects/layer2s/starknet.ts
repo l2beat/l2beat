@@ -1055,47 +1055,49 @@ export const starknet: Layer2 = {
     },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  upgradesAndGovernance: (() => {
-    const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
-    const proxygovMulti = discovery.getContract('ProxyMultisig')
-    const implGovernors = discovery.getPermissionedAccounts(
-      'Starknet',
-      'governors',
-    )
+  upgradesAndGovernance: {
+    content: (() => {
+      const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+      const proxygovMulti = discovery.getContract('ProxyMultisig')
+      const implGovernors = discovery.getPermissionedAccounts(
+        'Starknet',
+        'governors',
+      )
 
-    assert(
-      proxyGovernors[1].address === proxygovMulti.address &&
-        proxyGovernors.length === 2 &&
-        discovery.isEOA(implGovernors[0].address),
-      'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
-    )
-    const description = `
-The Upgrading mechanism of Starknet follows a similar scheme for all of their smart contracts. A contract initializes with the creator of the contract as a Governor, who can then nominate or remove other Governors allowing them to call restricted governor functions.
-
-The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governors\`: A Proxy multisig with a ${discovery.getMultisigStats(
-      'ProxyMultisig',
-    )} threshold and an EOA. Implementations can be upgraded ${
-      starknetDelaySeconds === 0
-        ? 'without delay, thus users are not provided with an exit window in case of unwanted upgrades.'
-        : 'with a delay of ' + formatSeconds(starknetDelaySeconds) + '.'
-    }
-
-\`Starknet Implementation Governors\` have the authority to execute governed functions that modify contract parameters without delay. These actions encompass registering/removing Operators, specifying the program and config hash, or setting the Message Cancellation Delay between L1 and L2. Currently it is governed by a Multisig with a ${discovery.getMultisigStats(
-      'ImplementationMultisig',
-    )} threshold and an EOA. The verifier address is set upon initialization of the Starknet Implementation contract.
-
-Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${
-      getSHARPVerifierUpgradeDelay() === 0
-        ? 'no'
-        : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())
-    } delay before any upgrade takes effect.
-
-The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
-
-At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.
-`
-    return description
-  })(),
+      assert(
+        proxyGovernors[1].address === proxygovMulti.address &&
+          proxyGovernors.length === 2 &&
+          discovery.isEOA(implGovernors[0].address),
+        'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
+      )
+      const description = `
+  The Upgrading mechanism of Starknet follows a similar scheme for all of their smart contracts. A contract initializes with the creator of the contract as a Governor, who can then nominate or remove other Governors allowing them to call restricted governor functions.
+  
+  The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governors\`: A Proxy multisig with a ${discovery.getMultisigStats(
+    'ProxyMultisig',
+  )} threshold and an EOA. Implementations can be upgraded ${
+    starknetDelaySeconds === 0
+      ? 'without delay, thus users are not provided with an exit window in case of unwanted upgrades.'
+      : 'with a delay of ' + formatSeconds(starknetDelaySeconds) + '.'
+  }
+  
+  \`Starknet Implementation Governors\` have the authority to execute governed functions that modify contract parameters without delay. These actions encompass registering/removing Operators, specifying the program and config hash, or setting the Message Cancellation Delay between L1 and L2. Currently it is governed by a Multisig with a ${discovery.getMultisigStats(
+    'ImplementationMultisig',
+  )} threshold and an EOA. The verifier address is set upon initialization of the Starknet Implementation contract.
+  
+  Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${
+    getSHARPVerifierUpgradeDelay() === 0
+      ? 'no'
+      : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())
+  } delay before any upgrade takes effect.
+  
+  The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
+  
+  At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.
+  `
+      return description
+    })(),
+  },
   permissions: {
     [discovery.chain]: {
       actors: [

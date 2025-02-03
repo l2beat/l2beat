@@ -1,5 +1,5 @@
 import type { Layer2 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -336,15 +336,19 @@ export async function getL2ProjectDetails({
       props: {
         id: 'upgrades-and-governance',
         title: 'Upgrades & Governance',
-        content: project.upgradesAndGovernance,
+        content: project.upgradesAndGovernance.content,
         diagram: {
           type: 'upgrades-and-governance',
           slug:
             project.display.upgradesAndGovernanceImage ?? project.display.slug,
         },
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-        isUnderReview: project.isUnderReview,
-        includeChildrenIfUnderReview: true,
+        isUnderReview:
+          !!project.isUnderReview ||
+          !!project.upgradesAndGovernance.isUnderReview ||
+          !!project.upgradesAndGovernance.isUnderReviewHidden,
+        includeChildrenIfUnderReview:
+          !project.upgradesAndGovernance.isUnderReviewHidden,
       },
     })
   }

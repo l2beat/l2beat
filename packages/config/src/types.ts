@@ -496,7 +496,7 @@ export interface Layer2 extends ScalingProject {
   display: Layer2Display
   config: Layer2Config
   /** Upgrades and governance explained */
-  upgradesAndGovernance?: string
+  upgradesAndGovernance?: Layer2UpgradesAndGovernance
 }
 
 export interface Layer2Display extends ScalingProjectDisplay {
@@ -638,6 +638,12 @@ export type Layer2FinalityConfig =
     }
 
 export type FinalityType = Layer2FinalityConfig['type']
+
+export type Layer2UpgradesAndGovernance = {
+  content: string
+  isUnderReview?: boolean
+  isUnderReviewHidden?: boolean
+}
 
 export interface ProofVerification {
   shortDescription?: string
