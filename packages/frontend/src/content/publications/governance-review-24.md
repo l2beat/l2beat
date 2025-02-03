@@ -152,9 +152,9 @@ There are 4 active proposals on Uniswap, with 1 currently going through a Snapsh
 [Uniswap Onboarding Package - OKX Chain](https://snapshot.org/#/uniswapgovernance.eth/proposal/0x4d070edcd39b24b67e219f8f0f6308083c28d510ed0a1ac4ed3fb8d5879f3b6b) - ends on August 7 at 22:59 UTC. 
 
 
-### **[RFC] Forse for Uniswap Analytics for Uniswap Revitalization and Growth Program**
+### **[RFC] Force for Uniswap Analytics for Uniswap Revitalization and Growth Program**
 
-StableLabs[ published an RFC](https://gov.uniswap.org/t/rfc-forse-for-uniswap-analytics-for-uniswap-revitalization-and-growth-program/24327) proposing the onboarding of Forse (by StableLabs) as a data service provider to analyze the effectiveness of the [Uniswap Revitalization and Growth Program](https://gov.uniswap.org/t/uniswap-revitalization-and-growth/22616). The proposal requests $70,000 worth of UNI to analyze the impact of the Uniswap Revitalization and Growth Program so far for 3 blockchains chosen by the Uniswap DAO, with 3 months of additional maintenance support and updates to analytics modules utilized in the live dashboard.
+StableLabs[ published an RFC](https://gov.uniswap.org/t/rfc-forse-for-uniswap-analytics-for-uniswap-revitalization-and-growth-program/24327) proposing the onboarding of Force (by StableLabs) as a data service provider to analyze the effectiveness of the [Uniswap Revitalization and Growth Program](https://gov.uniswap.org/t/uniswap-revitalization-and-growth/22616). The proposal requests $70,000 worth of UNI to analyze the impact of the Uniswap Revitalization and Growth Program so far for 3 blockchains chosen by the Uniswap DAO, with 3 months of additional maintenance support and updates to analytics modules utilized in the live dashboard.
 
 
 ### **[RFC] Ethereum Foundation Attackathon Sponsorship**
@@ -180,7 +180,7 @@ AbdullahUmar [published a post](https://gov.uniswap.org/t/official-uniswap-v3-de
 
 **Discuss with L2BEAT**
 
-We’re interested in discussing the use of Forse by StableLabs with other delegates and interested parties to better understand the possibilities of using it, not only for the Uniswap Revitalization and Growth Program but also for other initiatives in the DAO.
+We’re interested in discussing the use of Force by StableLabs with other delegates and interested parties to better understand the possibilities of using it, not only for the Uniswap Revitalization and Growth Program but also for other initiatives in the DAO.
 
 **When/where to catch us:**
 
