@@ -6,10 +6,10 @@ import { makeTechnologyChoice } from './make-technology-section'
 
 export function getScalingTechnologySection(project: Layer2 | Layer3) {
   const relatedDaProjects = daLayers.filter(
-    (layer) =>
-      layer.bridges.some((bridge) =>
+    (project) =>
+      project.daLayer.bridges.some((bridge) =>
         bridge.usedIn.some((usedIn) => usedIn.id === project.id),
-      ) && layer.bridges.length > 0,
+      ) && project.daLayer.bridges.length > 0,
   )
 
   const items = compact([
@@ -34,7 +34,7 @@ export function getScalingTechnologySection(project: Layer2 | Layer3) {
                   text: 'Learn more about the DA layer here:',
                   project: {
                     name: relatedDaProjects[0].display.name,
-                    slug: `${relatedDaProjects[0].display.slug}/${relatedDaProjects[0].bridges[0]?.display.slug}`,
+                    slug: `${relatedDaProjects[0].display.slug}/${relatedDaProjects[0].daLayer.bridges[0]?.display.slug}`,
                     type: 'data-availability',
                   },
                 }

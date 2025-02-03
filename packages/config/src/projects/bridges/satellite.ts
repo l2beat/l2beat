@@ -113,27 +113,37 @@ export const satellite: Bridge = {
       sentiment: 'warning',
     },
   },
-  permissions: [
-    {
-      name: 'MintLimiter Multisig',
-      accounts: discovery.getPermissionedAccounts('Multisig', 'signerAccounts'),
-      description: 'Members of the Multisig that can set mint limits.',
-    },
-    {
-      name: 'Operators',
-      accounts: [],
-      description:
-        'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
-    },
-    {
-      name: 'AxelarGasService Admin',
-      accounts: [
-        discovery.getPermissionedAccount('AxelarGasServiceOperators', 'owner'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'MintLimiter Multisig',
+          accounts: discovery.getPermissionedAccounts(
+            'Multisig',
+            'signerAccounts',
+          ),
+          description: 'Members of the Multisig that can set mint limits.',
+        },
+        {
+          name: 'Operators',
+          accounts: [],
+          description:
+            'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
+        },
+        {
+          name: 'AxelarGasService Admin',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'AxelarGasServiceOperators',
+              'owner',
+            ),
+          ],
+          description:
+            'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
+        },
       ],
-      description:
-        'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
     },
-  ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails(

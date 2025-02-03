@@ -2,14 +2,14 @@ import { daLayers, ethereumDaLayer, layer2s, layer3s } from '@l2beat/config'
 
 export function getUniqueProjectsInUse() {
   const custom = [...layer2s, ...layer3s]
-    .filter((project) => project.dataAvailabilitySolution)
+    .filter((project) => project.customDa)
     .map((project) => project.id)
 
   return [
     ...new Set(
       [...daLayers, ethereumDaLayer]
-        .map((daLayer) =>
-          daLayer.bridges.map((bridge) =>
+        .map((project) =>
+          project.daLayer.bridges.map((bridge) =>
             bridge.usedIn.map((project) => project.id),
           ),
         )

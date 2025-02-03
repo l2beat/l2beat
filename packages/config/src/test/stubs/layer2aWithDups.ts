@@ -98,122 +98,126 @@ export const layer2aWithDups: Layer2 = {
       },
     ],
   },
-  permissions: [
-    {
-      name: 'Layer2a MultiSig',
-      accounts: [
+  permissions: {
+    ethereum: {
+      actors: [
         {
-          address: EthereumAddress(
-            '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          ),
-          type: 'MultiSig',
+          name: 'Layer2a MultiSig',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description: '',
+        },
+        {
+          name: 'Duplicate Layer2a MultiSig',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
+              ),
+              type: 'MultiSig',
+            },
+          ],
+          description: '',
+        },
+        {
+          name: 'Duplicate CanonicalTransactionChain',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
+              ),
+              type: 'Contract',
+            },
+          ],
+          description: '',
+        },
+        {
+          name: 'MultiSig participants',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x3041BA32f451F5850c147805F5521AC206421623',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x3bC453E5b3c941D1baD8F25E512772a50eE20AC1',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x6709Ef8aDCEA465f673dEA5b1a774a79BBCb4EAa',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x7904c69A27026A9Ff2CC2C8f5A917c018a46C613',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x7cB07FE039a92B3D784f284D919503A381BEC54f',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa',
+              ),
+              type: 'EOA',
+            },
+            {
+              address: EthereumAddress(
+                '0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94',
+              ),
+              type: 'EOA',
+            },
+          ],
+          description: '',
+        },
+        {
+          name: 'Sequencer',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
+              ),
+              type: 'EOA',
+            },
+          ],
+          description: '',
+        },
+        {
+          name: 'State Root Proposer',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x473300df21D047806A082244b417f96b32f13A33',
+              ),
+              type: 'EOA',
+            },
+          ],
+          description: '',
         },
       ],
-      description: '',
     },
-    {
-      name: 'Duplicate Layer2a MultiSig',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
-          ),
-          type: 'MultiSig',
-        },
-      ],
-      description: '',
-    },
-    {
-      name: 'Duplicate CanonicalTransactionChain',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
-          ),
-          type: 'Contract',
-        },
-      ],
-      description: '',
-    },
-    {
-      name: 'MultiSig participants',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x3041BA32f451F5850c147805F5521AC206421623',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x3bC453E5b3c941D1baD8F25E512772a50eE20AC1',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x6709Ef8aDCEA465f673dEA5b1a774a79BBCb4EAa',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x7904c69A27026A9Ff2CC2C8f5A917c018a46C613',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x7cB07FE039a92B3D784f284D919503A381BEC54f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description: '',
-    },
-    {
-      name: 'Sequencer',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description: '',
-    },
-    {
-      name: 'State Root Proposer',
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x473300df21D047806A082244b417f96b32f13A33',
-          ),
-          type: 'EOA',
-        },
-      ],
-      description: '',
-    },
-  ],
+  },
   contracts: {
     addresses: [
       {

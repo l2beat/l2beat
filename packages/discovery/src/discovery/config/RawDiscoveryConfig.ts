@@ -25,6 +25,8 @@ export const RolePermissionEntries = [
   'operateLinea',
   'fastconfirm',
   'validateZkStack',
+  'validateBridge',
+  'relay',
 ] as const
 
 export const Permission = z.enum([
@@ -87,7 +89,7 @@ export const ExternalReference = z.object({
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
-  canActIndependently: z.boolean().default(false),
+  canActIndependently: z.optional(z.boolean()),
   ignoreDiscovery: z.boolean().default(false),
   proxyType: z.optional(ManualProxyType),
   displayName: z.string().optional(),

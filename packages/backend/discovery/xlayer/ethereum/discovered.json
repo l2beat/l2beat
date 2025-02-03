@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 21665594,
-  "configHash": "0x5fe03ef944f620355c5cb07ebd60481d7b318a35bf013a954856a9dd5d02b06e",
+  "configHash": "0x4eed62d789b6169576ee4855df290694b1e846d4f50d28c189ef098c329f4b56",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -348,6 +348,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

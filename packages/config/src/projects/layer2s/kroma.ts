@@ -395,69 +395,78 @@ export const kroma: Layer2 = {
     dataFormat:
       'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://specs.kroma.network/protocol/rollup-node.html#derivation).',
   },
-  permissions: [
-    {
-      name: 'Spectrum EOA Admin',
-      accounts: [discovery.getPermissionedAccount('SC_ProxyAdmin', 'owner')],
-      description: (() => {
-        const scPA = discovery.getPermissionedAccount(
-          'SC_ProxyAdmin',
-          'owner',
-        ).address
-        const shPA = discovery.getPermissionedAccount(
-          'SH_ProxyAdmin',
-          'owner',
-        ).address
-        const spETHPA = discovery.getPermissionedAccount(
-          'spETH_ProxyAdmin',
-          'owner',
-        ).address
-        assert(
-          scPA === shPA && shPA === spETHPA,
-          'Spectrum EOA Admin permission changed, please update the .ts file.',
-        )
-        const description =
-          'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.'
-        return description
-      })(),
-    },
-    {
-      name: 'SecurityCouncil',
-      accounts: [
-        discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
-      ],
-      description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
-        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
-    },
-    {
-      name: 'SecurityCouncil members',
-      accounts: SCMembers,
-      description: `Members of the SecurityCouncil.`,
-      references: [
+  permissions: {
+    [discovery.chain]: {
+      actors: [
         {
-          title: 'Security Council members - Announcing Kroma Security Council',
-          url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
+          name: 'Spectrum EOA Admin',
+          accounts: [
+            discovery.getPermissionedAccount('SC_ProxyAdmin', 'owner'),
+          ],
+          description: (() => {
+            const scPA = discovery.getPermissionedAccount(
+              'SC_ProxyAdmin',
+              'owner',
+            ).address
+            const shPA = discovery.getPermissionedAccount(
+              'SH_ProxyAdmin',
+              'owner',
+            ).address
+            const spETHPA = discovery.getPermissionedAccount(
+              'spETH_ProxyAdmin',
+              'owner',
+            ).address
+            assert(
+              scPA === shPA && shPA === spETHPA,
+              'Spectrum EOA Admin permission changed, please update the .ts file.',
+            )
+            const description =
+              'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.'
+            return description
+          })(),
         },
+        {
+          name: 'SecurityCouncil',
+          accounts: [
+            discovery.getPermissionedAccount('Colosseum', 'SECURITY_COUNCIL'),
+          ],
+          description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
+        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
+        },
+        {
+          name: 'SecurityCouncil members',
+          accounts: SCMembers,
+          description: `Members of the SecurityCouncil.`,
+          references: [
+            {
+              title:
+                'Security Council members - Announcing Kroma Security Council',
+              url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
+            },
+          ],
+        },
+        {
+          name: 'Sequencer',
+          accounts: [
+            discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
+          ],
+          description: 'Central actor allowed to commit L2 transactions on L1.',
+        },
+        {
+          name: 'Guardian',
+          accounts: [
+            discovery.getPermissionedAccount('KromaPortal', 'GUARDIAN'),
+          ],
+          description:
+            'Actor allowed to pause withdrawals. Currently set to the Security Council.',
+        },
+        ...discovery.getMultisigPermission(
+          'KromaRewardVaultMultisig',
+          'Escrows a pool of KRO used as validator rewards by the AssetManager.',
+        ),
       ],
     },
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount('SystemConfig', 'batcherHash'),
-      ],
-      description: 'Central actor allowed to commit L2 transactions on L1.',
-    },
-    {
-      name: 'Guardian',
-      accounts: [discovery.getPermissionedAccount('KromaPortal', 'GUARDIAN')],
-      description:
-        'Actor allowed to pause withdrawals. Currently set to the Security Council.',
-    },
-    ...discovery.getMultisigPermission(
-      'KromaRewardVaultMultisig',
-      'Escrows a pool of KRO used as validator rewards by the AssetManager.',
-    ),
-  ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('L2OutputOracle', {

@@ -36,7 +36,7 @@ import type {
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
-  ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectTechnology,
@@ -47,7 +47,8 @@ import type {
 import { Badge, type BadgeId, badges } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { mergeBadges } from './utils'
+import { generateDiscoveryDrivenPermissions } from './generateDiscoveryDrivenSections'
+import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -81,7 +82,7 @@ export interface ZkStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ScalingProjectContract[]
   nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]
@@ -94,6 +95,7 @@ export interface ZkStackConfigCommon {
   additionalBadges?: BadgeId[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
@@ -217,6 +219,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
   }
 
+  const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -232,7 +235,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       templateVars.additionalBadges ?? [],
     ),
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       upgradesAndGovernanceImage: 'zk-stack',
       ...templateVars.display,
       stack: 'ZK Stack',
@@ -450,13 +456,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     `
       return description
     })(),
-    permissions: [
-      ...discovery.getDiscoveredPermissions(),
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
-    nativePermissions: {
-      zksync2: discovery_ZKstackGovL2.getDiscoveredPermissions(),
-    },
+    permissions: mergePermissions(
+      generateDiscoveryDrivenPermissions(allDiscoveries),
+      templateVars.nonTemplatePermissions ?? {},
+    ),
     contracts: {
       addresses: discovery.getDiscoveredContracts(),
       nativeAddresses: {

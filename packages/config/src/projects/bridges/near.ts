@@ -154,10 +154,14 @@ export const near: Bridge = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'BridgeAdminMultisig',
-      'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'BridgeAdminMultisig',
+          'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
+        ),
+      ],
+    },
+  },
 }

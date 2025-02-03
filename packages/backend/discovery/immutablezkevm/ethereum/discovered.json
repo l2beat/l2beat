@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 20977341,
-  "configHash": "0x9e1609e44e22f40efa087f8aafb1db523b7540f6fb962b49add1b147a62e55f0",
+  "configHash": "0xdf3a31c1ab3913ecc9876d58fbae37226956f9c04630681ecd63786128941bc2",
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -523,7 +523,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

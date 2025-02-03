@@ -109,16 +109,20 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
       ],
     },
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'OwnerMultisig',
-      'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
-      'Contract allowed to upgrade the Bridge, its flow rate control and the Axelar adaptor.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'OwnerMultisig',
+          'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
+        ),
+        discovery.contractAsPermissioned(
+          discovery.getContract('ProxyAdmin'),
+          'Contract allowed to upgrade the Bridge, its flow rate control and the Axelar adaptor.',
+        ),
+      ],
+    },
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('Bridge', {

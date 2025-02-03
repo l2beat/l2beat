@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
-import { TypeCell } from '~/components/table/cells/type-cell'
+import { TypeInfo } from '~/components/table/cells/type-info'
 import {
   adjustTableValue,
   sortTableValues,
@@ -43,7 +43,7 @@ export const bridgesRisksColumns = [
       tooltip:
         'Token bridges use escrows and mint tokens. Liquidity Networks use pools and swap tokens. Hybrid do both.',
     },
-    cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
+    cell: (ctx) => <TypeInfo>{ctx.getValue()}</TypeInfo>,
   }),
   columnHelper.accessor(
     (e) => adjustTableValue(e.riskView.sourceUpgradeability),

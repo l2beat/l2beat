@@ -13,7 +13,6 @@ import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../_components/basic-da-table'
-import { mapBridgeRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { publicSystemsColumns } from './columns'
 import { ProjectsUsedIn } from './projects-used-in'
 
@@ -35,7 +34,10 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
     return (
       <>
         {remainingBridges.map((bridge) => (
-          <TableRow key={bridge.href} className={getRowTypeClassNames()}>
+          <TableRow
+            key={bridge.href}
+            className={getRowTypeClassNames({ isEthereum: false })}
+          >
             <BridgeCells bridge={bridge} />
           </TableRow>
         ))}
@@ -66,8 +68,6 @@ function BridgeCells({
   bridge: DaBridgeSummaryEntry
   excludeBridge?: boolean
 }) {
-  const bridgeRisks = mapBridgeRisksToRosetteValues(bridge.risks)
-
   return (
     <>
       <TableCell
@@ -81,7 +81,7 @@ function BridgeCells({
         className="flex items-center justify-center pl-4"
       >
         <GrissiniCell
-          values={bridgeRisks}
+          values={bridge.risks.values}
           hasNoBridge={bridge.risks.isNoBridge}
         />
       </TableCell>

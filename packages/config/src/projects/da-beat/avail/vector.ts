@@ -10,11 +10,6 @@ const discovery = new ProjectDiscovery('vector')
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
 
-const validation = {
-  type: 'zk-proof',
-  relayer: 'SuccinctGateway',
-}
-
 export const vector = {
   id: 'vector',
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
@@ -23,12 +18,7 @@ export const vector = {
     name: 'Vector',
     slug: 'vector',
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
-    links: {
-      documentation: ['https://docs.succinct.xyz/'],
-      repositories: ['https://github.com/succinctlabs/sp1-vector'],
-    },
   },
-  validation: validation,
   contracts: {
     addresses: {
       ethereum: discovery.getDiscoveredContracts(),

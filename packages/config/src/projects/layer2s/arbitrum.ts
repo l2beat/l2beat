@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-
 import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -48,8 +47,8 @@ const upgradeExecutorUpgradeability = {
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
   upgradableBy: [
-    'SecurityCouncilEmergency',
-    'SecurityCouncilPropose',
+    'L2SecurityCouncilEmergency',
+    'L2SecurityCouncilPropose',
     'L1Timelock',
   ],
   upgradeDelay: `${formatSeconds(
@@ -261,37 +260,45 @@ export const arbitrum: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'SecurityCouncil',
-      'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-      [
-        {
-          title: 'Security Council members - Arbitrum Foundation Docs',
-          url: 'https://docs.arbitrum.foundation/security-council-members',
-        },
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'SecurityCouncil',
+          'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+          [
+            {
+              title: 'Security Council members - Arbitrum Foundation Docs',
+              url: 'https://docs.arbitrum.foundation/security-council-members',
+            },
+          ],
+        ),
+        discovery.contractAsPermissioned(
+          discovery.getContract('L1Timelock'),
+          'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
+        ),
+        ...discovery.getMultisigPermission(
+          'BatchPosterManagerMultisig',
+          'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+        ),
       ],
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('L1Timelock'),
-      'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-    ),
-    ...discovery.getMultisigPermission(
-      'BatchPosterManagerMultisig',
-      'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-    ),
-  ],
-  nativePermissions: {
-    arbitrum: [
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilEmergency',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-      ),
-      ...l2Discovery.getMultisigPermission(
-        'L2SecurityCouncilPropose',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
-      ),
-    ],
+    },
+    arbitrum: {
+      actors: [
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilEmergency',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+        ),
+        ...l2Discovery.getMultisigPermission(
+          'L2SecurityCouncilPropose',
+          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
+        ),
+        l2Discovery.eoaAsPermissioned(
+          l2Discovery.getEOA('L1Timelock'),
+          'Alias of the L1Timelock contract on L1.',
+        ),
+      ],
+    },
   },
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {
@@ -417,11 +424,11 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('L2DAIGateway', {
         description:
-          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2',
+          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.',
       }),
       l2Discovery.getContractDetails('L2LPTGateway', {
         description:
-          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2',
+          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.',
       }),
     ],
   },

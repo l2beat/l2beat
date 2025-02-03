@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 25417811,
-  "configHash": "0x350e8246f769a4b08f50b809534cf81ae46a22ad1222ce45636cf51741456d38",
+  "configHash": "0x49b1ee239d67d3466585e5686c23d6337c88ea8b9f4d25424d5f1b47dcc524d3",
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -796,9 +796,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "succinct/SP1Blobstream": "0xc923f0ea69810f65b34ffc59eaa1cd6fdf2a924dba13dc8cbfa71ddde982ead2",
-    "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276",
-    "succinct/SuccinctGateway": "0x6b44128c0a4c6cf1adb6fd78a757b40be48d8b70234442deb52fa64c906d1a42"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "succinct/SP1Blobstream": "0x262c8b04903ad745cba7709fe120da701b48e70ebb57914b191a8ef4ecd767e8",
+    "succinct/SP1SuccinctGateway": "0x314e4bceb58474f5dc58b1d972ba8b8c7acb4b7abfe92b5ee54c9f79a3fc2a9b",
+    "succinct/SuccinctGateway": "0x6daba83e61c2da2aae9b5563d07769aa741778d9696ecf837807821c3235a31e"
   }
 }

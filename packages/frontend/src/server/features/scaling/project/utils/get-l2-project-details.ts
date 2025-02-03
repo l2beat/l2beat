@@ -1,6 +1,5 @@
 import type { Layer2 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
-import { getPermissionedEntities } from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/get-permissioned-entities'
+import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -16,6 +15,7 @@ import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-s
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
 import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
@@ -45,7 +45,6 @@ export async function getL2ProjectDetails({
           type: project.type,
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
-          nativePermissions: project.nativePermissions,
           daSolution,
         },
         contractsVerificationStatuses,
@@ -74,6 +73,7 @@ export async function getL2ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const sequencingSection = getSequencingSection(project)
 
   await Promise.all([
     api.tvs.chart.prefetch({
@@ -254,7 +254,7 @@ export async function getL2ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.customDa?.description,
       },
     })
   }
@@ -294,6 +294,17 @@ export async function getL2ProjectDetails({
         id: 'operator',
         title: 'Operator',
         ...operatorSection,
+      },
+    })
+  }
+
+  if (sequencingSection) {
+    items.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
       },
     })
   }
@@ -339,9 +350,7 @@ export async function getL2ProjectDetails({
   }
 
   if (permissionsSection) {
-    const permissionedEntities = project.dataAvailabilitySolution
-      ? getPermissionedEntities(project.dataAvailabilitySolution.bridge)
-      : undefined
+    const permissionedEntities = project.customDa?.dac?.knownMembers
 
     items.push({
       type: 'PermissionsSection',

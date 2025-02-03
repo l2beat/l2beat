@@ -22,14 +22,6 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
       slug: 'rari',
     },
   ],
-  display: {
-    links: {
-      documentation: ['https://docs.celestia.org/developers/blobstream'],
-      repositories: ['https://github.com/succinctlabs/sp1-blobstream'],
-      explorers: ['https://etherscan.io/'],
-    },
-  },
-
   technology: {
     description: `
 

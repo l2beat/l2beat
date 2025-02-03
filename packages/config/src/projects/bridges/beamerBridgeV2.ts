@@ -141,22 +141,26 @@ export const beamerbridgev2: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Owner',
-      description:
-        'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-      accounts: [
-        discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Owner',
+          description:
+            'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
+          accounts: [
+            discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
+          ],
+        },
+        {
+          name: 'Liquidity Providers',
+          description: 'Addresses allowed to fill requests.',
+          accounts: discovery.getPermissionedAccounts(
+            'EthereumFillManager',
+            'liquidityProviders',
+          ),
+        },
       ],
     },
-    {
-      name: 'Liquidity Providers',
-      description: 'Addresses allowed to fill requests.',
-      accounts: discovery.getPermissionedAccounts(
-        'EthereumFillManager',
-        'liquidityProviders',
-      ),
-    },
-  ],
+  },
 }

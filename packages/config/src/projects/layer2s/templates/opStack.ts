@@ -32,7 +32,7 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
-  DacDaLayer,
+  CustomDa,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -65,7 +65,10 @@ import type {
 import { Badge, type BadgeId } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
+import {
+  generateDiscoveryDrivenPermissions,
+  generateDiscoveryDrivenSections,
+} from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -119,7 +122,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  customDa?: CustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -142,7 +145,6 @@ interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
@@ -161,6 +163,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
   usingAltVm?: boolean
@@ -264,7 +267,11 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
+  const discoveryDrivenContracts = templateVars.discoveryDrivenData
     ? generateDiscoveryDrivenSections(
         templateVars.discovery,
         nativeContractRisks,
@@ -279,7 +286,10 @@ function opStackCommon(
     capability: templateVars.capability ?? 'universal',
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
@@ -335,31 +345,30 @@ function opStackCommon(
       ],
     },
     technology: getTechnology(templateVars, explorerUrl),
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
-      : [
-          ...templateVars.discovery.getOpStackPermissions({
-            batcherHash: 'Sequencer',
-            PROPOSER: 'Proposer',
-            GUARDIAN: 'Guardian',
-            CHALLENGER: 'Challenger',
-            ...(templateVars.roleOverrides ?? {}),
-          }),
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nonTemplateNativePermissions,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
       : {
-          addresses: [
-            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-            ...(templateVars.nonTemplateContracts ?? []),
-          ],
-          risks: nativeContractRisks,
-          nativeAddresses: templateVars.nonTemplateNativeContracts,
+          [templateVars.discovery.chain]: {
+            actors: [
+              ...templateVars.discovery.getOpStackPermissions({
+                batcherHash: 'Sequencer',
+                PROPOSER: 'Proposer',
+                GUARDIAN: 'Guardian',
+                CHALLENGER: 'Challenger',
+                ...(templateVars.roleOverrides ?? {}),
+              }),
+              ...(templateVars.nonTemplatePermissions ?? []),
+            ],
+          },
         },
+    contracts: discoveryDrivenContracts ?? {
+      addresses: [
+        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
+        ...(templateVars.nonTemplateContracts ?? []),
+      ],
+      risks: nativeContractRisks,
+      nativeAddresses: templateVars.nonTemplateNativeContracts,
+    },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
@@ -380,7 +389,7 @@ function opStackCommon(
       },
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),

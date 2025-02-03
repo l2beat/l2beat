@@ -113,32 +113,38 @@ export const pulseChain: Bridge = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    {
-      name: 'Validators',
-      description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Validators',
+          description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
         are required.`,
-      accounts: discovery.getPermissionedAccounts(
-        'BridgeValidators',
-        'validatorList',
-      ),
-    },
-    {
-      name: 'Owner of Validators contract',
-      description:
-        'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
-      accounts: [discovery.getPermissionedAccount('BridgeValidators', 'owner')],
-    },
-    {
-      name: 'Upgradeability Owner of main bridge contract',
-      description:
-        'Owner of the main bridge contract, able to upgrade the contract with no notice.',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'ForeignOmnibridge',
-          'upgradeabilityOwner',
-        ),
+          accounts: discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
+          ),
+        },
+        {
+          name: 'Owner of Validators contract',
+          description:
+            'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
+          accounts: [
+            discovery.getPermissionedAccount('BridgeValidators', 'owner'),
+          ],
+        },
+        {
+          name: 'Upgradeability Owner of main bridge contract',
+          description:
+            'Owner of the main bridge contract, able to upgrade the contract with no notice.',
+          accounts: [
+            discovery.getPermissionedAccount(
+              'ForeignOmnibridge',
+              'upgradeabilityOwner',
+            ),
+          ],
+        },
       ],
     },
-  ],
+  },
 }

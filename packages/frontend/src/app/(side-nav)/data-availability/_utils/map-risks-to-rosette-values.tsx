@@ -1,8 +1,12 @@
-import type { DaBridge, DaLayer } from '@l2beat/config'
+import type {
+  DaBridgeRisks,
+  DaLayerRisks,
+  TableReadyValue,
+} from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
 
 export function mapLayerRisksToRosetteValues(
-  risks: DaLayer['risks'],
+  risks: DaLayerRisks | TableReadyValue,
 ): RosetteValue[] {
   if (!('economicSecurity' in risks)) {
     return [
@@ -15,7 +19,6 @@ export function mapLayerRisksToRosetteValues(
       },
     ]
   }
-
   return [
     {
       name: 'Economic security',
@@ -35,7 +38,7 @@ export function mapLayerRisksToRosetteValues(
 }
 
 export function mapBridgeRisksToRosetteValues(
-  risks: DaBridge['risks'],
+  risks: DaBridgeRisks | TableReadyValue,
 ): RosetteValue[] {
   if (!('committeeSecurity' in risks)) {
     return [

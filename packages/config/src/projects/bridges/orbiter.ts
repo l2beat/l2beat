@@ -138,54 +138,58 @@ export const orbiter: Bridge = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      accounts: [
+  permissions: {
+    [discovery.chain]: {
+      actors: [
         {
-          address: EthereumAddress(
-            '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
-          ),
-          type: 'EOA',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
+              ),
+              type: 'EOA',
+            },
+          ],
+          name: 'ETH escrow',
+          description: 'Maker account for ETH deposits/withdrawals',
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
+              ),
+              type: 'EOA',
+            },
+          ],
+          name: 'USDC escrow',
+          description: 'Maker account for USDC deposits/withdrawals',
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+              ),
+              type: 'EOA',
+            },
+          ],
+          name: 'USDT escrow',
+          description: 'Maker account for USDT deposits/withdrawals',
+        },
+        {
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x095D2918B03b2e86D68551DCF11302121fb626c9',
+              ),
+              type: 'EOA',
+            },
+          ],
+          name: 'DAI escrow',
+          description: 'Maker account for DAI deposits/withdrawals',
         },
       ],
-      name: 'ETH escrow',
-      description: 'Maker account for ETH deposits/withdrawals',
     },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'USDC escrow',
-      description: 'Maker account for USDC deposits/withdrawals',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'USDT escrow',
-      description: 'Maker account for USDT deposits/withdrawals',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x095D2918B03b2e86D68551DCF11302121fb626c9',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'DAI escrow',
-      description: 'Maker account for DAI deposits/withdrawals',
-    },
-  ],
+  },
 }

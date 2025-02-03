@@ -168,23 +168,30 @@ export const immutablex: Layer2 = {
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governor',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Governor',
+          accounts: getProxyGovernance(discovery, 'StarkExchange'),
+          description:
+            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromString(upgradeDelay),
+        },
+        committee,
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        {
+          name: 'Operators',
+          accounts: discovery.getPermissionedAccounts(
+            'StarkExchange',
+            'OPERATORS',
+          ),
+          description:
+            'Allowed to update the state. When the Operator is down the state cannot be updated.',
+        },
+      ],
     },
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update the state. When the Operator is down the state cannot be updated.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Trading is live on Immutable X Marketplace',
@@ -204,9 +211,8 @@ export const immutablex: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: StarkexDAC({
+    dac: {
       knownMembers: [
         {
           external: false,

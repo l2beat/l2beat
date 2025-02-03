@@ -210,14 +210,18 @@ export const honeypot: Layer2 = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Authority owner',
-      description:
-        'The Authority owner can submit claims to the Honeypot DApp.',
-      accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Authority owner',
+          description:
+            'The Authority owner can submit claims to the Honeypot DApp.',
+          accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+        },
+      ],
     },
-  ],
+  },
   milestones: [
     {
       title: 'Honeypot announcement',

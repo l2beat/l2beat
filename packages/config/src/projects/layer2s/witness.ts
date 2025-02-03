@@ -127,28 +127,32 @@ export const witness: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('WitnessValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('WitnessValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+        },
+        {
+          name: 'DACProxyAdminOwner',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('ProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+        },
       ],
-      description:
-        'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
     },
-    {
-      name: 'DACProxyAdminOwner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('ProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('WitnessValidiumDAC', {
       description:
@@ -156,12 +160,10 @@ export const witness: Layer2 = polygonCDKStack({
       ...upgradeability,
     }),
   ],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

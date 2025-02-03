@@ -1,8 +1,8 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 21721209,
-  "configHash": "0xbf3578646b1fa6094bc230a098bc720e898721689500a1f1a0d7dfa1186d28e8",
+  "blockNumber": 21736827,
+  "configHash": "0x46855f1be1e3d4f9ca4615f05d9df041a7d110bb48be20a6c252c1d1894a4183",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -481,26 +481,26 @@
         "getBaseToken": "0xAB3B124052F0389D1cbED221d912026Ac995bb95",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 308,
+        "getFirstUnprocessedPriorityTx": 322,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
-        "getL2SystemContractsUpgradeBatchNumber": 533,
-        "getL2SystemContractsUpgradeBlockNumber": 533,
-        "getL2SystemContractsUpgradeTxHash": "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674",
+        "getL2SystemContractsUpgradeBatchNumber": 0,
+        "getL2SystemContractsUpgradeBlockNumber": 0,
+        "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 11,
+        "getPriorityQueueSize": 7,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 534,
-        "getTotalBatchesExecuted": 514,
-        "getTotalBatchesVerified": 532,
-        "getTotalBlocksCommitted": 534,
-        "getTotalBlocksExecuted": 514,
-        "getTotalBlocksVerified": 532,
-        "getTotalPriorityTxs": 319,
+        "getTotalBatchesCommitted": 598,
+        "getTotalBatchesExecuted": 563,
+        "getTotalBatchesVerified": 591,
+        "getTotalBlocksCommitted": 598,
+        "getTotalBlocksExecuted": 563,
+        "getTotalBlocksVerified": 591,
+        "getTotalPriorityTxs": 329,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -509,8 +509,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xf598fbfb34f159e57fd1a32ac9f5d32ef5ac142a5a710f9baa8ff4c56d54301e",
-          "expirationTimestamp": 1737974723,
+          "canonicalTxHash": "0x89614d1f53e5c4a5098d1b40b2fcf90dd3c43651d7197412f44ba5b1c992cf0e",
+          "expirationTimestamp": 1738163327,
           "layer2Tip": 0
         },
         "txFilterer": ["0x3Cd52B238Ac856600b22756133eEb31ECb25109a"],
@@ -1012,10 +1012,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x59b433947459b51f5f56685f9922099f8571f5a75a669ceb2c6e8af49843e267",
-    "shared-zk-stack/Diamond": "0x397e45da0a66ab5d9e4a95ee84d5610dec0ab033890a4a9c851ed9d77828725d",
-    "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
-    "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "shared-zk-stack/ChainAdmin": "0x8ec8acbff3be82b53cdc97244336ee589a872235b0383506534d0bae9463feb9",
+    "shared-zk-stack/Diamond": "0xd62d6f07bb60c75ee3179ef73ab905abd0718aeceadc5bde7d463f43c77a41df",
+    "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
+    "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
   }
 }

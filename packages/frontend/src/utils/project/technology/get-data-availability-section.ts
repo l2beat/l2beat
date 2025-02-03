@@ -4,24 +4,21 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getDaRisks } from '~/server/features/data-availability/utils/get-da-risks'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 
 export function getDataAvailabilitySection(project: Layer2 | Layer3) {
-  if (!project.dataAvailabilitySolution) {
+  if (!project.customDa) {
     return
   }
 
   const daSubsections: ProjectDetailsSection[] = []
 
-  const evaluatedRisks = getDaRisks(
-    project.dataAvailabilitySolution,
-    project.dataAvailabilitySolution.bridge,
-    0, // TODO: getTVS
+  const layerGrissiniValues = mapLayerRisksToRosetteValues(
+    project.customDa.risks,
   )
-
-  const layerGrissiniValues = mapLayerRisksToRosetteValues(evaluatedRisks)
-  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
+  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
+    project.customDa.risks,
+  )
 
   daSubsections.push({
     type: 'GrissiniRiskAnalysisSection',
@@ -44,19 +41,11 @@ export function getDataAvailabilitySection(project: Layer2 | Layer3) {
         type: 'da-layer-technology',
         slug: project.display.slug,
       },
-      content: project.dataAvailabilitySolution.technology.description.concat(
-        project.dataAvailabilitySolution.bridge.technology.description,
-      ),
+      content: project.customDa.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: project.dataAvailabilitySolution.technology.risks
-        ?.concat(project.dataAvailabilitySolution.bridge.technology.risks ?? [])
-        .map(toTechnologyRisk),
-      references:
-        project.dataAvailabilitySolution.technology.references?.concat(
-          ...(project.dataAvailabilitySolution.bridge.technology.references ??
-            []),
-        ),
+      risks: (project.customDa.technology.risks ?? []).map(toTechnologyRisk),
+      references: project.customDa.technology.references,
     },
   })
 

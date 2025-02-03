@@ -140,28 +140,32 @@ export const lzOmnichain: Bridge = {
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
-  permissions: [
-    {
-      accounts: RELAYERS.map((address) =>
-        discovery.formatPermissionedAccount(address),
-      ),
-      name: 'Default Relayer',
-      description:
-        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          accounts: RELAYERS.map((address) =>
+            discovery.formatPermissionedAccount(address),
+          ),
+          name: 'Default Relayer',
+          description:
+            'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+        },
+        {
+          accounts: ORACLES.map((address) =>
+            discovery.formatPermissionedAccount(address),
+          ),
+          name: 'Default Oracles',
+          description:
+            'Contracts that submit source chain block hashes to the destination chain.',
+        },
+        ...discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
+        ),
+      ],
     },
-    {
-      accounts: ORACLES.map((address) =>
-        discovery.formatPermissionedAccount(address),
-      ),
-      name: 'Default Oracles',
-      description:
-        'Contracts that submit source chain block hashes to the destination chain.',
-    },
-    ...discovery.getMultisigPermission(
-      'LayerZero Multisig',
-      'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
-    ),
-  ],
+  },
   knowledgeNuggets: [
     {
       title: 'Security models: isolated vs shared',

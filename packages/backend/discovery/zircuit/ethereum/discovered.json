@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 21564418,
-  "configHash": "0x6e6b7970712b48c4cb88ba7f380be14d0193946a349862f8e2423a142ecb96a9",
+  "configHash": "0x68ae1c639e2de73df9a97b4ce1794dec85617ff5d55dd90884f6c4352609ee6b",
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -1252,13 +1252,13 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "lido/L1ERC20TokenBridge": "0x92f3dfbce98dce7429c279c185dde3045452f70303e3ec8ed6d5ac2d8036950d",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1ERC721Bridge": "0x597905c209b546f9d70c98674823b68e0a156ca904d559323057dc4987b98132",
-    "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
-    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
-    "opstack/OptimismPortal_zircuit": "0x774cf9e6dd64784eb16fc650e8c5e8a570bb6a827c7479b22c46be4094520d35",
-    "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "lido/L1ERC20TokenBridge": "0x6b130feebf496d13479657eb711e6957c3e73d18677bac07644b4882103ec109",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
+    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/OptimismPortal_zircuit": "0x0c427140791d1979b70ca61872c9d420887b60d30ef3f66b1791b3475af5131d",
+    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
   }
 }

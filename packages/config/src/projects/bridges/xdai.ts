@@ -147,20 +147,24 @@ export const xdai: Bridge = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'GnosisBridgeGovernanceMultisig',
-      'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
-    ),
-    {
-      accounts: [
-        ...discovery.getPermissionedAccounts(
-          'BridgeValidators',
-          'validatorList',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        ...discovery.getMultisigPermission(
+          'GnosisBridgeGovernanceMultisig',
+          'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
         ),
+        {
+          accounts: [
+            ...discovery.getPermissionedAccounts(
+              'BridgeValidators',
+              'validatorList',
+            ),
+          ],
+          name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
+          description: 'Bridge Validators.',
+        },
       ],
-      name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
-      description: 'Bridge Validators.',
     },
-  ],
+  },
 }

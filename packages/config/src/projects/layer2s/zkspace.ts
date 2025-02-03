@@ -199,22 +199,29 @@ export const zkspace: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
-  permissions: [
-    {
-      name: 'zkSpace Admin',
-      accounts: [
-        discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'zkSpace Admin',
+          accounts: [
+            discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
+          ],
+          description:
+            'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager, ZkSeaNFT and ZkSync contracts.',
+        },
+        {
+          name: 'Active validator',
+          accounts: discovery.getPermissionedAccounts(
+            'Governance',
+            'validators',
+          ),
+          description:
+            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
+        },
       ],
-      description:
-        'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager, ZkSeaNFT and ZkSync contracts.',
     },
-    {
-      name: 'Active validator',
-      accounts: discovery.getPermissionedAccounts('Governance', 'validators'),
-      description:
-        'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'ZKSpace Officially Upgrades to ZKBase',

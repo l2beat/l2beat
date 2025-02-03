@@ -1,8 +1,8 @@
 {
   "name": "witness",
   "chain": "ethereum",
-  "blockNumber": 21715800,
-  "configHash": "0x271dae2021804d278c07a38d665fb6d6a92123fc674159d78c7580ec08dc83df",
+  "blockNumber": 21736867,
+  "configHash": "0xdd89d41445cf651d447dc85ce42cd6cefff5c07624a60af12d9ebe09c1fda9b1",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -335,6 +335,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

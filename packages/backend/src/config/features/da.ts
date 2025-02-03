@@ -18,8 +18,8 @@ function getDaLayers(): DaLayerTrackingConfig[] {
   return [
     ...new Set(
       daLayers
-        .filter((daLayer) => daLayer.kind === 'PublicBlockchain')
-        .flatMap(({ daTracking }) => daTracking ?? []),
+        .filter((project) => project.daLayer.kind === 'PublicBlockchain')
+        .flatMap((project) => project.daLayer.daTracking ?? []),
     ),
   ]
 }

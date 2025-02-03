@@ -30,7 +30,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
   ChainConfig,
-  DacDaLayer,
+  CustomDa,
   KnowledgeNugget,
   Layer2,
   Layer2Display,
@@ -45,6 +45,7 @@ import type {
   ScalingProjectContract,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -58,8 +59,16 @@ import type {
 import { Badge, type BadgeId, badges } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  generateDiscoveryDrivenPermissions,
+  generateDiscoveryDrivenSections,
+} from './generateDiscoveryDrivenSections'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -125,7 +134,7 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateContracts?: ScalingProjectContract[]
@@ -144,12 +153,12 @@ interface OrbitStackConfigCommon {
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
-  dataAvailabilitySolution?: DacDaLayer
+  customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -328,7 +337,11 @@ function orbitStackCommon(
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
+  const discoveryDrivenContrats = templateVars.discoveryDrivenData
     ? generateDiscoveryDrivenSections(
         templateVars.discovery,
         nativeContractRisks,
@@ -423,19 +436,17 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
-      : {
-          addresses: unionBy(
-            [
-              ...(templateVars.nonTemplateContracts ?? []),
-              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            ],
-            'address',
-          ),
-          nativeAddresses: templateVars.nativeAddresses,
-          risks: nativeContractRisks,
-        },
+    contracts: discoveryDrivenContrats ?? {
+      addresses: unionBy(
+        [
+          ...(templateVars.nonTemplateContracts ?? []),
+          ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
+        ],
+        'address',
+      ),
+      nativeAddresses: templateVars.nativeAddresses,
+      risks: nativeContractRisks,
+    },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:
@@ -546,17 +557,21 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
-      : [
-          sequencers,
-          validators,
-          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nativePermissions,
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
+      : mergePermissions(
+          {
+            [templateVars.discovery.chain]: {
+              actors: [
+                sequencers,
+                validators,
+                ...templateVars.discovery.resolveOrbitStackTemplates()
+                  .permissions,
+              ],
+            },
+          },
+          templateVars.nonTemplatePermissions ?? {},
+        ),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -573,7 +588,7 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
@@ -741,7 +756,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -922,7 +940,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,

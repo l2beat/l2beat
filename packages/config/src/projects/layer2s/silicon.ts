@@ -120,28 +120,32 @@ export const silicon: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the SiliconValidium contract.',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('SiliconValidium', 'admin'),
-        ),
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'LocalAdmin',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('SiliconValidium', 'admin'),
+            ),
+          ],
+          description:
+            'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
+        },
+        {
+          name: 'SiliconDAC Upgrader',
+          accounts: [
+            discovery.formatPermissionedAccount(
+              discovery.getContractValue('DACProxyAdmin', 'owner'),
+            ),
+          ],
+          description:
+            'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
+        },
       ],
-      description:
-        'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
     },
-    {
-      name: 'SiliconDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
-    },
-  ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('SiliconDAC', {
       description:
@@ -160,12 +164,10 @@ export const silicon: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

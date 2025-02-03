@@ -6,7 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
@@ -26,6 +25,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  CustomDa,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -35,7 +35,7 @@ import type {
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectContract,
-  ScalingProjectPermission,
+  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectStateDerivation,
   ScalingProjectStateValidation,
@@ -44,10 +44,14 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import type { ChainConfig, KnowledgeNugget } from '../../../types'
-import type { DacDaLayer } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 export interface DAProvider {
   layer: DataAvailabilityLayer
@@ -61,14 +65,14 @@ export interface PolygonCDKStackConfig {
   addedAt: UnixTime
   capability?: ScalingProjectCapability
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  customDa?: CustomDa
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'>
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateEscrows: ProjectEscrow[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
@@ -83,9 +87,11 @@ export interface PolygonCDKStackConfig {
   associatedTokens?: string[]
   additionalBadges?: BadgeId[]
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  architectureImage?: string
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -168,9 +174,17 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     isArchived: templateVars.isArchived,
     display: {
       ...templateVars.display,
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       category:
         templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      architectureImage:
+        (templateVars.architectureImage ??
+        templateVars.daProvider !== undefined)
+          ? 'polygon-zkevm-validium'
+          : 'polygon-zkevm-rollup',
       stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
@@ -453,51 +467,57 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     },
     stateDerivation: templateVars.stateDerivation,
     stateValidation: templateVars.stateValidation,
-    permissions: [
+    permissions: mergePermissions(
       {
-        name: 'Sequencer',
-        accounts: [
-          templateVars.discovery.getPermissionedAccount(
-            templateVars.rollupModuleContract.name,
-            'trustedSequencer',
-          ),
-        ],
-        description:
-          'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
+        [templateVars.discovery.chain]: {
+          actors: [
+            {
+              name: 'Sequencer',
+              accounts: [
+                templateVars.discovery.getPermissionedAccount(
+                  templateVars.rollupModuleContract.name,
+                  'trustedSequencer',
+                ),
+              ],
+              description:
+                'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
+            },
+            {
+              name: 'Proposer (Trusted Aggregator)',
+              accounts: shared.getAccessControlRolePermission(
+                rollupManagerContract.name,
+                'TRUSTED_AGGREGATOR',
+              ),
+              description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+            },
+            ...shared.getMultisigPermission(
+              'SecurityCouncil',
+              'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+            ),
+            {
+              name: 'Forced Batcher',
+              accounts: [
+                templateVars.discovery.getPermissionedAccount(
+                  templateVars.rollupModuleContract.name,
+                  'forceBatchAddress',
+                ),
+              ],
+              description:
+                'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
+            },
+            ...shared.getMultisigPermission(
+              'RollupManagerAdminMultisig',
+              `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${
+                templateVars.rollupModuleContract.name
+              } contracts, but are restricted by a ${formatSeconds(
+                upgradeDelay,
+              )} delay unless rollup is put in the Emergency State.`,
+            ),
+          ],
+        },
       },
-      {
-        name: 'Proposer (Trusted Aggregator)',
-        accounts: shared.getAccessControlRolePermission(
-          rollupManagerContract.name,
-          'TRUSTED_AGGREGATOR',
-        ),
-        description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      },
-      ...shared.getMultisigPermission(
-        'SecurityCouncil',
-        'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
-      ),
-      {
-        name: 'Forced Batcher',
-        accounts: [
-          templateVars.discovery.getPermissionedAccount(
-            templateVars.rollupModuleContract.name,
-            'forceBatchAddress',
-          ),
-        ],
-        description:
-          'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
-      },
-      ...shared.getMultisigPermission(
-        'RollupManagerAdminMultisig',
-        `Admin of the PolygonRollupManager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state. They can also upgrade the ${
-          templateVars.rollupModuleContract.name
-        } contracts, but are restricted by a ${formatSeconds(
-          upgradeDelay,
-        )} delay unless rollup is put in the Emergency State.`,
-      ),
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
+      templateVars.nonTemplatePermissions ?? {},
+    ),
     contracts: {
       addresses: [
         ...(templateVars.nonTemplateContracts ?? []),
@@ -579,7 +599,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       templateVars.additionalBadges ?? [],
     ),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }

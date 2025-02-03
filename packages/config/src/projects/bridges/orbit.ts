@@ -181,19 +181,25 @@ export const orbit: Bridge = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    {
-      name: 'Bridge contract Governance',
-      accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
-      description: `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Bridge contract Governance',
+          accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
+          description: `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
+        },
+        {
+          name: 'Policy Admin',
+          accounts: [
+            discovery.getPermissionedAccount('ETH Vault', 'policyAdmin'),
+          ],
+          description:
+            'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
+        },
+      ],
     },
-    {
-      name: 'Policy Admin',
-      accounts: [discovery.getPermissionedAccount('ETH Vault', 'policyAdmin')],
-      description:
-        'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Orbit Bridge hacked for $81.5M',

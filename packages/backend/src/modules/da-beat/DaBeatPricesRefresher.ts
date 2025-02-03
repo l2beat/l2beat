@@ -36,10 +36,10 @@ export class DaBeatPricesRefresher {
 
   private async refresh() {
     const coingeckoIds = [
-      ...daLayers.filter((x) => x.kind === 'PublicBlockchain'),
+      ...daLayers.filter((x) => x.daLayer.kind === 'PublicBlockchain'),
       ethereumDaLayer,
     ]
-      .map((x) => x.economicSecurity?.token.coingeckoId)
+      .map((x) => x.daLayer.economicSecurity?.token.coingeckoId)
       .filter((x) => x !== undefined)
 
     assert(coingeckoIds.length <= 100, 'Too many ids')

@@ -220,56 +220,61 @@ export const cBridge: Bridge = {
     references: [],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Bridge Governance',
-      description:
-        'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
-      accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
-    },
-    {
-      name: 'Bridge Governance (2)',
-      description:
-        'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
-      accounts: [
-        discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Bridge Governance',
+          description:
+            'The owner of the main bridge contract, can update bridge parameters such as Token Bridge and Liquidity Network addresses.',
+          accounts: [discovery.getPermissionedAccount('MessageBus', 'owner')],
+        },
+        {
+          name: 'Bridge Governance (2)',
+          description:
+            'The owner of both PeggedTokenBridges, the Liquidity Network, the TransferAgent and Sentinel is a governance contract with the permissions to manage: signers responsible for messages relaying, pausers with the ability to pause the bridge as well as governance of the system.',
+          accounts: [
+            discovery.getPermissionedAccount('OriginalTokenVaultV2', 'owner'),
+          ],
+        },
+        {
+          name: 'Governors',
+          description:
+            'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
+          accounts: unionBy(
+            discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
+            discovery.getPermissionedAccounts('Sentinel', 'governors'),
+            JSON.stringify,
+          ),
+        },
+        {
+          name: 'Full pausers',
+          description: 'Can pause and unpause the system.',
+          accounts: unionBy(
+            discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
+            discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
+            JSON.stringify,
+          ),
+        },
+        {
+          name: 'Partial pausers',
+          description: 'Can pause the system.',
+          accounts: discovery.getPermissionedAccounts(
+            'Sentinel',
+            'pausersPauseOnly',
+          ),
+        },
+        {
+          name: 'Sentinel Admin',
+          description:
+            'Can add and remove governors and pausers from the system.',
+          accounts: [
+            discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
+          ],
+        },
       ],
     },
-    {
-      name: 'Governors',
-      description:
-        'Can modify bridge operational parameters such as minimal and maximal send amounts, max slippage and transfer delay.',
-      accounts: unionBy(
-        discovery.getPermissionedAccounts('Liquidity Network', 'governors'),
-        discovery.getPermissionedAccounts('Sentinel', 'governors'),
-        JSON.stringify,
-      ),
-    },
-    {
-      name: 'Full pausers',
-      description: 'Can pause and unpause the system.',
-      accounts: unionBy(
-        discovery.getPermissionedAccounts('Liquidity Network', 'pausers'),
-        discovery.getPermissionedAccounts('Sentinel', 'pausersFull'),
-        JSON.stringify,
-      ),
-    },
-    {
-      name: 'Partial pausers',
-      description: 'Can pause the system.',
-      accounts: discovery.getPermissionedAccounts(
-        'Sentinel',
-        'pausersPauseOnly',
-      ),
-    },
-    {
-      name: 'Sentinel Admin',
-      description: 'Can add and remove governors and pausers from the system.',
-      accounts: [
-        discovery.getPermissionedAccount('SentinelProxyAdmin', 'owner'),
-      ],
-    },
-  ],
+  },
   knowledgeNuggets: [
     {
       title: 'How HTLC bridge works?',

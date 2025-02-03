@@ -1,13 +1,13 @@
 import type {
   Bridge,
-  DaLayer,
+  DaProject,
   Layer2,
   Layer3,
   ScalingProjectContract,
 } from '../types'
 
 export function getContractsVerificationStatuses(
-  project: Layer2 | Layer3 | Bridge | DaLayer,
+  project: Layer2 | Layer3 | Bridge | DaProject,
 ) {
   const contracts: ScalingProjectContract[] = []
   if ('contracts' in project) {

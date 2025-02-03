@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "blockNumber": 17968825,
-  "configHash": "0xeff419f24c2797599bd5967be5c200b88d6501bdc3bd3d2cb499de5f14ebb31d",
+  "configHash": "0xd0458710cb80acda80d65831700c119c81845298f56042ea09ce82170f23945d",
   "contracts": [
     {
       "name": "ForeignOmnibridge",

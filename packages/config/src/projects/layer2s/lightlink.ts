@@ -239,36 +239,40 @@ export const lightlink: Layer2 = {
     ],
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Validators',
-      description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-      accounts: validators.map((validator) => ({
-        address: EthereumAddress(validator.addr),
-        type: 'EOA',
-      })),
-    },
-    {
-      name: 'Proposer',
-      accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
-      description:
-        'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
-    },
-    {
-      name: 'LightLinkMultisig',
-      accounts: [
-        { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        {
+          name: 'Validators',
+          description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+          accounts: validators.map((validator) => ({
+            address: EthereumAddress(validator.addr),
+            type: 'EOA',
+          })),
+        },
+        {
+          name: 'Proposer',
+          accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
+          description:
+            'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
+        },
+        {
+          name: 'LightLinkMultisig',
+          accounts: [
+            { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
+          ],
+          description:
+            'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
+        },
+        {
+          name: 'LightLinkAdmin',
+          accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
+          description:
+            'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
+        },
       ],
-      description:
-        'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
     },
-    {
-      name: 'LightLinkAdmin',
-      accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
-      description:
-        'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
-    },
-  ],
+  },
 }
 
 function getMinValidatorsForConsensus(
