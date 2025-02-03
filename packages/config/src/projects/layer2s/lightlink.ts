@@ -261,7 +261,7 @@ export const lightlink: Layer2 = {
         {
           name: 'LightLinkMultisig',
           accounts: [
-            { address: EthereumAddress(LightLinkMultisig), type: 'MultiSig' },
+            { address: EthereumAddress(LightLinkMultisig), type: 'Contract' },
           ],
           description:
             'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',

@@ -264,7 +264,7 @@ export const allbridge: Bridge = {
           name: 'Allbridge Owner EOA.',
           description:
             'Owner of all system contracts except TokenBridge, privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
-          accounts: [discovery.getPermissionedAccount('LPBridge', 'owner')],
+          accounts: discovery.getPermissionedAccounts('LPBridge', 'owner'),
         },
         {
           name: 'AllbridgeMessenger EOA.',

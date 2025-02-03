@@ -1,4 +1,4 @@
-import type { ProjectContract, ScalingProjectPermissions } from '@l2beat/config'
+import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { daLayers } from '@l2beat/config'
 import type { ScalingProject } from './get-scaling-project-entry'
 
@@ -9,7 +9,7 @@ type Common = {
 }
 
 export type DaSolution = Common & {
-  permissions: ScalingProjectPermissions | undefined
+  permissions: ProjectPermissions | undefined
   contracts: ProjectContract[] | undefined
 }
 

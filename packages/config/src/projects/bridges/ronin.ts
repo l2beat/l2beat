@@ -190,7 +190,7 @@ export const ronin: Bridge = {
           accounts: [
             {
               address: discovery.getContract('RoninManagerMultiSig').address,
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description:
@@ -211,12 +211,11 @@ export const ronin: Bridge = {
         ),
         {
           name: 'MainchainGatewayV3 Sentry Account',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'MainchainGateway',
-              'emergencyPauser',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'MainchainGateway',
+            'emergencyPauser',
+          ),
+
           description:
             'An address that can pause the bridge in case of emergency (can be another contract).',
         },

@@ -131,20 +131,19 @@ export const pulseChain: Bridge = {
           name: 'Owner of Validators contract',
           description:
             'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
-          accounts: [
-            discovery.getPermissionedAccount('BridgeValidators', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'owner',
+          ),
         },
         {
           name: 'Upgradeability Owner of main bridge contract',
           description:
             'Owner of the main bridge contract, able to upgrade the contract with no notice.',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'ForeignOmnibridge',
-              'upgradeabilityOwner',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ForeignOmnibridge',
+            'upgradeabilityOwner',
+          ),
         },
       ],
     },

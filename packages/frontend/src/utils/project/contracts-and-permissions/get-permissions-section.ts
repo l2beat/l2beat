@@ -3,9 +3,9 @@ import type {
   DaProject,
   Layer2,
   Layer3,
-  ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
-  ScalingProjectPermissions,
+  ProjectPermission,
+  ProjectPermissionedAccount,
+  ProjectPermissions,
 } from '@l2beat/config'
 import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
@@ -24,7 +24,7 @@ import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   id: string
-  permissions: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions: Record<string, ProjectPermissions> | 'UnderReview'
   daSolution?: DaSolution
   isUnderReview: boolean
 } & (
@@ -38,7 +38,7 @@ type PermissionSection = Omit<
 >
 
 function permissionsAreEmpty(
-  permissions: ScalingProjectPermissions | 'UnderReview' | undefined,
+  permissions: ProjectPermissions | 'UnderReview' | undefined,
 ): boolean {
   if (permissions === undefined) {
     return true
@@ -110,7 +110,7 @@ export function getPermissionsSection(
 function getGroupedTechnologyContracts(
   projectParams: ProjectParams,
   contractsVerificationStatuses: ContractsVerificationStatuses,
-  permissions: ScalingProjectPermissions,
+  permissions: ProjectPermissions,
 ): PermissionSection['permissionsByChain'][string] {
   return {
     roles:
@@ -166,7 +166,7 @@ function getDaSolution(
 
 function resolvePermissionedName(
   rootName: string,
-  account: ScalingProjectPermissionedAccount,
+  account: ProjectPermissionedAccount,
   projectPermissions: ProjectParams['permissions'],
   chain: string,
 ): {
@@ -208,7 +208,7 @@ function resolvePermissionedName(
 
 function toTechnologyContract(
   projectParams: ProjectParams,
-  permission: ScalingProjectPermission,
+  permission: ProjectPermission,
   contractsVerificationStatuses: ContractsVerificationStatuses,
 ): TechnologyContract[] {
   const chain = getChain(projectParams, permission)

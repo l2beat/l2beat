@@ -442,7 +442,7 @@ export const socket: Bridge = {
           name: 'socketadmin.eth EOA',
           description:
             'Account privileged to set up different roles in the main Socket contract.',
-          accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
+          accounts: discovery.getPermissionedAccounts('Socket', 'owner'),
         },
         ...discovery.getMultisigPermission(
           'LyraMultisig',
@@ -455,9 +455,10 @@ export const socket: Bridge = {
         {
           name: 'KintoEOA',
           description: 'owns some Vaults associated with Kinto.',
-          accounts: [
-            discovery.getPermissionedAccount('PAXG Vault Kinto', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'PAXG Vault Kinto',
+            'owner',
+          ),
         },
         ...discovery.getMultisigPermission(
           'LooksRareMultisig',
@@ -467,9 +468,10 @@ export const socket: Bridge = {
           name: 'PolynomialEOA',
           description:
             'EOA that owns the Socket Vaults associated with Polynomial L2.',
-          accounts: [
-            discovery.getPermissionedAccount('USDC Vault Polynomial', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'USDC Vault Polynomial',
+            'owner',
+          ),
         },
       ],
     },

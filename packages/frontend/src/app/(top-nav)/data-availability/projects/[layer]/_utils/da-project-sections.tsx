@@ -51,7 +51,6 @@ export function getRegularDaProjectSections({
         escrows: undefined,
         isUnderReview: daLayer.isUnderReview,
       },
-      contractsVerificationStatuses,
       projectsChangeReport,
     )
 

@@ -33,10 +33,10 @@ import type {
   Milestone,
   ProjectContract,
   ProjectEscrow,
+  ProjectPermissions,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
-  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRiskView,
   ScalingProjectTechnology,
@@ -85,7 +85,7 @@ export interface ZkStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
+  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
   nonTemplateEscrows?: (upgrades: Upgradeability) => ProjectEscrow[]
   associatedTokens?: string[]

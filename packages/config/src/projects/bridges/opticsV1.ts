@@ -154,9 +154,11 @@ export const opticsV1: Bridge = {
         ),
         {
           name: 'Updater',
-          accounts: [
-            discovery.getPermissionedAccount('UpdaterManager', 'updater'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'UpdaterManager',
+            'updater',
+          ),
+
           description: 'Permissioned account that can update message roots.',
         },
         {

@@ -107,7 +107,7 @@ export interface ScalingProject {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -267,16 +267,16 @@ export interface ProjectLinks {
   rollupCodes?: string
 }
 
-export interface ScalingProjectPermissions {
+export interface ProjectPermissions {
   /** List of roles */
-  roles?: ScalingProjectPermission[]
+  roles?: ProjectPermission[]
   /** List of actors */
-  actors?: ScalingProjectPermission[]
+  actors?: ProjectPermission[]
 }
 
-export interface ScalingProjectPermission {
+export interface ProjectPermission {
   /** List of the accounts */
-  accounts: ScalingProjectPermissionedAccount[]
+  accounts: ProjectPermissionedAccount[]
   /** Name of this group */
   name: string
   /** Description of the permissions */
@@ -286,14 +286,14 @@ export interface ScalingProjectPermission {
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
-  participants?: ScalingProjectPermissionedAccount[]
+  participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
 
-export interface ScalingProjectPermissionedAccount {
+export interface ProjectPermissionedAccount {
   address: EthereumAddress
-  type: 'EOA' | 'MultiSig' | 'Contract'
+  type: 'EOA' | 'Contract'
 }
 
 export type ScalingProjectStack =
@@ -696,7 +696,7 @@ export interface Bridge {
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -868,7 +868,7 @@ export interface DaBridge {
   risks: DaBridgeRisks
   dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts?: ProjectContracts
 }

@@ -74,7 +74,6 @@ export async function getL3ProjectDetails({
       architectureImage: project.display.architectureImage,
       daSolution,
     },
-    contractsVerificationStatuses,
     projectsChangeReport,
   )
 

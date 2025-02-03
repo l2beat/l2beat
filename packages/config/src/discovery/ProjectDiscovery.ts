@@ -26,14 +26,14 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { groupBy, isArray, isString, sum, uniq } from 'lodash'
+import { groupBy, isString, sum, uniq } from 'lodash'
 import type {
   ProjectContract,
   ProjectEscrow,
+  ProjectPermission,
+  ProjectPermissionedAccount,
+  ProjectPermissions,
   ReferenceLink,
-  ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
-  ScalingProjectPermissions,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -217,7 +217,7 @@ export class ProjectDiscovery {
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
+  ): ProjectPermission[] {
     const resolved = this.computeStackContractPermissions(
       OP_STACK_PERMISSION_TEMPLATES,
       overrides,
@@ -230,7 +230,7 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): {
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermission[]
     contracts: ProjectContract[]
   } {
     return this.resolveStackTemplates(
@@ -263,7 +263,7 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): {
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermission[]
     contracts: ProjectContract[]
   } {
     const resolved = this.computeStackContractPermissions(
@@ -378,7 +378,7 @@ export class ProjectDiscovery {
     description: string | string[],
     userReferences?: ReferenceLink[],
     useBulletPoints: boolean = false,
-  ): ScalingProjectPermission[] {
+  ): ProjectPermission[] {
     const contract = this.getContract(identifier)
 
     const passedDescription = Array.isArray(description)
@@ -411,7 +411,7 @@ export class ProjectDiscovery {
         accounts: [
           {
             address: contract.address,
-            type: 'MultiSig',
+            type: 'Contract',
           },
         ],
         chain: this.chain,
@@ -424,7 +424,7 @@ export class ProjectDiscovery {
   getAccessControlRolePermission(
     contractIdentifier: string,
     role: string,
-  ): ScalingProjectPermissionedAccount[] {
+  ): ProjectPermissionedAccount[] {
     const { members } = this.getAccessControlField(contractIdentifier, role)
     return members.map((member) => this.formatPermissionedAccount(member))
   }
@@ -541,46 +541,31 @@ export class ProjectDiscovery {
 
   formatPermissionedAccount(
     account: ContractValue | EthereumAddress,
-  ): ScalingProjectPermissionedAccount {
+  ): ProjectPermissionedAccount {
     assert(
       isString(account) && EthereumAddress.check(account),
       `Values must be Ethereum addresses`,
     )
     const address = EthereumAddress(account)
     const isEOA = this.isEOA(address)
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
-    const contract = contracts.find((contract) => contract.address === address)
-    const isMultisig = isMultisigLike(contract)
-
-    const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
+    const type = isEOA ? 'EOA' : 'Contract'
 
     return { address: address, type }
-  }
-
-  getPermissionedAccount(
-    contractIdentifier: string,
-    key: string,
-  ): ScalingProjectPermissionedAccount {
-    const value = this.getContractValue(contractIdentifier, key)
-    return this.formatPermissionedAccount(value)
   }
 
   getPermissionedAccounts(
     contractIdentifier: string,
     key: string,
-    index?: number,
-  ): ScalingProjectPermissionedAccount[] {
-    let value = this.getContractValue(contractIdentifier, key)
-    assert(isArray(value), `Value of ${key} must be an array`)
-
-    if (index !== undefined) {
-      value = (value as ContractValue[])[index]
-      assert(isArray(value), `Value of ${key}[${index}] must be an array`)
+  ): ProjectPermissionedAccount[] {
+    const value = this.getContractValue(contractIdentifier, key)
+    const addresses: ContractValue[] = []
+    if (Array.isArray(value)) {
+      addresses.push(...value)
+    } else {
+      addresses.push(value)
     }
 
-    return value.map(this.formatPermissionedAccount.bind(this))
+    return addresses.map(this.formatPermissionedAccount.bind(this))
   }
 
   getContractFromValue(
@@ -610,7 +595,7 @@ export class ProjectDiscovery {
   contractAsPermissioned(
     contract: ContractParameters,
     description: string,
-  ): ScalingProjectPermission {
+  ): ProjectPermission {
     return {
       name: contract.name,
       accounts: [
@@ -631,7 +616,7 @@ export class ProjectDiscovery {
   eoaAsPermissioned(
     eoa: EoaParameters,
     description: string,
-  ): ScalingProjectPermission {
+  ): ProjectPermission {
     return {
       name: eoa.name ?? eoa.address,
       accounts: [
@@ -789,7 +774,7 @@ export class ProjectDiscovery {
 
   getPermissionsByRole(
     role: (typeof RolePermissionEntries)[number],
-  ): ScalingProjectPermissionedAccount[] {
+  ): ProjectPermissionedAccount[] {
     return this.getContractsAndEoas()
       .filter((x) =>
         (x.receivedPermissions ?? []).find((p) => p.permission === role),
@@ -816,8 +801,8 @@ export class ProjectDiscovery {
 
   describeRolePermissions(
     relevantContracts: (ContractParameters | EoaParameters)[],
-  ): ScalingProjectPermission[] {
-    const result: ScalingProjectPermission[] = []
+  ): ProjectPermission[] {
+    const result: ProjectPermission[] = []
     for (const role of RolePermissionEntries) {
       const matching = relevantContracts.filter(
         (c) =>
@@ -1059,7 +1044,7 @@ export class ProjectDiscovery {
     return s
   }
 
-  getDiscoveredPermissions(): ScalingProjectPermissions {
+  getDiscoveredPermissions(): ProjectPermissions {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
@@ -1082,7 +1067,7 @@ export class ProjectDiscovery {
 
     const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
-    const actors: ScalingProjectPermission[] = []
+    const actors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {

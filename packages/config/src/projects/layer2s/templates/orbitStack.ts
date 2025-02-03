@@ -40,12 +40,12 @@ import type {
   Milestone,
   ProjectContract,
   ProjectEscrow,
+  ProjectPermission,
+  ProjectPermissions,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
-  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -135,7 +135,7 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
+  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
   nonTemplateContracts?: Record<string, ProjectContract[]>
@@ -384,7 +384,7 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ScalingProjectPermission = {
+  const validators: ProjectPermission = {
     name: 'Validators/Proposers',
     accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
     description:
@@ -397,7 +397,7 @@ function orbitStackCommon(
     )
   }
 
-  const sequencers: ScalingProjectPermission = {
+  const sequencers: ProjectPermission = {
     name: 'Sequencers',
     accounts: templateVars.discovery.getPermissionsByRole('sequence'),
     description: 'Central actors allowed to submit transaction batches to L1.',

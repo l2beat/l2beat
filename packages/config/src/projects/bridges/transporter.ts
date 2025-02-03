@@ -75,9 +75,9 @@ export const transporter: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Transporter is a Token Bridge based on the CCIP network. The CCIP network is an AMB (Arbitrary Message Bridge) that enables the cross-chain transfer of arbitrary messages that are attested by ChainLink Oracles as well as a separate Risk Management Network. 
-        On each chain it has a singleton Router contract. For each route (”lane”) there is a triplet of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain, 
-        while OffRamp and CommitStore are used to receive messages. The CommitStore is used to store Merkle roots of CCIP messages sent from the Source chain, while OffRamp is used to verify and execute incoming messages. 
+      description: `Transporter is a Token Bridge based on the CCIP network. The CCIP network is an AMB (Arbitrary Message Bridge) that enables the cross-chain transfer of arbitrary messages that are attested by ChainLink Oracles as well as a separate Risk Management Network.
+        On each chain it has a singleton Router contract. For each route (”lane”) there is a triplet of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain,
+        while OffRamp and CommitStore are used to receive messages. The CommitStore is used to store Merkle roots of CCIP messages sent from the Source chain, while OffRamp is used to verify and execute incoming messages.
         Both OnRamps and OffRamps use TokenPools to escrow tokens, one TokenPool per token. TokenPools - depending on token - may Lock/Release or Mint/Burn tokens. They may also use some custom setup, like e.g. for USDC where TokenPool is a wrapper for Circle’s CCTP bridge.`,
       risks: [],
       references: [],
@@ -85,7 +85,7 @@ export const transporter: Bridge = {
     validation: {
       name: 'Oracle Network',
       description: `Chainlink Oracle network is responsible for validating cross-chain messages. For additional security, CCIP uses an off-chain secondary validation network called Risk Management Network.
-        Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
+        Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [
         {
@@ -164,7 +164,7 @@ export const transporter: Bridge = {
           description: (() => {
             return `Role-based Access Control Timelock (RBACTimelock) smart contract. Onchain security-critical configuration changes and upgrades to the CCIP must pass through this contract. CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
           })(),
-          accounts: [discovery.getPermissionedAccount('Router', 'owner')],
+          accounts: discovery.getPermissionedAccounts('Router', 'owner'),
         },
         {
           name: 'Timelock Admins',

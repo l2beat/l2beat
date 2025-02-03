@@ -129,15 +129,13 @@ export const hyphen: Bridge = {
           name: 'ProxyAdmin owner',
           description:
             'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-          accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+          accounts: discovery.getPermissionedAccounts('ProxyAdmin', 'owner'),
         },
         {
           name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
           description:
             'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-          accounts: [
-            discovery.getPermissionedAccount('LiquidityPool', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('LiquidityPool', 'owner'),
         },
         {
           name: 'Executors',
