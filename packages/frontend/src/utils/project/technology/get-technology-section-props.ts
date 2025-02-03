@@ -11,7 +11,10 @@ export function getTechnologySectionProps(
 ):
   | Omit<
       TechnologySectionProps,
-      keyof Omit<ProjectSectionProps, 'isUnderReview'>
+      keyof Omit<
+        ProjectSectionProps,
+        'isUnderReview' | 'includeChildrenIfUnderReview'
+      >
     >
   | undefined {
   if (items.length === 0) {
@@ -23,8 +26,10 @@ export function getTechnologySectionProps(
   return {
     isUnderReview:
       !!project.isUnderReview ||
+      !!project.technology.isUnderReviewHidden ||
       !!project.technology.isUnderReview ||
       areAllUnderReview,
+    includeChildrenIfUnderReview: !project.technology.isUnderReviewHidden,
     items,
   }
 }

@@ -428,8 +428,10 @@ export interface ScalingProjectTechnology {
   massExit?: ProjectTechnologyChoice
   /** Other considerations */
   otherConsiderations?: ProjectTechnologyChoice[]
-  /** Is the technology section under review */
+  /** Is the technology section under review but the content is visible */
   isUnderReview?: boolean
+  /** Is the technology section under review and content is hidden */
+  isUnderReviewHidden?: boolean
 }
 
 export interface ProjectTechnologyChoice {
@@ -731,6 +733,7 @@ export interface BridgeTechnology {
   validation?: ProjectTechnologyChoice
   destinationToken?: ProjectTechnologyChoice
   isUnderReview?: boolean
+  isUnderReviewHidden?: boolean
 }
 
 export interface CustomDa {
