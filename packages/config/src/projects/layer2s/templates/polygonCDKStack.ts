@@ -47,8 +47,8 @@ import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import {
+  generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-  generateDiscoveryDrivenSections,
 } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
@@ -460,12 +460,15 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     stateDerivation: templateVars.stateDerivation,
     stateValidation: templateVars.stateValidation,
     permissions: generateDiscoveryDrivenPermissions([templateVars.discovery]),
-    contracts: generateDiscoveryDrivenSections(templateVars.discovery, [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
-        upgradeDelayString,
-        'PolygonSecurityCouncil',
-      ),
-    ]),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts([templateVars.discovery]),
+      risks: [
+        CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
+          upgradeDelayString,
+          'PolygonSecurityCouncil',
+        ),
+      ],
+    },
     upgradesAndGovernance:
       templateVars.upgradesAndGovernance ??
       `
