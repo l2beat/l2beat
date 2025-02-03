@@ -65,7 +65,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 ).length
 
 export const eigenDAbridge: DaBridge = {
-  id: ProjectId('eigenda-bridge'),
+  id: ProjectId('eigenda'), // TODO: merge with main eigenda project
   addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   display: {
     name: 'ServiceManager',

@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
 
 export const hotshot: DaBridge = {
-  id: ProjectId('HotShotLightClient'),
+  id: ProjectId('espresso'), // TODO: merge with main espresso project
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
   display: {
     name: 'HotShot Light Client',
