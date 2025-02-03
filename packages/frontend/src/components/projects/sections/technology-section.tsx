@@ -23,6 +23,7 @@ export interface TechnologyChoice {
   description: string
   isIncomplete: boolean
   isUnderReview: boolean
+  isUnderReviewHidden: boolean
   risks: TechnologyRisk[]
   references: ReferenceLink[]
   relatedProjectBanner?: ProjectDetailsRelatedProjectBannerProps
@@ -42,8 +43,19 @@ export function TechnologySection({
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
           {item.isIncomplete && <TechnologyIncompleteNote />}
-          {item.isUnderReview ? (
-            <UnderReviewCallout />
+          {item.isUnderReview || item.isUnderReviewHidden ? (
+            !item.isUnderReviewHidden ? (
+              <>
+                <UnderReviewCallout className="mb-6" />
+                <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+                  {item.description}
+                </Markdown>
+                <RiskList risks={item.risks} />
+                <ReferenceList references={item.references} />{' '}
+              </>
+            ) : (
+              <UnderReviewCallout />
+            )
           ) : (
             <>
               <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">

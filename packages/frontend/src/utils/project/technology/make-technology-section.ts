@@ -20,6 +20,7 @@ export function makeTechnologyChoice(
     description: item.description,
     isIncomplete: !!item.isIncomplete,
     isUnderReview: !!item.isUnderReview,
+    isUnderReviewHidden: !!item.isUnderReviewHidden,
     references: item.references,
     risks,
     ...options,

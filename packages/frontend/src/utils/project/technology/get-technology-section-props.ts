@@ -21,7 +21,8 @@ export function getTechnologySectionProps(
     return undefined
   }
 
-  const areAllUnderReview = items.every((item) => item.isUnderReview)
+  const areAllUnderReview =
+    items.length > 1 && items.every((item) => item.isUnderReview)
 
   return {
     isUnderReview:

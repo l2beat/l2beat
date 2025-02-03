@@ -445,8 +445,10 @@ export interface ProjectTechnologyChoice {
   risks: ScalingProjectRisk[]
   /** The description and research is incomplete */
   isIncomplete?: boolean
-  /** The description and research is under review */
+  /** The description and research is under review but the content is visible */
   isUnderReview?: boolean
+  /** The description is under review and content is hidden */
+  isUnderReviewHidden?: boolean
 }
 
 export type TransactionApiConfig =
