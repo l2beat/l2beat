@@ -250,8 +250,6 @@ export const starknet: Layer2 = {
     name: 'Starknet',
     slug: 'starknet',
     stack: 'SN Stack',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
