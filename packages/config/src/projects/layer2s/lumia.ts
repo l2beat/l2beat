@@ -16,17 +16,17 @@ const discovery = new ProjectDiscovery('lumia')
 const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'LumiaDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'LumiaDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('LumiaValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 export const lumia: Layer2 = polygonCDKStack({
@@ -86,8 +86,8 @@ export const lumia: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('LumiaValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'lumia',

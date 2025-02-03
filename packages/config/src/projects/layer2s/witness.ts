@@ -15,17 +15,17 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 const discovery = new ProjectDiscovery('witness')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'WitnessValidiumDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'WitnessValidiumDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('WitnessValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 export const witness: Layer2 = polygonCDKStack({
@@ -114,7 +114,7 @@ export const witness: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('WitnessValidium'),
+  rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {

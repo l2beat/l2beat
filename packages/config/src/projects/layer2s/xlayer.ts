@@ -16,17 +16,17 @@ const discovery = new ProjectDiscovery('xlayer')
 const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('XLayerValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 export const xlayer: Layer2 = polygonCDKStack({
@@ -118,8 +118,8 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('XLayerValidium'),
-  rollupVerifierContract: discovery.getContract('XLayerVerifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
   rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
   nonTemplateTechnology: {

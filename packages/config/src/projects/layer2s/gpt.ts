@@ -15,20 +15,18 @@ import { polygonCDKStack } from './templates/polygonCDKStack'
 const discovery = new ProjectDiscovery('gpt')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'GptProtocolDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'GptProtocolDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'GptProtocolValidium',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 export const gpt: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
@@ -98,8 +96,8 @@ export const gpt: Layer2 = polygonCDKStack({
     minTimestampForTvl: new UnixTime(1716807971),
     name: 'gpt',
   },
-  rollupModuleContract: discovery.getContract('GptProtocolValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
   nonTemplateTechnology: {

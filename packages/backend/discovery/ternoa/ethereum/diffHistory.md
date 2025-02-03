@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xeb6cb770cc2e210c292c0999e6019ae84a28e02e
+Generated with discovered.json: 0x65133cd49cd7c93be5bb74e300a20b9eee1dfc29
 
-# Diff at Sun, 02 Feb 2025 16:46:28 GMT:
+# Diff at Mon, 03 Feb 2025 09:09:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21737758
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21737758
 - current block number: 21737758
 
 ## Description
 
-discodrive polygon cdk chains!
+discodrive polygoncdk chains!
 
 ## Config/verification related changes
 
@@ -17,18 +17,35 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21737758 (main branch discovery), not current.
 
 ```diff
-    contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789) {
+    +++ description: None
+      name:
+-        "TernoaValidium"
++        "Validium"
+    }
+```
+
+```diff
+    contract FflonkVerifier_12 (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D) {
     +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "Verifier"
++        "FflonkVerifier_12"
       template:
 +        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
       description:
 +        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
     }
 ```
 
 ```diff
-    contract TernoaDAC (0xB408a216927d31A27fd96176dbF1B825630f0301) {
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301) {
     +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+      name:
+-        "TernoaDAC"
++        "PolygonDataCommittee"
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0x49015545B46B07082bd7faf2633643eae87710EC","via":[{"address":"0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b"}]}
       issuedPermissions.0.permission:
@@ -40,16 +57,31 @@ discovery. Values are for block 21737758 (main branch discovery), not current.
 +        "manage the members of the data availability committee and the threshold for valid commitments."
       template:
 +        "polygon-cdk/PolygonDataCommittee"
-      displayName:
-+        "PolygonDataCommittee"
       description:
 +        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1)."
     }
 ```
 
 ```diff
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b) {
+    +++ description: None
+      name:
+-        "DACProxyAdmin"
++        "ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
 +   Status: CREATED
     contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CapsuleCoin (0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2)
     +++ description: None
 ```
 

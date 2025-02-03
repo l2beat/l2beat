@@ -16,17 +16,17 @@ const discovery = new ProjectDiscovery('ternoa')
 const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'TernoaDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'TernoaDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('TernoaValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 export const ternoa: Layer2 = polygonCDKStack({
@@ -87,8 +87,8 @@ export const ternoa: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('TernoaValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier_12'),
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'ternoa',

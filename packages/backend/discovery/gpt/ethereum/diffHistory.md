@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf3242835df98a95ffed0376564ce757ed62c483e
+Generated with discovered.json: 0x45609a98af3614dacd940df0d10bc4a6d0148962
 
-# Diff at Sun, 02 Feb 2025 11:57:19 GMT:
+# Diff at Mon, 03 Feb 2025 09:18:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@9637849b063da030577f396e3f0368d2e5dcec02 block: 21744154
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21744154
 - current block number: 21744154
 
 ## Description
 
-discodrive polygon cdk stack!
+discodrive polygoncdk chains!
 
 ## Config/verification related changes
 
@@ -17,8 +17,26 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21744154 (main branch discovery), not current.
 
 ```diff
-    contract GptProtocolDAC (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "Verifier"
++        "FflonkVerifier"
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
     +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      name:
+-        "GptProtocolDAC"
++        "PolygonDataCommittee"
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]}
       issuedPermissions.0.permission:
@@ -33,23 +51,39 @@ discovery. Values are for block 21744154 (main branch discovery), not current.
 +        "manage the members of the data availability committee and the threshold for valid commitments."
       template:
 +        "polygon-cdk/PolygonDataCommittee"
-      displayName:
-+        "PolygonDataCommittee"
       description:
 +        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1)."
     }
 ```
 
 ```diff
-+   Status: CREATED
-    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
     +++ description: None
+      name:
+-        "DACProxyAdmin"
++        "ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+    }
 ```
 
 ```diff
-+   Status: CREATED
-    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
-    +++ description: None
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "GptProtocolValidium"
++        "Validium"
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"configure","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x3451F208447c4D81346c10239eF92A1eB98b65C3","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
 ```
 
 Generated with discovered.json: 0x88c43e6dad7121eee5424175b01f0a26d848b77a

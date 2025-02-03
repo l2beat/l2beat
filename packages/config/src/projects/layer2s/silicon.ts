@@ -16,17 +16,17 @@ const discovery = new ProjectDiscovery('silicon')
 const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'SiliconDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'SiliconDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('SiliconValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
 
 export const silicon: Layer2 = polygonCDKStack({
@@ -48,8 +48,8 @@ export const silicon: Layer2 = polygonCDKStack({
     },
   },
   rpcUrl: 'https://rpc.silicon.network',
-  rollupModuleContract: discovery.getContract('SiliconValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   daProvider: {
     layer: DA_LAYERS.DAC,

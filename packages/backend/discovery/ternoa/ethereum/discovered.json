@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 21737758,
-  "configHash": "0x78909a4c6c4ad4404f492074cc41fa97686aebe17de0e52e529653ad084aeca0",
+  "configHash": "0xe538d3a2166e9efdd8eceae050a3b28d7917f1b4c728ab6ec28f25bc4b59188c",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -15,6 +15,21 @@
       "values": {
         "$immutable": true,
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
+      }
+    },
+    {
+      "name": "CapsuleCoin",
+      "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
+      "sourceHashes": [
+        "0xfc4cdeb3381babd2fd86994c11c7f5b1e494ef4a47ed555ba8c91882a9633f25"
+      ],
+      "sinceTimestamp": 1614363963,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Capsule Coin",
+        "symbol": "CAPS",
+        "totalSupply": "2500000000000000000000000000"
       }
     },
     {
@@ -52,11 +67,10 @@
       }
     },
     {
-      "name": "TernoaValidium",
+      "name": "Validium",
       "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1735650935,
       "values": {
         "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
@@ -105,19 +119,19 @@
       "derivedName": "PolygonValidiumEtrog"
     },
     {
-      "name": "Verifier",
+      "name": "FflonkVerifier_12",
       "address": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
       ],
+      "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1729157663,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier_12"
+      "values": { "$immutable": true }
     },
     {
-      "name": "TernoaDAC",
+      "name": "PolygonDataCommittee",
       "address": "0xB408a216927d31A27fd96176dbF1B825630f0301",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -125,7 +139,6 @@
         "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "PolygonDataCommittee",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).",
       "issuedPermissions": [
         {
@@ -163,17 +176,15 @@
         ],
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1
-      },
-      "derivedName": "PolygonDataCommittee"
+      }
     },
     {
-      "name": "DACProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -184,8 +195,7 @@
       "values": {
         "$immutable": true,
         "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     }
   ],
   "eoas": [
@@ -248,6 +258,25 @@
       "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
+    ],
+    "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2": [
+      "constructor(address vault)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function claimOffchainGrant(bytes proof, address from, address to, uint256 amount, uint256 validity, uint256 nonce)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function hashForClaim(address from, address to, uint256 amount, uint256 validity, uint256 nonce) pure returns (bytes32)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function name() view returns (string)",
+      "function nonceUsed(address, uint256) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
     "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": [
       "constructor()",
