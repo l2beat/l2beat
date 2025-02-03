@@ -35,8 +35,6 @@ const daRisksColumn = columnHelper.display({
   },
 })
 
-const EMPTY: RosetteValue = { name: '', value: '' }
-const EMPTY_GRISSINI = [EMPTY, EMPTY, EMPTY]
 const daBridgeRisksColumn = columnHelper.display({
   id: 'bridge-risks',
   header: 'Bridge Risks',
@@ -45,11 +43,11 @@ const daBridgeRisksColumn = columnHelper.display({
     if (!bridge) {
       return EM_DASH
     }
-    const values = bridge.risks.isNoBridge
-      ? EMPTY_GRISSINI
-      : bridge.risks.values
     return (
-      <GrissiniCell values={values} hasNoBridge={bridge.risks.isNoBridge} />
+      <GrissiniCell
+        values={bridge.risks.values}
+        hasNoBridge={bridge.risks.isNoBridge}
+      />
     )
   },
   meta: {

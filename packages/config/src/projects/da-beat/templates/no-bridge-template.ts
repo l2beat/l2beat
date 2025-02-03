@@ -32,6 +32,7 @@ export function NO_BRIDGE(template: TemplateVars): DaBridge {
     })
 
   const risks: DaBridgeRisks = {
+    isNoBridge: true,
     ...template.risks,
   }
 
