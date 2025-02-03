@@ -31,9 +31,9 @@ import type {
   ProjectContract,
   ProjectEscrow,
   ReferenceLink,
-  ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
-  ScalingProjectPermissions,
+  ProjectPermission,
+  ProjectPermissionedAccount,
+  ProjectPermissions,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
@@ -217,7 +217,7 @@ export class ProjectDiscovery {
   getOpStackPermissions(
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
-  ): ScalingProjectPermission[] {
+  ): ProjectPermission[] {
     const resolved = this.computeStackContractPermissions(
       OP_STACK_PERMISSION_TEMPLATES,
       overrides,
@@ -230,7 +230,7 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): {
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermission[]
     contracts: ProjectContract[]
   } {
     return this.resolveStackTemplates(
@@ -263,7 +263,7 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): {
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermission[]
     contracts: ProjectContract[]
   } {
     const resolved = this.computeStackContractPermissions(
@@ -378,7 +378,7 @@ export class ProjectDiscovery {
     description: string | string[],
     userReferences?: ReferenceLink[],
     useBulletPoints: boolean = false,
-  ): ScalingProjectPermission[] {
+  ): ProjectPermission[] {
     const contract = this.getContract(identifier)
 
     const passedDescription = Array.isArray(description)
@@ -424,7 +424,7 @@ export class ProjectDiscovery {
   getAccessControlRolePermission(
     contractIdentifier: string,
     role: string,
-  ): ScalingProjectPermissionedAccount[] {
+  ): ProjectPermissionedAccount[] {
     const { members } = this.getAccessControlField(contractIdentifier, role)
     return members.map((member) => this.formatPermissionedAccount(member))
   }
@@ -541,7 +541,7 @@ export class ProjectDiscovery {
 
   formatPermissionedAccount(
     account: ContractValue | EthereumAddress,
-  ): ScalingProjectPermissionedAccount {
+  ): ProjectPermissionedAccount {
     assert(
       isString(account) && EthereumAddress.check(account),
       `Values must be Ethereum addresses`,
@@ -556,7 +556,7 @@ export class ProjectDiscovery {
   getPermissionedAccount(
     contractIdentifier: string,
     key: string,
-  ): ScalingProjectPermissionedAccount {
+  ): ProjectPermissionedAccount {
     const value = this.getContractValue(contractIdentifier, key)
     return this.formatPermissionedAccount(value)
   }
@@ -565,7 +565,7 @@ export class ProjectDiscovery {
     contractIdentifier: string,
     key: string,
     index?: number,
-  ): ScalingProjectPermissionedAccount[] {
+  ): ProjectPermissionedAccount[] {
     let value = this.getContractValue(contractIdentifier, key)
     assert(isArray(value), `Value of ${key} must be an array`)
 
@@ -604,7 +604,7 @@ export class ProjectDiscovery {
   contractAsPermissioned(
     contract: ContractParameters,
     description: string,
-  ): ScalingProjectPermission {
+  ): ProjectPermission {
     return {
       name: contract.name,
       accounts: [
@@ -625,7 +625,7 @@ export class ProjectDiscovery {
   eoaAsPermissioned(
     eoa: EoaParameters,
     description: string,
-  ): ScalingProjectPermission {
+  ): ProjectPermission {
     return {
       name: eoa.name ?? eoa.address,
       accounts: [
@@ -783,7 +783,7 @@ export class ProjectDiscovery {
 
   getPermissionsByRole(
     role: (typeof RolePermissionEntries)[number],
-  ): ScalingProjectPermissionedAccount[] {
+  ): ProjectPermissionedAccount[] {
     return this.getContractsAndEoas()
       .filter((x) =>
         (x.receivedPermissions ?? []).find((p) => p.permission === role),
@@ -810,8 +810,8 @@ export class ProjectDiscovery {
 
   describeRolePermissions(
     relevantContracts: (ContractParameters | EoaParameters)[],
-  ): ScalingProjectPermission[] {
-    const result: ScalingProjectPermission[] = []
+  ): ProjectPermission[] {
+    const result: ProjectPermission[] = []
     for (const role of RolePermissionEntries) {
       const matching = relevantContracts.filter(
         (c) =>
@@ -1053,7 +1053,7 @@ export class ProjectDiscovery {
     return s
   }
 
-  getDiscoveredPermissions(): ScalingProjectPermissions {
+  getDiscoveredPermissions(): ProjectPermissions {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
@@ -1076,7 +1076,7 @@ export class ProjectDiscovery {
 
     const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
-    const actors: ScalingProjectPermission[] = []
+    const actors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {

@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import type { ProjectContract, ScalingProjectPermissions } from '../../../types'
+import type { ProjectContract, ProjectPermissions } from '../../../types'
 
 export function generateDiscoveryDrivenContracts(
   discoveries: ProjectDiscovery[],
@@ -19,8 +19,8 @@ export function generateDiscoveryDrivenContracts(
 
 export function generateDiscoveryDrivenPermissions(
   discoveries: ProjectDiscovery[],
-): Record<string, ScalingProjectPermissions> {
-  const result: Record<string, ScalingProjectPermissions> = {}
+): Record<string, ProjectPermissions> {
+  const result: Record<string, ProjectPermissions> = {}
   for (const discovery of discoveries) {
     // NOTE(radomski): Just make sure we don't insert twice. There is a
     // talk to be had about "what about shared modules" and all of that but

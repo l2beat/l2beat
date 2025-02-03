@@ -7,7 +7,7 @@ import { unionBy } from 'lodash'
 import type {
   ProjectContracts,
   ReferenceLink,
-  ScalingProjectPermissions,
+  ProjectPermissions,
 } from '../../../types'
 import { type BadgeId, badges } from '../../badges'
 
@@ -26,10 +26,10 @@ export function mergeBadges(
 }
 
 export function mergePermissions(
-  base: Record<string, ScalingProjectPermissions>,
-  pushed: Record<string, ScalingProjectPermissions>,
-): Record<string, ScalingProjectPermissions> {
-  const result: Record<string, ScalingProjectPermissions> =
+  base: Record<string, ProjectPermissions>,
+  pushed: Record<string, ProjectPermissions>,
+): Record<string, ProjectPermissions> {
+  const result: Record<string, ProjectPermissions> =
     structuredClone(base)
 
   for (const [key, value] of Object.entries(pushed)) {

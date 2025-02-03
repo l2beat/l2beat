@@ -25,7 +25,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ScalingProjectPermissionedAccount } from '../../types'
+import type { ProjectPermissionedAccount } from '../../types'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
@@ -53,7 +53,7 @@ const zodiacRoles = discovery.getContractValue<{
   roles: Record<string, Record<string, boolean>>
 }>('Roles', 'roles')
 const zodiacPauserRole = '1'
-const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+const zodiacPausers: ProjectPermissionedAccount[] = Object.keys(
   zodiacRoles.roles[zodiacPauserRole].members,
 ).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
