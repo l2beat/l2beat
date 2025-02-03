@@ -385,16 +385,11 @@ export const stargatev2: Bridge = {
           'LayerZero Multisig',
           'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
         ),
-        {
-          name: 'Planner',
-          accounts: discovery.getPermissionedAccounts(
-            'CreditMessaging',
-            'planner',
-          ),
-
-          description:
-            'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
-        },
+        discovery.getPermissionDetails(
+          'Planner',
+          discovery.getPermissionedAccounts('CreditMessaging', 'planner'),
+          'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
+        ),
       ],
     },
   },

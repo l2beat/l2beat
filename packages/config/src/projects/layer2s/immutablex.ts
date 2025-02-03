@@ -59,11 +59,10 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const committee = getCommittee(discovery)
+const [committee, minSigners] = getCommittee(discovery)
 
 const requiredHonestMembersPercentage = (
-  ((committee.accounts.length - committee.minSigners + 1) /
-    committee.accounts.length) *
+  ((committee.accounts.length - minSigners + 1) / committee.accounts.length) *
   100
 ).toFixed(0)
 
@@ -125,7 +124,7 @@ export const immutablex: Layer2 = {
     layers: [DA_LAYERS.DAC],
     bridge: DA_BRIDGES.DAC_MEMBERS({
       membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
   }),
@@ -133,7 +132,7 @@ export const immutablex: Layer2 = {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
       membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -173,24 +172,19 @@ export const immutablex: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governor',
-          accounts: getProxyGovernance(discovery, 'StarkExchange'),
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Governor',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
-        },
+        ),
         committee,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchange',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update the state. When the Operator is down the state cannot be updated.',
-        },
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update the state. When the Operator is down the state cannot be updated.',
+        ),
       ],
     },
   },
@@ -263,7 +257,7 @@ export const immutablex: Layer2 = {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       committeeSecurity:
         DaCommitteeSecurityRisk.NoHonestMinimumCommitteeSecurity(
-          `${committee.minSigners}/${committee.accounts.length}`,
+          `${minSigners}/${committee.accounts.length}`,
           requiredHonestMembersPercentage,
         ),
     },

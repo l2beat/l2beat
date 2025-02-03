@@ -90,33 +90,22 @@ export const zircuit: Layer2 = opStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    {
-      name: 'Admins of SuperchainConfig',
-      accounts: discovery.getAccessControlRolePermission(
+    discovery.getPermissionDetails(
+      'Admins of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
         'ZircuitSuperchainConfig',
         'DEFAULT_ADMIN_ROLE',
       ),
-      description: 'Admin of the SuperChainConfig, can configure other roles.',
-    },
-    /*  This role is still not set, but it is present in the code and must be uncommented in the future
-    {
-      name: 'Operators of SuperchainConfig',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZircuitSuperchainConfig',
-        'OPERATOR_ROLE',
-      ),
-      description:
-        'Role set up in SuperChainConfig contract that can raise the withdrawal limit for a user.',
-    }, */
-    {
-      name: 'Monitors of SuperchainConfig',
-      accounts: discovery.getAccessControlRolePermission(
+      'Admin of the SuperChainConfig, can configure other roles.',
+    ),
+    discovery.getPermissionDetails(
+      'Monitors of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
         'ZircuitSuperchainConfig',
         'MONITOR_ROLE',
       ),
-      description:
-        'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
-    },
+      'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
+    ),
     ...discovery.getMultisigPermission(
       'ZircuitMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \

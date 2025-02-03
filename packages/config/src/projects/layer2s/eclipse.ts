@@ -144,26 +144,26 @@ export const eclipse: Layer2 = {
           'TreasuryOwner',
           'Can upgrade and transfer funds from the Treasury.',
         ),
-        {
-          name: 'WithdrawerEOA',
-          accounts: [
+        discovery.getPermissionDetails(
+          'WithdrawerEOA',
+          [
             discovery.getAccessControlRolePermission(
               'CanonicalBridge',
               'WITHDRAW_AUTHORITY_ROLE',
             )[1],
           ],
-          description: `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-        },
-        {
-          name: 'PauserEOA',
-          accounts: [
+          `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        ),
+        discovery.getPermissionDetails(
+          'PauserEOA',
+          [
             discovery.getAccessControlRolePermission(
               'CanonicalBridge',
               'PAUSER_ROLE',
             )[1],
           ],
-          description: `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-        },
+          `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        ),
       ],
     },
   },

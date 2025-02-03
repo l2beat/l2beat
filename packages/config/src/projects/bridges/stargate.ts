@@ -195,43 +195,27 @@ export const stargate: Bridge = {
           'LayerZero Multisig',
           'The owner of Endpoint, UltraLightNode and Treasury contracts. Can switch to a new UltraLightNode for an Endpoint. Can switch proof library for an UltraLightNode and change Treasury.',
         ),
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x902F09715B6303d4173037652FA7377e5b98089E',
-              ),
-              type: 'Contract',
-            },
-          ],
-          name: 'LayerZero Relayer',
-          description:
-            'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
-        },
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
-              ),
-              type: 'EOA',
-            },
-          ],
-          name: 'LayerZero Relayer Admin owner',
-          description: 'Can upgrade LayerZero relayer contract with no delay.',
-        },
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
-              ),
-              type: 'EOA',
-            },
-          ],
-          name: 'LayerZero Oracle Admin owner',
-          description: 'Can upgrade LayerZero oracle contract with no delay.',
-        },
+        discovery.getPermissionDetails(
+          'LayerZero Relayer',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
+          ]),
+          'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+        ),
+        discovery.getPermissionDetails(
+          'LayerZero Relayer Admin owner',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5'),
+          ]),
+          'Can upgrade LayerZero relayer contract with no delay.',
+        ),
+        discovery.getPermissionDetails(
+          'LayerZero Oracle Admin owner',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8'),
+          ]),
+          'Can upgrade LayerZero oracle contract with no delay.',
+        ),
       ],
     },
   },

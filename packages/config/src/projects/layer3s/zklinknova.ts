@@ -715,16 +715,11 @@ export const zklinknova: Layer3 = {
           'LineaOwner',
           'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
-        {
-          name: 'Validators',
-          accounts: lineaDiscovery.getPermissionedAccounts(
-            'zkLink',
-            'validators',
-          ),
-          chain: 'linea',
-          description:
-            'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
-        },
+        lineaDiscovery.getPermissionDetails(
+          'Validators',
+          lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
+          'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
+        ),
       ],
     },
     optimism: {
@@ -769,21 +764,14 @@ export const zklinknova: Layer3 = {
           mantapacificDiscovery.getContract('MantaProxyAdmin'),
           'Owner of the L1ERC20Bridge on Manta Pacific.',
         ),
-        {
-          name: 'MantaOwner',
-          accounts: mantapacificDiscovery.getPermissionedAccounts(
+        mantapacificDiscovery.getPermissionDetails(
+          'MantaOwner',
+          mantapacificDiscovery.getPermissionedAccounts(
             'MantaProxyAdmin',
             'owner',
           ),
-          description:
-            'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
-        },
-        /* unverified contract
-      ...mantapacificDiscovery.getMultisigPermission(
-        'MantaOwner',
-        'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
-      ),
-      */
+          'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
+        ),
       ],
     },
     mantle: {

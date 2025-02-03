@@ -114,13 +114,12 @@ export function getSHARPVerifierGovernors(
   )
 
   return [
-    {
-      name: 'SHARP Verifier Governors',
-      accounts: getProxyGovernance(discovery, 'SHARPVerifierProxy'),
-      description:
-        'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
+    projectDiscovery.getPermissionDetails(
+      'SHARP Verifier Governors',
+      getProxyGovernance(discovery, 'SHARPVerifierProxy'),
+      'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
         delayDescriptionFromSeconds(upgradeDelay),
-    },
+    ),
     ...discovery.getMultisigPermission(
       'SHARPVerifierAdminMultisig',
       'SHARP Verifier Governor.',

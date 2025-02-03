@@ -118,33 +118,27 @@ export const pulseChain: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Validators',
-          description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
-        are required.`,
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.getPermissionedAccounts(
             'BridgeValidators',
             'validatorList',
           ),
-        },
-        {
-          name: 'Owner of Validators contract',
-          description:
-            'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
-          accounts: discovery.getPermissionedAccounts(
-            'BridgeValidators',
-            'owner',
-          ),
-        },
-        {
-          name: 'Upgradeability Owner of main bridge contract',
-          description:
-            'Owner of the main bridge contract, able to upgrade the contract with no notice.',
-          accounts: discovery.getPermissionedAccounts(
+          `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures are required.`,
+        ),
+        discovery.getPermissionDetails(
+          'Owner of Validators contract',
+          discovery.getPermissionedAccounts('BridgeValidators', 'owner'),
+          'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
+        ),
+        discovery.getPermissionDetails(
+          'Upgradeability Owner of main bridge contract',
+          discovery.getPermissionedAccounts(
             'ForeignOmnibridge',
             'upgradeabilityOwner',
           ),
-        },
+          'Owner of the main bridge contract, able to upgrade the contract with no notice.',
+        ),
       ],
     },
   },

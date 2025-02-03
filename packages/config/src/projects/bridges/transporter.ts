@@ -159,49 +159,43 @@ export const transporter: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'RBACTimelock',
-          description: (() => {
-            return `Role-based Access Control Timelock (RBACTimelock) smart contract. Onchain security-critical configuration changes and upgrades to the CCIP must pass through this contract. CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`
-          })(),
-          accounts: discovery.getPermissionedAccounts('Router', 'owner'),
-        },
-        {
-          name: 'Timelock Admins',
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'RBACTimelock',
+          discovery.getPermissionedAccounts('Router', 'owner'),
+          `Role-based Access Control Timelock (RBACTimelock) smart contract. Onchain security-critical configuration changes and upgrades to the CCIP must pass through this contract. CCIP contract upgrades have to go through a ${upgradeDelayString} timelock.`,
+        ),
+        discovery.getPermissionDetails(
+          'Timelock Admins',
+          discovery.getAccessControlRolePermission(
             'RBACTimelock',
             'ADMIN_ROLE',
           ),
-          description:
-            'Admins of the RBACTimelock contract. Can modify all other roles.',
-        },
-        {
-          name: 'Timelock Proposers',
-          accounts: discovery.getAccessControlRolePermission(
+          'Admins of the RBACTimelock contract. Can modify all other roles.',
+        ),
+        discovery.getPermissionDetails(
+          'Timelock Proposers',
+          discovery.getAccessControlRolePermission(
             'RBACTimelock',
             'PROPOSER_ROLE',
           ),
-          description:
-            'Proposers of the RBACTimelock contract. Can propose upgrades.',
-        },
-        {
-          name: 'Timelock Cancellers',
-          accounts: discovery.getAccessControlRolePermission(
+          'Proposers of the RBACTimelock contract. Can propose upgrades.',
+        ),
+        discovery.getPermissionDetails(
+          'Timelock Cancellers',
+          discovery.getAccessControlRolePermission(
             'RBACTimelock',
             'CANCELLER_ROLE',
           ),
-          description:
-            'Cancellers of the RBACTimelock contract. Can cancel pending upgrades.',
-        },
-        {
-          name: 'Timelock Executors',
-          accounts: discovery.getAccessControlRolePermission(
+          'Cancellers of the RBACTimelock contract. Can cancel pending upgrades.',
+        ),
+        discovery.getPermissionDetails(
+          'Timelock Executors',
+          discovery.getAccessControlRolePermission(
             'RBACTimelock',
             'EXECUTOR_ROLE',
           ),
-          description:
-            'Contract through which RBACTimelock proposals are executed. Proposals execution can be initiated by anyone.',
-        },
+          'Contract through which RBACTimelock proposals are executed. Proposals execution can be initiated by anyone.',
+        ),
       ],
     },
   },

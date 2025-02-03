@@ -153,25 +153,20 @@ export const pNetwork: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'PNETWORK',
-          description:
-            'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
-          accounts: [
+        discovery.getPermissionDetails(
+          'PNETWORK',
+          [
             ...discovery.getPermissionedAccounts('ERC20 Vault V2', 'PNETWORK'),
             ...discovery.getPermissionedAccounts('ERC20 Vault V1', 'PNETWORK'),
             ...discovery.getPermissionedAccounts('UOS Vault', 'PNETWORK'),
           ],
-        },
-        {
-          name: 'pNetwork DAO',
-          description:
-            'A voting contract that controls the inflation withdrawal logic of PNT token.',
-          accounts: discovery.getPermissionedAccounts(
-            'EthPntv2',
-            'inflationOwner',
-          ),
-        },
+          'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
+        ),
+        discovery.getPermissionDetails(
+          'pNetwork DAO',
+          discovery.getPermissionedAccounts('EthPntv2', 'inflationOwner'),
+          'A voting contract that controls the inflation withdrawal logic of PNT token.',
+        ),
         ...discovery.getMultisigPermission(
           'pNetwork Multisig',
           'Can upgrade ERC20 Vault V2.',

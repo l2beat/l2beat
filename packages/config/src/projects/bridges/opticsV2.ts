@@ -144,34 +144,28 @@ export const opticsV2: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governor',
-          accounts: [],
-          description:
-            'A multisig on Celo Network that manages all Optics V1 bridge components.',
-        },
+        discovery.getPermissionDetails(
+          'Governor',
+          [],
+          'A multisig on Celo Network that manages all Optics V1 bridge components.',
+        ),
         ...discovery.getMultisigPermission(
           'RecoveryManager',
           'Manages Optics V1 bridge recovery via GovernanceRouter contract.',
         ),
-        {
-          name: 'Updater',
-          accounts: discovery.getPermissionedAccounts(
-            'UpdaterManager',
-            'updater',
-          ),
-
-          description: 'Permissioned account that can update message roots.',
-        },
-        {
-          name: 'XAppConnectionManager Watchers',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Updater',
+          discovery.getPermissionedAccounts('UpdaterManager', 'updater'),
+          'Permissioned account that can update message roots.',
+        ),
+        discovery.getPermissionDetails(
+          'XAppConnectionManager Watchers',
+          discovery.getPermissionedAccounts(
             'XAppConnectionManager',
             'watchers',
           ),
-          description:
-            'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
-        },
+          'Watchers can unenroll, i.e. stop receiving messages, from a given Replica.',
+        ),
       ],
     },
   },

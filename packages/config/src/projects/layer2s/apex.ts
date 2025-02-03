@@ -82,30 +82,32 @@ const minFreezeGracePeriod = Math.min(
   freezeGracePeriodUSDT,
 )
 
-const usdcCommittee = getCommittee(
-  discovery,
-  'CommitteeUSDC',
-  'Data Availability Committee for USDC StarkEx',
-)
-const usdtCommittee = getCommittee(
-  discovery,
-  'CommitteeUSDT',
-  'Data Availability Committee for USDT StarkEx',
-)
+const [usdcCommittee, usdcMinSigners, usdcMinAssumedHonestMembers] =
+  getCommittee(
+    discovery,
+    'CommitteeUSDC',
+    'Data Availability Committee for USDC StarkEx',
+  )
+const [usdtCommittee, usdtMinSigners, usdtMinAssumedHonestMembers] =
+  getCommittee(
+    discovery,
+    'CommitteeUSDT',
+    'Data Availability Committee for USDT StarkEx',
+  )
 
 const usdcDacConfig =
-  usdcCommittee.minAssumedHonestMembers / usdcCommittee.accounts.length
+  usdcMinAssumedHonestMembers / usdcCommittee.accounts.length
 const usdtDacConfig =
-  usdtCommittee.minAssumedHonestMembers / usdtCommittee.accounts.length
+  usdtMinAssumedHonestMembers / usdtCommittee.accounts.length
 
 const dacConfig =
   usdcDacConfig < usdtDacConfig
     ? {
-        requiredSignatures: usdcCommittee.minSigners,
+        requiredSignatures: usdcMinSigners,
         membersCount: usdcCommittee.accounts.length,
       }
     : {
-        requiredSignatures: usdtCommittee.minSigners,
+        requiredSignatures: usdtMinSigners,
         membersCount: usdtCommittee.accounts.length,
       }
 
@@ -244,38 +246,28 @@ export const apex: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governors for USDC StarkEx',
-          accounts: getProxyGovernance(discovery, 'StarkExchangeUSDC'),
-          description:
-            'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
+        discovery.getPermissionDetails(
+          'Governors for USDC StarkEx',
+          getProxyGovernance(discovery, 'StarkExchangeUSDC'),
+          'Allowed to upgrade the implementation of the StarkExchange (USDC) contract, potentially maliciously gaining control over the system or stealing funds.' +
             delayDescriptionFromString(upgradeDelayUSDC),
-        },
-        {
-          name: 'Governors for USDT StarkEx',
-          accounts: getProxyGovernance(discovery, 'StarkExchangeUSDT'),
-          description:
-            'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
+        ),
+        discovery.getPermissionDetails(
+          'Governors for USDT StarkEx',
+          getProxyGovernance(discovery, 'StarkExchangeUSDT'),
+          'Allowed to upgrade the implementation of the StarkExchange (USDT) contract, potentially maliciously gaining control over the system or stealing funds.' +
             delayDescriptionFromString(upgradeDelayUSDT),
-        },
-        {
-          name: 'Operators for USDC StarkEx',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchangeUSDC',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update state of the system and verify DA proofs for USDC StarkEx instance. When Operator is down the state cannot be updated.',
-        },
-        {
-          name: 'Operators for USDT StarkEx',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchangeUSDT',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
-        },
+        ),
+        discovery.getPermissionDetails(
+          'Operators for USDC StarkEx',
+          discovery.getPermissionedAccounts('StarkExchangeUSDC', 'OPERATORS'),
+          'Allowed to update state of the system and verify DA proofs for USDC StarkEx instance. When Operator is down the state cannot be updated.',
+        ),
+        discovery.getPermissionDetails(
+          'Operators for USDT StarkEx',
+          discovery.getPermissionedAccounts('StarkExchangeUSDT', 'OPERATORS'),
+          'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
+        ),
         usdcCommittee,
         usdtCommittee,
         ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),

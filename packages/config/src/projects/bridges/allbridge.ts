@@ -225,86 +225,64 @@ export const allbridge: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'TokenBridge Admin',
-          description:
-            'Allowed to grant and revoke all roles in the TokenBridge (Can steal all funds).',
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'TokenBridge Admin',
+          discovery.getAccessControlRolePermission(
             'TokenBridge',
             'DEFAULT_ADMIN_ROLE',
           ),
-        },
-        {
-          name: 'TokenBridge Manager',
-          description:
-            'Allowed to set Validators, unlockSigners and unpause in the TokenBridge (Can steal all funds).',
-          accounts: discovery.getAccessControlRolePermission(
+          'Allowed to grant and revoke all roles in the TokenBridge (Can steal all funds).',
+        ),
+        discovery.getPermissionDetails(
+          'TokenBridge Manager',
+          discovery.getAccessControlRolePermission(
             'TokenBridge',
             'BRIDGE_MANAGER',
           ),
-        },
-        {
-          name: 'TokenBridge Token Manager',
-          description:
-            'Allowed add and remove token support in the TokenBridge.',
-          accounts: discovery.getAccessControlRolePermission(
+          'Allowed to set Validators, unlockSigners and unpause in the TokenBridge (Can steal all funds).',
+        ),
+        discovery.getPermissionDetails(
+          'TokenBridge Token Manager',
+          discovery.getAccessControlRolePermission(
             'TokenBridge',
             'TOKEN_MANAGER',
           ),
-        },
-        {
-          name: 'TokenBridge Stop Manager',
-          description: 'Can pause the TokenBridge.',
-          accounts: discovery.getAccessControlRolePermission(
+          'Allowed add and remove token support in the TokenBridge.',
+        ),
+        discovery.getPermissionDetails(
+          'TokenBridge Stop Manager',
+          discovery.getAccessControlRolePermission(
             'TokenBridge',
             'STOP_MANAGER',
           ),
-        },
-        {
-          name: 'Allbridge Owner EOA.',
-          description:
-            'Owner of all system contracts except TokenBridge, privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
-          accounts: discovery.getPermissionedAccounts('LPBridge', 'owner'),
-        },
-        {
-          name: 'AllbridgeMessenger EOA.',
-          description:
-            'EOA delivering crosschain messages to the AllbridgeMessenger contract.',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x7234dB900E907398EdfAdA744d5Bf8A842B335BA',
-              ),
-              type: 'EOA',
-            },
-          ],
-        },
-        {
-          name: 'WormholeMessenger EOA.',
-          description:
-            'EOA delivering crosschain messages to the WormholeMessenger contract.',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5',
-              ),
-              type: 'EOA',
-            },
-          ],
-        },
-        {
-          name: 'CctpBridge messenger EOA.',
-          description:
-            'EOA delivering crosschain messages to the WormholeMessenger contract.',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0xb7C522Adb3429e2C7474df324c7a3744A5803414',
-              ),
-              type: 'EOA',
-            },
-          ],
-        },
+          'Can pause the TokenBridge.',
+        ),
+        discovery.getPermissionDetails(
+          'Allbridge Owner EOA.',
+          discovery.getPermissionedAccounts('LPBridge', 'owner'),
+          'Owner of all system contracts except TokenBridge, privileged to update messengers and other bridge parameters. As a result this account can drain all funds from the pools.',
+        ),
+        discovery.getPermissionDetails(
+          'AllbridgeMessenger EOA.',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x7234dB900E907398EdfAdA744d5Bf8A842B335BA'),
+          ]),
+          'EOA delivering crosschain messages to the AllbridgeMessenger contract.',
+        ),
+        discovery.getPermissionDetails(
+          'WormholeMessenger EOA.',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5'),
+          ]),
+          'EOA delivering crosschain messages to the WormholeMessenger contract.',
+        ),
+        discovery.getPermissionDetails(
+          'CctpBridge messenger EOA.',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0xb7C522Adb3429e2C7474df324c7a3744A5803414'),
+          ]),
+          'EOA delivering crosschain messages to the WormholeMessenger contract.',
+        ),
       ],
     },
   },

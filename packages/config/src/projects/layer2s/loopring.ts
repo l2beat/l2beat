@@ -308,21 +308,20 @@ export const loopring: Layer2 = {
           'LoopringMultisig',
           'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
         ),
-        {
-          name: 'Block Submitters',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Block Submitters',
+          discovery.getPermissionedAccounts(
             'LoopringIOExchangeOwner',
             'blockSubmitters',
           ),
-          description:
-            'Actors who can submit new blocks, updating the L2 state on L1.',
-        },
-        {
-          name: 'RollupOwner',
-          accounts: discovery.getPermissionedAccounts('ExchangeV3', 'owner'),
-          description:
-            'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
-        },
+          'Actors who can submit new blocks, updating the L2 state on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'RollupOwner',
+          discovery.getPermissionedAccounts('ExchangeV3', 'owner'),
+
+          'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
+        ),
       ],
     },
   },

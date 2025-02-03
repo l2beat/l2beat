@@ -225,42 +225,26 @@ export const amarok: Bridge = {
           'Connext Fee Multisig',
           'Collects fees from the bridge. Can manage Routers through its RouterAdmin role.',
         ),
-        {
-          name: 'Watchers',
-          description:
-            'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules receiving messages. They can also remove connectors from the RootManager. List of watchers is maintained by the Connext MultiSig.',
-          accounts: discovery.getPermissionedAccounts(
-            'WatcherManager',
-            'WATCHERS',
-          ),
-        },
-        {
-          name: 'Sequencer',
-          description:
-            'Permissioned actor that collects bids from all chains, aggregates them and randomly selects router(s) to fulfill them. The sequencer will post batches of these bids to a relayer network, which will submit them to the destination chain',
-          accounts: discovery.getPermissionedAccounts(
-            'ConnextBridge',
-            'SEQUENCERS',
-          ),
-        },
-        {
-          name: 'Relayers',
-          description:
-            'Permissioned set of actors who can perform certain bridge operations as a service.',
-          accounts: discovery.getPermissionedAccounts(
-            'ConnextBridge',
-            'RELAYERS',
-          ),
-        },
-        {
-          name: 'Routers',
-          description:
-            'Permissioned set of actors who can front liquidity, speeding up message delivery.',
-          accounts: discovery.getPermissionedAccounts(
-            'ConnextBridge',
-            'ROUTERS',
-          ),
-        },
+        discovery.getPermissionDetails(
+          'Watchers',
+          discovery.getPermissionedAccounts('WatcherManager', 'WATCHERS'),
+          'Permissioned set of actors who can pause certain bridge components. On Ethereum L1 Watchers can pause RootManager and MainnetSpokeConnector, i.e. modules receiving messages. They can also remove connectors from the RootManager. List of watchers is maintained by the Connext MultiSig.',
+        ),
+        discovery.getPermissionDetails(
+          'Sequencer',
+          discovery.getPermissionedAccounts('ConnextBridge', 'SEQUENCERS'),
+          'Permissioned actor that collects bids from all chains, aggregates them and randomly selects router(s) to fulfill them. The sequencer will post batches of these bids to a relayer network, which will submit them to the destination chain',
+        ),
+        discovery.getPermissionDetails(
+          'Relayers',
+          discovery.getPermissionedAccounts('ConnextBridge', 'RELAYERS'),
+          'Permissioned set of actors who can perform certain bridge operations as a service.',
+        ),
+        discovery.getPermissionDetails(
+          'Routers',
+          discovery.getPermissionedAccounts('ConnextBridge', 'ROUTERS'),
+          'Permissioned set of actors who can front liquidity, speeding up message delivery.',
+        ),
       ],
     },
   },

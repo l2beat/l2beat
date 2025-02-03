@@ -216,44 +216,25 @@ export const metis: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Sequencer',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x1A9da0aedA630dDf2748a453BF6d92560762D914',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description: 'Central actor allowed to commit transactions to L1.',
-        },
+        discovery.getPermissionDetails(
+          'Sequencer',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x1A9da0aedA630dDf2748a453BF6d92560762D914'),
+          ]),
+          'Central actor allowed to commit transactions to L1.',
+        ),
         ...discovery.getMultisigPermission(
           'Metis Multisig',
-          'This address is the owner of all the upgradable contracts of the system. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+          'This address is the owner of all the upgradable contracts of the system. This allows it to censor messages or pause message bridge altogether, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer, state root proposer or any other system component (unlimited upgrade power). Can challenge the state roots submitted by the state root proposer.',
         ),
-        {
-          name: 'State Root Proposer',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'State Root Proposer',
+          discovery.getPermissionedAccounts(
             'Lib_AddressManager',
             '_1088_MVM_Proposer',
           ),
-          description: 'Central actor to post new state roots to L1.',
-        },
-        {
-          name: 'Execution Verifiers',
-          accounts: [
-            // TODO: Verify this. This is the same address as the multisig. If this is correct, we should remove it and change multisig description.
-            {
-              address: EthereumAddress(
-                '0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Those addresses can challenge the state roots submitted by the state root proposer.',
-        },
+          'Central actor to post new state roots to L1.',
+        ),
       ],
     },
   },

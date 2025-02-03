@@ -156,16 +156,14 @@ export const xdai: Bridge = {
           'GnosisBridgeGovernanceMultisig',
           'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
         ),
-        {
-          accounts: [
-            ...discovery.getPermissionedAccounts(
-              'BridgeValidators',
-              'validatorList',
-            ),
-          ],
-          name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
-          description: 'Bridge Validators.',
-        },
+        discovery.getPermissionDetails(
+          `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
+          discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
+          ),
+          'Bridge Validators.',
+        ),
       ],
     },
   },

@@ -401,42 +401,33 @@ export const zksynclite: Layer2 = {
           'ZkSync Multisig',
           'This Multisig is the owner of Upgrade Gatekeeper contract and therefore is allowed to perform upgrades for Governance, Verifier and ZkSync contracts. It can also change the list of active validators and appoint the security council (by upgrading the ZkSync contract).',
         ),
-        {
-          name: 'Security Council',
-          accounts: discovery.getPermissionedAccounts(
-            'ZkSync',
-            'securityCouncilMembers',
-          ),
-          description: `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
-          references: [
-            {
-              title: 'Security Council Members - Etherscan source code',
-              url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
-            },
-            {
-              title: 'Security Council 2.0 - Matter Labs blog post',
-              url: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
-            },
-          ],
-        },
-        {
-          name: 'Active validators',
-          accounts: discovery.getPermissionedAccounts(
-            'Governance',
-            'validators',
-          ),
-          description:
-            'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
-        },
-        {
-          name: 'Token listing beneficiary',
-          accounts: discovery.getPermissionedAccounts(
-            'TokenGovernance',
-            'treasury',
-          ),
-          description:
-            'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
-        },
+        discovery.getPermissionDetails(
+          'Security Council',
+          discovery.getPermissionedAccounts('ZkSync', 'securityCouncilMembers'),
+          `The Security Council's only role is to reduce the upgrade delay to zero if ${securityCouncilThreshold} of its members decide to do so. The council has ${securityCouncilMembers.length} members which are hardcoded into the ZkSync contract. Changing the council requires a ZkSync contract upgrade.`,
+          {
+            references: [
+              {
+                title: 'Security Council Members - Etherscan source code',
+                url: 'https://etherscan.io/address/0x2eaa1377e0fc95de998b9fa7611e9d67eba534fd#code#F1#L128',
+              },
+              {
+                title: 'Security Council 2.0 - Matter Labs blog post',
+                url: 'https://blog.matter-labs.io/security-council-2-0-2337a555f17a',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Active validators',
+          discovery.getPermissionedAccounts('Governance', 'validators'),
+          'Those actors are allowed to propose, revert and execute L2 blocks on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'Token listing beneficiary',
+          discovery.getPermissionedAccounts('TokenGovernance', 'treasury'),
+          'Account receiving fees for listing tokens. Can be updated by ZkSync Multisig.',
+        ),
       ],
     },
   },

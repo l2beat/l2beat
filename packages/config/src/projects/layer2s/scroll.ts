@@ -719,20 +719,16 @@ export const scroll: Layer2 = {
           'ScrollEmergencyMultisig',
           'Can revert batches, remove sequencers and provers, and pause contracts via the TimelockEmergency. The ScrollExecutorMultisig needs to execute these proposals.',
         ),
-        {
-          name: 'Sequencers',
-          accounts: discovery.getPermissionedAccounts(
-            'ScrollChain',
-            'sequencers',
-          ),
-          description: 'Actors allowed to commit transaction batches.',
-        },
-        {
-          name: 'Proposers',
-          accounts: discovery.getPermissionedAccounts('ScrollChain', 'provers'),
-          description:
-            'Actors allowed to prove transaction batches and publish state root updates.',
-        },
+        discovery.getPermissionDetails(
+          'Sequencers',
+          discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),
+          'Actors allowed to commit transaction batches.',
+        ),
+        discovery.getPermissionDetails(
+          'Proposers',
+          discovery.getPermissionedAccounts('ScrollChain', 'provers'),
+          'Actors allowed to prove transaction batches and publish state root updates.',
+        ),
       ],
     },
   },

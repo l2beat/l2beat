@@ -163,19 +163,13 @@ export const sygma: Bridge = {
           'Community Multisig',
           'This multisig has the ability to manually withdraw tokens from the bridge using adminWithdraw() method.',
         ),
-        {
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
-              ),
-              type: 'EOA',
-            },
-          ],
-          name: 'Pauser/Unpauser',
-          description:
-            'EOA address with the permission to pause/unpause the bridge.',
-        },
+        discovery.getPermissionDetails(
+          'Pauser/Unpauser',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x695bd50CB07ffBd4098b272CE8b52B3c256ca049'),
+          ]),
+          'EOA address with the permission to pause/unpause the bridge.',
+        ),
       ],
     },
   },

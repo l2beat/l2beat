@@ -53,9 +53,10 @@ const zodiacRoles = discovery.getContractValue<{
   roles: Record<string, Record<string, boolean>>
 }>('Roles', 'roles')
 const zodiacPauserRole = '1'
-const zodiacPausers: ProjectPermissionedAccount[] = Object.keys(
-  zodiacRoles.roles[zodiacPauserRole].members,
-).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
+const zodiacPausers: ProjectPermissionedAccount[] =
+  discovery.formatPermissionedAccounts(
+    Object.keys(zodiacRoles.roles[zodiacPauserRole].members),
+  )
 
 const isPaused: boolean =
   discovery.getContractValue<boolean>('LineaRollup', 'isPaused_GENERAL') ||
@@ -501,27 +502,24 @@ export const linea: Layer2 = {
           'LineaAdminMultisig',
           'Admin of the Linea rollup. Can upgrade all core contracts, bridges and update permissioned actors.',
         ),
-        {
-          accounts: zodiacPausers,
-          name: 'Pauser',
-          description:
-            'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
-        },
-        {
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'Pauser',
+          zodiacPausers,
+          'Address allowed to pause the TokenBridge, the USDCBridge and the core functionalities of the project (via LineaRollup contract).',
+        ),
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getAccessControlRolePermission(
             'LineaRollup',
             'OPERATOR_ROLE',
           ),
-          name: 'Operators',
-          description:
-            'The operators are allowed to prove blocks and post the corresponding transaction data.',
-        },
-        {
-          accounts: zodiacPausers,
-          name: 'Pauser',
-          description:
-            'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
-        },
+          'The operators are allowed to prove blocks and post the corresponding transaction data.',
+        ),
+        discovery.getPermissionDetails(
+          'Pauser',
+          zodiacPausers,
+          'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project in the LineaRollup contract (via the Roles module of the LineaAdminMultisig).',
+        ),
       ],
     },
   },

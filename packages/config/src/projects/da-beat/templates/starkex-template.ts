@@ -19,12 +19,12 @@ interface TemplateVars {
 }
 
 export function StarkexDAC(template: TemplateVars): CustomDa {
-  const committee = template.discovery
+  const [committee, minSigners] = template.discovery
     ? getCommittee(template.discovery)
-    : undefined
+    : [undefined, undefined]
 
   const membersCount = committee?.accounts.length ?? template.dac?.membersCount
-  const requiredMembers = committee?.minSigners ?? template.dac?.requiredMembers
+  const requiredMembers = minSigners ?? template.dac?.requiredMembers
 
   assert(
     membersCount,

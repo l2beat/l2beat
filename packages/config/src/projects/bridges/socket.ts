@@ -438,12 +438,11 @@ export const socket: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'socketadmin.eth EOA',
-          description:
-            'Account privileged to set up different roles in the main Socket contract.',
-          accounts: discovery.getPermissionedAccounts('Socket', 'owner'),
-        },
+        discovery.getPermissionDetails(
+          'socketadmin.eth EOA',
+          discovery.getPermissionedAccounts('Socket', 'owner'),
+          'Account privileged to set up different roles in the main Socket contract.',
+        ),
         ...discovery.getMultisigPermission(
           'LyraMultisig',
           'Multisig that owns the Socket Vaults associated with Lyra.',
@@ -452,27 +451,20 @@ export const socket: Bridge = {
           'KintoMultisig',
           'Multisig that owns the Socket Vaults associated with Kinto.',
         ),
-        {
-          name: 'KintoEOA',
-          description: 'owns some Vaults associated with Kinto.',
-          accounts: discovery.getPermissionedAccounts(
-            'PAXG Vault Kinto',
-            'owner',
-          ),
-        },
+        discovery.getPermissionDetails(
+          'KintoEOA',
+          discovery.getPermissionedAccounts('PAXG Vault Kinto', 'owner'),
+          'owns some Vaults associated with Kinto.',
+        ),
         ...discovery.getMultisigPermission(
           'LooksRareMultisig',
           'Multisig that owns a Socket Vault associated with LOOKS token.',
         ),
-        {
-          name: 'PolynomialEOA',
-          description:
-            'EOA that owns the Socket Vaults associated with Polynomial L2.',
-          accounts: discovery.getPermissionedAccounts(
-            'USDC Vault Polynomial',
-            'owner',
-          ),
-        },
+        discovery.getPermissionDetails(
+          'PolynomialEOA',
+          discovery.getPermissionedAccounts('USDC Vault Polynomial', 'owner'),
+          'EOA that owns the Socket Vaults associated with Polynomial L2.',
+        ),
       ],
     },
   },
