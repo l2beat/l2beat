@@ -766,6 +766,7 @@ export interface DaLayer {
   bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
 
   fallback?: TableReadyValue
   challengeMechanism?: DaChallengeMechanism

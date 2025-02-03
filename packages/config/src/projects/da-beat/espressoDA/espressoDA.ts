@@ -79,6 +79,7 @@ After block finalization in HotShot, the relayer propagates the commitment and q
 Users can retrieve data by querying any of Espresso DA's layers, though the VID layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
  `,
     },
+    usedWithoutBridgeIn: [],
     bridges: [hotshot],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,

@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { linkByDA } from '../utils/link-by-da'
 import { blobstream } from './blobstream'
 
 export const celestia: DaProject = {
@@ -115,19 +115,11 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
         },
       ],
     },
-    bridges: [
-      NO_BRIDGE({
-        id: ProjectId('celestia-no-bridge'),
-        addedAt: new UnixTime(1721138888), // 2024-07-16T14:08:08Z
-        layer: 'Celestia',
-        description: `The risk profile in this page refers to L2s that do not integrate with a data availability bridge.
-          Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.`,
-        technology: {
-          description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
-        },
-      }),
-      blobstream,
-    ],
+    usedWithoutBridgeIn: linkByDA({
+      layer: (layer) => layer === 'Celestia',
+      bridge: (bridge) => bridge === 'None',
+    }),
+    bridges: [blobstream],
     /*
       Node params sources:
       - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
