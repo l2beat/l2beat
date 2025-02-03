@@ -1096,6 +1096,7 @@ export interface ProjectContracts {
   isIncomplete?: boolean
   /** The description and research is under review */
   isUnderReview?: boolean
+  isUnderReviewHidden?: boolean
 }
 
 export interface ProjectStatuses {

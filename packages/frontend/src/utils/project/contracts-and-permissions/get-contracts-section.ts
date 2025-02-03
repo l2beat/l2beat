@@ -49,7 +49,6 @@ type ProjectParams = {
       hostChain: string
     }
 )
-
 type ContractsSection = Omit<
   ContractsSectionProps,
   keyof Omit<ProjectSectionProps, 'isUnderReview'>
@@ -173,7 +172,10 @@ export function getContractsSection(
     references: projectParams.contracts?.references ?? [],
     isIncomplete: projectParams.contracts?.isIncomplete,
     isUnderReview:
-      projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
+      !!projectParams.isUnderReview ||
+      !!projectParams.contracts?.isUnderReview ||
+      !!projectParams.contracts?.isUnderReviewHidden,
+    isUnderReviewHidden: !!projectParams.contracts?.isUnderReviewHidden,
     daSolution,
   }
 }

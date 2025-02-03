@@ -30,6 +30,7 @@ export interface ContractsSectionProps {
   diagram?: DiagramParams
   isIncomplete?: boolean
   isUnderReview?: boolean
+  isUnderReviewHidden?: boolean
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -74,8 +75,8 @@ export function ContractsSection(props: ContractsSectionProps) {
       id={props.id}
       nested={props.nested}
       sectionOrder={props.sectionOrder}
-      isUnderReview={props.isUnderReview}
-      includeChildrenIfUnderReview
+      isUnderReview={!!props.isUnderReview || !!props.isUnderReviewHidden}
+      includeChildrenIfUnderReview={!props.isUnderReviewHidden}
     >
       {hasContractsChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}
