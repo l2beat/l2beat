@@ -308,7 +308,7 @@ Starknet’s governance is slowly but surely picking up the pace.
 
 ### **Accountability and Incentives for Consensus**
 
-Josef Widder [published a post](https://community.starknet.io/t/accountability-and-incentives-for-consensus/115031) discussing the implementation of a decentralized Starknet using a consensus mechanism based on the Tendermint algorithm. The post highlights the challenges of running Proof-of-Stake (PoS) nodes, including security and availability concerns, and proposes incentivizing node operators to maintain proper configurations. To support this, the post emphasizes the need to collect evidence of provable misbehaviors, particularly "double vote" and "amnesia" attacks, which are critical for system stability. To address these issues, there are mild penalties proposed for such misbehaviors to encourage reliability while fostering a discussion on potential adaptations to Tendermint.
+Josef Wider [published a post](https://community.starknet.io/t/accountability-and-incentives-for-consensus/115031) discussing the implementation of a decentralized Starknet using a consensus mechanism based on the Tendermint algorithm. The post highlights the challenges of running Proof-of-Stake (PoS) nodes, including security and availability concerns, and proposes incentivizing node operators to maintain proper configurations. To support this, the post emphasizes the need to collect evidence of provable misbehaviors, particularly "double vote" and "amnesia" attacks, which are critical for system stability. To address these issues, there are mild penalties proposed for such misbehaviors to encourage reliability while fostering a discussion on potential adaptations to Tendermint.
 
 
 ### **SNIP25: Starknet security council V1.0**
