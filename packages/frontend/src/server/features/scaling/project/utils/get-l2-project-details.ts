@@ -265,8 +265,13 @@ export async function getL2ProjectDetails({
       props: {
         id: 'state-derivation',
         title: 'State derivation',
-        isUnderReview: project.isUnderReview,
         ...project.stateDerivation,
+        isUnderReview:
+          !!project.isUnderReview ||
+          !!project.stateDerivation.isUnderReview ||
+          !!project.stateDerivation.isUnderReviewHidden,
+        includeChildrenIfUnderReview:
+          !project.stateDerivation.isUnderReviewHidden,
       },
     })
   }

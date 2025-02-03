@@ -383,6 +383,8 @@ export interface ScalingProjectStateDerivation {
   compressionScheme?: string
   genesisState: string
   dataFormat: string
+  isUnderReview?: boolean
+  isUnderReviewHidden?: boolean
 }
 
 type CategoryTitle =
