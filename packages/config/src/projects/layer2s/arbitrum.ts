@@ -283,7 +283,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         ),
       ],
     },
-    arbitrum: {
+    [l2Discovery.chain]: {
       actors: [
         ...l2Discovery.getMultisigPermission(
           'L2SecurityCouncilEmergency',
@@ -347,7 +347,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         ...upgradeExecutorUpgradeability,
       }),
     ],
-    arbitrum: [
+    [l2Discovery.chain]: [
       l2Discovery.getContractDetails('CoreGovernor', {
         description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent}% quorum for proposals.`,
         ...l2Upgradability,
