@@ -141,7 +141,6 @@ import { redstone } from './redstone'
 import { reya } from './reya'
 import { rhinofi } from './rhinofi'
 import { rise } from './rise'
-import { river } from './river'
 import { rss3 } from './rss3'
 import { rufus } from './rufus'
 import { scroll } from './scroll'
@@ -174,6 +173,7 @@ import { termstructure } from './termstructure'
 import { ternoa } from './ternoa'
 import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
+import { towns } from './towns'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { unichain } from './unichain'
@@ -339,7 +339,6 @@ export const layer2s: Layer2[] = [
   reya,
   rhinofi,
   rise,
-  river,
   rss3,
   rufus,
   scroll,
@@ -363,6 +362,7 @@ export const layer2s: Layer2[] = [
   swell,
   sxt,
   t1,
+  towns,
   sxnetwork,
   taiko,
   tanx,
