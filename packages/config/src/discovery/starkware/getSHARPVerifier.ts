@@ -119,7 +119,7 @@ export function getSHARPVerifierGovernors(
         delayDescriptionFromSeconds(upgradeDelay),
     },
     ...discovery.getMultisigPermission(
-      'SHARPVerifierGovernorMultisig',
+      'SHARPVerifierAdminMultisig',
       'SHARP Verifier Governor.',
     ),
   ]
