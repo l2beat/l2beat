@@ -1,4 +1,5 @@
 import type { TableReadyValue } from '@l2beat/config'
+import { NaBadge } from '~/components/badge/na-badge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
@@ -13,7 +14,6 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar, sentimentToWarningBarColor } from '../../warning-bar'
 import { NoInfoCell } from './no-info-cell'
 import { TwoRowCell } from './two-row-cell'
-import { NaBadge } from '~/components/badge/na-badge'
 
 interface Props {
   value: TableReadyValue | undefined

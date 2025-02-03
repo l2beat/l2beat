@@ -9,7 +9,6 @@ import type { DaSummaryEntry } from '~/server/features/data-availability/summary
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
-import { RosetteValue } from '~/components/rosette/types'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
