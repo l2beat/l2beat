@@ -102,6 +102,7 @@ export async function getBridgeProjectDetails(
         id: 'risk-analysis',
         title: 'Risk summary',
         ...riskSummary,
+        isUnderReview: bridge.isUnderReview,
       },
     })
   }
