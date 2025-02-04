@@ -250,14 +250,14 @@ function TransactionDetails({
               <span>{transaction.multiplier}</span>
             </div>
             <Tooltip>
-              <TooltipTrigger className="inline size-4">
+              <TooltipTrigger className="inline size-3">
                 <InfoIcon />
               </TooltipTrigger>
               <TooltipContent>
-                {/* TODO: better info */}
-                This transaction is tracked with a multiplier. This means that
-                the cost of this transaction is multiplied by the multiplier.
-                Some more important info and more useful info XD
+                Multiple projects are using the same contract. Therefore,
+                transaction costs are split between the projects, and the
+                multiplier shows how much of the cost is attributed to the
+                specific project.
               </TooltipContent>
             </Tooltip>
           </div>
