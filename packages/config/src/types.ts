@@ -383,6 +383,7 @@ export interface ScalingProjectStateDerivation {
   compressionScheme?: string
   genesisState: string
   dataFormat: string
+  isUnderReview?: boolean
 }
 
 type CategoryTitle =
@@ -407,6 +408,7 @@ export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
   proofVerification?: ProofVerification
+  isUnderReview?: boolean
 }
 
 export interface ScalingProjectTechnology {

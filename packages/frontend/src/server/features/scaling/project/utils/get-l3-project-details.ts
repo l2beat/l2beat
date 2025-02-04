@@ -286,6 +286,7 @@ export async function getL3ProjectDetails({
         title: 'Data availability',
         items: dataAvailabilitySection,
         description: project.customDa?.description,
+        isUnderReview: project.isUnderReview,
       },
     })
   }
