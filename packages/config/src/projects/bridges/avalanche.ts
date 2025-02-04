@@ -152,6 +152,7 @@ export const avalanche: Bridge = {
           name: 'Bridge Wardens',
           description:
             'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
+          chain: 'ethereum',
           accounts: [
             {
               address: EthereumAddress(

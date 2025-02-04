@@ -44,6 +44,7 @@ export const layer2aWithDups: Layer2 = {
         contract: {
           name: 'SynthetixBridgeEscrow',
           isVerified: true,
+          chain: 'ethereum',
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
@@ -55,6 +56,7 @@ export const layer2aWithDups: Layer2 = {
         contract: {
           name: 'L1Escrow',
           isVerified: true,
+          chain: 'ethereum',
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
@@ -102,6 +104,7 @@ export const layer2aWithDups: Layer2 = {
       actors: [
         {
           name: 'Layer2a MultiSig',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -115,6 +118,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate Layer2a MultiSig',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -128,6 +132,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate CanonicalTransactionChain',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -141,6 +146,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'MultiSig participants',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -203,6 +209,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Sequencer',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -216,6 +223,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'State Root Proposer',
+          chain: 'ethereum',
           accounts: [
             {
               isVerified: true,
@@ -245,6 +253,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e',
           ),
+          chain: 'ethereum',
           name: 'Duplicate ForeignAMB Proxy',
           upgradeability: {
             proxyType: 'Custom',
@@ -262,6 +271,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -269,6 +279,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -276,6 +287,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -283,6 +295,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xD16463EF9b0338CE3D73309028ef1714D220c024',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -290,6 +303,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xb0ddFf09c4019e31960de11bD845E836078E8EbE',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -297,6 +311,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xcd626E1328b41fCF24737F137BcD4CE0c32bc8d1',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -304,6 +319,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1',
           ),
+          chain: 'ethereum',
           upgradeability: {
             proxyType: 'EIP1967 proxy',
             admins: [
@@ -320,6 +336,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -327,6 +344,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
           ),
+          chain: 'ethereum',
           upgradeability: {
             proxyType: 'EIP1967 proxy',
             admins: [
@@ -343,6 +361,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
         {
@@ -350,6 +369,7 @@ export const layer2aWithDups: Layer2 = {
           address: EthereumAddress(
             '0x10E6593CDda8c58a1d0f14C5164B376352a55f2F',
           ),
+          chain: 'ethereum',
           isVerified: true,
         },
       ],

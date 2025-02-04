@@ -897,6 +897,7 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
+        chain: this.chain,
       })
     }
     return result
