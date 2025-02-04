@@ -445,7 +445,7 @@ export const badges = {
     display: {
       name: 'Espresso Sequencing',
       description:
-        'The project integrates with Espresso sequencing network. The chain batch poster publishes blocks to Espresso, and runs the batch poster in a Trusted Execution Environment (TEE) to ensure only Espresso-validated blocks reach the chain.',
+        'The project integrates with Espresso sequencing network. The chain batch poster publishes blocks to Espresso and runs in a Trusted Execution Environment (TEE) to ensure only Espresso-validated batches reach the parent chain.',
     },
     type: BadgeType.Other,
   },
