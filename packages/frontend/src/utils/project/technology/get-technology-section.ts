@@ -1,13 +1,13 @@
-import { ProjectService } from '@l2beat/config'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
+import { ps } from '~/server/projects'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export async function getScalingTechnologySection(project: Layer2 | Layer3) {
   // TODO: This is absurd. All i need here is a link. This could've been precomputed in config!
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer', 'daBridges'],
   })
 

@@ -4,8 +4,8 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
 import { compact } from 'lodash'
+import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
@@ -19,7 +19,7 @@ export async function getBridgesSummaryEntries() {
   const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([
     get7dTokenBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks', 'tvlInfo'],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'isArchived'],

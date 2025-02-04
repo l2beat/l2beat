@@ -1,5 +1,5 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -13,7 +13,7 @@ export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'scalingInfo', 'tvlInfo'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],

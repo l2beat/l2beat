@@ -1,7 +1,7 @@
-import { ProjectService } from '@l2beat/config'
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
+import { ps } from '~/server/projects'
 import { getBaseUrl } from '~/utils/get-base-url'
 
 export const runtime = 'nodejs'
@@ -12,7 +12,7 @@ const size = {
 }
 
 export async function generateStaticParams() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer'],
   })
   return projects.flatMap((project) => ({
@@ -38,7 +38,7 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer'],
   })
   const project = projects.find((p) => p.slug === params.layer)

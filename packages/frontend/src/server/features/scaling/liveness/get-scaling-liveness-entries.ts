@@ -4,8 +4,8 @@ import type {
   ScalingProjectStack,
   TableReadyValue,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -22,7 +22,7 @@ export async function getScalingLivenessEntries() {
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     getLiveness(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'scalingInfo', 'livenessInfo'],
       optional: ['scalingDa'],
       where: ['isScaling'],

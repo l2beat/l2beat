@@ -3,9 +3,9 @@ import type {
   ScalingProjectCategory,
   ScalingProjectStack,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -19,7 +19,7 @@ export async function getScalingArchivedEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
       where: ['isScaling', 'isArchived'],
     }),

@@ -5,7 +5,7 @@ import type {
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -18,7 +18,7 @@ import type { FinalityProjectData } from './schema'
 import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
     optional: ['scalingDa'],
     where: ['isScaling'],

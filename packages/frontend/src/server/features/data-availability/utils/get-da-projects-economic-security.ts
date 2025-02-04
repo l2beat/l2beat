@@ -1,8 +1,7 @@
-import { ProjectService } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export async function getDaProjectsEconomicSecurity(): Promise<ProjectsEconomicSecurity> {
   if (env.MOCK) {
@@ -24,7 +23,7 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
   )
 
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer'],
   })
   const arr = projects.map((project) => {
@@ -50,11 +49,11 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     return [project.id, economicSecurity] as const
   })
 
-  return Object.fromEntries(arr.filter(notUndefined))
+  return Object.fromEntries(arr.filter((x) => x !== undefined))
 }
 
 async function getMockProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer'],
   })
   return Object.fromEntries(
@@ -65,6 +64,6 @@ async function getMockProjectsEconomicSecurityData(): Promise<ProjectsEconomicSe
         }
         return [project.id, 100000] as const
       })
-      .filter(notUndefined),
+      .filter((x) => x !== undefined),
   )
 }

@@ -26,8 +26,8 @@ describe(ProjectService.name, () => {
   const getProjects = () => projects
 
   it('selects a single project by id', async () => {
-    const service = new ProjectService(getProjects)
-    const result = await service.getProject({
+    const ps = new ProjectService(getProjects)
+    const result = await ps.getProject({
       id: ProjectId('foo'),
     })
     expect(result).toEqual({
@@ -40,16 +40,16 @@ describe(ProjectService.name, () => {
   })
 
   it('returns undefined for non-existent project', async () => {
-    const service = new ProjectService(getProjects)
-    const result = await service.getProject({
+    const ps = new ProjectService(getProjects)
+    const result = await ps.getProject({
       id: ProjectId('baz'),
     })
     expect(result).toEqual(undefined)
   })
 
   it('returns selected items', async () => {
-    const service = new ProjectService(getProjects)
-    const result = await service.getProject({
+    const ps = new ProjectService(getProjects)
+    const result = await ps.getProject({
       id: ProjectId('foo'),
       select: ['isScaling'],
       optional: ['isBridge', 'isArchived'],
@@ -67,8 +67,8 @@ describe(ProjectService.name, () => {
   })
 
   it('returns multiple projects', async () => {
-    const service = new ProjectService(getProjects)
-    const result = await service.getProjects({
+    const ps = new ProjectService(getProjects)
+    const result = await ps.getProjects({
       select: ['isScaling'],
       optional: ['isBridge', 'isArchived'],
     })

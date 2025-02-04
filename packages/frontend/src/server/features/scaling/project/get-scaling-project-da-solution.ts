@@ -1,8 +1,5 @@
-import {
-  type ProjectContract,
-  type ProjectPermissions,
-  ProjectService,
-} from '@l2beat/config'
+import { type ProjectContract, type ProjectPermissions } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { getDaBridges } from '../../data-availability/utils/get-da-bridges'
 import type { ScalingProject } from './get-scaling-project-entry'
 
@@ -22,7 +19,7 @@ export type DaSolutionWith<T> = Common & T
 export async function getDaSolution(
   project: ScalingProject,
 ): Promise<DaSolution | undefined> {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer', 'daBridges'],
   })
 

@@ -9,10 +9,10 @@ import type {
   StageConfig,
   WarningWithSentiment,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -27,7 +27,7 @@ import { getAssociatedTokenWarning } from '../tvs/utils/get-associated-token-war
 import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingSummaryEntries() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingRisks'],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
     where: ['isScaling'],

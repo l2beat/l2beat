@@ -4,12 +4,7 @@ import type {
   TableReadyValue,
   UsedInProject,
 } from '@l2beat/config'
-import {
-  ProjectService,
-  isDaBridgeVerified,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import {
@@ -17,6 +12,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
+import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -36,7 +32,7 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
   const getTvs = pickTvsForProjects(tvsPerProject)
   const dacEntries = getDacEntries(getTvs)
 
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer', 'daBridges', 'statuses'],
   })
   const entries = projects.map((project) =>

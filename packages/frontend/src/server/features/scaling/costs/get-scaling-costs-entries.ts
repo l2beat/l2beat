@@ -1,8 +1,5 @@
-import {
-  type Project,
-  ProjectService,
-  type WarningWithSentiment,
-} from '@l2beat/config'
+import { type Project, type WarningWithSentiment } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import {
@@ -19,7 +16,7 @@ import { compareStageAndCost } from './utils/compare-stage-and-cost'
 export async function getScalingCostsEntries() {
   const [projectsChangeReport, projects, costs] = await Promise.all([
     getProjectsChangeReport(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'scalingInfo', 'costsInfo'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
