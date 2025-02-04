@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "ZircuitSuperchainConfig",
+  "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x8227712ef8ad39d0f26f06731ef0df8665eb7ada7f41b1ee089adf3c238862a2": "MONITOR_ROLE",
+          "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR_ROLE"
+        }
+      }
+    },
+    "monitorAC": {
+      // weird superchain fake with accesscontrol and custom roles
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x8227712ef8ad39d0f26f06731ef0df8665eb7ada7f41b1ee089adf3c238862a2": "MONITOR_ROLE"
+        },
+        "pickRoleMembers": "MONITOR_ROLE"
+      },
+      "target": {
+        "permissions": [{ "type": "guard" }]
+      }
+    },
+    "defaultAdmin": {
+      // weird superchain fake with accesscontrol and custom roles
+      "target": {
+        "permissions": [
+          { "type": "guard" },
+          {
+            "type": "interact",
+            "description": "manage roles including the guardian role."
+          }
+        ]
+      }
+    }
+  }
+}

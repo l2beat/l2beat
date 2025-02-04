@@ -1,3 +1,192 @@
+Generated with discovered.json: 0x5bdcadeb20b8e969cf7891011d814b99f257ad2d
+
+# Diff at Tue, 04 Feb 2025 14:52:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0b255b1e33d3bf85933cb640f6762fa0c8f26ff4 block: 21564418
+- current block number: 21773698
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21564418 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time.
+      issuedPermissions.1.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.1.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","description":"manage roles including the guardian role."}
+      receivedPermissions.1:
++        {"permission":"guard","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"}
+    }
+```
+
+```diff
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.2.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+      categories:
++        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"},{"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091"},{"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"},{"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c"},{"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"},{"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"},{"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244"},{"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1"},{"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091"},{"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"},{"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c"},{"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0"},{"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4"},{"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244"},{"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"}]
+    }
+```
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+      description:
++        "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
+    }
+```
+
+```diff
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+      issuedPermissions.3:
++        {"permission":"upgrade","to":"0xC463EaC02572CC964D43D2414023E2c6B62bAF38","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x2c0B27F7C8F083B539557a0bA787041BF22DB276","description":"manage roles including the guardian role.","via":[]}
+      issuedPermissions.1:
++        {"permission":"guard","to":"0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0x2c0B27F7C8F083B539557a0bA787041BF22DB276"
+      values.monitorAC:
++        ["0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]
+      template:
++        "opstack/SuperchainConfig_zircuit"
+      description:
++        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system."
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      issuedPermissions.2.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.2.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+    }
+```
+
+```diff
+    contract ZircuitAdminMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      name:
+-        "ZircuitMultiSig"
++        "ZircuitAdminMultiSig"
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x994eEb321F9cD79B077a5455fC248c77f30Dd244","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x92Ef6Af472b39F1b363da45E35530c24619245A4","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x6BCe7408c0781dcE7b71494274302D4b75a1447c","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0x2a721cBE81a128be0F01040e3353c3805A5EA091","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1","via":[{"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      issuedPermissions.0.to:
+-        "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"
++        "0xC463EaC02572CC964D43D2414023E2c6B62bAF38"
+      issuedPermissions.0.via.0:
++        {"address":"0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257"}
+      template:
++        "opstack/OptimismMintableERC20Factory"
+      description:
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
 Generated with discovered.json: 0xb0f3cada1cf73800cf4bcac358fd31b944542102
 
 # Diff at Tue, 04 Feb 2025 12:33:35 GMT:
