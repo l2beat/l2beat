@@ -13,14 +13,11 @@ export interface ExtendedProjectSectionProps {
   className?: string
   children: ReactNode
   isUnderReview?: boolean
-  includeChildrenIfUnderReview?: boolean
+  hideChildrenIfUnderReview?: boolean
   as?: 'section' | 'div'
 }
 
-export function ProjectSection({
-  includeChildrenIfUnderReview = true,
-  ...props
-}: ExtendedProjectSectionProps) {
+export function ProjectSection(props: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   return (
     <Component
@@ -39,7 +36,7 @@ export function ProjectSection({
         className="mb-6"
       />
       {props.isUnderReview ? (
-        includeChildrenIfUnderReview ? (
+        !props.hideChildrenIfUnderReview ? (
           <>
             <UnderReviewCallout className="mb-6" />
             {props.children}

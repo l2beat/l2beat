@@ -46,11 +46,7 @@ export function StageSection({
 }: StageSectionProps) {
   if (stageConfig.stage === 'UnderReview' || sectionProps.isUnderReview) {
     return (
-      <ProjectSection
-        {...sectionProps}
-        isUnderReview
-        includeChildrenIfUnderReview
-      >
+      <ProjectSection {...sectionProps} isUnderReview>
         <div className="mb-6 flex flex-wrap items-center font-medium">
           <Image
             src={icon}
