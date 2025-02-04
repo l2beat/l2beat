@@ -90,8 +90,9 @@ export const rari: Layer3 = orbitStackL3({
         },
       ],
       risks: [
+        // Liveness attack, but there is forced inclusion to bypass it
         {
-          category: 'Funds can be frozen if',
+          category: 'Withdrawals can be delayed if',
           text: 'the owner of EspressoTEEVerifier updates the contract verification values (mrEnclave, mrSigner) and it is no longer possible to verify the TEE quote.',
         },
       ],
