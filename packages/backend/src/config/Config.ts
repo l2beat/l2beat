@@ -39,7 +39,7 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly verifiers: boolean
-  readonly daBeat: DABeatConfig | false
+  readonly daBeat: DaBeatConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -184,7 +184,11 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface DABeatConfig {
+export interface DaBeatConfig {
+  /** Coingecko ids of tokens for economic security */
+  readonly coingeckoIds: string[]
+  /** Names of the economic security types */
+  readonly types: string[]
   readonly quicknodeApiUrl: string
   readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string

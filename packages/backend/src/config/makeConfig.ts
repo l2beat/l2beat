@@ -15,6 +15,7 @@ import {
   getProjectsWithActivity,
 } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
+import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
@@ -26,10 +27,10 @@ interface MakeConfigOptions {
   minTimestampOverride?: UnixTime
 }
 
-export function makeConfig(
+export async function makeConfig(
   env: Env,
   { name, isLocal, minTimestampOverride }: MakeConfigOptions,
-): Config {
+): Promise<Config> {
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
@@ -170,38 +171,7 @@ export function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
-    daBeat: flags.isEnabled('da-beat') && {
-      quicknodeApiUrl: env.string([
-        'QUICKNODE_API_URL_FOR_DA_BEAT',
-        'QUICKNODE_API_URL',
-      ]),
-      quicknodeCallsPerMinute: env.integer(
-        [
-          'QUICKNODE_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
-          'QUICKNODE_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      celestiaApiUrl: env.string([
-        'CELESTIA_API_URL_FOR_DA_BEAT',
-        'CELESTIA_API_URL',
-      ]),
-      celestiaCallsPerMinute: env.integer(
-        [
-          'CELESTIA_API_CALLS_PER_MINUTE_FOR_DA_BEAT',
-          'CELESTIA_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      nearRpcUrl: env.string(
-        ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
-        'https://rpc.mainnet.near.org/',
-      ),
-      availWsUrl: env.string(
-        ['AVAIL_WS_URL_FOR_DA_BEAT', 'AVAIL_WS_URL'],
-        'wss://avail-mainnet.public.blastapi.io/',
-      ),
-    },
+    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(env)),
     chainConfig: getChainConfig(env),
     beaconApi: {
       url: env.optionalString([
@@ -223,7 +193,7 @@ export function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && getDaTrackingConfig(flags, env),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(flags, env)),
     // Must be last
     flags: flags.getResolved(),
   }
