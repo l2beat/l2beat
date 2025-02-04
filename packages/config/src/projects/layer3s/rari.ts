@@ -81,5 +81,19 @@ export const rari: Layer3 = orbitStackL3({
       description: 'RARI Chain launches on Arbitrum One.',
       type: 'general',
     },
+    {
+      title: 'RARI integrates Celestia Blobstream',
+      url: 'https://x.com/RariChain/status/1871209215324496336',
+      date: '2024-12-19T00:00:00.00Z',
+      description: 'RARI is the first chain to integrate Celestia Blobstream DA bridge.',
+      type: 'general',
+    },
+    {
+      title: 'RARI integrates Espresso sequencer',
+      url: 'https://x.com/EspressoSys/status/1884970716199895376',
+      date: '2025-01-30T00:00:00.00Z',
+      description: 'RARI is the first chain to integrate Espresso TEE sequencer.',
+      type: 'general',
+    },
   ],
 })
