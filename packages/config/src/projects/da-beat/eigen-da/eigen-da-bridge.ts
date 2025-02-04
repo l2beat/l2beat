@@ -3,7 +3,7 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
 const discovery = new ProjectDiscovery('eigenda')
 

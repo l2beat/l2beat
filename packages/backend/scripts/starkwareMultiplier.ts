@@ -33,7 +33,10 @@ const cmd = command({
   args,
   handler: async (args) => {
     const env = getEnv()
-    const config = makeConfig(env, { name: 'Script/Local', isLocal: true })
+    const config = await makeConfig(env, {
+      name: 'Script/Local',
+      isLocal: true,
+    })
 
     if (!Object.keys(customerIds).includes(args.project)) {
       throw new Error(`Project ${args.project} is not supported`)

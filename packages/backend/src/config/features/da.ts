@@ -1,6 +1,5 @@
-import { daLayers, ethereumDaLayer, layer2s, layer3s } from '@l2beat/config'
-
 import type { Env } from '@l2beat/backend-tools'
+import { type ProjectService, layer2s, layer3s } from '@l2beat/config'
 import type {
   DaLayerTrackingConfig,
   ProjectDaTrackingConfig,
@@ -9,10 +8,11 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
-export function getDaTrackingConfig(
+export async function getDaTrackingConfig(
+  ps: ProjectService,
   flags: FeatureFlags,
   env: Env,
-): DataAvailabilityTrackingConfig {
+): Promise<DataAvailabilityTrackingConfig> {
   return {
     blobscan: {
       baseUrl: env.string('BLOBSCAN_API_URL', 'https://api.blobscan.com/'),
@@ -23,20 +23,24 @@ export function getDaTrackingConfig(
       minHeight: env.integer('DA_ETHEREUM_MIN_HEIGHT', 19426618), // blobs
       batchSize: env.integer('DA_ETHEREUM_BATCH_SIZE', 2500),
     },
-    layers: getDaLayers().filter((layer) => flags.isEnabled('da', layer)),
+    layers: (await getDaTrackingLayers(ps)).filter((layer) =>
+      flags.isEnabled('da', layer),
+    ),
     projects: getProjectsWithDaTracking().filter((project) =>
       flags.isEnabled('da', project.id.toString()),
     ),
   }
 }
 
-function getDaLayers(): DaLayerTrackingConfig[] {
+async function getDaTrackingLayers(
+  ps: ProjectService,
+): Promise<DaLayerTrackingConfig[]> {
+  const projects = await ps.getProjects({
+    select: ['daLayer'],
+    whereNot: ['isUpcoming'],
+  })
   return [
-    ...new Set(
-      [...daLayers, ethereumDaLayer]
-        .filter((project) => project.daLayer)
-        .flatMap((project) => project.daLayer.daTracking ?? []),
-    ),
+    ...new Set(projects.flatMap((project) => project.daLayer.daTracking ?? [])),
   ]
 }
 

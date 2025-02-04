@@ -1,4 +1,4 @@
-import { daLayers, ethereumDaLayer } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import { env } from '~/env'
@@ -24,7 +24,10 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
     (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
   )
 
-  const arr = [...daLayers, ethereumDaLayer].map((project) => {
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['daLayer'],
+  })
+  const arr = projects.map((project) => {
     if (!project.daLayer.economicSecurity) {
       return undefined
     }
@@ -50,9 +53,12 @@ async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecuri
   return Object.fromEntries(arr.filter(notUndefined))
 }
 
-function getMockProjectsEconomicSecurityData(): ProjectsEconomicSecurity {
+async function getMockProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['daLayer'],
+  })
   return Object.fromEntries(
-    daLayers
+    projects
       .map((project) => {
         if (!project.daLayer.economicSecurity) {
           return undefined

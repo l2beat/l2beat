@@ -44,7 +44,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     reasonsForBeingOther: project.reasonsForBeingOther,
     countdowns: getCountdowns(project),
   }
-  const daSolution = getDaSolution(project)
+  const daSolution = await getDaSolution(project)
 
   const rosetteValues = getScalingRosetteValues(project.riskView)
   const isProjectVerified = isVerified(project)

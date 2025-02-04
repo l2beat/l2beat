@@ -61,7 +61,7 @@ export async function getL2ProjectDetails({
   )
 
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
-  const technologySection = getScalingTechnologySection(project)
+  const technologySection = await getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)

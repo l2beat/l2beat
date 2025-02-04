@@ -1,6 +1,7 @@
 import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   DaLayerTrackingConfig,
+  OnchainVerifier,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
@@ -38,8 +39,8 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
-  readonly verifiers: boolean
-  readonly daBeat: DABeatConfig | false
+  readonly verifiers: VerifiersConfig | false
+  readonly daBeat: DaBeatConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
     readonly url: string | undefined
@@ -177,6 +178,10 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
+export interface VerifiersConfig {
+  readonly verifiers: OnchainVerifier[]
+}
+
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -184,7 +189,11 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface DABeatConfig {
+export interface DaBeatConfig {
+  /** Coingecko ids of tokens for economic security */
+  readonly coingeckoIds: string[]
+  /** Names of the economic security types */
+  readonly types: string[]
   readonly quicknodeApiUrl: string
   readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string

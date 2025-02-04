@@ -1,19 +1,13 @@
-import type { Bridge, DaProject, Layer2, Layer3 } from '@l2beat/config'
 import { getCommonContractsIn } from '@l2beat/config'
 import { uniqBy } from 'lodash'
 import type { TechnologyContractAddress } from '../../../components/projects/sections/contract-entry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 
-type ProjectParams =
-  | {
-      id?: string
-      type: (Layer2 | Bridge | DaProject)['type']
-    }
-  | {
-      id?: string
-      type: Layer3['type']
-      hostChain: string
-    }
+type ProjectParams = {
+  type: 'layer2' | 'layer3' | 'bridge'
+  id?: string
+  hostChain?: string
+}
 
 export function getUsedInProjects(
   projectParams: ProjectParams,
@@ -21,9 +15,6 @@ export function getUsedInProjects(
   implementationAddresses: TechnologyContractAddress[],
 ): UsedInProject[] {
   if (projectParams.id === undefined) {
-    return []
-  }
-  if (projectParams.type === 'DaLayer') {
     return []
   }
   const commonContracts = getCommonContractsIn(projectParams)

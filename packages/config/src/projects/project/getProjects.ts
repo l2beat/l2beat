@@ -1,16 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
-import type {
-  Bridge,
-  DaProject,
-  Layer2,
-  Layer3,
-  ProjectLivenessInfo,
-} from '../../types'
+import type { Bridge, Layer2, Layer3, ProjectLivenessInfo } from '../../types'
 import type { BaseProject, ProjectCostsInfo } from '../../types'
 import { isVerified } from '../../verification/isVerified'
 import { bridges } from '../bridges'
-import { daLayers } from '../da-beat'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { refactored } from '../refactored'
@@ -24,7 +17,6 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(bridges.map(bridgeToProject))
-    .concat(daLayers.map(daToProject))
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
@@ -49,6 +41,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
             reasons: otherMigrationContext.reasonsForBeingOther,
           }
         : undefined,
+    },
+    display: {
+      description: p.display.description,
+      links: p.display.links,
     },
     scalingInfo: {
       layer: p.type,
@@ -84,6 +80,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
+    milestones: p.milestones,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -144,6 +141,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
     },
+    display: {
+      description: p.display.description,
+      links: p.display.links,
+    },
     bridgeInfo: {
       category: p.display.category,
       destination: p.technology.destination,
@@ -154,30 +155,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    milestones: p.milestones,
     // tags
     isBridge: true,
     isArchived: p.isArchived ? true : undefined,
-    isUpcoming: p.isUpcoming ? true : undefined,
-  }
-}
-
-function daToProject(p: DaProject): BaseProject {
-  return {
-    id: p.id,
-    slug: p.display.slug,
-    name: p.display.name,
-    shortName: undefined,
-    addedAt: UnixTime.ZERO,
-    // data
-    statuses: {
-      yellowWarning: undefined,
-      redWarning: undefined,
-      isUnderReview: !!p.isUnderReview,
-      isUnverified: !isVerified(p),
-    },
-    daBridges: p.daLayer.bridges,
-    // tags
-    isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
 }

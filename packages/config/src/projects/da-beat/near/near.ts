@@ -1,16 +1,25 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
-export const near: DaProject = {
-  type: 'DaLayer',
+export const near: BaseProject = {
   id: ProjectId('near-da'), // TODO: merge with near bridge in the future
+  slug: 'near',
+  name: 'NEAR DA',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   display: {
-    name: 'NEAR DA',
-    slug: 'near',
     description: `NEAR's Data Availability Layer (NEAR DA) leverages the sharded architecture of the NEAR Protocol to provide a modular data availability layer for layer 2 solutions.`,
     links: {
       websites: ['https://near.org/', 'https://nuff.tech/'],
@@ -29,7 +38,7 @@ export const near: DaProject = {
     },
   },
   daLayer: {
-    kind: 'PublicBlockchain',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     consensusAlgorithm: {
       name: 'Nightshade',
@@ -135,7 +144,6 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       layer: ProjectId('near-da'),
       bridge: undefined,
     }),
-    bridges: [],
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
     throughput: {
       size: 16000, // 16 MB , 4MB per 4 shard
@@ -154,6 +162,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       },
     },
   },
+  daBridges: [],
   milestones: [
     {
       title: 'Near mainnet launch',
