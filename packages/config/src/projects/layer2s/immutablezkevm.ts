@@ -11,7 +11,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -67,11 +66,11 @@ export const immutablezkevm: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.NONE],
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

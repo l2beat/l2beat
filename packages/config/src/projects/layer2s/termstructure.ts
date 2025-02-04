@@ -1,11 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  DA_BRIDGES,
-  DA_LAYERS,
-  DA_MODES,
-  addSentimentToDataAvailability,
-} from '../../common'
+import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { EXITS } from '../../common/exits'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
@@ -52,11 +46,11 @@ export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,

@@ -11,7 +11,6 @@ import {
   DA_MODES,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -67,11 +66,11 @@ export const eclipse: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.CELESTIA],
+  dataAvailability: {
+    layer: DA_LAYERS.CELESTIA,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

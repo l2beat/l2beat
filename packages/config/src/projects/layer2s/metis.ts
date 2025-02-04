@@ -9,7 +9,6 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
@@ -106,11 +105,11 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.MEMO],
+  dataAvailability: {
+    layer: DA_LAYERS.MEMO,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,

@@ -482,8 +482,8 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: TableReadyValue
-  bridge: TableReadyValue
+  layer: TableReadyValue & { projectId?: ProjectId }
+  bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
 }
 
