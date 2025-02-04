@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x44ff06bfe70e10837cb9a392f70a56a1aeff2829
+Generated with discovered.json: 0x01bcaec657b3ffd06d7f536499e305b1ecebdda4
 
-# Diff at Tue, 04 Feb 2025 09:24:00 GMT:
+# Diff at Tue, 04 Feb 2025 10:16:43 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
-- current block number: 302501975
+- current block number: 302514505
 
 ## Description
 
-Rari integrates with Espresso. Batch poster was replaced with a new batch poster that runs inside a TEE. The sequencer inbox was updated so that the data posting function also includes an attestation as input, a "quote", that is verified for each batch tx by the EspressoTEEVerifier. The verifier checks this signature that can only originate from inside the TEE and reverts if unsuccessful, meaning that for every batch tx we can be sure it came from the TEE.
+Rari integrates with Espresso TEE. Batch poster was replaced with a new batch poster that runs inside a TEE. The sequencer inbox was updated so that the data posting function also includes an attestation as input, a "quote", that is verified for each batch tx by the EspressoTEEVerifier. The verifier checks this signature that can only originate from inside the TEE and reverts if unsuccessful, meaning that for every batch tx we can be sure it came from the TEE.
 From Ethereum POV, there is no change in the external DA checks. The sequencer is still supposed to post to Celestia, and the inbox still checks the commitment has the designated Celesita initial byte (0x63) and length (89). No changes to proof system either.
 
 ## Watched changes
@@ -49,7 +49,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 +        5
       values.batchCount:
 -        8248
-+        10142
++        10146
       values.batchPosterManager:
 -        "0x0000000000000000000000000000000000000000"
 +        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
@@ -70,7 +70,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 -        1
       values.totalDelayedMessagesRead:
 -        187079
-+        192119
++        192125
       values.BLOBSTREAM:
 +        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
       values.espressoTEEVerifier:
