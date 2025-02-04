@@ -364,6 +364,15 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
+
+  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== undefined && templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== EthereumAddress.ZERO
+
   const currentRequiredStake = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'currentRequiredStake',
@@ -582,7 +591,12 @@ function orbitStackCommon(
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
-      [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
+      [
+        Badge.Stack.Orbit,
+        Badge.VM.EVM,
+        daBadge,
+        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoSequencing] : []),
+      ],
       templateVars.additionalBadges ?? [],
     ),
     customDa: templateVars.customDa,
@@ -734,13 +748,23 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== undefined && templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== EthereumAddress.ZERO
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream'
-      : postsToExternalDA
-        ? 'orbit-optimium'
-        : 'orbit-rollup'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
 
   return {
     type: 'layer3',
@@ -915,13 +939,23 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
+  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== undefined && templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'espressoTEEVerifier',
+  ) !== EthereumAddress.ZERO
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream'
-      : postsToExternalDA
-        ? 'orbit-optimium'
-        : 'orbit-rollup'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??

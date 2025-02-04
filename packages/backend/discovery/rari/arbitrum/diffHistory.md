@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3163fabc7b24650503d3209509a7dee49ed1f9e1
+Generated with discovered.json: 0xeade51474a29225918e591ff1e9d296d9dc464b3
 
-# Diff at Tue, 04 Feb 2025 15:36:03 GMT:
+# Diff at Tue, 04 Feb 2025 23:18:12 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
-- current block number: 302591167
+- current block number: 302700506
 
 ## Description
 
@@ -95,7 +95,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 ```diff
 +   Status: CREATED
     contract V3QuoteVerifier (0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1)
-    +++ description: None
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.
 ```
 
 ```diff
@@ -143,7 +143,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 ```diff
 +   Status: CREATED
     contract EspressoTEEVerifier (0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb)
-    +++ description: None
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
 ```
 
 ## Source code changes

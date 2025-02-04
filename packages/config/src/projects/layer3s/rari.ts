@@ -13,7 +13,6 @@ export const rari: Layer3 = orbitStackL3({
     Badge.DA.CelestiaBlobstream,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
-    Badge.Other.EspressoSequencing,
   ],
   additionalPurposes: ['NFT'],
   discovery,

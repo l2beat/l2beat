@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 302591167,
+  "blockNumber": 302700506,
   "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
@@ -191,11 +191,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 192151,
+        "delayedMessageCount": 192182,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 10166,
-        "sequencerReportedSubMessageCount": 1500871
+        "sequencerMessageCount": 10193,
+        "sequencerReportedSubMessageCount": 1501708
       }
     },
     {
@@ -331,12 +331,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 8799,
+        "firstUnresolvedNode": 8806,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 8798,
-        "latestNodeCreated": 8946,
+        "latestConfirmed": 8805,
+        "latestNodeCreated": 8953,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -542,9 +542,13 @@
     {
       "name": "V3QuoteVerifier",
       "address": "0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1",
+      "template": "espresso/Sequencing/QuoteVerifier",
       "sourceHashes": [
         "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84"
       ],
+      "displayName": "QuoteVerifier",
+      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.",
+      "ignoreInWatchMode": [""],
       "sinceTimestamp": 1732459265,
       "values": {
         "$immutable": true,
@@ -955,7 +959,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 10166,
+        "batchCount": 10193,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -988,7 +992,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 192150,
+        "totalDelayedMessagesRead": 192180,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1094,9 +1098,12 @@
     {
       "name": "EspressoTEEVerifier",
       "address": "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb",
+      "template": "espresso/Sequencing/EspressoTEEVerifier",
       "sourceHashes": [
         "0x7914b3894035170507ca8bd719f2e22ed393a5817b53cdf5e2126b837b35519f"
       ],
+      "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
+      "ignoreInWatchMode": [""],
       "sinceTimestamp": 1738111205,
       "values": {
         "$immutable": true,
@@ -2115,6 +2122,8 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing/EspressoTEEVerifier": "0xb314995d86c96fc069a0a02f7d04af82cc04b03f1be94e31ccac61034197ab1c",
+    "espresso/Sequencing/QuoteVerifier": "0x7c016e0f3ca53f7dbd6d1b90231b9c54e4e8fa9230aa41f61a3ea3371d3dc29f",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
