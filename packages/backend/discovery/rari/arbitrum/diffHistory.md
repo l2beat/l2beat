@@ -1,3 +1,180 @@
+Generated with discovered.json: 0x44ff06bfe70e10837cb9a392f70a56a1aeff2829
+
+# Diff at Tue, 04 Feb 2025 09:24:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
+- current block number: 302501975
+
+## Description
+
+Rari integrates with Espresso. Batch poster was replaced with a new batch poster that runs inside a TEE. The sequencer inbox was updated so that the data posting function also includes an attestation as input, a "quote", that is verified for each batch tx by the EspressoTEEVerifier. The verifier checks this signature that can only originate from inside the TEE and reverts if unsuccessful, meaning that for every batch tx we can be sure it came from the TEE.
+From Ethereum POV, there is no change in the external DA checks. The sequencer is still supposed to post to Celestia, and the inbox still checks the commitment has the designated Celesita initial byte (0x63) and length (89). No changes to proof system either.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: None
+      template:
+-        "orbitstack/SequencerInbox_Celestia"
+      sourceHashes.1:
+-        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
++        "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"},{"address":"0x003e70B041abb993006C03E56c8515622a02928C"}]}
+      issuedPermissions.0.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
++        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
+      issuedPermissions.0.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+      issuedPermissions.0.via.1:
++        {"address":"0x003e70B041abb993006C03E56c8515622a02928C"}
+      issuedPermissions.0.via.0:
++        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      values.$implementation:
+-        "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"
++        "0x805dc3546d99AfB35EfB261b907679b67A08256e"
+      values.$pastUpgrades.4:
++        ["2025-01-31T02:05:35.000Z","0x206804ee59ae4cd1cd13fc2c92c59958f3ecfcf3f210b2d583a6816e3a4a0b10",["0x805dc3546d99AfB35EfB261b907679b67A08256e"]]
+      values.$pastUpgrades.3:
++        ["2025-01-29T20:23:12.000Z","0xb59494487d444c465d61f19a4fe9830806da172e2883ae0861c155f3066592a7",["0xE2DdF957261A6d8a96A7eff29C51460707FfbBE5"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.batchCount:
+-        8248
++        10142
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      values.batchPosters:
+-        ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"]
+      values.dacKeyset:
+-        {"requiredSignatures":1,"membersCount":1,"blsSignatures":["YAeDrpnsDZsKv0V5I5tcYA5z/PZaJuRA4qpki9y8x/bBV15fKHfMHv3Nyn2gBbBbtBjzXZKDCk4Q7mLMfFakukCyPyJSWB9vIczaCFaY1PjUMc//pY9x5VcTauBVhAKx5BZmQ398qhs+fqtEfZ3OgUQMYLvkim1uJ9tidMOnEo+wgWMDZAuMkXoO7BFdMzr8dBkpLjQYP9AYjPYphAERMiUoRuK8/mrXygNrokw2/RrthAH7qlt9eugYrRgIoy8hbgezFeIpVxKYTeuICu2TDV7XJk0oci4CIFSCCdD6X4gTiqbUFETjzthryj4va/GL8hc7MOkf4mPFeFHvzLTXCeh+0SSOOaH9onG0zgVvqEU5ZI6ddqiLMnGwjiJwJ52Efg=="]}
+      values.keySetUpdates:
+-        1
+      values.maxTimeVariation:
+-        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
++        [5760,48,86400,3600]
+      values.postsBlobs:
+-        false
+      values.sequencerVersion:
+-        "0x63"
+      values.setIsBatchPosterCount:
+-        1
+      values.totalDelayedMessagesRead:
+-        187079
++        192119
+      values.BLOBSTREAM:
++        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
+      values.espressoTEEVerifier:
++        "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb"
+      values.inboxAccs:
++        ["0x72815e3eb5a9995e3b70bcca59dd3d78772b811718742f76a6865974a8e8a55c","0x0cc2a75ea448a5b53c908d5404293eff1ac863ee2b0bbad3b5d385656da0db36","0xfb571ad0bdce76e80432a8a223afb9cea31f9b2eda2e1649006bf87fd8b42549","0x6ccc4a6ff88cdca255c948fe6cc43cf7159ff33a0b9804bdd5a5d6b17d7885e6","0x69d02ed8b2eda79fd77f8e487714fa2dad1e6b710ecfbb2f4f4fc28cab43b791"]
+      fieldMeta:
+-        {"maxTimeVariation":{"description":"Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."}}
+      errors:
++        {"inboxAccs":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDaoStorage (0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AutomataPckDao (0x31F18aA7B4cbAD7A726BCBF5AB3e286fC0b02A82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AutomataEnclaveIdentityDao (0x45f91C0d9Cf651785d93fcF7e9E97dE952CdB910)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract V3QuoteVerifier (0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PCKHelper (0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract X509CRLHelper (0x6e204fEAe40F668a06E78a83b66185FFC8892DDA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FmspcTcbHelper (0x71056B540b4E60D0E8eFb55FAd487C486B09FFF5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PCCSRouter (0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AutomataFmspcTcbDao (0x9c54C72867b07caF2e6255CE32983c28aFE40F26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EnclaveIdentityHelper (0xae27D762EED6958bc34b358bd7C78c7211fe77F8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AutomataPcsDao (0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../rari/arbitrum/.flat/AutomataDaoStorage.sol     |  899 ++++++
+ .../arbitrum/.flat/AutomataEnclaveIdentityDao.sol  |  698 +++++
+ .../rari/arbitrum/.flat/AutomataFmspcTcbDao.sol    |  733 +++++
+ .../rari/arbitrum/.flat/AutomataPckDao.sol         | 2437 ++++++++++++++++
+ .../rari/arbitrum/.flat/AutomataPcsDao.sol         | 1935 +++++++++++++
+ .../rari/arbitrum/.flat/EnclaveIdentityHelper.sol  | 2685 ++++++++++++++++++
+ .../rari/arbitrum/.flat/EspressoTEEVerifier.sol    |  637 +++++
+ .../rari/arbitrum/.flat/FmspcTcbHelper.sol         | 2988 ++++++++++++++++++++
+ .../rari/arbitrum/.flat/PCCSRouter.sol             |  610 ++++
+ .../rari/arbitrum/.flat/PCKHelper.sol              | 2625 +++++++++++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  141 +-
+ .../rari/arbitrum/.flat/V3QuoteVerifier.sol        | 2547 +++++++++++++++++
+ .../rari/arbitrum/.flat/X509CRLHelper.sol          | 2485 ++++++++++++++++
+ 13 files changed, 21414 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0x63729782dddf45505acdc0541899a78e0e7e5577
 
 # Diff at Mon, 20 Jan 2025 11:10:34 GMT:
