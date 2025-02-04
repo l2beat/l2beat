@@ -108,7 +108,7 @@ export const layer2aWithDups: Layer2 = {
               address: EthereumAddress(
                 '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               ),
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description: '',
@@ -120,7 +120,7 @@ export const layer2aWithDups: Layer2 = {
               address: EthereumAddress(
                 '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               ),
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description: '',

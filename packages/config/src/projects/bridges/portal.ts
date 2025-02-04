@@ -7,6 +7,11 @@ import { RISK_VIEW } from './common'
 
 const discovery = new ProjectDiscovery('portal')
 
+const guardians = discovery.getContractValue<[string[], number]>(
+  'WormholeCore',
+  'guardianSet',
+)[0]
+
 export const portal: Bridge = {
   type: 'bridge',
   id: ProjectId('portal'),
@@ -171,10 +176,8 @@ export const portal: Bridge = {
           name: 'Guardian Network',
           description:
             'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-          accounts: discovery.getPermissionedAccounts(
-            'WormholeCore',
-            'guardianSet',
-            0,
+          accounts: guardians.map((g) =>
+            discovery.formatPermissionedAccount(g),
           ),
         },
       ],

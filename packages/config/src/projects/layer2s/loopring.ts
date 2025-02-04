@@ -319,7 +319,7 @@ export const loopring: Layer2 = {
         },
         {
           name: 'RollupOwner',
-          accounts: [discovery.getPermissionedAccount('ExchangeV3', 'owner')],
+          accounts: discovery.getPermissionedAccounts('ExchangeV3', 'owner'),
           description:
             'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
         },

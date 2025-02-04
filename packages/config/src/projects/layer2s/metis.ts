@@ -234,12 +234,10 @@ export const metis: Layer2 = {
         ),
         {
           name: 'State Root Proposer',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'Lib_AddressManager',
-              '_1088_MVM_Proposer',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'Lib_AddressManager',
+            '_1088_MVM_Proposer',
+          ),
           description: 'Central actor to post new state roots to L1.',
         },
         {

@@ -279,9 +279,7 @@ export const degate2: Layer2 = {
           name: 'BlockVerifier Owner',
           description:
             'This address is the owner of the BlockVerifier contract.',
-          accounts: [
-            discovery.getPermissionedAccount('BlockVerifier', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('BlockVerifier', 'owner'),
         },
         {
           name: 'Block Submitters',

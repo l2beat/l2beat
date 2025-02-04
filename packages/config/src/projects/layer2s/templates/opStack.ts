@@ -46,13 +46,13 @@ import type {
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectPermission,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCapability,
   ScalingProjectCategory,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -150,7 +150,7 @@ interface OpStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: ProjectPermission[]
   nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]

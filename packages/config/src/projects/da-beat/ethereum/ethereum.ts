@@ -101,6 +101,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
         },
       ],
     },
+    usedWithoutBridgeIn: [],
     bridges: [enshrinedBridge],
     consensusAlgorithm: {
       name: 'Gasper',
@@ -129,5 +130,6 @@ This method allows ZK rollups to prove that the data used in their validity proo
         coingeckoId: 'ethereum',
       },
     },
+    daTracking: 'ethereum',
   },
 }

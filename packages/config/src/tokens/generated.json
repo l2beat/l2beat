@@ -1501,21 +1501,6 @@
       "supply": "zero"
     },
     {
-      "name": "DeversiFi Token",
-      "coingeckoId": "rhinofi",
-      "address": "0xDDdddd4301A082e62E84e43F474f044423921918",
-      "symbol": "DVF",
-      "decimals": 18,
-      "deploymentTimestamp": 1615354524,
-      "coingeckoListingTimestamp": 1625875200,
-      "untilTimestamp": 1725840000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "DEXTF Token",
       "coingeckoId": "dextf",
       "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0",

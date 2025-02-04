@@ -15,7 +15,7 @@ import type {
   Layer2,
   Layer3,
   ProjectContract,
-  ScalingProjectPermission,
+  ProjectPermission,
 } from '../types'
 
 type CommonProject = Layer2 | Layer3 | Bridge
@@ -223,7 +223,7 @@ function projectContainsAddressAsContract(
 function getPermissionContainingAddress(
   project: Pick<CommonProject, 'permissions'>,
   address: string,
-): ScalingProjectPermission | undefined {
+): ProjectPermission | undefined {
   if (
     project.permissions === undefined ||
     project.permissions === 'UnderReview'

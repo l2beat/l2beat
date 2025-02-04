@@ -132,12 +132,11 @@ export const satellite: Bridge = {
         },
         {
           name: 'AxelarGasService Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'AxelarGasServiceOperators',
-              'owner',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'AxelarGasServiceOperators',
+            'owner',
+          ),
+
           description:
             'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
         },

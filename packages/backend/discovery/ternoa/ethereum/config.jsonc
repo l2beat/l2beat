@@ -11,5 +11,10 @@
   },
   "names": {
     "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": "Validium"
+  },
+  "overrides": {
+    "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": {
+      "extends": "polygon-cdk/PolygonZkEVM" // temporary due to shape match bug
+    }
   }
 }

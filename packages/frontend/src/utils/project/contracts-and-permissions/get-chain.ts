@@ -1,14 +1,8 @@
-import type {
-  Bridge,
-  DaBridge,
-  DaProject,
-  Layer2,
-  Layer3,
-} from '@l2beat/config'
+import type { Bridge, DaProject, Layer2, Layer3 } from '@l2beat/config'
 
 type BaseProjectParams =
   | {
-      type: (Layer2 | Bridge | DaProject | DaBridge)['type']
+      type: (Layer2 | Bridge | DaProject)['type']
     }
   | {
       type: Layer3['type']

@@ -185,7 +185,11 @@
     ["0xc2267387", "mint"],
     ["0x614a7479", "mint"],
     ["0xa41e6ceb", "claim"],
-    ["0xb6b55f25", "deposit"]
+    ["0xb6b55f25", "deposit"],
+    ["0x574caef3", "deployAccount"],
+    ["0x5ae401dc", "multicall"],
+    ["0x3dad0c9c", "cleanupERC20"],
+    ["0x04e45aaf", "exactInputSingle"]
   ],
   "IMPLEMENTATIONS": [
     [

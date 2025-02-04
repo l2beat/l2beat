@@ -6,6 +6,7 @@ import type {
   ProjectContract,
 } from '../types'
 
+// TODO(radomski): Remove
 export function getContractsVerificationStatuses(
   project: Layer2 | Layer3 | Bridge | DaProject,
 ) {

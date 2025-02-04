@@ -1,5 +1,6 @@
 import type { Bridge, DaBridge, DaProject, Layer2, Layer3 } from '../types'
 
+// TODO(radomski): Permissions
 export function isVerified(
   project: Layer2 | Layer3 | Bridge | DaProject,
 ): boolean {

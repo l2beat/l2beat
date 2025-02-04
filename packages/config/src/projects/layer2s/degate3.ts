@@ -369,9 +369,7 @@ export const degate3: Layer2 = {
           name: 'BlockVerifier Owner',
           description:
             'This address is the owner of the BlockVerifier contract.',
-          accounts: [
-            discovery.getPermissionedAccount('BlockVerifier', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('BlockVerifier', 'owner'),
         },
         {
           name: 'Block Submitters',
@@ -384,7 +382,7 @@ export const degate3: Layer2 = {
         },
         {
           name: 'Degate HomeDAO2 Multisig',
-          accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
+          accounts: discovery.getPermissionedAccounts('TimeLock1', 'admin'),
           description: (() => {
             const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
             const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')

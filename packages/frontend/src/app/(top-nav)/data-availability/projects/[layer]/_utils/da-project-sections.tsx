@@ -51,7 +51,6 @@ export function getRegularDaProjectSections({
         escrows: undefined,
         isUnderReview: daLayer.isUnderReview,
       },
-      contractsVerificationStatuses,
       projectsChangeReport,
     )
 
@@ -102,7 +101,7 @@ export function getRegularDaProjectSections({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       bridgeGrissiniValues,
-      hideRisks: daBridge.type === 'NoBridge',
+      hideRisks: !!daBridge.risks.isNoBridge,
       hideTitle: true,
     },
   })
@@ -194,7 +193,7 @@ export function getRegularDaProjectSections({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
-      sideNavTitle: daBridge.type === 'NoBridge' ? 'DA Bridge' : undefined,
+      sideNavTitle: !!daBridge.risks.isNoBridge ? 'DA Bridge' : undefined,
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,

@@ -210,26 +210,28 @@ export const polynetwork: Bridge = {
     [discovery.chain]: {
       actors: [
         {
-          accounts: [discovery.getPermissionedAccount('PolyWrapper', 'owner')],
+          accounts: discovery.getPermissionedAccounts('PolyWrapper', 'owner'),
           name: 'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',
           description:
             'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
         },
         {
-          accounts: [
-            discovery.getPermissionedAccount('EthCrossChainManager', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'EthCrossChainManager',
+            'owner',
+          ),
+
           name: 'Owner of EthCrossChainManager',
           description:
             'Can pause the contracts and update implementation of EthCrossChainData contract.',
         },
         {
           accounts: [
-            discovery.getPermissionedAccount('Lock Proxy 1', 'owner'),
-            discovery.getPermissionedAccount('Lock Proxy 2', 'owner'),
-            discovery.getPermissionedAccount('Lock Proxy 3', 'owner'),
-            discovery.getPermissionedAccount('Lock Proxy 4', 'owner'),
-            discovery.getPermissionedAccount('Lock Proxy 5', 'owner'),
+            ...discovery.getPermissionedAccounts('Lock Proxy 1', 'owner'),
+            ...discovery.getPermissionedAccounts('Lock Proxy 2', 'owner'),
+            ...discovery.getPermissionedAccounts('Lock Proxy 3', 'owner'),
+            ...discovery.getPermissionedAccounts('Lock Proxy 4', 'owner'),
+            ...discovery.getPermissionedAccounts('Lock Proxy 5', 'owner'),
           ],
           name: 'Lock Proxy owners',
           description:
