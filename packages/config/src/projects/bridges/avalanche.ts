@@ -158,6 +158,11 @@ export const avalanche: Bridge = {
                 '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
               ),
               type: 'EOA',
+              // NOTE(radomski): This is hardcoded because:
+              //
+              // - it's an EOA and we assume that all EOAs are verified
+              // - avalanche does not have it's own discovery to fetch it from there
+              isVerified: true,
             },
           ],
         },

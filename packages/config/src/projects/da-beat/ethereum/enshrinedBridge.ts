@@ -20,9 +20,8 @@ export const enshrinedBridge: DaBridge = {
     `,
   },
   usedIn: linkByDA({
-    // To catch both blobs and calldata suffix
-    layer: (layer) => layer?.startsWith('Ethereum'),
-    bridge: (bridge) => bridge === 'Enshrined',
+    layer: ProjectId('ethereum'),
+    bridge: ProjectId('enshrined-bridge'),
   }),
   risks: {
     daBridge: EthereumDaBridgeRisks.Enshrined,

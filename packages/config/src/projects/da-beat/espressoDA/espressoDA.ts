@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
+import { linkByDA } from '../utils/link-by-da'
 import { hotshot } from './hotshot'
 
 export const espressoDA: DaProject = {
@@ -79,7 +80,10 @@ After block finalization in HotShot, the relayer propagates the commitment and q
 Users can retrieve data by querying any of Espresso DA's layers, though the VID layer is slower due to the reconstruction of erasure-coded shares. L2s can also use a verifyInclusion function on an L1 light client smart contract to confirm a blob's inclusion in the Espresso DA HotShot chain.
  `,
     },
-    usedWithoutBridgeIn: [],
+    usedWithoutBridgeIn: linkByDA({
+      layer: ProjectId('espressoDA'),
+      bridge: undefined,
+    }),
     bridges: [hotshot],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,

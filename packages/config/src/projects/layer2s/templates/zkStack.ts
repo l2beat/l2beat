@@ -12,14 +12,13 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityLayer,
+  type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../../common'
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -54,8 +53,7 @@ import {
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
-  layer: DataAvailabilityLayer
-  fallback?: DataAvailabilityLayer
+  layer: DaProjectTableValue
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
@@ -292,20 +290,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability:
-      daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.layer, daProvider.fallback]
-              : [daProvider.layer],
-            bridge: daProvider.bridge,
-            mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-          })
-        : addSentimentToDataAvailability({
-            layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-          }),
+    dataAvailability: {
+      layer: daProvider?.layer ?? DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
+      bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.STATE_DIFFS_COMPRESSED,
+    },
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,

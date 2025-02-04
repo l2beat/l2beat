@@ -116,8 +116,8 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: (layer) => layer === 'Celestia',
-      bridge: (bridge) => bridge === 'None',
+      layer: ProjectId('celestia'),
+      bridge: undefined,
     }),
     bridges: [blobstream],
     /*

@@ -152,7 +152,7 @@ export const hop: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Hop Multisig',
           'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
         ),

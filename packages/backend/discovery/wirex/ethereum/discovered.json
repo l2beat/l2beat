@@ -1,7 +1,7 @@
 {
   "name": "wirex",
   "chain": "ethereum",
-  "blockNumber": 21744311,
+  "blockNumber": 21766767,
   "configHash": "0x5e4fefef153889abe97a4682d238cb5fc5d527b118a3b0cc817efdbd52b011c4",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
@@ -150,7 +150,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xbe69032a00fbbb6bd6005e333efb4b1373740d4cbc19070157fa62388c1ca35c",
+        "lastAccInputHash": "0x56fb12d42018a564ff91b7744464bf13f8c5247b94701d4dd2820fd77415b8ac",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",

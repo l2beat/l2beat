@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7277696948f50c3c681e447f10b3f9a949dfe593
+Generated with discovered.json: 0xd294fbd6e769de9056e40610ba279d1fd676df80
 
-# Diff at Mon, 03 Feb 2025 15:55:13 GMT:
+# Diff at Tue, 04 Feb 2025 12:33:45 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 54882487
-- current block number: 54882487
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 55181277
+- current block number: 55181277
 
 ## Description
 
@@ -14,7 +14,7 @@ Rename 'configure' permission to 'interact'
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 54882487 (main branch discovery), not current.
+discovery. Values are for block 55181277 (main branch discovery), not current.
 
 ```diff
     contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
@@ -130,6 +130,29 @@ discovery. Values are for block 54882487 (main branch discovery), not current.
       issuedPermissions.0.permission:
 -        "configure"
 +        "interact"
+    }
+```
+
+Generated with discovered.json: 0x60eec5b53262d973f06f6ca4f1d13d7a1bc5c4b9
+
+# Diff at Mon, 03 Feb 2025 15:07:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f48b05175a82517aba519a7273477b15b3c1ad94 block: 54882487
+- current block number: 55181277
+
+## Description
+
+[AAVE DAO Airdrop Claim Extension Request](https://www.tally.xyz/gov/zksync/proposal/57908166665921469155508302947951953966033148387652385473031300159207145997268?govId=eip155:324:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) TPP queued.
+
+## Watched changes
+
+```diff
+    contract ZkTokenGovernor (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalQueuedCount:
+-        1
++        2
     }
 ```
 

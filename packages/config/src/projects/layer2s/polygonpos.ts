@@ -5,12 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import {
-  CONTRACTS,
-  DA_MODES,
-  NUGGETS,
-  addSentimentToDataAvailability,
-} from '../../common'
+import { CONTRACTS, DA_MODES, NUGGETS } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -125,8 +120,8 @@ export const polygonpos: Layer2 = {
       startBlock: 5000000,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.POLYGON_POS_DA],
+  dataAvailability: {
+    layer: DA_LAYERS.POLYGON_POS_DA,
     bridge: {
       value: `${currentValidatorSetSize} validators`,
       sentiment: 'warning',
@@ -134,7 +129,7 @@ export const polygonpos: Layer2 = {
         'The bridge verifies that at least 2/3+1 of the Polygon PoS stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set.',
     },
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_POS,
@@ -261,7 +256,7 @@ export const polygonpos: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'PolygonMultisig',
           'Can propose and execute code upgrades.',
         ),

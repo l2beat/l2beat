@@ -18,7 +18,22 @@
         "getConfirmations",
         "isConfirmed",
         "transactions"
-      ]
+      ],
+      "fields": {
+        "$members": {
+          "handler": {
+            "type": "array",
+            "method": "owners"
+          }
+        },
+        "$threshold": {
+          "handler": {
+            "type": "call",
+            "method": "required",
+            "args": []
+          }
+        }
+      }
     },
     "MainchainGateway": {
       "ignoreMethods": [

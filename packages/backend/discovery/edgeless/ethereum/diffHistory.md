@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x5931afd1038b376d250f3a2e23c79925a6d2da64
+Generated with discovered.json: 0xc324f77f075847a248c626b237e3cca14dfbd7be
 
-# Diff at Mon, 03 Feb 2025 15:54:34 GMT:
+# Diff at Tue, 04 Feb 2025 12:31:23 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21628441
-- current block number: 21628441
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21766618
+- current block number: 21766618
 
 ## Description
 
@@ -14,7 +14,7 @@ Rename 'configure' permission to 'interact'
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21628441 (main branch discovery), not current.
+discovery. Values are for block 21766618 (main branch discovery), not current.
 
 ```diff
     contract EdgelessMultisig (0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4) {
@@ -43,7 +43,7 @@ discovery. Values are for block 21628441 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xa13aff0390f4b1b800e2c9630baeb01a6d4a103b
+Generated with discovered.json: 0x96bd7f19550cf1d531dff6ec34a086ba323eb845
 
 # Diff at Mon, 20 Jan 2025 11:09:27 GMT:
 

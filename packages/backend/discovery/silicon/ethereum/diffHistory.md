@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb7d4a46bcd745f40ad52d0b59f8fc9f309dfcee7
+Generated with discovered.json: 0xdc07114b391580f8a86afe5c0415b090a70eeb34
 
-# Diff at Mon, 03 Feb 2025 15:54:59 GMT:
+# Diff at Tue, 04 Feb 2025 12:32:36 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21744175
-- current block number: 21744175
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21766766
+- current block number: 21766766
 
 ## Description
 
@@ -14,7 +14,7 @@ Rename 'configure' permission to 'interact'
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21744175 (main branch discovery), not current.
+discovery. Values are for block 21766766 (main branch discovery), not current.
 
 ```diff
     contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A) {
@@ -37,7 +37,7 @@ discovery. Values are for block 21744175 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xeafbeb5c29eb11b7dd5366982fc5c1dbf22e8117
+Generated with discovered.json: 0xbd2cc4f95d141fd4e51c89301c7ab06a492e7f5b
 
 # Diff at Mon, 03 Feb 2025 09:09:40 GMT:
 

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0acf43b60237b7e2b7ac61e25188df2e4e7923ec
+Generated with discovered.json: 0x6828727d31292c83ff8408bdddc8c5a3db5a941a
 
-# Diff at Mon, 03 Feb 2025 15:54:38 GMT:
+# Diff at Tue, 04 Feb 2025 12:31:32 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@e24967bf68842528cfcbf442cdd095d0011ba02d block: 21736827
-- current block number: 21736827
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21766583
+- current block number: 21766583
 
 ## Description
 
@@ -14,7 +14,7 @@ Rename 'configure' permission to 'interact'
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21736827 (main branch discovery), not current.
+discovery. Values are for block 21766583 (main branch discovery), not current.
 
 ```diff
     contract GrvtChainAdminMultisig (0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5) {
@@ -51,7 +51,7 @@ discovery. Values are for block 21736827 (main branch discovery), not current.
 
 ```diff
     contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
-    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
       receivedPermissions.0.permission:
 -        "configure"
 +        "interact"
@@ -103,6 +103,49 @@ discovery. Values are for block 21736827 (main branch discovery), not current.
       receivedPermissions.0.permission:
 -        "configure"
 +        "interact"
+    }
+```
+
+Generated with discovered.json: 0x5e7644ba5c5277c6b612c7bfcf928d88f1fa0d3d
+
+# Diff at Mon, 03 Feb 2025 14:33:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f48b05175a82517aba519a7273477b15b3c1ad94 block: 21736827
+- current block number: 21766583
+
+## Description
+
+[ZIP-002] 'Reduce the execution delay from 21 hours to 3 hours' executed.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      description:
+-        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h."
++        "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h."
+      values.executionDelay:
+-        75600
++        10800
+      values.executionDelay_fmt:
+-        "21h"
++        "3h"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736827 (main branch discovery), not current.
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.priorityQueueFrontOperation:
+-        {"canonicalTxHash":"0x89614d1f53e5c4a5098d1b40b2fcf90dd3c43651d7197412f44ba5b1c992cf0e","expirationTimestamp":1738163327,"layer2Tip":0}
     }
 ```
 

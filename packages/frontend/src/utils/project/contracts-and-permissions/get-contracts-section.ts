@@ -18,10 +18,7 @@ import type { DaSolution } from '~/server/features/scaling/project/get-scaling-p
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import type {
-  TechnologyContract,
-  TechnologyContractAddress,
-} from '../../../components/projects/sections/contract-entry'
+import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getChain } from './get-chain'
@@ -166,7 +163,6 @@ function makeTechnologyContract(
   const getAddress = (opts: {
     address: EthereumAddress
     name?: string
-    isAdmin?: boolean
   }) => {
     const name =
       opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
@@ -176,10 +172,36 @@ function makeTechnologyContract(
       address: opts.address.toString(),
       verificationStatus: toVerificationStatus(!isUnverified),
       href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
-      isAdmin: !!opts.isAdmin,
     }
   }
-  const addresses = getAddresses(item, getAddress)
+
+  const addresses = [getAddress({ address: item.address })]
+
+  const implementations = item.upgradeability?.implementations ?? []
+  for (const [i, implementation] of implementations.entries()) {
+    const upgradable = !item.upgradeability?.immutable
+    const upgradeableText = upgradable ? ' (Upgradable)' : ''
+    addresses.push(
+      getAddress({
+        name:
+          implementations.length > 1
+            ? `Implementation #${i + 1}${upgradeableText}`
+            : `Implementation${upgradeableText}`,
+        address: implementation,
+      }),
+    )
+  }
+
+  const adminAddresses = item.upgradeability?.admins ?? []
+  const admins = []
+  for (const [i, admin] of adminAddresses.entries()) {
+    admins.push(
+      getAddress({
+        name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
+        address: admin,
+      }),
+    )
+  }
 
   let description = item.description
 
@@ -244,6 +266,7 @@ function makeTechnologyContract(
   return {
     name: item.name,
     addresses,
+    admins,
     description,
     usedInProjects,
     references: concat(item.references ?? [], additionalReferences),
@@ -254,45 +277,6 @@ function makeTechnologyContract(
     upgradeDelay: item.upgradeDelay,
     upgradeConsiderations: item.upgradeConsiderations,
   }
-}
-
-function getAddresses(
-  contract: ProjectContract,
-  getAddress: (opts: {
-    address: EthereumAddress
-    name?: string
-    isAdmin?: boolean
-  }) => TechnologyContractAddress,
-): TechnologyContractAddress[] {
-  const addresses = [getAddress({ address: contract.address })]
-
-  const implementations = contract.upgradeability?.implementations ?? []
-  for (const [i, implementation] of implementations.entries()) {
-    const upgradable = !contract.upgradeability?.immutable
-    const upgradeableText = upgradable ? ' (Upgradable)' : ''
-    addresses.push(
-      getAddress({
-        name:
-          implementations.length > 1
-            ? `Implementation #${i + 1}${upgradeableText}`
-            : `Implementation${upgradeableText}`,
-        address: implementation,
-      }),
-    )
-  }
-
-  const admins = contract.upgradeability?.admins ?? []
-  for (const [i, admin] of admins.entries()) {
-    addresses.push(
-      getAddress({
-        name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
-        address: admin,
-        isAdmin: true,
-      }),
-    )
-  }
-
-  return addresses
 }
 
 function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {

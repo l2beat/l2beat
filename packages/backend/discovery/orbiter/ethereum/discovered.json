@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0xef545068d4bc7fd9b8ee29f6a6ddd3a8ca491fb97b1631243bbc2be3c994bc28",
+  "configHash": "0x9d28a1ec30beff12a00b795eaa7452063e439aefa547c1c3e202d61b3e3e0cb2",
   "contracts": [
     {
       "name": "OBSource",
@@ -14,7 +14,12 @@
       "values": { "$immutable": true }
     }
   ],
-  "eoas": [],
+  "eoas": [
+    { "address": "0x095D2918B03b2e86D68551DCF11302121fb626c9" },
+    { "address": "0x41d3D33156aE7c62c094AAe2995003aE63f587B3" },
+    { "address": "0x80C67432656d59144cEFf962E8fAF8926599bCF8" },
+    { "address": "0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC" }
+  ],
   "abis": {
     "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc": [
       "function transfer(address _to, bytes _ext) payable",
