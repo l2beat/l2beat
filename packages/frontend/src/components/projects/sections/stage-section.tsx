@@ -51,13 +51,13 @@ export function StageSection({
         isUnderReview
         includeChildrenIfUnderReview
       >
-        <div className="mb-6 font-medium">
+        <div className="mb-6 flex flex-wrap items-center font-medium">
           <Image
             src={icon}
             alt={name}
             width={18}
             height={18}
-            className="relative -top-0.5 mr-2 inline-block"
+            className="relative -top-0.5 mr-2 inline-block size-[18px]"
           />
           {name} is currently
           <StageBadge

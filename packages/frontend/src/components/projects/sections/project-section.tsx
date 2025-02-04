@@ -17,7 +17,10 @@ export interface ExtendedProjectSectionProps {
   as?: 'section' | 'div'
 }
 
-export function ProjectSection(props: ExtendedProjectSectionProps) {
+export function ProjectSection({
+  includeChildrenIfUnderReview = true,
+  ...props
+}: ExtendedProjectSectionProps) {
   const Component = props.as ?? 'section'
   return (
     <Component
@@ -36,7 +39,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
         className="mb-6"
       />
       {props.isUnderReview ? (
-        props.includeChildrenIfUnderReview ? (
+        includeChildrenIfUnderReview ? (
           <>
             <UnderReviewCallout className="mb-6" />
             {props.children}

@@ -194,6 +194,7 @@ export async function getL3ProjectDetails({
         id: 'risk-summary',
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
+        isUnderReview: project.isUnderReview,
       },
     })
   }

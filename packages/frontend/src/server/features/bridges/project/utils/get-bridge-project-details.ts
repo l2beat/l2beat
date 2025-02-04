@@ -1,5 +1,5 @@
 import type { Bridge } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
@@ -107,6 +107,7 @@ export async function getBridgeProjectDetails(
         id: 'risk-analysis',
         title: 'Risk summary',
         ...riskSummary,
+        isUnderReview: bridge.isUnderReview,
       },
     })
   }

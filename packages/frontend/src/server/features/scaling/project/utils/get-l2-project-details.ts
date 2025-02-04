@@ -1,5 +1,5 @@
 import type { Layer2 } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -188,6 +188,7 @@ export async function getL2ProjectDetails({
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
+        isUnderReview: project.isUnderReview,
         ...riskSummary,
       },
     })
@@ -264,7 +265,8 @@ export async function getL2ProjectDetails({
       props: {
         id: 'state-derivation',
         title: 'State derivation',
-        isUnderReview: project.isUnderReview,
+        isUnderReview:
+          !!project.isUnderReview || !!project.stateDerivation.isUnderReview,
         ...project.stateDerivation,
       },
     })
@@ -281,7 +283,8 @@ export async function getL2ProjectDetails({
           'state-validation',
           project.display.stateValidationImage ?? project.display.slug,
         ),
-        isUnderReview: project.isUnderReview,
+        isUnderReview:
+          !!project.isUnderReview || !!project.stateValidation.isUnderReview,
       },
     })
   }
@@ -343,7 +346,6 @@ export async function getL2ProjectDetails({
         },
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,
-        includeChildrenIfUnderReview: true,
       },
     })
   }
