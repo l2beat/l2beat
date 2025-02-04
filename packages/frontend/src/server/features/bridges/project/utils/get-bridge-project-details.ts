@@ -19,8 +19,8 @@ export async function getBridgeProjectDetails(
   const permissionsSection = bridge.permissions
     ? getPermissionsSection(
         {
+          type: 'bridge',
           id: bridge.id,
-          type: bridge.type,
           isUnderReview: !!bridge.isUnderReview,
           permissions: bridge.permissions,
         },
@@ -30,8 +30,8 @@ export async function getBridgeProjectDetails(
   const contractsSection = bridge.contracts
     ? getContractsSection(
         {
+          type: 'bridge',
           id: bridge.id,
-          type: bridge.type,
           isVerified,
           slug: bridge.display.slug,
           contracts: bridge.contracts,

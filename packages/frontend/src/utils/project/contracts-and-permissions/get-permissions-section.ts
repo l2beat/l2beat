@@ -1,8 +1,4 @@
 import type {
-  Bridge,
-  DaProject,
-  Layer2,
-  Layer3,
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
@@ -23,14 +19,13 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
+  type: 'layer2' | 'layer3' | 'bridge'
   id: string
   permissions: Record<string, ProjectPermissions> | 'UnderReview'
   daSolution?: DaSolution
   isUnderReview: boolean
-} & (
-  | { type: (Layer2 | Bridge | DaProject)['type'] }
-  | { type: Layer3['type']; hostChain: string }
-)
+  hostChain?: string
+}
 
 type PermissionSection = Omit<
   PermissionsSectionProps,

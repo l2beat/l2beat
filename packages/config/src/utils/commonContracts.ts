@@ -19,9 +19,7 @@ import type {
 
 type CommonProject = Layer2 | Layer3 | Bridge
 
-type Params =
-  | { type: (Layer2 | Bridge)['type'] }
-  | { type: Layer3['type']; hostChain: string }
+type Params = { type: 'layer2' | 'layer3' | 'bridge'; hostChain?: string }
 
 export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {

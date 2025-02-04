@@ -1,8 +1,4 @@
 import type {
-  Bridge,
-  DaProject,
-  Layer2,
-  Layer3,
   ProjectContract,
   ProjectContracts,
   ProjectEscrow,
@@ -29,6 +25,7 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
+  type: 'layer2' | 'layer3' | 'bridge'
   id?: string
   slug: string
   isUnderReview?: boolean
@@ -37,15 +34,8 @@ type ProjectParams = {
   contracts: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
-} & (
-  | {
-      type: (Layer2 | Bridge | DaProject)['type']
-    }
-  | {
-      type: Layer3['type']
-      hostChain: string
-    }
-)
+  hostChain?: string
+}
 
 type ContractsSection = Omit<
   ContractsSectionProps,
@@ -132,7 +122,7 @@ export function getContractsSection(
   }
 
   const chainName =
-    projectParams.type === 'layer3'
+    projectParams.type === 'layer3' && projectParams.hostChain
       ? getL3HostChain(projectParams.hostChain)
       : 'Ethereum'
 

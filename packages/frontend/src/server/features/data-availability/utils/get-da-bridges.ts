@@ -1,8 +1,8 @@
-import type { DaBridge, DaProject } from '@l2beat/config'
+import type { DaBridge, Project } from '@l2beat/config'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-export function getDaBridges(project: DaProject) {
-  const bridges = [...project.daLayer.bridges]
+export function getDaBridges(project: Project<'daLayer' | 'daBridges'>) {
+  const bridges = [...project.daBridges]
   if (project.daLayer.usedWithoutBridgeIn.length > 0) {
     const noBridge: DaBridge = {
       id: ProjectId('unused-no-bridge'),
