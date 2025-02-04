@@ -73,6 +73,24 @@ export const rari: Layer3 = orbitStackL3({
     blockscoutV2ApiUrl: 'https://rari.calderaexplorer.xyz/api/v2',
     minTimestampForTvl: new UnixTime(1705716145),
   },
+  nonTemplateTechnology: {
+    sequencing: {
+      name: 'Espresso TEE sequencer',
+      description:
+        `Rari integrates with Espresso sequencing, 
+        In addition to providing regular pre-confirmations, the sequencer publishes blocks to the Espresso Network.
+        The integration expects the transaction batch poster to run inside a Trusted Execution Environment (TEE), ensuring waits for an Espresso Network attestation before publishing the batch to the parent chain.
+        The sequencer inbox contract was updated so that the data posting function also includes an attestation as input, a "quote", that is verified onchain for each batch tx by the EspressoTEEVerifier. 
+        The verifier checks the quote signature originates from inside the TEE and reverts if unsuccessful.`,
+      references: [
+        {
+          url: 'https://x.com/EspressoSys/status/1884970716199895376',
+          title: 'RARI integrates Espresso sequencer',
+        },
+      ],
+      risks: [],
+    },
+  },
   milestones: [
     {
       title: 'RARI Chain Mainnet Launch',
@@ -85,14 +103,16 @@ export const rari: Layer3 = orbitStackL3({
       title: 'RARI integrates Celestia Blobstream',
       url: 'https://x.com/RariChain/status/1871209215324496336',
       date: '2024-12-19T00:00:00.00Z',
-      description: 'RARI is the first chain to integrate Celestia Blobstream DA bridge.',
+      description:
+        'RARI is the first chain to integrate Celestia Blobstream DA bridge.',
       type: 'general',
     },
     {
       title: 'RARI integrates Espresso sequencer',
       url: 'https://x.com/EspressoSys/status/1884970716199895376',
       date: '2025-01-30T00:00:00.00Z',
-      description: 'RARI is the first chain to integrate Espresso TEE sequencer.',
+      description:
+        'RARI is the first chain to integrate Espresso TEE sequencer.',
       type: 'general',
     },
   ],

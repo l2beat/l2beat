@@ -37,7 +37,9 @@ const abi = new utils.Interface([
 
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
-const addSequencerBatchEspressoSigHash = abi.getSighash(addSequencerBatchEspresso)
+const addSequencerBatchEspressoSigHash = abi.getSighash(
+  addSequencerBatchEspresso,
+)
 
 export class ArbitrumSequencerVersionHandler implements Handler {
   readonly dependencies: string[] = []
