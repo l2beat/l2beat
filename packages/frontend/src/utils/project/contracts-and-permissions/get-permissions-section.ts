@@ -13,7 +13,6 @@ import type {
 } from '../../../components/projects/sections/contract-entry'
 import type { UsedInProject } from '../../../components/projects/sections/permissions/used-in-project'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
-import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
@@ -180,7 +179,7 @@ function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
 ): TechnologyContract[] {
-  const chain = getChain(projectParams, permission)
+  const chain = permission.chain
   const etherscanUrl = getExplorerUrl(chain)
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
@@ -239,7 +238,7 @@ function toTechnologyContract(
       addresses,
       admins: [],
       usedInProjects,
-      chain,
+      chain: permission.chain,
       description: permission.description,
       participants,
       references: permission.references ?? [],
