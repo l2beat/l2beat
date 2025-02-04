@@ -236,9 +236,9 @@ describe(ProjectDiscovery.name, () => {
                 '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
               ),
               type: 'Contract',
+              isVerified: true,
             },
           ],
-          isVerified: true,
           description:
             'Admin of SystemConfig, L2OutputOracle, L1StandardBridge.',
           name: 'ProxyAdmin',
@@ -271,12 +271,14 @@ describe(ProjectDiscovery.name, () => {
         {
           address: contractStub.address,
           type: 'Contract',
+          isVerified: true,
         },
         {
           address: EthereumAddress(
             '0x000000000000000000000000000000000000Bb22',
           ),
           type: 'EOA',
+          isVerified: true,
         },
       ])
     })

@@ -203,7 +203,7 @@ function toTechnologyContract(
           ? `#${permissionedName.name}`
           : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
-        verificationStatus: toVerificationStatus(permission.isVerified),
+        verificationStatus: toVerificationStatus(account.isVerified),
       }
     },
   )

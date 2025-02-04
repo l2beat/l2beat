@@ -289,11 +289,10 @@ export interface ProjectPermission {
   participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
-  /** Indicates if all accounts in this permission are verified */
-  isVerified: boolean
 }
 
 export interface ProjectPermissionedAccount {
+  isVerified: boolean
   address: EthereumAddress
   type: 'EOA' | 'Contract'
 }

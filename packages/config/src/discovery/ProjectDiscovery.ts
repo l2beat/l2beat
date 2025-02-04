@@ -210,7 +210,6 @@ export class ProjectDiscovery {
             accounts: this.formatPermissionedAccounts([contract.address]),
             description,
             chain: this.chain,
-            isVerified: isEntryVerified(entry),
           }
         }
       })
@@ -412,6 +411,7 @@ export class ProjectDiscovery {
       description: descriptionWithContractNames,
       accounts: [
         {
+          isVerified: isEntryVerified(contract),
           address: contract.address,
           type: 'Contract',
         },
@@ -419,7 +419,6 @@ export class ProjectDiscovery {
       chain: this.chain,
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
-      isVerified: isEntryVerified(contract),
     }
   }
 
@@ -554,8 +553,11 @@ export class ProjectDiscovery {
       const address = EthereumAddress(account)
       const isEOA = this.isEOA(address)
       const type = isEOA ? 'EOA' : 'Contract'
+      const entry = this.getEntryByAddress(address)
+      assert(isNonNullable(entry), `Could not find ${address} in discovery`)
+      const isVerified = isEntryVerified(entry)
 
-      result.push({ address: address, type })
+      result.push({ address: address, type, isVerified })
     }
 
     return result
@@ -590,11 +592,6 @@ export class ProjectDiscovery {
       description,
       chain: this.chain,
       ...(opts ?? {}),
-      isVerified: accounts.every((a) => {
-        const entry = this.getEntryByAddress(a.address)
-        assert(isNonNullable(entry), `Entry not found in the discovery`)
-        return isEntryVerified(entry)
-      }),
     }
   }
 
@@ -630,6 +627,7 @@ export class ProjectDiscovery {
       name: contract.name,
       accounts: [
         {
+          isVerified: isEntryVerified(contract),
           address: contract.address,
           type: 'Contract',
         },
@@ -640,7 +638,6 @@ export class ProjectDiscovery {
         url: x.href,
       })),
       description,
-      isVerified: isEntryVerified(contract),
     }
   }
 
@@ -652,6 +649,7 @@ export class ProjectDiscovery {
       name: eoa.name ?? eoa.address,
       accounts: [
         {
+          isVerified: isEntryVerified(eoa),
           address: eoa.address,
           type: 'EOA',
         },
@@ -662,7 +660,6 @@ export class ProjectDiscovery {
         url: x.href,
       })),
       description,
-      isVerified: isEntryVerified(eoa),
     }
   }
 
@@ -900,11 +897,6 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
-        isVerified: addresses.every((a) => {
-          const entry = this.getEntryByAddress(a)
-          assert(isNonNullable(entry), `Entry not found in the discovery`)
-          return isEntryVerified(entry)
-        }),
       })
     }
     return result
@@ -1139,7 +1131,6 @@ export class ProjectDiscovery {
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
         description,
-        isVerified: isEntryVerified(eoa),
       })
     }
 

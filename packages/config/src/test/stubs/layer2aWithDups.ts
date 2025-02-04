@@ -103,9 +103,9 @@ export const layer2aWithDups: Layer2 = {
       actors: [
         {
           name: 'Layer2a MultiSig',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               ),
@@ -116,9 +116,9 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate Layer2a MultiSig',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A',
               ),
@@ -129,9 +129,9 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate CanonicalTransactionChain',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
               ),
@@ -142,51 +142,58 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'MultiSig participants',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x3041BA32f451F5850c147805F5521AC206421623',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x3bC453E5b3c941D1baD8F25E512772a50eE20AC1',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x6709Ef8aDCEA465f673dEA5b1a774a79BBCb4EAa',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x7904c69A27026A9Ff2CC2C8f5A917c018a46C613',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x7cB07FE039a92B3D784f284D919503A381BEC54f',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa',
               ),
               type: 'EOA',
             },
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0xA902A27a7631D502E3Ec17fc5d4c3e0861752c94',
               ),
@@ -197,9 +204,9 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Sequencer',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x6887246668a3b87F54DeB3b94Ba47a6f63F32985',
               ),
@@ -210,9 +217,9 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'State Root Proposer',
-          isVerified: true,
           accounts: [
             {
+              isVerified: true,
               address: EthereumAddress(
                 '0x473300df21D047806A082244b417f96b32f13A33',
               ),
