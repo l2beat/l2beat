@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe442a28c03385d20bc0d8343087163cb0757d8a5
 
 ## Description
 
-Upgrade PolygonRollupManager to the version "pessimistic".
+Upgrade PolygonRollupManager to the version "pessimistic" (yes this is the version string).
 
 Reduce timelock delay from 10d to 3d.
 
@@ -19,12 +19,12 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
 ### PolygonRollupManager
 
 - add `rollupIDToRollupDataV2()` in addition to the old v1 function to accomodate the new members of the RollupData struct:
-  - VerifierType rollupVerifierType: a rename of the old rollupCompatibilityID
-  - bytes32 lastPessimisticRoot: 
-  - bytes32 programVKey: 
-- remove pending state (consolidatePendingState)
-- remove `verifyBatches()`: leaves only the trusted aggregator version
-- `verifyPessimisticTrustedAggregator()`: verifies pessimistic proof
+  - VerifierType rollupVerifierType: a rename of the old rollupCompatibilityID, `StateTransition` or `Pessimistic`
+  - bytes32 lastPessimisticRoot
+  - bytes32 programVKey: SP1 program vKey 
+- remove `verifyBatches()` after timeout of proposer being unlive: leaves only the trusted aggregator version (risk rosette red for prop fail)
+- remove pending state (and consolidatePendingState) since there is no permissionless proposer/prover anymore (this also removes the `proveNonDeterministicState` entry into emergency state)
+- `verifyPessimisticTrustedAggregator()`: verifies pessimistic proof, equivalent to `verifyBatchesTrustedAggregator()` for the legacy projects
 
 ## Watched changes
 
