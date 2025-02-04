@@ -150,43 +150,46 @@ export const omni: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ForeignAMB', {
-        description:
-          'Arbitrary Message Bridge validated by the BridgeValidators.',
-        ...upgrades,
-        pausable,
-      }),
-      discovery.getContractDetails('MultiTokenMediator', {
-        description: 'Mediator contract and escrow.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('BridgeValidators', {
-        description: `Bridge validators contract, acts as a ${validatorsString} multisig.`,
-        ...upgrades,
-      }),
-      discovery.getContractDetails('AAVEInterestERC20', {
-        description: 'Contract that was used to invest token deposits to Aave.',
-        ...upgrades,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ForeignAMB', {
+          description:
+            'Arbitrary Message Bridge validated by the BridgeValidators.',
+          ...upgrades,
+          pausable,
+        }),
+        discovery.getContractDetails('MultiTokenMediator', {
+          description: 'Mediator contract and escrow.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('BridgeValidators', {
+          description: `Bridge validators contract, acts as a ${validatorsString} multisig.`,
+          ...upgrades,
+        }),
+        discovery.getContractDetails('AAVEInterestERC20', {
+          description:
+            'Contract that was used to invest token deposits to Aave.',
+          ...upgrades,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OmniBridgeGovernance',
           'Can update the contracts and parameters of the bridge.',
         ),
-        {
-          name: 'Bridge validators',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Bridge validators',
+          discovery.getPermissionedAccounts(
             'BridgeValidators',
             'validatorList',
           ),
-          description: 'List of actors that can validate incoming messages.',
-        },
+          'List of actors that can validate incoming messages.',
+        ),
       ],
     },
   },

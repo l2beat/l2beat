@@ -2,12 +2,14 @@ import { isArray, sum } from 'lodash'
 
 import {
   EIP712_methods,
+  ERC20ROUTER_methods,
   ERC4337_methods,
   MULTICALLV3_methods,
   type Method,
   type Operation,
   SAFE_methods,
   isEip712,
+  isErc20Router,
   isErc4337,
   isGnosisSafe,
   isMulticallv3,
@@ -26,12 +28,14 @@ export class RpcUopsAnalyzer {
     const methods = ERC4337_methods.concat(SAFE_methods)
       .concat(EIP712_methods)
       .concat(MULTICALLV3_methods)
+      .concat(ERC20ROUTER_methods)
 
     if (
       isErc4337(tx) ||
       isGnosisSafe(tx) ||
       isEip712(tx) ||
-      isMulticallv3(tx)
+      isMulticallv3(tx) ||
+      isErc20Router(tx)
     ) {
       assert(
         tx.data && !isArray(tx.data),

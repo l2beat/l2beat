@@ -1,6 +1,7 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   BlobClient,
+  BlobScanClient,
   type BlockClient,
   BlockIndexerClient,
   CoingeckoClient,
@@ -23,6 +24,7 @@ export interface Clients {
   degate: LoopringClient | undefined
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
+  blobscan: BlobScanClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
 }
@@ -35,6 +37,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let degateClient: LoopringClient | undefined
   let ethereumClient: RpcClient | undefined
   let blobClient: BlobClient | undefined
+  let blobscanClient: BlobScanClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -145,6 +148,18 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
+  if (config.da) {
+    blobscanClient = new BlobScanClient({
+      callsPerMinute: config.da.blobscan.callsPerMinute,
+      baseUrl: config.da.blobscan.baseUrl,
+      timeout: config.da.blobscan.timeout,
+      retryStrategy: 'UNRELIABLE',
+      sourceName: 'blobscan',
+      logger,
+      http,
+    })
+  }
+
   const coingeckoClient = new CoingeckoClient({
     sourceName: 'coingeckoApi',
     apiKey: config.coingeckoApiKey,
@@ -187,6 +202,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     degate: degateClient,
     coingecko: coingeckoClient,
     blob: blobClient,
+    blobscan: blobscanClient,
     getStarknetClient,
     getRpcClient,
   }

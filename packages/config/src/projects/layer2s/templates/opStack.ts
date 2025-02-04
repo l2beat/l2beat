@@ -13,14 +13,13 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityLayer,
+  type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -41,17 +40,17 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectContract,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectPermission,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCapability,
   ScalingProjectCategory,
-  ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -66,10 +65,15 @@ import { Badge, type BadgeId } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
+  generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-  generateDiscoveryDrivenSections,
 } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergeContracts,
+  safeGetImplementation,
+} from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -91,7 +95,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
+  daLayer: DaProjectTableValue = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -107,8 +111,7 @@ export function DACHALLENGES_DA_PROVIDER(
 }
 
 interface DAProvider {
-  layer: DataAvailabilityLayer
-  fallback?: DataAvailabilityLayer
+  layer: DaProjectTableValue
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
@@ -144,9 +147,8 @@ interface OpStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
+  nonTemplatePermissions?: ProjectPermission[]
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -226,15 +228,11 @@ function opStackCommon(
     ? [Badge.Stack.OPStack, daBadge]
     : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
-  const nativeDA =
-    incomingNativeDA ??
-    addSentimentToDataAvailability({
-      layers: [
-        usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-      ],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+  const nativeDA = incomingNativeDA ?? {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
 
   const portal = getOptimismPortal(templateVars)
   const l1StandardBridgeEscrow =
@@ -271,14 +269,6 @@ function opStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
-  const discoveryDrivenContracts = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
@@ -361,14 +351,23 @@ function opStackCommon(
             ],
           },
         },
-    contracts: discoveryDrivenContracts ?? {
-      addresses: [
-        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-        ...(templateVars.nonTemplateContracts ?? []),
-      ],
-      risks: nativeContractRisks,
-      nativeAddresses: templateVars.nonTemplateNativeContracts,
-    },
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+          risks: nativeContractRisks,
+        }
+      : {
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.getOpStackContractDetails(
+                  upgradeability,
+                ),
+            },
+            templateVars.nonTemplateContracts ?? {},
+          ),
+          risks: nativeContractRisks,
+        },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
@@ -839,6 +838,7 @@ function getTechnology(
         ],
       },
     ],
+    sequencing: templateVars.nonTemplateTechnology?.sequencing,
   }
 }
 
@@ -1086,13 +1086,11 @@ function decideDA(
   nativeDA: ProjectDataAvailability | undefined,
 ): ProjectDataAvailability | undefined {
   if (daProvider !== undefined) {
-    return addSentimentToDataAvailability({
-      layers: daProvider.fallback
-        ? [daProvider.layer, daProvider.fallback]
-        : [daProvider.layer],
+    return {
+      layer: daProvider.layer,
       bridge: daProvider.bridge,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+    }
   }
 
   return nativeDA

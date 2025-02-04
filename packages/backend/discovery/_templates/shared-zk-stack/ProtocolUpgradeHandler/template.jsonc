@@ -12,7 +12,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "extend the legal veto period, approve a protocol upgrade."
           }
         ]
@@ -22,7 +22,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "soft freeze, hard freeze, approve a protocol upgrade."
           }
         ]
@@ -32,7 +32,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "start (queue) upgrades."
           }
         ]

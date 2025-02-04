@@ -1,10 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import {
-  badgesCompareFn,
-  getContractsVerificationStatuses,
-  isVerified,
-  layer2s,
-} from '@l2beat/config'
+import { badgesCompareFn, isVerified, layer2s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -27,12 +22,10 @@ export type ScalingProjectEntry = Awaited<
 >
 
 export async function getScalingProjectEntry(project: ScalingProject) {
-  const [contractsVerificationStatuses, projectsChangeReport, header] =
-    await Promise.all([
-      getContractsVerificationStatuses(project),
-      getProjectsChangeReport(),
-      getHeader(project),
-    ])
+  const [projectsChangeReport, header] = await Promise.all([
+    getProjectsChangeReport(),
+    getHeader(project),
+  ])
 
   const changes = projectsChangeReport.getChanges(project.id)
 
@@ -60,7 +53,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     const projectDetails = await getL2ProjectDetails({
       project,
       isVerified: isProjectVerified,
-      contractsVerificationStatuses,
       projectsChangeReport,
       rosetteValues,
       daSolution,
@@ -98,7 +90,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     rosetteValues,
     isHostChainVerified,
     projectsChangeReport,
-    contractsVerificationStatuses,
     combinedRosetteValues: stackedRosetteValues,
     hostChainRosetteValues: baseLayerRosetteValues,
   })

@@ -1,29 +1,39 @@
 {
   "name": "lumia",
   "chain": "ethereum",
-  "blockNumber": 21738270,
-  "configHash": "0x0e024ee17c6f84c9c215af9a88293a9c45c09905112dac0c7215218a505219a8",
+  "blockNumber": 21764836,
+  "configHash": "0x12e6b656d425da88faa33fa6b62a8b7c97723616832cf2197e2ba79eb3ac07ed",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
-      "name": "Verifier",
+      "name": "FflonkVerifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "displayName": "Verifier",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
+      "values": { "$immutable": true }
     },
     {
-      "name": "LumiaDAC",
+      "name": "PolygonDataCommittee",
       "address": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+      "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
@@ -57,14 +67,35 @@
         ],
         "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1
-      },
-      "derivedName": "PolygonDataCommittee"
+      }
     },
     {
-      "name": "LumiaValidium",
+      "name": "Validium",
       "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
       "unverified": true,
+      "template": "polygon-cdk/PolygonZkEVM",
       "proxyType": "EIP1967 proxy",
+      "displayName": "PolygonZkEVM",
+      "description": "The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x258862dec9a77db57b398c441390783293E2a7A1",
+          "description": "sole address that can force batches.",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1719499031,
       "values": {
@@ -97,7 +128,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x36467cad73e3cb0b0ce4767349cbb32e1bc832a5f5535faa2d650daaccafe080",
+        "lastAccInputHash": "0x81e70422df4dd75b526e4cf6da4f00dfb7ead5248145b42ff3e3c2f36efd4288",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "prism",
@@ -111,16 +142,21 @@
         "trustedSequencer": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
         "trustedSequencerURL": "https://prism-sequencer.eu-north-2.gateway.fm/"
       },
+      "fieldMeta": {
+        "forceBatchAddress": {
+          "severity": "HIGH",
+          "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
+        }
+      },
       "derivedName": "PolygonValidiumStorageMigration"
     },
     {
-      "name": "DACProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -131,15 +167,41 @@
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x258862dec9a77db57b398c441390783293E2a7A1" },
-    { "address": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F" },
-    { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
+    {
+      "address": "0x258862dec9a77db57b398c441390783293E2a7A1",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
+        {
+          "permission": "interact",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+          "description": "sole address that can force batches."
+        }
+      ]
+    },
+    {
+      "address": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
+        }
+      ]
+    },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "receivedPermissions": [
@@ -325,6 +387,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
+    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
+    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

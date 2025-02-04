@@ -2,7 +2,17 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "hyperliquid",
   "chain": "arbitrum",
-  "initialAddresses": ["0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7"],
+  "initialAddresses": [
+    "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x8003FD297a7Aa477B746825E7A506675bF590E91", // Cold Validator 1
+    "0x86d6AE3032732F27239075D77a1317989B52F628", // Cold Validator 2
+    "0xE346B41B47296153A21E64D6bFc857C27874C6e7", // Cold Validator 3
+    "0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede" // Cold Validator 4
+  ],
   "names": {
     "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "HyperliquidBridge"
   },

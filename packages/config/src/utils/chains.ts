@@ -3,7 +3,7 @@ import type {
   DaProject,
   Layer2,
   Layer3,
-  ScalingProjectContract,
+  ProjectContract,
 } from '../types'
 
 /**
@@ -23,7 +23,7 @@ export function getChainNames(
 
 function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
   const escrowContracts = project.config.escrows.flatMap(
-    (escrow): ScalingProjectContract[] => {
+    (escrow): ProjectContract[] => {
       if (!escrow.contract) {
         return []
       }
@@ -44,7 +44,7 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
 
   const allContracts = [
     ...escrowContracts,
-    ...(project.contracts?.addresses ?? []),
+    ...Object.values(project.contracts?.addresses ?? {}).flat(),
     ...permissions,
   ]
   const devIds = allContracts.map((c) => c.chain ?? 'ethereum')
@@ -59,12 +59,11 @@ export function getChainNamesForDA(...projects: DaProject[]): string[] {
 }
 
 function getProjectDevIdsForDA(p: DaProject): string[] {
-  const bridges = p.daLayer.bridges.filter((b) => b.type === 'OnChainBridge')
-  const addresses = bridges.flatMap((b) =>
+  const addresses = p.daLayer.bridges.flatMap((b) =>
     Object.values(b.contracts?.addresses ?? {}).flat(),
   )
 
-  const permissions = bridges.flatMap((b) => {
+  const permissions = p.daLayer.bridges.flatMap((b) => {
     const result = []
     if (b.permissions && b.permissions !== 'UnderReview') {
       const values = Object.values(b.permissions)

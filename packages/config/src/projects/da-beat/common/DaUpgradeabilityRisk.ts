@@ -14,12 +14,6 @@ const ImmutableNoSecurity: TableReadyValue = {
     'The bridge smart contract is immutable and cannot be updated. The bridge committee security is low and cannot be improved.',
 }
 
-const NoBridge: TableReadyValue = {
-  value: 'N/A',
-  sentiment: 'bad',
-  description: `Without the bridge, users cannot react in time to malicious actions by the sequencer.`,
-}
-
 const ONE_DAY_SECONDS = 24 * 60 * 60
 const THIRTY_DAYS_SECONDS = 30 * ONE_DAY_SECONDS
 const SEVEN_DAYS_SECONDS = 7 * ONE_DAY_SECONDS
@@ -99,7 +93,6 @@ function LowOrNoDelay(delaySeconds?: number): TableReadyValue {
 
 export const DaUpgradeabilityRisk = {
   Eoa,
-  NoBridge,
   Immutable,
   ImmutableNoSecurity,
   LowOrNoDelay,

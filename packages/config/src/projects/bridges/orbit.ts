@@ -169,34 +169,33 @@ export const orbit: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ETH Vault',
-        'Bridge contract, Proxy, Escrow, Governance.',
-      ),
-      discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
-      discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
-      discovery.getContractDetails('USDC Farm', 'USDC Compound Farm.'),
-      discovery.getContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ETH Vault',
+          'Bridge contract, Proxy, Escrow, Governance.',
+        ),
+        discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
+        discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
+        discovery.getContractDetails('USDC Farm', 'USDC Compound Farm.'),
+        discovery.getContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Bridge contract Governance',
-          accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
-          description: `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
-        },
-        {
-          name: 'Policy Admin',
-          accounts: [
-            discovery.getPermissionedAccount('ETH Vault', 'policyAdmin'),
-          ],
-          description:
-            'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
-        },
+        discovery.getPermissionDetails(
+          'Bridge contract Governance',
+          discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
+          `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
+        ),
+        discovery.getPermissionDetails(
+          'Policy Admin',
+          discovery.getPermissionedAccounts('ETH Vault', 'policyAdmin'),
+          'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
+        ),
       ],
     },
   },

@@ -12,7 +12,7 @@ import { UserHandlerDefinition } from '../handlers/user'
 export const BasePermissionEntries = [
   'member',
   'act',
-  'configure',
+  'interact',
   'upgrade',
 ] as const
 
@@ -27,6 +27,7 @@ export const RolePermissionEntries = [
   'validateZkStack',
   'validateBridge',
   'relay',
+  'aggregatePolygon',
 ] as const
 
 export const Permission = z.enum([

@@ -107,7 +107,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
           "description": "set and change address mappings."
         },
@@ -161,7 +161,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -357,13 +357,13 @@
       "description": "ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s).",
           "via": []
@@ -394,13 +394,13 @@
       "description": "frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
           "description": "can mint frxETH tokens.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
           "description": "can add and remove frxETH minters and set a new timelock address.",
           "via": [
@@ -411,7 +411,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can mint frxETH tokens.",
           "via": []
@@ -584,13 +584,13 @@
       "description": "Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
           "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here).",
           "via": []
@@ -598,7 +598,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
@@ -626,22 +626,22 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
           "description": "set the default AMO and lending pool contracts among the registered ones and trigger the predefined rebalancing functions of the router."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5acAf61d339dd123e60ba450Ea38fbC49445007C",
           "description": "withdraw all escrowed ETH and ERC-20s and configure important addresses like the operator, AMO(s) or the lending pool(s)."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
           "description": "configure important addresses like the operator or the EtherRouter and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Bc6bad540453360F744666D625fec0ee1320cA3",
           "description": "pause ETH deposits / frxETH mints and withdraw ETH and ERC-20s from the contract (usually not escrowed here)."
         }
@@ -681,12 +681,12 @@
       "description": "Allows for time-delayed execution of transactions. Current delay is 2d.",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can add and remove frxETH minters and set a new timelock address."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
         }
@@ -713,7 +713,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
@@ -817,7 +817,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can add and remove frxETH minters and set a new timelock address.",
           "via": [
@@ -828,7 +828,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
           "via": [
@@ -879,7 +879,7 @@
       "description": "Accepts user-supplied ETH and converts it to frxETH.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
           "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`).",
           "via": [
@@ -892,7 +892,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
@@ -931,23 +931,23 @@
           "from": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
         },
         {
-          "permission": "configure",
-          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-        },
-        {
-          "permission": "configure",
-          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
-          "description": "set and change address mappings.",
-          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
-        },
-        {
           "permission": "guard",
           "from": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
         },
         {
           "permission": "guard",
           "from": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+        },
+        {
+          "permission": "interact",
+          "from": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "interact",
+          "from": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "description": "set and change address mappings.",
+          "via": [{ "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA" }]
         },
         {
           "permission": "upgrade",
@@ -1020,7 +1020,7 @@
       "address": "0x0000000000000000000000000000000000000000",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5E8422345238F34275888049021821E8E08CAa1f",
           "description": "can mint frxETH tokens."
         }
@@ -1696,14 +1696,14 @@
     ]
   },
   "usedTemplates": {
-    "fraxtal/EtherRouter": "0x96f84067be8bad31c6d2cb080eef5c7b27276822e65c27fc2adfcf9910d06ccc",
-    "fraxtal/FraxEtherMinter": "0x02f6c5b2cea0a41e9b2e8d4db4bbd7f5cfe7d0d6d9667be5c5325c34d0eba4bf",
-    "fraxtal/frxETH": "0xdbea2442f624aeb1d5aaf5de75f56c388c7512f74e4190c27b332343d2af534d",
-    "fraxtal/FrxEthMinter": "0xfb6ac8f4554841fd29988fe90425d53e526d495e2716f1155c5825269dfd22fd",
+    "fraxtal/EtherRouter": "0xea2ff103bac571d9429241471dda30f93dadbf453853f1c6e0f18fa1aa51bff0",
+    "fraxtal/FraxEtherMinter": "0xad545981fb7f014266b2d17754e672b6ac01d308bb8bd381b1a19667c30b70fc",
+    "fraxtal/frxETH": "0x1db69ce12a6754dd672309151e80e4f4c8662d34b9bace5b8ccc78e559587c7f",
+    "fraxtal/FrxEthMinter": "0x47862ed88f954f09ef6da3667b164a24d76a97c96ba86df5f87ffff83e31bd56",
     "fraxtal/Timelock": "0xffa1ed7ed3994faf0ddba01753043589e9271bcd32704074ab03c88b77b5f8db",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
     "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
@@ -1711,6 +1711,6 @@
     "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

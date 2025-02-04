@@ -2,18 +2,20 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0x502acbcd777a8ae4b39b3eef9abc63764c16c80c7a546b4e89ef5e2742767690",
+  "configHash": "0x1be9382776421fe44d961049d496d1a72cb66d895934cd45ddc0ab55451a17e8",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
-      "name": "AstarVerifier",
+      "name": "FflonkVerifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "displayName": "Verifier",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
+      "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
@@ -35,13 +37,35 @@
       }
     },
     {
-      "name": "AstarValidium",
+      "name": "Validium",
       "address": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+      "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
         "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "PolygonZkEVM",
+      "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+          "description": "sole address that can force batches.",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1708632059,
       "values": {
@@ -93,6 +117,12 @@
         "trustedSequencer": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
         "trustedSequencerURL": "https://rpc-zkevm.astar.network"
       },
+      "fieldMeta": {
+        "forceBatchAddress": {
+          "severity": "HIGH",
+          "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
+        }
+      },
       "derivedName": "PolygonValidiumStorageMigration"
     },
     {
@@ -124,14 +154,22 @@
       }
     },
     {
-      "name": "AstarValidiumDAC",
+      "name": "PolygonDataCommittee",
       "address": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+      "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
@@ -177,11 +215,10 @@
         ],
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3
-      },
-      "derivedName": "PolygonDataCommittee"
+      }
     },
     {
-      "name": "LocalAdmin",
+      "name": "AstarMultisig",
       "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -189,7 +226,23 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "description": "sole address that can force batches."
+        },
+        {
+          "permission": "interact",
+          "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
         {
           "permission": "upgrade",
           "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
@@ -236,8 +289,15 @@
     { "address": "0x4324c3960c7B2567D0C13ba17493bb364c407937" },
     { "address": "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58" },
     { "address": "0x83cC8195856b0463dEd5f052021009b7985FDa2C" },
-    { "address": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4" },
-    { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
+    {
+      "address": "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+        }
+      ]
+    },
     { "address": "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0" },
     { "address": "0xC4ad70e848f36925FcbDfb252f5e258D06647320" },
     { "address": "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa" },
@@ -476,6 +536,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
+    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
+    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

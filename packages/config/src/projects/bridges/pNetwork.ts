@@ -133,43 +133,41 @@ export const pNetwork: Bridge = {
 
   contracts: {
     isIncomplete: true,
-    addresses: [
-      discovery.getContractDetails(
-        'ERC20 Vault V2',
-        'Has special logic for handling inflation of PNT token.',
-      ),
-      discovery.getContractDetails('ERC20 Vault V1'),
-      discovery.getContractDetails('UOS Vault'),
-      discovery.getContractDetails(
-        'PProxyAdmin',
-        'Proxy owner of ERC20 Vault v2.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ERC20 Vault V2',
+          'Has special logic for handling inflation of PNT token.',
+        ),
+        discovery.getContractDetails('ERC20 Vault V1'),
+        discovery.getContractDetails('UOS Vault'),
+        discovery.getContractDetails(
+          'PProxyAdmin',
+          'Proxy owner of ERC20 Vault v2.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'PNETWORK',
-          description:
-            'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
-          accounts: [
-            discovery.getPermissionedAccount('ERC20 Vault V2', 'PNETWORK'),
-            discovery.getPermissionedAccount('ERC20 Vault V1', 'PNETWORK'),
-            discovery.getPermissionedAccount('UOS Vault', 'PNETWORK'),
+        discovery.getPermissionDetails(
+          'PNETWORK',
+          [
+            ...discovery.getPermissionedAccounts('ERC20 Vault V2', 'PNETWORK'),
+            ...discovery.getPermissionedAccounts('ERC20 Vault V1', 'PNETWORK'),
+            ...discovery.getPermissionedAccounts('UOS Vault', 'PNETWORK'),
           ],
-        },
-        {
-          name: 'pNetwork DAO',
-          description:
-            'A voting contract that controls the inflation withdrawal logic of PNT token.',
-          accounts: [
-            discovery.getPermissionedAccount('EthPntv2', 'inflationOwner'),
-          ],
-        },
-        ...discovery.getMultisigPermission(
+          'A set of EOA addresses (different ones for different Vault contracts) that can transfer tokens and perform admin functions. It is supposed to be controlled by a group of Validator nodes in an MPC network.',
+        ),
+        discovery.getPermissionDetails(
+          'pNetwork DAO',
+          discovery.getPermissionedAccounts('EthPntv2', 'inflationOwner'),
+          'A voting contract that controls the inflation withdrawal logic of PNT token.',
+        ),
+        discovery.getMultisigPermission(
           'pNetwork Multisig',
           'Can upgrade ERC20 Vault V2.',
         ),

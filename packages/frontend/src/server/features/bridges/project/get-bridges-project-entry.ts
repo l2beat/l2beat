@@ -1,5 +1,5 @@
 import type { Bridge, TableReadyValue } from '@l2beat/config'
-import { getContractsVerificationStatuses, isVerified } from '@l2beat/config'
+import { isVerified } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -13,12 +13,10 @@ export type BridgesProjectEntry = Awaited<
 >
 
 export async function getBridgesProjectEntry(project: Bridge) {
-  const [contractsVerificationStatuses, projectsChangeReport, header] =
-    await Promise.all([
-      getContractsVerificationStatuses(project),
-      getProjectsChangeReport(),
-      getHeader(project),
-    ])
+  const [projectsChangeReport, header] = await Promise.all([
+    getProjectsChangeReport(),
+    getHeader(project),
+  ])
 
   const isProjectVerified = isVerified(project)
   const changes = projectsChangeReport.getChanges(project.id)
@@ -37,7 +35,6 @@ export async function getBridgesProjectEntry(project: Bridge) {
     projectDetails: await getBridgeProjectDetails(
       project,
       isProjectVerified,
-      contractsVerificationStatuses,
       projectsChangeReport,
     ),
   }

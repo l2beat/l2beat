@@ -70,6 +70,14 @@ export const soneium = opStackL2({
         'Custom externally governed escrow for USDC bridged to Soneium.',
       tokens: ['USDC'],
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x2F543A7C9cc80Cc2427c892B96263098d23ee55a'),
+      name: 'Custom (w)stETH Escrow.',
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Lido-governed escrow for bridging (w)stETH via canonical messaging to Soneium.',
+      tokens: ['stETH', 'wstETH'],
+    }),
   ],
   milestones: [
     {

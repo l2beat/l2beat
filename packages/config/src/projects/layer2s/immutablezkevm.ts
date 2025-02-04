@@ -11,7 +11,6 @@ import {
   DA_LAYERS,
   DA_MODES,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -67,11 +66,11 @@ export const immutablezkevm: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.NONE],
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -112,7 +111,7 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OwnerMultisig',
           'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
         ),
@@ -124,16 +123,18 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Bridge', {
-        description: 'Main escrow for tokens.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('RootAxelarBridgeAdaptor', {
-        description: 'Axelar adaptor contract used by the bridge.',
-        ...upgradeability,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Bridge', {
+          description: 'Main escrow for tokens.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('RootAxelarBridgeAdaptor', {
+          description: 'Axelar adaptor contract used by the bridge.',
+          ...upgradeability,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

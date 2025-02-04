@@ -1,15 +1,15 @@
 import { daLayers } from '@l2beat/config'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
+import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export function getScalingTechnologySection(project: Layer2 | Layer3) {
-  const relatedDaProjects = daLayers.filter(
-    (project) =>
-      project.daLayer.bridges.some((bridge) =>
-        bridge.usedIn.some((usedIn) => usedIn.id === project.id),
-      ) && project.daLayer.bridges.length > 0,
+  const relatedDaProjects = daLayers.filter((project) =>
+    getDaBridges(project).some((bridge) =>
+      bridge.usedIn.some((usedIn) => usedIn.id === project.id),
+    ),
   )
 
   const items = compact([
@@ -34,7 +34,7 @@ export function getScalingTechnologySection(project: Layer2 | Layer3) {
                   text: 'Learn more about the DA layer here:',
                   project: {
                     name: relatedDaProjects[0].display.name,
-                    slug: `${relatedDaProjects[0].display.slug}/${relatedDaProjects[0].daLayer.bridges[0]?.display.slug}`,
+                    slug: `${relatedDaProjects[0].display.slug}/${getDaBridges(relatedDaProjects[0])[0]?.display.slug}`,
                     type: 'data-availability',
                   },
                 }

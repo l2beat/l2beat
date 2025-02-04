@@ -1,8 +1,8 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 21736827,
-  "configHash": "0x46855f1be1e3d4f9ca4615f05d9df041a7d110bb48be20a6c252c1d1894a4183",
+  "blockNumber": 21766583,
+  "configHash": "0x79b150438f4e0eff13fa17f38ecd75e4ebba908ebd969de7604ac91bb6160189",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -30,12 +30,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D",
           "description": "set the conversion factor for gas token deposits."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D" }]
@@ -86,25 +86,25 @@
       "severity": "HIGH",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
           "description": "address is part of the GRVTTransactionFilterer whitelist.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe81d64195072e4d09639b31Abb257d0096FEa9d1",
           "description": "address is part of the GRVTTransactionFilterer whitelist.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
           "description": "address is part of the GRVTTransactionFilterer whitelist.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
           "description": "manage the whitelist of addresses.",
           "via": []
@@ -117,7 +117,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
         }
@@ -168,7 +168,7 @@
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
           "permission": "validateZkStack",
@@ -183,7 +183,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
@@ -191,8 +191,8 @@
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
-        "executionDelay": 75600,
-        "executionDelay_fmt": "21h",
+        "executionDelay": 10800,
+        "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -213,7 +213,7 @@
       ],
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "description": "set the conversion factor for gas token deposits.",
           "via": []
@@ -221,7 +221,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
         }
@@ -254,7 +254,7 @@
       "description": "Checks the signature of the DepositApprover for each deposit and, on succeeding, forwards the user's funds and bridging request to the L1SharedBridge contract to deposit to GRVT.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
           "description": "approve deposits to GRVT via the GRVTBridgeProxy.",
           "via": []
@@ -267,7 +267,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist."
         }
@@ -316,19 +316,19 @@
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x3a23919d4aA39e096E9d6420fd6a2861A20B19e5",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0x6308ee1Ebdb8D5E60bB88D3EA3b56CE326193e7D" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
@@ -343,8 +343,9 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx"
+        "getFirstUnprocessedPriorityTx",
+        "baseTokenGasPriceMultiplierNominator",
+        "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1731379871,
       "values": {
@@ -481,26 +482,26 @@
         "getBaseToken": "0xAB3B124052F0389D1cbED221d912026Ac995bb95",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 322,
+        "getFirstUnprocessedPriorityTx": 341,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
+        "getPriorityQueueSize": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 598,
-        "getTotalBatchesExecuted": 563,
-        "getTotalBatchesVerified": 591,
-        "getTotalBlocksCommitted": 598,
-        "getTotalBlocksExecuted": 563,
-        "getTotalBlocksVerified": 591,
-        "getTotalPriorityTxs": 329,
+        "getTotalBatchesCommitted": 761,
+        "getTotalBatchesExecuted": 736,
+        "getTotalBatchesVerified": 759,
+        "getTotalBlocksCommitted": 761,
+        "getTotalBlocksExecuted": 736,
+        "getTotalBlocksVerified": 759,
+        "getTotalPriorityTxs": 341,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -508,11 +509,6 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x89614d1f53e5c4a5098d1b40b2fcf90dd3c43651d7197412f44ba5b1c992cf0e",
-          "expirationTimestamp": 1738163327,
-          "layer2Tip": 0
-        },
         "txFilterer": ["0x3Cd52B238Ac856600b22756133eEb31ECb25109a"],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -540,7 +536,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist."
         }
@@ -580,7 +576,7 @@
       "address": "0x5c8de5821dd9263F124E8ddbff11C3368Ff86a37",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xE17aeD2fC55f4A876315376ffA49FE6358113a65",
           "description": "approve deposits to GRVT via the GRVTBridgeProxy."
         }
@@ -593,12 +589,12 @@
       "address": "0xF29bFff344c7ef0186432fE30C39fda0cca0550b",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "address is part of the GRVTTransactionFilterer whitelist."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3Cd52B238Ac856600b22756133eEb31ECb25109a",
           "description": "manage the whitelist of addresses."
         }
@@ -1013,8 +1009,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/ChainAdmin": "0x8ec8acbff3be82b53cdc97244336ee589a872235b0383506534d0bae9463feb9",
-    "shared-zk-stack/Diamond": "0xd62d6f07bb60c75ee3179ef73ab905abd0718aeceadc5bde7d463f43c77a41df",
+    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
+    "shared-zk-stack/Diamond": "0xff5383a8ec4b4fefa1093890cd7eed015c46ac789aa5fbb7f2ef4b5b1adcf473",
     "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
     "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
   }

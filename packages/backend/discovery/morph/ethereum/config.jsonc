@@ -41,7 +41,7 @@
         "owner": {
           "target": {
             "permissions": [
-              { "type": "configure", "description": "can pause and unpause" }
+              { "type": "interact", "description": "can pause and unpause" }
             ]
           }
         }
@@ -168,7 +168,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
               }
             ]

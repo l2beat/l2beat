@@ -23,7 +23,7 @@ export function PermissionsSection({
   ...sectionProps
 }: PermissionsSectionProps) {
   return (
-    <ProjectSection {...sectionProps} includeChildrenIfUnderReview>
+    <ProjectSection {...sectionProps}>
       {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
           The committee has the following members:
