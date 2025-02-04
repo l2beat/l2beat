@@ -18,7 +18,6 @@ import {
   STATE_CORRECTNESS,
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
@@ -323,11 +322,11 @@ export const scroll: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...STATE_ZKP_SN,

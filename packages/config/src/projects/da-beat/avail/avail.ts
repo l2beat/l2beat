@@ -105,8 +105,8 @@ App-specific data can be reconstructed by app clients, which request and assembl
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: (layer) => layer === 'Avail',
-      bridge: (bridge) => bridge === 'None',
+      layer: ProjectId('avail'),
+      bridge: undefined,
     }),
     bridges: [vector],
     /*

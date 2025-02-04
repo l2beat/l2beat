@@ -13,7 +13,6 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
@@ -45,11 +44,11 @@ export const fuel: Layer2 = {
   id: ProjectId('fuel'),
   capability: 'universal',
   addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Fuel Ignition',

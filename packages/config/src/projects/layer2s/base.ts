@@ -20,7 +20,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
@@ -284,11 +283,11 @@ export const base: Layer2 = {
     ],
     coingeckoPlatform: 'base',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,

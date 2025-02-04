@@ -3,6 +3,7 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -153,7 +154,10 @@ export const eigenDAbridge: DaBridge = {
     requiredMembers: 0, // currently 0 since threshold is not enforced
     membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('eigen-da'),
+    bridge: ProjectId('eigenda'),
+  }),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',

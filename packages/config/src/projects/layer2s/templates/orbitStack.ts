@@ -19,7 +19,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -800,11 +799,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -812,14 +811,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
       : baseChain.dataAvailability,
@@ -999,11 +998,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -1011,25 +1010,23 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
-      : addSentimentToDataAvailability({
-          layers: [
-            usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
+      : {
+          layer: usesBlobs
+            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+            : DA_LAYERS.ETH_CALLDATA,
           bridge: DA_BRIDGES.ENSHRINED,
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+        },
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
