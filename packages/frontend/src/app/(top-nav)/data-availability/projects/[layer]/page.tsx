@@ -1,6 +1,6 @@
-import { ProjectService } from '@l2beat/config'
 import { notFound, redirect } from 'next/navigation'
 import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
+import { ps } from '~/server/projects'
 
 interface Props {
   params: Promise<{
@@ -11,7 +11,7 @@ interface Props {
 
 export default async function RedirectPage(props: Props) {
   const { layer } = await props.params
-  const project = await ProjectService.STATIC.getProject({
+  const project = await ps.getProject({
     slug: layer,
     select: ['daLayer', 'daBridges'],
   })

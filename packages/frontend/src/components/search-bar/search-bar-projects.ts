@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import type { SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     optional: [
       'scalingInfo',
       'daBridges',

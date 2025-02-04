@@ -1,8 +1,8 @@
-import { ProjectService } from '@l2beat/config'
 import { NextResponse } from 'next/server'
+import { ps } from '~/server/projects'
 
 export async function GET() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     optional: [
       'isUpcoming',
       'isArchived',

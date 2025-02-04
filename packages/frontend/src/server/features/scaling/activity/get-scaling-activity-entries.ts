@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -13,7 +13,7 @@ import { compareActivityEntry } from './utils/compare-activity-entry'
 import { getActivitySyncWarning } from './utils/is-activity-synced'
 
 export async function getScalingActivityEntries() {
-  const unfilteredProjects = await ProjectService.STATIC.getProjects({
+  const unfilteredProjects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'hasActivity'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],

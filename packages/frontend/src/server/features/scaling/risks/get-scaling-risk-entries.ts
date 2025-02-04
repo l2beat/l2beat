@@ -1,5 +1,5 @@
 import type { Project, ScalingProjectRiskView } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -12,7 +12,7 @@ export async function getScalingRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'scalingInfo', 'scalingRisks'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
