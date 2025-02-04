@@ -10,9 +10,9 @@ export const tusima: Layer2 = upcomingL2({
     name: 'Tusima',
     slug: 'tusima',
     description:
-      'Tusima is an infrastructure that bridges Web3.0 and real-world business.',
+      'Tusima is an infrastructure that bridges Web3.0 and real-world business. It aims to be a consumer payment network for any asset.',
     purposes: ['Universal', 'Payments'],
-    category: 'ZK Rollup',
+    category: 'Validium',
     stack: 'Polygon',
     links: {
       websites: ['https://tusima.network/'],
