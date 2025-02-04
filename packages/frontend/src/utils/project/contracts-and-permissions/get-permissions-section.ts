@@ -7,7 +7,6 @@ import type {
   ProjectPermissionedAccount,
   ProjectPermissions,
 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'

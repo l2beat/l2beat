@@ -1,5 +1,4 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
