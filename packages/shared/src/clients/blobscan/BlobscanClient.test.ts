@@ -91,5 +91,9 @@ function mockBlob() {
     blockHash: '0xabcd',
     blockNumber: 100,
     blockTimestamp: '2024-01-01T00:00:00Z',
+    transaction: {
+      from: '0x1234567890123456789012345678901234567890',
+      to: '0x0987654321098765432109876543210987654321',
+    },
   }
 }
