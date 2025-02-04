@@ -271,7 +271,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'SecurityCouncil',
           'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
           [
@@ -285,7 +285,7 @@ export const arbitrum: Layer2 = orbitStackL2({
           discovery.getContract('L1Timelock'),
           'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'BatchPosterManagerMultisig',
           'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
         ),
@@ -293,11 +293,11 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
     [l2Discovery.chain]: {
       actors: [
-        ...l2Discovery.getMultisigPermission(
+        l2Discovery.getMultisigPermission(
           'L2SecurityCouncilEmergency',
           'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
         ),
-        ...l2Discovery.getMultisigPermission(
+        l2Discovery.getMultisigPermission(
           'L2SecurityCouncilPropose',
           'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
         ),

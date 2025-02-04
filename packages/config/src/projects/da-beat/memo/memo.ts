@@ -84,8 +84,8 @@ export const memo: DaProject = {
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: (layer) => layer === 'MEMO',
-      bridge: (bridge) => bridge === 'None',
+      layer: ProjectId('memo'),
+      bridge: undefined,
     }),
     bridges: [],
     pruningWindow: 0,

@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x04a4ca09834c82dab2118b2620ea0704e672dfb3
+
+# Diff at Tue, 04 Feb 2025 12:31:24 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21372994
+- current block number: 21372994
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21372994 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x1290e65807d50f3902417f526119a0eba52b3764
 
 # Diff at Mon, 20 Jan 2025 11:09:28 GMT:

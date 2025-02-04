@@ -18,7 +18,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
@@ -55,7 +54,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const committee = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
@@ -134,19 +133,19 @@ export const rhinofi: Layer2 = {
     //   },
     // ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
+  dataAvailability: {
+    layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -187,28 +186,23 @@ export const rhinofi: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governors',
-          accounts: getProxyGovernance(discovery, 'StarkExchange'),
-          description:
-            'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Governors',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
-        },
-        ...discovery.getMultisigPermission(
+        ),
+        discovery.getMultisigPermission(
           'GovernanceMultisig',
           'Has full power to upgrade the bridge implementation as a Governor.',
         ),
-        committee,
+        committeePermission,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchange',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-        },
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
+        ),
         discovery.contractAsPermissioned(
           // this multisig does not get recognized as such (because of the old proxy?)
           discovery.getContract('DeversiFiTreasuryMultisig'),

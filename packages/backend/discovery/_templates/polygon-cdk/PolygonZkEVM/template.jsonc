@@ -9,7 +9,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
           }
         ]
@@ -30,7 +30,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "sole address that can force batches."
           }
         ]

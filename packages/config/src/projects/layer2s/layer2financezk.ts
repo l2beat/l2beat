@@ -124,64 +124,39 @@ export const layer2financezk: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governor',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
-        },
-        {
-          name: 'Data Availability Committee',
-          accounts: [],
-          description:
-            'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
-        },
-        {
-          name: 'SHARP Verifier Governor',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
-        },
-        {
-          name: 'Broker Owner',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Most Broker functionality is restricted only for the owner, it includes managing rides, setting prices or slippages, burning shares.',
-        },
-        {
-          name: 'Operator',
-          accounts: [
-            {
-              address: EthereumAddress(
-                '0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5',
-              ),
-              type: 'EOA',
-            },
-          ],
-          description:
-            'Allowed to update state of the system. When Operator is down the state cannot be updated.',
-        },
+        discovery.getPermissionDetails(
+          'Governor',
+          discovery.formatPermissionedAccounts([
+            '0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e',
+          ]),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        ),
+        discovery.getPermissionDetails(
+          'Data Availability Committee',
+          [],
+          'There exists a Data Availability Committee with unknown members and an unverified smart contract.',
+        ),
+        discovery.getPermissionDetails(
+          'SHARP Verifier Governor',
+          discovery.formatPermissionedAccounts([
+            '0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6',
+          ]),
+          'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. Currently there is no delay before the upgrade, so the users will not have time to migrate.',
+        ),
+        discovery.getPermissionDetails(
+          'Broker Owner',
+          discovery.formatPermissionedAccounts([
+            '0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988',
+          ]),
+          'Most Broker functionality is restricted only for the owner, it includes managing rides, setting prices or slippages, burning shares.',
+        ),
+        discovery.getPermissionDetails(
+          'Broker Owner',
+          discovery.formatPermissionedAccounts([
+            '0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5',
+          ]),
+          'Most Broker functionality is restricted only for the owner, it includes managing rides, setting prices or slippages, burning shares.',
+        ),
       ],
     },
   },

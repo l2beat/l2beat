@@ -39,6 +39,7 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { degenlayer } from './degenlayer'
+import { destra } from './destra'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
 import { eclipse } from './eclipse'
@@ -238,6 +239,7 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   degenlayer,
+  destra,
   dydx,
   edgeless,
   ethernity,

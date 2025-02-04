@@ -18,7 +18,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -53,7 +52,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const committee = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
   isArchived: true,
@@ -117,19 +116,19 @@ export const reddioex: Layer2 = {
     },
     */
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
+  dataAvailability: {
+    layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -166,24 +165,19 @@ export const reddioex: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governor',
-          accounts: getProxyGovernance(discovery, 'StarkExchange'),
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Governor',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
-        },
-        committee,
+        ),
+        committeePermission,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchange',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update the state. When the Operator is down the state cannot be updated.',
-        },
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update the state. When the Operator is down the state cannot be updated.',
+        ),
       ],
     },
   },

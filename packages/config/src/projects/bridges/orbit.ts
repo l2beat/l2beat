@@ -186,21 +186,16 @@ export const orbit: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Bridge contract Governance',
-          accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
-          description: `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
-        },
-        {
-          name: 'Policy Admin',
-          accounts: discovery.getPermissionedAccounts(
-            'ETH Vault',
-            'policyAdmin',
-          ),
-
-          description:
-            'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
-        },
+        discovery.getPermissionDetails(
+          'Bridge contract Governance',
+          discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
+          `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
+        ),
+        discovery.getPermissionDetails(
+          'Policy Admin',
+          discovery.getPermissionedAccounts('ETH Vault', 'policyAdmin'),
+          'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
+        ),
       ],
     },
   },

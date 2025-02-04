@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 130896600,
-  "configHash": "0xb209683e9a3041f7f442664e6ad2507160bda89a4c93d1927ada7cfe2eb45eba",
+  "configHash": "0x724b3e9f9cc3eff60f1cff3399defb7a5c926b7e9e2420ace693b8961cc45ee8",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -15,7 +15,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
           "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
         }
@@ -659,7 +659,7 @@
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
           "description": "change the OP token owner to a different MintManager and therefore change the inflation policy.",
           "via": []

@@ -209,34 +209,27 @@ export const polynetwork: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          accounts: discovery.getPermissionedAccounts('PolyWrapper', 'owner'),
-          name: 'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',
-          description:
-            'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
-        },
-        {
-          accounts: discovery.getPermissionedAccounts(
-            'EthCrossChainManager',
-            'owner',
-          ),
-
-          name: 'Owner of EthCrossChainManager',
-          description:
-            'Can pause the contracts and update implementation of EthCrossChainData contract.',
-        },
-        {
-          accounts: [
+        discovery.getPermissionDetails(
+          'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',
+          discovery.getPermissionedAccounts('PolyWrapper', 'owner'),
+          'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the PolyWrapper contract.',
+        ),
+        discovery.getPermissionDetails(
+          'Owner of EthCrossChainManager',
+          discovery.getPermissionedAccounts('EthCrossChainManager', 'owner'),
+          'Can pause the contracts and update implementation of EthCrossChainData contract.',
+        ),
+        discovery.getPermissionDetails(
+          'Lock Proxy owners',
+          [
             ...discovery.getPermissionedAccounts('Lock Proxy 1', 'owner'),
             ...discovery.getPermissionedAccounts('Lock Proxy 2', 'owner'),
             ...discovery.getPermissionedAccounts('Lock Proxy 3', 'owner'),
             ...discovery.getPermissionedAccounts('Lock Proxy 4', 'owner'),
             ...discovery.getPermissionedAccounts('Lock Proxy 5', 'owner'),
           ],
-          name: 'Lock Proxy owners',
-          description:
-            'Can update address of EthCrossChainManagerProxy contract.',
-        },
+          'Can update address of EthCrossChainManagerProxy contract.',
+        ),
       ],
     },
   },

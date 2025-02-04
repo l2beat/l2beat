@@ -1,10 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
-import { aevo } from '../../layer2s/aevo'
-import { soon } from '../../layer2s/soon'
-import { donatuz } from '../../layer3s/donatuz'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { toUsedInProject } from '../utils/to-used-in-project'
+import { linkByDA } from '../utils/link-by-da'
 import { eigenDAbridge } from './eigen-da-bridge'
 
 export const eigenDA: DaProject = {
@@ -85,7 +82,10 @@ export const eigenDA: DaProject = {
         },
       ],
     },
-    usedWithoutBridgeIn: toUsedInProject([donatuz, aevo, soon]),
+    usedWithoutBridgeIn: linkByDA({
+      layer: ProjectId('eigen-da'),
+      bridge: undefined,
+    }),
     bridges: [eigenDAbridge],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),

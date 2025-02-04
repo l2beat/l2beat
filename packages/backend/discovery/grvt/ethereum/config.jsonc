@@ -51,7 +51,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "approve deposits to GRVT via the GRVTBridgeProxy."
               }
             ]
@@ -81,7 +81,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "address is part of the GRVTTransactionFilterer whitelist."
               }
             ]
@@ -95,7 +95,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "manage the whitelist of addresses."
               }
             ]

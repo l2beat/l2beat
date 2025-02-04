@@ -33,7 +33,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to {{isProposeGuarded}}."
               }
             ]
@@ -43,7 +43,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
               }
             ]
@@ -58,7 +58,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
               }
             ]

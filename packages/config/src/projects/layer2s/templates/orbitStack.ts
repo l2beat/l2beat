@@ -19,7 +19,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -386,25 +385,26 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ProjectPermission = {
-    name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
-    description:
+  const validators: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Validators/Proposers',
+      templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    chain: templateVars.discovery.chain,
-  }
+    )
+
   if (validators.accounts.length === 0) {
     throw new Error(
       `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
     )
   }
 
-  const sequencers: ProjectPermission = {
-    name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
-    description: 'Central actors allowed to submit transaction batches to L1.',
-    chain: templateVars.discovery.chain,
-  }
+  const sequencers: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Sequencers',
+      templateVars.discovery.getPermissionsByRole('sequence'),
+      'Central actors allowed to submit transaction batches to L1.',
+    )
+
   if (sequencers.accounts.length === 0) {
     throw new Error(
       `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
@@ -447,6 +447,7 @@ function orbitStackCommon(
         },
     chainConfig: templateVars.chainConfig,
     technology: {
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
@@ -801,11 +802,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -813,14 +814,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
       : baseChain.dataAvailability,
@@ -1001,11 +1002,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -1013,25 +1014,23 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
-      : addSentimentToDataAvailability({
-          layers: [
-            usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
+      : {
+          layer: usesBlobs
+            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+            : DA_LAYERS.ETH_CALLDATA,
           bridge: DA_BRIDGES.ENSHRINED,
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+        },
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(

@@ -292,6 +292,7 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
+  isVerified: boolean
   address: EthereumAddress
   type: 'EOA' | 'Contract'
 }
@@ -383,6 +384,7 @@ export interface ScalingProjectStateDerivation {
   compressionScheme?: string
   genesisState: string
   dataFormat: string
+  isUnderReview?: boolean
 }
 
 type CategoryTitle =
@@ -407,6 +409,7 @@ export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
   proofVerification?: ProofVerification
+  isUnderReview?: boolean
 }
 
 export interface ScalingProjectTechnology {
@@ -482,8 +485,8 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: TableReadyValue
-  bridge: TableReadyValue
+  layer: TableReadyValue & { projectId?: ProjectId }
+  bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
 }
 

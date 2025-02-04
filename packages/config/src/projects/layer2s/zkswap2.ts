@@ -7,7 +7,6 @@ import {
   DA_MODES,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -61,11 +60,11 @@ export const zkswap2: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -119,24 +118,16 @@ export const zkswap2: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'zkSwap 2.0 Admin',
-          accounts: discovery.getPermissionedAccounts(
-            'UpgradeGatekeeper',
-            'getMaster',
-          ),
-          description:
-            'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
-        },
-        {
-          name: 'Active validator',
-          accounts: discovery.getPermissionedAccounts(
-            'Governance',
-            'validators',
-          ),
-          description:
-            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
-        },
+        discovery.getPermissionDetails(
+          'zkSwap 2.0 Admin',
+          discovery.getPermissionedAccounts('UpgradeGatekeeper', 'getMaster'),
+          'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
+        ),
+        discovery.getPermissionDetails(
+          'Active validator',
+          discovery.getPermissionedAccounts('Governance', 'validators'),
+          'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
+        ),
       ],
     },
   },
