@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf34bcf2bfdea2d66ef2a2c4ff3889c66549735d1
+
+# Diff at Tue, 04 Feb 2025 14:08:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a2f7f11f0fef381d4eb0e185aacd127008332826 block: 21731591
+- current block number: 21773634
+
+## Description
+
+Added standard lido external canonical escrow (shapes in stock).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21731591 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1LidoTokensBridge (0x2F543A7C9cc80Cc2427c892B96263098d23ee55a)
+    +++ description: Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.
+```
+
 Generated with discovered.json: 0x016ba5982ef0aba702c30e84511699e6675d454d
 
 # Diff at Tue, 04 Feb 2025 12:32:41 GMT:
