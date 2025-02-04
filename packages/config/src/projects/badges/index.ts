@@ -441,6 +441,14 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
+  EspressoSequencing: {
+    display: {
+      name: 'Espresso Sequencing',
+      description:
+        'The project integrates with Espresso sequencing network. The chain batch poster publishes blocks to Espresso, and runs the batch poster in a Trusted Execution Environment (TEE) to ensure only Espresso-validated blocks reach the chain.',
+    },
+    type: BadgeType.Other,
+  },
   MigratedFromL1: {
     display: {
       name: 'Migrated from L1 to Ethereum L2',
