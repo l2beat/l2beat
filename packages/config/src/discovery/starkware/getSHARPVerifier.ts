@@ -120,7 +120,7 @@ export function getSHARPVerifierGovernors(
       'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
         delayDescriptionFromSeconds(upgradeDelay),
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'SHARPVerifierAdminMultisig',
       'SHARP Verifier Governor.',
     ),
