@@ -232,11 +232,9 @@ function toTechnologyContract(
       chain,
     )
 
-    // TODO(radomski): how to make this better
     return {
       name: permissionedName.name,
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
-      verificationStatus: toVerificationStatus(true),
     }
   })
 

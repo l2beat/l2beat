@@ -166,12 +166,7 @@ function getCalloutProps(
   const isAnyAddressUnverified = contract.addresses.some(
     (c) => c.verificationStatus === 'unverified' && !c.isAdmin,
   )
-  const isEveryAddressUnverified = contract.addresses.every(
-    (c) => c.verificationStatus === 'unverified',
-  )
-  const showRedBackground =
-    (type === 'contract' && isAnyAddressUnverified) ||
-    (type === 'permission' && isEveryAddressUnverified)
+  const showRedBackground = type === 'contract' && isAnyAddressUnverified
 
   if (showRedBackground) {
     return {
