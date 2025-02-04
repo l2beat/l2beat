@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa2068c053df5537dcf03a4bdb3a0f0d0ae727c90
+Generated with discovered.json: 0x6e0bf9ef2ea555f5959e94c27880677b5ef2a461
 
-# Diff at Tue, 04 Feb 2025 13:23:01 GMT:
+# Diff at Tue, 04 Feb 2025 13:45:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@142491370256d9fb936a347e610d0ac200e9e51c block: 21745064
@@ -43,6 +43,9 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
       receivedPermissions.3.via.0.delay:
 -        864000
 +        259200
+      receivedPermissions.2.description:
+-        "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
       receivedPermissions.1.via.0.delay:
 -        864000
 +        259200
@@ -76,6 +79,9 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
       issuedPermissions.7.via.0.delay:
 -        864000
 +        259200
+      issuedPermissions.4.description:
+-        "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
       issuedPermissions.3.via.0.delay:
 -        864000
 +        259200
@@ -97,24 +103,129 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
       values.rollupCount:
 -        13
 +        14
-+++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
-+++ severity: MEDIUM
-      values.rollupsData.13:
-+        ["0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",9369,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",9]
+      values.rollupsData:
+-        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",6],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",8],["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]]
       values.rollupTypeCount:
 -        8
 +        9
-+++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
       values.rollupTypes.8:
-+        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"]
++        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,1,false,"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"]
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.2:
++        13
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.2:
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.2:
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.2:
++        11
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.2:
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.2:
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.2:
++        8
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.2:
++        7
       values.trustedAggregatorTimeout:
 -        432000
       values.verifyBatchTimeTarget:
 -        1800
       values.ROLLUP_MANAGER_VERSION:
 +        "pessimistic"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2:
++        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,6,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",13,8,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",9369,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,9,1,"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"]]
       fieldMeta.nondeterministicPendingState:
 -        {"severity":"HIGH"}
+      fieldMeta.rollupsData:
+-        {"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"}
+      fieldMeta.rollupTypes.description:
+-        "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
++        "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
+      fieldMeta.rollupsDataV2:
++        {"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"}
     }
 ```
 

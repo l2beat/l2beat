@@ -63,7 +63,7 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
         },
         {
           "permission": "interact",
@@ -291,7 +291,7 @@
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).",
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
           "via": []
         },
         {
@@ -462,129 +462,207 @@
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 14,
-        "rollupsData": [
+        "rollupsDataV2": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             1101,
             "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            6
+            12,
+            6,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
             3776,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
             196,
             "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
-            8
+            13,
+            8,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
             4913,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
             1511670449,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
             1702448187,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             994873017,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
             31415,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
             511252203,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
             2355,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
             999,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
             938,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
             752025,
             "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            7
+            12,
+            7,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
             9369,
             "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            9
+            12,
+            9,
+            1,
+            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
         "rollupTypeCount": 9,
         "rollupTypes": [
           [
             "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+            7,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+            8,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            9,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            9,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            11,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            13,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            12,
+            1,
+            false,
+            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
         "totalSequencedBatches": 581266,
@@ -600,12 +678,12 @@
           "severity": "HIGH",
           "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
         },
-        "rollupsData": {
+        "rollupsDataV2": {
           "severity": "MEDIUM",
-          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"
         },
         "rollupTypes": {
-          "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
+          "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
         },
         "isVerifyingBatches": {
           "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
@@ -1496,7 +1574,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x13ed46cc7772fde00e6747a0cb0492d3659f57ca3cdd105d2011c79de04fb164",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x3242399a042899dc2e4c499787d41db79155837a2732592be96895174fbb8f3a",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
   }

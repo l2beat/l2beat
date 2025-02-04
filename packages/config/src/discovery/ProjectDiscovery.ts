@@ -1312,7 +1312,7 @@ const roleDescriptions: {
   aggregatePolygon: {
     name: 'Trusted Aggregator (Proposer)',
     description:
-      "Permissioned to post new state roots and global exit roots accompanied by ZK proofs. Can also settle verified state roots without a timeout ('consolidate pending state').",
+      'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
   },
 }
 

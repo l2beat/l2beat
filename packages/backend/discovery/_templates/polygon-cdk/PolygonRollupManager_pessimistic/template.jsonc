@@ -103,7 +103,7 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
+            "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
           }
         ]
       }
@@ -155,26 +155,41 @@
         ]
       }
     },
-    "rollupsData": {
-      "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]",
+    "rollupsDataV2": {
+      "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]",
       "severity": "MEDIUM",
       "handler": {
         "type": "array",
-        "method": "rollupIDToRollupData",
+        "method": "rollupIDToRollupDataV2",
         "startIndex": 1,
-        "pickFields": ["rollupContract", "chainID", "verifier", "rollupTypeID"],
+        "pickFields": [
+          "rollupContract",
+          "chainID",
+          "verifier",
+          "forkID",
+          "rollupTypeID",
+          "rollupVerifierType",
+          "programVKey"
+        ],
         "length": "{{ rollupCount }}",
         "ignoreRelative": true
       }
     },
     "rollupTypes": {
-      "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock",
+      "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey",
       "handler": {
         "type": "array",
         "method": "rollupTypeMap",
         "startIndex": 1,
         "length": "{{ rollupTypeCount }}",
-        "pickFields": ["consensusImplementation", "verifier"],
+        "pickFields": [
+          "consensusImplementation",
+          "verifier",
+          "forkID",
+          "rollupVerifierType",
+          "obsolete",
+          "programVKey"
+        ],
         "ignoreRelative": true
       }
     },
