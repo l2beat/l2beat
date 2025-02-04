@@ -1,7 +1,7 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
@@ -34,6 +34,15 @@ export function ScalingCostsTable({ entries, rollups }: Props) {
     const tableEntries = entries.map((e) => mapToTableEntry(e, data, unit))
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
   }, [data, entries, metric, unit])
+
+  useEffect(() => {
+    setSorting([
+      {
+        id: 'total-cost',
+        desc: metric === 'per-l2-uop' ? false : true,
+      },
+    ])
+  }, [metric, setSorting])
 
   const table = useTable({
     data: tableEntries,
