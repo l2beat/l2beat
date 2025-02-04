@@ -1,8 +1,8 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 302514505,
-  "configHash": "0x30f76fa14ada01837ec0faffed6ac2a23e22b8df767515d5f6fb6da9625e21c1",
+  "blockNumber": 302520739,
+  "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -191,11 +191,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 192127,
+        "delayedMessageCount": 192128,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 10146,
-        "sequencerReportedSubMessageCount": 1500274
+        "sequencerMessageCount": 10147,
+        "sequencerReportedSubMessageCount": 1500299
       }
     },
     {
@@ -336,7 +336,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
         "latestConfirmed": 8793,
-        "latestNodeCreated": 8940,
+        "latestNodeCreated": 8941,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -893,12 +893,26 @@
     {
       "name": "SequencerInbox",
       "address": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+      "template": "orbitstack/SequencerInbox_Celestia_Espresso",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
@@ -908,6 +922,7 @@
           ]
         }
       ],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "sinceTimestamp": 1705716145,
       "values": {
         "$admin": "0x003e70B041abb993006C03E56c8515622a02928C",
@@ -940,36 +955,48 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 10146,
+        "batchCount": 10147,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
+        "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
         "bridge": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "CELESTIA_MESSAGE_HEADER_FLAG": "0x63",
+        "dacKeyset": {
+          "requiredSignatures": 1,
+          "membersCount": 1,
+          "blsSignatures": [
+            "YAeDrpnsDZsKv0V5I5tcYA5z/PZaJuRA4qpki9y8x/bBV15fKHfMHv3Nyn2gBbBbtBjzXZKDCk4Q7mLMfFakukCyPyJSWB9vIczaCFaY1PjUMc//pY9x5VcTauBVhAKx5BZmQ398qhs+fqtEfZ3OgUQMYLvkim1uJ9tidMOnEo+wgWMDZAuMkXoO7BFdMzr8dBkpLjQYP9AYjPYphAERMiUoRuK8/mrXygNrokw2/RrthAH7qlt9eugYrRgIoy8hbgezFeIpVxKYTeuICu2TDV7XJk0oci4CIFSCCdD6X4gTiqbUFETjzthryj4va/GL8hc7MOkf4mPFeFHvzLTXCeh+0SSOOaH9onG0zgVvqEU5ZI6ddqiLMnGwjiJwJ52Efg=="
+          ]
+        },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "espressoTEEVerifier": "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb",
         "HEADER_LENGTH": 40,
-        "inboxAccs": [
-          "0x72815e3eb5a9995e3b70bcca59dd3d78772b811718742f76a6865974a8e8a55c",
-          "0x0cc2a75ea448a5b53c908d5404293eff1ac863ee2b0bbad3b5d385656da0db36",
-          "0xfb571ad0bdce76e80432a8a223afb9cea31f9b2eda2e1649006bf87fd8b42549",
-          "0x6ccc4a6ff88cdca255c948fe6cc43cf7159ff33a0b9804bdd5a5d6b17d7885e6",
-          "0x69d02ed8b2eda79fd77f8e487714fa2dad1e6b710ecfbb2f4f4fc28cab43b791"
-        ],
         "isUsingFeeToken": false,
+        "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
-        "sequencerVersion": "0x63",
-        "totalDelayedMessagesRead": 192125,
+        "setIsBatchPosterCount": 5,
+        "totalDelayedMessagesRead": 192126,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
-      "errors": { "inboxAccs": "Processing error occurred." },
-      "derivedName": "SequencerInbox"
+      "errors": { "sequencerVersion": "Processing error occurred." },
+      "fieldMeta": {
+        "maxTimeVariation": {
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+        }
+      }
     },
     {
       "name": "ChallengeManager",
@@ -1115,7 +1142,21 @@
         }
       ]
     },
-    { "address": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77" }
+    {
+      "address": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+          "description": "Add/remove batchPosters (Sequencers)."
+        },
+        {
+          "permission": "sequence",
+          "from": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ]
+    }
   ],
   "abis": {
     "0x003e70B041abb993006C03E56c8515622a02928C": [
@@ -2090,6 +2131,7 @@
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
     "orbitstack/RollupProxy_fastConfirm": "0x632e80b226338badc60fe5be816d84d735e6a943e8d0283d083fc8084678642f",
+    "orbitstack/SequencerInbox_Celestia_Espresso": "0x5b6b1cef47ea4c5c84996ea4b4a270018cca3539f605fa0af986d836c83943fe",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }

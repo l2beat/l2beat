@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4cb9da3eb705cb417313cbff22cb3be41879baf0
+Generated with discovered.json: 0x96d7305dae17d13b55a5facefba8f6860c730e9a
 
-# Diff at Tue, 04 Feb 2025 10:28:44 GMT:
+# Diff at Tue, 04 Feb 2025 10:42:04 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@ccb272fa97397c2c0bde64fd116f62794d575e23 block: 286430025
-- current block number: 302514505
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
+- current block number: 302520739
 
 ## Description
 
@@ -15,28 +15,36 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 
 ```diff
     contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
-    +++ description: None
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.
       template:
 -        "orbitstack/SequencerInbox_Celestia"
++        "orbitstack/SequencerInbox_Celestia_Espresso"
       sourceHashes.1:
 -        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
 +        "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c"
-      description:
--        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
-      issuedPermissions.1:
--        {"permission":"upgrade","to":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"},{"address":"0x003e70B041abb993006C03E56c8515622a02928C"}]}
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"},{"address":"0x003e70B041abb993006C03E56c8515622a02928C"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.to:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      issuedPermissions.1.via.1:
+-        {"address":"0x003e70B041abb993006C03E56c8515622a02928C"}
+      issuedPermissions.1.via.0:
+-        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      issuedPermissions.1.description:
++        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
       issuedPermissions.0.permission:
 -        "sequence"
-+        "upgrade"
++        "configure"
       issuedPermissions.0.to:
 -        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
-+        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
       issuedPermissions.0.description:
 -        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
-      issuedPermissions.0.via.1:
-+        {"address":"0x003e70B041abb993006C03E56c8515622a02928C"}
-      issuedPermissions.0.via.0:
-+        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
++        "Add/remove batchPosters (Sequencers)."
       values.$implementation:
 -        "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"
 +        "0x805dc3546d99AfB35EfB261b907679b67A08256e"
@@ -47,38 +55,23 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
       values.$upgradeCount:
 -        3
 +        5
-      values.batchCount:
--        8248
-+        10146
       values.batchPosterManager:
 -        "0x0000000000000000000000000000000000000000"
 +        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
-      values.batchPosters:
--        ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"]
-      values.dacKeyset:
--        {"requiredSignatures":1,"membersCount":1,"blsSignatures":["YAeDrpnsDZsKv0V5I5tcYA5z/PZaJuRA4qpki9y8x/bBV15fKHfMHv3Nyn2gBbBbtBjzXZKDCk4Q7mLMfFakukCyPyJSWB9vIczaCFaY1PjUMc//pY9x5VcTauBVhAKx5BZmQ398qhs+fqtEfZ3OgUQMYLvkim1uJ9tidMOnEo+wgWMDZAuMkXoO7BFdMzr8dBkpLjQYP9AYjPYphAERMiUoRuK8/mrXygNrokw2/RrthAH7qlt9eugYrRgIoy8hbgezFeIpVxKYTeuICu2TDV7XJk0oci4CIFSCCdD6X4gTiqbUFETjzthryj4va/GL8hc7MOkf4mPFeFHvzLTXCeh+0SSOOaH9onG0zgVvqEU5ZI6ddqiLMnGwjiJwJ52Efg=="]}
-      values.keySetUpdates:
--        1
-      values.maxTimeVariation:
--        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
-+        [5760,48,86400,3600]
-      values.postsBlobs:
--        false
+      values.batchPosters.0:
+-        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      values.sequencerVersion:
+-        "0x63"
       values.setIsBatchPosterCount:
 -        1
-      values.totalDelayedMessagesRead:
--        187079
-+        192125
++        5
       values.BLOBSTREAM:
 +        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
       values.espressoTEEVerifier:
 +        "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb"
-      values.inboxAccs:
-+        ["0x72815e3eb5a9995e3b70bcca59dd3d78772b811718742f76a6865974a8e8a55c","0x0cc2a75ea448a5b53c908d5404293eff1ac863ee2b0bbad3b5d385656da0db36","0xfb571ad0bdce76e80432a8a223afb9cea31f9b2eda2e1649006bf87fd8b42549","0x6ccc4a6ff88cdca255c948fe6cc43cf7159ff33a0b9804bdd5a5d6b17d7885e6","0x69d02ed8b2eda79fd77f8e487714fa2dad1e6b710ecfbb2f4f4fc28cab43b791"]
-      fieldMeta:
--        {"maxTimeVariation":{"description":"Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."}}
       errors:
-+        {"inboxAccs":"Processing error occurred."}
++        {"sequencerVersion":"Processing error occurred."}
     }
 ```
 
