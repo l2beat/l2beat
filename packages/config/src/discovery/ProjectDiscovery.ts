@@ -1137,6 +1137,7 @@ export class ProjectDiscovery {
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
     assert(actors.every((actor) => actor.accounts.length === 1))
     assert(allUnique(actors.map((actor) => actor.accounts[0].address)))
+    assert(allUnique(actors.map((actor) => actor.accounts[0].name)))
 
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
