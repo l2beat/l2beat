@@ -1,16 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
-import type {
-  Bridge,
-  DaProject,
-  Layer2,
-  Layer3,
-  ProjectLivenessInfo,
-} from '../../types'
+import type { Bridge, Layer2, Layer3, ProjectLivenessInfo } from '../../types'
 import type { BaseProject, ProjectCostsInfo } from '../../types'
 import { isVerified } from '../../verification/isVerified'
 import { bridges } from '../bridges'
-import { daLayers } from '../da-beat'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { refactored } from '../refactored'
@@ -24,7 +17,6 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(bridges.map(bridgeToProject))
-    .concat(daLayers.map(daToProject))
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
@@ -167,32 +159,6 @@ function bridgeToProject(p: Bridge): BaseProject {
     // tags
     isBridge: true,
     isArchived: p.isArchived ? true : undefined,
-    isUpcoming: p.isUpcoming ? true : undefined,
-  }
-}
-
-function daToProject(p: DaProject): BaseProject {
-  return {
-    id: p.id,
-    slug: p.display.slug,
-    name: p.display.name,
-    shortName: undefined,
-    addedAt: UnixTime.ZERO,
-    // data
-    statuses: {
-      yellowWarning: undefined,
-      redWarning: undefined,
-      isUnderReview: !!p.isUnderReview,
-      isUnverified: !isVerified(p),
-    },
-    display: {
-      description: p.display.description,
-      links: p.display.links,
-    },
-    daBridges: p.daLayer.bridges,
-    milestones: p.milestones,
-    // tags
-    isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
 }

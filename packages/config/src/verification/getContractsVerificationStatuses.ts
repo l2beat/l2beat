@@ -1,14 +1,8 @@
-import type {
-  Bridge,
-  DaProject,
-  Layer2,
-  Layer3,
-  ProjectContract,
-} from '../types'
+import type { Bridge, Layer2, Layer3, ProjectContract } from '../types'
 
 // TODO(radomski): Remove
 export function getContractsVerificationStatuses(
-  project: Layer2 | Layer3 | Bridge | DaProject,
+  project: Layer2 | Layer3 | Bridge,
 ) {
   if (!('contracts' in project)) {
     return {}

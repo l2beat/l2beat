@@ -728,25 +728,11 @@ export interface CustomDa {
   challengeMechanism?: DaChallengeMechanism
 }
 
-export interface DaProject {
-  type: 'DaLayer'
-  id: ProjectId
-  display: DaLayerDisplay
-  /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isUnderReview?: boolean
-  daLayer: DaLayer
-  milestones?: Milestone[]
-}
-
 export interface DaLayer {
   name?: string
   description?: string
   type: string
   systemCategory: 'public' | 'custom'
-  bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
   usedWithoutBridgeIn: UsedInProject[]
@@ -981,6 +967,7 @@ export interface BaseProject {
   id: ProjectId
   slug: string
   name: string
+  /** Used in place of name in tables to save space. */
   shortName: string | undefined
   addedAt: UnixTime
   // data
@@ -1004,6 +991,7 @@ export interface BaseProject {
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
+  daLayer?: DaLayer
   daBridges?: DaBridge[]
   countdowns?: ProjectCountdowns
   milestones?: Milestone[]

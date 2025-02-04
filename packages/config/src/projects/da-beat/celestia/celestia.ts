@@ -1,17 +1,29 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 import { blobstream } from './blobstream'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 
-export const celestia: DaProject = {
-  type: 'DaLayer',
+const daBridges = [blobstream]
+
+export const celestia: BaseProject = {
   id: ProjectId('celestia'),
+  slug: 'celestia',
+  name: 'Celestia',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: !daBridges.every(isDaBridgeVerified),
+  },
   display: {
-    name: 'Celestia',
-    slug: 'celestia',
     description:
       'Celestia is a modular data availability network that allows L2s to post arbitrary data as blobs.',
     links: {
@@ -119,7 +131,6 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       layer: ProjectId('celestia'),
       bridge: undefined,
     }),
-    bridges: [blobstream],
     /*
       Node params sources:
       - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
@@ -158,6 +169,7 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       },
     },
   },
+  daBridges,
   milestones: [
     {
       title: 'Mainnet launch',

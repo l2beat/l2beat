@@ -10,7 +10,6 @@ import {
   isDaBridgeVerified,
   layer2s,
   layer3s,
-  toUsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
@@ -156,7 +155,13 @@ function getDacEntries(
         return undefined
       }
 
-      const usedIn = toUsedInProject([parentProject])
+      const usedIn: UsedInProject[] = [
+        {
+          id: parentProject.id,
+          name: parentProject.display.name,
+          slug: parentProject.display.slug,
+        },
+      ]
       const tvs = getTvs([parentProject.id])
       const dacInfo = customDa.dac
         ? {

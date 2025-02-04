@@ -1,16 +1,28 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 import { hotshot } from './hotshot'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 
-export const espressoDA: DaProject = {
-  type: 'DaLayer',
+const daBridges = [hotshot]
+
+export const espressoDA: BaseProject = {
   id: ProjectId('espressoDA'),
+  slug: 'espressoDA',
+  name: 'Espresso DA',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: !daBridges.every(isDaBridgeVerified),
+  },
   display: {
-    name: 'Espresso DA',
-    slug: 'espressoDA',
     description:
       'Espresso DA is a three-layer data availability (DA) solution based on the HotShot consensus.',
     links: {
@@ -84,12 +96,12 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       layer: ProjectId('espressoDA'),
       bridge: undefined,
     }),
-    bridges: [hotshot],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
   },
+  daBridges,
   milestones: [
     {
       title: 'EspressoDA launch on mainnet',

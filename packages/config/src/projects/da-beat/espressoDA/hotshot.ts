@@ -6,7 +6,7 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../common'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours

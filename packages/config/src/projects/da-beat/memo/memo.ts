@@ -1,15 +1,24 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
-export const memo: DaProject = {
-  type: 'DaLayer',
+export const memo: BaseProject = {
   id: ProjectId('memo'),
+  slug: 'memo',
+  name: 'Meeda',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: false,
+  },
   display: {
-    name: 'Meeda',
-    slug: 'memo',
     description: `Meeda (MemoDA) is a blockchain-based cloud storage protocol developed by MEMO Labs.`,
     links: {
       websites: ['https://www.memolabs.org/'],
@@ -87,13 +96,13 @@ export const memo: DaProject = {
       layer: ProjectId('memo'),
       bridge: undefined,
     }),
-    bridges: [],
     pruningWindow: 0,
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
   },
+  daBridges: [],
   milestones: [
     {
       title: 'MEMO Megrez Network launch',

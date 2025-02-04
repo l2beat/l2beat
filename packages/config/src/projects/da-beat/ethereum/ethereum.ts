@@ -1,16 +1,28 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 
-export const ethereum: DaProject = {
-  type: 'DaLayer',
+const daBridges = [enshrinedBridge]
+
+export const ethereum: BaseProject = {
   id: ProjectId('ethereum'),
+  slug: 'ethereum',
+  name: 'Ethereum',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: !daBridges.every(isDaBridgeVerified),
+  },
   display: {
     // name: 'Ethereum (EIP-4844)',
-    name: 'Ethereum',
-    slug: 'ethereum',
     description: `Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
     links: {
@@ -102,7 +114,6 @@ This method allows ZK rollups to prove that the data used in their validity proo
       ],
     },
     usedWithoutBridgeIn: [],
-    bridges: [enshrinedBridge],
     consensusAlgorithm: {
       name: 'Gasper',
       description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
@@ -132,4 +143,5 @@ This method allows ZK rollups to prove that the data used in their validity proo
     },
     daTracking: 'ethereum',
   },
+  daBridges,
 }

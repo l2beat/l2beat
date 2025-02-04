@@ -1,17 +1,29 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 import { vector } from './vector'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 
-export const avail: DaProject = {
-  type: 'DaLayer',
+const daBridges = [vector]
+
+export const avail: BaseProject = {
   id: ProjectId('avail'),
+  slug: 'avail',
+  name: 'Avail',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: !daBridges.every(isDaBridgeVerified),
+  },
   display: {
-    name: 'Avail',
-    slug: 'avail',
     description:
       'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
     links: {
@@ -108,7 +120,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
       layer: ProjectId('avail'),
       bridge: undefined,
     }),
-    bridges: [vector],
     /*
       Node params sources:
     */
@@ -141,6 +152,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       },
     },
   },
+  daBridges,
   milestones: [
     {
       title: 'Mainnet launch',

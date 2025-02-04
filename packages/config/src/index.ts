@@ -27,11 +27,6 @@ export {
   type BadgeId,
 } from './projects/badges'
 export { bridges } from './projects/bridges'
-export {
-  daLayers,
-  ethereumDaLayer,
-  toUsedInProject,
-} from './projects/da-beat'
 export { layer2s } from './projects/layer2s'
 export { layer3s } from './projects/layer3s'
 export { onChainProjects } from './projects/onChainProjects'
