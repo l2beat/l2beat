@@ -1,16 +1,20 @@
-Generated with discovered.json: 0x00f65df11fa698c30862a553ca2138a323a66238
+Generated with discovered.json: 0xe442a28c03385d20bc0d8343087163cb0757d8a5
 
-# Diff at Tue, 04 Feb 2025 07:35:27 GMT:
+# Diff at Tue, 04 Feb 2025 10:59:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@142491370256d9fb936a347e610d0ac200e9e51c block: 21745064
-- current block number: 21771679
+- current block number: 21772665
 
 ## Description
 
 Upgrade PolygonRollupManager to the version "pessimistic".
 
 Reduce timelock delay from 10d to 3d.
+
+This upgrade introduces an enum `VerifierType` that replaces the old `rollupCompatibilityID`. It can be either `StateTransition` or `Pessimistic`, and currently cannot be changed for a project.
+- `StateTransition` Layer 2s (Rollups or Validiums) are using their normal verifier contracts for state validation as before: (`verifyBatchesTrustedAggregator()`)
+- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/agglayer/modes-of-integration/polygon-cdk/#cdk-sovereign), without full state validation or DA on Ethereum.
 
 ### PolygonRollupManager
 
@@ -27,65 +31,21 @@ Reduce timelock delay from 10d to 3d.
 ```diff
     contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
     +++ description: None
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]}
-      receivedPermissions.6:
--        {"permission":"upgrade","from":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]}
-      receivedPermissions.5:
--        {"permission":"upgrade","from":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","via":[{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]}
-      receivedPermissions.4.permission:
--        "configure"
-+        "upgrade"
-      receivedPermissions.4.from:
--        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-+        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
-      receivedPermissions.4.description:
--        "propose, cancel and execute transactions in the timelock, manage all access control roles."
-      receivedPermissions.4.via:
-+        [{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there is no delay"}]
-      receivedPermissions.3.permission:
--        "configure"
-+        "upgrade"
-      receivedPermissions.3.from:
--        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-+        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-      receivedPermissions.3.description:
--        "propose, cancel and execute transactions in the timelock, manage all access control roles."
-      receivedPermissions.3.via.1:
-+        {"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there is no delay"}
-      receivedPermissions.3.via.0.address:
--        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-+        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      receivedPermissions.7.via.1.delay:
+-        864000
++        259200
+      receivedPermissions.6.via.1.delay:
+-        864000
++        259200
+      receivedPermissions.5.via.1.delay:
+-        864000
++        259200
       receivedPermissions.3.via.0.delay:
 -        864000
-      receivedPermissions.3.via.0.condition:
--        "there is no emergency state, in which case there is no delay"
-      receivedPermissions.2.permission:
--        "configure"
-+        "upgrade"
-      receivedPermissions.2.from:
--        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-+        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
-      receivedPermissions.2.description:
--        "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
-      receivedPermissions.2.via:
-+        [{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there is no delay"}]
-      receivedPermissions.1.from:
--        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-+        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      receivedPermissions.1.description:
--        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
-+        "propose, cancel and execute transactions in the timelock, manage all access control roles."
-      receivedPermissions.1.via:
--        [{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]
-      receivedPermissions.0.from:
--        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-+        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      receivedPermissions.0.description:
--        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
-+        "propose, cancel and execute transactions in the timelock, manage all access control roles."
-      receivedPermissions.0.via:
-+        [{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there is no delay"}]
++        259200
+      receivedPermissions.1.via.0.delay:
+-        864000
++        259200
       directlyReceivedPermissions.0.delay:
 -        864000
 +        259200
@@ -102,47 +62,23 @@ Reduce timelock delay from 10d to 3d.
 ```
 
 ```diff
--   Status: DELETED
-    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
-    +++ description: None
-```
-
-```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
-    +++ description: None
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
       template:
 -        "polygon-cdk/PolygonRollupManager"
++        "polygon-cdk/PolygonRollupManager_pessimistic"
       sourceHashes.1:
 -        "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
 +        "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
       description:
 -        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers."
-      issuedPermissions.7:
--        {"permission":"upgrade","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"},{"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}]}
-      issuedPermissions.6:
--        {"permission":"configure","to":"0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]}
-      issuedPermissions.5:
--        {"permission":"configure","to":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","description":"activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.","via":[]}
-      issuedPermissions.4:
--        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).","via":[]}
-      issuedPermissions.3:
--        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.","via":[{"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":864000,"condition":"there is no emergency state, in which case there is no delay"}]}
-      issuedPermissions.2:
--        {"permission":"configure","to":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","description":"deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.","via":[]}
-      issuedPermissions.1:
--        {"permission":"aggregatePolygon","to":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","via":[]}
-      issuedPermissions.0.permission:
--        "aggregatePolygon"
-+        "upgrade"
-      issuedPermissions.0.to:
--        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
-+        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-      issuedPermissions.0.via.1:
-+        {"address":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"}
-      issuedPermissions.0.via.0:
-+        {"address":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"there is no emergency state, in which case there is no delay"}
-      values._HALT_AGGREGATION_TIMEOUT:
--        "1 week"
++        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
+      issuedPermissions.7.via.0.delay:
+-        864000
++        259200
+      issuedPermissions.3.via.0.delay:
+-        864000
++        259200
       values.$implementation:
 -        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
 +        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
@@ -151,24 +87,9 @@ Reduce timelock delay from 10d to 3d.
       values.$upgradeCount:
 -        5
 +        6
-      values.accessControl:
--        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"TRUSTED_AGGREGATOR":{"adminRole":"TRUSTED_AGGREGATOR_ADMIN","members":["0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]},"ADD_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"ADD_EXISTING_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"UPDATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"OBSOLETE_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"CREATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"]},"STOP_EMERGENCY":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TWEAK_PARAMETERS":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TRUSTED_AGGREGATOR_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"SET_FEE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"EMERGENCY_COUNCIL":{"adminRole":"EMERGENCY_COUNCIL_ADMIN","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]},"EMERGENCY_COUNCIL_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]}}
-      values.createRollupAC:
--        ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"]
-      values.defaultAdminAC:
--        ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
-      values.emergencyCouncilAdminAC:
--        ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
-      values.emergencyStateCount:
--        1
-      values.getRollupExitRoot:
--        "0xa00fca521c0fcd8a9a4af2b5cd6ec38ae8627e0f8b871cdcea4baac5f1663bcc"
-+        "0xce81a8b584b8496095c6a79d7c61a3cc2cf8c30648a2dbb20cedc1d886f4d066"
-      values.isVerifyingBatches:
--        [[true],[true],[true],[false],[true],[true],[true],[true],[true],[true],[true],[true],[true]]
-      values.lastAggregationTimestamp:
--        1738332791
-+        1738653863
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.13:
++        [false]
       values.nondeterministicPendingState:
 -        []
       values.pendingStateTimeout:
@@ -176,37 +97,24 @@ Reduce timelock delay from 10d to 3d.
       values.rollupCount:
 -        13
 +        14
-      values.rollupsData:
--        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",6],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",8],["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]]
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.13:
++        ["0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",9369,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",9]
       values.rollupTypeCount:
 -        8
 +        9
-      values.rollupTypes:
--        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"],["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"],["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"],["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F","0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"]]
-      values.totalSequencedBatches:
--        574255
-+        580866
-      values.totalVerifiedBatches:
--        573751
-+        580330
-      values.trustedAggregatorAC:
--        ["0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]
++++ description: struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock
+      values.rollupTypes.8:
++        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"]
       values.trustedAggregatorTimeout:
 -        432000
-      values.tweakParametersAC:
--        ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
       values.verifyBatchTimeTarget:
 -        1800
-      values.calculateRewardPerBatch:
-+        "100000000000003792"
-      values.getForcedBatchFee:
-+        "10000000000000000000"
       values.ROLLUP_MANAGER_VERSION:
 +        "pessimistic"
-      fieldMeta:
--        {"nondeterministicPendingState":{"severity":"HIGH"},"isEmergencyState":{"severity":"HIGH","description":"pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."},"rollupsData":{"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"},"rollupTypes":{"description":"struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"},"isVerifyingBatches":{"description":"Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."}}
-      usedTypes:
--        [{"typeCaster":"GreaterThan","arg":{"value":1}}]
+      fieldMeta.nondeterministicPendingState:
+-        {"severity":"HIGH"}
     }
 ```
 
@@ -220,12 +128,6 @@ Reduce timelock delay from 10d to 3d.
 ```
 
 ```diff
--   Status: DELETED
-    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
-    +++ description: None
-```
-
-```diff
     contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
     +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
       description:
@@ -234,14 +136,6 @@ Reduce timelock delay from 10d to 3d.
       issuedPermissions.1.via.0.delay:
 -        864000
 +        259200
-      directlyReceivedPermissions.3:
--        {"permission":"configure","from":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","description":"propose, cancel and execute transactions in the timelock, manage all access control roles."}
-      directlyReceivedPermissions.2.from:
--        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-+        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      directlyReceivedPermissions.2.description:
--        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
-+        "propose, cancel and execute transactions in the timelock, manage all access control roles."
       directlyReceivedPermissions.1.delay:
 -        864000
 +        259200
@@ -254,29 +148,11 @@ Reduce timelock delay from 10d to 3d.
     }
 ```
 
-```diff
-+   Status: CREATED
-    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
-.../shared-polygon-cdk/ethereum/.flat/Permit2.sol  |  939 ++++++++
- .../GnosisSafe.sol => /dev/null                    |  953 --------
- .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
- .../ethereum/.flat/PolygonEcosystemToken.sol       | 2402 ++++++++++++++++++++
- .../PolygonRollupManager/PolygonRollupManager.sol  | 1305 +++++------
- .../GnosisSafe.sol => /dev/null                    |  953 --------
- .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
- 7 files changed, 3856 insertions(+), 2766 deletions(-)
+.../PolygonRollupManager/PolygonRollupManager.sol  | 1305 ++++++++------------
+ 1 file changed, 515 insertions(+), 790 deletions(-)
 ```
 
 Generated with discovered.json: 0xda60ce55287fb5f595f630ba4fb0ae56915c6943

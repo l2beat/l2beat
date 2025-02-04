@@ -1,21 +1,9 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21771679,
+  "blockNumber": 21772665,
   "configHash": "0xece1e516b4d6c8360cf38bcef6633134c0fb72adc9e6773ecb060a535ddcb57e",
   "contracts": [
-    {
-      "name": "Permit2",
-      "address": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
-      "sourceHashes": [
-        "0x84beffbcb4624fb74fab61c80beeb566023a939418284a8f44357b71cd40b63b"
-      ],
-      "sinceTimestamp": 1668647879,
-      "values": {
-        "$immutable": true,
-        "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
-      }
-    },
     {
       "name": "SharedProxyAdmin",
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
@@ -55,6 +43,28 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "there is no emergency state, in which case there is no delay"
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
+        },
         {
           "permission": "configure",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
@@ -184,7 +194,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x818968e7439326bf364b3d5dc3b669507f03d6d1193e010a201ed2f19609dd6f",
+        "getRoot": "0x20c08ddfc6efaca570f8ed1a8556889bdf0e9ef01a76c232da1d3e193c09fe19",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -199,48 +209,103 @@
       }
     },
     {
-      "name": "PolygonEcosystemToken",
-      "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+      "name": "PolygonSecurityCouncil",
+      "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+      "template": "GnosisSafe",
       "sourceHashes": [
-        "0xb814773e3a4cf3d1dd288afdeed9cbdc361edda62de8fa393290e5be836ffae0"
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
-      "sinceTimestamp": 1698224783,
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1678429487,
       "values": {
-        "$immutable": true,
-        "CAP_MANAGER_ROLE": "0x027f9f680a0c6704fd9796b55c67fe885252243966ecb05a88f3e7873c845d9a",
-        "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0xb229387d8db422d84103ea5884522a783e8f8b570d17cc1e9bb39959983346f8",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Polygon Ecosystem Token",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "EMISSION_ROLE": "0x573321b8a13c75b2702bc4b0ad9afaae98bf6985285411964a564e68bf6da1c9",
-        "lastMint": 1738426127,
-        "mintPerSecondCap": "13370000000000000000",
-        "name": "Polygon Ecosystem Token",
-        "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
-        "PERMIT2_REVOKER_ROLE": "0xbd4c1461ef59750b24719a44d7e2a7948c57fd12c98e333541b7ea7b61f07cb7",
-        "permit2Enabled": true,
-        "symbol": "POL",
-        "totalSupply": "10354975668542738958480400588",
-        "version": "1.1.0"
-      }
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+          "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+          "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+          "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+          "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+          "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+          "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+          "0x21887c89368bf918346c62460e0c339113801C28"
+        ],
+        "$threshold": 6,
+        "domainSeparator": "0x33ea3e28c0dfd2e84cb64bd76585cb4f6ed8e2e6f5fe17293c8c09fa01db36d7",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 8 (75%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "template": "polygon-cdk/PolygonRollupManager_pessimistic",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
         "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
       "issuedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "to": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+          "via": []
+        },
+        {
+          "permission": "aggregatePolygon",
+          "to": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
+          "via": [
+            {
+              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "there is no emergency state, in which case there is no delay"
+            }
+          ]
+        },
+        {
+          "permission": "configure",
+          "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+          "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
@@ -254,8 +319,15 @@
           ]
         }
       ],
+      "ignoreInWatchMode": [
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
       "sinceTimestamp": 1679653163,
       "values": {
+        "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0xA33619940bceb9be7c9679Dd80FA2918C2476382",
         "$pastUpgrades": [
@@ -291,23 +363,255 @@
           ]
         ],
         "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "TRUSTED_AGGREGATOR": {
+            "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
+            "members": [
+              "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+              "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+            ]
+          },
+          "ADD_ROLLUP_TYPE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "ADD_EXISTING_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "UPDATE_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+            ]
+          },
+          "OBSOLETE_ROLLUP_TYPE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "CREATE_ROLLUP": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+              "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+            ]
+          },
+          "STOP_EMERGENCY": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "TWEAK_PARAMETERS": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "TRUSTED_AGGREGATOR_ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "SET_FEE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "EMERGENCY_COUNCIL": {
+            "adminRole": "EMERGENCY_COUNCIL_ADMIN",
+            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+          },
+          "EMERGENCY_COUNCIL_ADMIN": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+          }
+        },
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "calculateRewardPerBatch": "100000000000003792",
+        "createRollupAC": [
+          "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "defaultAdminAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "emergencyCouncilAdminAC": [
+          "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"
+        ],
+        "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getForcedBatchFee": "10000000000000000000",
-        "getRollupExitRoot": "0xce81a8b584b8496095c6a79d7c61a3cc2cf8c30648a2dbb20cedc1d886f4d066",
+        "getRollupExitRoot": "0x779840b4b5315947a2a15bdac4b1b3584e318081b7c27e339626b88b22b0d0c3",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1738653863,
+        "isVerifyingBatches": [
+          [true],
+          [true],
+          [true],
+          [false],
+          [true],
+          [true],
+          [true],
+          [true],
+          [true],
+          [true],
+          [true],
+          [true],
+          [true],
+          [false]
+        ],
+        "lastAggregationTimestamp": 1738665827,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 14,
+        "rollupsData": [
+          [
+            "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+            1101,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            6
+          ],
+          [
+            "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+            3776,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            196,
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            8
+          ],
+          [
+            "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+            4913,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+            1511670449,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+            1702448187,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+            994873017,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+            31415,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
+            511252203,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+            2355,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
+            999,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
+            938,
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            4
+          ],
+          [
+            "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+            752025,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            7
+          ],
+          [
+            "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+            9369,
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            9
+          ]
+        ],
         "rollupTypeCount": 9,
-        "totalSequencedBatches": 580866,
-        "totalVerifiedBatches": 580330
-      }
+        "rollupTypes": [
+          [
+            "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+          ],
+          [
+            "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+          ],
+          [
+            "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+          ],
+          [
+            "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+          ],
+          [
+            "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+          ]
+        ],
+        "totalSequencedBatches": 581266,
+        "totalVerifiedBatches": 580763,
+        "trustedAggregatorAC": [
+          "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+        ],
+        "tweakParametersAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+      },
+      "fieldMeta": {
+        "isEmergencyState": {
+          "severity": "HIGH",
+          "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
+        },
+        "rollupsData": {
+          "severity": "MEDIUM",
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"
+        },
+        "rollupTypes": {
+          "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
+        },
+        "isVerifyingBatches": {
+          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
+        }
+      },
+      "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }]
     },
     {
       "name": "PolygonZkEVMGlobalExitRootV2",
@@ -358,10 +662,51 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 53555,
-        "getRoot": "0xd93c745e83e07d4d7398396c4c4e996243bf3c94d09e78705113e3d564a46902",
+        "depositCount": 53566,
+        "getRoot": "0x04ce7c970f6113dc3d9cc5a053401d45acdfcbdf98922e06c9d5eb28308be1d7",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       }
+    },
+    {
+      "name": "PolygonCreateRollupMultisig",
+      "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1722533147,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+          "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+          "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+          "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+          "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+          "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+          "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "PolygonZkEVMTimelock",
@@ -402,6 +747,11 @@
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "condition": "there is no emergency state, in which case there is no delay"
+        },
+        {
+          "permission": "configure",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
         },
         {
           "permission": "configure",
@@ -749,44 +1099,44 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6" },
+    { "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77" },
+    {
+      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    { "address": "0x21887c89368bf918346c62460e0c339113801C28" },
+    { "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5" },
+    { "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622" },
+    { "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86" },
     { "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891" },
+    {
+      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "receivedPermissions": [
+        {
+          "permission": "aggregatePolygon",
+          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        }
+      ]
+    },
+    { "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496" },
+    { "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0" },
     { "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227" },
-    { "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2" }
+    { "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31" },
+    { "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D" },
+    { "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf" },
+    { "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9" },
+    { "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc" },
+    { "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC" },
+    { "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2" },
+    { "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b" }
   ],
   "abis": {
-    "0x000000000022D473030F116dDEE9F6B43aC78BA3": [
-      "error AllowanceExpired(uint256 deadline)",
-      "error ExcessiveInvalidation()",
-      "error InsufficientAllowance(uint256 amount)",
-      "error InvalidAmount(uint256 maxAmount)",
-      "error InvalidContractSignature()",
-      "error InvalidNonce()",
-      "error InvalidSignature()",
-      "error InvalidSignatureLength()",
-      "error InvalidSigner()",
-      "error LengthMismatch()",
-      "error SignatureExpired(uint256 signatureDeadline)",
-      "event Approval(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration)",
-      "event Lockdown(address indexed owner, address token, address spender)",
-      "event NonceInvalidation(address indexed owner, address indexed token, address indexed spender, uint48 newNonce, uint48 oldNonce)",
-      "event Permit(address indexed owner, address indexed token, address indexed spender, uint160 amount, uint48 expiration, uint48 nonce)",
-      "event UnorderedNonceInvalidation(address indexed owner, uint256 word, uint256 mask)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address, address, address) view returns (uint160 amount, uint48 expiration, uint48 nonce)",
-      "function approve(address token, address spender, uint160 amount, uint48 expiration)",
-      "function invalidateNonces(address token, address spender, uint48 newNonce)",
-      "function invalidateUnorderedNonces(uint256 wordPos, uint256 mask)",
-      "function lockdown(tuple(address token, address spender)[] approvals)",
-      "function nonceBitmap(address, uint256) view returns (uint256)",
-      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce)[] details, address spender, uint256 sigDeadline) permitBatch, bytes signature)",
-      "function permit(address owner, tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes signature)",
-      "function permitTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes signature)",
-      "function permitTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes signature)",
-      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount) permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount) transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
-      "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
-      "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
-      "function transferFrom(address from, address to, uint160 amount, address token)"
-    ],
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -873,55 +1223,8 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": [
-      "constructor(address migration, address emissionManager, address protocolCouncil, address emergencyCouncil)",
-      "error InvalidAddress()",
-      "error InvalidShortString()",
-      "error MaxMintExceeded(uint256 maxMint, uint256 mintRequested)",
-      "error StringTooLong(string str)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event MintCapUpdated(uint256 oldCap, uint256 newCap)",
-      "event Permit2AllowanceUpdated(bool enabled)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function CAP_MANAGER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function EMISSION_ROLE() view returns (bytes32)",
-      "function PERMIT2() view returns (address)",
-      "function PERMIT2_REVOKER_ROLE() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
-      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function lastMint() view returns (uint256)",
-      "function mint(address to, uint256 amount)",
-      "function mintPerSecondCap() view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function permit2Enabled() view returns (bool)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function updateMintCap(uint256 newCap)",
-      "function updatePermit2Allowance(bool enabled)",
-      "function version() pure returns (string)"
+    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
+      "constructor(address _singleton)"
     ],
     "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1097,6 +1400,9 @@
       "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
       "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof)"
     ],
+    "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
+      "constructor(address _singleton)"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -1190,6 +1496,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0xf79efdefaf0609b8ca2a85e76e95247398a624c35c1e685136222e6e6f2982cf",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x80f5f7cbfcfd3a0bb40507d93218158b0615cd29def7ddc00ea7138144ed416f"
   }
