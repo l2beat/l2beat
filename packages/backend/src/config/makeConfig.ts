@@ -3,7 +3,7 @@ import {
   layer2ToBackendProject,
 } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s } from '@l2beat/config'
+import { ProjectService, bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
@@ -19,6 +19,7 @@ import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
+import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
 
 interface MakeConfigOptions {
@@ -31,6 +32,8 @@ export async function makeConfig(
   env: Env,
   { name, isLocal, minTimestampOverride }: MakeConfigOptions,
 ): Promise<Config> {
+  const ps = new ProjectService()
+
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
@@ -150,7 +153,7 @@ export async function makeConfig(
           blockExplorerConfig: getChainActivityBlockExplorerConfig(env, x),
         })),
     },
-    verifiers: flags.isEnabled('verifiers'),
+    verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {
@@ -171,7 +174,7 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
-    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(env)),
+    daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
     chainConfig: getChainConfig(env),
     beaconApi: {
       url: env.optionalString([
@@ -193,7 +196,7 @@ export async function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(flags, env)),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, flags, env)),
     // Must be last
     flags: flags.getResolved(),
   }

@@ -1,6 +1,7 @@
 import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   DaLayerTrackingConfig,
+  OnchainVerifier,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
@@ -38,7 +39,7 @@ export interface Config {
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
-  readonly verifiers: boolean
+  readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly chainConfig: ChainApi[]
   readonly beaconApi: {
@@ -175,6 +176,10 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
+}
+
+export interface VerifiersConfig {
+  readonly verifiers: OnchainVerifier[]
 }
 
 export interface DiscordConfig {

@@ -1,9 +1,12 @@
 import type { Env } from '@l2beat/backend-tools'
-import { ProjectService } from '@l2beat/config'
+import type { ProjectService } from '@l2beat/config'
 import type { DaBeatConfig } from '../Config'
 
-export async function getDaBeatConfig(env: Env): Promise<DaBeatConfig> {
-  const projects = await ProjectService.STATIC.getProjects({
+export async function getDaBeatConfig(
+  ps: ProjectService,
+  env: Env,
+): Promise<DaBeatConfig> {
+  const projects = await ps.getProjects({
     select: ['daLayer'],
     whereNot: ['isUpcoming'],
   })

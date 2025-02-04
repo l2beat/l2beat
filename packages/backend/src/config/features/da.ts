@@ -1,6 +1,5 @@
-import { ProjectService, layer2s, layer3s } from '@l2beat/config'
-
 import type { Env } from '@l2beat/backend-tools'
+import { type ProjectService, layer2s, layer3s } from '@l2beat/config'
 import type {
   DaLayerTrackingConfig,
   ProjectDaTrackingConfig,
@@ -10,6 +9,7 @@ import type { DataAvailabilityTrackingConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getDaTrackingConfig(
+  ps: ProjectService,
   flags: FeatureFlags,
   env: Env,
 ): Promise<DataAvailabilityTrackingConfig> {
@@ -23,7 +23,7 @@ export async function getDaTrackingConfig(
       minHeight: env.integer('DA_ETHEREUM_MIN_HEIGHT', 19426618), // blobs
       batchSize: env.integer('DA_ETHEREUM_BATCH_SIZE', 2500),
     },
-    layers: (await getDaTrackingLayers()).filter((layer) =>
+    layers: (await getDaTrackingLayers(ps)).filter((layer) =>
       flags.isEnabled('da', layer),
     ),
     projects: getProjectsWithDaTracking().filter((project) =>
@@ -32,8 +32,10 @@ export async function getDaTrackingConfig(
   }
 }
 
-async function getDaTrackingLayers(): Promise<DaLayerTrackingConfig[]> {
-  const projects = await ProjectService.STATIC.getProjects({
+async function getDaTrackingLayers(
+  ps: ProjectService,
+): Promise<DaLayerTrackingConfig[]> {
+  const projects = await ps.getProjects({
     select: ['daLayer'],
     whereNot: ['isUpcoming'],
   })
