@@ -240,12 +240,25 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 
 const finalizationPeriod = 0
 
+const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
+
+// big governance assert
+assert(
+  proxyGovernors[0].address ===
+    discovery.getContract('StarknetAdminMultisig').address &&
+    proxyGovernors.length === 1 &&
+    governors[0].address ===
+      discovery.getContract('StarknetOpsMultisig').address &&
+    governors.length === 1,
+  'gov has changed, review non-discodriven perms and gov section.',
+)
+
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
   capability: 'universal',
   addedAt: new UnixTime(1642687633), // 2022-01-20T14:07:13Z
-  isUnderReview: true,
   display: {
     name: 'Starknet',
     slug: 'starknet',
@@ -1024,97 +1037,63 @@ export const starknet: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Starknet', {
-        description:
-          'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-        upgradeDelay: starknetDelaySeconds
-          ? formatSeconds(starknetDelaySeconds)
-          : 'No delay',
-        upgradableBy: ['Starknet Proxy Governors'],
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-      discovery.getContractDetails(
-        'L1DaiGateway',
-        'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
-      ),
-      discovery.getContractDetails('StarkgateManager', {
-        description:
-          'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
-        upgradableBy: ['StarkGate MultiBridge Admin'],
-        upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
-      }),
-      discovery.getContractDetails('StarkgateRegistry', {
-        description:
-          'A central registry contract to map token addresses to their StarkGate bridge contract.',
-        upgradableBy: ['StarkGate MultiBridge Admin'],
-        upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Starknet', {
+          description:
+            'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
+          upgradeDelay: starknetDelaySeconds
+            ? formatSeconds(starknetDelaySeconds)
+            : 'No delay',
+          upgradableBy: ['StarknetAdminMultisig'],
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+        discovery.getContractDetails(
+          'L1DaiGateway',
+          'Custom DAI Gateway, main entry point for users depositing DAI to L2 where "canonical" L2 DAI token managed by MakerDAO will be minted. Managed by MakerDAO.',
+        ),
+        discovery.getContractDetails('StarkgateManager', {
+          description:
+            'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
+          upgradableBy: ['StarkgateBridgeMultisig'],
+          upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
+        }),
+        discovery.getContractDetails('StarkgateRegistry', {
+          description:
+            'A central registry contract to map token addresses to their StarkGate bridge contract.',
+          upgradableBy: ['StarkgateBridgeMultisig'],
+          upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  upgradesAndGovernance: (() => {
-    const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
-    const proxygovMulti = discovery.getContract('ProxyMultisig')
-    const implGovernors = discovery.getPermissionedAccounts(
-      'Starknet',
-      'governors',
-    )
-
-    assert(
-      proxyGovernors[1].address === proxygovMulti.address &&
-        proxyGovernors.length === 2 &&
-        discovery.isEOA(implGovernors[0].address),
-      'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
-    )
-    const description = `
-The Upgrading mechanism of Starknet follows a similar scheme for all of their smart contracts. A contract initializes with the creator of the contract as a Governor, who can then nominate or remove other Governors allowing them to call restricted governor functions.
-
-The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governors\`: A Proxy multisig with a ${discovery.getMultisigStats(
-      'ProxyMultisig',
-    )} threshold and an EOA. Implementations can be upgraded ${
-      starknetDelaySeconds === 0
-        ? 'without delay, thus users are not provided with an exit window in case of unwanted upgrades.'
-        : 'with a delay of ' + formatSeconds(starknetDelaySeconds) + '.'
-    }
-
-\`Starknet Implementation Governors\` have the authority to execute governed functions that modify contract parameters without delay. These actions encompass registering/removing Operators, specifying the program and config hash, or setting the Message Cancellation Delay between L1 and L2. Currently it is governed by a Multisig with a ${discovery.getMultisigStats(
-      'ImplementationMultisig',
-    )} threshold and an EOA. The verifier address is set upon initialization of the Starknet Implementation contract.
-
-Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${
-      getSHARPVerifierUpgradeDelay() === 0
-        ? 'no'
-        : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())
-    } delay before any upgrade takes effect.
-
-The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
-
-At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.
-`
-    return description
-  })(),
+  upgradesAndGovernance: `
+  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
+  
+  
+  The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
+  
+  
+  The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
+  `,
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Starknet Proxy Governors',
-          accounts: getProxyGovernance(discovery, 'Starknet'),
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. Can also upgrade implementation of the StarknetCore contract, potentially allowing fraudulent state to be posted. ' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        },
         ...discovery.getMultisigPermission(
-          'ProxyMultisig',
-          'One of Proxy Governors.',
+          'StarknetAdminMultisig',
+          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
+            delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
-        {
-          name: 'Starknet Implementation Governors',
-          accounts: discovery.getPermissionedAccounts('Starknet', 'governors'),
-          description:
-            'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-        },
+        ...discovery.getMultisigPermission(
+          'StarkgateBridgeMultisig',
+          'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
+        ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        ...discovery.getMultisigPermission(
+          'StarknetOpsMultisig',
+          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+        ),
         {
           name: 'Operators',
           accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
@@ -1122,105 +1101,11 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
             'Allowed to post state updates. When the operator is down the state cannot be updated.',
         },
         {
-          name: 'StarkGate ETH owner',
-          accounts: getProxyGovernance(discovery, ESCROW_ETH_ADDRESS),
-          description:
-            'Can upgrade implementation of the ETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowETHDelaySeconds),
-        },
-        ...discovery.getMultisigPermission(
-          'StarkgateETHSecurityAgentMultisig',
-          'Can enable the token withdrawal limit of the Starkgate escrow for ETH.',
-        ),
-        {
-          name: 'StarkGate WBTC owner',
-          accounts: getProxyGovernance(discovery, ESCROW_WBTC_ADDRESS),
-          description:
-            'Can upgrade implementation of the WBTC escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowWBTCDelaySeconds),
-        },
-        {
-          name: 'StarkGate USDC owner',
-          accounts: getProxyGovernance(discovery, ESCROW_USDC_ADDRESS),
-          description:
-            'Can upgrade implementation of the USDC escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-        },
-        {
-          name: 'StarkGate USDT owner',
-          accounts: getProxyGovernance(discovery, ESCROW_USDT_ADDRESS),
-          description:
-            'Can upgrade implementation of the USDT escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowUSDTDelaySeconds),
-        },
-        {
-          name: 'StarkGate wstETH owner',
-          accounts: getProxyGovernance(discovery, ESCROW_WSTETH_ADDRESS),
-          description:
-            'Can upgrade implementation of the wstETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowWSTETHDelaySeconds),
-        },
-        {
-          name: 'StarkGate rETH owner',
-          accounts: getProxyGovernance(discovery, ESCROW_RETH_ADDRESS),
-          description:
-            'Can upgrade implementation of the rETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowRETHDelaySeconds),
-        },
-        {
-          name: 'StarkGate UNI owner',
-          accounts: getProxyGovernance(discovery, ESCROW_UNI_ADDRESS),
-          description:
-            'Can upgrade implementation of the UNI escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowUNIDelaySeconds),
-        },
-        {
-          name: 'StarkGate FRAX owner',
-          accounts: getProxyGovernance(discovery, ESCROW_FRAX_ADDRESS),
-          description:
-            'Can upgrade implementation of the FRAX escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowFRAXDelaySeconds),
-        },
-        {
-          name: 'StarkGate FXS owner',
-          accounts: getProxyGovernance(discovery, ESCROW_FXS_ADDRESS),
-          description:
-            'Can upgrade implementation of the FXS escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowFXSDelaySeconds),
-        },
-        {
-          name: 'StarkGate sfrxETH owner',
-          accounts: getProxyGovernance(discovery, ESCROW_SFRXETH_ADDRESS),
-          description:
-            'Can upgrade implementation of the sfrxETH escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowSFRXETHDelaySeconds),
-        },
-        {
           name: 'StarkGate LUSD owner',
           accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
           description:
             'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
-        },
-        {
-          name: 'StarkGate MultiBridge Admin',
-          accounts: getProxyGovernance(discovery, ESCROW_MULTIBRIDGE_ADDRESS),
-          description:
-            'Can upgrade implementation of the StarkGate MultiBridge escrow, potentially gaining access to all funds stored in the bridge. Is also the TokenAdmin of the StarkgateManager contract, permissioned to blacklist tokens from enrollment, pause deposits on the MultiBridge, and add existing bridges to the Registry contract. Additionally, the StarkgateManager and StarkgateRegistry contracts can be upgraded by this address.',
-        },
-        ...discovery.getMultisigPermission(
-          'BridgeMultisig',
-          'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
-        ),
-        {
-          name: 'StarkGate STRK owner',
-          accounts: discovery.getAccessControlRolePermission(
-            'STRKBridge',
-            'GOVERNANCE_ADMIN',
-          ),
-          description:
-            'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
-            delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
         },
       ],
     },

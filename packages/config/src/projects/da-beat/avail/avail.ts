@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { linkByDA } from '../utils/link-by-da'
 import { vector } from './vector'
 
 export const avail: DaProject = {
@@ -104,18 +104,11 @@ App-specific data can be reconstructed by app clients, which request and assembl
         },
       ],
     },
-    bridges: [
-      NO_BRIDGE({
-        addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-        layer: 'Avail',
-        description:
-          'The risk profile in this page refers to L2s that do not integrate with a data availability bridge.',
-        technology: {
-          description: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
-        },
-      }),
-      vector,
-    ],
+    usedWithoutBridgeIn: linkByDA({
+      layer: (layer) => layer === 'Avail',
+      bridge: (bridge) => bridge === 'None',
+    }),
+    bridges: [vector],
     /*
       Node params sources:
     */

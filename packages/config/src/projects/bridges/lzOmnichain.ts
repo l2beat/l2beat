@@ -104,39 +104,41 @@ export const lzOmnichain: Bridge = {
     escrows: OMNICHAIN_ESCROWS,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TSS Oracle',
-        'Contract used to submit source chain block hashes. One of the default Oracles.',
-      ),
-      discovery.getContractDetails(
-        'Google Cloud Oracle',
-        'Contract used to submit source chain block hashes. One of the default Oracles.',
-      ),
-      discovery.getContractDetails(
-        'LayerZero Relayer',
-        'Contract used to provide the merkle proof for the transfers on source chains.',
-      ),
-      ...INBOUND_PROOF_LIBRARIES.map((l) =>
+    addresses: {
+      [discovery.chain]: [
         discovery.getContractDetails(
-          l,
-          'Contracts used to validate messages coming from source chains.',
+          'TSS Oracle',
+          'Contract used to submit source chain block hashes. One of the default Oracles.',
         ),
-      ),
-      discovery.getContractDetails(
-        'Endpoint',
-        'Contract used for cross-chain messaging.',
-      ),
-      discovery.getContractDetails(
-        'UltraLightNodeV2',
-        'Default send and receive library.',
-      ),
-      discovery.getContractDetails(
-        'TreasuryV2',
-        'Contract responsible for fee mechanism.',
-      ),
-      discovery.getContractDetails('NonceContract'),
-    ],
+        discovery.getContractDetails(
+          'Google Cloud Oracle',
+          'Contract used to submit source chain block hashes. One of the default Oracles.',
+        ),
+        discovery.getContractDetails(
+          'LayerZero Relayer',
+          'Contract used to provide the merkle proof for the transfers on source chains.',
+        ),
+        ...INBOUND_PROOF_LIBRARIES.map((l) =>
+          discovery.getContractDetails(
+            l,
+            'Contracts used to validate messages coming from source chains.',
+          ),
+        ),
+        discovery.getContractDetails(
+          'Endpoint',
+          'Contract used for cross-chain messaging.',
+        ),
+        discovery.getContractDetails(
+          'UltraLightNodeV2',
+          'Default send and receive library.',
+        ),
+        discovery.getContractDetails(
+          'TreasuryV2',
+          'Contract responsible for fee mechanism.',
+        ),
+        discovery.getContractDetails('NonceContract'),
+      ],
+    },
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },

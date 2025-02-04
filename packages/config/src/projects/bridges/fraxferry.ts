@@ -519,278 +519,280 @@ export const fraxferry: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      // ARBITRUM
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Arbitrum)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Arbitrum)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (Arbitrum)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (Arbitrum)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Arbitrum)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Arbitrum)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (Arbitrum)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // AURORA
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Aurora)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      // AVALANCHE
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Avalanche)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Avalanche)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (Avalanche)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (Avalanche)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Avalanche)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Avalanche)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (Avalanche)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // BOBA
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Boba)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      // BSC
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (bsc)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (bsc)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (bsc)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (bsc)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (bsc)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (bsc)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (bsc)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // EVMOS
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (evmos)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      // FANTOM
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Fantom)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Fantom)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Fantom)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Fantom)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      // FRAXTAL
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Fraxtal)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Fraxtal)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (Fraxtal)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (Fraxtal)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Fraxtal)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (Fraxtal)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // MOONBEAM
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Moonbeam)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Moonbeam)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Moonbeam)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Moonbeam)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      // MOONRIVER
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Moonriver)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Moonriver)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      // OPTIMISM
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Optimism)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Optimism)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (Optimism)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (Optimism)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Optimism)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Optimism)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (Optimism)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // POLYGON PoS
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Polygon PoS)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (Polygon PoS)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Polygon PoS)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Polygon PoS)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      // POLYGON zkEVM
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (Polygon zkEVM)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (polygonzkEVM)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (Polygon zkEVM)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (Polygon zkEVM)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (Polygon zkEVM)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (Polygon zkEVM)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sFRAX Ferry Bridge (Polygon zkEVM)',
-        'sFRAX Bridge Contract (Escrow).',
-      ),
-      // ZKSYNC
-      discovery.getContractDetails(
-        'FRAX Ferry Bridge (ZKsync)',
-        'FRAX Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FXS Ferry Bridge (ZKsync)',
-        'FXS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPI Ferry Bridge (ZKsync)',
-        'FPI Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'FPIS Ferry Bridge (ZKsync)',
-        'FPIS Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'frxETH Ferry Bridge (ZKsync)',
-        'frxETH Bridge Contract (Escrow).',
-      ),
-      discovery.getContractDetails(
-        'sfrxETH Ferry Bridge (ZKsync)',
-        'sfrxETH Bridge Contract (Escrow).',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        // ARBITRUM
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Arbitrum)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Arbitrum)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (Arbitrum)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (Arbitrum)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Arbitrum)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Arbitrum)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (Arbitrum)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // AURORA
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Aurora)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        // AVALANCHE
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Avalanche)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Avalanche)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (Avalanche)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (Avalanche)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Avalanche)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Avalanche)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (Avalanche)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // BOBA
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Boba)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        // BSC
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (bsc)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (bsc)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (bsc)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (bsc)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (bsc)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (bsc)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (bsc)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // EVMOS
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (evmos)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        // FANTOM
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Fantom)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Fantom)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Fantom)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Fantom)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        // FRAXTAL
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Fraxtal)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Fraxtal)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (Fraxtal)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (Fraxtal)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Fraxtal)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (Fraxtal)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // MOONBEAM
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Moonbeam)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Moonbeam)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Moonbeam)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Moonbeam)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        // MOONRIVER
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Moonriver)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Moonriver)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        // OPTIMISM
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Optimism)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Optimism)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (Optimism)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (Optimism)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Optimism)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Optimism)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (Optimism)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // POLYGON PoS
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Polygon PoS)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (Polygon PoS)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Polygon PoS)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Polygon PoS)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        // POLYGON zkEVM
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (Polygon zkEVM)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (polygonzkEVM)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (Polygon zkEVM)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (Polygon zkEVM)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (Polygon zkEVM)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (Polygon zkEVM)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sFRAX Ferry Bridge (Polygon zkEVM)',
+          'sFRAX Bridge Contract (Escrow).',
+        ),
+        // ZKSYNC
+        discovery.getContractDetails(
+          'FRAX Ferry Bridge (ZKsync)',
+          'FRAX Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FXS Ferry Bridge (ZKsync)',
+          'FXS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPI Ferry Bridge (ZKsync)',
+          'FPI Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'FPIS Ferry Bridge (ZKsync)',
+          'FPIS Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'frxETH Ferry Bridge (ZKsync)',
+          'frxETH Bridge Contract (Escrow).',
+        ),
+        discovery.getContractDetails(
+          'sfrxETH Ferry Bridge (ZKsync)',
+          'sfrxETH Bridge Contract (Escrow).',
+        ),
+      ],
+    },
     risks: [],
   },
   permissions: {
@@ -800,45 +802,37 @@ export const fraxferry: Bridge = {
           name: 'Bridge Owner',
           description:
             'Address authorized to pause and unpause the bridge, remove posted batches, set the challenge period, and change the bridge `Captain`, `First Officer` and `Crew Members`. It is also allowed to set fees and transfer tokens from the bridge escrow. Note that there are over 60 frax ferry bridges smart contracts, each with its own owner. Please check the owner() method of the specific escrow smart contract you are interested in.',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'FRAX Ferry Bridge (Fraxtal)',
-              'owner',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'FRAX Ferry Bridge (Fraxtal)',
+            'owner',
+          ),
         },
         {
           name: 'FPI Bridge Owner',
           description:
             'Has the same permissions as the above Bridge Owner, but only for the FPI and FPIS bridge contracts.',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'FPI Ferry Bridge (Fraxtal)',
-              'owner',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'FPI Ferry Bridge (Fraxtal)',
+            'owner',
+          ),
         },
         {
           name: 'Captain',
           description:
             'Address authorized to post batch transaction data from the origin chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `Captain`. Please check the captain() method of the specific escrow smart contract you are interested in.',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'FRAX Ferry Bridge (Fraxtal)',
-              'captain',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'FRAX Ferry Bridge (Fraxtal)',
+            'captain',
+          ),
         },
         {
           name: 'First Officer',
           description:
             'Address authorized to distribute funds on the destination chain once the challenge period has passed. Note that there are over 60 frax ferry bridges smart contracts, each with its own `firstOfficer`. Please check the firstOfficer() method of the specific escrow smart contract you are interested in.',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'FRAX Ferry Bridge (Fraxtal)',
-              'firstOfficer',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'FRAX Ferry Bridge (Fraxtal)',
+            'firstOfficer',
+          ),
         },
         {
           name: 'Crew Members',

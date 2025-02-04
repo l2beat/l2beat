@@ -11,6 +11,7 @@ import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
+import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
@@ -25,7 +26,7 @@ interface Props {
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
   return [...daLayers, ethereumDaLayer].flatMap((project) =>
-    project.daLayer.bridges.map((bridge) => ({
+    getDaBridges(project).map((bridge) => ({
       layer: project.display.slug,
       bridge: bridge.display.slug,
     })),
@@ -40,7 +41,7 @@ export async function generateMetadata(props: Props) {
   if (!project || !params.bridge) {
     notFound()
   }
-  const bridge = project.daLayer.bridges.find(
+  const bridge = getDaBridges(project).find(
     (bridge) => bridge.display?.slug === params.bridge,
   )
   if (!bridge) {
@@ -126,7 +127,7 @@ async function getPageData(params: { layer: string; bridge: string }) {
   if (!project) {
     return
   }
-  const daBridge = project.daLayer.bridges.find(
+  const daBridge = getDaBridges(project).find(
     (b) => b.display.slug === params.bridge,
   )
 

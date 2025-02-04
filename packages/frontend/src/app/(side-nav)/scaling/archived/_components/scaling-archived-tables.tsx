@@ -16,6 +16,7 @@ import {
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingUpcomingAndArchivedFilters } from '../../_components/scaling-upcoming-and-archived-filters'
@@ -36,10 +37,7 @@ export function ScalingArchivedTables(
   }
 
   const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.tvsOrder - a.tvsOrder,
-      )
+    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
     : filteredEntries
 
   const initialSort = {

@@ -143,25 +143,27 @@ export const ronin: Bridge = {
   },
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
-    addresses: [
-      {
-        ...discovery.getContractDetails(
-          'MainchainGateway',
-          `Bridge V3 contract handling deposits and withdrawals.`,
+    addresses: {
+      [discovery.chain]: [
+        {
+          ...discovery.getContractDetails(
+            'MainchainGateway',
+            `Bridge V3 contract handling deposits and withdrawals.`,
+          ),
+          upgradableBy: ['MainchainBridgeManager Governors'],
+          upgradeDelay: 'No delay',
+          pausable,
+        },
+        discovery.getContractDetails(
+          'MainchainBridgeManager',
+          `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
         ),
-        upgradableBy: ['MainchainBridgeManager Governors'],
-        upgradeDelay: 'No delay',
-        pausable,
-      },
-      discovery.getContractDetails(
-        'MainchainBridgeManager',
-        `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
-      ),
-      discovery.getContractDetails(
-        'PauseEnforcer',
-        `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
-      ),
-    ],
+        discovery.getContractDetails(
+          'PauseEnforcer',
+          `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
@@ -188,7 +190,7 @@ export const ronin: Bridge = {
           accounts: [
             {
               address: discovery.getContract('RoninManagerMultiSig').address,
-              type: 'MultiSig',
+              type: 'Contract',
             },
           ],
           description:
@@ -209,12 +211,11 @@ export const ronin: Bridge = {
         ),
         {
           name: 'MainchainGatewayV3 Sentry Account',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'MainchainGateway',
-              'emergencyPauser',
-            ),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'MainchainGateway',
+            'emergencyPauser',
+          ),
+
           description:
             'An address that can pause the bridge in case of emergency (can be another contract).',
         },

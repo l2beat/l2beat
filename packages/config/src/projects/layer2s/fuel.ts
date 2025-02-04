@@ -290,24 +290,26 @@ export const fuel: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('FuelERC20Gateway', {
-        description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-      discovery.getContractDetails('FuelMessagePortal', {
-        description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-      discovery.getContractDetails('FuelChainState', {
-        description:
-          'Contract that allows state root submissions and settlement.',
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('FuelERC20Gateway', {
+          description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+        discovery.getContractDetails('FuelMessagePortal', {
+          description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+        discovery.getContractDetails('FuelChainState', {
+          description:
+            'Contract that allows state root submissions and settlement.',
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',

@@ -38,16 +38,14 @@ const daBridgeRisksColumn = columnHelper.display({
   id: 'bridge-risks',
   header: 'Bridge Risks',
   cell: (ctx) => {
-    const [firstBridge] = ctx.row.original.bridges
-
-    if (!firstBridge) {
+    const [bridge] = ctx.row.original.bridges
+    if (!bridge) {
       return EM_DASH
     }
-    console.log(firstBridge.risks.values)
     return (
       <GrissiniCell
-        values={firstBridge.risks.values}
-        hasNoBridge={firstBridge.risks.isNoBridge}
+        values={bridge.risks.values}
+        hasNoBridge={bridge.risks.isNoBridge}
       />
     )
   },

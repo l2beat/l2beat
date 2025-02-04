@@ -293,9 +293,7 @@ export const degate: Layer2 = {
           name: 'BlockVerifier Owner',
           description:
             'This address is the owner of the BlockVerifier contract.',
-          accounts: [
-            discovery.getPermissionedAccount('BlockVerifier', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('BlockVerifier', 'owner'),
         },
         {
           name: 'Block Submitters',
@@ -310,25 +308,27 @@ export const degate: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
-      discovery.getContractDetails(
-        'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      ),
-      discovery.getContractDetails(
-        'DefaultDepositContract',
-        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      ),
-      discovery.getContractDetails(
-        'LoopringV3',
-        'Contract for setting exchange fee parameters.',
-      ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
+        discovery.getContractDetails(
+          'LoopringIOExchangeOwner',
+          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        ),
+        discovery.getContractDetails(
+          'DefaultDepositContract',
+          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+        ),
+        discovery.getContractDetails(
+          'LoopringV3',
+          'Contract for setting exchange fee parameters.',
+        ),
+        discovery.getContractDetails(
+          'BlockVerifier',
+          'zkSNARK Verifier based on ethsnarks library.',
+        ),
+      ],
+    },
     risks: [],
   },
   milestones: [

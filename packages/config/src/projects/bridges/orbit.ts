@@ -169,16 +169,18 @@ export const orbit: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ETH Vault',
-        'Bridge contract, Proxy, Escrow, Governance.',
-      ),
-      discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
-      discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
-      discovery.getContractDetails('USDC Farm', 'USDC Compound Farm.'),
-      discovery.getContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ETH Vault',
+          'Bridge contract, Proxy, Escrow, Governance.',
+        ),
+        discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
+        discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
+        discovery.getContractDetails('USDC Farm', 'USDC Compound Farm.'),
+        discovery.getContractDetails('WBTC Farm', 'WBTC Compound Farm.'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
@@ -191,9 +193,11 @@ export const orbit: Bridge = {
         },
         {
           name: 'Policy Admin',
-          accounts: [
-            discovery.getPermissionedAccount('ETH Vault', 'policyAdmin'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'ETH Vault',
+            'policyAdmin',
+          ),
+
           description:
             'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
         },

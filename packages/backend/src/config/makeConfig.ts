@@ -223,7 +223,7 @@ export function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && getDaTrackingConfig(),
+    da: flags.isEnabled('da') && getDaTrackingConfig(flags, env),
     // Must be last
     flags: flags.getResolved(),
   }

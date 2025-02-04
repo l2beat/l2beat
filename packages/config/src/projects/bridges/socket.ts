@@ -400,36 +400,38 @@ export const socket: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Socket',
-        'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
-      ),
-      discovery.getContractDetails(
-        'FastSwitchboard',
-        'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
-      ),
-      discovery.getContractDetails(
-        'PolygonL1Switchboard',
-        'Switchboard using native Polygon message passing.',
-      ),
-      discovery.getContractDetails(
-        'OptimismSwitchboard',
-        'Switchboard using native Optimism message passing.',
-      ),
-      discovery.getContractDetails(
-        'ArbitrumL1Switchboard',
-        'Switchboard using native Arbitrum message passing.',
-      ),
-      discovery.getContractDetails(
-        'ExecutionManager',
-        'Manages crosschain execution and fees.',
-      ),
-      discovery.getContractDetails(
-        'TransmitManager',
-        'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Socket',
+          'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
+        ),
+        discovery.getContractDetails(
+          'FastSwitchboard',
+          'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
+        ),
+        discovery.getContractDetails(
+          'PolygonL1Switchboard',
+          'Switchboard using native Polygon message passing.',
+        ),
+        discovery.getContractDetails(
+          'OptimismSwitchboard',
+          'Switchboard using native Optimism message passing.',
+        ),
+        discovery.getContractDetails(
+          'ArbitrumL1Switchboard',
+          'Switchboard using native Arbitrum message passing.',
+        ),
+        discovery.getContractDetails(
+          'ExecutionManager',
+          'Manages crosschain execution and fees.',
+        ),
+        discovery.getContractDetails(
+          'TransmitManager',
+          'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
@@ -440,7 +442,7 @@ export const socket: Bridge = {
           name: 'socketadmin.eth EOA',
           description:
             'Account privileged to set up different roles in the main Socket contract.',
-          accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
+          accounts: discovery.getPermissionedAccounts('Socket', 'owner'),
         },
         ...discovery.getMultisigPermission(
           'LyraMultisig',
@@ -453,9 +455,10 @@ export const socket: Bridge = {
         {
           name: 'KintoEOA',
           description: 'owns some Vaults associated with Kinto.',
-          accounts: [
-            discovery.getPermissionedAccount('PAXG Vault Kinto', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'PAXG Vault Kinto',
+            'owner',
+          ),
         },
         ...discovery.getMultisigPermission(
           'LooksRareMultisig',
@@ -465,9 +468,10 @@ export const socket: Bridge = {
           name: 'PolynomialEOA',
           description:
             'EOA that owns the Socket Vaults associated with Polynomial L2.',
-          accounts: [
-            discovery.getPermissionedAccount('USDC Vault Polynomial', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'USDC Vault Polynomial',
+            'owner',
+          ),
         },
       ],
     },

@@ -101,7 +101,6 @@ export const rhinofi: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    associatedTokens: ['DVF'],
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
@@ -169,14 +168,16 @@ export const rhinofi: Layer2 = {
     exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkExchange'),
-      discovery.getContractDetails(
-        'Committee',
-        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkExchange'),
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,

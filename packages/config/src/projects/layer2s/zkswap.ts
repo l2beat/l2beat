@@ -154,28 +154,30 @@ export const zkswap: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ZkSync',
-        'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-      ),
-      discovery.getContractDetails(
-        'ZkSyncCommitBlock',
-        'Additional contract to store implementation details of the main ZkSync contract.',
-      ),
-      discovery.getContractDetails('ZkSyncExit'),
-      discovery.getContractDetails(
-        'Governance',
-        'Keeps a list of block producers and whitelisted tokens.',
-      ),
-      discovery.getContractDetails('PairManager'),
-      discovery.getContractDetails('Verifier'),
-      discovery.getContractDetails('VerifierExit'),
-      discovery.getContractDetails(
-        'UpgradeGatekeeper',
-        'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'ZkSync',
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+        ),
+        discovery.getContractDetails(
+          'ZkSyncCommitBlock',
+          'Additional contract to store implementation details of the main ZkSync contract.',
+        ),
+        discovery.getContractDetails('ZkSyncExit'),
+        discovery.getContractDetails(
+          'Governance',
+          'Keeps a list of block producers and whitelisted tokens.',
+        ),
+        discovery.getContractDetails('PairManager'),
+        discovery.getContractDetails('Verifier'),
+        discovery.getContractDetails('VerifierExit'),
+        discovery.getContractDetails(
+          'UpgradeGatekeeper',
+          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('8 days')],
   },
   permissions: {
@@ -183,9 +185,10 @@ export const zkswap: Layer2 = {
       actors: [
         {
           name: 'zkSwap 1.0 Admin',
-          accounts: [
-            discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
-          ],
+          accounts: discovery.getPermissionedAccounts(
+            'UpgradeGatekeeper',
+            'getMaster',
+          ),
           description:
             'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
         },

@@ -1,6 +1,6 @@
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 
-import type { ScalingProjectPermission } from '../../types'
+import type { ProjectPermission } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
@@ -104,10 +104,13 @@ export function getSHARPVerifierContracts(
 export function getSHARPVerifierGovernors(
   projectDiscovery: ProjectDiscovery,
   verifierAddress: EthereumAddress,
-): ScalingProjectPermission[] {
+): ProjectPermission[] {
   assert(
-    verifierAddress === SHARP_VERIFIER_PROXY.address,
-    `SHARPVerifierProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
+    verifierAddress === SHARP_VERIFIER_PROXY.address &&
+      getProxyGovernance(discovery, 'SHARPVerifierProxy')[0].address ===
+        discovery.getContract('SHARPVerifierAdminMultisig').address &&
+      getProxyGovernance(discovery, 'SHARPVerifierProxy').length === 1,
+    `SHARPVerifierProxy or governance address mismatch. This project probably uses a different SHARP verifier or the admin has changed (${projectDiscovery.projectName})`,
   )
 
   return [
@@ -119,7 +122,7 @@ export function getSHARPVerifierGovernors(
         delayDescriptionFromSeconds(upgradeDelay),
     },
     ...discovery.getMultisigPermission(
-      'SHARPVerifierGovernorMultisig',
+      'SHARPVerifierAdminMultisig',
       'SHARP Verifier Governor.',
     ),
   ]

@@ -103,21 +103,23 @@ export const hyphen: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('LiquidityPool'),
-      discovery.getContractDetails(
-        'TokenManager',
-        'Configures limits and other aspects of supported assets.',
-      ),
-      discovery.getContractDetails(
-        'ExecutorManager',
-        'Manages a list of addresses with Executor role.',
-      ),
-      discovery.getContractDetails(
-        'LiquidityProviders',
-        'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('LiquidityPool'),
+        discovery.getContractDetails(
+          'TokenManager',
+          'Configures limits and other aspects of supported assets.',
+        ),
+        discovery.getContractDetails(
+          'ExecutorManager',
+          'Manages a list of addresses with Executor role.',
+        ),
+        discovery.getContractDetails(
+          'LiquidityProviders',
+          'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
@@ -127,15 +129,13 @@ export const hyphen: Bridge = {
           name: 'ProxyAdmin owner',
           description:
             'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-          accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+          accounts: discovery.getPermissionedAccounts('ProxyAdmin', 'owner'),
         },
         {
           name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
           description:
             'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-          accounts: [
-            discovery.getPermissionedAccount('LiquidityPool', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('LiquidityPool', 'owner'),
         },
         {
           name: 'Executors',

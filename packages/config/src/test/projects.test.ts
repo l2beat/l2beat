@@ -7,7 +7,7 @@ import { expect } from 'earl'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
-import type { Layer2, Layer3, ScalingProjectContract } from '../types'
+import type { Layer2, Layer3 } from '../types'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'
@@ -80,11 +80,7 @@ describe('projects', () => {
   describe('contracts', () => {
     for (const project of [...layer2s, ...bridges]) {
       describe(project.display.name, () => {
-        const contracts: Record<string, ScalingProjectContract[]> = {
-          ethereum: project.contracts?.addresses ?? [],
-          ...project.contracts?.nativeAddresses,
-        }
-
+        const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
             const description = contract.description

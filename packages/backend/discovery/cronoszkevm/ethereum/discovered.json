@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 21721078,
+  "blockNumber": 21766582,
   "configHash": "0x57ea252b51cec20327219f3476d3c8906c9bf687d8bb4f063e38153e265a2b39",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
@@ -69,7 +69,7 @@
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
           "permission": "validateZkStack",
@@ -92,8 +92,8 @@
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
-        "executionDelay": 75600,
-        "executionDelay_fmt": "21h",
+        "executionDelay": 10800,
+        "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -225,8 +225,9 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx"
+        "getFirstUnprocessedPriorityTx",
+        "baseTokenGasPriceMultiplierNominator",
+        "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1722357035,
       "values": {
@@ -373,26 +374,26 @@
         "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3953,
+        "getFirstUnprocessedPriorityTx": 3974,
         "getL2BootloaderBytecodeHash": "0x010008c3be57ae5800e077b6c2056d9d75ad1a7b4f0ce583407961cc6fe0b678",
         "getL2DefaultAccountBytecodeHash": "0x0100055dba11508480be023137563caec69debc85f826cb3a4b68246a7cabe30",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
+        "getPriorityQueueSize": 2,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 107374182400,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 25, 0],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 275,
-        "getTotalBatchesExecuted": 274,
-        "getTotalBatchesVerified": 274,
-        "getTotalBlocksCommitted": 275,
-        "getTotalBlocksExecuted": 274,
-        "getTotalBlocksVerified": 274,
-        "getTotalPriorityTxs": 3960,
+        "getTotalBatchesCommitted": 286,
+        "getTotalBatchesExecuted": 282,
+        "getTotalBatchesVerified": 282,
+        "getTotalBlocksCommitted": 286,
+        "getTotalBlocksExecuted": 282,
+        "getTotalBlocksVerified": 282,
+        "getTotalPriorityTxs": 3976,
         "getVerifier": "0x06aa7a7B07108F7C5539645e32DD5c21cBF9EB66",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -400,11 +401,6 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x8a73a91142980f05c9e362c18105924b03a060a64713514f9078ed67f4dd4ceb",
-          "expirationTimestamp": 1737962003,
-          "layer2Tip": 0
-        },
         "txFilterer": ["0xA8998F231a660Eca365B382943c71ad9b7619139"],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -889,7 +885,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/Diamond": "0xd62d6f07bb60c75ee3179ef73ab905abd0718aeceadc5bde7d463f43c77a41df",
+    "shared-zk-stack/Diamond": "0x0b3c325e7797ebbc2cbb7d8518f22c694bce12e188d52758cc1e4ac318c29813",
     "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
     "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
   }

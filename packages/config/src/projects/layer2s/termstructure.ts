@@ -360,17 +360,19 @@ export const termstructure: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ZkTrueUp', {
-        description:
-          'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Verifier', {
-        description: 'Verifier contract used to verify the SNARK proofs.',
-        ...upgrades,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ZkTrueUp', {
+          description:
+            'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Verifier', {
+          description: 'Verifier contract used to verify the SNARK proofs.',
+          ...upgrades,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

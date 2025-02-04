@@ -154,28 +154,33 @@ export const stargate: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Router',
-        'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
-      ),
-      discovery.getContractDetails(
-        'Bridge',
-        'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
-      ),
-      discovery.getContractDetails(
-        'Factory',
-        'Factory contract managing all liquidity pools.',
-      ),
-      discovery.getContractDetails('TSS Oracle'),
-      discovery.getContractDetails('Google Cloud Oracle'),
-      discovery.getContractDetails('LayerZero Relayer'),
-      discovery.getContractDetails('Endpoint', 'LayerZero Ethereum Endpoint.'),
-      discovery.getContractDetails(
-        'UltraLightNodeV2',
-        'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Router',
+          'Entry point for the user interaction with StarGate Bridge, handles the logic of swaps and adding liquidity, send messages to the bridge.',
+        ),
+        discovery.getContractDetails(
+          'Bridge',
+          'Main bridge contract, receives messages from LayerZero Endpoint, stores bridge configuration.',
+        ),
+        discovery.getContractDetails(
+          'Factory',
+          'Factory contract managing all liquidity pools.',
+        ),
+        discovery.getContractDetails('TSS Oracle'),
+        discovery.getContractDetails('Google Cloud Oracle'),
+        discovery.getContractDetails('LayerZero Relayer'),
+        discovery.getContractDetails(
+          'Endpoint',
+          'LayerZero Ethereum Endpoint.',
+        ),
+        discovery.getContractDetails(
+          'UltraLightNodeV2',
+          'LayerZero UltraLight Node. Used by oracles to checkpoint source chain block hashes.',
+        ),
+      ],
+    },
     risks: [],
     isIncomplete: true,
   },

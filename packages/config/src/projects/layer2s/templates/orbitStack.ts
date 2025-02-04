@@ -38,14 +38,14 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectContract,
   ProjectEscrow,
+  ProjectPermission,
+  ProjectPermissions,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProjectCapability,
-  ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
-  ScalingProjectPermissions,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -60,12 +60,13 @@ import { Badge, type BadgeId, badges } from '../../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
+  generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
-  generateDiscoveryDrivenSections,
 } from './generateDiscoveryDrivenSections'
 import {
   explorerReferences,
   mergeBadges,
+  mergeContracts,
   mergePermissions,
   safeGetImplementation,
 } from './utils'
@@ -134,10 +135,10 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: Record<string, ScalingProjectPermissions>
+  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
@@ -152,7 +153,6 @@ interface OrbitStackConfigCommon {
   stateDerivation?: ScalingProjectStateDerivation
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
-  nativeAddresses?: Record<string, ScalingProjectContract[]>
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
@@ -210,20 +210,20 @@ export function getNitroGovernance(
   l2TreasuryQuorumPercent: number,
 ): string {
   return `
-  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO) 
-  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s. 
-  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through 
-  the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions, 
+  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
+  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
+  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
+  the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions,
   their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One and crosschain transactions.
-  
-  
-  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One 
-  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs 
-  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. 
+
+
+  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One
+  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
+  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
   These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-  
-  
-  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a 
+
+
+  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
   CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
     l2TimelockDelay,
   )} delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of ${formatSeconds(
@@ -231,19 +231,19 @@ export function getNitroGovernance(
   )}.
   When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
-  )}. Both timelocks serve as delays during which the transparent transaction contents can be audited, 
-  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts 
+  )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
+  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts
   through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-  
-  
-  Operator roles like the Sequencers and Validators are managed using the same paths. 
+
+
+  Operator roles like the Sequencers and Validators are managed using the same paths.
   Sequencer changes can be delegated to a Batch Poster Manager.
-  
-  
+
+
   Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
-  )} 
-  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel 
+  )}
+  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel
   these transactions or schedule different ones but can overwrite them anyway by having full admin upgrade permissions for all the underlying smart contracts.`
 }
 
@@ -341,14 +341,6 @@ function orbitStackCommon(
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
   ]
-  const discoveryDrivenContrats = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -392,7 +384,7 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ScalingProjectPermission = {
+  const validators: ProjectPermission = {
     name: 'Validators/Proposers',
     accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
     description:
@@ -405,7 +397,7 @@ function orbitStackCommon(
     )
   }
 
-  const sequencers: ScalingProjectPermission = {
+  const sequencers: ProjectPermission = {
     name: 'Sequencers',
     accounts: templateVars.discovery.getPermissionsByRole('sequence'),
     description: 'Central actors allowed to submit transaction batches to L1.',
@@ -436,17 +428,21 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: discoveryDrivenContrats ?? {
-      addresses: unionBy(
-        [
-          ...(templateVars.nonTemplateContracts ?? []),
-          ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
-        ],
-        'address',
-      ),
-      nativeAddresses: templateVars.nativeAddresses,
-      risks: nativeContractRisks,
-    },
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+          risks: nativeContractRisks,
+        }
+      : {
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.resolveOrbitStackTemplates().contracts,
+            },
+            templateVars.nonTemplateContracts ?? {},
+          ),
+          risks: nativeContractRisks,
+        },
     chainConfig: templateVars.chainConfig,
     technology: {
       stateCorrectness:

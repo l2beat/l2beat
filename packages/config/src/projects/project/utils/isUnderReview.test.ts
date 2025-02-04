@@ -4,7 +4,7 @@ import type {
   Layer2,
   Layer2Config,
   Layer2Display,
-  ScalingProjectContracts,
+  ProjectContracts,
   ScalingProjectRiskView,
   ScalingProjectTechnology,
   StageConfig,
@@ -22,7 +22,7 @@ describe(isUnderReview.name, () => {
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,
     }),
-    contracts: mockObject<ScalingProjectContracts>({
+    contracts: mockObject<ProjectContracts>({
       isUnderReview: undefined,
     }),
     riskView: mockObject<ScalingProjectRiskView>(),

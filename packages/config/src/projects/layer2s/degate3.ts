@@ -369,9 +369,7 @@ export const degate3: Layer2 = {
           name: 'BlockVerifier Owner',
           description:
             'This address is the owner of the BlockVerifier contract.',
-          accounts: [
-            discovery.getPermissionedAccount('BlockVerifier', 'owner'),
-          ],
+          accounts: discovery.getPermissionedAccounts('BlockVerifier', 'owner'),
         },
         {
           name: 'Block Submitters',
@@ -384,7 +382,7 @@ export const degate3: Layer2 = {
         },
         {
           name: 'Degate HomeDAO2 Multisig',
-          accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
+          accounts: discovery.getPermissionedAccounts('TimeLock1', 'admin'),
           description: (() => {
             const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
             const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
@@ -422,40 +420,42 @@ export const degate3: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ExchangeV3', {
-        description: `Main ExchangeV3 contract.`,
-        ...timelockUpgrades1,
-      }),
-      discovery.getContractDetails(
-        'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      ),
-      discovery.getContractDetails('DefaultDepositContract', {
-        description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
-        ...timelockUpgrades2,
-      }),
-      discovery.getContractDetails(
-        'LoopringV3',
-        'Contract for setting exchange fee parameters.',
-      ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
-      discovery.getContractDetails(
-        'TimeLock1',
-        `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
-          delay1,
-        )} time delay for upgrading the contract.`,
-      ),
-      discovery.getContractDetails(
-        'TimeLock2',
-        `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
-          delay2,
-        )} time delay for upgrading the contract.`,
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ExchangeV3', {
+          description: `Main ExchangeV3 contract.`,
+          ...timelockUpgrades1,
+        }),
+        discovery.getContractDetails(
+          'LoopringIOExchangeOwner',
+          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        ),
+        discovery.getContractDetails('DefaultDepositContract', {
+          description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
+          ...timelockUpgrades2,
+        }),
+        discovery.getContractDetails(
+          'LoopringV3',
+          'Contract for setting exchange fee parameters.',
+        ),
+        discovery.getContractDetails(
+          'BlockVerifier',
+          'zkSNARK Verifier based on ethsnarks library.',
+        ),
+        discovery.getContractDetails(
+          'TimeLock1',
+          `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
+            delay1,
+          )} time delay for upgrading the contract.`,
+        ),
+        discovery.getContractDetails(
+          'TimeLock2',
+          `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
+            delay2,
+          )} time delay for upgrading the contract.`,
+        ),
+      ],
+    },
     risks: [],
   },
   milestones: [

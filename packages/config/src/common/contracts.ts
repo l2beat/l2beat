@@ -1,5 +1,5 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
-import type { ScalingProjectContracts, ScalingProjectRisk } from '../types'
+import type { ProjectContracts, ScalingProjectRisk } from '../types'
 
 const UNVERIFIED_DESCRIPTION =
   'The source code of this contract is not verified on Etherscan.'
@@ -9,9 +9,6 @@ const UNVERIFIED_DESCRIPTION_SOME =
 
 const UNVERIFIED_DESCRIPTION_ALL =
   'The source code of these contracts is not verified on Etherscan.'
-
-const UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION =
-  'The source code of an implementation is not verified on Etherscan.'
 
 const UNVERIFIED_RISK: ScalingProjectRisk = {
   category: 'Funds can be stolen if',
@@ -55,8 +52,8 @@ function UPGRADE_WITH_DELAY_SECONDS_RISK(
   return UPGRADE_WITH_DELAY_RISK(delay)
 }
 
-const EMPTY: ScalingProjectContracts = {
-  addresses: [],
+const EMPTY: ProjectContracts = {
+  addresses: {},
   risks: [],
 }
 
@@ -66,7 +63,7 @@ const ARBITRUM_OLD_BRIDGE = EthereumAddress(
 
 const UNDER_REVIEW = {
   isUnderReview: true,
-  addresses: [],
+  addresses: {},
   risks: [],
 }
 
@@ -76,7 +73,6 @@ export const CONTRACTS = {
   UNVERIFIED_DESCRIPTION,
   UNVERIFIED_DESCRIPTION_SOME,
   UNVERIFIED_DESCRIPTION_ALL,
-  UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,

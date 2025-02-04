@@ -52,11 +52,13 @@ export const layer2finance: Layer2 = {
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: {
     isUnderReview: true,
-    addresses: [
-      discovery.getContractDetails('RollupChain'),
-      discovery.getContractDetails('TransitionDisputer'),
-      discovery.getContractDetails('Registry'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('RollupChain'),
+        discovery.getContractDetails('TransitionDisputer'),
+        discovery.getContractDetails('Registry'),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',
