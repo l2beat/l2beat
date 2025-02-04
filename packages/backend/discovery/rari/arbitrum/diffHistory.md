@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x96d7305dae17d13b55a5facefba8f6860c730e9a
+Generated with discovered.json: 0x8dcc088c9f3b564fde6da463b3abaebf7fd23f5a
 
-# Diff at Tue, 04 Feb 2025 10:42:04 GMT:
+# Diff at Tue, 04 Feb 2025 10:47:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
-- current block number: 302520739
+- current block number: 302521968
 
 ## Description
 
@@ -15,13 +15,16 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 
 ```diff
     contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
-    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge.
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
       template:
 -        "orbitstack/SequencerInbox_Celestia"
 +        "orbitstack/SequencerInbox_Celestia_Espresso"
       sourceHashes.1:
 -        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
 +        "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia."
       issuedPermissions.2:
 +        {"permission":"upgrade","to":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"},{"address":"0x003e70B041abb993006C03E56c8515622a02928C"}]}
       issuedPermissions.1.permission:
@@ -61,8 +64,6 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
       values.batchPosters.0:
 -        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
 +        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
-      values.sequencerVersion:
--        "0x63"
       values.setIsBatchPosterCount:
 -        1
 +        5
@@ -70,8 +71,6 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 +        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
       values.espressoTEEVerifier:
 +        "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb"
-      errors:
-+        {"sequencerVersion":"Processing error occurred."}
     }
 ```
 
