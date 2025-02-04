@@ -8,7 +8,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
           }
         ]

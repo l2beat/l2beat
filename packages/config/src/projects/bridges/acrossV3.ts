@@ -286,15 +286,15 @@ export const acrossV3: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'HubPool Multisig',
           'Can invoke admin functions of HubPool contract, and by implication of other contracts.',
         ),
-        {
-          name: 'BondToken transfer proposers',
-          accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-          description: 'Allowed to propose BondToken transfers.',
-        },
+        discovery.getPermissionDetails(
+          'BondToken transfer proposers',
+          discovery.getPermissionedAccounts('BondToken', 'proposers'),
+          'Allowed to propose BondToken transfers.',
+        ),
       ],
     },
   },

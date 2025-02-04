@@ -172,14 +172,11 @@ export const portal: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Guardian Network',
-          description:
-            'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
-          accounts: guardians.map((g) =>
-            discovery.formatPermissionedAccount(g),
-          ),
-        },
+        discovery.getPermissionDetails(
+          'Guardian Network',
+          discovery.formatPermissionedAccounts(guardians),
+          'Off-chain actors signing messages (VAAs) containing transfer information or governance actions such as upgrades, which are decoded onchain with signature checks.',
+        ),
       ],
     },
   },

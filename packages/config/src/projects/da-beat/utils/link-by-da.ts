@@ -1,3 +1,4 @@
+import type { ProjectId } from '@l2beat/shared-pure'
 import type { Layer2, Layer3 } from '../../../types'
 import { layer2s } from '../../layer2s'
 import { layer3s } from '../../layer3s'
@@ -8,21 +9,19 @@ import { toUsedInProject } from './to-used-in-project'
  * @notice Utilizes `dataAvailability` field from layer2s and layer3s
  */
 export function linkByDA(where: {
-  layer: (value: string | undefined) => boolean | undefined
-  bridge?: (value: string | undefined) => boolean | undefined
+  layer: ProjectId
+  bridge: ProjectId | undefined
 }) {
-  const filterFn = ({ dataAvailability }: Layer2 | Layer3) => {
-    const layerResult = where.layer(dataAvailability?.layer.value)
-    return (
-      layerResult &&
-      (!where.bridge || where.bridge(dataAvailability?.bridge.value))
-    )
-  }
-
   return toUsedInProject(
     [...layer2s, ...layer3s]
-      .filter(filterFn)
-      .filter((project) => !project.isArchived)
+      .filter((project: Layer2 | Layer3) => {
+        return (
+          !project.isArchived &&
+          !project.isUpcoming &&
+          where.layer === project.dataAvailability?.layer.projectId &&
+          where.bridge === project.dataAvailability.bridge.projectId
+        )
+      })
       .sort((a, b) => a.display.name.localeCompare(b.display.name)),
   )
 }

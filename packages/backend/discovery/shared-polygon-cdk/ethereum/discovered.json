@@ -44,12 +44,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "via": [
@@ -61,12 +61,12 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
           "via": [
@@ -78,7 +78,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
         },
@@ -219,7 +219,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable."
         }
@@ -271,13 +271,13 @@
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "via": [
@@ -289,19 +289,19 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
           "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
           "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
           "via": []
@@ -678,7 +678,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
         }
@@ -719,13 +719,13 @@
       "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles.",
           "via": [
@@ -749,12 +749,12 @@
           "condition": "there is no emergency state, in which case there is no delay"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles."
         }
@@ -1496,8 +1496,8 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0xf79efdefaf0609b8ca2a85e76e95247398a624c35c1e685136222e6e6f2982cf",
+    "polygon-cdk/PolygonRollupManager": "0x46dae75c4ecc2f97347a8689444844b2e39c53446fab1c308c6e7e1de848bed0",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
-    "polygon-cdk/Timelock": "0x80f5f7cbfcfd3a0bb40507d93218158b0615cd29def7ddc00ea7138144ed416f"
+    "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
   }
 }

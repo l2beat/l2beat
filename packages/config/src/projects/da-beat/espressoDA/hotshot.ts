@@ -6,6 +6,7 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../common'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
@@ -188,7 +189,10 @@ export const hotshot: DaBridge = {
       },
     ],
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('espressoDA'),
+    bridge: ProjectId('espresso'),
+  }),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',

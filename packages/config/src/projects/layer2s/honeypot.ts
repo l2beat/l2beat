@@ -9,7 +9,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -121,11 +120,11 @@ export const honeypot: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -215,12 +214,11 @@ export const honeypot: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Authority owner',
-          description:
-            'The Authority owner can submit claims to the Honeypot DApp.',
-          accounts: discovery.getPermissionedAccounts('Authority', 'owner'),
-        },
+        discovery.getPermissionDetails(
+          'Authority owner',
+          discovery.getPermissionedAccounts('Authority', 'owner'),
+          'The Authority owner can submit claims to the Honeypot DApp.',
+        ),
       ],
     },
   },

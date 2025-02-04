@@ -13,14 +13,13 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityLayer,
+  type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -96,7 +95,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
+  daLayer: DaProjectTableValue = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -112,8 +111,7 @@ export function DACHALLENGES_DA_PROVIDER(
 }
 
 interface DAProvider {
-  layer: DataAvailabilityLayer
-  fallback?: DataAvailabilityLayer
+  layer: DaProjectTableValue
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
@@ -230,15 +228,11 @@ function opStackCommon(
     ? [Badge.Stack.OPStack, daBadge]
     : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
-  const nativeDA =
-    incomingNativeDA ??
-    addSentimentToDataAvailability({
-      layers: [
-        usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-      ],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+  const nativeDA = incomingNativeDA ?? {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
 
   const portal = getOptimismPortal(templateVars)
   const l1StandardBridgeEscrow =
@@ -844,6 +838,7 @@ function getTechnology(
         ],
       },
     ],
+    sequencing: templateVars.nonTemplateTechnology?.sequencing,
   }
 }
 
@@ -1091,13 +1086,11 @@ function decideDA(
   nativeDA: ProjectDataAvailability | undefined,
 ): ProjectDataAvailability | undefined {
   if (daProvider !== undefined) {
-    return addSentimentToDataAvailability({
-      layers: daProvider.fallback
-        ? [daProvider.layer, daProvider.fallback]
-        : [daProvider.layer],
+    return {
+      layer: daProvider.layer,
       bridge: daProvider.bridge,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+    }
   }
 
   return nativeDA

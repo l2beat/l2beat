@@ -4,7 +4,7 @@ export function getProxyGovernance(
   discovery: ProjectDiscovery,
   contractIdentifier: string,
 ) {
-  return discovery
-    .get$Admins(contractIdentifier)
-    .map(discovery.formatPermissionedAccount.bind(discovery))
+  return discovery.formatPermissionedAccounts(
+    discovery.get$Admins(contractIdentifier),
+  )
 }

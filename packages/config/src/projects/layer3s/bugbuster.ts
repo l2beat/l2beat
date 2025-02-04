@@ -8,7 +8,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -148,11 +147,11 @@ export const bugbuster: Layer3 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
 
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -173,26 +172,16 @@ export const bugbuster: Layer3 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'BugBuster Owner',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('BugBuster', 'owner'),
-            ),
-          ],
-          description:
-            'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
-        },
-        {
-          name: 'Authority Owner',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('Authority', 'owner'),
-            ),
-          ],
-          description:
-            'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
-        },
+        discovery.getPermissionDetails(
+          'BugBuster Owner',
+          discovery.getPermissionedAccounts('BugBuster', 'owner'),
+          'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
+        ),
+        discovery.getPermissionDetails(
+          'Authority Owner',
+          discovery.getPermissionedAccounts('Authority', 'owner'),
+          'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
+        ),
       ],
     },
   },

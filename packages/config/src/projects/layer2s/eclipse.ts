@@ -11,7 +11,6 @@ import {
   DA_MODES,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -67,11 +66,11 @@ export const eclipse: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.CELESTIA],
+  dataAvailability: {
+    layer: DA_LAYERS.CELESTIA,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -136,34 +135,34 @@ export const eclipse: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'AuthorityMultisig',
           "Can pause and upgrade the EtherBridge and Mailbox contracts and change all parameters in the 'CanonicalBridge' contract or authorize/cancel withdrawals.",
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TreasuryOwner',
           'Can upgrade and transfer funds from the Treasury.',
         ),
-        {
-          name: 'WithdrawerEOA',
-          accounts: [
+        discovery.getPermissionDetails(
+          'WithdrawerEOA',
+          [
             discovery.getAccessControlRolePermission(
               'CanonicalBridge',
               'WITHDRAW_AUTHORITY_ROLE',
             )[1],
           ],
-          description: `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-        },
-        {
-          name: 'PauserEOA',
-          accounts: [
+          `Can authorize arbitrary withdrawals from the Treasury (via the 'CanonicalBridge' contract) with a ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        ),
+        discovery.getPermissionDetails(
+          'PauserEOA',
+          [
             discovery.getAccessControlRolePermission(
               'CanonicalBridge',
               'PAUSER_ROLE',
             )[1],
           ],
-          description: `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
-        },
+          `Can pause standard withdrawals from the 'CanonicalBridge' contract and cancel withdrawals during the standard ${formatSeconds(withdrawalDelaySeconds)} delay.`,
+        ),
       ],
     },
   },

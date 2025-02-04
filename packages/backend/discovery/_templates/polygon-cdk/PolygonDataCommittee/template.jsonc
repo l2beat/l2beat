@@ -7,7 +7,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "manage the members of the data availability committee and the threshold for valid commitments."
           }
         ]

@@ -90,59 +90,30 @@ export const zircuit: Layer2 = opStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    {
-      name: 'Admins of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'DEFAULT_ADMIN_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description: 'Admin of the SuperChainConfig, can configure other roles.',
-    },
-    /*  This role is still not set, but it is present in the code and must be uncommented in the future
-    {
-      name: 'Operators of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'OPERATOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description:
-        'Role set up in SuperChainConfig contract that can raise the withdrawal limit for a user.',
-    }, */
-    {
-      name: 'Monitors of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'MONITOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description:
-        'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
-    },
-    ...discovery.getMultisigPermission(
+    discovery.getPermissionDetails(
+      'Admins of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'DEFAULT_ADMIN_ROLE',
+      ),
+      'Admin of the SuperChainConfig, can configure other roles.',
+    ),
+    discovery.getPermissionDetails(
+      'Monitors of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'MONITOR_ROLE',
+      ),
+      'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
+    ),
+    discovery.getMultisigPermission(
       'ZircuitMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \
       It is also designated as a Challenger and SystemOwner of the L2OutputOracle, meaning it can remove L2 state roots and reconfigure \
       L2OutputOracle, including changing the Verifier contract. \
       It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ZircuitGuardianMultiSig',
       'This address is the permissioned guardian of the system, meaning it can pause all withdrawals. \
       It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',

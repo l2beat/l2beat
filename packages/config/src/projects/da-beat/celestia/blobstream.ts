@@ -4,6 +4,7 @@ import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
+import { linkByDA } from '../utils/link-by-da'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -21,13 +22,10 @@ export const blobstream: DaBridge = {
     slug: 'blobstream',
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
   },
-  usedIn: [
-    {
-      id: ProjectId('rari'),
-      name: 'RARI Chain',
-      slug: 'rari',
-    },
-  ],
+  usedIn: linkByDA({
+    layer: ProjectId('celestia'),
+    bridge: ProjectId('blobstream'),
+  }),
   technology: {
     description: `
 

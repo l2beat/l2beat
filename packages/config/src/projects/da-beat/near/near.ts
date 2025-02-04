@@ -132,8 +132,8 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       ],
     },
     usedWithoutBridgeIn: linkByDA({
-      layer: (layer) => layer === 'NearDA',
-      bridge: (bridge) => bridge === 'None',
+      layer: ProjectId('near-da'),
+      bridge: undefined,
     }),
     bridges: [],
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)

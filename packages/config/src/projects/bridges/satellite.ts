@@ -116,30 +116,24 @@ export const satellite: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'MintLimiter Multisig',
-          accounts: discovery.getPermissionedAccounts(
-            'Multisig',
-            'signerAccounts',
-          ),
-          description: 'Members of the Multisig that can set mint limits.',
-        },
-        {
-          name: 'Operators',
-          accounts: [],
-          description:
-            'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
-        },
-        {
-          name: 'AxelarGasService Admin',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'MintLimiter Multisig',
+          discovery.getPermissionedAccounts('Multisig', 'signerAccounts'),
+          'Members of the Multisig that can set mint limits.',
+        ),
+        discovery.getPermissionDetails(
+          'Operators',
+          [],
+          'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
+        ),
+        discovery.getPermissionDetails(
+          'AxelarGasService Admin',
+          discovery.getPermissionedAccounts(
             'AxelarGasServiceOperators',
             'owner',
           ),
-
-          description:
-            'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
-        },
+          'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
+        ),
       ],
     },
   },
