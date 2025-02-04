@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 302514505,
-  "configHash": "0x685b703ce045cf392093b743fd287f2a80bd5f4da0c239a1585745a9f9241e4c",
+  "configHash": "0x30f76fa14ada01837ec0faffed6ac2a23e22b8df767515d5f6fb6da9625e21c1",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -963,6 +963,7 @@
         "maxTimeVariation": [5760, 48, 86400, 3600],
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
+        "sequencerVersion": "0x63",
         "totalDelayedMessagesRead": 192125,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"

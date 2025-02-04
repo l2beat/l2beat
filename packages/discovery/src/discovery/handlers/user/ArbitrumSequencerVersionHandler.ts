@@ -25,15 +25,19 @@ const addSequencerBatchV1 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder)'
 const addSequencerBatchV2 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)'
+const addSequencerBatchRari =
+  'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)'
 
 const abi = new utils.Interface([
   'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64, uint64, uint64, uint64) timeBounds, uint8 dataLocation)',
   `function ${addSequencerBatchV1}`,
   `function ${addSequencerBatchV2}`,
+  `function ${addSequencerBatchRari}`,
 ])
 
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
+const addSequencerBatchRariSigHash = abi.getSighash(addSequencerBatchRari)
 
 export class ArbitrumSequencerVersionHandler implements Handler {
   readonly dependencies: string[] = []
@@ -136,6 +140,8 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       return abi.decodeFunctionData(addSequencerBatchV1, calldata)
     } else if (calldata.startsWith(addSequencerBatchV2SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV2, calldata)
+    } else if (calldata.startsWith(addSequencerBatchRariSigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchRari, calldata)
     } else {
       throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }

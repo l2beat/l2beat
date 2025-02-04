@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x01bcaec657b3ffd06d7f536499e305b1ecebdda4
+Generated with discovered.json: 0x4cb9da3eb705cb417313cbff22cb3be41879baf0
 
-# Diff at Tue, 04 Feb 2025 10:16:43 GMT:
+# Diff at Tue, 04 Feb 2025 10:28:44 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ccb272fa97397c2c0bde64fd116f62794d575e23 block: 286430025
 - current block number: 302514505
 
 ## Description
@@ -64,8 +64,6 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 +        [5760,48,86400,3600]
       values.postsBlobs:
 -        false
-      values.sequencerVersion:
--        "0x63"
       values.setIsBatchPosterCount:
 -        1
       values.totalDelayedMessagesRead:

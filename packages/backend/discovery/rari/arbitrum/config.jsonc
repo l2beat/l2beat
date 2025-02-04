@@ -12,9 +12,11 @@
   },
   "overrides": {
     "SequencerInbox": {
-      "sequencerVersion": {
-        "handler": {
-          "type": "arbitrumSequencerVersion"
+      "fields": {
+        "sequencerVersion": {
+          "handler": {
+            "type": "arbitrumSequencerVersion"
+          }
         }
       }
     }
