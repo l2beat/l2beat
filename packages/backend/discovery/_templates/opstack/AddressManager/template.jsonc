@@ -7,7 +7,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "set and change address mappings."
           }
         ]

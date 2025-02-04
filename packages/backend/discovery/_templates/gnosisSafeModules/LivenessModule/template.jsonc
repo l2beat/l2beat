@@ -22,7 +22,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can remove members of {{ safe }} inactive for {{ livenessInterval }}."
           }
         ]

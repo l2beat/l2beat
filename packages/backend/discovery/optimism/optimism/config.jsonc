@@ -55,7 +55,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
               }
             ]

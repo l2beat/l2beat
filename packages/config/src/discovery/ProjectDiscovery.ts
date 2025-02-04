@@ -101,7 +101,7 @@ export class ProjectDiscovery {
 
     return {
       name: contract.name,
-      isVerified: contract.unverified !== true,
+      isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -201,6 +201,8 @@ export class ProjectDiscovery {
   transformToPermissions(resolved: Record<string, PermissionedContract>) {
     return Object.values(resolved)
       .map((contract) => {
+        const entry = this.getEntryByAddress(contract.address)
+        assert(isNonNullable(entry), `Entry not found in the discovery`)
         const description = contract.generateDescription()
         if (description !== '') {
           return {
@@ -409,6 +411,7 @@ export class ProjectDiscovery {
       description: descriptionWithContractNames,
       accounts: [
         {
+          isVerified: isEntryVerified(contract),
           address: contract.address,
           type: 'Contract',
         },
@@ -550,8 +553,11 @@ export class ProjectDiscovery {
       const address = EthereumAddress(account)
       const isEOA = this.isEOA(address)
       const type = isEOA ? 'EOA' : 'Contract'
+      const entry = this.getEntryByAddress(address)
+      assert(isNonNullable(entry), `Could not find ${address} in discovery`)
+      const isVerified = isEntryVerified(entry)
 
-      result.push({ address: address, type })
+      result.push({ address: address, type, isVerified })
     }
 
     return result
@@ -605,7 +611,7 @@ export class ProjectDiscovery {
     }
     return {
       address: contract.address,
-      isVerified: contract.unverified !== true,
+      isVerified: isEntryVerified(contract),
       name: contract.name,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -621,6 +627,7 @@ export class ProjectDiscovery {
       name: contract.name,
       accounts: [
         {
+          isVerified: isEntryVerified(contract),
           address: contract.address,
           type: 'Contract',
         },
@@ -642,6 +649,7 @@ export class ProjectDiscovery {
       name: eoa.name ?? eoa.address,
       accounts: [
         {
+          isVerified: isEntryVerified(eoa),
           address: eoa.address,
           type: 'EOA',
         },
@@ -918,7 +926,7 @@ export class ProjectDiscovery {
     const ultimatePermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'Can change the configuration of',
+      interact: 'Is allowed to interact with',
       upgrade: 'Can upgrade the implementation of',
       act: undefined,
       guard: 'A Guardian',
@@ -961,7 +969,12 @@ export class ProjectDiscovery {
         return ''
       }
 
-      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const permissionsRequiringTarget: PermissionType[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
             .map((entry) => this.getContract(entry.from.toString()).name)
@@ -988,7 +1001,7 @@ export class ProjectDiscovery {
     const directPermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'Can be used to configure',
+      interact: 'Can be used to interact with',
       upgrade: 'Can be used to upgrade implementation of',
       act: 'Can act on behalf of',
       guard: 'Can act as a Guardian',
@@ -1019,7 +1032,12 @@ export class ProjectDiscovery {
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
       const delay = key.split('►')[3] ?? ''
-      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const permissionsRequiringTarget: PermissionType[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
             .map((entry) => this.getContract(entry.from.toString()).name)
@@ -1329,4 +1347,12 @@ function isMultisigLike(contract: ContractParameters | undefined): boolean {
   const hasThreshold = contract.values?.['$threshold'] !== undefined
 
   return hasMembers && hasThreshold
+}
+
+function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
+  if ('unverified' in entry) {
+    return entry.unverified !== true
+  }
+
+  return true
 }

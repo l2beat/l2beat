@@ -18,7 +18,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can eject DA operators from a quorum."
           }
         ]

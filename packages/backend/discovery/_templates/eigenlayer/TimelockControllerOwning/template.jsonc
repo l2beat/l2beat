@@ -29,7 +29,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "executes scheduled operations after the delay"
           }
         ]
@@ -43,7 +43,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can cancel scheduled operations"
           }
         ]

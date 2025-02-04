@@ -75,7 +75,6 @@ export function ContractsSection(props: ContractsSectionProps) {
       nested={props.nested}
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
-      includeChildrenIfUnderReview
     >
       {hasContractsChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}

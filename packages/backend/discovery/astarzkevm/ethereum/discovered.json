@@ -49,13 +49,13 @@
       "description": "The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
           "description": "sole address that can force batches.",
           "via": []
@@ -165,7 +165,7 @@
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "via": []
@@ -229,17 +229,17 @@
       "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           "description": "sole address that can force batches."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
           "description": "manage the members of the data availability committee and the threshold for valid commitments."
         },
@@ -537,8 +537,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a",
-    "polygon-cdk/PolygonZkEVM": "0x1b875d2c93809cbc2714ed3e0d71fa66d182e0082a816b78492fd220fe9fcd86",
+    "polygon-cdk/PolygonDataCommittee": "0x31cd17cf72567c89c63efc52c1e02df7c736621657d2c0fa8007a75fca167219",
+    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
     "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

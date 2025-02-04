@@ -347,6 +347,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
             },
           )),
     technology: {
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
         technologyDA(daProvider),

@@ -23,6 +23,7 @@ import { ReferenceList } from './reference-list'
 export interface TechnologyContract {
   name: string
   addresses: TechnologyContractAddress[]
+  admins: TechnologyContractAddress[]
   chain: string
   description?: string
   upgradeableBy?: string[]
@@ -39,7 +40,6 @@ export interface TechnologyContractAddress {
   name: string
   href: string
   address: string
-  isAdmin: boolean
   verificationStatus: VerificationStatus
 }
 
@@ -66,6 +66,7 @@ export function ContractEntry({
 
   const { color, icon } = getCalloutProps(contract, type)
 
+  const entries = [...contract.addresses, ...contract.admins]
   return (
     <Callout
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
@@ -75,7 +76,7 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
             <strong id={contract.name}>{contract.name}</strong>{' '}
-            {contract.addresses.map((address, i) => (
+            {entries.map((address, i) => (
               <HighlightableLink
                 key={i}
                 variant={
@@ -164,14 +165,9 @@ function getCalloutProps(
   type: 'permission' | 'contract',
 ) {
   const isAnyAddressUnverified = contract.addresses.some(
-    (c) => c.verificationStatus === 'unverified' && !c.isAdmin,
-  )
-  const isEveryAddressUnverified = contract.addresses.every(
     (c) => c.verificationStatus === 'unverified',
   )
-  const showRedBackground =
-    (type === 'contract' && isAnyAddressUnverified) ||
-    (type === 'permission' && isEveryAddressUnverified)
+  const showRedBackground = type === 'contract' && isAnyAddressUnverified
 
   if (showRedBackground) {
     return {

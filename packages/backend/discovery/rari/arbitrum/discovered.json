@@ -96,7 +96,7 @@
           "from": "0x003e70B041abb993006C03E56c8515622a02928C"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
@@ -265,7 +265,7 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x139C5A235632EDdad741ff380112B3161d31a21C" }]
@@ -623,7 +623,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x139C5A235632EDdad741ff380112B3161d31a21C" }]
@@ -1116,6 +1116,11 @@
           "permission": "fastconfirm",
           "from": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        },
+        {
+          "permission": "interact",
+          "from": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+          "description": "Add/remove batchPosters (Sequencers)."
         }
       ]
     },

@@ -22,7 +22,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "update the state root."
               }
             ]
@@ -48,7 +48,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "set the proof verifier and the exit administrator."
               }
             ]
@@ -65,7 +65,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
               }
             ]
@@ -99,7 +99,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "manage access control roles."
               }
             ]
@@ -113,7 +113,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "add tokens to the whitelist."
               }
             ]
@@ -127,7 +127,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "remove tokens from the whitelist."
               }
             ]
@@ -153,7 +153,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "manage all access control roles."
               }
             ]
@@ -167,7 +167,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "set the fast lane fee."
               }
             ]
@@ -181,7 +181,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
               }
             ]
@@ -208,7 +208,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "set permissioned relayers."
               }
             ]
