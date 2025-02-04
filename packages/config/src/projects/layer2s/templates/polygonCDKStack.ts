@@ -12,7 +12,7 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  type DataAvailabilityLayer,
+  type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
@@ -20,7 +20,6 @@ import {
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../../common'
 import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -53,8 +52,7 @@ import {
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
-  layer: DataAvailabilityLayer
-  fallback?: DataAvailabilityLayer
+  layer: DaProjectTableValue
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
@@ -333,20 +331,11 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             },
     },
     chainConfig: templateVars.chainConfig,
-    dataAvailability:
-      daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.layer, daProvider.fallback]
-              : [daProvider.layer],
-            bridge: daProvider.bridge,
-            mode: DA_MODES.TRANSACTION_DATA,
-          })
-        : addSentimentToDataAvailability({
-            layers: [DA_LAYERS.ETH_CALLDATA],
-            bridge: DA_BRIDGES.ENSHRINED,
-            mode: DA_MODES.TRANSACTION_DATA,
-          }),
+    dataAvailability: {
+      layer: daProvider?.layer ?? DA_LAYERS.ETH_CALLDATA,
+      bridge: daProvider?.bridge ?? DA_BRIDGES.ENSHRINED,
+      mode: DA_MODES.TRANSACTION_DATA,
+    },
     riskView: {
       stateValidation: {
         ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
@@ -456,6 +445,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ]),
         },
       ],
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
     },
     stateDerivation: templateVars.stateDerivation,
     stateValidation: templateVars.stateValidation,

@@ -46,7 +46,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "manage the blacklist of addresses in the TransactionFilterer."
               }
             ]

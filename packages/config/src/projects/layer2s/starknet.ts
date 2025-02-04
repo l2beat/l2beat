@@ -21,7 +21,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
@@ -897,11 +896,11 @@ export const starknet: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS_COMPRESSED,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -1080,33 +1079,31 @@ export const starknet: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'StarknetAdminMultisig',
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
           'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'StarknetOpsMultisig',
           'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
         ),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts('Starknet', 'operators'),
-          description:
-            'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        },
-        {
-          name: 'StarkGate LUSD owner',
-          accounts: getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
-          description:
-            'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('Starknet', 'operators'),
+          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        ),
+        discovery.getPermissionDetails(
+          'StarkGate LUSD owner',
+          getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),
+          'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
-        },
+        ),
       ],
     },
   },

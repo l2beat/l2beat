@@ -91,11 +91,11 @@ export const sollet: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          accounts: discovery.getPermissionedAccounts('SplTokenSwap', 'owner'),
-          name: 'Sollet Bridge Owner (EOA)',
-          description: 'Can withdraw funds from the bridge',
-        },
+        discovery.getPermissionDetails(
+          'Sollet Bridge Owner (EOA)',
+          discovery.getPermissionedAccounts('SplTokenSwap', 'owner'),
+          'Can withdraw funds from the bridge',
+        ),
       ],
     },
   },

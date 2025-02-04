@@ -15,7 +15,6 @@ import {
   NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
@@ -43,6 +42,14 @@ const proposerRoundDurationSeconds = discovery.getContractValue<number>(
 const rootsSubmissionIntervalBlocks = discovery.getContractValue<number>(
   'L2OutputOracle',
   'SUBMISSION_INTERVAL',
+)
+
+const scPA = discovery.getContractValue<string>('SC_ProxyAdmin', 'owner')
+const shPA = discovery.getContractValue<string>('SH_ProxyAdmin', 'owner')
+const spETHPA = discovery.getContractValue<string>('spETH_ProxyAdmin', 'owner')
+assert(
+  scPA === shPA && shPA === spETHPA,
+  'Spectrum EOA Admin permission changed, please update the .ts file.',
 )
 
 const rootsSubmissionIntervalSeconds = rootsSubmissionIntervalBlocks * 2 // L2 block time
@@ -222,11 +229,11 @@ export const kroma: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
@@ -398,70 +405,42 @@ export const kroma: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Spectrum EOA Admin',
-          accounts: discovery.getPermissionedAccounts('SC_ProxyAdmin', 'owner'),
-          description: (() => {
-            const scPA = discovery.getPermissionedAccounts(
-              'SC_ProxyAdmin',
-              'owner',
-            )[0].address
-            const shPA = discovery.getPermissionedAccounts(
-              'SH_ProxyAdmin',
-              'owner',
-            )[0].address
-            const spETHPA = discovery.getPermissionedAccounts(
-              'spETH_ProxyAdmin',
-              'owner',
-            )[0].address
-            assert(
-              scPA === shPA && shPA === spETHPA,
-              'Spectrum EOA Admin permission changed, please update the .ts file.',
-            )
-            const description =
-              'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.'
-            return description
-          })(),
-        },
-        {
-          name: 'SecurityCouncil',
-          accounts: discovery.getPermissionedAccounts(
-            'Colosseum',
-            'SECURITY_COUNCIL',
-          ),
-          description: `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
+        discovery.getPermissionDetails(
+          'Spectrum EOA Admin',
+          discovery.getPermissionedAccounts('SC_ProxyAdmin', 'owner'),
+          'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.',
+        ),
+        discovery.getPermissionDetails(
+          'SecurityCouncil',
+          discovery.getPermissionedAccounts('Colosseum', 'SECURITY_COUNCIL'),
+          `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
         and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
-        },
-        {
-          name: 'SecurityCouncil members',
-          accounts: SCMembers,
-          description: `Members of the SecurityCouncil.`,
-          references: [
-            {
-              title:
-                'Security Council members - Announcing Kroma Security Council',
-              url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
-            },
-          ],
-        },
-        {
-          name: 'Sequencer',
-          accounts: discovery.getPermissionedAccounts(
-            'SystemConfig',
-            'batcherHash',
-          ),
-          description: 'Central actor allowed to commit L2 transactions on L1.',
-        },
-        {
-          name: 'Guardian',
-          accounts: discovery.getPermissionedAccounts(
-            'KromaPortal',
-            'GUARDIAN',
-          ),
-          description:
-            'Actor allowed to pause withdrawals. Currently set to the Security Council.',
-        },
-        ...discovery.getMultisigPermission(
+        ),
+        discovery.getPermissionDetails(
+          'SecurityCouncil members',
+          SCMembers,
+          `Members of the SecurityCouncil.`,
+          {
+            references: [
+              {
+                title:
+                  'Security Council members - Announcing Kroma Security Council',
+                url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Sequencer',
+          discovery.getPermissionedAccounts('SystemConfig', 'batcherHash'),
+          'Central actor allowed to commit L2 transactions on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'Guardian',
+          discovery.getPermissionedAccounts('KromaPortal', 'GUARDIAN'),
+          'Actor allowed to pause withdrawals. Currently set to the Security Council.',
+        ),
+        discovery.getMultisigPermission(
           'KromaRewardVaultMultisig',
           'Escrows a pool of KRO used as validator rewards by the AssetManager.',
         ),

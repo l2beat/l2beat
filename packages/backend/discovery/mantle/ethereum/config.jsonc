@@ -55,7 +55,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "defines addresses that can pause or unpause ability to invest into strategies."
               }
             ]
@@ -114,7 +114,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "sign data commitments for the DA bridge."
               }
             ]
@@ -154,7 +154,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
               }
             ]
@@ -175,7 +175,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "defines addresses that can pause or unpause ability to deposit tokens into strategies."
               }
             ]
@@ -192,7 +192,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "can register or change status of DA node operators."
               }
             ]

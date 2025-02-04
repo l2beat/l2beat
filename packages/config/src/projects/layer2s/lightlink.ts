@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
-import { addSentimentToDataAvailability } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -20,19 +19,10 @@ const upgradesLightLink = {
   upgradeDelay: 'No delay',
 }
 
-const CSCowner = discovery.getContractValue<string>(
-  'CanonicalStateChain',
-  'owner',
-)
-
-const LightLinkMultisig = discovery.getContractValue<string>(
-  'L1BridgeRegistry',
-  'multisig',
-)
-
 const validators = discovery.getContractValue<
   { addr: string; power: number }[]
 >('L1BridgeRegistry', 'getValidators')
+const validatorAddresses = validators.map((v) => v.addr)
 
 const totalVotingPower = validators
   .map((validator) => validator.power)
@@ -49,11 +39,6 @@ const validatorThresholdPercentage = (
 const minValidatorsForConsensus = getMinValidatorsForConsensus(
   validators,
   validatorThreshold,
-)
-
-const publisher = discovery.getContractValue<string>(
-  'CanonicalStateChain',
-  'publisher',
 )
 
 /* Initially added as L2, commented out sections are from the original file. */
@@ -127,11 +112,11 @@ export const lightlink: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.CELESTIA],
+  dataAvailability: {
+    layer: DA_LAYERS.CELESTIA,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   // chainConfig: {
   //   name: 'lightlink',
   //   chainId: 1890,
@@ -244,34 +229,26 @@ export const lightlink: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Validators',
-          description: `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-          accounts: validators.map((validator) => ({
-            address: EthereumAddress(validator.addr),
-            type: 'EOA',
-          })),
-        },
-        {
-          name: 'Proposer',
-          accounts: [{ address: EthereumAddress(publisher), type: 'EOA' }],
-          description:
-            'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
-        },
-        {
-          name: 'LightLinkMultisig',
-          accounts: [
-            { address: EthereumAddress(LightLinkMultisig), type: 'Contract' },
-          ],
-          description:
-            'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
-        },
-        {
-          name: 'LightLinkAdmin',
-          accounts: [{ address: EthereumAddress(CSCowner), type: 'EOA' }],
-          description:
-            'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
-        },
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.formatPermissionedAccounts(validatorAddresses),
+          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+        ),
+        discovery.getPermissionDetails(
+          'Proposer',
+          discovery.getPermissionedAccounts('CanonicalStateChain', 'publisher'),
+          'The proposer ("publisher") is responsible for pushing new state roots to the CanonicalStateChain contract on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'LightLinkMultisig',
+          discovery.getPermissionedAccounts('L1BridgeRegistry', 'multisig'),
+          'This address is the admin of the L1BridgeRegistry. It can pause the bridge and upgrade the bridge implementation. It also determines the validators of the bridge and their voting power. It is not a Gnosis Safe multisig, but a custom multisig implementation.',
+        ),
+        discovery.getPermissionDetails(
+          'LightLinkAdmin',
+          discovery.getPermissionedAccounts('CanonicalStateChain', 'owner'),
+          'This address is the owner of all the CanonicalStateChain and Challenge contracts. Can replace the proposer and core system parameters.',
+        ),
       ],
     },
   },

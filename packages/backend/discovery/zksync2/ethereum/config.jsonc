@@ -78,7 +78,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract." // {{$$.address}} does not work
               }
             ]

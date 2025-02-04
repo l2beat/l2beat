@@ -94,12 +94,11 @@ export const gravity: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Cosmos Validators',
-          description:
-            'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
-          accounts: [],
-        },
+        discovery.getPermissionDetails(
+          'Cosmos Validators',
+          [],
+          'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
+        ),
       ],
     },
   },

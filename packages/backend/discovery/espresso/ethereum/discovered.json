@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 21372994,
-  "configHash": "0x317eb98449de787ed7ecd06c3049a2045cab849340a6cbdfcddb82fdb4b724a3",
+  "configHash": "0x11f1497b651946891cfb955d5b8b0aef3b14bddf359c45fe095d6c33338117ce",
   "contracts": [
     {
       "name": "EspressoMultisig",
@@ -15,7 +15,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
         },
@@ -55,13 +55,13 @@
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
           "description": "can call newFinalizedState() to prove the latest HotShot state.",
           "via": []
@@ -123,7 +123,7 @@
       "address": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can call newFinalizedState() to prove the latest HotShot state."
         }

@@ -38,7 +38,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can confirm batches to the DA bridge."
           }
         ]
@@ -48,7 +48,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can pause the DA bridge"
           }
         ]
@@ -58,7 +58,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer"
           }
         ]
@@ -68,7 +68,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can create rewards submissions."
           }
         ]

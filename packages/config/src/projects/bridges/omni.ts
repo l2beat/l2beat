@@ -178,18 +178,18 @@ export const omni: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OmniBridgeGovernance',
           'Can update the contracts and parameters of the bridge.',
         ),
-        {
-          name: 'Bridge validators',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Bridge validators',
+          discovery.getPermissionedAccounts(
             'BridgeValidators',
             'validatorList',
           ),
-          description: 'List of actors that can validate incoming messages.',
-        },
+          'List of actors that can validate incoming messages.',
+        ),
       ],
     },
   },

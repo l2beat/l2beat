@@ -353,12 +353,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
           "description": "executes scheduled operations after the delay"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
           "description": "executes scheduled operations after the delay"
         },
@@ -658,13 +658,13 @@
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "description": "executes scheduled operations after the delay",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can cancel scheduled operations",
           "via": []
@@ -1197,12 +1197,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x738130BC8eADe1Bc65A9c056DEa636835896bc53",
           "description": "can cancel scheduled operations"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d",
           "description": "can cancel scheduled operations"
         },
@@ -1364,13 +1364,13 @@
       "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F",
           "description": "executes scheduled operations after the delay",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
           "description": "can cancel scheduled operations",
           "via": []
@@ -2696,7 +2696,7 @@
     "eigenlayer/RewardAllStakersActionGenerator": "0xe7a628d04c304f1774fb445ab055daba3d45d29d884cea0cf653c452b8471bab",
     "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
     "eigenlayer/StrategyManager": "0x91dbd29e4171ae9cef07eed3c492622e98c1f91baf2bee399a0e72331296ac91",
-    "eigenlayer/TimelockControllerOwning": "0x523fab291192562f16433e3b73d4b71b39f88e107e6019fd44efc723e39149e7",
+    "eigenlayer/TimelockControllerOwning": "0x089a48c5958746053b46c7f052ae879ff1a8891d5c9c48e6dfe25a36ac021448",
     "eigenlayer/TokenHopper": "0xa7a1dc2a0b6dd2dcf17c48f0556e05791098c11aadc69900499911a228765efd",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
