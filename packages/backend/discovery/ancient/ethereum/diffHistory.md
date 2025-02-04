@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xa2afb9fecefb74fd51385f58f4806e58e5b9c210
+
+# Diff at Tue, 04 Feb 2025 14:56:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0b255b1e33d3bf85933cb640f6762fa0c8f26ff4 block: 21637075
+- current block number: 21773864
+
+## Description
+
+discodrive!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637075 (main branch discovery), not current.
+
+```diff
+    contract Ancient8GuardianMultisig (0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f) {
+    +++ description: None
+      name:
+-        "ChallengerMultisig"
++        "Ancient8GuardianMultisig"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x132b3456300332d488f946B818eB9512931eBCAa)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
 Generated with discovered.json: 0x9b6209b47e918e1381188b4331477bb5f681674a
 
 # Diff at Tue, 04 Feb 2025 12:30:46 GMT:

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5bdcadeb20b8e969cf7891011d814b99f257ad2d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+discodrive!
 
 ## Config/verification related changes
 
