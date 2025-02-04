@@ -203,7 +203,7 @@ function toTechnologyContract(
           ? `#${permissionedName.name}`
           : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
-        verificationStatus: toVerificationStatus(account.isVerified),
+        verificationStatus: toVerificationStatus(account.isVerified ?? false),
       }
     },
   )
@@ -242,6 +242,7 @@ function toTechnologyContract(
     {
       name,
       addresses,
+      admins: [],
       usedInProjects,
       chain,
       description: permission.description,
