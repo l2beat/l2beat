@@ -7,7 +7,7 @@ import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('river')
 
-export const towns: Layer2 = opStackL2({
+export const river: Layer2 = opStackL2({
   addedAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
   additionalBadges: [Badge.RaaS.Caldera],
   discovery,
@@ -37,7 +37,7 @@ export const towns: Layer2 = opStackL2({
       title: 'River Protocol is now Towns Protocol',
       url: 'https://x.com/TownsProtocol/status/1871587022818931001',
       date: '2024-12-25',
-      description: 'River Protocol is now Towns Protocol',
+      description: 'River Protocol is now Towns Protocol.',
       type: 'general',
     },
   ],

@@ -173,7 +173,7 @@ import { termstructure } from './termstructure'
 import { ternoa } from './ternoa'
 import { thanos } from './thanos'
 import { thebinaryholdings } from './thebinaryholdings'
-import { towns } from './towns'
+import { river } from './river'
 import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { unichain } from './unichain'
@@ -362,7 +362,7 @@ export const layer2s: Layer2[] = [
   swell,
   sxt,
   t1,
-  towns,
+  river,
   sxnetwork,
   taiko,
   tanx,
