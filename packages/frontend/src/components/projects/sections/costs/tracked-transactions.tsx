@@ -7,8 +7,14 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/collapsible'
 import { Switch } from '~/components/core/switch'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { EtherscanLink } from '~/components/etherscan-link'
 import { ChevronIcon } from '~/icons/chevron'
+import { InfoIcon } from '~/icons/info'
 import { formatTimestamp } from '~/utils/dates'
 import type {
   TrackedTransaction,
@@ -164,12 +170,10 @@ function TransactionDetails({
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Selector: </span>
-              <span className="rounded">{transaction.selector}</span>
+              <span>{transaction.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-words">
-                {transaction.functionSignature}
-              </code>
+              <code className="break-all">{transaction.functionSignature}</code>
             </div>
           </>
         )}
@@ -189,14 +193,22 @@ function TransactionDetails({
 
         {transaction.formula === 'sharpSubmission' && (
           <div>
-            <div className="mb-2 text-sm text-secondary">Program Hashes:</div>
+            <div className="mb-1 text-sm">
+              <span className="text-secondary">Address: </span>
+              <EtherscanLink address={transaction.address} />
+            </div>
+            <div className="mb-1 text-sm">
+              <span className="text-secondary">Selector: </span>
+              <span>{transaction.selector}</span>
+            </div>
+            <div className="mb-1 text-sm text-secondary">Program Hashes:</div>
             {transaction.programHashes.map((hash, index) => (
-              <code
+              <div
                 key={index}
-                className="mb-1 block rounded bg-surface-secondary px-1.5 py-0.5 text-xs"
+                className="rounded bg-surface-secondary p-2 text-xs"
               >
-                {hash}
-              </code>
+                <code className="break-all">{hash}</code>
+              </div>
             ))}
           </div>
         )}
@@ -214,14 +226,32 @@ function TransactionDetails({
             </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Selector: </span>
-              <span className="rounded">{transaction.selector}</span>
+              <span>{transaction.selector}</span>
             </div>
             <div className="rounded bg-surface-secondary p-2 text-xs">
-              <code className="break-words">
-                {transaction.functionSignature}
-              </code>
+              <code className="break-all">{transaction.functionSignature}</code>
             </div>
           </>
+        )}
+
+        {transaction.multiplier && (
+          <div className="mt-1 flex items-center gap-0.5 text-sm">
+            <div className="leading-none">
+              <span className="text-secondary">Multiplier: </span>
+              <span>{transaction.multiplier}</span>
+            </div>
+            <Tooltip>
+              <TooltipTrigger className="inline size-4">
+                <InfoIcon />
+              </TooltipTrigger>
+              <TooltipContent>
+                {/* TODO: better info */}
+                This transaction is tracked with a multiplier. This means that
+                the cost of this transaction is multiplied by the multiplier.
+                Some more important info and more useful info XD
+              </TooltipContent>
+            </Tooltip>
+          </div>
         )}
       </div>
     </div>
