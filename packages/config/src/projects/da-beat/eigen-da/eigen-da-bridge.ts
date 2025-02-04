@@ -66,7 +66,7 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 ).length
 
 export const eigenDAbridge: DaBridge = {
-  id: ProjectId('eigen-da-bridge'), // TODO: merge with main eigenda project
+  id: ProjectId('eigenda'), // TODO: merge with main eigenda project
   addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
   display: {
     name: 'ServiceManager',
@@ -156,7 +156,7 @@ export const eigenDAbridge: DaBridge = {
   },
   usedIn: linkByDA({
     layer: ProjectId('eigen-da'),
-    bridge: ProjectId('eigen-da-bridge'),
+    bridge: ProjectId('eigenda'),
   }),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
