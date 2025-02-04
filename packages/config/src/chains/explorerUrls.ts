@@ -14,7 +14,7 @@
 // In the third pass we'll understand what projects are available and we can
 // inline the explorer url at that time.
 
-export const ExplorerUrlMap: Record<string, string> = {
+export const EXPLORER_URLS: Record<string, string> = {
   ethereum: 'https://etherscan.io',
   zksync2: 'https://era.zksync.network',
   arbitrum: 'https://arbiscan.io',

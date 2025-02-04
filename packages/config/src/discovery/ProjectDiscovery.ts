@@ -27,7 +27,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
-import { ExplorerUrlMap } from '../chains/explorerUrls'
+import { EXPLORER_URLS } from '../chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,
@@ -553,7 +553,7 @@ export class ProjectDiscovery {
       const isVerified = isEntryVerified(entry)
 
       const name = `${address.slice(0, 6)}…${address.slice(38, 42)}`
-      const explorerUrl = ExplorerUrlMap[this.chain]
+      const explorerUrl = EXPLORER_URLS[this.chain]
       assert(
         isNonNullable(explorerUrl),
         `Failed to find explorer url for chain [${this.chain}]`,
