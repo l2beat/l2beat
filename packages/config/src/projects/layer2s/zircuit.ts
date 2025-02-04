@@ -56,8 +56,6 @@ export const zircuit: Layer2 = opStackL2({
       ],
     },
     architectureImage: 'zircuit',
-    warning:
-      'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
   },
   genesisTimestamp: new UnixTime(1719936217),
   rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
