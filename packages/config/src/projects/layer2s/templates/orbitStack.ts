@@ -365,13 +365,15 @@ function orbitStackCommon(
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== undefined && templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== EthereumAddress.ZERO
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
 
   const currentRequiredStake = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
@@ -748,13 +750,15 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
-  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== undefined && templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== EthereumAddress.ZERO
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
@@ -939,13 +943,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  const isUsingEspressoSequencer = templateVars.discovery.getContractValueOrUndefined<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== undefined && templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'espressoTEEVerifier',
-  ) !== EthereumAddress.ZERO
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
 
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
