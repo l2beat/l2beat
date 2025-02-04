@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe442a28c03385d20bc0d8343087163cb0757d8a5
+Generated with discovered.json: 0xa2068c053df5537dcf03a4bdb3a0f0d0ae727c90
 
-# Diff at Tue, 04 Feb 2025 10:59:14 GMT:
+# Diff at Tue, 04 Feb 2025 13:23:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@142491370256d9fb936a347e610d0ac200e9e51c block: 21745064
@@ -153,6 +153,90 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
 ```diff
 .../PolygonRollupManager/PolygonRollupManager.sol  | 1305 ++++++++------------
  1 file changed, 515 insertions(+), 790 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21745064 (main branch discovery), not current.
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.4.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.3.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.
+      issuedPermissions.6.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.5.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.4.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.3.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d.
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+      directlyReceivedPermissions.3.permission:
+-        "configure"
++        "interact"
+      directlyReceivedPermissions.2.permission:
+-        "configure"
++        "interact"
+    }
 ```
 
 Generated with discovered.json: 0xda60ce55287fb5f595f630ba4fb0ae56915c6943
