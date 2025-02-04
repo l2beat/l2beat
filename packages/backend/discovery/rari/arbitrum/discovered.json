@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 302521968,
+  "blockNumber": 302526019,
   "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
@@ -191,11 +191,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 192129,
+        "delayedMessageCount": 192130,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 10148,
-        "sequencerReportedSubMessageCount": 1500315
+        "sequencerMessageCount": 10149,
+        "sequencerReportedSubMessageCount": 1500337
       }
     },
     {
@@ -955,7 +955,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 10148,
+        "batchCount": 10149,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
