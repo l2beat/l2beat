@@ -250,8 +250,8 @@ function TransactionDetails({
               <span>{transaction.multiplier}</span>
             </div>
             <Tooltip>
-              <TooltipTrigger className="inline size-3">
-                <InfoIcon />
+              <TooltipTrigger>
+                <InfoIcon className="size-3" />
               </TooltipTrigger>
               <TooltipContent>
                 Multiple projects are using the same contract. Therefore,
