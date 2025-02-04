@@ -50,6 +50,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
           }
         : undefined,
     },
+    display: {
+      description: p.display.description,
+      links: p.display.links,
+    },
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -144,6 +148,10 @@ function bridgeToProject(p: Bridge): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
     },
+    display: {
+      description: p.display.description,
+      links: p.display.links,
+    },
     bridgeInfo: {
       category: p.display.category,
       destination: p.technology.destination,
@@ -174,6 +182,10 @@ function daToProject(p: DaProject): BaseProject {
       redWarning: undefined,
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
+    },
+    display: {
+      description: p.display.description,
+      links: p.display.links,
     },
     daBridges: p.daLayer.bridges,
     // tags

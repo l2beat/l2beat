@@ -250,23 +250,6 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export interface ProjectLinks {
-  /** Links to marketing landing pages. */
-  websites?: string[]
-  /** Links to web apps connected to the layer2. */
-  apps?: string[]
-  /** Links to documentation pages. */
-  documentation?: string[]
-  /** Links to transaction explorers. */
-  explorers?: string[]
-  /** Links to source code repositories. */
-  repositories?: string[]
-  /** Links to social media pages. */
-  socialMedia?: string[]
-  /** Link to rollup codes. */
-  rollupCodes?: string
-}
-
 export interface ProjectPermissions {
   /** List of roles */
   roles?: ProjectPermission[]
@@ -1005,6 +988,7 @@ export interface BaseProject {
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  display?: ProjectDisplay
   bridgeInfo?: ProjectBridgeInfo
   bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
@@ -1091,6 +1075,23 @@ export interface ProjectStatuses {
     pretendingToBe: ScalingProjectCategory
     reasons: ReasonForBeingInOther[]
   }
+}
+
+export interface ProjectDisplay {
+  description: string
+  links: ProjectLinks
+}
+
+export interface ProjectLinks {
+  /** Links to marketing landing pages. */
+  websites?: string[]
+  /** Links to web apps. */
+  apps?: string[]
+  documentation?: string[]
+  explorers?: string[]
+  repositories?: string[]
+  socialMedia?: string[]
+  rollupCodes?: string
 }
 
 export interface ProjectBridgeInfo {
