@@ -53,14 +53,7 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
       initActivityModule(config, logger, clock, providers, database),
-      initDataAvailabilityModule(
-        config,
-        logger,
-        clock,
-        providers,
-        database,
-        peripherals,
-      ),
+      initDataAvailabilityModule(config, logger, clock, providers, database),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,

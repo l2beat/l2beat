@@ -19,6 +19,7 @@ export function getDaTrackingConfig(
       callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 300),
       timeout: env.integer('BLOBSCAN_TIMEOUT', 30_000),
     },
+    // Ideally layer should go in tandem with its projects
     ethereum: {
       minHeight: env.integer('DA_ETHEREUM_MIN_HEIGHT', 19426618), // blobs
       batchSize: env.integer('DA_ETHEREUM_BATCH_SIZE', 2500),

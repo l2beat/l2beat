@@ -53,65 +53,6 @@ describe(BlobScanClient.name, () => {
       expect(http.fetch).toHaveBeenCalledTimes(2)
     })
   })
-
-  describe(BlobScanClient.prototype.getTransactionsWithBlobsByAddress
-    .name, () => {
-    it('handles single-page responses', async () => {
-      const tx = mockTransaction()
-
-      const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce({
-          transactions: [tx],
-          totalTransactions: 500,
-        }),
-      })
-
-      const client = mockClient({ http })
-
-      const result = await client.getTransactionsWithBlobsByAddress(
-        100,
-        200,
-        '0xaddress',
-      )
-
-      expect(result.length).toEqual(1)
-      expect(http.fetch).toHaveBeenCalledTimes(1)
-    })
-
-    it('handles multi-page responses', async () => {
-      const tx = mockTransaction()
-
-      const firstPage = {
-        transactions: [tx],
-        totalTransactions: 501, // More than MAX_PER_PAGE to trigger pagination
-      }
-      const secondPage = {
-        transactions: [
-          {
-            ...tx,
-            hash: '0x456',
-            blockNumber: 101,
-          },
-        ],
-        totalTransactions: 501,
-      }
-
-      const http = mockObject<HttpClient>({
-        fetch: mockFn().resolvesToOnce(firstPage).resolvesToOnce(secondPage),
-      })
-
-      const client = mockClient({ http })
-
-      const result = await client.getTransactionsWithBlobsByAddress(
-        100,
-        200,
-        '0xaddress',
-      )
-
-      expect(result.length).toEqual(2)
-      expect(http.fetch).toHaveBeenCalledTimes(2)
-    })
-  })
 })
 
 function mockClient(deps: {
@@ -150,34 +91,5 @@ function mockBlob() {
     blockHash: '0xabcd',
     blockNumber: 100,
     blockTimestamp: '2024-01-01T00:00:00Z',
-  }
-}
-
-function mockTransaction() {
-  return {
-    hash: '0x123',
-    blockNumber: 100,
-    blockTimestamp: '2024-01-01T00:00:00Z',
-    blockHash: '0xabc',
-    index: 0,
-    from: '0x1234567890123456789012345678901234567890',
-    to: '0x0987654321098765432109876543210987654321',
-    maxFeePerBlobGas: '1000000000',
-    blobGasUsed: '100000',
-    blobAsCalldataGasUsed: '50000',
-    category: 'transfer',
-    rollup: 'optimism',
-    blobs: [
-      {
-        versionedHash: '0x123456',
-        index: 0,
-      },
-    ],
-    block: {
-      blobGasPrice: '1000000000',
-    },
-    blobAsCalldataGasFee: '50000000',
-    blobGasBaseFee: '40000000',
-    blobGasMaxFee: '60000000',
   }
 }
