@@ -1,16 +1,15 @@
 ARG ARCH=x86_64
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
-# This value is extracted from package.json
-ARG PNPM_VERSION="pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+ARG COREPACK_VERSION="^0.31.0"
 
 FROM node:22 as pruner
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
-ARG PNPM_VERSION
-RUN corepack prepare $PNPM_VERSION --activate && corepack enable pnpm
+ARG COREPACK_VERSION
+RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY . .
 RUN pnpm add -g turbo
@@ -20,8 +19,8 @@ FROM node:22 as builder
 ARG ARCH
 ARG TURBO_TEAM
 ARG TURBO_TOKEN
-ARG PNPM_VERSION
-RUN corepack prepare $PNPM_VERSION --activate && corepack enable pnpm
+ARG COREPACK_VERSION
+RUN npm i -g corepack@${COREPACK_VERSION} && corepack enable pnpm
 WORKDIR /src/
 COPY --from=pruner /src/out/json/ .
 RUN pnpm install
