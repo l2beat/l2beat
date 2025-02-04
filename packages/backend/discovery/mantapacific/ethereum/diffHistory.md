@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x91eab5ce884fcb860fc86936902eb12c55d53e8c
+
+# Diff at Tue, 04 Feb 2025 12:31:41 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 20927642
+- current block number: 20927642
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract MantaMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xa0c0f842e16795da9e03d39b46f7e9bfb6a34d59
 
 # Diff at Mon, 20 Jan 2025 11:09:43 GMT:

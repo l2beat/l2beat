@@ -445,6 +445,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           ]),
         },
       ],
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
     },
     stateDerivation: templateVars.stateDerivation,
     stateValidation: templateVars.stateValidation,

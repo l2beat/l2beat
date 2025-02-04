@@ -21,7 +21,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "Can change security parameters of the DMT token (Sanko gas token) and its OFT adapters (LayerZero). This includes the permission to mint unlimited tokens or steal tokens in the canonical bridge escrow."
               }
             ]

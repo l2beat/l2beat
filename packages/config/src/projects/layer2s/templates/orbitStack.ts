@@ -445,6 +445,7 @@ function orbitStackCommon(
         },
     chainConfig: templateVars.chainConfig,
     technology: {
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:

@@ -158,7 +158,7 @@
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x918778e825747a892b17C66fe7D24C618262867d",
           "description": "set and change address mappings."
         },
@@ -404,7 +404,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "description": "set and change address mappings.",
           "via": []
@@ -1328,6 +1328,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274"
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37"
   }
 }

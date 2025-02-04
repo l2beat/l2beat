@@ -7,7 +7,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can withdraw all funds from the bridge."
           }
         ]
@@ -17,7 +17,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can sign arbitrary withdrawals for users."
           }
         ]

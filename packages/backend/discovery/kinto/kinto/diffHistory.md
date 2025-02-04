@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x1b42e603e4713a14ade31eaf3e26f9123526838d
+
+# Diff at Tue, 04 Feb 2025 12:34:05 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 715537
+- current block number: 715537
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 715537 (main branch discovery), not current.
+
+```diff
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9) {
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a) {
+    +++ description: Governance contract allowing token- and NFT based voting.
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract KintoAdminMultisig (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Treasury (0x793500709506652Fcc61F0d2D0fDa605638D4293) {
+    +++ description: Kinto Treasury.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      issuedPermissions.8.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.7.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.6.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.5.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.4.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.3.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xd34b17ff308ca2ac3515c18051460684b6c4b03b
 
 # Diff at Wed, 29 Jan 2025 09:53:10 GMT:

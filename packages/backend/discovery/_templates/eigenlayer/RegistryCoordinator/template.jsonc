@@ -50,7 +50,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can approve the replacement of churned operators from a quorum"
           }
         ]
@@ -60,7 +60,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can add and remove strategies"
           }
         ]

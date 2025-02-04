@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 55181277,
-  "configHash": "0xcbdfd7bffd456db4f68afda070e2483816e220205312b7333ac165a3130cd90f",
+  "configHash": "0xc7390df39511c2b7c0e5399db60a6e06cc86c64433c35fa905aae39d3accae8f",
   "contracts": [
     {
       "name": "ZkTokenGovernor",
@@ -14,13 +14,13 @@
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "via": []
@@ -28,22 +28,22 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "cancel queued transactions."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "execute transactions that are ready."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "via": [
@@ -116,19 +116,19 @@
       "description": "Timelock contract that can send L2->L1 transactions to start a proposal in the ProtocolUpgradeHandler on Ethereum (L2_SENDER_ROLE). This timelock has a minimum delay of 0s.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
           "description": "cancel queued transactions.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
           "description": "execute transactions that are ready.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76705327e682F2d96943280D99464Ab61219e34f",
           "description": "propose transactions.",
           "via": []
@@ -182,19 +182,19 @@
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "cancel queued transactions.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "execute transactions that are ready.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "propose transactions.",
           "via": []
@@ -202,7 +202,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
         }
@@ -255,7 +255,7 @@
       "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe788e09324F8bb3cc64f009973693f751C33b999",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "via": []
@@ -263,17 +263,17 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "cancel queued transactions."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "execute transactions that are ready."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "propose transactions."
         }
@@ -340,7 +340,7 @@
       "description": "The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "via": [
@@ -351,7 +351,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
           "description": "control all roles in the ZkToken access control, including the minter roles.",
           "via": []
@@ -456,17 +456,17 @@
       "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "cancel queued transactions."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "execute transactions that are ready."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions."
         }
@@ -529,19 +529,19 @@
       "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 3d.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "cancel queued transactions.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "execute transactions that are ready.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "propose transactions.",
           "via": []
@@ -613,7 +613,7 @@
       "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles."
         },
@@ -635,7 +635,7 @@
       "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
         }
@@ -646,12 +646,12 @@
       "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
         }
@@ -1063,8 +1063,8 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "shared-zk-stack/TimelockController": "0x38f43b8c36d40f49fb5bb1617228d17380aba0b12091b134579e30bc355e8123",
+    "shared-zk-stack/TimelockController": "0xb19fa409e8aab26306d8d1694bc6f340f67218c38b6d4d3e9d3b6da7b6eb56aa",
     "shared-zk-stack/ZkGovernor": "0xc5df0dc32cd88ab7d0221d702c91c8ecde126c7f21d95e4cb5cbaa49ab70d398",
-    "shared-zk-stack/ZkToken": "0x0832f7cc461e7c92cecaf38b20aed1c119a1d91d0a01085cc260c38ad27031f1"
+    "shared-zk-stack/ZkToken": "0x0b3f521e99577081132884d9a0c7f20be6a8d132c8c15e1f5ba1f76c79bca0e4"
   }
 }

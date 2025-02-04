@@ -1,3 +1,171 @@
+Generated with discovered.json: 0x249e03d6a3e6c8a451dbf9adbd7939a3f5cfb761
+
+# Diff at Tue, 04 Feb 2025 12:31:24 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21736785
+- current block number: 21736785
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736785 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts and the EigenDAServiceManager.
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EigenLayerProtocolCouncil (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      issuedPermissions.16.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.15.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.14.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.13.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.12.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.11.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.10.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.9.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.8.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.7.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.6.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.5.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.4.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.3.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      receivedPermissions.4.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.3.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x238873892213bc6404be9eb87afa73dac25d2832
 
 # Diff at Wed, 29 Jan 2025 14:53:51 GMT:

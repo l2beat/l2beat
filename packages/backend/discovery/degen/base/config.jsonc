@@ -23,7 +23,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "Can control the LayerZero OrbitERC20OFTAdapter contract for the DEGEN token and thus potentially steal all funds from the canonical bridge."
               }
             ]
@@ -41,7 +41,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "directly controls the UTB contract's critical functions like updating all roles and modules."
               }
             ]
