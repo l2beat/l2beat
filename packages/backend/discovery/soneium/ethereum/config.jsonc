@@ -4,7 +4,8 @@
   "name": "soneium",
   "initialAddresses": [
     "0xeb9bf100225c214efc3e7c651ebbadcf85177607", // L1StandardBridge
-    "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb" // L1OpUsdcBridgeAdapterProxy
+    "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb", // L1OpUsdcBridgeAdapterProxy
+    "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a" // L1LidoTokensBridge
   ],
   "names": {
     "0x509182eC226b3B71D36A3255A80EF0b1A9D43033": "SoneiumMultisig"

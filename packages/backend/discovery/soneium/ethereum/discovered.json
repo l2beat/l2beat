@@ -1,8 +1,8 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 21731591,
-  "configHash": "0xff7b349767155f3b68635f5a3e0c164f7a858821a50bc3673236b13f8734c981",
+  "blockNumber": 21773634,
+  "configHash": "0xbe00624731d81cab9f3ff271b3c1705ac95ebf3133b207ef21d63aa5ea6ffeac",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -103,6 +103,82 @@
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "version": "1.0.0"
+      }
+    },
+    {
+      "name": "L1LidoTokensBridge",
+      "address": "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a",
+      "template": "lido/L1LidoTokensBridge",
+      "sourceHashes": [
+        "0x698ae88793265d087e07a445b69bf16b450cdcf636b9073b86221936e912a135",
+        "0xee07202651af1cf311f14f1f29908dd5524a050efc650832b6ee88c9a9cf86fd"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "displayName": "L1ERC20TokenBridge",
+      "description": "Lido custom escrow for wstETH tokens that uses the canonical bridge for messaging but is governed externally.",
+      "sinceTimestamp": 1737366215,
+      "values": {
+        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "$implementation": "0xf034dE8BD85A434d9Dc68F03382B589f86791425",
+        "$pastUpgrades": [
+          [
+            "2025-01-20T09:43:35.000Z",
+            "0xbd91ce5bc5a8c80796c11ac29b5aa78e37ad5f7b089c9a821d2ea6dbc6c60342",
+            ["0xf034dE8BD85A434d9Dc68F03382B589f86791425"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accesscontrol": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "0x73b047fe6337183A454c5217241D780a932777bD"
+            ]
+          },
+          "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"]
+          },
+          "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "0x73b047fe6337183A454c5217241D780a932777bD"
+            ]
+          }
+        },
+        "ACCOUNTING_ORACLE": "0x852deD011285fe67063a08005c71a85690503Cee",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
+        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
+        "GENESIS_TIME": 1606824023,
+        "getContractVersion": 2,
+        "isDepositsEnabled": true,
+        "isInitialized": true,
+        "isWithdrawalsEnabled": true,
+        "L1_TOKEN_NON_REBASABLE": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "L1_TOKEN_REBASABLE": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
+        "L2_TOKEN_NON_REBASABLE": "0xaA9BD8c957D803466FA92504BDd728cC140f8941",
+        "L2_TOKEN_REBASABLE": "0x0Ce031AEd457C870D74914eCAA7971dd3176cDAF",
+        "l2TokenBridge": "0xb4a0Cc7bE277DC9F9CBB6fbE8574B6f5221018D8",
+        "MESSENGER": "0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f",
+        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "proxy__getImplementation": "0xf034dE8BD85A434d9Dc68F03382B589f86791425",
+        "proxy__getIsOssified": false,
+        "SECONDS_PER_SLOT": 12,
+        "TOKEN_RATE_DECIMALS": 27,
+        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
+        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d",
+        "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       }
     },
     {
@@ -213,7 +289,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 54,
+        "nonce": 55,
         "VERSION": "1.3.0"
       }
     },
@@ -250,7 +326,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -285,7 +361,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 663,
+        "gameCount": 803,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x42D15f045159Ce4adE9EDC7da5704eF36056c936",
@@ -295,7 +371,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 663,
+        "permissionedGamesTotal": 803,
         "version": "1.0.0"
       }
     },
@@ -575,7 +651,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279134862300634158369",
+        "scalar": "452312848583266388373324160190187140051835877600158453279137802119848928776",
         "sequencerInbox": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 21314185,
@@ -684,7 +760,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21731580
+          "prevBlockNum": 21773634
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -979,7 +1055,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631648",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634718",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1316,6 +1392,22 @@
       "function superchainConfig() view returns (address)",
       "function tryUpdateAnchorState()",
       "function version() view returns (string)"
+    ],
+    "0x2F543A7C9cc80Cc2427c892B96263098d23ee55a": [
+      "constructor(address implementation_, address admin_, bytes data_)",
+      "error ErrorNotAdmin()",
+      "error ErrorProxyIsOssified()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ProxyOssified()",
+      "event Upgraded(address indexed implementation)",
+      "function proxy__changeAdmin(address newAdmin_)",
+      "function proxy__getAdmin() view returns (address)",
+      "function proxy__getImplementation() view returns (address)",
+      "function proxy__getIsOssified() view returns (bool)",
+      "function proxy__ossify()",
+      "function proxy__upgradeTo(address newImplementation_)",
+      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
     "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
       "constructor()",
@@ -2084,6 +2176,79 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
+    "0xf034dE8BD85A434d9Dc68F03382B589f86791425": [
+      "constructor(address messenger_, address l2TokenBridge_, address l1TokenNonRebasable_, address l1TokenRebasable_, address l2TokenNonRebasable_, address l2TokenRebasable_, address accountingOracle_)",
+      "error ErrorAccountIsZeroAddress()",
+      "error ErrorAlreadyInitialized()",
+      "error ErrorBridgingManagerIsNotInitialized()",
+      "error ErrorDepositsDisabled()",
+      "error ErrorDepositsEnabled()",
+      "error ErrorSenderNotEOA()",
+      "error ErrorUnauthorizedMessenger()",
+      "error ErrorUnsupportedL1L2TokensPair(address l1Token, address l2Token)",
+      "error ErrorUnsupportedL2Token(address l2Token)",
+      "error ErrorWithdrawalsDisabled()",
+      "error ErrorWithdrawalsEnabled()",
+      "error ErrorWrongCrossDomainSender()",
+      "error ErrorZeroAddressAccountingOracle()",
+      "error ErrorZeroAddressAdmin()",
+      "error ErrorZeroAddressL1TokenNonRebasable()",
+      "error ErrorZeroAddressL1TokenRebasable()",
+      "error ErrorZeroAddressL2Bridge()",
+      "error ErrorZeroAddressL2TokenNonRebasable()",
+      "error ErrorZeroAddressL2TokenRebasable()",
+      "error ErrorZeroAddressMessenger()",
+      "error ErrorZeroAddressWstETH()",
+      "error InvalidContractVersionIncrement()",
+      "error NonZeroContractVersionOnInit()",
+      "error UnexpectedContractVersion(uint256 expected, uint256 received)",
+      "event ContractVersionSet(uint256 version)",
+      "event DepositsDisabled(address indexed disabler)",
+      "event DepositsEnabled(address indexed enabler)",
+      "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event ERC20WithdrawalFinalized(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
+      "event Initialized(address indexed admin)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event WithdrawalsDisabled(address indexed disabler)",
+      "event WithdrawalsEnabled(address indexed enabler)",
+      "function ACCOUNTING_ORACLE() view returns (address)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
+      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
+      "function GENESIS_TIME() view returns (uint256)",
+      "function L1_TOKEN_NON_REBASABLE() view returns (address)",
+      "function L1_TOKEN_REBASABLE() view returns (address)",
+      "function L2_TOKEN_NON_REBASABLE() view returns (address)",
+      "function L2_TOKEN_REBASABLE() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function SECONDS_PER_SLOT() view returns (uint256)",
+      "function TOKEN_RATE_DECIMALS() view returns (uint256)",
+      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
+      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
+      "function WSTETH() view returns (address)",
+      "function depositERC20(address l1Token_, address l2Token_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function depositERC20To(address l1Token_, address l2Token_, address to_, uint256 amount_, uint32 l2Gas_, bytes data_)",
+      "function disableDeposits()",
+      "function disableWithdrawals()",
+      "function enableDeposits()",
+      "function enableWithdrawals()",
+      "function finalizeERC20Withdrawal(address l1Token_, address l2Token_, address from_, address to_, uint256 amount_, bytes data_)",
+      "function finalizeUpgrade_v2()",
+      "function getContractVersion() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin_)",
+      "function isDepositsEnabled() view returns (bool)",
+      "function isInitialized() view returns (bool)",
+      "function isWithdrawalsEnabled() view returns (bool)",
+      "function l2TokenBridge() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
     "0xF56D96B2535B932656d3c04Ebf51baBff241D886": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2132,6 +2297,7 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
     "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
+    "lido/L1LidoTokensBridge": "0xc7f9240c649749b30d835a342d6042229aff7f93596fa88893a387fe33428af3",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/AnchorStateRegistry": "0x5edafcbd7ee4adf7acb235602afad395d234f30cb9b817bdcf13429ac1c3c77a",
     "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",
