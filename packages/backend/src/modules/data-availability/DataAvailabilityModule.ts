@@ -124,7 +124,9 @@ function createIndexers(
         if (projectConfigs.length > 0) {
           // We use one indexer for all projects for now
           // ideally each project should have its own indexer
-          // with its own config and hash
+          // with its own config and hash;
+          // also disabling certain projects will now cause indexer to invalidate
+          // until we introduced multimanaged indexers
           const projectIndexer = new ProjectDaIndexer({
             name: `da_project_indexer_${layer}`,
             logger,
