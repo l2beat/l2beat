@@ -1,5 +1,4 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -26,7 +25,6 @@ interface Params {
   project: Layer3
   isVerified: boolean
   isHostChainVerified: boolean
-  contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   hostChain?: Layer2
@@ -45,20 +43,16 @@ export async function getL3ProjectDetails({
   combinedRosetteValues,
   hostChainRosetteValues,
   projectsChangeReport,
-  contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
-    ? getPermissionsSection(
-        {
-          id: project.id,
-          type: project.type,
-          hostChain: project.hostChain,
-          isUnderReview: !!project.isUnderReview,
-          permissions: project.permissions,
-          daSolution,
-        },
-        contractsVerificationStatuses,
-      )
+    ? getPermissionsSection({
+        id: project.id,
+        type: project.type,
+        hostChain: project.hostChain,
+        isUnderReview: !!project.isUnderReview,
+        permissions: project.permissions,
+        daSolution,
+      })
     : undefined
 
   const contractsSection = getContractsSection(

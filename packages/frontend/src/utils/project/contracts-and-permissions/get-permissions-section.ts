@@ -7,7 +7,6 @@ import type {
   ProjectPermissionedAccount,
   ProjectPermissions,
 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -58,7 +57,6 @@ function permissionsAreEmpty(
 
 export function getPermissionsSection(
   projectParams: ProjectParams,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
 ): PermissionSection | undefined {
   if (
     projectParams.permissions !== 'UnderReview' &&
@@ -89,11 +87,7 @@ export function getPermissionsSection(
         ([slug, permissions]) => {
           return [
             slugToDisplayName(slug),
-            getGroupedTechnologyContracts(
-              projectParams,
-              contractsVerificationStatuses,
-              permissions,
-            ),
+            getGroupedTechnologyContracts(projectParams, permissions),
           ]
         },
       ),
@@ -103,38 +97,28 @@ export function getPermissionsSection(
   return {
     ...section,
     permissionsByChain,
-    daSolution: getDaSolution(projectParams, contractsVerificationStatuses),
+    daSolution: getDaSolution(projectParams),
   }
 }
 
 function getGroupedTechnologyContracts(
   projectParams: ProjectParams,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
   permissions: ProjectPermissions,
 ): PermissionSection['permissionsByChain'][string] {
   return {
     roles:
       permissions.roles?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractsVerificationStatuses,
-        ),
+        toTechnologyContract(projectParams, permission),
       ) ?? [],
     actors:
       permissions.actors?.flatMap((permission) =>
-        toTechnologyContract(
-          projectParams,
-          permission,
-          contractsVerificationStatuses,
-        ),
+        toTechnologyContract(projectParams, permission),
       ) ?? [],
   }
 }
 
 function getDaSolution(
   projectParams: ProjectParams,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
 ): PermissionSection['daSolution'] {
   return projectParams.daSolution
     ? {
@@ -144,20 +128,11 @@ function getDaSolution(
         permissions: {
           roles:
             projectParams.daSolution.permissions?.roles?.flatMap((permission) =>
-              toTechnologyContract(
-                projectParams,
-                permission,
-                contractsVerificationStatuses,
-              ),
+              toTechnologyContract(projectParams, permission),
             ) ?? [],
           actors:
             projectParams.daSolution.permissions?.actors?.flatMap(
-              (permission) =>
-                toTechnologyContract(
-                  projectParams,
-                  permission,
-                  contractsVerificationStatuses,
-                ),
+              (permission) => toTechnologyContract(projectParams, permission),
             ) ?? [],
         },
       }
@@ -209,10 +184,8 @@ function resolvePermissionedName(
 function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
 ): TechnologyContract[] {
   const chain = getChain(projectParams, permission)
-  const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => {
@@ -230,9 +203,7 @@ function toTechnologyContract(
           ? `#${permissionedName.name}`
           : `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
-        verificationStatus: toVerificationStatus(
-          verificationStatusForChain[address],
-        ),
+        verificationStatus: toVerificationStatus(account.isVerified ?? false),
       }
     },
   )
@@ -264,9 +235,6 @@ function toTechnologyContract(
     return {
       name: permissionedName.name,
       href: `${etherscanUrl}/address/${account.address.toString()}#code`,
-      verificationStatus: toVerificationStatus(
-        verificationStatusForChain[account.address.toString()],
-      ),
     }
   })
 
@@ -274,6 +242,7 @@ function toTechnologyContract(
     {
       name,
       addresses,
+      admins: [],
       usedInProjects,
       chain,
       description: permission.description,

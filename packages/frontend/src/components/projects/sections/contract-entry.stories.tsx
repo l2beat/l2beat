@@ -21,21 +21,18 @@ const CONTRACT = {
   address: '0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf',
   verificationStatus: 'verified' as const,
   href: 'https://etherscan.io/address/0x65432133f54e0E8A33A975908C5BA1c14e5BbbDf',
-  isAdmin: false,
 }
 const IMPLEMENTATION = {
   name: 'Implementation (upgradeable)',
   address: '0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf',
   verificationStatus: 'verified' as const,
   href: 'https://etherscan.io/address/0x99932133f54e0E8A33A975908C5BA1c14e5BbbDf',
-  isAdmin: false,
 }
 const ADMIN = {
   name: 'Admin',
   address: '0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf',
   verificationStatus: 'verified' as const,
   href: 'https://etherscan.io/address/0x12345633f54e0E8A33A975908C5BA1c14e5BbbDf',
-  isAdmin: true,
 }
 
 const REFERENCES = [
@@ -53,6 +50,7 @@ export const SingleAddress: Story = {
       implementationChanged: false,
       highSeverityFieldChanged: false,
       addresses: [CONTRACT],
+      admins: [],
       description:
         'This is a smart contract responsible for X in the system Y.',
       references: REFERENCES,
@@ -69,6 +67,7 @@ export const UpgradeDetails: Story = {
       implementationChanged: false,
       highSeverityFieldChanged: false,
       addresses: [CONTRACT],
+      admins: [],
       description:
         'This is a smart contract responsible for X in the system Y.',
       upgradeableBy: ['Tom and Jerry'],
@@ -88,7 +87,8 @@ export const MultipleAddresses: Story = {
       chain: 'ethereum',
       implementationChanged: false,
       highSeverityFieldChanged: false,
-      addresses: [CONTRACT, IMPLEMENTATION, ADMIN],
+      addresses: [CONTRACT, IMPLEMENTATION],
+      admins: [ADMIN],
       description:
         'This is a smart contract responsible for X in the system Y.',
       references: [],
@@ -107,8 +107,8 @@ export const UnverifiedContract: Story = {
       addresses: [
         CONTRACT,
         { ...IMPLEMENTATION, verificationStatus: 'unverified' as const },
-        ADMIN,
       ],
+      admins: [ADMIN],
       description:
         'This is a smart contract responsible for X in the system Y.',
       references: [],

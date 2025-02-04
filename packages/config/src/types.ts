@@ -292,6 +292,7 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
+  isVerified: boolean
   address: EthereumAddress
   type: 'EOA' | 'Contract'
 }
