@@ -65,13 +65,6 @@ function NoHonestMinimumCommitteeSecurity(
   }
 }
 
-const NoBridge: TableReadyValue = {
-  value: 'N/A',
-  sentiment: 'bad',
-  description: 'There is no committee attesting to the availability of data. ',
-  orderHint: -1,
-}
-
 function AutoDAC(params: {
   membersCount: number
   requiredMembers: number
@@ -155,6 +148,5 @@ export const DaCommitteeSecurityRisk = {
   NoCommitteeSecurity,
   NoDiversityCommitteeSecurity,
   NoHonestMinimumCommitteeSecurity,
-  NoBridge,
   AutoDAC,
 }

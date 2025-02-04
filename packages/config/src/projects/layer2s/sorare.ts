@@ -18,7 +18,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
@@ -55,7 +54,7 @@ const verifierAddress = discovery.getAddressFromValue(
   'gpsContract',
 )
 
-const committee = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const sorare: Layer2 = {
   type: 'layer2',
@@ -107,19 +106,19 @@ export const sorare: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
+  dataAvailability: {
+    layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -140,14 +139,16 @@ export const sorare: Layer2 = {
     exitMechanisms: EXITS.STARKEX_SPOT,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkExchange'),
-      discovery.getContractDetails(
-        'Committee',
-        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkExchange'),
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
@@ -157,24 +158,19 @@ export const sorare: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Governors',
-          accounts: getProxyGovernance(discovery, 'StarkExchange'),
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Governors',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromString(upgradeDelay),
-        },
-        committee,
+        ),
+        committeePermission,
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkExchange',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update state of the system. When Operator is down the state cannot be updated.',
-        },
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update state of the system. When Operator is down the state cannot be updated.',
+        ),
       ],
     },
   },

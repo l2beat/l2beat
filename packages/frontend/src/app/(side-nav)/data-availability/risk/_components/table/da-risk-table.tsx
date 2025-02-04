@@ -87,13 +87,16 @@ function BridgeCells({
         </TableCell>
       )}
       <TableCell href={bridge.href} className="pl-6">
-        <TableValueCell value={bridge.risks.committeeSecurity} />
+        <TableValueCell
+          emptyMode="n/a"
+          value={bridge.risks.committeeSecurity}
+        />
       </TableCell>
       <TableCell href={bridge.href}>
-        <TableValueCell value={bridge.risks.upgradeability} />
+        <TableValueCell emptyMode="n/a" value={bridge.risks.upgradeability} />
       </TableCell>
       <TableCell href={bridge.href}>
-        <TableValueCell value={bridge.risks.relayerFailure} />
+        <TableValueCell emptyMode="n/a" value={bridge.risks.relayerFailure} />
       </TableCell>
     </>
   )

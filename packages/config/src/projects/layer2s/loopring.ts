@@ -17,7 +17,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -157,11 +156,11 @@ export const loopring: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -304,65 +303,66 @@ export const loopring: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LoopringMultisig',
           'This address is the owner of the following contracts: LoopringIOExchangeOwner, ExchangeV3 (proxy), BlockVerifier, AgentRegistry, LoopringV3. This allows it to grant access to submitting blocks, arbitrarily change the forced withdrawal fee, change the Verifier address and upgrade ExchangeV3 implementation potentially gaining access to all funds in DefaultDepositContract.',
         ),
-        {
-          name: 'Block Submitters',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'Block Submitters',
+          discovery.getPermissionedAccounts(
             'LoopringIOExchangeOwner',
             'blockSubmitters',
           ),
-          description:
-            'Actors who can submit new blocks, updating the L2 state on L1.',
-        },
-        {
-          name: 'RollupOwner',
-          accounts: [discovery.getPermissionedAccount('ExchangeV3', 'owner')],
-          description:
-            'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
-        },
+          'Actors who can submit new blocks, updating the L2 state on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'RollupOwner',
+          discovery.getPermissionedAccounts('ExchangeV3', 'owner'),
+
+          'The rollup owner can submit blocks, set rollup parameters and shutdown the exchange.',
+        ),
       ],
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ExchangeV3', {
-        description: 'Main Loopring contract.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. It allows to give or revoke permissions to submit blocks and to open block submission to everyone.',
-      ),
-      discovery.getContractDetails(
-        'DefaultDepositContract',
-        'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
-      ),
-      discovery.getContractDetails(
-        'LoopringV3',
-        'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawal fee and the Verifier address.',
-      ),
-      discovery.getContractDetails(
-        'FastWithdrawalAgent',
-        'Auxiliary contract allowing users to process fast withdrawals.',
-      ),
-      discovery.getContractDetails(
-        'ForcedWithdrawalAgent',
-        'Auxiliary contract able to force withdrawals from L1 on behalf of users.',
-      ),
-      discovery.getContractDetails('BlockVerifier', {
-        description: 'zkSNARK Verifier based on ethsnarks library.',
-        ...upgrades,
-        upgradeConsiderations:
-          'The Verifier contract address can be changed by the ProxyOwner.',
-      }),
-      discovery.getContractDetails(
-        'AgentRegistry',
-        'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ExchangeV3', {
+          description: 'Main Loopring contract.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails(
+          'LoopringIOExchangeOwner',
+          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract. It allows to give or revoke permissions to submit blocks and to open block submission to everyone.',
+        ),
+        discovery.getContractDetails(
+          'DefaultDepositContract',
+          'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+        ),
+        discovery.getContractDetails(
+          'LoopringV3',
+          'Contract managing LRC staking for exchanges (one Loopring contract can manage many exchanges). It also allows to change the forced withdrawal fee and the Verifier address.',
+        ),
+        discovery.getContractDetails(
+          'FastWithdrawalAgent',
+          'Auxiliary contract allowing users to process fast withdrawals.',
+        ),
+        discovery.getContractDetails(
+          'ForcedWithdrawalAgent',
+          'Auxiliary contract able to force withdrawals from L1 on behalf of users.',
+        ),
+        discovery.getContractDetails('BlockVerifier', {
+          description: 'zkSNARK Verifier based on ethsnarks library.',
+          ...upgrades,
+          upgradeConsiderations:
+            'The Verifier contract address can be changed by the ProxyOwner.',
+        }),
+        discovery.getContractDetails(
+          'AgentRegistry',
+          'Agent registry that is used by all other Loopring contracts. Currently used are FastWithdrawalAgent, ForcedWithdrawalAgent, DestroyableWalletAgent and a number of LoopringAmmPool contracts.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   stateValidation: {

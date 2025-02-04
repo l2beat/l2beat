@@ -68,7 +68,7 @@
           "target": {
             "permissions": [
               {
-                "type": "configure",
+                "type": "interact",
                 "description": "can manage asset strategies and fees for the user's funds backing reETH."
               }
             ]

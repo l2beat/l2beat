@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { linkByDA } from '../utils/link-by-da'
 
 export const memo: DaProject = {
   type: 'DaLayer',
@@ -83,12 +83,11 @@ export const memo: DaProject = {
         },
       ],
     },
-    bridges: [
-      NO_BRIDGE({
-        addedAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
-        layer: 'MEMO',
-      }),
-    ],
+    usedWithoutBridgeIn: linkByDA({
+      layer: ProjectId('memo'),
+      bridge: undefined,
+    }),
+    bridges: [],
     pruningWindow: 0,
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),

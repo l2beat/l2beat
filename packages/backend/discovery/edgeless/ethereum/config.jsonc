@@ -50,7 +50,7 @@
     "EthStrategy": {
       "description": "Deposits funds into the Lido protocol.",
       "ignoreMethods": ["proxiableUUID"],
-      "ignoreInWatchMode": ["underlyingAssetAmount"]
+      "ignoreInWatchMode": ["underlyingAssetAmount", "ethUnderWithdrawal"]
     },
     "RenzoStrategy": {
       "description": "Deposits funds into the Renzo protocol.",

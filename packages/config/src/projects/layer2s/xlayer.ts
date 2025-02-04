@@ -13,28 +13,21 @@ import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
 const discovery = new ProjectDiscovery('xlayer')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('XLayerValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['DACProxyAdminOwner'],
-  upgradeDelay: 'No delay',
-}
 
 export const xlayer: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
@@ -101,7 +94,7 @@ export const xlayer: Layer2 = polygonCDKStack({
   },
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sinceTimestamp: new UnixTime(1712620800),
@@ -125,8 +118,8 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('XLayerValidium'),
-  rollupVerifierContract: discovery.getContract('XLayerVerifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
   rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
@@ -134,49 +127,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        {
-          name: 'LocalAdmin',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('XLayerValidium', 'admin'),
-            ),
-          ],
-          description:
-            'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
-        },
-        {
-          name: 'RollupManager',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('XLayerValidium', 'rollupManager'),
-            ),
-          ],
-          description:
-            'Permissioned to revert batches that are not yet finalized and to initialize / upgrade the validium contract to a new (existing) version.',
-        },
-        {
-          name: 'DACProxyAdminOwner',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('ProxyAdmin', 'owner'),
-            ),
-          ],
-          description:
-            "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-        },
-      ],
-    },
-  },
-  nonTemplateContracts: [
-    discovery.getContractDetails('XLayerValidiumDAC', {
-      description:
-        'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

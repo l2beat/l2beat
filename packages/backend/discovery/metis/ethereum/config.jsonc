@@ -4,7 +4,12 @@
   "name": "metis",
   "initialAddresses": [
     "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-    "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+    "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x1A9da0aedA630dDf2748a453BF6d92560762D914" // Sequencer
   ],
   "names": {
     "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer-CTC-batches",

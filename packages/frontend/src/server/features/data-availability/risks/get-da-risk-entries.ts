@@ -2,12 +2,12 @@ import type { DaBridgeRisks, DaLayerRisks, DaProject } from '@l2beat/config'
 import { daLayers, isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaBridgeRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
@@ -40,7 +40,7 @@ function getDaRiskEntry(
   project: DaProject,
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
-  const bridges = project.daLayer.bridges
+  const bridges = getDaBridges(project)
     .map((daBridge): DaBridgeRiskEntry => {
       const tvs = getTvs(daBridge.usedIn.map((project) => project.id))
 
@@ -51,7 +51,7 @@ function getDaRiskEntry(
         statuses: {
           verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
         },
-        risks: getDaBridgeRisks(daBridge),
+        risks: daBridge.risks,
         tvs,
       }
     })
@@ -66,7 +66,7 @@ function getDaRiskEntry(
     statuses: {},
     isPublic: project.daLayer.systemCategory === 'public',
     tvs: getTvs(
-      project.daLayer.bridges.flatMap((bridge) =>
+      getDaBridges(project).flatMap((bridge) =>
         bridge.usedIn.map((project) => project.id),
       ),
     ),

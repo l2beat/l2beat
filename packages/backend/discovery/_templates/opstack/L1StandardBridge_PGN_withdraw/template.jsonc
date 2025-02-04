@@ -28,7 +28,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "withdraw ERC-20 tokens escrowed in the bridge."
           }
         ]

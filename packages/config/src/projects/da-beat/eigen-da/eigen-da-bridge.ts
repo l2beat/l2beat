@@ -1,8 +1,9 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk, DaUpgradeabilityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -65,9 +66,8 @@ const totalNumberOfRegisteredOperators = discovery.getContractValue<string[]>(
 ).length
 
 export const eigenDAbridge: DaBridge = {
-  id: 'eigenda-bridge',
+  id: ProjectId('eigenda'), // TODO: merge with main eigenda project
   addedAt: new UnixTime(1724426960), // 2024-08-23T15:29:20Z
-  type: 'StandaloneDacBridge',
   display: {
     name: 'ServiceManager',
     slug: 'bridge',
@@ -154,7 +154,10 @@ export const eigenDAbridge: DaBridge = {
     requiredMembers: 0, // currently 0 since threshold is not enforced
     membersCount: 400, // max allowed operators (quorum 1 + quorum 2)
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('eigen-da'),
+    bridge: ProjectId('eigenda'),
+  }),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',

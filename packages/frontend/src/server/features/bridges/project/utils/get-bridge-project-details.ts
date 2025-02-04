@@ -1,5 +1,4 @@
 import type { Bridge } from '@l2beat/config'
-import { type ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
@@ -13,19 +12,15 @@ import { getBridgeTechnologySection } from '~/utils/project/technology/get-techn
 export async function getBridgeProjectDetails(
   bridge: Bridge,
   isVerified: boolean,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
   projectsChangeReport: ProjectsChangeReport,
 ) {
   const permissionsSection = bridge.permissions
-    ? getPermissionsSection(
-        {
-          id: bridge.id,
-          type: bridge.type,
-          isUnderReview: !!bridge.isUnderReview,
-          permissions: bridge.permissions,
-        },
-        contractsVerificationStatuses,
-      )
+    ? getPermissionsSection({
+        id: bridge.id,
+        type: bridge.type,
+        isUnderReview: !!bridge.isUnderReview,
+        permissions: bridge.permissions,
+      })
     : undefined
   const contractsSection = bridge.contracts
     ? getContractsSection(
@@ -38,7 +33,6 @@ export async function getBridgeProjectDetails(
           isUnderReview: bridge.isUnderReview,
           escrows: bridge.config.escrows,
         },
-        contractsVerificationStatuses,
         projectsChangeReport,
       )
     : undefined

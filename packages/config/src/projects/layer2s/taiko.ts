@@ -12,7 +12,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -26,17 +25,6 @@ const upgradesTaikoMultisig = {
   upgradableBy: ['TaikoAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const chainWatchdog = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'chain_watchdog',
-)
-
-// sequencer for block 1
-const proposerOne = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'proposer_one',
-)
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
@@ -141,11 +129,11 @@ export const taiko: Layer2 = {
   id: ProjectId('taiko'),
   capability: 'universal',
   addedAt: new UnixTime(1680768480), // 2023-04-06T08:08:00Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -414,109 +402,110 @@ export const taiko: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('TaikoL1Contract', {
-        description:
-          'This contract provides functionalities for sequencing, proving, and verifying batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('L1RollupAddressManager', {
-        description:
-          'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('MainnetTierRouter', {
-        description:
-          'Contract managing and routing the multi-tier proof system.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SgxVerifier', {
-        description: 'Verifier contract for SGX proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('Risc0Verifier', {
-        description: 'Verifier contract for ZK-proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SP1Verifier', {
-        description: 'Verifier contract for ZK-proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('GuardianMinorityProver', {
-        description:
-          'Verifier contract for batches proven by Guardian multisig minority.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('GuardianProver', {
-        description: 'Verifier contract for Guardian multisig proven batches.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('DAOFallbackProposer', {
-        description:
-          "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SignalService', {
-        description:
-          'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('AutomataDcapV3Attestation', {
-        description: 'Contract managing SGX attestation certificates.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('TaikoToken', {
-        description:
-          "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('TaikoBridge', {
-        description: 'Shared bridge for Taiko chains for bridged ETH.',
-        ...upgradesTaikoMultisig,
-      }),
-      discovery.getContractDetails('SharedERC20Vault', {
-        description: 'Shared vault for Taiko chains for bridged ERC20 tokens.',
-        ...upgradesTaikoMultisig,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('TaikoL1Contract', {
+          description:
+            'This contract provides functionalities for sequencing, proving, and verifying batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('L1RollupAddressManager', {
+          description:
+            'This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('MainnetTierRouter', {
+          description:
+            'Contract managing and routing the multi-tier proof system.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SgxVerifier', {
+          description: 'Verifier contract for SGX proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('Risc0Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SP1Verifier', {
+          description: 'Verifier contract for ZK-proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('GuardianMinorityProver', {
+          description:
+            'Verifier contract for batches proven by Guardian multisig minority.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('GuardianProver', {
+          description:
+            'Verifier contract for Guardian multisig proven batches.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('DAOFallbackProposer', {
+          description:
+            "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.",
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SignalService', {
+          description:
+            'The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('AutomataDcapV3Attestation', {
+          description: 'Contract managing SGX attestation certificates.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('TaikoToken', {
+          description:
+            "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds.",
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('TaikoBridge', {
+          description: 'Shared bridge for Taiko chains for bridged ETH.',
+          ...upgradesTaikoMultisig,
+        }),
+        discovery.getContractDetails('SharedERC20Vault', {
+          description:
+            'Shared vault for Taiko chains for bridged ERC20 tokens.',
+          ...upgradesTaikoMultisig,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TaikoAdmin',
           'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
         ),
-        {
-          name: 'GuardianProvers',
-          description: `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
-          accounts: discovery.getPermissionedAccounts(
-            'GuardianProver',
-            'guardians',
-          ),
-        },
-        {
-          name: 'GuardianMinorityProver',
-          description: `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'GuardianProvers',
+          discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
+          `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
+        ),
+        discovery.getPermissionDetails(
+          'GuardianMinorityProver',
+          discovery.getPermissionedAccounts(
             'GuardianMinorityProver',
             'guardians',
           ),
-        },
-        {
-          name: 'ChainWatchdog',
-          accounts: [
-            { address: EthereumAddress(chainWatchdog), type: 'MultiSig' },
-          ],
-          description: 'The chain watchdog role can pause proving of blocks.',
-        },
-        {
-          name: 'SequencerBlockOne',
-          accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
-          description:
-            'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
-        },
+          `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
+        ),
+        discovery.getPermissionDetails(
+          'ChainWatchdog',
+          discovery.getPermissionedAccounts(
+            'TaikoL1Contract',
+            'chain_watchdog',
+          ),
+          'The chain watchdog role can pause proving of blocks.',
+        ),
+        discovery.getPermissionDetails(
+          'SequencerBlockOne',
+          discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
+          'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
+        ),
       ],
     },
   },

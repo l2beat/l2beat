@@ -1,26 +1,17 @@
-import type {
-  DaBridge,
-  DaProject,
-  EthereumDaBridge,
-  EthereumDaProject,
-  ScalingProjectRisk,
-} from '@l2beat/config'
+import type { DaBridge, DaProject, ScalingProjectRisk } from '@l2beat/config'
 import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(
-  project: DaProject | EthereumDaProject,
-  bridge: DaBridge | EthereumDaBridge,
+  project: DaProject,
+  bridge: DaBridge,
   isVerified: boolean,
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
   const bridgeSections = [
     {
       id: 'da-bridge-contracts',
-      value:
-        bridge.type === 'OnChainBridge' || bridge.type === 'StandaloneDacBridge'
-          ? bridge.contracts
-          : { risks: [] },
+      value: bridge.contracts ?? { risks: [] },
     },
     {
       id: 'da-bridge-technology',

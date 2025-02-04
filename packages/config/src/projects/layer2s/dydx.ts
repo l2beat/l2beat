@@ -17,7 +17,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -181,11 +180,11 @@ export const dydx: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -288,75 +287,77 @@ export const dydx: Layer2 = {
     },
   ),
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkPerpetual', {
-        description:
-          'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
-        ...priorityExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('FinalizableGpsFactAdapter', {
-        description:
-          'Contract serving as an adapter for STARK Verifier. It holds the address of the STARK Verifier and CAIRO program hash needed for verification.',
-        upgradeConsiderations:
-          'This contract is not upgradeable and the program hash cannot be updated because it is in the finalized state.',
-      }),
-      discovery.getContractDetails(
-        'GpsStatementVerifier',
-        'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
-      ),
-      discovery.getContractDetails(
-        'MemoryPageFactRegistry',
-        'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
-      ),
-      discovery.getContractDetails(
-        'FriStatementContract',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails(
-        'MerkleStatementContract',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails(
-        'CairoBootloaderProgram',
-        'Part of STARK Verifier.',
-      ),
-      discovery.getContractDetails('PerpetualEscapeVerifier', {
-        description:
-          'Contract responsible for validating force withdrawal requests.',
-      }),
-      discovery.getContractDetails('MerkleDistributor', {
-        description:
-          'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
-        ...shortTimelockUpgradeability,
-        upgradeConsiderations: `This contract can be paused by the Merkle Pauser with ${
-          formatSeconds(merklePauserDelay) === ''
-            ? 'no'
-            : formatSeconds(merklePauserDelay)
-        } delay.`,
-      }),
-      discovery.getContractDetails('LiquidityStaking', {
-        description:
-          'The Liquidity Module is a collection of smart contracts for staking and borrowing, which incentivize the allocation of USDC funds for market making purposes on the dYdX layer 2 exchange.',
-        ...shortTimelockUpgradeability,
-      }),
-      discovery.getContractDetails('SafetyModule', {
-        description:
-          'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
-        ...longTimelockUpgradeability,
-      }),
-      discovery.getContractDetails('DydxGovernor', {
-        description: 'Contract storing dYdX Governance logic.',
-      }),
-      discovery.getContractDetails('GovernanceStrategyV2', {
-        description:
-          'Contract storing logic for votes counting in dYdX Governance.',
-        upgradeConsiderations:
-          'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
-      }),
-      discovery.getContractDetails('DydxToken', {
-        description: 'Token used by the dYdX Governance for voting.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkPerpetual', {
+          description:
+            'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
+          ...priorityExecutorUpgradeability,
+        }),
+        discovery.getContractDetails('FinalizableGpsFactAdapter', {
+          description:
+            'Contract serving as an adapter for STARK Verifier. It holds the address of the STARK Verifier and CAIRO program hash needed for verification.',
+          upgradeConsiderations:
+            'This contract is not upgradeable and the program hash cannot be updated because it is in the finalized state.',
+        }),
+        discovery.getContractDetails(
+          'GpsStatementVerifier',
+          'STARK Verifier. In contrast to other StarkWare systems which use common SHARP Prover, dYdX uses separate Prover/Verifier.',
+        ),
+        discovery.getContractDetails(
+          'MemoryPageFactRegistry',
+          'Contract storing CAIRO Program Output, in case of dYdX, it stores state diffs of dYdX Exchange.',
+        ),
+        discovery.getContractDetails(
+          'FriStatementContract',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails(
+          'MerkleStatementContract',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails(
+          'CairoBootloaderProgram',
+          'Part of STARK Verifier.',
+        ),
+        discovery.getContractDetails('PerpetualEscapeVerifier', {
+          description:
+            'Contract responsible for validating force withdrawal requests.',
+        }),
+        discovery.getContractDetails('MerkleDistributor', {
+          description:
+            'The Merkle Distributor smart contract distributes DYDX token rewards according to a Merkle tree of balances.',
+          ...shortTimelockUpgradeability,
+          upgradeConsiderations: `This contract can be paused by the Merkle Pauser with ${
+            formatSeconds(merklePauserDelay) === ''
+              ? 'no'
+              : formatSeconds(merklePauserDelay)
+          } delay.`,
+        }),
+        discovery.getContractDetails('LiquidityStaking', {
+          description:
+            'The Liquidity Module is a collection of smart contracts for staking and borrowing, which incentivize the allocation of USDC funds for market making purposes on the dYdX layer 2 exchange.',
+          ...shortTimelockUpgradeability,
+        }),
+        discovery.getContractDetails('SafetyModule', {
+          description:
+            'The Safety Module is a staking pool that offers DYDX rewards to users who stake DYDX towards the security of the Protocol.',
+          ...longTimelockUpgradeability,
+        }),
+        discovery.getContractDetails('DydxGovernor', {
+          description: 'Contract storing dYdX Governance logic.',
+        }),
+        discovery.getContractDetails('GovernanceStrategyV2', {
+          description:
+            'Contract storing logic for votes counting in dYdX Governance.',
+          upgradeConsiderations:
+            'This contract is not upgradeable, although the address of the GovernanceStrategyV2 can be changed by the owner of DydxGovernor contract.',
+        }),
+        discovery.getContractDetails('DydxToken', {
+          description: 'Token used by the dYdX Governance for voting.',
+        }),
+      ],
+    },
     risks: [
       {
         ...CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(maxPriorityDelay),
@@ -372,109 +373,97 @@ export const dydx: Layer2 = {
     [discovery.chain]: {
       actors: [
         // TODO: detailed breakdown of permissions
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts(
-            'StarkPerpetual',
-            'OPERATORS',
-          ),
-          description:
-            'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
-        },
-        // getCommittee(discovery), # Removed because even though it is set for some reason, it is not used in updateState()
-        {
-          name: 'Rollup Admin',
-          accounts: [
-            discovery.getPermissionedAccount('PriorityExecutor', 'getAdmin'),
-          ],
-          description:
-            'Controlled by dYdX Governance. Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkPerpetual', 'OPERATORS'),
+          'Allowed to update state of the rollup. When Operator is down the state cannot be updated.',
+        ),
+        discovery.getPermissionDetails(
+          'Rollup Admin',
+          discovery.getPermissionedAccounts('PriorityExecutor', 'getAdmin'),
+          'Controlled by dYdX Governance. Defines rules of governance via the dYdX token. Can upgrade implementation of the rollup, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(maxPriorityDelay),
-          references: [
-            {
-              title: 'Rollup Admin documentation',
-              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-            },
-          ],
-        },
-        {
-          name: 'Rollup Priority Controller',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue<string[]>(
-                'PriorityExecutor',
-                'PRIORITY_CONTROLLERS',
-              )[0],
-            ),
-          ],
-          description: `Can decrease the delay required for the Rollup upgrade to ${formatSeconds(
+          {
+            references: [
+              {
+                title: 'Rollup Admin documentation',
+                url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Rollup Priority Controller',
+          discovery.formatPermissionedAccounts([
+            discovery.getContractValue<string[]>(
+              'PriorityExecutor',
+              'PRIORITY_CONTROLLERS',
+            )[0],
+          ]),
+          `Can decrease the delay required for the Rollup upgrade to ${formatSeconds(
             minPriorityDelay,
           )}.`,
-          references: [
-            {
-              title: 'dYdX governance documentation',
-              url: 'https://docs.dydx.community/dydx-governance/',
-            },
-            {
-              title: 'Priority Controller documentation',
-              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-            },
-          ],
-        },
-        {
-          name: 'Treasury Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'ShortTimelockExecutor',
-              'getAdmin',
-            ),
-          ],
-          description:
-            'Controlled by dYdX Governance. Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
+          {
+            references: [
+              {
+                title: 'dYdX governance documentation',
+                url: 'https://docs.dydx.community/dydx-governance/',
+              },
+              {
+                title: 'Priority Controller documentation',
+                url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Treasury Admin',
+          discovery.getPermissionedAccounts(
+            'ShortTimelockExecutor',
+            'getAdmin',
+          ),
+
+          'Controlled by dYdX Governance. Owner of dYdX token. Can upgrade Treasury, Liquidity Module and Merkle Distributor. ' +
             delayDescriptionFromSeconds(shortTimelockDelay),
-          references: [
-            {
-              title: 'Treasury Admin documentation',
-              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-            },
-          ],
-        },
-        {
-          name: 'Safety Module Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'LongTimelockExecutor',
-              'getAdmin',
-            ),
-          ],
-          description:
-            'Controlled by dYdX Governance. Has the ability to update Governance Strategy resulting in different logic of votes counting. Can upgrade Safety Module. ' +
+          {
+            references: [
+              {
+                title: 'Treasury Admin documentation',
+                url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Safety Module Admin',
+          discovery.getPermissionedAccounts('LongTimelockExecutor', 'getAdmin'),
+
+          'Controlled by dYdX Governance. Has the ability to update Governance Strategy resulting in different logic of votes counting. Can upgrade Safety Module. ' +
             delayDescriptionFromSeconds(longTimelockDelay),
-          references: [
-            {
-              title: 'Safety Module Admin',
-              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
-            },
-          ],
-        },
-        {
-          name: 'Merkle Pauser',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'MerklePauserExecutor',
-              'getAdmin',
-            ),
-          ],
-          description:
-            'Controlled by dYdX Governance. The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
+          {
+            references: [
+              {
+                title: 'Safety Module Admin',
+                url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#long-timelock-executor',
+              },
+            ],
+          },
+        ),
+        discovery.getPermissionDetails(
+          'Merkle Pauser',
+          discovery.getPermissionedAccounts('MerklePauserExecutor', 'getAdmin'),
+
+          'Controlled by dYdX Governance. The Merkle-pauser executor can freeze the Merkle root, which is updated periodically with each user cumulative reward balance, in case the proposed root is incorrect or malicious. It can also veto forced trade requests by any of the stark proxy contracts.' +
             delayDescriptionFromSeconds(merklePauserDelay),
-          references: [
-            {
-              title: 'Merkle Pauser documentation',
-              url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
-            },
-          ],
-        },
+          {
+            references: [
+              {
+                title: 'Merkle Pauser documentation',
+                url: 'https://docs.dydx.community/dydx-governance/voting-and-governance/governance-process#merkle-pauser-executor',
+              },
+            ],
+          },
+        ),
       ],
     },
   },

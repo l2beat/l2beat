@@ -12,6 +12,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { OthersInfo, RollupsInfo } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
@@ -32,10 +33,7 @@ export function ScalingFinalityTables(props: Props) {
   }
 
   const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.tvsOrder - a.tvsOrder,
-      )
+    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(

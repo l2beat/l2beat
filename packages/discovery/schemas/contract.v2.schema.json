@@ -106,9 +106,10 @@
             "sequence",
             "guard",
             "fastconfirm",
-            "configure",
+            "interact",
             "upgrade",
-            "act"
+            "act",
+            "aggregatePolygon"
           ]
         },
         "delay": {

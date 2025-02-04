@@ -12,7 +12,6 @@ import {
   DA_MODES,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -113,11 +112,11 @@ export const zkspace: Layer2 = {
       },
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -165,60 +164,56 @@ export const zkspace: Layer2 = {
     exitMechanisms: zkswap.technology.exitMechanisms,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ZkSync', {
-        description:
-          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('Governance', {
-        description: 'Keeps a list of block producers and whitelisted tokens.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('UniswapV2Factory', {
-        description: 'Manages trading pairs.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('ZkSeaNFT', {
-        description:
-          'Contract managing deposits and withdrawals of NFTs to Layer2.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('Verifier', {
-        description: 'zkSNARK Plonk Verifier.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('VerifierExit', {
-        description: 'zkSNARK Verifier for the escape hatch.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails(
-        'UpgradeGatekeeper',
-        'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ZkSync', {
+          description:
+            'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('Governance', {
+          description:
+            'Keeps a list of block producers and whitelisted tokens.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('UniswapV2Factory', {
+          description: 'Manages trading pairs.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('ZkSeaNFT', {
+          description:
+            'Contract managing deposits and withdrawals of NFTs to Layer2.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('Verifier', {
+          description: 'zkSNARK Plonk Verifier.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('VerifierExit', {
+          description: 'zkSNARK Verifier for the escape hatch.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails(
+          'UpgradeGatekeeper',
+          'This is the contract that implements the upgrade mechanism for Governance, Verifier and ZkSync. It relies on the ZkSync contract to enforce upgrade delays.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'zkSpace Admin',
-          accounts: [
-            discovery.getPermissionedAccount('UpgradeGatekeeper', 'getMaster'),
-          ],
-          description:
-            'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager, ZkSeaNFT and ZkSync contracts.',
-        },
-        {
-          name: 'Active validator',
-          accounts: discovery.getPermissionedAccounts(
-            'Governance',
-            'validators',
-          ),
-          description:
-            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
-        },
+        discovery.getPermissionDetails(
+          'zkSpace Admin',
+          discovery.getPermissionedAccounts('UpgradeGatekeeper', 'getMaster'),
+          'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager, ZkSeaNFT and ZkSync contracts.',
+        ),
+        discovery.getPermissionDetails(
+          'Active validator',
+          discovery.getPermissionedAccounts('Governance', 'validators'),
+          'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSpace Admin.',
+        ),
       ],
     },
   },

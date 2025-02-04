@@ -14,7 +14,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
@@ -45,12 +45,12 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
           "description": "withdraw ETH escrowed in the OptimismPortal."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
           "description": "withdraw ERC-20 tokens escrowed in the bridge."
         }
@@ -128,13 +128,13 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         },
@@ -209,7 +209,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -391,14 +391,14 @@
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
-          "permission": "configure",
-          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
-          "description": "withdraw ETH escrowed in the OptimismPortal.",
+          "permission": "guard",
+          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
           "via": []
         },
         {
-          "permission": "guard",
-          "to": "0x39E13D1AB040F6EA58CE19998edCe01B3C365f84",
+          "permission": "interact",
+          "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
+          "description": "withdraw ETH escrowed in the OptimismPortal.",
           "via": []
         },
         {
@@ -448,7 +448,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e",
           "description": "set and change address mappings."
         },
@@ -494,7 +494,7 @@
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21",
           "description": "withdraw ERC-20 tokens escrowed in the bridge.",
           "via": []
@@ -849,12 +849,12 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/BalanceClaimer": "0x09fcc75cc1cd947618722a75dfa1e4949d5bacc72d02eed807aea142ed542bb7",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1StandardBridge_PGN_withdraw": "0xadabab3e4a572a49fbad2c5aefa0683e221f48fd258d6756fe88a0ab19a1e8c6",
+    "opstack/L1StandardBridge_PGN_withdraw": "0xe152a2830b50d3a8fdc8cc912718b43f47466533821c8735539c1e44a1a592d6",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
-    "opstack/OptimismPortal_PGN_withdraw": "0x2ff0a66b7723228ba077170909017210b1baa12d37952ba1ddcc62e1688d9b96",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/OptimismPortal_PGN_withdraw": "0x67c82ff4125be83bd8f5a235deac37207417cf37a35f01e71ee242e7c4cd4dcb",
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

@@ -42,23 +42,24 @@ export const playblock: Layer3 = orbitStackL3({
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'RollupOwnerEOA',
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'RollupOwnerEOA',
+          discovery.getAccessControlRolePermission(
             'UpgradeExecutor',
             'EXECUTOR_ROLE',
           ),
-          description:
-            'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
-        },
+          'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
+        ),
       ],
     },
   },
-  nonTemplateContracts: [
-    discovery.getContractDetails('ProxyAdmin', {
-      description:
-        'This contract can upgrade the implementations of the rollup proxies.',
-    }),
-  ],
+  nonTemplateContracts: {
+    [discovery.chain]: [
+      discovery.getContractDetails('ProxyAdmin', {
+        description:
+          'This contract can upgrade the implementations of the rollup proxies.',
+      }),
+    ],
+  },
   customDa: AnytrustDAC({ discovery }),
 })

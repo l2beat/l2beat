@@ -1,14 +1,8 @@
-import type {
-  DaBridge,
-  DaProject,
-  EthereumDaBridge,
-  EthereumDaProject,
-} from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
+import type { DaBridge, DaProject } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
-import { getMultiChainContractsSection } from '~/utils/project/contracts-and-permissions/get-multichain-contract-section'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
@@ -17,7 +11,6 @@ type RegularDetailsParams = {
   daLayer: DaProject
   daBridge: DaBridge
   isVerified: boolean
-  contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
@@ -27,34 +20,31 @@ export function getRegularDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
-  contractsVerificationStatuses,
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const permissionsSection =
     daBridge.permissions &&
-    getPermissionsSection(
-      {
-        id: daLayer.id,
-        type: 'DaLayer',
-        isUnderReview: !!daLayer.isUnderReview,
-        permissions: daBridge.permissions,
-      },
-      contractsVerificationStatuses,
-    )
+    getPermissionsSection({
+      id: daLayer.id,
+      type: 'DaLayer',
+      isUnderReview: !!daLayer.isUnderReview,
+      permissions: daBridge.permissions,
+    })
 
   const contractsSection =
     daBridge.contracts &&
-    getMultiChainContractsSection(
+    getContractsSection(
       {
+        type: 'DaLayer',
         id: daBridge.id,
         isVerified,
         slug: daBridge.display.slug,
-        contracts: daBridge.contracts,
+        contracts: daBridge.contracts ?? {},
+        escrows: undefined,
         isUnderReview: daLayer.isUnderReview,
       },
-      contractsVerificationStatuses,
       projectsChangeReport,
     )
 
@@ -105,7 +95,7 @@ export function getRegularDaProjectSections({
       isUnderReview: !!daLayer.isUnderReview,
       isVerified,
       bridgeGrissiniValues,
-      hideRisks: daBridge.type === 'NoBridge',
+      hideRisks: !!daBridge.risks.isNoBridge,
       hideTitle: true,
     },
   })
@@ -141,7 +131,7 @@ export function getRegularDaProjectSections({
 
   if (contractsSection) {
     daBridgeItems.push({
-      type: 'MultichainContractsSection',
+      type: 'ContractsSection',
       props: {
         ...contractsSection,
         id: 'da-bridge-contracts',
@@ -197,7 +187,7 @@ export function getRegularDaProjectSections({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
-      sideNavTitle: daBridge.type === 'NoBridge' ? 'DA Bridge' : undefined,
+      sideNavTitle: !!daBridge.risks.isNoBridge ? 'DA Bridge' : undefined,
       props: {
         id: 'da-bridge',
         title: daBridge.display.name,
@@ -211,8 +201,8 @@ export function getRegularDaProjectSections({
 }
 
 type EthereumDetailsParams = {
-  daLayer: EthereumDaProject
-  daBridge: EthereumDaBridge
+  daLayer: DaProject
+  daBridge: DaBridge
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]

@@ -8,6 +8,7 @@ import {
   initCirculatingSupplyProviders,
 } from './CirculatingSupplyProviders'
 import { type Clients, initClients } from './Clients'
+import { DaProviders } from './DaProviders'
 import { type PriceProviders, initPriceProviders } from './PriceProviders'
 
 export class Providers {
@@ -15,6 +16,7 @@ export class Providers {
   price: PriceProviders | undefined
   circulatingSupply: CirculatingSupplyProviders | undefined
   blob: BlobProviders | undefined
+  da: DaProviders | undefined
   clients: Clients
 
   constructor(
@@ -37,6 +39,10 @@ export class Providers {
       config.finality && this.clients.blob
         ? new BlobProviders(this.clients.blob)
         : undefined
+    this.da =
+      config.da && this.clients.blobscan
+        ? new DaProviders(this.clients.blobscan)
+        : undefined
   }
 
   getPriceProviders() {
@@ -55,5 +61,10 @@ export class Providers {
   getBlobProviders() {
     assert(this.blob, 'Blob providers unintended access')
     return this.blob
+  }
+
+  getDaProviders() {
+    assert(this.da, 'Da providers unintended access')
+    return this.da
   }
 }

@@ -20,13 +20,14 @@ import {
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaBridgeRisks, getDaLayerRisks } from '../utils/get-da-risks'
+import { getDaLayerRisks } from '../utils/get-da-risks'
 import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
@@ -79,9 +80,8 @@ function getDaSummaryEntry(
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
-  const bridges = project.daLayer.bridges
+  const bridges = getDaBridges(project)
     .map((daBridge): DaBridgeSummaryEntry => {
-      const bridgeRisks = getDaBridgeRisks(daBridge)
       return {
         name: daBridge.display.name,
         slug: daBridge.display.slug,
@@ -95,8 +95,8 @@ function getDaSummaryEntry(
         },
         tvs: getTvs(daBridge.usedIn.map((project) => project.id)),
         risks: {
-          isNoBridge: bridgeRisks.isNoBridge,
-          values: mapBridgeRisksToRosetteValues(bridgeRisks),
+          isNoBridge: !!daBridge.risks.isNoBridge,
+          values: mapBridgeRisksToRosetteValues(daBridge.risks),
         },
         usedIn: daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
         dacInfo:
@@ -114,7 +114,7 @@ function getDaSummaryEntry(
     .sort((a, b) => b.tvs - a.tvs)
 
   const usedIn = uniq(
-    project.daLayer.bridges.flatMap((bridge) =>
+    getDaBridges(project).flatMap((bridge) =>
       bridge.usedIn.map((project) => project.id),
     ),
   )
@@ -148,35 +148,36 @@ function getDacEntries(
     .filter((project) => project.customDa)
     .map((project) => ({
       parentProject: project,
-      daLayer: project.customDa,
+      customDa: project.customDa,
     }))
 
   return projects
-    .map(({ parentProject, daLayer }) => {
-      if (!daLayer) {
+    .map(({ parentProject, customDa }) => {
+      if (!customDa) {
         return undefined
       }
 
       const usedIn = toUsedInProject([parentProject])
       const tvs = getTvs([parentProject.id])
-      const dacInfo = daLayer.dac
+      const dacInfo = customDa.dac
         ? {
-            memberCount: daLayer.dac.membersCount,
-            requiredMembers: daLayer.dac.requiredMembers,
+            memberCount: customDa.dac.membersCount,
+            requiredMembers: customDa.dac.requiredMembers,
             membersArePublic:
-              !!daLayer.dac.knownMembers && daLayer.dac.knownMembers.length > 0,
+              !!customDa.dac.knownMembers &&
+              customDa.dac.knownMembers.length > 0,
           }
         : undefined
 
       const bridgeEntry: DaBridgeSummaryEntry = {
-        name: daLayer.name ?? `${parentProject.display.name} DAC`,
+        name: customDa.name ?? `${parentProject.display.name} DAC`,
         slug: parentProject.display.slug,
         href: `/scaling/projects/${parentProject.display.slug}`,
         statuses: {},
         tvs,
         risks: {
-          isNoBridge: !!daLayer.isNoBridge,
-          values: mapBridgeRisksToRosetteValues(daLayer.risks),
+          isNoBridge: !!customDa.risks.isNoBridge,
+          values: mapBridgeRisksToRosetteValues(customDa.risks),
         },
         dacInfo,
         usedIn,
@@ -185,13 +186,13 @@ function getDacEntries(
       const projectEntry: DaSummaryEntry = {
         id: parentProject.id,
         slug: parentProject.display.slug,
-        name: daLayer.name ?? `${parentProject.display.name} DAC`,
-        nameSecondLine: daLayer.type,
+        name: customDa.name ?? `${parentProject.display.name} DAC`,
+        nameSecondLine: customDa.type,
         href: `/scaling/projects/${parentProject.display.slug}#da-layer`,
         statuses: {},
-        risks: mapLayerRisksToRosetteValues(daLayer.risks),
-        fallback: daLayer.fallback,
-        challengeMechanism: daLayer.challengeMechanism ?? 'None',
+        risks: mapLayerRisksToRosetteValues(customDa.risks),
+        fallback: customDa.fallback,
+        challengeMechanism: customDa.challengeMechanism ?? 'None',
         isPublic: false,
         economicSecurity: undefined,
         tvs,
