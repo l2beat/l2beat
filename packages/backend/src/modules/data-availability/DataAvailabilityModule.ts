@@ -116,24 +116,33 @@ function createIndexers(
           configHash: layerConfigHash,
         })
 
-        // We use one indexer for all projects for now
-        // ideally each project should have its own indexer
-        // with its own config and hash
-        const projectIndexer = new ProjectDaIndexer({
-          name: `da_project_indexer_${layer}`,
-          logger,
-          indexerService,
-          projectConfigs,
-          daProvider,
-          blockProvider,
-          db: dependencies.database,
-          batchSize: dependencies.config.ethereum.batchSize,
-          minHeight: dependencies.config.ethereum.minHeight,
-          parents: [blockTargetIndexer],
-          configHash: projectsConfigHash,
-        })
+        const indexers: DataAvailabilityIndexer[] = [
+          blockTargetIndexer,
+          layerIndexer,
+        ]
 
-        return [blockTargetIndexer, layerIndexer, projectIndexer]
+        if (projectConfigs.length > 0) {
+          // We use one indexer for all projects for now
+          // ideally each project should have its own indexer
+          // with its own config and hash
+          const projectIndexer = new ProjectDaIndexer({
+            name: `da_project_indexer_${layer}`,
+            logger,
+            indexerService,
+            projectConfigs,
+            daProvider,
+            blockProvider,
+            db: dependencies.database,
+            batchSize: dependencies.config.ethereum.batchSize,
+            minHeight: dependencies.config.ethereum.minHeight,
+            parents: [blockTargetIndexer],
+            configHash: projectsConfigHash,
+          })
+
+          indexers.push(projectIndexer)
+        }
+
+        return indexers
       }
 
       return []
