@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x93659560cb738f525d19c1dfde50240c7f56dfa8
+
+# Diff at Tue, 04 Feb 2025 12:33:31 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21764788
+- current block number: 21764788
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21764788 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x647058a59ed8a77ef9e86fe0f87a753c73074986
 
 # Diff at Mon, 03 Feb 2025 09:09:41 GMT:

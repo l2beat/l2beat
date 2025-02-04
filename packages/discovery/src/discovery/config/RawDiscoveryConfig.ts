@@ -12,7 +12,7 @@ import { UserHandlerDefinition } from '../handlers/user'
 export const BasePermissionEntries = [
   'member',
   'act',
-  'configure',
+  'interact',
   'upgrade',
 ] as const
 

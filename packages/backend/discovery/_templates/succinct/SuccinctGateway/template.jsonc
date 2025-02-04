@@ -6,7 +6,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
           }
         ]

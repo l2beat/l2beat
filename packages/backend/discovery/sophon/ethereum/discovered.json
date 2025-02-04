@@ -20,13 +20,13 @@
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
@@ -238,7 +238,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
@@ -282,7 +282,7 @@
       ],
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
           "description": "set the conversion factor for gas token deposits.",
           "via": []
@@ -290,7 +290,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
         }
@@ -321,7 +321,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
@@ -413,7 +413,7 @@
       "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
           "description": "set the conversion factor for gas token deposits."
         }
@@ -699,8 +699,8 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/ChainAdmin": "0x8ec8acbff3be82b53cdc97244336ee589a872235b0383506534d0bae9463feb9",
-    "shared-zk-stack/Diamond": "0x0b3c325e7797ebbc2cbb7d8518f22c694bce12e188d52758cc1e4ac318c29813",
+    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
+    "shared-zk-stack/Diamond": "0xff5383a8ec4b4fefa1093890cd7eed015c46ac789aa5fbb7f2ef4b5b1adcf473",
     "shared-zk-stack/L1USDCBridge": "0x2019efe6e7d65625e60d2634927905cae0728c8a28189bf0538df8037b416425",
     "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
     "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"

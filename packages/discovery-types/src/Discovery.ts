@@ -52,7 +52,7 @@ export type PermissionType =
   | 'validate'
   | 'operateLinea'
   | 'fastconfirm'
-  | 'configure'
+  | 'interact'
   | 'upgrade'
   | 'act'
   | 'validateZkStack'

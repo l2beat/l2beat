@@ -20,7 +20,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can toggle between the optimistic mode and not optimistic (ZK) mode."
           }
         ]

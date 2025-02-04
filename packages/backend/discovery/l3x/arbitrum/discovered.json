@@ -163,7 +163,7 @@
           "from": "0x29994207C5AeDc83F27c5dc16E468f328832d42d"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
         },
@@ -439,7 +439,7 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5e31608B400F45846043E93747D72A1a02c5a2f5",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }]
@@ -709,7 +709,7 @@
       "address": "0x0000000000000000000000000000000000000000",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
           "description": "Add/remove batchPosters (Sequencers)."
         }
@@ -720,7 +720,7 @@
       "address": "0x5e31608B400F45846043E93747D72A1a02c5a2f5",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "via": [{ "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }]
@@ -1468,8 +1468,8 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy": "0x786f25fc1e6ec815d7b50cafcae454fe88273cfb5d8e226096585a89eee3c8db",
-    "orbitstack/SequencerInbox": "0xe264e39a9da58723f5214aa378f5035519d82e12fdf65899a6ac85a2e02c85fb",
+    "orbitstack/RollupProxy": "0x349d6acd385f789c3568a84b26aecf2e64b154bf52b5874bbc9e979ef5f72230",
+    "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }

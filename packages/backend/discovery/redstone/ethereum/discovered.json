@@ -173,7 +173,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xFe27f187A9E46104a932189dDF229871E06B22F8",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xCC53b447aFe07926423aB96D5496b1af30485ED2" }]
@@ -258,7 +258,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -346,7 +346,7 @@
       "description": "The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xb356B146F1629c49C44344464F69BCDAfb4bb664",
           "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure.",
           "via": []
@@ -546,7 +546,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xFe27f187A9E46104a932189dDF229871E06B22F8",
           "description": "set and change address mappings."
         },
@@ -602,7 +602,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x70FdbCb066eD3621647Ddf61A1f40aaC6058Bc89",
           "description": "set and change address mappings.",
           "via": [{ "address": "0xCC53b447aFe07926423aB96D5496b1af30485ED2" }]
@@ -647,22 +647,22 @@
           "from": "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
         },
         {
-          "permission": "configure",
-          "from": "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-        },
-        {
-          "permission": "configure",
-          "from": "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80",
-          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
-        },
-        {
           "permission": "guard",
           "from": "0x4b5b41c240173191425F5928bc6bdd0d439331BB"
         },
         {
           "permission": "guard",
           "from": "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae"
+        },
+        {
+          "permission": "interact",
+          "from": "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
+        {
+          "permission": "interact",
+          "from": "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80",
+          "description": "can upgrade the parameters of DA challenges like the bond size or refund percentages, potentially making challenges infeasable or insecure."
         }
       ]
     },
@@ -1087,8 +1087,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/AddressManager": "0x74b4962b12808eabfd9e4c6141a0465ab35f1b99763f012f8a63e67b62973274",
-    "opstack/DataAvailabilityChallenge": "0x5d7a9815df08ff2ede6eb446f3a0fbad87a983e82b10e5b7106bcdc15fbd4d09",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
+    "opstack/DataAvailabilityChallenge": "0xef5ea058f8f2f95e26cdbd4e6e4bbd53712acbd98b9915d376a54d832c6a0d4d",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
     "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
@@ -1096,6 +1096,6 @@
     "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
-    "opstack/SystemConfig": "0xb4eead74ee51fed41ee916e16321cad82a4b760856d2b85dceb2ad20ca69b29c"
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

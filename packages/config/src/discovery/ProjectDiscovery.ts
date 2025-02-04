@@ -926,7 +926,7 @@ export class ProjectDiscovery {
     const ultimatePermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'Can change the configuration of',
+      interact: 'Is allowed to interact with',
       upgrade: 'Can upgrade the implementation of',
       act: undefined,
       guard: 'A Guardian',
@@ -969,7 +969,12 @@ export class ProjectDiscovery {
         return ''
       }
 
-      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const permissionsRequiringTarget: PermissionType[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
             .map((entry) => this.getContract(entry.from.toString()).name)
@@ -996,7 +1001,7 @@ export class ProjectDiscovery {
     const directPermissionToPrefix: {
       [key in PermissionType]: string | undefined
     } = {
-      configure: 'Can be used to configure',
+      interact: 'Can be used to interact with',
       upgrade: 'Can be used to upgrade implementation of',
       act: 'Can act on behalf of',
       guard: 'Can act as a Guardian',
@@ -1027,7 +1032,12 @@ export class ProjectDiscovery {
       const description = key.split('►')[1] ?? ''
       const condition = key.split('►')[2] ?? ''
       const delay = key.split('►')[3] ?? ''
-      const showTargets = ['configure', 'upgrade', 'act'].includes(permission)
+      const permissionsRequiringTarget: PermissionType[] = [
+        'interact',
+        'upgrade',
+        'act',
+      ]
+      const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
             .map((entry) => this.getContract(entry.from.toString()).name)

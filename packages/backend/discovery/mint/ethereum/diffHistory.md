@@ -1,3 +1,83 @@
+Generated with discovered.json: 0x5d059c3dbf5253fc0a4b79dab4aa1c636d9cb6eb
+
+# Diff at Tue, 04 Feb 2025 12:31:43 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21637079
+- current block number: 21637079
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637079 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x59625d1FE0Eeb8114a4d13c863978F39b3471781"
++        "0xEa4165C5CDCA155779803A113d8391b741bA5228"
+      receivedPermissions.3.description:
++        "set and change address mappings."
+      receivedPermissions.3.via:
++        [{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.2.from:
+-        "0xEa4165C5CDCA155779803A113d8391b741bA5228"
++        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
+      receivedPermissions.2.description:
+-        "set and change address mappings."
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.2.via:
+-        [{"address":"0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]
+      receivedPermissions.1.permission:
+-        "configure"
++        "guard"
+      receivedPermissions.1.from:
+-        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
++        "0x59625d1FE0Eeb8114a4d13c863978F39b3471781"
+      receivedPermissions.1.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0xC975862927797812371A9Fb631f83F8f5e2240D5) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0xEa4165C5CDCA155779803A113d8391b741bA5228) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0xaa75bf422fd03ea01d523df42729e67603e3ea13
 
 # Diff at Mon, 20 Jan 2025 11:09:45 GMT:
