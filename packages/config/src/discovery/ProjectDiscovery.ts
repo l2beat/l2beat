@@ -27,6 +27,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
+import { ExplorerUrlMap } from '../chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,
@@ -53,7 +54,6 @@ import type {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
-import { ExplorerUrlMap } from '../chains/explorerUrls'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -1097,8 +1097,6 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
-
     const actors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
@@ -1136,15 +1134,31 @@ export class ProjectDiscovery {
       })
     }
 
+    // NOTE(radomski): Checking for assumptions made about discovery driven actors
+    assert(actors.every((actor) => actor.accounts.length === 1))
+    assert(allUnique(actors.map((actor) => actor.accounts[0].address)))
+
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
+      if (permission.participants !== undefined) {
+        permission.participants = linkupActorsIntoAccounts(
+          permission.participants,
+          actors,
+        )
+      }
     })
+
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
     roles.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
+      )
+      permission.accounts = linkupActorsIntoAccounts(
+        permission.accounts,
+        actors,
       )
     })
 
@@ -1347,4 +1361,33 @@ function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
   }
 
   return true
+}
+
+function allUnique(arr: string[]): boolean {
+  return new Set(arr).size === arr.length
+}
+
+function linkupActorsIntoAccounts(
+  accountsToLink: ProjectPermissionedAccount[],
+  actors: ProjectPermission[],
+): ProjectPermissionedAccount[] {
+  const result: ProjectPermissionedAccount[] = []
+  const actorNameLUT: Record<string, string> = {}
+  for (const actor of actors) {
+    assert(actor.accounts.length === 1)
+    actorNameLUT[actor.accounts[0].address] = actor.name
+  }
+
+  for (const account of accountsToLink) {
+    const entry = structuredClone(account)
+
+    const actorName = actorNameLUT[account.address]
+    if (actorName !== undefined) {
+      entry.name = actorName
+      entry.url = `#${actorName}`
+    }
+
+    result.push(entry)
+  }
+  return result
 }

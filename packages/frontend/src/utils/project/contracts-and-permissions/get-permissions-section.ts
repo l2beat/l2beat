@@ -1,11 +1,9 @@
 import type {
   ProjectPermission,
-  ProjectPermissionedAccount,
   ProjectPermissions,
 } from '@l2beat/config'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/permissions-section'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type {
   TechnologyContract,
@@ -133,48 +131,6 @@ function getDaSolution(
     : undefined
 }
 
-function resolvePermissionedName(
-  rootName: string,
-  account: ProjectPermissionedAccount,
-  projectPermissions: ProjectParams['permissions'],
-  chain: string,
-): {
-  name: string
-  redirectToName: boolean
-} {
-  const initialName = `${account.address.slice(0, 6)}…${account.address.slice(38, 42)}`
-  let name = initialName
-  if (projectPermissions === 'UnderReview') {
-    return { name, redirectToName: name !== initialName }
-  }
-
-  const permissions = projectPermissions[chain]
-
-  if (permissions !== undefined) {
-    const matchingPermissions = (permissions.actors ?? []).filter(
-      (p) =>
-        p.name !== rootName &&
-        p.accounts
-          .map((a) => a.address.toString())
-          .includes(account.address.toString()),
-    )
-    const firstMatchingPermission = matchingPermissions[0]
-    if (matchingPermissions.length === 1 && firstMatchingPermission) {
-      name = firstMatchingPermission.name
-    }
-
-    const multisigs = matchingPermissions.filter(
-      (p) => p.participants !== undefined,
-    )
-    const firstMultisig = multisigs[0]
-    if (multisigs.length === 1 && firstMultisig) {
-      name = firstMultisig.name
-    }
-  }
-
-  return { name, redirectToName: name !== initialName }
-}
-
 function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
@@ -207,6 +163,7 @@ function toTechnologyContract(
   const participants = permission.participants?.map((account) => ({
     name: account.name,
     href: account.url,
+    address: account.address,
   }))
 
   const result: TechnologyContract[] = [

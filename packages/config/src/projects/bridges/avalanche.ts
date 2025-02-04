@@ -164,7 +164,7 @@ export const avalanche: Bridge = {
               // - it's an EOA and we assume that all EOAs are verified
               // - avalanche does not have it's own discovery to fetch it from there
               isVerified: true,
-            // TODO(radomski): Create avalanche discovery
+              // TODO(radomski): Create avalanche discovery
               name: '',
               url: '',
             },

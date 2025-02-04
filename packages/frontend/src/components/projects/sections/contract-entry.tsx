@@ -85,6 +85,7 @@ export function ContractEntry({
                     : undefined
                 }
                 href={address.href}
+                address={address.address}
                 className="flex items-center gap-0.5"
               >
                 {address.verificationStatus === 'unverified' &&

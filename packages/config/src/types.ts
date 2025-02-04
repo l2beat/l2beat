@@ -275,12 +275,11 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
-  isVerified: boolean
-  address: EthereumAddress
-  type: 'EOA' | 'Contract'
-
   name: string
   url: string
+  address: EthereumAddress
+  isVerified: boolean
+  type: 'EOA' | 'Contract'
 }
 
 export type ScalingProjectStack =

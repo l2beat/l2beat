@@ -4,7 +4,7 @@
 // explorer for different chains but we can't access layer2s/layer3s/bridges
 // since entries of these arrays are being built by ProjectDiscovery.
 //
-// The ideal solution that config will employ is a three pass approach. 
+// The ideal solution that config will employ is a three pass approach.
 //
 // - The first pass reads in the data required for operation.
 // - The second pass builds each project
