@@ -13,7 +13,7 @@ export type VerifiersStatusRefresherDeps = {
   peripherals: Peripherals
   clock: Clock
   logger: Logger
-  verifiersListProvider: () => Promise<OnchainVerifier[]>
+  verifiers: OnchainVerifier[]
   chains: ChainConfig[]
 }
 
@@ -40,11 +40,9 @@ export class VerifiersStatusRefresher {
   }
 
   async refresh() {
-    const verifiers = await this.$.verifiersListProvider()
+    assert(this.$.verifiers.length > 0, 'No verifier addresses found')
 
-    assert(verifiers.length > 0, 'No verifier addresses found')
-
-    const toRefresh = verifiers.map(async (verifier) => {
+    const toRefresh = this.$.verifiers.map(async (verifier) => {
       try {
         const blockscoutClient = this.getBlockscoutClient(verifier.chainId)
         const transactions = await blockscoutClient.getInternalTransactions(

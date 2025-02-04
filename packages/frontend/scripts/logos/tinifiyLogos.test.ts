@@ -17,7 +17,6 @@ describe('icons', () => {
     const uniqueSlugs = projects
       .map((x) => x.slug)
       .filter((x, i, a) => a.indexOf(x) === i) // unique
-      .concat('ethereum')
       .sort()
     const requiredIcons = icons.filter((x) => uniqueSlugs.includes(x))
 

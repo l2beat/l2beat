@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaBridge } from '../../../types'
 import { EthereumDaBridgeRisks } from '../common'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
 export const enshrinedBridge: DaBridge = {
   id: ProjectId('enshrined-bridge'),

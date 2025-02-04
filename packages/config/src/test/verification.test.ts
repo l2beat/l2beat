@@ -6,9 +6,9 @@ import type {
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
 import { bridges } from '../projects/bridges'
-import { daLayers } from '../projects/da-beat'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
+import { daLayers } from '../projects/refactored'
 import type {
   Bridge,
   DaBridge,
@@ -51,7 +51,7 @@ describe('verification status', () => {
   describe('DABEAT', () => {
     for (const project of daLayers) {
       const chains = getChainNamesForDA(project)
-      for (const bridge of project.daLayer.bridges) {
+      for (const bridge of project.daBridges ?? []) {
         const bridgeId = bridge.id
         if (!bridgeId) {
           continue

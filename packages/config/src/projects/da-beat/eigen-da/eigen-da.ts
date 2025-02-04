@@ -1,16 +1,28 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { DaProject } from '../../../types'
+import type { BaseProject } from '../../../types'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 import { eigenDAbridge } from './eigen-da-bridge'
 
-export const eigenDA: DaProject = {
-  type: 'DaLayer',
+const daBridges = [eigenDAbridge]
+
+export const eigenDA: BaseProject = {
   id: ProjectId('eigen-da'),
+  slug: 'eigenda',
+  name: 'EigenDA',
+  shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
+  // tags
+  isDaLayer: true,
+  // data
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    isUnderReview: false,
+    isUnverified: !daBridges.every(isDaBridgeVerified),
+  },
   display: {
-    name: 'EigenDA',
-    slug: 'eigenda',
     description:
       'EigenDA is a data availability solution built on Eigen Layer.',
     links: {
@@ -22,7 +34,7 @@ export const eigenDA: DaProject = {
     },
   },
   daLayer: {
-    kind: 'DA Service',
+    type: 'DA Service',
     systemCategory: 'public',
     technology: {
       description: `
@@ -86,12 +98,12 @@ export const eigenDA: DaProject = {
       layer: ProjectId('eigen-da'),
       bridge: undefined,
     }),
-    bridges: [eigenDAbridge],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
   },
+  daBridges,
   milestones: [
     {
       title: 'EigenDA launch on mainnet',

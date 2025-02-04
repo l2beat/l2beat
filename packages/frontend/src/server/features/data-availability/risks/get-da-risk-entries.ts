@@ -1,5 +1,10 @@
-import type { DaBridgeRisks, DaLayerRisks, DaProject } from '@l2beat/config'
-import { daLayers, isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
+import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
+import {
+  ProjectService,
+  isDaBridgeVerified,
+  layer2s,
+  layer3s,
+} from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getDaBridges } from '../utils/get-da-bridges'
@@ -8,14 +13,18 @@ import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
-  const uniqueProjectsInUse = getUniqueProjectsInUse()
+  const uniqueProjectsInUse = await getUniqueProjectsInUse()
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
   const getTvs = pickTvsForProjects(tvsPerProject)
 
-  const entries = daLayers
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['daLayer', 'daBridges'],
+  })
+
+  const entries = projects
+    .filter((project) => project.id !== ProjectId.ETHEREUM)
     .map((project) => getDaRiskEntry(project, getTvs))
     .sort((a, b) => b.tvs - a.tvs)
 
@@ -37,7 +46,7 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaRiskEntry(
-  project: DaProject,
+  project: Project<'daLayer' | 'daBridges'>,
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
   const bridges = getDaBridges(project)
@@ -47,7 +56,7 @@ function getDaRiskEntry(
       return {
         name: daBridge.display.name,
         slug: daBridge.display.slug,
-        href: `/data-availability/projects/${project.display.slug}/${daBridge.display.slug}`,
+        href: `/data-availability/projects/${project.slug}/${daBridge.display.slug}`,
         statuses: {
           verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
         },
@@ -59,9 +68,9 @@ function getDaRiskEntry(
 
   return {
     id: ProjectId(project.id),
-    name: project.display.name,
-    nameSecondLine: kindToType(project.daLayer.kind),
-    slug: project.display.slug,
+    name: project.name,
+    nameSecondLine: project.daLayer.type,
+    slug: project.slug,
     href: bridges[0]?.href,
     statuses: {},
     isPublic: project.daLayer.systemCategory === 'public',

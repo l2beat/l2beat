@@ -4,7 +4,7 @@ import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
 const discovery = new ProjectDiscovery('vector')
 

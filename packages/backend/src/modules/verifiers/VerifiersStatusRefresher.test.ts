@@ -81,7 +81,7 @@ describe(VerifiersStatusRefresher.name, () => {
         db: mockDatabase({
           verifierStatus: verifierStatusRepositoryMock,
         }),
-        verifiersListProvider: mockFn(async () => mockVerifiers),
+        verifiers: mockVerifiers,
       })
 
       refresher.getBlockscoutClient = mockFn().returns(
@@ -112,7 +112,7 @@ describe(VerifiersStatusRefresher.name, () => {
     it('throws if no verifiers found', async () => {
       const refresher = createVerifierStatusRefresher({
         chains: [],
-        verifiersListProvider: () => Promise.resolve([]),
+        verifiers: [],
       })
 
       await expect(() => refresher.refresh()).toBeRejectedWith(
@@ -130,7 +130,7 @@ function createVerifierStatusRefresher(
     peripherals: mockObject<Peripherals>(),
     clock: mockObject<Clock>(),
     logger: Logger.SILENT,
-    verifiersListProvider: () => Promise.resolve([]),
+    verifiers: [],
     chains: [],
     ...deps,
   })

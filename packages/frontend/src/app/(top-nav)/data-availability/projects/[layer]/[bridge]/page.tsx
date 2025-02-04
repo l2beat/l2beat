@@ -1,4 +1,4 @@
-import { daLayers, ethereumDaLayer } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
@@ -25,9 +25,13 @@ interface Props {
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
-  return [...daLayers, ethereumDaLayer].flatMap((project) =>
+
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['daLayer', 'daBridges'],
+  })
+  return projects.flatMap((project) =>
     getDaBridges(project).map((bridge) => ({
-      layer: project.display.slug,
+      layer: project.slug,
       bridge: bridge.display.slug,
     })),
   )
@@ -35,9 +39,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const project = [...daLayers, ethereumDaLayer].find(
-    (layer) => layer.display.slug === params.layer,
-  )
+  const project = await ProjectService.STATIC.getProject({
+    slug: params.layer,
+    select: ['daLayer', 'daBridges', 'display'],
+  })
+
   if (!project || !params.bridge) {
     notFound()
   }
@@ -49,12 +55,12 @@ export async function generateMetadata(props: Props) {
   }
   return getProjectMetadata({
     project: {
-      name: project.display.name,
+      name: project.name,
       description: project.display.description,
     },
     metadata: {
       openGraph: {
-        url: `/data-availability/projects/${project.display.slug}/${bridge.display?.slug}`,
+        url: `/data-availability/projects/${project.slug}/${bridge.display?.slug}`,
       },
     },
   })
@@ -111,28 +117,27 @@ export default async function Page(props: Props) {
 }
 
 async function getPageData(params: { layer: string; bridge: string }) {
-  if (
-    params.layer === ethereumDaLayer.display.slug &&
-    params.bridge === ethereumDaLayer.daLayer.bridges[0]?.display.slug
-  ) {
-    const entry = await getEthereumDaProjectEntry(ethereumDaLayer)
-
-    return {
-      entry,
-      summaryComponent: <EthereumDaProjectSummary project={entry} />,
-    }
-  }
-
-  const project = daLayers.find((p) => p.display.slug === params.layer)
+  const project = await ProjectService.STATIC.getProject({
+    slug: params.layer,
+    select: ['daLayer', 'display', 'daBridges', 'statuses'],
+    optional: ['isUpcoming', 'milestones'],
+  })
   if (!project) {
     return
   }
   const daBridge = getDaBridges(project).find(
     (b) => b.display.slug === params.bridge,
   )
-
   if (!daBridge) {
     return
+  }
+  if (params.layer === 'ethereum') {
+    const entry = await getEthereumDaProjectEntry(project, daBridge)
+
+    return {
+      entry,
+      summaryComponent: <EthereumDaProjectSummary project={entry} />,
+    }
   }
 
   const entry = await getDaProjectEntry(project, daBridge)

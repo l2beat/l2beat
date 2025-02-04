@@ -4,7 +4,7 @@ import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import { linkByDA } from '../utils/link-by-da'
+import { linkByDA } from '../common/linkByDA'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')

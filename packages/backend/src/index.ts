@@ -23,7 +23,7 @@ async function main() {
   const logger = createLogger(environment)
 
   try {
-    const config = getConfig()
+    const config = await getConfig()
     const app = new Application(config, logger)
     await app.start()
   } catch (e) {

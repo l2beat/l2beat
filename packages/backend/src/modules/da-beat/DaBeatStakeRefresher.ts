@@ -1,8 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { daLayers, ethereumDaLayer } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { compact } from 'lodash'
-import type { DABeatConfig } from '../../config/Config'
+import type { DaBeatConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import { QuickNodeClient } from '../../peripherals/quicknode/QuickNodeClient'
 import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
@@ -20,7 +18,7 @@ export class DaBeatStakeRefresher {
   private readonly analyzers: Record<string, AbstractStakeAnalyzer>
   constructor(
     private readonly peripherals: Peripherals,
-    private readonly config: DABeatConfig,
+    private readonly config: DaBeatConfig,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
@@ -28,19 +26,7 @@ export class DaBeatStakeRefresher {
     this.logger = logger.for('DaBeatStakeRefresher')
     this.refresh = this.refresh.bind(this)
     this.analyzers = Object.fromEntries(
-      [
-        ...new Set(
-          compact(
-            [...daLayers, ethereumDaLayer]
-              .filter(
-                (project) =>
-                  project.daLayer.kind === 'EthereumDaLayer' ||
-                  project.daLayer.kind === 'PublicBlockchain',
-              )
-              .map((project) => project.daLayer.economicSecurity?.name),
-          ),
-        ),
-      ].map((type) => {
+      config.types.map((type) => {
         switch (type) {
           case 'Ethereum':
             return [

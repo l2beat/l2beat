@@ -11,7 +11,6 @@ import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
 import type {
   Bridge,
-  DaProject,
   Layer2,
   Layer3,
   ProjectContract,
@@ -20,9 +19,7 @@ import type {
 
 type CommonProject = Layer2 | Layer3 | Bridge
 
-type Params =
-  | { type: (Layer2 | Bridge | DaProject)['type'] }
-  | { type: Layer3['type']; hostChain: string }
+type Params = { type: 'layer2' | 'layer3' | 'bridge'; hostChain?: string }
 
 export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {
@@ -36,10 +33,6 @@ export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer3') {
     const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
     return findCommonContractsMemoized(projects, project.hostChain as string)
-  }
-
-  if (project.type === 'DaLayer') {
-    throw new Error('Not implemented yet')
   }
 
   return {}

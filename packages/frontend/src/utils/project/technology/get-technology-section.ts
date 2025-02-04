@@ -1,12 +1,17 @@
-import { daLayers } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
 import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
-export function getScalingTechnologySection(project: Layer2 | Layer3) {
-  const relatedDaProjects = daLayers.filter((project) =>
+export async function getScalingTechnologySection(project: Layer2 | Layer3) {
+  // TODO: This is absurd. All i need here is a link. This could've been precomputed in config!
+  const projects = await ProjectService.STATIC.getProjects({
+    select: ['daLayer', 'daBridges'],
+  })
+
+  const relatedDaProjects = projects.filter((project) =>
     getDaBridges(project).some((bridge) =>
       bridge.usedIn.some((usedIn) => usedIn.id === project.id),
     ),
@@ -33,8 +38,8 @@ export function getScalingTechnologySection(project: Layer2 | Layer3) {
               ? {
                   text: 'Learn more about the DA layer here:',
                   project: {
-                    name: relatedDaProjects[0].display.name,
-                    slug: `${relatedDaProjects[0].display.slug}/${getDaBridges(relatedDaProjects[0])[0]?.display.slug}`,
+                    name: relatedDaProjects[0].name,
+                    slug: `${relatedDaProjects[0].slug}/${getDaBridges(relatedDaProjects[0])[0]?.display.slug}`,
                     type: 'data-availability',
                   },
                 }

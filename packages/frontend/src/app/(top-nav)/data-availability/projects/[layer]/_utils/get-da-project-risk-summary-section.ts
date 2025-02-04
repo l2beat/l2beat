@@ -1,10 +1,10 @@
-import type { DaBridge, DaProject, ScalingProjectRisk } from '@l2beat/config'
+import type { DaBridge, Project, ScalingProjectRisk } from '@l2beat/config'
 import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(
-  project: DaProject,
+  project: Project<'daLayer'>,
   bridge: DaBridge,
   isVerified: boolean,
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
@@ -44,7 +44,7 @@ export function getDaProjectRiskSummarySection(
 
   return {
     layer: {
-      name: project.display.name,
+      name: project.name,
       risks: groupRisks(layerRisks),
     },
     bridge: {
