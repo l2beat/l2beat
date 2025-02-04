@@ -26,7 +26,6 @@ interface Params {
   project: Layer3
   isVerified: boolean
   isHostChainVerified: boolean
-  contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   hostChain?: Layer2
@@ -45,20 +44,16 @@ export async function getL3ProjectDetails({
   combinedRosetteValues,
   hostChainRosetteValues,
   projectsChangeReport,
-  contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
-    ? getPermissionsSection(
-        {
-          id: project.id,
-          type: project.type,
-          hostChain: project.hostChain,
-          isUnderReview: !!project.isUnderReview,
-          permissions: project.permissions,
-          daSolution,
-        },
-        contractsVerificationStatuses,
-      )
+    ? getPermissionsSection({
+        id: project.id,
+        type: project.type,
+        hostChain: project.hostChain,
+        isUnderReview: !!project.isUnderReview,
+        permissions: project.permissions,
+        daSolution,
+      })
     : undefined
 
   const contractsSection = getContractsSection(

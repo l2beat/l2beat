@@ -1,5 +1,4 @@
 import type { DaBridge, DaProject } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -12,7 +11,6 @@ type RegularDetailsParams = {
   daLayer: DaProject
   daBridge: DaBridge
   isVerified: boolean
-  contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
@@ -22,22 +20,18 @@ export function getRegularDaProjectSections({
   daLayer,
   daBridge,
   isVerified,
-  contractsVerificationStatuses,
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const permissionsSection =
     daBridge.permissions &&
-    getPermissionsSection(
-      {
-        id: daLayer.id,
-        type: 'DaLayer',
-        isUnderReview: !!daLayer.isUnderReview,
-        permissions: daBridge.permissions,
-      },
-      contractsVerificationStatuses,
-    )
+    getPermissionsSection({
+      id: daLayer.id,
+      type: 'DaLayer',
+      isUnderReview: !!daLayer.isUnderReview,
+      permissions: daBridge.permissions,
+    })
 
   const contractsSection =
     daBridge.contracts &&

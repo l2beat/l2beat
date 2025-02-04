@@ -5,7 +5,6 @@ import type {
   DaProject,
 } from '@l2beat/config'
 import { isDaBridgeVerified } from '@l2beat/config'
-import { getContractsVerificationStatuses } from '@l2beat/config'
 import type { UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
@@ -108,17 +107,12 @@ export async function getDaProjectEntry(
 
   const uniqueProjectsInUse = getUniqueProjectsInUse(getDaBridges(project))
 
-  const [
-    economicSecurity,
-    tvsPerProject,
-    contractsVerificationStatuses,
-    projectsChangeReport,
-  ] = await Promise.all([
-    getDaProjectEconomicSecurity(project.daLayer.economicSecurity),
-    getDaProjectsTvs(uniqueProjectsInUse),
-    getContractsVerificationStatuses(project),
-    getProjectsChangeReport(),
-  ])
+  const [economicSecurity, tvsPerProject, projectsChangeReport] =
+    await Promise.all([
+      getDaProjectEconomicSecurity(project.daLayer.economicSecurity),
+      getDaProjectsTvs(uniqueProjectsInUse),
+      getProjectsChangeReport(),
+    ])
 
   const layerTvs =
     tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
@@ -139,7 +133,6 @@ export async function getDaProjectEntry(
     daLayer: project,
     daBridge,
     isVerified: common.isVerified,
-    contractsVerificationStatuses,
     projectsChangeReport,
     layerGrissiniValues,
     bridgeGrissiniValues,
