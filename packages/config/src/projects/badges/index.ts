@@ -97,6 +97,14 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
+  Zeeve: {
+    display: {
+      name: 'Zeeve',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Zeeve',
+    },
+    type: BadgeType.RaaS,
+  },
   // DA
   Avail: {
     display: {
