@@ -35,15 +35,6 @@ export function ScalingCostsTable({ entries, rollups }: Props) {
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
   }, [data, entries, metric, unit])
 
-  useEffect(() => {
-    setSorting([
-      {
-        id: 'total-cost',
-        desc: metric === 'per-l2-uop' ? false : true,
-      },
-    ])
-  }, [metric, setSorting])
-
   const table = useTable({
     data: tableEntries,
     columns: getScalingCostsColumns(metric),
@@ -60,6 +51,17 @@ export function ScalingCostsTable({ entries, rollups }: Props) {
       },
     },
   })
+
+  useEffect(() => {
+    if (table.getState().sorting[0]?.id === 'total-cost') {
+      setSorting([
+        {
+          id: 'total-cost',
+          desc: metric === 'total',
+        },
+      ])
+    }
+  }, [metric, setSorting, table])
 
   return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
 }
