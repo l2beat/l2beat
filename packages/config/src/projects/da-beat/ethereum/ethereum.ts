@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { EthereumDaLayerRisks } from '../common'
 import { enshrinedBridge } from './enshrinedBridge'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
 
 const daBridges = [enshrinedBridge]
 

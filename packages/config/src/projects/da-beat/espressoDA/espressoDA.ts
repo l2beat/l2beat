@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
+import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
 import { linkByDA } from '../common/linkByDA'
 import { hotshot } from './hotshot'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
 
 const daBridges = [hotshot]
 

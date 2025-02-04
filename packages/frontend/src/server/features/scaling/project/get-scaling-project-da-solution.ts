@@ -1,7 +1,7 @@
 import {
-  ProjectService,
   type ProjectContract,
   type ProjectPermissions,
+  ProjectService,
 } from '@l2beat/config'
 import { getDaBridges } from '../../data-availability/utils/get-da-bridges'
 import type { ScalingProject } from './get-scaling-project-entry'

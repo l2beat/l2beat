@@ -1,4 +1,4 @@
-import { layer2s, layer3s, ProjectService } from '@l2beat/config'
+import { ProjectService, layer2s, layer3s } from '@l2beat/config'
 import { getDaBridges } from './get-da-bridges'
 
 export async function getUniqueProjectsInUse() {

@@ -1,3 +1,4 @@
+import { ProjectService } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
@@ -14,7 +15,6 @@ import { getDaBridges } from '~/server/features/data-availability/utils/get-da-b
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
-import { ProjectService } from '@l2beat/config'
 
 interface Props {
   params: Promise<{

@@ -1,9 +1,9 @@
 import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
 import {
+  ProjectService,
   isDaBridgeVerified,
   layer2s,
   layer3s,
-  ProjectService,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'

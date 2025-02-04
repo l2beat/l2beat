@@ -1,8 +1,8 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getProjects } from './getProjects'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
+import { getProjects } from './getProjects'
 
 describe('getProjects', () => {
   const projects = getProjects()

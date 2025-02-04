@@ -5,10 +5,10 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import {
+  ProjectService,
   isDaBridgeVerified,
   layer2s,
   layer3s,
-  ProjectService,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
