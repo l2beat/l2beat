@@ -131,9 +131,23 @@ function TransactionDetails({
     <div className="mb-4">
       <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-medium capitalize">
-            {transaction.formula}
-          </p>
+          <div className="flex items-center gap-1">
+            <p className="text-xs font-medium capitalize">
+              {transaction.formula}
+            </p>
+            {transaction.formula === 'sharedBridge' && (
+              <Tooltip>
+                <TooltipTrigger className="inline size-4">
+                  <InfoIcon />
+                </TooltipTrigger>
+                <TooltipContent>
+                  Tracked function calls are those ones with chain ID in
+                  calldata equal to project&apos;s chain ID (
+                  {transaction.chainId})
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
           {showHistoricalTransactions ? (
             transaction.isHistorical ? (
               <Badge type="gray" size="small">
@@ -146,7 +160,7 @@ function TransactionDetails({
             )
           ) : null}
         </div>
-        <p className="text-xs text-secondary">
+        <p className="text-2xs text-secondary max-md:mt-0.5 md:text-xs">
           {formatTimestamp(transaction.sinceTimestamp, {
             mode: 'datetime',
             longMonthName: false,
@@ -215,11 +229,6 @@ function TransactionDetails({
 
         {transaction.formula === 'sharedBridge' && (
           <>
-            <div className="mb-1 text-sm">
-              This project is using a shared bridge so the tracked function
-              calls are those ones with chain ID equal to project&apos;s chain
-              ID ({transaction.chainId})
-            </div>
             <div className="mb-1 text-sm">
               <span className="text-secondary">Address: </span>
               <EtherscanLink address={transaction.address} />
