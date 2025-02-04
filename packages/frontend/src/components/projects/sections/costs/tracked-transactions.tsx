@@ -245,7 +245,7 @@ function TransactionDetails({
 
         {transaction.multiplier && (
           <div className="mt-1 flex items-center gap-0.5 text-sm">
-            <div className="leading-none">
+            <div>
               <span className="text-secondary">Multiplier: </span>
               <span>{transaction.multiplier}</span>
             </div>
