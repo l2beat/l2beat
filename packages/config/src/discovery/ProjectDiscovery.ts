@@ -53,6 +53,7 @@ import type {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
+import { ExplorerUrlMap } from '../chains/explorerUrls'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -409,13 +410,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name,
       description: descriptionWithContractNames,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
@@ -557,7 +552,15 @@ export class ProjectDiscovery {
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
       const isVerified = isEntryVerified(entry)
 
-      result.push({ address: address, type, isVerified })
+      const name = `${address.slice(0, 6)}…${address.slice(38, 42)}`
+      const explorerUrl = ExplorerUrlMap[this.chain]
+      assert(
+        isNonNullable(explorerUrl),
+        `Failed to find explorer url for chain [${this.chain}]`,
+      )
+      const url = `${explorerUrl}/address/${address}`
+
+      result.push({ address: address, type, isVerified, name, url })
     }
 
     return result
@@ -625,13 +628,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: contract.name,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -647,13 +644,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: eoa.name ?? eoa.address,
-      accounts: [
-        {
-          isVerified: isEntryVerified(eoa),
-          address: eoa.address,
-          type: 'EOA',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([eoa.address]),
       chain: this.chain,
       references: eoa.references?.map((x) => ({
         title: x.text,

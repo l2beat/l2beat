@@ -10,7 +10,7 @@ import {
 } from '../../common'
 import type { Layer2 } from '../../types'
 
-export const layer2aWithDups: Layer2 = {
+export const layer2aWithDups = {
   type: 'layer2',
   id: ProjectId('layer2a'),
   addedAt: new UnixTime(1723722996), // 2024-08-15T11:56:36Z
@@ -376,4 +376,4 @@ export const layer2aWithDups: Layer2 = {
     },
     risks: [],
   },
-}
+} as unknown as Layer2

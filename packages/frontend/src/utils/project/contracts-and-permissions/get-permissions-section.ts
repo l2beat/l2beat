@@ -179,27 +179,13 @@ function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
 ): TechnologyContract[] {
-  const chain = permission.chain
-  const etherscanUrl = getExplorerUrl(chain)
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
-    (account) => {
-      const address = account.address.toString()
-      const permissionedName = resolvePermissionedName(
-        permission.name,
-        account,
-        projectParams.permissions,
-        chain,
-      )
-      return {
-        name: permissionedName.name,
-        address,
-        href: permissionedName.redirectToName
-          ? `#${permissionedName.name}`
-          : `${etherscanUrl}/address/${address}#code`,
-        isAdmin: false,
-        verificationStatus: toVerificationStatus(account.isVerified ?? false),
-      }
-    },
+    (account) => ({
+      name: account.name,
+      href: account.url,
+      address: account.address.toString(),
+      verificationStatus: toVerificationStatus(account.isVerified ?? false),
+    }),
   )
 
   let usedInProjects: UsedInProject[] | undefined
@@ -218,19 +204,10 @@ function toTechnologyContract(
       ? `${permission.name} (${permission.accounts.length})`
       : permission.name
 
-  const participants = permission.participants?.map((account) => {
-    const permissionedName = resolvePermissionedName(
-      permission.name,
-      account,
-      projectParams.permissions,
-      chain,
-    )
-
-    return {
-      name: permissionedName.name,
-      href: `${etherscanUrl}/address/${account.address.toString()}#code`,
-    }
-  })
+  const participants = permission.participants?.map((account) => ({
+    name: account.name,
+    href: account.url,
+  }))
 
   const result: TechnologyContract[] = [
     {

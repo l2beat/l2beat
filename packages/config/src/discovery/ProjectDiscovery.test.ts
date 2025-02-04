@@ -237,6 +237,8 @@ describe(ProjectDiscovery.name, () => {
               ),
               type: 'Contract',
               isVerified: true,
+              name: '0x543b…fB04',
+              url: 'https://etherscan.io/address/0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
             },
           ],
           description:
@@ -272,6 +274,8 @@ describe(ProjectDiscovery.name, () => {
           address: contractStub.address,
           type: 'Contract',
           isVerified: true,
+          name: '0x0D4C…72ac',
+          url: 'https://etherscan.io/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac',
         },
         {
           address: EthereumAddress(
@@ -279,6 +283,8 @@ describe(ProjectDiscovery.name, () => {
           ),
           type: 'EOA',
           isVerified: true,
+          name: '0x0000…Bb22',
+          url: 'https://etherscan.io/address/0x000000000000000000000000000000000000Bb22',
         },
       ])
     })
