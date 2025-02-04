@@ -4,6 +4,7 @@ import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -71,7 +72,10 @@ export const vector: DaBridge = {
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('avail'),
+    bridge: ProjectId('vector'),
+  }),
   risks: {
     committeeSecurity:
       DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validator set'),
