@@ -76,19 +76,24 @@ export const rari: Layer3 = orbitStackL3({
   nonTemplateTechnology: {
     sequencing: {
       name: 'Espresso TEE sequencer',
-      description:
-        `Rari integrates with Espresso sequencing, 
+      description: `Rari integrates with Espresso sequencing, 
         In addition to providing regular pre-confirmations, the sequencer publishes blocks to the Espresso Network.
-        The integration expects the transaction batch poster to run inside a Trusted Execution Environment (TEE), ensuring waits for an Espresso Network attestation before publishing the batch to the parent chain.
-        The sequencer inbox contract was updated so that the data posting function also includes an attestation as input, a "quote", that is verified onchain for each batch tx by the EspressoTEEVerifier. 
+        The integration expects the transaction batch poster to run inside a Trusted Execution Environment (TEE), and it is programmed to verify batch inclusion in a Espresso Network block before publishing it to the host chain.
+        However, the confirmations provided by Espresso Network are additive, and the batch poster can skip Espresso inclusion checks should the Espresso Network be down or unavailable.
+        To ensure the batch poster is running inside a TEE, the sequencer inbox contract on the host chain was updated so that the data posting function also includes a TEE attestation as input, a "quote", that is verified onchain by the EspressoTEEVerifier for each batch transaction. 
         The verifier checks the quote signature originates from inside the TEE and reverts if unsuccessful.`,
       references: [
         {
-          url: 'https://x.com/EspressoSys/status/1884970716199895376',
-          title: 'RARI integrates Espresso sequencer',
+          url: 'https://github.com/EspressoSystems/nitro-espresso-integration',
+          title: 'Nitro Espresso Integration',
         },
       ],
-      risks: [],
+      risks: [
+        {
+          category: 'Funds can be frozen if',
+          text: 'the owner of EspressoTEEVerifier updates the contract verification values (mrEnclave, mrSigner) and it is no longer possible to verify the TEE quote.',
+        },
+      ],
     },
   },
   milestones: [
