@@ -1,4 +1,3 @@
-import { ProjectService } from '@l2beat/config'
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +10,7 @@ import Image from 'next/image'
 import { MainPageHeader } from '~/components/main-page-header'
 import { ChevronIcon } from '~/icons/chevron'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
+import { ps } from '~/server/projects'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { VerifiedCountWithDetails } from './[slug]/_components/verified-count-with-details'
 import { DetailsItem } from './_components/details-item'
@@ -29,7 +29,7 @@ export const metadata: Metadata = getDefaultMetadata({
 
 export default async function Page() {
   const verifiers = await getVerifiers()
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['proofVerification'],
     whereNot: ['isArchived'],
   })

@@ -14,10 +14,7 @@ export type Project<K extends Key = never, O extends Key = never> = Simplify<
 >
 
 export class ProjectService {
-  // TODO: In the future this should be removed and the service should be
-  // created appropriately. For now we use this for simplicity
-  static STATIC = new ProjectService()
-
+  /** There should only be a single instance of ProjectService. */
   constructor(private _getProjects = getProjects) {}
 
   private projects: Promise<BaseProject[]> | undefined

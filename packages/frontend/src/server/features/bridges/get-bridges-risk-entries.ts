@@ -4,7 +4,7 @@ import type {
   Project,
   Sentiment,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
@@ -16,7 +16,7 @@ export async function getBridgeRiskEntries() {
   const [tvs, projectsChangeReport, projects] = await Promise.all([
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
       where: ['isBridge'],
       whereNot: ['isUpcoming', 'isArchived'],

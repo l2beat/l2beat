@@ -1,4 +1,3 @@
-import { ProjectService } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
@@ -12,6 +11,7 @@ import {
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
+import { ps } from '~/server/projects'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
@@ -26,7 +26,7 @@ interface Props {
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
 
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer', 'daBridges'],
   })
   return projects.flatMap((project) =>
@@ -39,7 +39,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const project = await ProjectService.STATIC.getProject({
+  const project = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'daBridges', 'display'],
   })
@@ -117,7 +117,7 @@ export default async function Page(props: Props) {
 }
 
 async function getPageData(params: { layer: string; bridge: string }) {
-  const project = await ProjectService.STATIC.getProject({
+  const project = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'daBridges', 'statuses'],
     optional: ['isUpcoming', 'milestones'],

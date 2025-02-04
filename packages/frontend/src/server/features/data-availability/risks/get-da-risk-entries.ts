@@ -1,11 +1,7 @@
 import type { DaBridgeRisks, DaLayerRisks, Project } from '@l2beat/config'
-import {
-  ProjectService,
-  isDaBridgeVerified,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
+import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -19,7 +15,7 @@ export async function getDaRiskEntries() {
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
   const getTvs = pickTvsForProjects(tvsPerProject)
 
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['daLayer', 'daBridges'],
   })
 
