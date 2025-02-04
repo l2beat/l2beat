@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
-import type { Layer3 } from './types'
 
 export const xrone: Layer3 = underReviewL3({
   id: 'xrone',
@@ -31,7 +31,6 @@ export const xrone: Layer3 = underReviewL3({
       ],
       documentation: ['https://xr-one.gitbook.io/xr'],
       explorers: ['https://xr-one.calderaexplorer.xyz/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/XR_Foundation',
         'https://discord.com/invite/W4BdM6N8xb',

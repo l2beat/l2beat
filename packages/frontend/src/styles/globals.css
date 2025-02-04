@@ -10,6 +10,8 @@
     --primary: 260deg 7.69% 7.65%;
     --primary-invert: 0deg 0% 98%;
     --secondary: 222deg 8.21% 40.6%;
+    --positive: 124deg 100% 22.7%;
+    --warning: 44.9deg 100% 33.5%;
     --negative: 0 100% 42%;
     --brand: 285deg 62.7% 52.7%;
     --background: 230deg 13.6% 91.4%;
@@ -26,7 +28,6 @@
     --indicator-validiums-optimiums: 180deg 50.2% 42.5%;
     --indicator-others: 44.9deg 100% 33.5%;
     --indicator-ethereum: 223deg 69% 50.6%;
-    --positive: 124deg 100% 22.7%;
     --link-stroke: 212deg 100% 86.5%;
     --link: 223deg 69% 50.6%;
   }
@@ -35,6 +36,8 @@
     --primary: 0deg 0% 98%;
     --primary-invert: 260deg 7.69% 7.65%;
     --secondary: 223deg 8.04% 56.1%;
+    --positive: 145deg 81.2% 43.7%;
+    --warning: 45deg 100% 51.4%;
     --negative: 0 100% 50%;
     --brand: 284deg 87.1% 75.7%;
     --background: 0deg 0% 0%;
@@ -51,7 +54,6 @@
     --indicator-validiums-optimiums: 190deg 73.6% 55.5%;
     --indicator-others: 54.2deg 70.9% 56.9%;
     --indicator-ethereum: 212deg 100% 66.3%;
-    --positive: 145deg 81.2% 43.7%;
     --link-stroke: 217deg 56.3% 18.8%;
     --link: 212deg 100% 66.3%;
   }
@@ -59,7 +61,7 @@
 
 @layer base {
   :root {
-    --header-height: 4rem;
+    --header-height: 2.5rem;
   }
 
   :root:has(.header-height-glossary) {

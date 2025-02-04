@@ -19,14 +19,13 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -52,6 +51,34 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
   maxForcedWithdrawalFee,
 )} ETH`
 
+const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
+const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
+assert(owner1 === owner2, 'The owners are different')
+
+const ownerDepositContract = discovery.getAddressFromValue(
+  'DefaultDepositContract',
+  'owner',
+)
+const ownerIOExchange = discovery.getAddressFromValue(
+  'LoopringIOExchangeOwner',
+  'owner',
+)
+const ownerV3 = discovery.getAddressFromValue('LoopringV3', 'owner')
+
+// making sure that the description is correct
+assert(
+  ownerDepositContract === ownerIOExchange &&
+    ownerIOExchange === ownerV3 &&
+    ownerV3 === owner1,
+  'DeGate: owners structure changed, update description',
+)
+
+const permissionedAccount = discovery.formatPermissionedAccounts([
+  ownerDepositContract,
+])
+
+assert(permissionedAccount[0].type !== 'EOA', 'DeGate: found unexpected EOA')
+
 const delay1 = discovery.getContractValue<number>('TimeLock1', 'MINIMUM_DELAY')
 const delay2 = discovery.getContractValue<number>('TimeLock2', 'MINIMUM_DELAY')
 
@@ -71,7 +98,7 @@ const timelockUpgrades2 = {
 export const degate3: Layer2 = {
   type: 'layer2',
   id: ProjectId('degate3'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
     Badge.VM.AppChain,
@@ -91,7 +118,6 @@ export const degate3: Layer2 = {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
-      explorers: [],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
@@ -160,11 +186,11 @@ export const degate3: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -259,7 +285,7 @@ export const degate3: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title: 'Withdraw - DeGate design doc',
@@ -268,7 +294,7 @@ export const degate3: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title: 'Forced Request Handling - DeGate design doc',
@@ -363,93 +389,67 @@ export const degate3: Layer2 = {
       ],
     },
   },
-  permissions: [
-    {
-      name: 'BlockVerifier Owner',
-      description: 'This address is the owner of the BlockVerifier contract.',
-      accounts: [discovery.getPermissionedAccount('BlockVerifier', 'owner')],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'BlockVerifier Owner',
+          discovery.getPermissionedAccounts('BlockVerifier', 'owner'),
+          'This address is the owner of the BlockVerifier contract.',
+        ),
+        discovery.getPermissionDetails(
+          'Block Submitters',
+          discovery.getPermissionedAccounts(
+            'LoopringIOExchangeOwner',
+            'blockSubmitters',
+          ),
+          'Actors who can submit new blocks, updating the L2 state on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'Degate HomeDAO2 Multisig',
+          discovery.getPermissionedAccounts('TimeLock1', 'admin'),
+          `Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts. This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`,
+        ),
+      ],
     },
-    {
-      name: 'Block Submitters',
-      accounts: discovery.getPermissionedAccounts(
-        'LoopringIOExchangeOwner',
-        'blockSubmitters',
-      ),
-      description:
-        'Actors who can submit new blocks, updating the L2 state on L1.',
-    },
-    {
-      name: 'Degate HomeDAO2 Multisig',
-      accounts: [discovery.getPermissionedAccount('TimeLock1', 'admin')],
-      description: (() => {
-        const owner1 = discovery.getAddressFromValue('TimeLock1', 'admin')
-        const owner2 = discovery.getAddressFromValue('TimeLock2', 'admin')
-        assert(owner1 === owner2, 'The owners are different')
-
-        const ownerDepositContract = discovery.getAddressFromValue(
-          'DefaultDepositContract',
-          'owner',
-        )
-        const ownerIOExchange = discovery.getAddressFromValue(
-          'LoopringIOExchangeOwner',
-          'owner',
-        )
-        const ownerV3 = discovery.getAddressFromValue('LoopringV3', 'owner')
-
-        // making sure that the description is correct
-        assert(
-          ownerDepositContract === ownerIOExchange &&
-            ownerIOExchange === ownerV3 &&
-            ownerV3 === owner1,
-          'DeGate: owners structure changed, update description',
-        )
-
-        const permissionedAccount =
-          discovery.formatPermissionedAccount(ownerDepositContract)
-
-        assert(
-          permissionedAccount.type !== 'EOA',
-          'DeGate: found unexpected EOA',
-        )
-        return `Actor allowed to upgrade the ExchangeV3 and DefaultDepositContract contracts. This address is the owner of the following contracts: LoopringIOExchangeOwner, LoopringV3, DefaultDepositContract. Can add or remove block submitters. Can change the forced withdrawal fee up to ${maxForcedWithdrawalFeeString}. Can change a way that balance is calculated per contract during the deposit, allowing the support of non-standard tokens.`
-      })(),
-    },
-  ],
+  },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ExchangeV3', {
-        description: `Main ExchangeV3 contract.`,
-        ...timelockUpgrades1,
-      }),
-      discovery.getContractDetails(
-        'LoopringIOExchangeOwner',
-        'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
-      ),
-      discovery.getContractDetails('DefaultDepositContract', {
-        description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
-        ...timelockUpgrades2,
-      }),
-      discovery.getContractDetails(
-        'LoopringV3',
-        'Contract for setting exchange fee parameters.',
-      ),
-      discovery.getContractDetails(
-        'BlockVerifier',
-        'zkSNARK Verifier based on ethsnarks library.',
-      ),
-      discovery.getContractDetails(
-        'TimeLock1',
-        `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
-          delay1,
-        )} time delay for upgrading the contract.`,
-      ),
-      discovery.getContractDetails(
-        'TimeLock2',
-        `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
-          delay2,
-        )} time delay for upgrading the contract.`,
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ExchangeV3', {
+          description: `Main ExchangeV3 contract.`,
+          ...timelockUpgrades1,
+        }),
+        discovery.getContractDetails(
+          'LoopringIOExchangeOwner',
+          'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
+        ),
+        discovery.getContractDetails('DefaultDepositContract', {
+          description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
+          ...timelockUpgrades2,
+        }),
+        discovery.getContractDetails(
+          'LoopringV3',
+          'Contract for setting exchange fee parameters.',
+        ),
+        discovery.getContractDetails(
+          'BlockVerifier',
+          'zkSNARK Verifier based on ethsnarks library.',
+        ),
+        discovery.getContractDetails(
+          'TimeLock1',
+          `This timelock contract is set as the proxyOwner of the ExchangeV3 contract. There is a ${formatSeconds(
+            delay1,
+          )} time delay for upgrading the contract.`,
+        ),
+        discovery.getContractDetails(
+          'TimeLock2',
+          `This timelock contract is set as the proxyOwner of the DefaultDepositContract contract. There is a ${formatSeconds(
+            delay2,
+          )} time delay for upgrading the contract.`,
+        ),
+      ],
+    },
     risks: [],
   },
   milestones: [

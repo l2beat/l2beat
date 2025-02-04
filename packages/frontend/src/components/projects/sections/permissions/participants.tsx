@@ -1,13 +1,8 @@
-import { TooltipTrigger } from '@radix-ui/react-tooltip'
-import { Tooltip, TooltipContent } from '~/components/core/tooltip/tooltip'
 import { HighlightableLink } from '~/components/link/highlightable/highlightable-link'
-import { UnverifiedIcon } from '~/icons/unverified'
-import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 
 export interface Participant {
   name: string
   href: string
-  verificationStatus: VerificationStatus
 }
 
 export function ParticipantsEntry({
@@ -21,20 +16,9 @@ export function ParticipantsEntry({
       {participants.map((address, i) => (
         <HighlightableLink
           key={i}
-          variant={
-            address.verificationStatus === 'unverified' ? 'danger' : undefined
-          }
           href={address.href}
           className="flex items-center gap-0.5"
         >
-          {address.verificationStatus === 'unverified' ? (
-            <Tooltip>
-              <TooltipTrigger>
-                <UnverifiedIcon className="fill-red-300" />
-              </TooltipTrigger>
-              <TooltipContent>This contract is not verified</TooltipContent>
-            </Tooltip>
-          ) : null}
           {address.name}
         </HighlightableLink>
       ))}

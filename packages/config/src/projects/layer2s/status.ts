@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const status: Layer2 = upcomingL2({
   id: 'status',
@@ -17,7 +17,6 @@ export const status: Layer2 = upcomingL2({
       websites: ['https://status.app/'],
       apps: ['https://status.app/apps#desktop'],
       documentation: ['https://status.app/specs'],
-      explorers: [],
       repositories: ['https://github.com/status-im'],
       socialMedia: ['https://x.com/ethstatus'],
     },

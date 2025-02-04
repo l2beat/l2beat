@@ -2,7 +2,7 @@
   "name": "rss3",
   "chain": "ethereum",
   "blockNumber": 21041870,
-  "configHash": "0xd9488f1ed8e509511608dc471261ffbc4e0e3207a002d7a3a88fe893799d96a2",
+  "configHash": "0xe052369b1bea751c84265b7d4c11ac7e8fb0014861da1926712969fd3411536b",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -13,7 +13,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03",
           "description": "set and change address mappings."
         },
@@ -174,14 +174,14 @@
       "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This fork of the OptimismPortal also allows an 'operator' address to overwrite the calldata of withdrawals on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
-          "to": "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d",
-          "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",
+          "permission": "guard",
+          "to": "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E",
           "via": []
         },
         {
-          "permission": "guard",
-          "to": "0x7ef00577fAAa44D0491970D6516eB7b90EC3c80E",
+          "permission": "interact",
+          "to": "0xC4f81F990b47c12144e74A901162A2cFDf4b5a9d",
+          "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts.",
           "via": []
         },
         {
@@ -236,7 +236,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x1075B29e5F7a911128C77F3989702E150C988904" }]
@@ -260,7 +260,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xC4878516C198a919566773797e24af20DfdE6272",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -374,7 +374,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x75D340E5BF2eAbC39A04AF4229Ce7875B4A73B03",
           "description": "set and change address mappings.",
           "via": [{ "address": "0x1075B29e5F7a911128C77F3989702E150C988904" }]
@@ -493,7 +493,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x6A12432491bbbE8d3babf75F759766774C778Db4",
           "description": "can overwrite the calldata of any withdrawals in the OptimismPortal on finalization, potentially stealing the withdrawn funds or calling arbitrary contracts."
         }
@@ -640,7 +640,7 @@
       "address": "0xC4878516C198a919566773797e24af20DfdE6272",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x80e73D6BfC73c567032304C3891a06c2d9954d09",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
@@ -1039,14 +1039,14 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1ERC721Bridge": "0x597905c209b546f9d70c98674823b68e0a156ca904d559323057dc4987b98132",
-    "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
-    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
-    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
-    "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
+    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

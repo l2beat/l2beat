@@ -9,14 +9,13 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('honeypot')
 
@@ -121,11 +120,11 @@ export const honeypot: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -172,7 +171,7 @@ export const honeypot: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
@@ -187,37 +186,42 @@ export const honeypot: Layer2 = {
       'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups/blob/v1.0.2/onchain/rollups/contracts/common/InputEncoding.sol#L40). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot#withdrawing-the-pot).',
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Honeypot', {
-        description:
-          'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
-      }),
-      discovery.getContractDetails('InputBox', {
-        description:
-          'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
-      }),
-      discovery.getContractDetails('ERC20Portal', {
-        description:
-          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
-      }),
-      discovery.getContractDetails('Authority', {
-        description:
-          'Simple consensus model controlled by a single address, the owner.',
-      }),
-      discovery.getContractDetails('History', {
-        description: 'Contract that stores claims for Cartesi DApps.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Honeypot', {
+          description:
+            'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
+        }),
+        discovery.getContractDetails('InputBox', {
+          description:
+            'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
+        }),
+        discovery.getContractDetails('ERC20Portal', {
+          description:
+            'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
+        }),
+        discovery.getContractDetails('Authority', {
+          description:
+            'Simple consensus model controlled by a single address, the owner.',
+        }),
+        discovery.getContractDetails('History', {
+          description: 'Contract that stores claims for Cartesi DApps.',
+        }),
+      ],
+    },
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Authority owner',
-      description:
-        'The Authority owner can submit claims to the Honeypot DApp.',
-      accounts: [discovery.getPermissionedAccount('Authority', 'owner')],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Authority owner',
+          discovery.getPermissionedAccounts('Authority', 'owner'),
+          'The Authority owner can submit claims to the Honeypot DApp.',
+        ),
+      ],
     },
-  ],
+  },
   milestones: [
     {
       title: 'Honeypot announcement',

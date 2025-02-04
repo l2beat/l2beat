@@ -1,8 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
-import { type VariantProps, cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
-import { type RosetteValue } from '../types'
+import type { RosetteValue } from '../types'
 
 interface Props extends VariantProps<typeof rosetteVariants> {
   values: RosetteValue[]

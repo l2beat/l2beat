@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x599c3f9863b349bcb1b4f6673cf7c004ba0cb3fb
+Generated with discovered.json: 0xaa9a8caaa5e4ab3e4c5f74cdc560428da920119d
+
+# Diff at Mon, 03 Feb 2025 16:07:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@6f70df55ec21905a77e92737dc90bb42cf7accd3 block: 21378535
+- current block number: 21378535
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21378535 (main branch discovery), not current.
+
+```diff
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    +++ description: None
+      values.$members:
++        ["0xE5EB222996967BE79468C28bA39D665fd96E8b30","0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0","0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"]
+      values.$threshold:
++        2
+    }
+```
+
+Generated with discovered.json: 0x4fbd6b608fa8670a3ce6ec0bf6c56b6292342225
 
 # Diff at Mon, 20 Jan 2025 11:09:59 GMT:
 

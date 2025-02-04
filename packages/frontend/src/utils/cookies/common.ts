@@ -1,8 +1,5 @@
-import {
-  type KnownCookieName,
-  type KnownCookieValue,
-  knownCookies,
-} from '~/consts/cookies'
+import type { KnownCookieName, KnownCookieValue } from '~/consts/cookies'
+import { knownCookies } from '~/consts/cookies'
 
 /**
  * Parse a cookie value.

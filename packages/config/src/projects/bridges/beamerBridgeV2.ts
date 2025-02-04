@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -98,65 +98,68 @@ export const beamerbridgev2: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Resolver', {
-        name: 'Resolver',
-        description:
-          'This contract resides on the L1 chain and is tasked with receiving thefill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
-      }),
-      discovery.getContractDetails('EthereumRequestManager', {
-        name: 'RequestManager',
-        description:
-          'When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
-        pausable: {
-          paused: isPaused,
-          pausableBy: ['Owner'],
-        },
-      }),
-      discovery.getContractDetails('EthereumFillManager', {
-        name: 'FillManager',
-        description:
-          'Agents filling requests from a Rollup to Ethereum use this contract to transfer the funds to the user.',
-      }),
-      discovery.getContractDetails('EthereumL2Messenger', {
-        name: 'EthereumL2Messenger',
-        description:
-          'The Ethereum L2 Messenger stores messages coming from the FillManager for a potential future L1 resolution. It takes over the job of the canonical bridges for rollups which is storing all messages going from the FillManager to the Resolution contract on L1.',
-      }),
-      discovery.getContractDetails('EthereumL1Messenger', {
-        name: 'EthereumL1Messenger',
-        description:
-          'The Ethereum L1 Messenger contracts forwards messages to the RequestManager.',
-      }),
-      discovery.getContractDetails('OptimismL1Messenger', {
-        name: 'OptimismL1Messenger',
-        description:
-          'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Optimism L1 Messenger is responsible for relaying the messages to the Optimism chain.',
-      }),
-      discovery.getContractDetails('ArbitrumL1Messenger', {
-        name: 'ArbitrumL1Messenger',
-        description:
-          'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Arbitrum L1 Messenger is responsible for relaying the messages to the Arbitrum chain.',
-      }),
-    ],
-    risks: [],
-  },
-  permissions: [
-    {
-      name: 'Owner',
-      description:
-        'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
-      accounts: [
-        discovery.getPermissionedAccount('EthereumRequestManager', 'owner'),
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Resolver', {
+          name: 'Resolver',
+          description:
+            'This contract resides on the L1 chain and is tasked with receiving thefill or non-fill proofs from the target L2 chain and forwarding them to the RequestManager on the source L2 chain.',
+        }),
+        discovery.getContractDetails('EthereumRequestManager', {
+          name: 'RequestManager',
+          description:
+            'When a user wants to perform a transfer from Ethereum to a rollup they deposit their funds in the request manager. An agent fills the request on the target chain and can later claim the funds locked in the RequestManager.',
+          pausable: {
+            paused: isPaused,
+            pausableBy: ['Owner'],
+          },
+        }),
+        discovery.getContractDetails('EthereumFillManager', {
+          name: 'FillManager',
+          description:
+            'Agents filling requests from a Rollup to Ethereum use this contract to transfer the funds to the user.',
+        }),
+        discovery.getContractDetails('EthereumL2Messenger', {
+          name: 'EthereumL2Messenger',
+          description:
+            'The Ethereum L2 Messenger stores messages coming from the FillManager for a potential future L1 resolution. It takes over the job of the canonical bridges for rollups which is storing all messages going from the FillManager to the Resolution contract on L1.',
+        }),
+        discovery.getContractDetails('EthereumL1Messenger', {
+          name: 'EthereumL1Messenger',
+          description:
+            'The Ethereum L1 Messenger contracts forwards messages to the RequestManager.',
+        }),
+        discovery.getContractDetails('OptimismL1Messenger', {
+          name: 'OptimismL1Messenger',
+          description:
+            'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Optimism L1 Messenger is responsible for relaying the messages to the Optimism chain.',
+        }),
+        discovery.getContractDetails('ArbitrumL1Messenger', {
+          name: 'ArbitrumL1Messenger',
+          description:
+            'The messenger contracts establish an interface for communication with the RequestManager and FillManager contracts via the rollups. The Arbitrum L1 Messenger is responsible for relaying the messages to the Arbitrum chain.',
+        }),
       ],
     },
-    {
-      name: 'Liquidity Providers',
-      description: 'Addresses allowed to fill requests.',
-      accounts: discovery.getPermissionedAccounts(
-        'EthereumFillManager',
-        'liquidityProviders',
-      ),
+    risks: [],
+  },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Owner',
+          discovery.getPermissionedAccounts('EthereumRequestManager', 'owner'),
+          'Can invoke admin functions on the contracts such as adding new tokens, whitelisting agents or pausing the contracts.',
+        ),
+        discovery.getPermissionDetails(
+          'Liquidity Providers',
+          discovery.getPermissionedAccounts(
+            'EthereumFillManager',
+            'liquidityProviders',
+          ),
+          'Addresses allowed to fill requests.',
+        ),
+      ],
     },
-  ],
+  },
 }

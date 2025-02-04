@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('layerzerov2oft')
 const enaExecutor = EthereumAddress(
@@ -301,36 +301,38 @@ export const layerzerov2oft: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'EndpointV2',
-        'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
-      ),
-      discovery.getContractDetails(
-        'SendUln302',
-        'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). It also accumulates fees configured by the OApp owners via the Treasury contract. New libraries can be added by the LayerZero Multisig.',
-      ),
-      discovery.getContractDetails(
-        'ReceiveUln302',
-        'The default receive library for the LayerZero EndpointV2. This contract defines a framework and configuration options for receiving messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig.',
-      ),
-      discovery.getContractDetails(
-        'LayerZeroDVN',
-        'The LayerZero Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'GoogleCloudDVN',
-        'The GoogleCloud Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'PolyhedraDVN',
-        'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
-      ),
-      discovery.getContractDetails(
-        'Treasury',
-        'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'EndpointV2',
+          'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
+        ),
+        discovery.getContractDetails(
+          'SendUln302',
+          'The default send library for the LayerZero EndpointV2. This contract defines a framework and configuration options for sending messages across the LayerZero Arbitrary Message Bridge (AMB). It also accumulates fees configured by the OApp owners via the Treasury contract. New libraries can be added by the LayerZero Multisig.',
+        ),
+        discovery.getContractDetails(
+          'ReceiveUln302',
+          'The default receive library for the LayerZero EndpointV2. This contract defines a framework and configuration options for receiving messages across the LayerZero Arbitrary Message Bridge (AMB). New libraries can be added by the LayerZero Multisig.',
+        ),
+        discovery.getContractDetails(
+          'LayerZeroDVN',
+          'The LayerZero Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'GoogleCloudDVN',
+          'The GoogleCloud Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'PolyhedraDVN',
+          'The Polyhedra Verifier delivers their verified messages through this contract. It is one of the default DVNs configured in the LayerZero EndpointV2.',
+        ),
+        discovery.getContractDetails(
+          'Treasury',
+          'Manages fees and fee recipients for registered OApps. Fees accumulate in the sendLib and OApp owners can withdraw them.',
+        ),
+      ],
+    },
     risks: [],
     references: [
       {
@@ -347,18 +349,21 @@ export const layerzerov2oft: Bridge = {
       },
     ],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'LayerZero Multisig',
-      'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
-    ),
-    {
-      accounts: [discovery.formatPermissionedAccount(enaExecutor)],
-      name: 'Default LayerZero Executor',
-      description:
-        'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'The owner of EndpointV2, both Uln302 and Treasury. Can register and set default MessageLibraries and change the Treasury address.',
+        ),
+        discovery.getPermissionDetails(
+          'Default LayerZero Executor',
+          discovery.formatPermissionedAccounts([enaExecutor]),
+          'Messages passed through the LayerZero AMB are, by default, sent to the destination chain by this Executor. This can be changed by the respective OApp owner.',
+        ),
+      ],
     },
-  ],
+  },
   knowledgeNuggets: [
     {
       title: 'Security models: isolated vs shared',

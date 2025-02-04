@@ -1,24 +1,17 @@
-import {
-  type DaBridge,
-  type DaLayer,
-  type ScalingProjectRisk,
-} from '@l2beat/config'
-import { type DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
-import { type ProjectSectionProps } from '~/components/projects/sections/types'
+import type { DaBridge, DaProject, ScalingProjectRisk } from '@l2beat/config'
+import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
+import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(
-  layer: DaLayer,
+  project: DaProject,
   bridge: DaBridge,
   isVerified: boolean,
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
   const bridgeSections = [
     {
       id: 'da-bridge-contracts',
-      value:
-        bridge.type === 'OnChainBridge' || bridge.type === 'StandaloneDacBridge'
-          ? bridge.contracts
-          : { risks: [] },
+      value: bridge.contracts ?? { risks: [] },
     },
     {
       id: 'da-bridge-technology',
@@ -29,7 +22,7 @@ export function getDaProjectRiskSummarySection(
   const layerSections = [
     {
       id: 'da-layer-technology',
-      value: layer.technology,
+      value: project.daLayer.technology,
     },
   ]
 
@@ -44,22 +37,22 @@ export function getDaProjectRiskSummarySection(
   const bridgeRisks: (ScalingProjectRisk & { referencedId: string })[] = []
 
   for (const { id, value } of bridgeSections) {
-    if (value.risks) {
+    if (value?.risks) {
       bridgeRisks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
     }
   }
 
   return {
     layer: {
-      name: layer.display.name,
+      name: project.display.name,
       risks: groupRisks(layerRisks),
     },
     bridge: {
       name: bridge.display.name,
       risks: groupRisks(bridgeRisks),
     },
-    warning: bridge.display.warning,
     isVerified,
+    warning: undefined,
     redWarning: undefined,
   }
 }

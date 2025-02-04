@@ -16,7 +16,6 @@ import {
   NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -29,10 +28,10 @@ import {
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
@@ -90,7 +89,6 @@ export const paradex: Layer2 = {
       websites: ['https://paradex.trade/'],
       apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
-      explorers: [],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: [
         'https://twitter.com/tradeparadex',
@@ -242,11 +240,11 @@ export const paradex: Layer2 = {
       stateUpdate: 'disabled',
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -294,48 +292,50 @@ export const paradex: Layer2 = {
     exitMechanisms: EXITS.STARKNET,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Paradex', {
-        description:
-          'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-        upgradeDelay: upgradeDelaySeconds
-          ? formatSeconds(upgradeDelaySeconds)
-          : 'No delay',
-        upgradableBy: ['Paradex owner'],
-      }),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Paradex', {
+          description:
+            'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
+          upgradeDelay: upgradeDelaySeconds
+            ? formatSeconds(upgradeDelaySeconds)
+            : 'No delay',
+          upgradableBy: ['Paradex owner'],
+        }),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  permissions: [
-    {
-      name: 'Paradex owner',
-      accounts: getProxyGovernance(discovery, 'Paradex'),
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
-        delayDescriptionFromSeconds(upgradeDelaySeconds),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Paradex owner',
+          getProxyGovernance(discovery, 'Paradex'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
+            delayDescriptionFromSeconds(upgradeDelaySeconds),
+        ),
+        discovery.getPermissionDetails(
+          'Paradex Implementation Governors',
+          discovery.getPermissionedAccounts('Paradex', 'governors'),
+          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+        ),
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('Paradex', 'operators'),
+          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        ),
+        discovery.getPermissionDetails(
+          'USDC Escrow owner',
+          getProxyGovernance(discovery, 'USDC Bridge'),
+          'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
+        ),
+      ],
     },
-    {
-      name: 'Paradex Implementation Governors',
-      accounts: discovery.getPermissionedAccounts('Paradex', 'governors'),
-      description:
-        'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-    },
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('Paradex', 'operators'),
-      description:
-        'Allowed to post state updates. When the operator is down the state cannot be updated.',
-    },
-    {
-      name: 'USDC Escrow owner',
-      accounts: getProxyGovernance(discovery, 'USDC Bridge'),
-      description:
-        'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Paradex starts using blobs',

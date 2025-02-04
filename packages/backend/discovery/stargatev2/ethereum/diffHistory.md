@@ -1,4 +1,28 @@
-Generated with discovered.json: 0xce07f1ae1099fb65788bc192d75cc69127423082
+Generated with discovered.json: 0x5f3681a6bdd635ad1f16b6c710568f36523a6f6f
+
+# Diff at Mon, 03 Feb 2025 14:40:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f48b05175a82517aba519a7273477b15b3c1ad94 block: 21723800
+- current block number: 21766636
+
+## Description
+
+USD 30M deficitOffset registered. This essentially simulates this pool having 30M less USDC then it has (~60M). This is only used for fee / slippage calculation for outgoing messages.
+The change seems to be a hacky way of adjusting fees for this large pool.
+
+## Watched changes
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        30000000000000
+    }
+```
+
+Generated with discovered.json: 0x65e1be70f6bdcd798cda1a6395d04b42eed06981
 
 # Diff at Tue, 28 Jan 2025 15:05:03 GMT:
 

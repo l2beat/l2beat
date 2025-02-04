@@ -18,7 +18,6 @@ import {
   EXITS,
   NUGGETS,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ESCROW } from '../../common'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
@@ -27,10 +26,14 @@ import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -319,11 +322,11 @@ export const optimism: Layer2 = {
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT,
@@ -335,7 +338,7 @@ export const optimism: Layer2 = {
       description:
         'There is no exit window for users to exit in case of unwanted regular upgrades as they are initiated by the Security Council with instant upgrade power and without proper notice.',
       sentiment: 'bad',
-      definingMetric: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
+      orderHint: -FINALIZATION_PERIOD_SECONDS, // 0-7 days
     },
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
@@ -435,7 +438,7 @@ export const optimism: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',
@@ -534,15 +537,9 @@ export const optimism: Layer2 = {
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
-  permissions: discovery.getDiscoveredPermissions(),
-  nativePermissions: {
-    optimism: l2Discovery.getDiscoveredPermissions(),
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery, l2Discovery]),
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
-    nativeAddresses: {
-      optimism: l2Discovery.getDiscoveredContracts(),
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery, l2Discovery]),
     risks: [
       {
         category: 'Funds can be stolen if',

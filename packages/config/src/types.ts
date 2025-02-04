@@ -1,14 +1,20 @@
-import type { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type {
+  ChainId,
+  EthereumAddress,
+  ProjectId,
+  StringWithAutocomplete,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
-import type { DacDaLayer, ProjectDaTrackingConfig } from './projects/da-beat'
-import type { StageConfig, WarningWithSentiment } from './projects/layer2s'
-import type { ProofVerification } from './projects/types'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
 export type WarningSentiment = 'bad' | 'warning' | 'neutral'
-export interface WarningValueWithSentiment {
+
+export interface WarningWithSentiment {
   value: string
   sentiment: WarningSentiment
 }
@@ -86,8 +92,8 @@ export interface ScalingProject {
   chainConfig?: ChainConfig
   /** Data availability of scaling project */
   dataAvailability?: ProjectDataAvailability
-  /** Data availability solution */
-  dataAvailabilitySolution?: DacDaLayer
+  /** Details about the custom availability solution */
+  customDa?: CustomDa
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -99,11 +105,9 @@ export interface ScalingProject {
   /** Explains how project validates state */
   stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
-  contracts: ScalingProjectContracts
-  /** List of permissioned addresses */
-  permissions?: ScalingProjectPermission[] | 'UnderReview'
-  /** List of permissioned addresses on the chain itself */
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
+  contracts: ProjectContracts
+  /** List of permissioned addresses on a given chain */
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -137,53 +141,6 @@ export interface ScalingProjectConfig {
   daTracking?: ProjectDaTrackingConfig
 }
 
-export interface ScalingProjectContracts {
-  /** List of the contracts on hosted chain */
-  addresses: ScalingProjectContract[]
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
-  /** List of the contracts on the chain itself */
-  nativeAddresses?: Record<string, ScalingProjectContract[]>
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
-}
-
-export interface ScalingProjectContract {
-  /** Address of the contract */
-  address: EthereumAddress
-  /** Verification status of the contract */
-  isVerified: boolean
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
-  /** Solidity name of the contract */
-  name: string
-  /** Description of the contract's role in the system */
-  description?: string
-  /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
-  /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
-  /** Other considerations worth mentioning about the upgrade process */
-  upgradeConsiderations?: string
-  /** Pasuable contract */
-  pausable?: {
-    /** Is it paused? **/
-    paused: boolean
-    /** Who can pause/unpause the contract */
-    pausableBy: string[]
-  }
-  /** List of references */
-  references?: ReferenceLink[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
-}
-
 export interface ScalingProjectUpgradeability {
   proxyType: string
   immutable?: boolean
@@ -191,32 +148,7 @@ export interface ScalingProjectUpgradeability {
   implementations: EthereumAddress[]
 }
 
-export interface DataAvailabilityConfig {
-  layers: DataAvailabilityLayer[]
-  bridge: DataAvailabilityBridge
-  mode: DataAvailabilityMode
-}
-
-export interface DataAvailabilityMode {
-  value: string
-  secondLine?: string
-}
-
-export interface DataAvailabilityLayer {
-  value: string
-  sentiment: Sentiment
-  secondLine?: string
-  description: string
-  fallbackDescription?: string
-}
-
-export interface DataAvailabilityBridge {
-  value: string
-  description: string
-  sentiment: Sentiment
-}
-
-export type ScalingProjectDisplay = {
+export interface ScalingProjectDisplay {
   /** Name of the scaling project, will be used as a display name on the website */
   name: string
   /** Short name of the scaling project, will be used in some places on the website as a display name */
@@ -242,13 +174,15 @@ export type ScalingProjectDisplay = {
   /** A short (<20 characters) description of the use case */
   purposes: ScalingProjectPurpose[]
   /** List of links */
-  links: ScalingProjectLinks
+  links: ProjectLinks
   /** Name of the architecture image to show in the contract section if present, otherwise use slug */
   architectureImage?: string
   /** Name of the state validation image to show in the state validation section if present, otherwise use slug */
   stateValidationImage?: string
   /** Name of the upgrades and governance image to show in the upgrades and governance section if present, otherwise use slug */
   upgradesAndGovernanceImage?: string
+  /** Name of the sequencing image to show in the sequencing section if present, otherwise use slug */
+  sequencingImage?: string
 }
 
 export interface ProjectEscrow {
@@ -258,7 +192,7 @@ export interface ProjectEscrow {
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
   /** All the data about the escrow contract */
-  contract?: Omit<ScalingProjectContract, 'address'>
+  contract?: Omit<ProjectContract, 'address'>
   /** Timestamp of the deployment transaction of the escrow contract. */
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
@@ -316,26 +250,33 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export interface ScalingProjectLinks {
+export interface ProjectLinks {
   /** Links to marketing landing pages. */
-  websites: string[]
+  websites?: string[]
   /** Links to web apps connected to the layer2. */
-  apps: string[]
+  apps?: string[]
   /** Links to documentation pages. */
-  documentation: string[]
+  documentation?: string[]
   /** Links to transaction explorers. */
-  explorers: string[]
+  explorers?: string[]
   /** Links to source code repositories. */
-  repositories: string[]
+  repositories?: string[]
   /** Links to social media pages. */
-  socialMedia: string[]
+  socialMedia?: string[]
   /** Link to rollup codes. */
   rollupCodes?: string
 }
 
-export interface ScalingProjectPermission {
+export interface ProjectPermissions {
+  /** List of roles */
+  roles?: ProjectPermission[]
+  /** List of actors */
+  actors?: ProjectPermission[]
+}
+
+export interface ProjectPermission {
   /** List of the accounts */
-  accounts: ScalingProjectPermissionedAccount[]
+  accounts: ProjectPermissionedAccount[]
   /** Name of this group */
   name: string
   /** Description of the permissions */
@@ -345,16 +286,15 @@ export interface ScalingProjectPermission {
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
-  participants?: ScalingProjectPermissionedAccount[]
-  /** Indicates whether the permission comes from a role like Proposer or Guardian */
-  fromRole?: boolean
+  participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
 
-export interface ScalingProjectPermissionedAccount {
+export interface ProjectPermissionedAccount {
+  isVerified: boolean
   address: EthereumAddress
-  type: 'EOA' | 'MultiSig' | 'Contract'
+  type: 'EOA' | 'Contract'
 }
 
 export type ScalingProjectStack =
@@ -381,6 +321,7 @@ export type ScalingProjectPurpose =
   | 'Identity'
   | 'Information'
   | 'Interoperability'
+  | 'KYC-ed DeFi'
   | 'Launchpad'
   | 'Lending'
   | 'Music'
@@ -420,21 +361,22 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export interface ScalingProjectRiskViewEntry {
+export interface TableReadyValue {
   value: string
-  description: string
-  secondLine?: string // second line in risk view
-  sentiment: Sentiment
-  warning?: WarningValueWithSentiment
-  definingMetric?: number
+  secondLine?: string
+  description?: string
+  sentiment?: Sentiment
+  warning?: WarningWithSentiment
+  /** Taken into account when sorting. Defaults to 0. */
+  orderHint?: number
 }
 
 export interface ScalingProjectRiskView {
-  stateValidation: ScalingProjectRiskViewEntry
-  dataAvailability: ScalingProjectRiskViewEntry
-  exitWindow: ScalingProjectRiskViewEntry
-  sequencerFailure: ScalingProjectRiskViewEntry
-  proposerFailure: ScalingProjectRiskViewEntry
+  stateValidation: TableReadyValue
+  dataAvailability: TableReadyValue
+  exitWindow: TableReadyValue
+  sequencerFailure: TableReadyValue
+  proposerFailure: TableReadyValue
 }
 
 export interface ScalingProjectStateDerivation {
@@ -442,6 +384,7 @@ export interface ScalingProjectStateDerivation {
   compressionScheme?: string
   genesisState: string
   dataFormat: string
+  isUnderReview?: boolean
 }
 
 type CategoryTitle =
@@ -466,6 +409,7 @@ export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
   proofVerification?: ProofVerification
+  isUnderReview?: boolean
 }
 
 export interface ScalingProjectTechnology {
@@ -477,6 +421,8 @@ export interface ScalingProjectTechnology {
   dataAvailability?: ProjectTechnologyChoice
   /** What are the details about project operator(s) */
   operator?: ProjectTechnologyChoice
+  /** What are the details about project sequencing */
+  sequencing?: ProjectTechnologyChoice
   /** What are the details about force transactions (censorship resistance) */
   forceTransactions?: ProjectTechnologyChoice
   /** A description of the available exit mechanisms */
@@ -539,7 +485,661 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: DataAvailabilityLayer
-  bridge: DataAvailabilityBridge
-  mode: DataAvailabilityMode
+  layer: TableReadyValue & { projectId?: ProjectId }
+  bridge: TableReadyValue & { projectId?: ProjectId }
+  mode: TableReadyValue
+}
+
+export interface Layer2 extends ScalingProject {
+  type: 'layer2'
+  display: Layer2Display
+  config: Layer2Config
+  /** Upgrades and governance explained */
+  upgradesAndGovernance?: string
+}
+
+export interface Layer2Display extends ScalingProjectDisplay {
+  /** Tooltip contents for liveness tab for given project */
+  liveness?: ProjectLivenessInfo
+  finality?: Layer2FinalityDisplay
+  /** Warning for Costs */
+  costsWarning?: WarningWithSentiment
+}
+
+export interface ProjectLivenessInfo {
+  explanation?: string
+  warnings?: {
+    stateUpdates?: string
+    batchSubmissions?: string
+    proofSubmissions?: string
+  }
+}
+
+export interface Layer2FinalityDisplay {
+  /** Warning tooltip content for finality tab for given project */
+  warnings?: {
+    timeToInclusion?: WarningWithSentiment
+    stateUpdateDelay?: WarningWithSentiment
+  }
+  /** Finalization period displayed in table for given project (time in seconds) */
+  finalizationPeriod?: number
+}
+
+export interface Layer2Config extends ScalingProjectConfig {
+  /** List of transactions that are tracked by our backend */
+  trackedTxs?: Layer2TxConfig[]
+  /** Configuration for getting liveness data */
+  liveness?: Layer2LivenessConfig
+  /** Configuration for getting finality data */
+  finality?: Layer2FinalityConfig
+}
+
+export type Layer2TxConfig = {
+  uses: Layer2TrackedTxUse[]
+  query: TrackedTxQuery
+  _hackCostMultiplier?: number
+}
+
+export type Layer2TrackedTxUse = {
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
+}
+
+type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
+
+interface FunctionCall {
+  formula: 'functionCall'
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface Transfer {
+  formula: 'transfer'
+  from: EthereumAddress
+  to: EthereumAddress
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharpSubmission {
+  formula: 'sharpSubmission'
+  programHashes: string[]
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+interface SharedBridge {
+  formula: 'sharedBridge'
+  chainId: number
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: `function ${string}`
+  /** Inclusive */
+  sinceTimestamp: UnixTime
+  /** Inclusive */
+  untilTimestamp?: UnixTime
+}
+
+export interface Layer2LivenessConfig {
+  duplicateData: {
+    from: TrackedTxsConfigSubtype
+    to: TrackedTxsConfigSubtype
+  }
+}
+
+/**
+ * Determines how the state update should be handled.
+ * - `analyze`: The state update delay should be analyzed as a part of the update.
+ * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
+ * - `disabled`: The state update analyzer will not be run.
+ */
+export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
+
+export type Layer2FinalityConfig =
+  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
+  | {
+      type:
+        | 'Linea'
+        | 'zkSyncEra'
+        | 'Scroll'
+        | 'zkSyncLite'
+        | 'Starknet'
+        | 'Arbitrum'
+        | 'Loopring'
+        | 'Degate'
+        | 'PolygonZkEvm'
+
+      minTimestamp: UnixTime
+      lag: number
+      stateUpdate: StateUpdateMode
+    }
+  | {
+      type: 'OPStack'
+      minTimestamp: UnixTime
+      lag: number
+      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
+      // you can get this values by calling the RPC method optimism_rollupConfig
+      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
+      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
+      // <rpc-url> | jq
+      genesisTimestamp: UnixTime
+      l2BlockTimeSeconds: number
+      stateUpdate: StateUpdateMode
+    }
+
+export type FinalityType = Layer2FinalityConfig['type']
+
+export interface ProofVerification {
+  shortDescription?: string
+  aggregation: boolean
+  verifiers: OnchainVerifier[]
+  requiredTools: RequiredTool[]
+}
+
+export type OnchainVerifier = {
+  name: string
+  description: string
+  contractAddress: EthereumAddress
+  chainId: ChainId
+  subVerifiers: SubVerifier[]
+} & (
+  | {
+      verified: 'yes' | 'failed'
+      /** Details of entity that performed verification */
+      performedBy: {
+        name: string
+        link: string
+      }
+    }
+  | { verified: 'no' }
+)
+
+export interface RequiredTool {
+  name: string
+  version: string
+  link?: string
+}
+
+export interface SubVerifier {
+  name: string
+  proofSystem: string
+  mainArithmetization: string
+  mainPCS: string
+  trustedSetup?: StringWithAutocomplete<'None'>
+  link?: string
+}
+
+export interface Layer3 extends ScalingProject {
+  type: 'layer3'
+  /** ProjectId of hostChain */
+  hostChain: ProjectId
+  /** Stacked risk view values for this layer3 and it's base chain */
+  stackedRiskView: ScalingProjectRiskView
+}
+
+export interface Bridge {
+  type: 'bridge'
+  id: ProjectId
+  /** Date of creation of the file (not the project) */
+  addedAt: UnixTime
+  isArchived?: boolean
+  isUpcoming?: boolean
+  isUnderReview?: boolean
+  display: BridgeDisplay
+  config: BridgeConfig
+  riskView: BridgeRiskView
+  technology: BridgeTechnology
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  milestones?: Milestone[]
+  knowledgeNuggets?: KnowledgeNugget[]
+}
+
+export interface BridgeDisplay {
+  name: string
+  shortName?: string
+  slug: string
+  warning?: string
+  description: string
+  detailedDescription?: string
+  category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
+  links: ProjectLinks
+  architectureImage?: string
+}
+
+export interface BridgeConfig {
+  associatedTokens?: string[]
+  escrows: ProjectEscrow[]
+}
+
+export interface BridgeRiskView {
+  validatedBy: TableReadyValue
+  sourceUpgradeability?: TableReadyValue
+  destinationToken?: TableReadyValue
+}
+
+export interface BridgeTechnology {
+  canonical?: boolean
+  destination: string[]
+  principleOfOperation?: ProjectTechnologyChoice
+  validation?: ProjectTechnologyChoice
+  destinationToken?: ProjectTechnologyChoice
+  isUnderReview?: boolean
+}
+
+export interface CustomDa {
+  /** Will show the project name if not provided. */
+  name?: string
+  description?: string
+  type: string
+  risks: DaLayerRisks & DaBridgeRisks
+  technology: DaTechnology
+  dac?: DacInfo
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
+}
+
+export interface DaProject {
+  type: 'DaLayer'
+  id: ProjectId
+  display: DaLayerDisplay
+  /** Date of creation of the file (not the project) */
+  addedAt: UnixTime
+  isArchived?: boolean
+  isUpcoming?: boolean
+  isUnderReview?: boolean
+  daLayer: DaLayer
+  milestones?: Milestone[]
+}
+
+export interface DaLayer {
+  name?: string
+  description?: string
+  kind: 'DA Service' | 'DAC' | 'No DAC' | 'EthereumDaLayer' | 'PublicBlockchain'
+  systemCategory: 'public' | 'custom'
+  bridges: DaBridge[]
+  risks: DaLayerRisks
+  technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
+
+  fallback?: TableReadyValue
+  challengeMechanism?: DaChallengeMechanism
+  numberOfOperators?: number
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow?: number
+  consensusAlgorithm?: DaConsensusAlgorithm
+  throughput?: DaLayerThroughput
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  economicSecurity?: DaEconomicSecurity
+  daTracking?: DaLayerTrackingConfig
+}
+
+export type DaChallengeMechanism = 'DA Challenges' | 'None'
+
+export interface DaLayerRisks {
+  daLayer?: TableReadyValue
+  economicSecurity?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
+export interface DaBridgeRisks {
+  isNoBridge?: boolean
+  /** Replaces risk grissini */
+  callout?: string
+  daBridge?: TableReadyValue
+  committeeSecurity?: TableReadyValue
+  upgradeability?: TableReadyValue
+  relayerFailure?: TableReadyValue
+}
+
+export interface DaLayerDisplay {
+  /** The name of the data availability layer. */
+  name: string
+  /** Slug of the data availability layer. */
+  slug: string
+  /** A short description of the data availability layer. */
+  description: string
+  /** Links related to the data availability layer. */
+  links: ProjectLinks
+}
+
+export interface DaConsensusAlgorithm {
+  /** The name of the consensus algorithm. */
+  name: string
+  /** A description of the consensus algorithm. */
+  description: string
+  /** The time it takes to produce a new block. @unit seconds. */
+  blockTime: number
+  /** Consensus finality time. @unit seconds. */
+  consensusFinality: number
+  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
+  unbondingPeriod: number
+}
+
+export interface DataAvailabilitySampling {
+  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
+  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
+}
+
+export interface DaLayerThroughput {
+  /**
+   * Batch size for data availability. Together with batchFrequency it determines max throughput.
+   * @unit KB - kilobytes
+   */
+  size: number
+  /**
+   * Batch frequency for data availability. Together with batchSize it determines max throughput.
+   * @unit seconds
+   */
+  frequency: number
+}
+
+export interface DaTechnology {
+  /** Description of technology used by the data availability layer. [MARKDOWN] */
+  description: string
+  /** List of risks associated with the technology */
+  risks?: ScalingProjectRisk[] // scaling risks on purpose
+
+  /** List of references put underneath the technology section */
+  references?: ReferenceLink[]
+}
+
+export interface DaBridge {
+  id: ProjectId
+  /** Date of creation of the file (not the project) */
+  addedAt: UnixTime
+  display: DaBridgeDisplay
+  isUnderReview?: boolean
+  technology: DaTechnology
+  usedIn: UsedInProject[]
+  risks: DaBridgeRisks
+  dac?: DacInfo
+  /** Data about related permissions - preferably from discovery. */
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  /** Data about the contracts used in the bridge - preferably from discovery. */
+  contracts?: ProjectContracts
+}
+
+export interface DacInfo {
+  membersCount: number
+  knownMembers?: {
+    external: boolean
+    name: string
+    href: string
+    key?: string
+  }[]
+  requiredMembers: number
+  /** TEMP: Members field will turn into N/A badge if this is true */
+  hideMembers?: boolean
+}
+
+export interface DaBridgeDisplay {
+  name: string
+  slug: string
+  description: string
+}
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+}
+
+export interface DaEconomicSecurity {
+  name: string
+  token: {
+    symbol: string
+    decimals: number
+    coingeckoId: string
+  }
+}
+// General da-layer tracking
+
+export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
+// Per-project da-layer tracking
+
+export interface EthereumDaTrackingConfig {
+  type: 'ethereum'
+  inbox: string
+  sequencers?: string[]
+}
+
+export interface CelestiaDaTrackingConfig {
+  type: 'celestia'
+  namespace: string
+  signers?: string[]
+}
+
+export interface AvailDaTrackingConfig {
+  type: 'avail'
+  appId: string
+}
+
+export type ProjectDaTrackingConfig =
+  | EthereumDaTrackingConfig
+  | CelestiaDaTrackingConfig
+  | AvailDaTrackingConfig
+
+export type StageBlueprint = Record<
+  string,
+  {
+    name: Stage
+    items: Record<
+      string,
+      {
+        positive: string
+        negative: string
+        negativeMessage?: string
+        underReviewMessage?: string
+      }
+    >
+  }
+>
+
+export type Satisfied = boolean | 'UnderReview'
+
+export type ChecklistValue = Satisfied | null | [Satisfied, string]
+
+export type ChecklistTemplate<T extends StageBlueprint> = {
+  [K in keyof T]: {
+    [L in keyof T[K]['items']]: ChecklistValue
+  }
+}
+
+export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
+
+export interface StageSummary {
+  stage: Stage
+  requirements: {
+    satisfied: Satisfied
+    description: string
+  }[]
+}
+
+export interface MissingStageRequirements {
+  nextStage: Stage
+  requirements: string[]
+}
+
+export type StageConfig =
+  | StageNotApplicable
+  | StageUnderReview
+  | StageConfigured
+export type UsableStageConfig = StageUnderReview | StageConfigured
+
+export interface StageConfigured {
+  stage: Stage
+  missing?: MissingStageRequirements
+  message: StageConfiguredMessage | undefined
+  summary: StageSummary[]
+  additionalConsiderations?: {
+    short: string
+    long: string
+  }
+}
+
+export interface StageConfiguredMessage {
+  type: 'underReview' | 'warning' | undefined
+  text: string
+}
+
+interface StageUnderReview {
+  stage: 'UnderReview'
+}
+
+interface StageNotApplicable {
+  stage: 'NotApplicable'
+}
+
+export interface BaseProject {
+  id: ProjectId
+  slug: string
+  name: string
+  shortName: string | undefined
+  addedAt: UnixTime
+  // data
+  statuses?: ProjectStatuses
+  bridgeInfo?: ProjectBridgeInfo
+  bridgeRisks?: BridgeRiskView
+  scalingInfo?: ProjectScalingInfo
+  scalingStage?: StageConfig | undefined
+  scalingRisks?: ProjectScalingRisks
+  scalingDa?: ProjectDataAvailability
+  tvlInfo?: ProjectTvlInfo
+  // tvlConfig
+  /** Display information for the liveness feature. If present liveness is enabled for this project. */
+  livenessInfo?: ProjectLivenessInfo
+  /** Display information for the costs feature. If present costs is enabled for this project. */
+  costsInfo?: ProjectCostsInfo
+  // trackedTxsConfig
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
+  finalityInfo?: Layer2FinalityDisplay
+  /** Configuration for the finality feature. If present finality is enabled for this project. */
+  finalityConfig?: Layer2FinalityConfig
+  proofVerification?: ProofVerification
+  daBridges?: DaBridge[]
+  countdowns?: ProjectCountdowns
+  // tags
+  isBridge?: true
+  isScaling?: true
+  isZkCatalog?: true
+  isDaLayer?: true
+  isUpcoming?: true
+  isArchived?: true
+  hasActivity?: true
+}
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: EthereumAddress
+  /** Verification status of the contract */
+  isVerified: boolean
+  /** Name of the chain of this address. Optional for backwards compatibility */
+  chain?: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** Details about upgradeability */
+  upgradeability?: ScalingProjectUpgradeability
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  upgradeDelay?: string
+  /** Which actors from permissions can upgrade */
+  upgradableBy?: string[]
+  /** Other considerations worth mentioning about the upgrade process */
+  upgradeConsiderations?: string
+  /** Pasuable contract */
+  pausable?: {
+    /** Is it paused? **/
+    paused: boolean
+    /** Who can pause/unpause the contract */
+    pausableBy: string[]
+  }
+  /** List of references */
+  references?: ReferenceLink[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
+}
+
+export interface ProjectContracts {
+  /** List of the contracts on a given chain */
+  addresses: Record<string, ProjectContract[]>
+  /** List of risks associated with the contracts */
+  risks: ScalingProjectRisk[]
+  /** List of references backing up the claim */
+  references?: ReferenceLink[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
+}
+
+export interface ProjectStatuses {
+  yellowWarning: string | undefined
+  redWarning: string | undefined
+  isUnderReview: boolean
+  isUnverified: boolean
+  // countdowns
+  otherMigration?: {
+    expiresAt: number
+    pretendingToBe: ScalingProjectCategory
+    reasons: ReasonForBeingInOther[]
+  }
+}
+
+export interface ProjectBridgeInfo {
+  category: BridgeDisplay['category']
+  destination: string[]
+  validatedBy: string
+}
+
+export interface ProjectScalingInfo {
+  layer: 'layer2' | 'layer3'
+  type: ScalingProjectCategory
+  capability: ScalingProjectCapability
+  /** In the future this will be reflected as `type === 'Other'` */
+  isOther: boolean
+  reasonsForBeingOther: ReasonForBeingInOther[] | undefined
+  hostChain: {
+    id: ProjectId
+    slug: string
+    name: string
+    shortName: string | undefined
+  }
+  stack: ScalingProjectStack | undefined
+  raas: string | undefined
+  daLayer: string
+  stage: ScalingProjectStage
+  purposes: ScalingProjectPurpose[]
+}
+
+export type ScalingProjectStage =
+  | 'Not applicable'
+  | 'Under review'
+  | 'Stage 0'
+  | 'Stage 1'
+  | 'Stage 2'
+
+export interface ProjectScalingRisks {
+  self: ScalingProjectRiskView
+  host: ScalingProjectRiskView | undefined
+  stacked: ScalingProjectRiskView | undefined
+}
+
+export interface ProjectTvlInfo {
+  associatedTokens: string[]
+  warnings: WarningWithSentiment[]
+}
+
+export interface ProjectCostsInfo {
+  warning?: WarningWithSentiment
 }

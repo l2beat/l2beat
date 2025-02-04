@@ -1,7 +1,8 @@
 'use client'
 
 import { cn } from '~/utils/cn'
-import { CustomLink, type CustomLinkProps } from '../custom-link'
+import type { CustomLinkProps } from '../custom-link'
+import { CustomLink } from '../custom-link'
 import { useHiglightableLinkContext } from './highlightable-link-context'
 
 export function HighlightableLink({ className, ...props }: CustomLinkProps) {

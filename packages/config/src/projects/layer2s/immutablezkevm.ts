@@ -11,12 +11,11 @@ import {
   DA_LAYERS,
   DA_MODES,
   RISK_VIEW,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -49,10 +48,7 @@ export const immutablezkevm: Layer2 = {
     purposes: ['Universal'],
     links: {
       websites: ['https://immutable.com/products/immutable-zkevm'],
-      apps: [],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
-      explorers: [],
-      repositories: [],
       socialMedia: ['https://twitter.com/Immutable'],
     },
   },
@@ -70,11 +66,11 @@ export const immutablezkevm: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.NONE],
+  dataAvailability: {
+    layer: DA_LAYERS.NONE,
     bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -112,27 +108,33 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
       ],
     },
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'OwnerMultisig',
-      'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
-      'Contract allowed to upgrade the Bridge, its flow rate control and the Axelar adaptor.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'OwnerMultisig',
+          'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
+        ),
+        discovery.contractAsPermissioned(
+          discovery.getContract('ProxyAdmin'),
+          'Contract allowed to upgrade the Bridge, its flow rate control and the Axelar adaptor.',
+        ),
+      ],
+    },
+  },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Bridge', {
-        description: 'Main escrow for tokens.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('RootAxelarBridgeAdaptor', {
-        description: 'Axelar adaptor contract used by the bridge.',
-        ...upgradeability,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Bridge', {
+          description: 'Main escrow for tokens.',
+          ...upgradeability,
+        }),
+        discovery.getContractDetails('RootAxelarBridgeAdaptor', {
+          description: 'Axelar adaptor contract used by the bridge.',
+          ...upgradeability,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

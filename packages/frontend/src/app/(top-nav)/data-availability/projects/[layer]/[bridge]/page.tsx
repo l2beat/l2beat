@@ -11,6 +11,7 @@ import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
+import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
@@ -24,9 +25,9 @@ interface Props {
 
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
-  return [...daLayers, ethereumDaLayer].flatMap((layer) =>
-    layer.bridges.map((bridge) => ({
-      layer: layer.display.slug,
+  return [...daLayers, ethereumDaLayer].flatMap((project) =>
+    getDaBridges(project).map((bridge) => ({
+      layer: project.display.slug,
       bridge: bridge.display.slug,
     })),
   )
@@ -34,26 +35,26 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const layer = [...daLayers, ethereumDaLayer].find(
+  const project = [...daLayers, ethereumDaLayer].find(
     (layer) => layer.display.slug === params.layer,
   )
-  if (!layer) {
+  if (!project || !params.bridge) {
     notFound()
   }
-  const bridge = layer.bridges.find(
-    (bridge) => bridge.display.slug === params.bridge,
+  const bridge = getDaBridges(project).find(
+    (bridge) => bridge.display?.slug === params.bridge,
   )
   if (!bridge) {
     notFound()
   }
   return getProjectMetadata({
     project: {
-      name: layer.display.name,
-      description: layer.display.description,
+      name: project.display.name,
+      description: project.display.description,
     },
     metadata: {
       openGraph: {
-        url: `/data-availability/projects/${layer.display.slug}/${bridge.display.slug}`,
+        url: `/data-availability/projects/${project.display.slug}/${bridge.display?.slug}`,
       },
     },
   })
@@ -112,7 +113,7 @@ export default async function Page(props: Props) {
 async function getPageData(params: { layer: string; bridge: string }) {
   if (
     params.layer === ethereumDaLayer.display.slug &&
-    params.bridge === ethereumDaLayer.bridges[0].display.slug
+    params.bridge === ethereumDaLayer.daLayer.bridges[0]?.display.slug
   ) {
     const entry = await getEthereumDaProjectEntry(ethereumDaLayer)
 
@@ -122,17 +123,19 @@ async function getPageData(params: { layer: string; bridge: string }) {
     }
   }
 
-  const daLayer = daLayers.find((p) => p.display.slug === params.layer)
-  if (!daLayer) {
+  const project = daLayers.find((p) => p.display.slug === params.layer)
+  if (!project) {
     return
   }
-  const daBridge = daLayer.bridges.find((b) => b.display.slug === params.bridge)
+  const daBridge = getDaBridges(project).find(
+    (b) => b.display.slug === params.bridge,
+  )
 
   if (!daBridge) {
     return
   }
 
-  const entry = await getDaProjectEntry(daLayer, daBridge)
+  const entry = await getDaProjectEntry(project, daBridge)
 
   return {
     entry,

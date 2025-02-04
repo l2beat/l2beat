@@ -1,38 +1,24 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import type { DaBridge } from '../types'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('vector')
 
 const chainName = 'Ethereum'
 const updateInterval = 1.5 // hours
 
-const validation = {
-  type: 'zk-proof',
-  relayer: 'SuccinctGateway',
-}
-
-export const vector = {
-  id: 'vector',
+export const vector: DaBridge = {
+  id: ProjectId('vector'),
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-  type: 'OnChainBridge',
   display: {
     name: 'Vector',
     slug: 'vector',
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
-    links: {
-      websites: [],
-      documentation: ['https://docs.succinct.xyz/'],
-      repositories: ['https://github.com/succinctlabs/sp1-vector'],
-      apps: [],
-      explorers: [],
-      socialMedia: [],
-    },
   },
-  validation: validation,
   contracts: {
     addresses: {
       ethereum: discovery.getDiscoveredContracts(),
@@ -86,7 +72,10 @@ export const vector = {
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('avail'),
+    bridge: ProjectId('vector'),
+  }),
   risks: {
     committeeSecurity:
       DaCommitteeSecurityRisk.RobustAndDiverseCommittee('Validator set'),

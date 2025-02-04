@@ -9,7 +9,7 @@ import { SmallSearchBarButton } from '../search-bar/search-bar-button'
 import { MobileNavTabs } from './mobile-nav-tabs'
 import { MobileNavTriggerOpen } from './mobile-nav-trigger'
 import { MobileSelectedLink } from './mobile-selected-link'
-import { type NavGroup } from './types'
+import type { NavGroup } from './types'
 
 /**
  * Mobile navigation bar that is shown on the very top on small screens.

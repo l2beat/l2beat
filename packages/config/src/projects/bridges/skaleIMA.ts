@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('skale-ima')
 
@@ -99,42 +99,48 @@ export const skaleIMA: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'MessageProxyForMainnet',
-        'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains. It supports gas reimbursement from the CommunityPool.',
-      ),
-      discovery.getContractDetails(
-        'DepositBoxEth',
-        'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      ),
-      discovery.getContractDetails(
-        'DepositBoxERC721WithMetadata',
-        'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      ),
-      discovery.getContractDetails(
-        'DepositBoxERC20',
-        'Bridge contract to transfer ERC20 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      ),
-      discovery.getContractDetails(
-        'DepositBoxERC721',
-        'Bridge contract to transfer ERC721 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      ),
-      discovery.getContractDetails(
-        'DepositBoxERC1155',
-        'Bridge contract to transfer ERC1155 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
-      ),
-      discovery.getContractDetails(
-        'CommunityPool',
-        'CommunityPool is Gas Wallet contract, where users need to deposit Eth, to be able to transfer their assets(Eth, ERC20, NFTs) or messages from SKALE chain to Ethereum. Deposited amount will be spend for gas reimbursement to Agent which will deliver message on Ethereum.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'MessageProxyForMainnet',
+          'Contract responsible for sending and receiving messages. It is used internally by the DepositBox contracts to transfer value between chains. It supports gas reimbursement from the CommunityPool.',
+        ),
+        discovery.getContractDetails(
+          'DepositBoxEth',
+          'Bridge contract to transfer ETH to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+        ),
+        discovery.getContractDetails(
+          'DepositBoxERC721WithMetadata',
+          'Bridge contract to transfer ERC721 tokens with metadata to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+        ),
+        discovery.getContractDetails(
+          'DepositBoxERC20',
+          'Bridge contract to transfer ERC20 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+        ),
+        discovery.getContractDetails(
+          'DepositBoxERC721',
+          'Bridge contract to transfer ERC721 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+        ),
+        discovery.getContractDetails(
+          'DepositBoxERC1155',
+          'Bridge contract to transfer ERC1155 tokens to Skale chains, Proxy, Source code of implementation is verified on Etherscan.',
+        ),
+        discovery.getContractDetails(
+          'CommunityPool',
+          'CommunityPool is Gas Wallet contract, where users need to deposit Eth, to be able to transfer their assets(Eth, ERC20, NFTs) or messages from SKALE chain to Ethereum. Deposited amount will be spend for gas reimbursement to Agent which will deliver message on Ethereum.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
-      'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'ProxyAdminOwner',
+          'This is an owner of DepositBox contracts proxies, can upgrade the implementation of those contracts, which potentially can introduce bug or introduce malicious behaviors.',
+        ),
+      ],
+    },
+  },
 }

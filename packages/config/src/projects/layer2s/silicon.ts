@@ -7,34 +7,27 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('silicon')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'SiliconDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'SiliconDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('SiliconValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['SiliconDAC Upgrader'],
-  upgradeDelay: 'None',
-}
 
 export const silicon: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1725027256), // 2024-08-30T14:14:16Z
@@ -51,13 +44,12 @@ export const silicon: Layer2 = polygonCDKStack({
       apps: ['https://bridge.silicon.network/'],
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
-      repositories: [],
       socialMedia: ['https://x.com/0xSilicon'],
     },
   },
   rpcUrl: 'https://rpc.silicon.network',
-  rollupModuleContract: discovery.getContract('SiliconValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -102,7 +94,7 @@ export const silicon: Layer2 = polygonCDKStack({
   },
   nonTemplateEscrows: [
     // shared
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sharedEscrow: {
@@ -121,35 +113,6 @@ export const silicon: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the SiliconValidium contract.',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('SiliconValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin and ForceBatcher of the SiliconValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the SiliconDAC contract.',
-    },
-    {
-      name: 'SiliconDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the SiliconDAC contract and thus change the data availability rules any time.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('SiliconDAC', {
-      description:
-        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'Silicon Mainnet Launch',
@@ -161,12 +124,10 @@ export const silicon: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

@@ -4,7 +4,7 @@ import { TokenAddressCell } from '../cells/token-address-cell'
 import { TokenNameCell } from '../cells/token-name-cell'
 import { TokenSimpleAmountCell } from '../cells/token-simple-amount-cell'
 import { TokenSimpleValueCell } from '../cells/token-simple-value-cell'
-import { type ExternallyBridgedTokenEntry } from '../externally-bridges-table'
+import type { ExternallyBridgedTokenEntry } from '../externally-bridges-table'
 
 const columnHelper = createColumnHelper<ExternallyBridgedTokenEntry>()
 

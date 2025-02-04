@@ -1,5 +1,5 @@
-import { type ScalingProjectRisk } from '@l2beat/config'
-import { type TechnologyRisk } from '~/components/projects/sections/risk-list'
+import type { ScalingProjectRisk } from '@l2beat/config'
+import type { TechnologyRisk } from '~/components/projects/sections/risk-list'
 
 export function toTechnologyRisk(risk: ScalingProjectRisk): TechnologyRisk {
   return {

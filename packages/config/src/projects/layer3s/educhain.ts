@@ -2,10 +2,10 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('educhain', 'arbitrum')
 
@@ -76,10 +76,5 @@ export const educhain: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1737096804),
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })

@@ -18,7 +18,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
@@ -30,10 +29,10 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -55,7 +54,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const committee = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
@@ -84,7 +83,6 @@ export const rhinofi: Layer2 = {
         'https://support.rhino.fi/en/',
         'https://docs.starkware.co/starkex/index.html',
       ],
-      explorers: [],
       repositories: [
         'https://github.com/starkware-libs/starkex-contracts',
         'https://github.com/rhinofi',
@@ -102,7 +100,6 @@ export const rhinofi: Layer2 = {
     stage: 'NotApplicable',
   },
   config: {
-    associatedTokens: ['DVF'],
     escrows: [
       {
         address: EthereumAddress('0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b'),
@@ -136,19 +133,19 @@ export const rhinofi: Layer2 = {
     //   },
     // ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
+  dataAvailability: {
+    layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -170,46 +167,50 @@ export const rhinofi: Layer2 = {
     exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkExchange'),
-      discovery.getContractDetails(
-        'Committee',
-        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkExchange'),
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governors',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Governors',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromString(upgradeDelay),
+        ),
+        discovery.getMultisigPermission(
+          'GovernanceMultisig',
+          'Has full power to upgrade the bridge implementation as a Governor.',
+        ),
+        committeePermission,
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
+        ),
+        discovery.contractAsPermissioned(
+          // this multisig does not get recognized as such (because of the old proxy?)
+          discovery.getContract('DeversiFiTreasuryMultisig'),
+          'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
+        ),
+      ],
     },
-    ...discovery.getMultisigPermission(
-      'GovernanceMultisig',
-      'Has full power to upgrade the bridge implementation as a Governor.',
-    ),
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
-    },
-    discovery.contractAsPermissioned(
-      // this multisig does not get recognized as such (because of the old proxy?)
-      discovery.getContract('DeversiFiTreasuryMultisig'),
-      'Is the BlockAdmin: Can add owner keys to a blocklist in the bridge, blocking their withdrawals on L1. After 2 weeks, this multisig can manually withdraw even for blocked actors.',
-    ),
-  ],
+  },
   milestones: [
     {
       title: 'Rebranding',
@@ -229,10 +230,5 @@ export const rhinofi: Layer2 = {
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
-  dataAvailabilitySolution: StarkexDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    },
-    discovery,
-  }),
+  customDa: StarkexDAC({ discovery }),
 }

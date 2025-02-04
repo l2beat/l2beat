@@ -1,3 +1,4 @@
+import type { Layer3 } from '../../types'
 import { alphadune } from './alphadune'
 import { animechain } from './animechain'
 import { anomaly } from './anomaly'
@@ -9,6 +10,7 @@ import { blessnet } from './blessnet'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
+import { datalake } from './datalake'
 import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
@@ -44,14 +46,11 @@ import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { teva } from './teva'
-import type { Layer3 } from './types'
 import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
 import { xrone } from './xrone'
 import { zklinknova } from './zklinknova'
-
-export * from './types'
 
 export const layer3s: Layer3[] = [
   anomaly,
@@ -65,6 +64,7 @@ export const layer3s: Layer3[] = [
   b3,
   cheese,
   clique,
+  datalake,
   degen,
   deri,
   dodochain,

@@ -33,11 +33,11 @@ export class DaBeatStakeRefresher {
           compact(
             [...daLayers, ethereumDaLayer]
               .filter(
-                (layer) =>
-                  layer.kind === 'EthereumDaLayer' ||
-                  layer.kind === 'PublicBlockchain',
+                (project) =>
+                  project.daLayer.kind === 'EthereumDaLayer' ||
+                  project.daLayer.kind === 'PublicBlockchain',
               )
-              .map((layer) => layer.economicSecurity?.name),
+              .map((project) => project.daLayer.economicSecurity?.name),
           ),
         ),
       ].map((type) => {

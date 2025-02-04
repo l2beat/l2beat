@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('orbiter')
 
@@ -130,62 +130,48 @@ export const orbiter: Bridge = {
   contracts: {
     // For contracts, see:
     // https://github.com/Orbiter-Finance/orbiter-sdk/blob/main/src/config/contracts.ts
-    addresses: [
-      discovery.getContractDetails(
-        'OBSource',
-        "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'OBSource',
+          "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
+        ),
+      ],
+    },
     risks: [],
   },
-  permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x80C67432656d59144cEFf962E8fAF8926599bCF8',
-          ),
-          type: 'EOA',
-        },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'ETH escrow',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x80C67432656d59144cEFf962E8fAF8926599bCF8'),
+          ]),
+          'Maker account for ETH deposits/withdrawals',
+        ),
+        discovery.getPermissionDetails(
+          'USDC escrow',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x41d3D33156aE7c62c094AAe2995003aE63f587B3'),
+          ]),
+          'Maker account for USDC deposits/withdrawals',
+        ),
+        discovery.getPermissionDetails(
+          'USDT escrow',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC'),
+          ]),
+          'Maker account for USDT deposits/withdrawals',
+        ),
+        discovery.getPermissionDetails(
+          'DAI escrow',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x095D2918B03b2e86D68551DCF11302121fb626c9'),
+          ]),
+          'Maker account for DAI deposits/withdrawals',
+        ),
       ],
-      name: 'ETH escrow',
-      description: 'Maker account for ETH deposits/withdrawals',
     },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'USDC escrow',
-      description: 'Maker account for USDC deposits/withdrawals',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'USDT escrow',
-      description: 'Maker account for USDT deposits/withdrawals',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x095D2918B03b2e86D68551DCF11302121fb626c9',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'DAI escrow',
-      description: 'Maker account for DAI deposits/withdrawals',
-    },
-  ],
+  },
 }

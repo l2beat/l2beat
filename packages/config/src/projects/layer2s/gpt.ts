@@ -7,33 +7,26 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('gpt')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'GptProtocolDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'GptProtocolDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'GptProtocolValidium',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['GptProtocolDAC Upgrader'],
-  upgradeDelay: 'None',
-}
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 export const gpt: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
@@ -55,7 +48,6 @@ export const gpt: Layer2 = polygonCDKStack({
         'https://assistant.gptprotocol.io/',
         'https://staking.gptprotocol.org/',
       ],
-      documentation: [],
       explorers: ['https://explorer.gptprotocol.io/'],
       repositories: ['https://github.com/gptprotocol'],
       socialMedia: [
@@ -104,8 +96,8 @@ export const gpt: Layer2 = polygonCDKStack({
     minTimestampForTvl: new UnixTime(1716807971),
     name: 'gpt',
   },
-  rollupModuleContract: discovery.getContract('GptProtocolValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [], // removed as their rpc is broken and last tvs was USD 81
   nonTemplateTechnology: {
@@ -122,35 +114,6 @@ export const gpt: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the GptProtocolValidium contract.',
   },
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('GptProtocolValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin and ForceBatcher of the GptProtocolValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the GptProtocolDAC contract.',
-    },
-    {
-      name: 'GptProtocolDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the GptProtocolDAC contract and thus change the data availability rules any time.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('GptProtocolDAC', {
-      description:
-        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'GPT Protocol Launch',
@@ -162,12 +125,10 @@ export const gpt: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

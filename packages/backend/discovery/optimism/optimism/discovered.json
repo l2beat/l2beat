@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 130896600,
-  "configHash": "0x937c5d37cdfd0e94395e2d8d1ac4bb118fc0407a19e9c6f812c33884998afca1",
+  "configHash": "0x724b3e9f9cc3eff60f1cff3399defb7a5c926b7e9e2420ace693b8961cc45ee8",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -15,7 +15,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
           "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
         }
@@ -659,7 +659,7 @@
       "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
           "description": "change the OP token owner to a different MintManager and therefore change the inflation policy.",
           "via": []
@@ -1303,7 +1303,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

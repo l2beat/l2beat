@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 import { NavDivider } from './nav-divider'
-import { type NavGroup } from './types'
+import type { NavGroup } from './types'
 
 export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()

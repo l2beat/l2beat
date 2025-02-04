@@ -2,13 +2,13 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
-import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
-import { TotalValueLockedCell } from './total-value-locked-cell'
-import { ValueLockedCell } from './value-locked-cell'
+import type { ScalingTvsTableRow } from '../../_utils/to-table-rows'
+import { TotalValueSecuredCell } from './total-value-secured-cell'
+import { ValueSecuredCell } from './value-secured-cell'
 
-const columnHelper = createColumnHelper<ScalingTvlTableRow>()
+const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
-export const scalingTvlColumns = [
+export const scalingTvsColumns = [
   ...getScalingCommonProjectColumns(columnHelper),
   columnHelper.group({
     id: 'data',
@@ -16,10 +16,10 @@ export const scalingTvlColumns = [
     columns: [
       columnHelper.accessor(
         (col) => {
-          if (!col.tvl.data) {
+          if (!col.tvs.data) {
             return undefined
           }
-          const { breakdown } = col.tvl.data
+          const { breakdown } = col.tvs.data
           if (
             breakdown.canonical + breakdown.external + breakdown.native ===
             0
@@ -32,13 +32,13 @@ export const scalingTvlColumns = [
           id: 'total',
           header: 'Total',
           cell: (ctx) => {
-            const data = ctx.row.original.tvl.data
+            const data = ctx.row.original.tvs.data
             if (!data) {
               return <NoDataBadge />
             }
             return (
-              <TotalValueLockedCell
-                tvlWarnings={ctx.row.original.tvl.warnings}
+              <TotalValueSecuredCell
+                tvsWarnings={ctx.row.original.tvs.warnings}
                 breakdown={{
                   canonical: data.breakdown.canonical,
                   external: data.breakdown.external,
@@ -57,17 +57,17 @@ export const scalingTvlColumns = [
       ),
     ],
   }),
-  columnHelper.accessor('tvl.data.breakdown.canonical', {
+  columnHelper.accessor('tvs.data.breakdown.canonical', {
     id: 'canonical',
     header: 'Canonical',
     cell: (ctx) => {
-      const data = ctx.row.original.tvl.data
+      const data = ctx.row.original.tvs.data
       if (!data) {
         return <NoDataBadge />
       }
 
       return (
-        <ValueLockedCell
+        <ValueSecuredCell
           value={data.breakdown.canonical}
           change={data.change.canonical}
         />
@@ -81,17 +81,17 @@ export const scalingTvlColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
     },
   }),
-  columnHelper.accessor('tvl.data.breakdown.external', {
+  columnHelper.accessor('tvs.data.breakdown.external', {
     id: 'external',
     header: 'External',
     cell: (ctx) => {
-      const data = ctx.row.original.tvl.data
+      const data = ctx.row.original.tvs.data
       if (!data) {
         return <NoDataBadge />
       }
 
       return (
-        <ValueLockedCell
+        <ValueSecuredCell
           value={data.breakdown.external}
           change={data.change.external}
         />
@@ -105,17 +105,17 @@ export const scalingTvlColumns = [
       headClassName: getColumnHeaderUnderline('before:bg-yellow-200'),
     },
   }),
-  columnHelper.accessor('tvl.data.breakdown.native', {
+  columnHelper.accessor('tvs.data.breakdown.native', {
     id: 'native',
     header: 'Native',
     cell: (ctx) => {
-      const data = ctx.row.original.tvl.data
+      const data = ctx.row.original.tvs.data
       if (!data) {
         return <NoDataBadge />
       }
 
       return (
-        <ValueLockedCell
+        <ValueSecuredCell
           value={data.breakdown.native}
           change={data.change.native}
         />

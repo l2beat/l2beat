@@ -1,4 +1,4 @@
-import { type ChartColumn } from '../chart-context'
+import type { ChartColumn } from '../chart-context'
 
 const MILESTONE_MAX_Y = 25
 const MILESTONE_MAX_Y_MOBILE = 30

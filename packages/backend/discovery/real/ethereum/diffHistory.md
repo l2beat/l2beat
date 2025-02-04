@@ -1,4 +1,88 @@
-Generated with discovered.json: 0x0ae2422eef71f4f05c6c6b4b1210c71eddcc4ec4
+Generated with discovered.json: 0x5251d75fe0822927fe701cfc9c16a7b193d63cf5
+
+# Diff at Tue, 04 Feb 2025 12:31:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21628399
+- current block number: 21628399
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628399 (main branch discovery), not current.
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.1.permission:
+-        "fastconfirm"
++        "interact"
+      issuedPermissions.1.to:
+-        "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.1.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.1.via.0.address:
+-        "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
++        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+      issuedPermissions.0.permission:
+-        "configure"
++        "fastconfirm"
+      issuedPermissions.0.to:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.via.0.address:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50"
+    }
+```
+
+```diff
+    contract RealStrategiesMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1) {
+    +++ description: This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xe1cdbbf0af1ed4b72a0bf0a16ef01c4d9a976ad0
 
 # Diff at Mon, 20 Jan 2025 11:09:57 GMT:
 

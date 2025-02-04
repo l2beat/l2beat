@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 21378535,
-  "configHash": "0xcb3a6821b8f58297a914897d3d3dc65e6742fbd445c019c2e98f61ad3b4f2bea",
+  "configHash": "0x2562b84251ad499b46f8d40077700b5782b21d3d9e2a8df4f8db7b7bd40da96b",
   "contracts": [
     {
       "name": "MainchainBridgeManager",
@@ -120,6 +120,12 @@
       "sinceTimestamp": 1562142059,
       "values": {
         "$immutable": true,
+        "$members": [
+          "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+          "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+          "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+        ],
+        "$threshold": 2,
         "calcMaxWithdraw": 0,
         "dailyLimit": 0,
         "getOwners": [
@@ -724,6 +730,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

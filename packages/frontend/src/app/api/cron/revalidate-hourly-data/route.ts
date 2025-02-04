@@ -1,5 +1,6 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
-import { type NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { env } from '~/env'
 
 export async function GET(req: NextRequest) {
@@ -21,7 +22,7 @@ export async function GET(req: NextRequest) {
   revalidatePath('/data-availability/projects/[layer]/[bridge]')
 
   revalidateTag('update-monitor')
-  revalidateTag('tvl')
+  revalidateTag('tvs')
   revalidateTag('costs')
   return NextResponse.json({ message: 'revalidated hourly data' })
 }

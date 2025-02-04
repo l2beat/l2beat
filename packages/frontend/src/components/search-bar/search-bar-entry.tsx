@@ -1,4 +1,4 @@
-import { type SearchBarCategory } from './search-bar-categories'
+import type { SearchBarCategory } from './search-bar-categories'
 
 interface SearchBarEntry {
   category: SearchBarCategory

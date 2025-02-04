@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x215cb94da3b9595e103b1c3725ca39732508f877
+Generated with discovered.json: 0x563c869bdef59ca1935387e06fc1c22834b0ef95
+
+# Diff at Tue, 04 Feb 2025 12:31:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21080599
+- current block number: 21080599
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21080599 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0xcee78437aE9e15cee9c78E63757E0153c0FD7479) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x94a5184d4b5cee757f3b929e2c0995471185a43f
 
 # Diff at Fri, 24 Jan 2025 10:54:04 GMT:
 

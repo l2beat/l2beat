@@ -11,19 +11,18 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
 export const fuelv1: Layer2 = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
-  capability: 'universal',
+  capability: 'appchain',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
@@ -36,7 +35,6 @@ export const fuelv1: Layer2 = {
 
     links: {
       websites: ['https://fuel.sh/'],
-      apps: [],
       documentation: ['https://docs.fuel.sh/'],
       explorers: ['https://mainnet.fuel.sh/network/'],
       repositories: [
@@ -64,11 +62,11 @@ export const fuelv1: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -147,7 +145,7 @@ export const fuelv1: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [
           {
             title: 'Withdraw.yulp#L40 - Fuel documentation',
@@ -165,7 +163,9 @@ export const fuelv1: Layer2 = {
       'The data format details are documented in the Data Structure subsection [here](https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/System%20Description%20Primer.html).',
   },
   contracts: {
-    addresses: [discovery.getContractDetails('Fuel')],
+    addresses: {
+      [discovery.chain]: [discovery.getContractDetails('Fuel')],
+    },
     risks: [],
   },
   milestones: [

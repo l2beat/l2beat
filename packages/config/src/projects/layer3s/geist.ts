@@ -2,10 +2,10 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('geist', 'base')
 
@@ -38,7 +38,6 @@ export const geist: Layer3 = orbitStackL3({
       ],
       documentation: ['https://docs.playongeist.com/'],
       explorers: ['https://geist-mainnet.explorer.alchemy.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/PlayOnGeist',
         'https://x.com/aavegotchi',
@@ -60,10 +59,5 @@ export const geist: Layer3 = orbitStackL3({
   gasTokens: ['GHST'],
   discovery,
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1737711018), // 2025-01-24T09:30:18+00:00
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })

@@ -1,4 +1,143 @@
-Generated with discovered.json: 0x181cb00a1b528cfc8141065ad0a024281ae91fcc
+Generated with discovered.json: 0x055311d62bd21b26f6dbf2254bfc3b445ccb2b0d
+
+# Diff at Tue, 04 Feb 2025 12:32:33 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21744163
+- current block number: 21744163
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744163 (main branch discovery), not current.
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x31b0dacc814f04df8b051448dbb2ffe2ec1fefa2
+
+# Diff at Fri, 31 Jan 2025 11:18:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21716805
+- current block number: 21744163
+
+## Description
+
+sub-MS member changes.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88) {
+    +++ description: None
+      values.$members.2:
++        "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F"
+      values.$members.1:
+-        "0xDfe6610c2357a0BfECF788e52697554aF5F35174"
++        "0xd9f8460f3081dC29dF1e3b6e5404B245B96F4A30"
+      values.$members.0:
+-        "0xcD6998D20876155D37aEC0dB4C19d63EEAEf058F"
++        "0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5"
+      values.multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 3 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x03c5af13478d02516b582a390c63107b0fe8a114
 
 # Diff at Tue, 28 Jan 2025 06:34:19 GMT:
 

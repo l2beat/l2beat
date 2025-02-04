@@ -1,13 +1,14 @@
 'use client'
 
-import { type NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import type { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import {
   useRouter as useNextRouter,
   usePathname,
   useSearchParams,
 } from 'next/navigation'
 import NProgress from 'nprogress'
-import React, { Suspense, useEffect, type JSX } from 'react'
+import type { JSX } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 
 export function ProgressBar() {

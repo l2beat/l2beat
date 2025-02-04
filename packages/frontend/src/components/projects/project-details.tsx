@@ -2,7 +2,6 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 
 import { ChartSection } from './sections/chart-section'
 import { ContractsSection } from './sections/contracts/contracts-section'
-import { MultiChainContractsSection } from './sections/contracts/multichain-contracts-section'
 import { DaRiskSummarySection } from './sections/da-risk-summary-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
@@ -11,7 +10,6 @@ import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
 import { MarkdownSection } from './sections/markdown-section'
 import { MilestonesAndIncidentsSection } from './sections/milestones-and-incidents-section'
-import { MultichainPermissionsSection } from './sections/permissions/multichain-permissions-section'
 import { PermissionsSection } from './sections/permissions/permissions-section'
 import { RiskAnalysisSection } from './sections/risk-analysis-section'
 import { RiskSummarySection } from './sections/risk-summary-section'
@@ -19,7 +17,7 @@ import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
-import { type ProjectDetailsSection } from './sections/types'
+import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
 export interface ProjectDetailsProps {
@@ -144,25 +142,9 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'MultichainPermissionsSection':
-            return (
-              <MultichainPermissionsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
           case 'ContractsSection':
             return (
               <ContractsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'MultichainContractsSection':
-            return (
-              <MultiChainContractsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

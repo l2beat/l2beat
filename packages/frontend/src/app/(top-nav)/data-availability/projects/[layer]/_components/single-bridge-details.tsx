@@ -1,6 +1,6 @@
 import { InlinedNoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { SingleGrissiniDetails } from '~/components/rosette/grissini/single-grissini-details'
-import { type DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 
 interface Props {
   project: DaProjectPageEntry
@@ -21,7 +21,7 @@ export function SingleBridgeDetails({ project }: Props) {
       <div className="mt-3 text-xs text-secondary md:hidden">
         DA Bridge risks
       </div>
-      {project.selectedBridge.type === 'NoBridge' ? (
+      {project.selectedBridge.isNoBridge ? (
         <InlinedNoBridgeGrissiniDetailsPlaceholder className="md:col-span-3" />
       ) : (
         project.header.daBridgeGrissiniValues.map((value) => (

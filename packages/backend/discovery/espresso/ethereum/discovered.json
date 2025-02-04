@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 21372994,
-  "configHash": "0x49e1d2b7fb5210b786deb7185ca24ba5772b244956a0f4892af00c2f0f3ee20e",
+  "configHash": "0x11f1497b651946891cfb955d5b8b0aef3b14bddf359c45fe095d6c33338117ce",
   "contracts": [
     {
       "name": "EspressoMultisig",
@@ -15,7 +15,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period."
         },
@@ -55,13 +55,13 @@
       "description": "The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x34F5af5158171Ffd2475d21dB5fc3B311F221982",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
           "description": "can call newFinalizedState() to prove the latest HotShot state.",
           "via": []
@@ -123,7 +123,7 @@
       "address": "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can call newFinalizedState() to prove the latest HotShot state."
         }
@@ -247,6 +247,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

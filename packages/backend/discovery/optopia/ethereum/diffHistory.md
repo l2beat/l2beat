@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x2d7490d6c7cd70e546bdc1b30728b2737edb4f54
+Generated with discovered.json: 0xdc510cb58e3f937136a34c55cef5006d463cec94
+
+# Diff at Tue, 04 Feb 2025 12:31:49 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21184911
+- current block number: 21184911
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Optopia Multisig (0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0x94118F86eE37Fa4Fdb266CDab1e55B8F0D6959D9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xa007fe6458a622a95243536a6dcf102de18eb21e
 
 # Diff at Mon, 20 Jan 2025 11:09:51 GMT:
 

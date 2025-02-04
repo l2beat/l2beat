@@ -1,4 +1,222 @@
-Generated with discovered.json: 0x3632f13c8b0cf95430098dde6c5c6e6d025a01d3
+Generated with discovered.json: 0xd63083b31c120e6eaa19d4fff58d8b9323daf233
+
+# Diff at Mon, 03 Feb 2025 12:59:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3a66ce5694d8c3f9dfc80675eaa6c0bc1a2489b3 block: 21715743
+- current block number: 21765269
+
+## Description
+
+Admin EOAs were removed from Starknet and SHARP governance. The other permissions remain the same as before (Multisigs mostly). 
+
+## Watched changes
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"}
+      receivedPermissions.9.from:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      receivedPermissions.8.from:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      receivedPermissions.7.from:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      receivedPermissions.6.from:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+      receivedPermissions.5.from:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      receivedPermissions.4.from:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+      receivedPermissions.3.from:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+      receivedPermissions.2.from:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+      receivedPermissions.1.from:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+      receivedPermissions.0.from:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$admin:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      values.accessControl.TOKEN_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$admin:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae","via":[]}
+      values.$admin:
+-        ["0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263","via":[]}
+      values.$admin:
+-        ["0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263","0x83C0A700114101D1283D1405E2c8f21D3F03e988"]
++        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      values.governors.1:
+-        "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
+      values.governors.0:
+-        "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E"
++        "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$admin:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.APP_GOVERNOR.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$admin:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21715743 (main branch discovery), not current.
+
+```diff
+    contract StarkgateBridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      name:
+-        "BridgeMultisig"
++        "StarkgateBridgeMultisig"
+    }
+```
+
+```diff
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      name:
+-        "ProxyMultisig"
++        "StarknetAdminMultisig"
+    }
+```
+
+```diff
+    contract StarknetOpsMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd) {
+    +++ description: None
+      name:
+-        "ImplementationMultisig"
++        "StarknetOpsMultisig"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      fieldMeta.isFinalized:
++        {"severity":"HIGH","description":"Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."}
+    }
+```
+
+Generated with discovered.json: 0x0ef342a524fe078de93e3c7066c59a6d6b0a45d7
 
 # Diff at Mon, 27 Jan 2025 12:20:21 GMT:
 

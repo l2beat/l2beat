@@ -1,13 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../common'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
-import type { BlockchainDaLayer } from '../types'
+import { linkByDA } from '../utils/link-by-da'
 
-export const memo: BlockchainDaLayer = {
-  id: 'memo',
+export const memo: DaProject = {
   type: 'DaLayer',
-  kind: 'PublicBlockchain',
-  systemCategory: 'public',
+  id: ProjectId('memo'),
+  addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   display: {
     name: 'Meeda',
     slug: 'memo',
@@ -16,7 +15,6 @@ export const memo: BlockchainDaLayer = {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],
       repositories: ['https://github.com/memoio'],
-      apps: [],
       explorers: ['https://scan.metamemo.one/'],
       socialMedia: [
         'https://x.com/MemoLabsOrg',
@@ -24,15 +22,18 @@ export const memo: BlockchainDaLayer = {
       ],
     },
   },
-  consensusAlgorithm: {
-    name: '',
-    description: ``,
-    blockTime: 0, // seconds average
-    consensusFinality: 0,
-    unbondingPeriod: 0,
-  },
-  technology: {
-    description: `
+  daLayer: {
+    kind: 'PublicBlockchain',
+    systemCategory: 'public',
+    consensusAlgorithm: {
+      name: '',
+      description: ``,
+      blockTime: 0, // seconds average
+      consensusFinality: 0,
+      unbondingPeriod: 0,
+    },
+    technology: {
+      description: `
     ## Architecture
 
     ![Meeda architecture](/images/da-layer-technology/meeda/architecture.png#center)
@@ -57,41 +58,41 @@ export const memo: BlockchainDaLayer = {
     L2s can upload transaction data to Meeda through the MemoDA RPC, and the Meeda operator will generate an aggregated KZG polynomial commitment based on the transaction data. 
     Nodes can request transaction data on Meeda based on the commitment value of the transaction data.
   `,
-    references: [
-      {
-        title: 'Meeda Documentation - Architecture',
-        url: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
-      },
-      {
-        title: 'Meeda FileProof contract - Metamemo Scan',
-        url: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
-      },
-      {
-        title: 'Meeda ControlFileProof contract - Metamemo Scan',
-        url: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
-      },
-      {
-        title: 'Meeda ProxyFileProof contract - Metamemo Scan',
-        url: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
-      },
-    ],
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: `Memo storage nodes do not make the data available.`,
-      },
-    ],
-  },
-  bridges: [
-    NO_BRIDGE({
-      addedAt: new UnixTime(1725887947), // 2024-09-09T13:19:07Z
-      layer: 'MEMO',
+      references: [
+        {
+          title: 'Meeda Documentation - Architecture',
+          url: 'https://memolabs.gitbook.io/meeda/readme/overview-of-meeda/whats-meeda',
+        },
+        {
+          title: 'Meeda FileProof contract - Metamemo Scan',
+          url: 'https://scan.metamemo.one:8080/address/0x58C3Ab98546879a859EDBa3252A9d38E43C9cbee/',
+        },
+        {
+          title: 'Meeda ControlFileProof contract - Metamemo Scan',
+          url: 'https://scan.metamemo.one:8080/address/0x6eEc7578dBAD9dcc1CA159A9Df0A73233548b89a/',
+        },
+        {
+          title: 'Meeda ProxyFileProof contract - Metamemo Scan',
+          url: 'https://scan.metamemo.one:8080/address/0x0c7B5A9Ce5e33B4fa1BcFaF9e8722B1c1c23243B/',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: `Memo storage nodes do not make the data available.`,
+        },
+      ],
+    },
+    usedWithoutBridgeIn: linkByDA({
+      layer: ProjectId('memo'),
+      bridge: undefined,
     }),
-  ],
-  pruningWindow: 0,
-  risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    bridges: [],
+    pruningWindow: 0,
+    risks: {
+      economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MEMO'),
+      fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
+    },
   },
   milestones: [
     {

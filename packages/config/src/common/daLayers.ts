@@ -1,106 +1,109 @@
-import type { DataAvailabilityLayer } from '../types'
+import { ProjectId } from '@l2beat/shared-pure'
+import type { DaProjectTableValue } from './dataAvailability'
 
-const ETH_CALLDATA: DataAvailabilityLayer = {
+const ETH_CALLDATA: DaProjectTableValue = {
   value: 'Ethereum',
   secondLine: 'Calldata',
   sentiment: 'good',
   description: 'The data is posted to Ethereum as calldata.',
-  fallbackDescription:
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
+  projectId: ProjectId('ethereum'),
 }
 
-const ETH_BLOBS: DataAvailabilityLayer = {
+const ETH_BLOBS: DaProjectTableValue = {
   value: 'Ethereum',
   secondLine: 'Blobs',
   sentiment: 'good',
   description: 'The data is posted to Ethereum as blobs.',
-  fallbackDescription:
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
+  projectId: ProjectId('ethereum'),
 }
 
-const ETH_BLOBS_OR_CALLDATA: DataAvailabilityLayer = {
+const ETH_BLOBS_OR_CALLDATA: DaProjectTableValue = {
   value: 'Ethereum',
   secondLine: 'Blobs or Calldata',
   sentiment: 'good',
   description: 'The data is posted to Ethereum as calldata or blobs.',
-  fallbackDescription:
-    'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
+  projectId: ProjectId('ethereum'),
 }
 
-const MEMO: DataAvailabilityLayer = {
+const MEMO: DaProjectTableValue = {
   value: 'MEMO',
   sentiment: 'warning',
   description: 'The data is posted to MEMO (a decentralized storage).',
+  projectId: ProjectId('memo'),
 }
 
-const DAC: DataAvailabilityLayer = {
+const DAC: DaProjectTableValue = {
   value: 'DAC',
   sentiment: 'warning',
   description:
     'The data is posted off chain and a Data Availability Committee (DAC) is responsible for protecting and supplying it.',
 }
 
-const CELESTIA: DataAvailabilityLayer = {
+const CELESTIA: DaProjectTableValue = {
   value: 'Celestia',
   sentiment: 'warning',
   description: 'The data is posted to Celestia.',
+  projectId: ProjectId('celestia'),
 }
 
-const AVAIL: DataAvailabilityLayer = {
+const AVAIL: DaProjectTableValue = {
   value: 'Avail',
   sentiment: 'warning',
   description: 'The data is posted to Avail.',
+  projectId: ProjectId('avail'),
 }
 
-const NONE: DataAvailabilityLayer = {
+const NONE: DaProjectTableValue = {
   value: 'None',
   sentiment: 'bad',
   description: 'The data is not posted to any data availability layer.',
 }
 
-const MANTLE_DA: DataAvailabilityLayer = {
+const MANTLE_DA: DaProjectTableValue = {
   value: 'Mantle DA',
   sentiment: 'warning',
   description:
     'The data is posted to Mantle DA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
 }
 
-const FRAXTAL_DA: DataAvailabilityLayer = {
+const FRAXTAL_DA: DaProjectTableValue = {
   value: 'FraxtalDA',
   sentiment: 'warning',
   description:
     'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data are published on an onchain inbox.',
 }
 
-const OP_ALT_DA: DataAvailabilityLayer = {
+const OP_ALT_DA: DaProjectTableValue = {
   value: 'Alt-DA Provider',
   sentiment: 'warning',
   description:
     'The data is posted to an off-chain data availability provider which is tasked to serve data upon request. Only hashes of the data are published on an onchain inbox.',
 }
 
-const EIGEN_DA: DataAvailabilityLayer = {
+const EIGEN_DA: DaProjectTableValue = {
   value: 'EigenDA',
   sentiment: 'warning',
   description:
     'The data is posted to EigenDA which is a separate data availability layer developed by the Eigenlayer team. Only hashes of data are published on an onchain inbox.',
+  projectId: ProjectId('eigen-da'),
 }
 
-const NEAR_DA: DataAvailabilityLayer = {
+const NEAR_DA: DaProjectTableValue = {
   value: 'NearDA',
   sentiment: 'warning',
   description:
     'The data is posted to NearDA which is a separate data availability layer on the Near protocol. Only hashes of data are published on an onchain inbox.',
+  projectId: ProjectId('near-da'),
 }
 
-const POLYGON_POS_DA: DataAvailabilityLayer = {
+const POLYGON_POS_DA: DaProjectTableValue = {
   value: 'Polygon PoS DA',
   sentiment: 'warning',
   description:
     'The data is guaranteed to be available by Polygon proof of stake validators. On Ethereum, the data is indirectly referenced in the signed block header.',
 }
 
-const HYPERLIQUID_DA: DataAvailabilityLayer = {
+const HYPERLIQUID_DA: DaProjectTableValue = {
   value: 'Hyperliquid DA',
   sentiment: 'bad',
   description:

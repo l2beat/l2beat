@@ -7,34 +7,27 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>('AstarValidium', 'forceBatchAddress') !==
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
   '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['LocalAdmin'],
-  upgradeDelay: 'None',
-}
 
 export const astarzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
@@ -69,8 +62,8 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('AstarValidium'),
-  rollupVerifierContract: discovery.getContract('AstarVerifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
     name: 'Astar zkEVM',
@@ -79,7 +72,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       "Astar zkEVM is a Validium that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     links: {
       websites: ['https://astar.network/blog/astar-evolution-phase-1-56'],
-      apps: [],
       documentation: ['https://docs.astar.network/docs/build/zkEVM/'],
       explorers: ['https://astar-zkevm.explorer.startale.com/'],
       repositories: ['https://github.com/AstarNetwork'],
@@ -109,7 +101,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
   discovery,
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sharedEscrow: {
@@ -133,19 +125,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'LocalAdmin',
-      'Admin of the AstarValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
-    ),
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('AstarValidiumDAC', {
-      description:
-        'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'Astar zkEVM Launch',
@@ -157,12 +136,10 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

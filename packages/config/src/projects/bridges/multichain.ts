@@ -2,9 +2,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
 import config from './multichain-config.json'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('multichain')
 
@@ -111,47 +111,40 @@ export const multichain: Bridge = {
   },
   contracts: {
     isIncomplete: true,
-    addresses: [
-      discovery.getContractDetails(
-        'AnyswapV4Router',
-        'Multichain Liquidity Network Router V4.',
-      ),
-      discovery.getContractDetails(
-        'AnyswapV6Router',
-        'Multichain Liquidity Network Router V6.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'AnyswapV4Router',
+          'Multichain Liquidity Network Router V4.',
+        ),
+        discovery.getContractDetails(
+          'AnyswapV6Router',
+          'Multichain Liquidity Network Router V6.',
+        ),
+      ],
+    },
     risks: [],
   },
-  permissions: [
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00',
-          ),
-          type: 'EOA',
-        },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Multichain "Liquidity Tool"',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00'),
+          ]),
+          'Privileged account that received funds from Ethereum source escrow without corresponding burn on the destination chain. These funds were bridged to different chains and used to supply liquidity for various anyTokens. Users have to trust this account that it never tries to redeem held anyTokens for the underlying canonical token.',
+        ),
+        discovery.getPermissionDetails(
+          'Multichain MPC',
+          discovery.formatPermissionedAccounts([
+            EthereumAddress('0x2A038e100F8B85DF21e4d44121bdBfE0c288A869'),
+          ]),
+          'Account controlled by the MPC nodes. Can set minters for anyTokens. Can access liquidity in anyTokens.',
+        ),
       ],
-      name: 'Multichain "Liquidity Tool"',
-      description:
-        'Privileged account that received funds from Ethereum source escrow without corresponding burn on the destination chain. These funds were bridged to different chains and used to supply liquidity\
-        for various anyTokens. Users have to trust this account that it never tries to redeem held anyTokens for the underlying canonical token.',
     },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x2A038e100F8B85DF21e4d44121bdBfE0c288A869',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Multichain MPC',
-      description:
-        'Account controlled by the MPC nodes. Can set minters for anyTokens. Can access liquidity in anyTokens.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Anyswap rebrands to Multichain',

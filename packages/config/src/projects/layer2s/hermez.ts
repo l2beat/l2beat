@@ -11,7 +11,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const upgradeDelay = 604800
 const discovery = new ProjectDiscovery('hermez')
@@ -130,9 +130,9 @@ export const hermez: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         description:
-          EXITS.REGULAR('zk', 'merkle proof').description +
+          EXITS.REGULAR_WITHDRAWAL('zk').description +
           ' This operation cannot be performed if the withdrawal exceeds certain threshold.',
         risks: [],
         references: [
@@ -187,19 +187,21 @@ export const hermez: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('HermezAuctionProtocol'),
-      discovery.getContractDetails('Hermez'),
-      discovery.getContractDetails(
-        'ProxyAdmin',
-        'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
-      ),
-      discovery.getContractDetails('WithdrawalDelayer'),
-      discovery.getContractDetails(
-        'Timelock',
-        'Enforces a 7 day delay on upgrades.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('HermezAuctionProtocol'),
+        discovery.getContractDetails('Hermez'),
+        discovery.getContractDetails(
+          'ProxyAdmin',
+          'Admin of HermezAuctionProtocol and Hermez, owned by the timelock.',
+        ),
+        discovery.getContractDetails('WithdrawalDelayer'),
+        discovery.getContractDetails(
+          'Timelock',
+          'Enforces a 7 day delay on upgrades.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
 }

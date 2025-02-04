@@ -2,8 +2,8 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ProjectTechnologyChoice } from '../../types'
+import type { Layer2 } from '../../types'
 import { opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -90,79 +90,52 @@ export const zircuit: Layer2 = opStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    {
-      name: 'Admins of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'DEFAULT_ADMIN_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description: 'Admin of the SuperChainConfig, can configure other roles.',
-    },
-    /*  This role is still not set, but it is present in the code and must be uncommented in the future
-    {
-      name: 'Operators of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'OPERATOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description:
-        'Role set up in SuperChainConfig contract that can raise the withdrawal limit for a user.',
-    }, */
-    {
-      name: 'Monitors of SuperchainConfig',
-      accounts: (() => {
-        const admins = discovery.getAccessControlField(
-          'ZircuitSuperchainConfig',
-          'MONITOR_ROLE',
-        ).members
-        const members = admins.map((member) =>
-          discovery.formatPermissionedAccount(member),
-        )
-        return members
-      })(),
-      description:
-        'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
-    },
-    ...discovery.getMultisigPermission(
+    discovery.getPermissionDetails(
+      'Admins of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'DEFAULT_ADMIN_ROLE',
+      ),
+      'Admin of the SuperChainConfig, can configure other roles.',
+    ),
+    discovery.getPermissionDetails(
+      'Monitors of SuperchainConfig',
+      discovery.getAccessControlRolePermission(
+        'ZircuitSuperchainConfig',
+        'MONITOR_ROLE',
+      ),
+      'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
+    ),
+    discovery.getMultisigPermission(
       'ZircuitMultiSig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \
       It is also designated as a Challenger and SystemOwner of the L2OutputOracle, meaning it can remove L2 state roots and reconfigure \
       L2OutputOracle, including changing the Verifier contract. \
       It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ZircuitGuardianMultiSig',
       'This address is the permissioned guardian of the system, meaning it can pause all withdrawals. \
       It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',
     ),
   ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('Verifier', {
-      description:
-        'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('ZircuitSuperchainConfig', {
-      description:
-        'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
+  nonTemplateContracts: {
+    [discovery.chain]: [
+      discovery.getContractDetails('Verifier', {
+        description:
+          'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
+        ...upgradeability,
+      }),
+      discovery.getContractDetails('ZircuitSuperchainConfig', {
+        description:
+          'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
         however this is a separate instance of the SuperChain contract. It manages the PAUSED_SLOT, a boolean value \
         indicating whether the chain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. It also defines OPERATOR and MONITOR roles\
         which are used to manage throttling (withdrawal limits) on OptimismPortal.',
-      ...upgradeability,
-    }),
-  ],
+        ...upgradeability,
+      }),
+    ],
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [

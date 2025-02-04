@@ -5,16 +5,17 @@ import type {
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { uniq, uniqBy } from 'lodash'
-import { type Bridge, bridges } from '../projects/bridges'
-import {
-  type DaBridge,
-  type OnChainDaBridge,
-  type StandaloneDacBridge,
-  daLayers,
-} from '../projects/da-beat'
-import { type Layer2, layer2s } from '../projects/layer2s'
-import { type Layer3, layer3s } from '../projects/layer3s'
-import type { ScalingProjectContract } from '../types'
+import { bridges } from '../projects/bridges'
+import { daLayers } from '../projects/da-beat'
+import { layer2s } from '../projects/layer2s'
+import { layer3s } from '../projects/layer3s'
+import type {
+  Bridge,
+  DaBridge,
+  Layer2,
+  Layer3,
+  ProjectContract,
+} from '../types'
 import { getChainNames, getChainNamesForDA } from '../utils/chains'
 
 describe('verification status', () => {
@@ -48,35 +49,32 @@ describe('verification status', () => {
   })
 
   describe('DABEAT', () => {
-    for (const daLayer of daLayers) {
-      const chains = getChainNamesForDA(daLayer)
-      for (const bridge of daLayer.bridges) {
-        const bridgeId = bridge.id.toString()
+    for (const project of daLayers) {
+      const chains = getChainNamesForDA(project)
+      for (const bridge of project.daLayer.bridges) {
+        const bridgeId = bridge.id
+        if (!bridgeId) {
+          continue
+        }
         for (const chain of chains) {
-          it(`${bridgeId}:${chain}`, () => {
-            const projectIds =
-              daLayer.kind === 'PublicBlockchain'
-                ? [bridge.id]
-                : bridge.usedIn.map((u) => u.id.toString())
-            for (const projectId of projectIds) {
-              const unverified = getUniqueAddressesForDaBridge(bridge, chain)
+          it(`${bridge.id} on ${chain}`, () => {
+            const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 
-              if (unverified.length <= 0) {
-                return
-              }
-
-              const discoveries = getDiscoveries(projectId, chain)
-              assert(
-                discoveries.length > 0,
-                `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
-              )
-
-              const notFound = containsAllAddresses(unverified, discoveries)
-              assert(
-                notFound.length === 0,
-                `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
-              )
+            if (unverified.length <= 0) {
+              return
             }
+
+            const discoveries = getDiscoveries(bridgeId, chain)
+            assert(
+              discoveries.length > 0,
+              `Failed to read discovery for ${bridgeId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
+            )
+
+            const notFound = containsAllAddresses(unverified, discoveries)
+            assert(
+              notFound.length === 0,
+              `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
+            )
           })
         }
       }
@@ -96,9 +94,9 @@ function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
   }
 
   const result = [discovery]
-  const config = configReader.readConfig(project, chain)
-  if (config.sharedModules.length > 0) {
-    for (const sharedModule of config.sharedModules) {
+  const sharedModules = discovery.sharedModules ?? []
+  if (sharedModules.length > 0) {
+    for (const sharedModule of sharedModules) {
       result.push(configReader.readDiscovery(sharedModule, chain))
     }
   }
@@ -181,7 +179,7 @@ function getUniqueContractsForProject(
 }
 
 function getUniqueContractsFromList(
-  contracts: ScalingProjectContract[],
+  contracts: ProjectContract[],
 ): AddressOnChain[] {
   const mainAddresses = contracts.flatMap((c) => ({
     address: c.address,
@@ -201,9 +199,9 @@ function getUniqueContractsFromList(
 function getProjectContractsForChain(
   project: Project,
   chain: string,
-): ScalingProjectContract[] {
-  const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract.chain, chain, project),
+): ProjectContract[] {
+  const contracts = (project.contracts?.addresses[chain] ?? []).filter(
+    (contract) => isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -223,12 +221,8 @@ function getDaBridgeContractsForChain(
   bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
-  const contracts = [bridge]
-    .filter(
-      (b) => b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
-    )
-    .flatMap((b) => Object.values(b.contracts.addresses))
-  const addresses = getUniqueContractsFromList(contracts.flat())
+  const contracts = Object.values(bridge.contracts?.addresses ?? {}).flat()
+  const addresses = getUniqueContractsFromList(contracts)
   return addresses.filter((a) => a.chain === chain)
 }
 
@@ -236,38 +230,36 @@ function getDaBridgePermissionsForChain(
   bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
-  const permissions: AddressOnChain[] = [bridge]
-    .filter(
-      (b): b is OnChainDaBridge | StandaloneDacBridge =>
-        b.type === 'OnChainBridge' || b.type === 'StandaloneDacBridge',
-    )
-    .flatMap((b) => {
-      if (b.permissions === 'UnderReview') {
+  if (!bridge.permissions || bridge.permissions === 'UnderReview') {
+    return []
+  }
+
+  const perChain = bridge.permissions?.[chain] ?? {}
+  const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
+  return all.flatMap((p) =>
+    p.accounts.flatMap((a) => {
+      if (!p.chain) {
         return []
       }
-
-      return Object.values(b.permissions).flatMap((perChain) => {
-        return perChain.flatMap((p) =>
-          p.accounts.flatMap((a) => {
-            if (!p.chain) {
-              return []
-            }
-            return {
-              chain: p.chain.toString(),
-              address: a.address,
-            }
-          }),
-        )
-      })
-    })
-
-  return permissions.filter((p) => p.chain === chain)
+      return {
+        chain: p.chain.toString(),
+        address: a.address,
+      }
+    }),
+  )
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
-  const permissions =
-    project.permissions === 'UnderReview' ? [] : (project.permissions ?? [])
-  return permissions
+  if (project.permissions === 'UnderReview') {
+    return []
+  }
+
+  const all = []
+  const perChain = project.permissions?.[chain] ?? {}
+  all.push(...(perChain.roles ?? []))
+  all.push(...(perChain.actors ?? []))
+
+  return all
     .filter((p) => isContractOnChain(p.chain, chain, project))
     .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
     .filter((p) => p.type !== 'EOA')

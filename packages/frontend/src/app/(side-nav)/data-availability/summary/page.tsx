@@ -13,7 +13,6 @@ import {
   PublicSystemInfo,
 } from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
-import { EthereumDaEntry } from './_components/ethereum-da-entry'
 import { DaSummaryCustomTable } from './_components/table/da-summary-custom-table'
 import { DaSummaryPublicTable } from './_components/table/da-summary-public-table'
 
@@ -24,7 +23,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const { entries, ethereumEntry } = await getDaSummaryEntries()
+  const entries = await getDaSummaryEntries()
   const { publicSystems, customSystems } = groupBySystem(entries)
 
   return (
@@ -47,7 +46,6 @@ export default async function Page() {
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
             <PublicSystemInfo />
-            <EthereumDaEntry entry={ethereumEntry} />
             <DaSummaryPublicTable items={publicSystems} />
           </DirectoryTabsContent>
           <DirectoryTabsContent value="custom">

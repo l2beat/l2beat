@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { BaseProject } from './BaseProject'
+import type { BaseProject } from '../../types'
 import { ProjectService } from './ProjectService'
 
 describe(ProjectService.name, () => {

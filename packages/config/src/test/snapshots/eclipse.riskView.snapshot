@@ -7,15 +7,15 @@
     value: "External"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "Cannot withdraw"
   }
@@ -25,8 +25,8 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     secondLine: "7d challenge period"
     sentiment: "bad"
     value: "None"

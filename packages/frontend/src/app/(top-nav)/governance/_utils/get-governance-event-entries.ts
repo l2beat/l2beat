@@ -1,9 +1,7 @@
 import type { CollectionEntry } from '~/content/get-collection'
 import { formatTimestamp } from '~/utils/dates'
-import {
-  type OneTimeEvent,
-  getOneTimeEvents,
-} from '~/utils/events/get-one-time-events'
+import type { OneTimeEvent } from '~/utils/events/get-one-time-events'
+import { getOneTimeEvents } from '~/utils/events/get-one-time-events'
 
 export interface GovernanceEventEntry {
   title: string

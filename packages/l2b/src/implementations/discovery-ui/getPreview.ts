@@ -1,15 +1,12 @@
-import {
-  ProjectDiscovery,
-  type ScalingProjectContract,
-  type ScalingProjectPermission,
-} from '@l2beat/config'
+import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
+import { ProjectDiscovery } from '@l2beat/config/build/src/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
 import { type ContractsMeta, getMeta } from './getMeta'
 import { toAddress } from './toAddress'
 import type {
   AddressFieldValue,
   ApiPreviewContract,
-  ApiPreviewPermission,
+  ApiPreviewPermissions,
   ApiPreviewResponse,
 } from './types'
 
@@ -30,11 +27,11 @@ export function getPreview(
 
   const permissionsPerChain: {
     chain: string
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermissions
   }[] = []
   const contractsPerChain: {
     chain: string
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   }[] = []
 
   const metaPerChain: { [chain: string]: ContractsMeta } = {}
@@ -64,27 +61,39 @@ export function getPreview(
 function getPermissionsPreview(
   permissionsPerChain: {
     chain: string
-    permissions: ScalingProjectPermission[]
+    permissions: ProjectPermissions
   }[],
   metaPerChain: { [chain: string]: ContractsMeta },
-): { chain: string; permissions: ApiPreviewPermission[] }[] {
+): { chain: string; permissions: ApiPreviewPermissions }[] {
   return permissionsPerChain.map(({ chain, permissions }) => ({
     chain,
-    permissions: permissions.map((p) => ({
-      addresses: p.accounts.map((a) =>
-        toAddressFieldValue(a.address, chain, metaPerChain),
-      ),
-      name: p.name,
-      description: p.description,
-      multisigParticipants: p.participants?.map((x) =>
-        toAddressFieldValue(x.address, chain, metaPerChain),
-      ),
-    })),
+    permissions: {
+      roles: (permissions.roles ?? []).map((p) => ({
+        addresses: p.accounts.map((a) =>
+          toAddressFieldValue(a.address, chain, metaPerChain),
+        ),
+        name: p.name,
+        description: p.description,
+        multisigParticipants: p.participants?.map((x) =>
+          toAddressFieldValue(x.address, chain, metaPerChain),
+        ),
+      })),
+      actors: (permissions.actors ?? []).map((p) => ({
+        addresses: p.accounts.map((a) =>
+          toAddressFieldValue(a.address, chain, metaPerChain),
+        ),
+        name: p.name,
+        description: p.description,
+        multisigParticipants: p.participants?.map((x) =>
+          toAddressFieldValue(x.address, chain, metaPerChain),
+        ),
+      })),
+    },
   }))
 }
 
 function getContractsPreview(
-  contractsPerChain: { chain: string; contracts: ScalingProjectContract[] }[],
+  contractsPerChain: { chain: string; contracts: ProjectContract[] }[],
   metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; contracts: ApiPreviewContract[] }[] {
   return contractsPerChain.map(({ chain, contracts }) => ({

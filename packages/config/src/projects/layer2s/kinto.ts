@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 const _l2discovery = new ProjectDiscovery('kinto', 'kinto')
@@ -16,7 +16,7 @@ export const kinto: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
   additionalBadges: [Badge.RaaS.Caldera],
-  additionalPurposes: ['RWA'],
+  overridingPurposes: ['KYC-ed DeFi'],
   // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
   display: {
     name: 'Kinto',
@@ -95,6 +95,11 @@ export const kinto: Layer2 = orbitStackL2({
         'https://docs.kinto.xyz/kinto-the-safe-l2/building-on-kinto/running-kinto-nodes',
       securityCouncilReference:
         'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/security-council',
+      additionalConsiderations: {
+        short:
+          'Kinto enforces the use of smart wallets and KYC by preventing arbitrary calls and new contract creation.',
+        long: 'Kinto enforces the use of smart wallets and KYC. A valid state transition in Kinto disallows all contract calls by EOAs and new contract creation, unless specifically whitelisted. This setup effectively enforces smart wallet use because the auxiliary contracts of the standard KintoWallet smart wallet (like the EntryPoint and the KintoWalletFactory) are whitelisted. The KYC validation is part of the KintoWallet signature verification. Since all users must use the same implementation of this smart wallet, all user transactions on Kinto check for an up-to-date KYC flag, and are dropped in case the check fails.',
+      },
     },
   ),
   nonTemplateTechnology: {

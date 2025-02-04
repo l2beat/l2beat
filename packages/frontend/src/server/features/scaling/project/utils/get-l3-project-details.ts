@@ -1,12 +1,11 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import type { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { toRosetteTuple } from '~/components/rosette/individual/to-rosette-tuple'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import {
   isActivityChartDataEmpty,
-  isTvlChartDataEmpty,
+  isTvsChartDataEmpty,
 } from '~/server/features/utils/is-chart-data-empty'
 import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
@@ -16,16 +15,16 @@ import { getScalingRiskSummarySection } from '~/utils/project/risk-summary/get-s
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/utils/project/technology/get-other-considerations-section'
+import { getSequencingSection } from '~/utils/project/technology/get-sequencing-section'
 import { getScalingTechnologySection } from '~/utils/project/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawals-section'
-import { getTokensForProject } from '../../tvl/tokens/get-tokens-for-project'
+import { getTokensForProject } from '../../tvs/tokens/get-tokens-for-project'
 import type { DaSolution } from '../get-scaling-project-da-solution'
 
 interface Params {
   project: Layer3
   isVerified: boolean
   isHostChainVerified: boolean
-  contractsVerificationStatuses: ContractsVerificationStatuses
   projectsChangeReport: ProjectsChangeReport
   rosetteValues: RosetteValue[]
   hostChain?: Layer2
@@ -44,21 +43,16 @@ export async function getL3ProjectDetails({
   combinedRosetteValues,
   hostChainRosetteValues,
   projectsChangeReport,
-  contractsVerificationStatuses,
 }: Params) {
   const permissionsSection = project.permissions
-    ? getPermissionsSection(
-        {
-          id: project.id,
-          type: project.type,
-          hostChain: project.hostChain,
-          isUnderReview: !!project.isUnderReview,
-          permissions: project.permissions,
-          nativePermissions: project.nativePermissions,
-          daSolution,
-        },
-        contractsVerificationStatuses,
-      )
+    ? getPermissionsSection({
+        id: project.id,
+        type: project.type,
+        hostChain: project.hostChain,
+        isUnderReview: !!project.isUnderReview,
+        permissions: project.permissions,
+        daSolution,
+      })
     : undefined
 
   const contractsSection = getContractsSection(
@@ -74,7 +68,6 @@ export async function getL3ProjectDetails({
       architectureImage: project.display.architectureImage,
       daSolution,
     },
-    contractsVerificationStatuses,
     projectsChangeReport,
   )
 
@@ -87,9 +80,10 @@ export async function getL3ProjectDetails({
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
   const dataAvailabilitySection = getDataAvailabilitySection(project)
+  const sequencingSection = getSequencingSection(project)
 
   await Promise.all([
-    api.tvl.chart.prefetch({
+    api.tvs.chart.prefetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
@@ -99,8 +93,8 @@ export async function getL3ProjectDetails({
       filter: { type: 'projects', projectIds: [project.id] },
     }),
   ])
-  const [tvlChartData, activityChartData, tokens] = await Promise.all([
-    api.tvl.chart({
+  const [tvsChartData, activityChartData, tokens] = await Promise.all([
+    api.tvs.chart({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
@@ -131,11 +125,11 @@ export async function getL3ProjectDetails({
         }
       : undefined
 
-  if (!project.isUpcoming && !isTvlChartDataEmpty(tvlChartData)) {
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
     items.push({
       type: 'ChartSection',
       props: {
-        id: 'tvl',
+        id: 'tvs',
         stacked: true,
         title: 'Value Secured',
         projectId: project.id,
@@ -194,6 +188,7 @@ export async function getL3ProjectDetails({
         id: 'risk-summary',
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
+        isUnderReview: project.isUnderReview,
       },
     })
   }
@@ -256,6 +251,11 @@ export async function getL3ProjectDetails({
         icon: `/icons/${project.display.slug}.png`,
         type: project.display.category,
         isUnderReview: project.isUnderReview,
+        isAppchain: project.capability === 'appchain',
+        additionalConsiderations:
+          project.stage.stage !== 'UnderReview'
+            ? project.stage.additionalConsiderations
+            : undefined,
       },
     })
   }
@@ -279,7 +279,8 @@ export async function getL3ProjectDetails({
         id: 'da-layer',
         title: 'Data availability',
         items: dataAvailabilitySection,
-        description: project.dataAvailabilitySolution?.display?.description,
+        description: project.customDa?.description,
+        isUnderReview: project.isUnderReview,
       },
     })
   }
@@ -317,6 +318,17 @@ export async function getL3ProjectDetails({
         title: 'Operator',
         ...operatorSection,
         hostChainWarning,
+      },
+    })
+  }
+
+  if (sequencingSection) {
+    items.push({
+      type: 'MarkdownSection',
+      props: {
+        id: 'sequencing',
+        title: 'Sequencing',
+        ...sequencingSection,
       },
     })
   }

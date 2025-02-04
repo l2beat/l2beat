@@ -3,9 +3,10 @@
   "chain": "ethereum",
   "name": "layerzerov2oft",
   "initialAddresses": [
-    "0x1a44076050125825900e736c501f859c50fE728c",
-    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-    "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+    "0x1a44076050125825900e736c501f859c50fE728c", // EndpointV2
+    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1", // SendUln302
+    "0xc02Ab410f0734EFa3F14628780e6e695156024C2", // ReceiveUln302
+    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc", // HorizenDVN
     // escrows, OApps, OFTs from here ---------------------------------------------
     "0x58538e6A46E07434d7E7375Bc268D3cb839C0133", // ENAOFTAdapter
     "0xCB07992DE144bDeE56fDb66Fff2454B43243b052", // CyberTokenAdapter1
@@ -36,6 +37,7 @@
     "0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "LayerZeroDVN",
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "GoogleCloudDVN",
     "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN",
+    "0x380275805876Ff19055EA900CDb2B46a94ecF20D": "HorizenDVN",
     "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {

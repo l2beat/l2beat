@@ -2,14 +2,9 @@
 
 import type { Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import {
-  type ActivityMetric,
-  useActivityMetricContext,
-} from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
+import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -18,22 +13,20 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import { type ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import { type ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
-import { type ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
+import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
 import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { ChartLegend } from '../core/chart-legend'
 import { ChartProvider } from '../core/chart-provider'
-import { type ChartScale } from '../types'
+import type { ChartScale } from '../types'
 import { ActivityChartHeader } from './activity-chart-header'
 import { ActivityChartHover } from './activity-chart-hover'
-import {
-  type ActivityChartType,
-  useActivityChartRenderParams,
-} from './use-activity-chart-render-params'
+import type { ActivityChartType } from './use-activity-chart-render-params'
+import { useActivityChartRenderParams } from './use-activity-chart-render-params'
 import { typeToIndicator } from './utils/get-chart-type'
 
 interface Props {
@@ -52,10 +45,9 @@ export function ActivityChart({
   const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
-  const includeFilter = useScalingFilter()
   const filter = useScalingFilterValues()
   const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-tvl-scale',
+    'scaling-tvs-scale',
     'lin',
   )
 
@@ -70,7 +62,7 @@ export function ActivityChart({
       }
     : {
         type: 'projects',
-        projectIds: entries.filter(includeFilter).map((project) => project.id),
+        projectIds: entries.map((project) => project.id),
       }
 
   const { data: stats } = api.activity.chartStats.useQuery({

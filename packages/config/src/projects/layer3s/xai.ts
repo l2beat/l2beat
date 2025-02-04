@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { DaEconomicSecurityRisk } from '../da-beat/common'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
@@ -26,7 +26,6 @@ export const xai: Layer3 = orbitStackL3({
       'Xai is an Ethereum Layer-3 that leverages Arbitrum AnyTrust to enable open trade in the next generation of video games.',
     links: {
       websites: ['https://xai.games/'],
-      apps: [],
       documentation: ['https://xai-foundation.gitbook.io/xai-network/'],
       explorers: ['https://explorer.xai-chain.net/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],
@@ -105,9 +104,8 @@ export const xai: Layer3 = orbitStackL3({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: AnytrustDAC({
+    dac: {
       knownMembers: [
         {
           external: false,

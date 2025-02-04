@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const pandasea: Layer2 = upcomingL2({
   id: 'pandasea',
@@ -16,11 +16,6 @@ export const pandasea: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://pandasea.io/'],
-      apps: [],
-      documentation: [],
-      explorers: [],
-      repositories: [],
-      socialMedia: [],
     },
   },
 })

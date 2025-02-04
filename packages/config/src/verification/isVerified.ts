@@ -1,19 +1,16 @@
-import type { Bridge } from '../projects/bridges'
-import type { DaBridge, DaLayer } from '../projects/da-beat'
-import type { Layer2 } from '../projects/layer2s'
-import type { Layer3 } from '../projects/layer3s'
+import type { Bridge, DaBridge, DaProject, Layer2, Layer3 } from '../types'
 
+// TODO(radomski): Permissions
 export function isVerified(
-  project: Layer2 | Layer3 | Bridge | DaLayer,
+  project: Layer2 | Layer3 | Bridge | DaProject,
 ): boolean {
   if (project.type === 'DaLayer') {
-    return project.bridges.every((bridge) =>
-      isDaBridgeVerified(project, bridge),
-    )
+    return project.daLayer.bridges.every((bridge) => isDaBridgeVerified(bridge))
   }
 
-  const contractsVerification =
-    project.contracts?.addresses.every((c) => c.isVerified) ?? true
+  const contractsVerification = Object.values(
+    project.contracts?.addresses ?? {},
+  ).every((p) => p.every((c) => c.isVerified))
   const escrowVerifications =
     project.config.escrows.every((e) => {
       if (!('contract' in e)) {
@@ -28,12 +25,12 @@ export function isVerified(
   return newVerification
 }
 
-export function isDaBridgeVerified(_: DaLayer, daBridge: DaBridge): boolean {
+export function isDaBridgeVerified(daBridge: DaBridge): boolean {
   let verification = true
 
   if ('contracts' in daBridge) {
     verification =
-      Object.values(daBridge.contracts?.addresses)
+      Object.values(daBridge.contracts?.addresses ?? {})
         .flat()
         .every((c) => c.isVerified) ?? false
   }

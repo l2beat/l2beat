@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { type ActiveLinkProps, useActiveLink } from '~/hooks/use-active-link'
+import type { ActiveLinkProps } from '~/hooks/use-active-link'
+import { useActiveLink } from '~/hooks/use-active-link'
 import { cn } from '~/utils/cn'
 
 export type NavLinkProps = {

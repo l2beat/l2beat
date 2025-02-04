@@ -8,7 +8,7 @@ import type {
   StageConfigured,
   StageConfiguredMessage,
   StageSummary,
-} from './types'
+} from '../../../../types'
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,

@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('pulseChain')
 
@@ -93,52 +93,53 @@ export const pulseChain: Bridge = {
     destinationToken: RISK_VIEW.WRAPPED,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'ForeignOmnibridge',
-        'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
-      ),
-      discovery.getContractDetails(
-        'ForeignAMB',
-        'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
-      ),
-      discovery.getContractDetails(
-        'BridgeValidators',
-        'Contract managing the list of trusted bridge Validators.',
-      ),
-      discovery.getContractDetails(
-        'WETHOmnibridgeRouter',
-        'The Auxiliary contract that handles wrapped tokens.',
-      ),
-    ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-  },
-  permissions: [
-    {
-      name: 'Validators',
-      description: `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures\
-        are required.`,
-      accounts: discovery.getPermissionedAccounts(
-        'BridgeValidators',
-        'validatorList',
-      ),
-    },
-    {
-      name: 'Owner of Validators contract',
-      description:
-        'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
-      accounts: [discovery.getPermissionedAccount('BridgeValidators', 'owner')],
-    },
-    {
-      name: 'Upgradeability Owner of main bridge contract',
-      description:
-        'Owner of the main bridge contract, able to upgrade the contract with no notice.',
-      accounts: [
-        discovery.getPermissionedAccount(
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
           'ForeignOmnibridge',
-          'upgradeabilityOwner',
+          'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
+        ),
+        discovery.getContractDetails(
+          'ForeignAMB',
+          'The Arbitrary Message Bridge receiving messages from the Foreign Chain. It is used for processing withdrawals from the bridge.',
+        ),
+        discovery.getContractDetails(
+          'BridgeValidators',
+          'Contract managing the list of trusted bridge Validators.',
+        ),
+        discovery.getContractDetails(
+          'WETHOmnibridgeRouter',
+          'The Auxiliary contract that handles wrapped tokens.',
         ),
       ],
     },
-  ],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
+          ),
+          `Permissioned set of validators that can sign off any arbitrary message from PulseChain including withdrawal request. ${reqNumberOfSigs} / ${numOfValidators} signatures are required.`,
+        ),
+        discovery.getPermissionDetails(
+          'Owner of Validators contract',
+          discovery.getPermissionedAccounts('BridgeValidators', 'owner'),
+          'Owner of Validators contract keeping a list of current Validators. Can add/remove Validators.',
+        ),
+        discovery.getPermissionDetails(
+          'Upgradeability Owner of main bridge contract',
+          discovery.getPermissionedAccounts(
+            'ForeignOmnibridge',
+            'upgradeabilityOwner',
+          ),
+          'Owner of the main bridge contract, able to upgrade the contract with no notice.',
+        ),
+      ],
+    },
+  },
 }

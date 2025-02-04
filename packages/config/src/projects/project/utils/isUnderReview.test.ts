@@ -1,17 +1,15 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type {
-  ScalingProjectContracts,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnology,
-} from '../../../types'
-import type {
   Layer2,
   Layer2Config,
   Layer2Display,
+  ProjectContracts,
+  ScalingProjectRiskView,
+  ScalingProjectTechnology,
   StageConfig,
-} from '../../layer2s'
+  TableReadyValue,
+} from '../../../types'
 import { isUnderReview } from './isUnderReview'
 
 describe(isUnderReview.name, () => {
@@ -24,7 +22,7 @@ describe(isUnderReview.name, () => {
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,
     }),
-    contracts: mockObject<ScalingProjectContracts>({
+    contracts: mockObject<ProjectContracts>({
       isUnderReview: undefined,
     }),
     riskView: mockObject<ScalingProjectRiskView>(),
@@ -73,7 +71,7 @@ describe(isUnderReview.name, () => {
         riskView: {
           ...mockProject.riskView,
           sequencerFailure: {
-            ...mockObject<ScalingProjectRiskViewEntry>(),
+            ...mockObject<TableReadyValue>(),
             sentiment: 'UnderReview' as const,
           },
         },

@@ -1,4 +1,4 @@
-import { type ReferenceLink } from '@l2beat/config'
+import type { ReferenceLink } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -12,18 +12,18 @@ import { BulletIcon } from '~/icons/bullet'
 import { ShieldIcon } from '~/icons/shield'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
-import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
-import { type Participant, ParticipantsEntry } from './permissions/participants'
+import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
+import type { Participant } from './permissions/participants'
+import { ParticipantsEntry } from './permissions/participants'
 import { UpgradeConsiderations } from './permissions/upgrade-considerations'
-import {
-  type UsedInProject,
-  UsedInProjectEntry,
-} from './permissions/used-in-project'
+import type { UsedInProject } from './permissions/used-in-project'
+import { UsedInProjectEntry } from './permissions/used-in-project'
 import { ReferenceList } from './reference-list'
 
 export interface TechnologyContract {
   name: string
   addresses: TechnologyContractAddress[]
+  admins: TechnologyContractAddress[]
   chain: string
   description?: string
   upgradeableBy?: string[]
@@ -40,7 +40,6 @@ export interface TechnologyContractAddress {
   name: string
   href: string
   address: string
-  isAdmin: boolean
   verificationStatus: VerificationStatus
 }
 
@@ -67,6 +66,7 @@ export function ContractEntry({
 
   const { color, icon } = getCalloutProps(contract, type)
 
+  const entries = [...contract.addresses, ...contract.admins]
   return (
     <Callout
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
@@ -76,7 +76,7 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
             <strong id={contract.name}>{contract.name}</strong>{' '}
-            {contract.addresses.map((address, i) => (
+            {entries.map((address, i) => (
               <HighlightableLink
                 key={i}
                 variant={
@@ -165,14 +165,9 @@ function getCalloutProps(
   type: 'permission' | 'contract',
 ) {
   const isAnyAddressUnverified = contract.addresses.some(
-    (c) => c.verificationStatus === 'unverified' && !c.isAdmin,
-  )
-  const isEveryAddressUnverified = contract.addresses.every(
     (c) => c.verificationStatus === 'unverified',
   )
-  const showRedBackground =
-    (type === 'contract' && isAnyAddressUnverified) ||
-    (type === 'permission' && isEveryAddressUnverified)
+  const showRedBackground = type === 'contract' && isAnyAddressUnverified
 
   if (showRedBackground) {
     return {

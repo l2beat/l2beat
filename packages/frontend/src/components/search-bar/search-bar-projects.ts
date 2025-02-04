@@ -1,5 +1,6 @@
-import { type Project, ProjectService } from '@l2beat/config'
-import { type SearchBarProject } from './search-bar-entry'
+import type { Project } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
+import type { SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
   const projects = await ProjectService.STATIC.getProjects({
@@ -57,10 +58,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
         results.push({
           ...common,
           id: `${p.id}-${b.id}`,
-          name:
-            b.type === 'StandaloneDacBridge'
-              ? p.name
-              : `${p.name} with ${b.display.name}`,
+          name: `${p.name} with ${b.display.name}`,
           href: `/data-availability/projects/${p.slug}/${b.display.slug}`,
           category: 'da',
           tags: [p.slug, b.display.slug],

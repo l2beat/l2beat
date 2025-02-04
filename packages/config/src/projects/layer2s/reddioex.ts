@@ -18,7 +18,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import {
@@ -28,9 +27,9 @@ import {
   getSHARPVerifierGovernors,
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
+import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')
 
@@ -53,7 +52,7 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const committee = getCommittee(discovery)
+const { committeePermission, minSigners } = getCommittee(discovery)
 
 export const reddioex: Layer2 = {
   isArchived: true,
@@ -117,19 +116,19 @@ export const reddioex: Layer2 = {
     },
     */
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.DAC],
+  dataAvailability: {
+    layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
-      membersCount: committee.accounts.length,
-      requiredSignatures: committee.minSigners,
+      membersCount: committeePermission.accounts.length,
+      requiredSignatures: minSigners,
     }),
     exitWindow: RISK_VIEW.EXIT_WINDOW(
       includingSHARPUpgradeDelaySeconds,
@@ -147,37 +146,41 @@ export const reddioex: Layer2 = {
     exitMechanisms: EXITS.STARKEX_SPOT,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('StarkExchange'),
-      discovery.getContractDetails(
-        'Committee',
-        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
-      ),
-      ...getSHARPVerifierContracts(discovery, verifierAddress),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('StarkExchange'),
+        discovery.getContractDetails(
+          'Committee',
+          'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+        ),
+        ...getSHARPVerifierContracts(discovery, verifierAddress),
+      ],
+    },
     risks: [
       CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
         includingSHARPUpgradeDelaySeconds,
       ),
     ],
   },
-  permissions: [
-    {
-      name: 'Governor',
-      accounts: getProxyGovernance(discovery, 'StarkExchange'),
-      description:
-        'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(upgradeDelay),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Governor',
+          getProxyGovernance(discovery, 'StarkExchange'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
+            delayDescriptionFromString(upgradeDelay),
+        ),
+        committeePermission,
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
+          'Allowed to update the state. When the Operator is down the state cannot be updated.',
+        ),
+      ],
     },
-    committee,
-    ...getSHARPVerifierGovernors(discovery, verifierAddress),
-    {
-      name: 'Operators',
-      accounts: discovery.getPermissionedAccounts('StarkExchange', 'OPERATORS'),
-      description:
-        'Allowed to update the state. When the Operator is down the state cannot be updated.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Reddio Announces Mainnet Launch',

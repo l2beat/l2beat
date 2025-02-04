@@ -1,4 +1,131 @@
-Generated with discovered.json: 0x20bd0ffd0c9b9e7795b3bc9c9774291626f20f85
+Generated with discovered.json: 0x182b69b1965920f09a79860285a7853e7c23894e
+
+# Diff at Tue, 04 Feb 2025 12:31:29 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x45609a98af3614dacd940df0d10bc4a6d0148962
+
+# Diff at Mon, 03 Feb 2025 09:18:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a86862ef704cb8a38295607226918095f937c05b block: 21744154
+- current block number: 21744154
+
+## Description
+
+discodrive polygoncdk chains!
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      name:
+-        "Verifier"
++        "FflonkVerifier"
+      template:
++        "polygon-cdk/Verifier"
+      displayName:
++        "Verifier"
+      description:
++        "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      name:
+-        "GptProtocolDAC"
++        "PolygonDataCommittee"
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xb8605297399baEb6628C9E8F5D3E52A056492cfe","via":[{"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "configure"
+      issuedPermissions.0.to:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40"
+      issuedPermissions.0.via.0:
+-        {"address":"0xada59D145126A746976F0F56477aafFEB3acc8e3"}
+      issuedPermissions.0.description:
++        "manage the members of the data availability committee and the threshold for valid commitments."
+      template:
++        "polygon-cdk/PolygonDataCommittee"
+      description:
++        "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1)."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3) {
+    +++ description: None
+      name:
+-        "DACProxyAdmin"
++        "ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858) {
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+      name:
+-        "GptProtocolValidium"
++        "Validium"
+      template:
++        "polygon-cdk/PolygonZkEVM"
+      displayName:
++        "PolygonZkEVM"
+      description:
++        "The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches."
+      issuedPermissions:
++        [{"permission":"configure","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","via":[]},{"permission":"configure","to":"0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40","description":"sole address that can force batches.","via":[]},{"permission":"sequence","to":"0x3451F208447c4D81346c10239eF92A1eB98b65C3","via":[]}]
+      fieldMeta:
++        {"forceBatchAddress":{"severity":"HIGH","description":"If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."}}
+    }
+```
+
+Generated with discovered.json: 0x88c43e6dad7121eee5424175b01f0a26d848b77a
 
 # Diff at Mon, 20 Jan 2025 11:09:33 GMT:
 

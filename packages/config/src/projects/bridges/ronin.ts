@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('ronin')
 
@@ -143,101 +143,91 @@ export const ronin: Bridge = {
   },
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
-    addresses: [
-      {
-        ...discovery.getContractDetails(
-          'MainchainGateway',
-          `Bridge V3 contract handling deposits and withdrawals.`,
+    addresses: {
+      [discovery.chain]: [
+        {
+          ...discovery.getContractDetails(
+            'MainchainGateway',
+            `Bridge V3 contract handling deposits and withdrawals.`,
+          ),
+          upgradableBy: ['MainchainBridgeManager Governors'],
+          upgradeDelay: 'No delay',
+          pausable,
+        },
+        discovery.getContractDetails(
+          'MainchainBridgeManager',
+          `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
         ),
-        upgradableBy: ['MainchainBridgeManager Governors'],
-        upgradeDelay: 'No delay',
-        pausable,
-      },
-      discovery.getContractDetails(
-        'MainchainBridgeManager',
-        `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
-      ),
-      discovery.getContractDetails(
-        'PauseEnforcer',
-        `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
-      ),
-    ],
+        discovery.getContractDetails(
+          'PauseEnforcer',
+          `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    {
-      name: 'MainchainBridgeManager Operators',
-      accounts: discovery.getPermissionedAccounts(
-        'MainchainBridgeManager',
-        'getBridgeOperators',
-      ),
-      description: `List of operators that can validate incoming messages. Transfer needs to be signed by ${operatorsString} Operators.`,
-    },
-    {
-      name: 'MainchainBridgeManager Governors',
-      accounts: discovery.getPermissionedAccounts(
-        'MainchainBridgeManager',
-        'getGovernors',
-      ),
-      description: `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
-    },
-    {
-      name: 'RoninManagerMultiSig', // non-standard MultiSig
-      accounts: [
-        {
-          address: discovery.getContract('RoninManagerMultiSig').address,
-          type: 'MultiSig',
-        },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'MainchainBridgeManager Operators',
+          discovery.getPermissionedAccounts(
+            'MainchainBridgeManager',
+            'getBridgeOperators',
+          ),
+          `List of operators that can validate incoming messages. Transfer needs to be signed by ${operatorsString} Operators.`,
+        ),
+        discovery.getPermissionDetails(
+          'MainchainBridgeManager Governors',
+          discovery.getPermissionedAccounts(
+            'MainchainBridgeManager',
+            'getGovernors',
+          ),
+          `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
+        ),
+        discovery.getMultisigPermission(
+          'RoninManagerMultiSig',
+          'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
+        ),
+        discovery.getMultisigPermission(
+          'RoninAdminMultisig',
+          'Can upgrade the bridge and the MainchainBridgeManager instantly by being Admin of the latter. Can add and remove sentries (un-/pausers).',
+        ),
+        discovery.getPermissionDetails(
+          'MainchainGatewayV3 Sentry Account',
+          discovery.getPermissionedAccounts(
+            'MainchainGateway',
+            'emergencyPauser',
+          ),
+          'An address that can pause the bridge in case of emergency (can be another contract).',
+        ),
+        discovery.getPermissionDetails(
+          'PauseEnforcer Sentries',
+          discovery.getAccessControlRolePermission(
+            'PauseEnforcer',
+            'SENTRY_ROLE',
+          ),
+          `These accounts can pause and unpause the bridge through the PauseEnforcer.`,
+        ),
+        discovery.getPermissionDetails(
+          'PauseEnforcer Admins',
+          discovery.getAccessControlRolePermission(
+            'PauseEnforcer',
+            'DEFAULT_ADMIN_ROLE',
+          ),
+          `These accounts can add and remove sentries (bridge pause-/unpausers) in the PauseEnforcer.`,
+        ),
+        discovery.getPermissionDetails(
+          'MainchainGatewayV3 Withdrawal Unlockers',
+          discovery.getAccessControlRolePermission(
+            'MainchainGateway',
+            'WITHDRAWAL_UNLOCKER_ROLE',
+          ),
+          'Addresses that can unlock withdrawals.',
+        ),
       ],
-      description:
-        'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
     },
-    {
-      name: 'RoninManagerMultiSig participants', // non-standard MultiSig owners
-      accounts: discovery.getPermissionedAccounts(
-        'RoninManagerMultiSig',
-        'getOwners',
-      ),
-
-      description: 'Those are the participants of the AdminMultisig.',
-    },
-    ...discovery.getMultisigPermission(
-      'RoninAdminMultisig',
-      'Can upgrade the bridge and the MainchainBridgeManager instantly by being Admin of the latter. Can add and remove sentries (un-/pausers).',
-    ),
-    {
-      name: 'MainchainGatewayV3 Sentry Account',
-      accounts: [
-        discovery.getPermissionedAccount('MainchainGateway', 'emergencyPauser'),
-      ],
-      description:
-        'An address that can pause the bridge in case of emergency (can be another contract).',
-    },
-    {
-      name: 'PauseEnforcer Sentries',
-      accounts: discovery.getAccessControlRolePermission(
-        'PauseEnforcer',
-        'SENTRY_ROLE',
-      ),
-      description: `These accounts can pause and unpause the bridge through the PauseEnforcer.`,
-    },
-    {
-      name: 'PauseEnforcer Admins',
-      accounts: discovery.getAccessControlRolePermission(
-        'PauseEnforcer',
-        'DEFAULT_ADMIN_ROLE',
-      ),
-      description: `These accounts can add and remove sentries (bridge pause-/unpausers) in the PauseEnforcer.`,
-    },
-    {
-      name: 'MainchainGatewayV3 Withdrawal Unlockers',
-      accounts: discovery.getAccessControlRolePermission(
-        'MainchainGateway',
-        'WITHDRAWAL_UNLOCKER_ROLE',
-      ),
-      description: 'Addresses that can unlock withdrawals.',
-    },
-  ],
+  },
   milestones: [
     {
       title: 'Whitehat hack for $12M',

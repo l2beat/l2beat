@@ -1,4 +1,67 @@
-Generated with discovered.json: 0xf396851f126f3c307476282f897cefffd4585f57
+Generated with discovered.json: 0x015e77aca1803c88183066cb70cce4c93ed97314
+
+# Diff at Tue, 04 Feb 2025 12:31:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract AddressManager (0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RaceMultisig1 (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RaceMultisig3 (0xBac1ad52745162c0aA3711fe88Df1Cc67034a3B9) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x0db533b96bb22c3abd7e82e5c099d17845bcfa4b
 
 # Diff at Mon, 20 Jan 2025 11:09:57 GMT:
 

@@ -6,22 +6,23 @@ import {
 } from '@l2beat/discovery-types'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { type Bridge, bridges } from '../projects/bridges'
-import type { DaLayer } from '../projects/da-beat'
-import { type Layer2, layer2s } from '../projects/layer2s'
-import { type Layer3, layer3s } from '../projects/layer3s'
-import type { ScalingProjectContract, ScalingProjectPermission } from '../types'
+import { bridges } from '../projects/bridges'
+import { layer2s } from '../projects/layer2s'
+import { layer3s } from '../projects/layer3s'
+import type {
+  Bridge,
+  DaProject,
+  Layer2,
+  Layer3,
+  ProjectContract,
+  ProjectPermission,
+} from '../types'
 
 type CommonProject = Layer2 | Layer3 | Bridge
 
 type Params =
-  | {
-      type: (Layer2 | Bridge | DaLayer)['type']
-    }
-  | {
-      type: Layer3['type']
-      hostChain: string
-    }
+  | { type: (Layer2 | Bridge | DaProject)['type'] }
+  | { type: Layer3['type']; hostChain: string }
 
 export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {
@@ -197,20 +198,22 @@ function pickOutReferencedEntries(
 function projectContainsAddressAsContract(
   project: Pick<CommonProject, 'contracts'>,
   address: string,
-): ScalingProjectContract | undefined {
+): ProjectContract | undefined {
   if (project.contracts === undefined) {
     return undefined
   }
 
-  for (const contract of project.contracts.addresses) {
-    if (
-      contract.address.toString() === address ||
-      (contract.upgradeability !== undefined &&
-        contract.upgradeability.implementations
-          .map((a) => a.toString())
-          .includes(address))
-    ) {
-      return contract
+  for (const chain in project.contracts.addresses ?? {}) {
+    for (const contract of (project.contracts.addresses ?? {})[chain]) {
+      if (
+        contract.address.toString() === address ||
+        (contract.upgradeability !== undefined &&
+          contract.upgradeability.implementations
+            .map((a) => a.toString())
+            .includes(address))
+      ) {
+        return contract
+      }
     }
   }
 
@@ -220,7 +223,7 @@ function projectContainsAddressAsContract(
 function getPermissionContainingAddress(
   project: Pick<CommonProject, 'permissions'>,
   address: string,
-): ScalingProjectPermission | undefined {
+): ProjectPermission | undefined {
   if (
     project.permissions === undefined ||
     project.permissions === 'UnderReview'
@@ -228,15 +231,19 @@ function getPermissionContainingAddress(
     return undefined
   }
 
-  for (const permission of project.permissions) {
-    if (permission.accounts.length > 1) {
-      continue
-    }
+  for (const perChain of Object.values(project.permissions)) {
+    const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
 
-    if (
-      permission.accounts.map((a) => a.address.toString()).includes(address)
-    ) {
-      return permission
+    for (const permission of all) {
+      if (permission.accounts.length > 1) {
+        continue
+      }
+
+      if (
+        permission.accounts.map((a) => a.address.toString()).includes(address)
+      ) {
+        return permission
+      }
     }
   }
 

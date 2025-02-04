@@ -13,13 +13,13 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -31,45 +31,49 @@ import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
   ChainConfig,
-  DataAvailabilityBridge,
-  DataAvailabilityLayer,
+  CustomDa,
   KnowledgeNugget,
-  Milestone,
-  ProjectDataAvailability,
-  ProjectEscrow,
-  ProjectTechnologyChoice,
-  ReasonForBeingInOther,
-  ScalingProject,
-  ScalingProjectCapability,
-  ScalingProjectCategory,
-  ScalingProjectContract,
-  ScalingProjectDisplay,
-  ScalingProjectPermission,
-  ScalingProjectPurpose,
-  ScalingProjectRisk,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectStateDerivation,
-  ScalingProjectStateValidation,
-  ScalingProjectTechnology,
-  TransactionApiConfig,
-} from '../../../types'
-import { Badge, type BadgeId } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
-import { getStage } from '../common/stages/getStage'
-import type { StageConfig } from '../common/stages/types'
-import type {
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
   Layer2FinalityDisplay,
   Layer2TxConfig,
+  Layer3,
+  Milestone,
+  ProjectContract,
+  ProjectDataAvailability,
+  ProjectEscrow,
   ProjectLivenessInfo,
-} from '../types'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+  ProjectPermission,
+  ProjectTechnologyChoice,
+  ReasonForBeingInOther,
+  ScalingProject,
+  ScalingProjectCapability,
+  ScalingProjectCategory,
+  ScalingProjectDisplay,
+  ScalingProjectPurpose,
+  ScalingProjectRisk,
+  ScalingProjectRiskView,
+  ScalingProjectStateDerivation,
+  ScalingProjectStateValidation,
+  ScalingProjectTechnology,
+  StageConfig,
+  TableReadyValue,
+  TransactionApiConfig,
+} from '../../../types'
+import { Badge, type BadgeId } from '../../badges'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
+import { getStage } from '../common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './generateDiscoveryDrivenSections'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergeContracts,
+  safeGetImplementation,
+} from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -91,7 +95,7 @@ export function DACHALLENGES_DA_PROVIDER(
   daChallengeWindow: string,
   daResolveWindow: string,
   nodeSourceLink?: string,
-  daLayer: DataAvailabilityLayer = DA_LAYERS.NONE,
+  daLayer: DaProjectTableValue = DA_LAYERS.NONE,
 ): DAProvider {
   return {
     layer: daLayer,
@@ -107,11 +111,10 @@ export function DACHALLENGES_DA_PROVIDER(
 }
 
 interface DAProvider {
-  layer: DataAvailabilityLayer
-  fallback?: DataAvailabilityLayer
-  riskView: ScalingProjectRiskViewEntry
+  layer: DaProjectTableValue
+  riskView: TableReadyValue
   technology: ProjectTechnologyChoice
-  bridge: DataAvailabilityBridge
+  bridge: TableReadyValue
   badge: BadgeId
 }
 
@@ -122,7 +125,7 @@ interface OpStackConfigCommon {
   isArchived?: true
   addedAt: UnixTime
   daProvider?: DAProvider
-  dataAvailabilitySolution?: DacDaLayer
+  customDa?: CustomDa
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
@@ -137,16 +140,15 @@ interface OpStackConfigCommon {
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
+  disputeGameFactory?: ContractParameters
   portal?: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
   stateValidation?: ScalingProjectStateValidation
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
-  nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
+  nonTemplatePermissions?: ProjectPermission[]
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -163,6 +165,7 @@ interface OpStackConfigCommon {
   additionalBadges?: BadgeId[]
   discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
   gasTokens?: string[]
   usingAltVm?: boolean
@@ -225,15 +228,11 @@ function opStackCommon(
     ? [Badge.Stack.OPStack, daBadge]
     : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
 
-  const nativeDA =
-    incomingNativeDA ??
-    addSentimentToDataAvailability({
-      layers: [
-        usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
-      ],
-      bridge: DA_BRIDGES.ENSHRINED,
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+  const nativeDA = incomingNativeDA ?? {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
 
   const portal = getOptimismPortal(templateVars)
   const l1StandardBridgeEscrow =
@@ -266,14 +265,10 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
   return {
     isArchived: templateVars.isArchived,
     id: ProjectId(templateVars.discovery.projectName),
@@ -281,7 +276,10 @@ function opStackCommon(
     capability: templateVars.capability ?? 'universal',
     isUnderReview: templateVars.isUnderReview ?? false,
     display: {
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       architectureImage:
         templateVars.architectureImage ?? architectureImage.join('-'),
       stateValidationImage:
@@ -337,30 +335,38 @@ function opStackCommon(
       ],
     },
     technology: getTechnology(templateVars, explorerUrl),
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
-      : [
-          ...templateVars.discovery.getOpStackPermissions({
-            batcherHash: 'Sequencer',
-            PROPOSER: 'Proposer',
-            GUARDIAN: 'Guardian',
-            CHALLENGER: 'Challenger',
-            ...(templateVars.roleOverrides ?? {}),
-          }),
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nonTemplateNativePermissions,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
       : {
-          addresses: [
-            ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-            ...(templateVars.nonTemplateContracts ?? []),
-          ],
+          [templateVars.discovery.chain]: {
+            actors: [
+              ...templateVars.discovery.getOpStackPermissions({
+                batcherHash: 'Sequencer',
+                PROPOSER: 'Proposer',
+                GUARDIAN: 'Guardian',
+                CHALLENGER: 'Challenger',
+                ...(templateVars.roleOverrides ?? {}),
+              }),
+              ...(templateVars.nonTemplatePermissions ?? []),
+            ],
+          },
+        },
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
           risks: nativeContractRisks,
-          nativeAddresses: templateVars.nonTemplateNativeContracts,
+        }
+      : {
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.getOpStackContractDetails(
+                  upgradeability,
+                ),
+            },
+            templateVars.nonTemplateContracts ?? {},
+          ),
+          risks: nativeContractRisks,
         },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
@@ -382,7 +388,7 @@ function opStackCommon(
       },
     ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     stateDerivation: templateVars.stateDerivation,
     stateValidation: getStateValidation(templateVars),
@@ -669,7 +675,7 @@ function getRiskView(
 
 function getRiskViewStateValidation(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
 
   switch (fraudProofType) {
@@ -696,7 +702,7 @@ function getRiskViewStateValidation(
 
 function getRiskViewExitWindow(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const finalizationPeriod = getFinalizationPeriod(templateVars)
 
   return RISK_VIEW.EXIT_WINDOW(0, finalizationPeriod)
@@ -704,7 +710,7 @@ function getRiskViewExitWindow(
 
 function getRiskViewProposerFailure(
   templateVars: OpStackConfigCommon,
-): ScalingProjectRiskViewEntry {
+): TableReadyValue {
   const fraudProofType = getFraudProofType(templateVars)
   switch (fraudProofType) {
     case 'None':
@@ -832,6 +838,7 @@ function getTechnology(
         ],
       },
     ],
+    sequencing: templateVars.nonTemplateTechnology?.sequencing,
   }
 }
 
@@ -986,9 +993,8 @@ function getTechnologyExitMechanism(
         templateVars.discovery.getContract('L2OutputOracle')
 
       result.push({
-        ...EXITS.REGULAR(
+        ...EXITS.REGULAR_MESSAGING(
           'optimistic',
-          'merkle proof',
           getFinalizationPeriod(templateVars),
         ),
         references: explorerReferences(explorerUrl, [
@@ -1063,7 +1069,7 @@ function getTechnologyExitMechanism(
   }
 
   result.push({
-    ...EXITS.FORCED('all-withdrawals'),
+    ...EXITS.FORCED_MESSAGING('all-messages'),
     references: [
       {
         title: 'Forced withdrawal from an OP Stack blockchain',
@@ -1080,13 +1086,11 @@ function decideDA(
   nativeDA: ProjectDataAvailability | undefined,
 ): ProjectDataAvailability | undefined {
   if (daProvider !== undefined) {
-    return addSentimentToDataAvailability({
-      layers: daProvider.fallback
-        ? [daProvider.layer, daProvider.fallback]
-        : [daProvider.layer],
+    return {
+      layer: daProvider.layer,
       bridge: daProvider.bridge,
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-    })
+    }
   }
 
   return nativeDA
@@ -1169,23 +1173,20 @@ function getTrackedTxs(
   templateVars: OpStackConfigCommon,
 ): Layer2TxConfig[] | undefined {
   const fraudProofType = getFraudProofType(templateVars)
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
+  const sequencerAddress = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+
   switch (fraudProofType) {
     case 'None': {
-      const sequencerInbox = EthereumAddress(
-        templateVars.discovery.getContractValue(
-          'SystemConfig',
-          'sequencerInbox',
-        ),
-      )
-      const sequencerAddress = EthereumAddress(
-        templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
-      )
       const l2OutputOracle =
         templateVars.l2OutputOracle ??
         templateVars.discovery.getContract('L2OutputOracle')
 
-      return ifPostsToEthereum(
-        templateVars,
+      return (
         templateVars.nonTemplateTrackedTxs ?? [
           {
             uses: [
@@ -1216,10 +1217,43 @@ function getTrackedTxs(
               ),
             },
           },
-        ],
+        ]
       )
     }
-    case 'Permissioned':
+    case 'Permissioned': {
+      const disputeGameFactory =
+        templateVars.disputeGameFactory ??
+        templateVars.discovery.getContract('DisputeGameFactory')
+
+      return [
+        {
+          uses: [
+            { type: 'liveness', subtype: 'batchSubmissions' },
+            { type: 'l2costs', subtype: 'batchSubmissions' },
+          ],
+          query: {
+            formula: 'transfer',
+            from: sequencerAddress,
+            to: sequencerInbox,
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+        {
+          uses: [
+            { type: 'liveness', subtype: 'stateUpdates' },
+            { type: 'l2costs', subtype: 'stateUpdates' },
+          ],
+          query: {
+            formula: 'functionCall',
+            address: disputeGameFactory.address,
+            selector: '0x82ecf2f6',
+            functionSignature:
+              'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+            sinceTimestamp: templateVars.genesisTimestamp,
+          },
+        },
+      ]
+    }
     case 'Permissionless':
       return undefined
   }

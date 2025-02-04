@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('omni')
 const threshold = discovery.getContractValue<number>(
@@ -150,40 +150,47 @@ export const omni: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ForeignAMB', {
-        description:
-          'Arbitrary Message Bridge validated by the BridgeValidators.',
-        ...upgrades,
-        pausable,
-      }),
-      discovery.getContractDetails('MultiTokenMediator', {
-        description: 'Mediator contract and escrow.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('BridgeValidators', {
-        description: `Bridge validators contract, acts as a ${validatorsString} multisig.`,
-        ...upgrades,
-      }),
-      discovery.getContractDetails('AAVEInterestERC20', {
-        description: 'Contract that was used to invest token deposits to Aave.',
-        ...upgrades,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ForeignAMB', {
+          description:
+            'Arbitrary Message Bridge validated by the BridgeValidators.',
+          ...upgrades,
+          pausable,
+        }),
+        discovery.getContractDetails('MultiTokenMediator', {
+          description: 'Mediator contract and escrow.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('BridgeValidators', {
+          description: `Bridge validators contract, acts as a ${validatorsString} multisig.`,
+          ...upgrades,
+        }),
+        discovery.getContractDetails('AAVEInterestERC20', {
+          description:
+            'Contract that was used to invest token deposits to Aave.',
+          ...upgrades,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'OmniBridgeGovernance',
-      'Can update the contracts and parameters of the bridge.',
-    ),
-    {
-      name: 'Bridge validators',
-      accounts: discovery.getPermissionedAccounts(
-        'BridgeValidators',
-        'validatorList',
-      ),
-      description: 'List of actors that can validate incoming messages.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'OmniBridgeGovernance',
+          'Can update the contracts and parameters of the bridge.',
+        ),
+        discovery.getPermissionDetails(
+          'Bridge validators',
+          discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
+          ),
+          'List of actors that can validate incoming messages.',
+        ),
+      ],
     },
-  ],
+  },
 }

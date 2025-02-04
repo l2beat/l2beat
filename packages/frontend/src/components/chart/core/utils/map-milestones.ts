@@ -1,4 +1,4 @@
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 
 export function mapMilestones(
   milestones: Milestone[],

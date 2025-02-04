@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0x9cfc465d4698c96c1305f3f8f7a9fab0c1ca2cec5aecd92d4fc16a0f553b12b5",
+  "configHash": "0xb97d19431de1cdcef4f99ce492eefd1011b924e9ea6dff1fc95376b5ae4b2378",
   "contracts": [
     {
       "name": "L1Staking",
@@ -520,7 +520,7 @@
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
           "via": []
@@ -635,12 +635,12 @@
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "description": "can pause and unpause"
         }
@@ -681,7 +681,7 @@
       "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "description": "can pause and unpause",
           "via": []
@@ -1722,7 +1722,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

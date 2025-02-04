@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { languageJoin } from '../../utils/languageJoin'
 import { RISK_VIEW } from './common'
 import {
@@ -11,7 +12,6 @@ import {
   ORACLES,
   RELAYERS,
 } from './lzOmnichain.contracts'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('lzomnichain')
 
@@ -104,64 +104,64 @@ export const lzOmnichain: Bridge = {
     escrows: OMNICHAIN_ESCROWS,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TSS Oracle',
-        'Contract used to submit source chain block hashes. One of the default Oracles.',
-      ),
-      discovery.getContractDetails(
-        'Google Cloud Oracle',
-        'Contract used to submit source chain block hashes. One of the default Oracles.',
-      ),
-      discovery.getContractDetails(
-        'LayerZero Relayer',
-        'Contract used to provide the merkle proof for the transfers on source chains.',
-      ),
-      ...INBOUND_PROOF_LIBRARIES.map((l) =>
+    addresses: {
+      [discovery.chain]: [
         discovery.getContractDetails(
-          l,
-          'Contracts used to validate messages coming from source chains.',
+          'TSS Oracle',
+          'Contract used to submit source chain block hashes. One of the default Oracles.',
         ),
-      ),
-      discovery.getContractDetails(
-        'Endpoint',
-        'Contract used for cross-chain messaging.',
-      ),
-      discovery.getContractDetails(
-        'UltraLightNodeV2',
-        'Default send and receive library.',
-      ),
-      discovery.getContractDetails(
-        'TreasuryV2',
-        'Contract responsible for fee mechanism.',
-      ),
-      discovery.getContractDetails('NonceContract'),
-    ],
+        discovery.getContractDetails(
+          'Google Cloud Oracle',
+          'Contract used to submit source chain block hashes. One of the default Oracles.',
+        ),
+        discovery.getContractDetails(
+          'LayerZero Relayer',
+          'Contract used to provide the merkle proof for the transfers on source chains.',
+        ),
+        ...INBOUND_PROOF_LIBRARIES.map((l) =>
+          discovery.getContractDetails(
+            l,
+            'Contracts used to validate messages coming from source chains.',
+          ),
+        ),
+        discovery.getContractDetails(
+          'Endpoint',
+          'Contract used for cross-chain messaging.',
+        ),
+        discovery.getContractDetails(
+          'UltraLightNodeV2',
+          'Default send and receive library.',
+        ),
+        discovery.getContractDetails(
+          'TreasuryV2',
+          'Contract responsible for fee mechanism.',
+        ),
+        discovery.getContractDetails('NonceContract'),
+      ],
+    },
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
-  permissions: [
-    {
-      accounts: RELAYERS.map((address) =>
-        discovery.formatPermissionedAccount(address),
-      ),
-      name: 'Default Relayer',
-      description:
-        'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Default Relayer',
+          discovery.formatPermissionedAccounts(RELAYERS),
+          'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
+        ),
+        discovery.getPermissionDetails(
+          'Default Oracles',
+          discovery.formatPermissionedAccounts(ORACLES),
+          'Contracts that submit source chain block hashes to the destination chain.',
+        ),
+        discovery.getMultisigPermission(
+          'LayerZero Multisig',
+          'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
+        ),
+      ],
     },
-    {
-      accounts: ORACLES.map((address) =>
-        discovery.formatPermissionedAccount(address),
-      ),
-      name: 'Default Oracles',
-      description:
-        'Contracts that submit source chain block hashes to the destination chain.',
-    },
-    ...discovery.getMultisigPermission(
-      'LayerZero Multisig',
-      'Contract authorize to update default security parameters (Relayer, Oracle, Libraries). Owner of the Endpoint and UltraLightNodeV2 contract.',
-    ),
-  ],
+  },
   knowledgeNuggets: [
     {
       title: 'Security models: isolated vs shared',

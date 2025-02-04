@@ -7,13 +7,13 @@
     value: "External"
   }
   exitWindow: {
-    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 21h."
+    description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 3h."
     sentiment: "bad"
     value: "None"
   }
   proposerFailure: {
-    definingMetric: -Infinity
     description: "Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade."
+    orderHint: -Infinity
     sentiment: "warning"
     value: "Cannot withdraw"
   }
@@ -23,9 +23,9 @@
     value: "Enqueue via L1"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
-    secondLine: "21h execution delay"
+    orderHint: Infinity
+    secondLine: "3h execution delay"
     sentiment: "good"
     value: "ZK proofs (ST, SN)"
   }

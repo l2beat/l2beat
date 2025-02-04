@@ -1,4 +1,4 @@
-import { type UsedInProject } from '@l2beat/config'
+import type { UsedInProject } from '@l2beat/config'
 import Image from 'next/image'
 import {
   Tooltip,

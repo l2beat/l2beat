@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x853d9212dfa92949b49a3aa696242fd9f5eba0ebc6a2a531d75dd9d48184d3bb",
+  "configHash": "0x63924442fc0f6b8b2b81c582520b27da0d1be5e47576ab58c4091e8971a8c115",
   "contracts": [
     {
       "name": "TokenBridge",
@@ -238,7 +238,12 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel transactions that are waiting in the Timelock."
+        },
+        {
+          "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions in the Timelock."
         },
@@ -578,13 +583,25 @@
       "description": "A Timelock with currently 0s minimum delay.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
+          "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": []
+        },
+        {
+          "permission": "interact",
           "to": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "description": "propose transactions in the Timelock.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
+          "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
           "to": "0xF24f1DC519d88246809B660eb56D94048575d083",
           "description": "propose transactions in the Timelock.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
@@ -644,7 +661,13 @@
       "description": "The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
+          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "cancel transactions that are waiting in the Timelock.",
+          "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
+        },
+        {
+          "permission": "interact",
           "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions in the Timelock.",
           "via": [{ "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3" }]
@@ -1308,10 +1331,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "linea/LineaRollup": "0x2a2bb0695f88233d3ed1d56a00b6c7a30ec7cca3f3b7a2ac8dca2ca019097f75",
-    "linea/Timelock": "0x7193e0837f3bc1ca55d33b891a49e9e451c4764a01b2abdae5a0e3fcdf560a02",
-    "linea/TokenBridge": "0x09a1d318631fb84e57a760e85453b3cb13e2f49e6ae8ab902307c13ac2727dba"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "linea/LineaRollup": "0xaa176c3ecbcb7e80b7d2989b18ee549fd8876f9b36dfc17a554db558d5008937",
+    "linea/Timelock": "0x9f99dc25ab22a20330b33c901cf53ee9df6e1e0bd99da91615e22fed2f9109bd",
+    "linea/TokenBridge": "0x344e398a00b4da4b739370df1e59ae2bc56c107d1b1e6839d965eb131f6110e0"
   }
 }

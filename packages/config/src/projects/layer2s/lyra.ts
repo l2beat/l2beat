@@ -4,9 +4,9 @@ import { NUGGETS } from '../../common'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('lyra')
 
@@ -30,7 +30,7 @@ export const lyra: Layer2 = opStackL2({
       websites: ['https://derive.xyz/'],
       apps: ['https://derive.xyz/options/eth'],
       documentation: ['https://docs.lyra.finance/'],
-      explorers: ['https://explorer.lyra.finance/'],
+      explorers: ['https://explorer.derive.xyz/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
       socialMedia: [
         'https://x.com/derivexyz',

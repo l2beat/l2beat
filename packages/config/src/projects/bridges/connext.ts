@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('connext')
 
@@ -93,27 +93,31 @@ export const connext: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TransactionManager',
-        'Escrow and logic for cross-chain transactions.',
-      ),
-      discovery.getContractDetails(
-        'FulfillInterpreter',
-        'Contract enabling execution of arbitrary calldata on a destination chain.',
-      ),
-    ],
-    risks: [],
-  },
-  permissions: [
-    {
-      name: 'Owner of TransactionManager',
-      description: 'Can add and remove Routers and supported assets.',
-      accounts: [
-        discovery.getPermissionedAccount('TransactionManager', 'owner'),
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'TransactionManager',
+          'Escrow and logic for cross-chain transactions.',
+        ),
+        discovery.getContractDetails(
+          'FulfillInterpreter',
+          'Contract enabling execution of arbitrary calldata on a destination chain.',
+        ),
       ],
     },
-  ],
+    risks: [],
+  },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Owner of TransactionManager',
+          discovery.getPermissionedAccounts('TransactionManager', 'owner'),
+          'Can add and remove Routers and supported assets.',
+        ),
+      ],
+    },
+  },
   knowledgeNuggets: [
     {
       title: 'Connext deep dive',

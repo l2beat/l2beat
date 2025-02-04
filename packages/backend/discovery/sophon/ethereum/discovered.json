@@ -1,8 +1,8 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 21717097,
-  "configHash": "0xf1664f172eb1be3356646e0466132b35b467838b53fab25f88dac13cc5b71e2d",
+  "blockNumber": 21766583,
+  "configHash": "0xe09083bc3c92fd4a993e6a37e82448bbff4d34ada1792d2ec91fcd978c767c1a",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {
@@ -20,13 +20,13 @@
       "description": "The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe4644b6d106A18062344c0A853666bc0B8f052d1",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
@@ -41,8 +41,9 @@
         "getTotalBatchesVerified",
         "getTotalBatchesCommitted",
         "getTotalPriorityTxs",
-        "priorityQueueFrontOperation",
-        "getFirstUnprocessedPriorityTx"
+        "getFirstUnprocessedPriorityTx",
+        "baseTokenGasPriceMultiplierNominator",
+        "baseTokenGasPriceMultiplierDenominator"
       ],
       "sinceTimestamp": 1729268843,
       "values": {
@@ -169,26 +170,26 @@
         "getBaseToken": "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 2345,
+        "getFirstUnprocessedPriorityTx": 2542,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 19,
+        "getPriorityQueueSize": 23,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215106,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 2],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 11810,
-        "getTotalBatchesExecuted": 11416,
-        "getTotalBatchesVerified": 11783,
-        "getTotalBlocksCommitted": 11810,
-        "getTotalBlocksExecuted": 11416,
-        "getTotalBlocksVerified": 11783,
-        "getTotalPriorityTxs": 2364,
+        "getTotalBatchesCommitted": 13574,
+        "getTotalBatchesExecuted": 13363,
+        "getTotalBatchesVerified": 13564,
+        "getTotalBlocksCommitted": 13574,
+        "getTotalBlocksExecuted": 13363,
+        "getTotalBlocksVerified": 13564,
+        "getTotalPriorityTxs": 2565,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -196,11 +197,6 @@
           "recursionCircuitsSetVksHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "isDiamondStorageFrozen": false,
-        "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x89022ba2dbcc5a35d299778e66998661b1a6c2f32fc7433b2e5218b42562d2e8",
-          "expirationTimestamp": 1737920783,
-          "layer2Tip": 0
-        },
         "txFilterer": [],
         "validators": ["0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"]
       },
@@ -227,7 +223,7 @@
       "sourceHashes": [
         "0x5c435b3eaf489b61e623af2356a751079cfa87c079c12e5d93108d007d3b4c97"
       ],
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h.",
+      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
       "issuedPermissions": [
         {
           "permission": "validateZkStack",
@@ -242,7 +238,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
         }
@@ -250,8 +246,8 @@
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
-        "executionDelay": 75600,
-        "executionDelay_fmt": "21h",
+        "executionDelay": 10800,
+        "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",
         "owner": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -286,7 +282,7 @@
       ],
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
           "description": "set the conversion factor for gas token deposits.",
           "via": []
@@ -294,7 +290,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role)."
         }
@@ -325,7 +321,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades and manage censorship through a TransactionFilterer (ChainAdmin role).",
           "via": [{ "address": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }]
@@ -417,7 +413,7 @@
       "address": "0xe14828E4405239dD331F194F1B7883eeD73bCBF3",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
           "description": "set the conversion factor for gas token deposits."
         }
@@ -702,11 +698,11 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "shared-zk-stack/ChainAdmin": "0x59b433947459b51f5f56685f9922099f8571f5a75a669ceb2c6e8af49843e267",
-    "shared-zk-stack/Diamond": "0x397e45da0a66ab5d9e4a95ee84d5610dec0ab033890a4a9c851ed9d77828725d",
-    "shared-zk-stack/L1USDCBridge": "0x76f3122eede9ca9aa44a5309ed016ebdb226df16dffc395108138bc8a3fc74ab",
-    "shared-zk-stack/ValidatorTimelock": "0xc92dfecd304167c043b524829e88c8dc9c4a4435a6a16f6eb64dc3f0ba4529b1",
-    "shared-zk-stack/Verifier": "0x5477716d2543fe149f70ab6ebb27e73acce1411292106861a40fc58562cabafe"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
+    "shared-zk-stack/Diamond": "0xff5383a8ec4b4fefa1093890cd7eed015c46ac789aa5fbb7f2ef4b5b1adcf473",
+    "shared-zk-stack/L1USDCBridge": "0x2019efe6e7d65625e60d2634927905cae0728c8a28189bf0538df8037b416425",
+    "shared-zk-stack/ValidatorTimelock": "0x3776f17136539758803c8f9414cca1bb0b6b9758adb3686b6cc31c7a53210cf0",
+    "shared-zk-stack/Verifier": "0x747e9df6c967ba03b301b81982e9eee0991001c30f832d55dba9c87bbd2651c4"
   }
 }

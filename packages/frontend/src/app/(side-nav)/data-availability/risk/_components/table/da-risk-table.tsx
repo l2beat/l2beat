@@ -1,14 +1,10 @@
 'use client'
-import {
-  type Row,
-  getCoreRowModel,
-  getSortedRowModel,
-} from '@tanstack/react-table'
-import { RiskCell } from '~/components/table/cells/risk-cell'
+import type { Row } from '@tanstack/react-table'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { useTable } from '~/hooks/use-table'
-import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -36,7 +32,12 @@ export function DaRiskTable({
     return (
       <>
         {remainingBridges.map((bridge) => (
-          <TableRow key={bridge.href} className={getRowTypeClassNames()}>
+          <TableRow
+            key={bridge.href}
+            className={getRowTypeClassNames({
+              isEthereum: false,
+            })}
+          >
             <BridgeCells excludeBridge={excludeBridge} bridge={bridge} />
           </TableRow>
         ))}
@@ -70,7 +71,7 @@ function BridgeCells({
   bridge,
   excludeBridge = false,
 }: {
-  bridge: (DaRiskEntry | DaSummaryEntry)['bridges'][number]
+  bridge: DaRiskEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
   return (
@@ -86,13 +87,16 @@ function BridgeCells({
         </TableCell>
       )}
       <TableCell href={bridge.href} className="pl-6">
-        <RiskCell risk={bridge.risks.committeeSecurity} />
+        <TableValueCell
+          emptyMode="n/a"
+          value={bridge.risks.committeeSecurity}
+        />
       </TableCell>
       <TableCell href={bridge.href}>
-        <RiskCell risk={bridge.risks.upgradeability} />
+        <TableValueCell emptyMode="n/a" value={bridge.risks.upgradeability} />
       </TableCell>
       <TableCell href={bridge.href}>
-        <RiskCell risk={bridge.risks.relayerFailure} />
+        <TableValueCell emptyMode="n/a" value={bridge.risks.relayerFailure} />
       </TableCell>
     </>
   )

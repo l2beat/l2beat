@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Bridge } from './types'
+import type { Bridge } from '../../types'
 
 const discovery = new ProjectDiscovery('chainport')
 const congressSize = discovery.getContractValue<number>(
@@ -120,32 +120,38 @@ export const chainport: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Vault6',
-        'Escrow controlled by the Chainport Congress.',
-      ),
-      discovery.getContractDetails(
-        'ChainportCongress',
-        'Contains the logic to create proposal, vote and execute them.',
-      ),
-      discovery.getContractDetails(
-        'ChainportCongressMembersRegistry',
-        `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Vault6',
+          'Escrow controlled by the Chainport Congress.',
+        ),
+        discovery.getContractDetails(
+          'ChainportCongress',
+          'Contains the logic to create proposal, vote and execute them.',
+        ),
+        discovery.getContractDetails(
+          'ChainportCongressMembersRegistry',
+          `Registry of the Chainport Congress members. Acts as a ${congressThreshold} / ${congressSize} multisig.`,
+        ),
+      ],
+    },
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Congress members',
-      accounts: discovery.getPermissionedAccounts(
-        'ChainportCongressMembersRegistry',
-        'allMembers',
-      ),
-      description: 'Members of the Chainport Congress.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Congress members',
+          discovery.getPermissionedAccounts(
+            'ChainportCongressMembersRegistry',
+            'allMembers',
+          ),
+          'Members of the Chainport Congress.',
+        ),
+        discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
+        discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
+      ],
     },
-    ...discovery.getMultisigPermission('MultisigVault1', 'Vault 1.'),
-    ...discovery.getMultisigPermission('MultisigVault2', 'Vault 2.'),
-  ],
+  },
 }

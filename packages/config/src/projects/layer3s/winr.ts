@@ -1,10 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
-import type { Layer3 } from '../layer3s'
 
 const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
@@ -32,7 +32,6 @@ export const winr: Layer3 = orbitStackL3({
       apps: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
-      repositories: [],
       socialMedia: ['https://x.com/WINRProtocol'],
     },
   },
@@ -164,10 +163,5 @@ export const winr: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })

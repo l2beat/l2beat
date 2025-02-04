@@ -10,7 +10,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { Layer2 } from './types'
+import type { Layer2 } from '../../types'
 
 const upgradeDelay = 0
 const discovery = new ProjectDiscovery('gluon')
@@ -35,7 +35,6 @@ export const gluon: Layer2 = {
       apps: ['https://live.leverj.io/'],
       documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Leverj_io',
         'https://t.me/leverj',
@@ -115,18 +114,20 @@ export const gluon: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Gluon'),
-      discovery.getContractDetails('RegistryLogic'),
-      discovery.getContractDetails('RegistryData'),
-      discovery.getContractDetails('StakeLogic'),
-      discovery.getContractDetails('StakeData'),
-      discovery.getContractDetails('SpotLogic'),
-      discovery.getContractDetails('SpotData'),
-      discovery.getContractDetails('DerivativesLogic'),
-      discovery.getContractDetails('DerivativesData'),
-      discovery.getContractDetails('LegacyTokensExtension'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Gluon'),
+        discovery.getContractDetails('RegistryLogic'),
+        discovery.getContractDetails('RegistryData'),
+        discovery.getContractDetails('StakeLogic'),
+        discovery.getContractDetails('StakeData'),
+        discovery.getContractDetails('SpotLogic'),
+        discovery.getContractDetails('SpotData'),
+        discovery.getContractDetails('DerivativesLogic'),
+        discovery.getContractDetails('DerivativesData'),
+        discovery.getContractDetails('LegacyTokensExtension'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

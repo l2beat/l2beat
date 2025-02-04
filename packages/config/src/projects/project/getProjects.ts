@@ -1,12 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
+import type {
+  Bridge,
+  DaProject,
+  Layer2,
+  Layer3,
+  ProjectLivenessInfo,
+} from '../../types'
+import type { BaseProject, ProjectCostsInfo } from '../../types'
 import { isVerified } from '../../verification/isVerified'
-import { type Bridge, bridges } from '../bridges'
-import { type DaLayer, daLayers } from '../da-beat'
-import { type Layer2, type ProjectLivenessInfo, layer2s } from '../layer2s'
-import { type Layer3, layer3s } from '../layer3s'
+import { bridges } from '../bridges'
+import { daLayers } from '../da-beat'
+import { layer2s } from '../layer2s'
+import { layer3s } from '../layer3s'
 import { refactored } from '../refactored'
-import type { BaseProject, ProjectCostsInfo } from './BaseProject'
 import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
@@ -17,7 +24,7 @@ export function getProjects(): BaseProject[] {
     .concat(layer2s.map(layer2Or3ToProject))
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(bridges.map(bridgeToProject))
-    .concat(daLayers.map(daLayerToProject))
+    .concat(daLayers.map(daToProject))
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
@@ -46,6 +53,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
+      capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
         (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
@@ -86,12 +94,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
 }
 
 function getLivenessInfo(p: Layer2 | Layer3): ProjectLivenessInfo | undefined {
-  if (
-    p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
-    p.config.trackedTxs !== undefined
-  ) {
+  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return p.display.liveness ?? {}
   }
 }
@@ -158,9 +161,9 @@ function bridgeToProject(p: Bridge): BaseProject {
   }
 }
 
-function daLayerToProject(p: DaLayer): BaseProject {
+function daToProject(p: DaProject): BaseProject {
   return {
-    id: ProjectId(`${p.id}-da-layer`),
+    id: p.id,
     slug: p.display.slug,
     name: p.display.name,
     shortName: undefined,
@@ -172,7 +175,7 @@ function daLayerToProject(p: DaLayer): BaseProject {
       isUnderReview: !!p.isUnderReview,
       isUnverified: !isVerified(p),
     },
-    daBridges: p.bridges,
+    daBridges: p.daLayer.bridges,
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,

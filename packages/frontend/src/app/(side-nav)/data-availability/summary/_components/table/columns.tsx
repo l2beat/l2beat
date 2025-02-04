@@ -1,19 +1,14 @@
-import { type Row, createColumnHelper } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
-import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { DaFallbackCell } from '../../../_components/da-fallback-cell'
 import { DacMembersCell } from '../../../_components/dac-members-cell'
 import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '../../../_utils/map-risks-to-rosette-values'
-import { DaEconomicSecurityCell } from './da-economic-security-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -32,9 +27,7 @@ const daRisksColumn = columnHelper.display({
   id: 'da-risks',
   header: 'DA Risks',
   cell: (ctx) => {
-    const risks = mapLayerRisksToRosetteValues(ctx.row.original.risks)
-
-    return <GrissiniCell values={risks} />
+    return <GrissiniCell values={ctx.row.original.risks} />
   },
   meta: {
     align: 'center',
@@ -45,16 +38,15 @@ const daBridgeRisksColumn = columnHelper.display({
   id: 'bridge-risks',
   header: 'Bridge Risks',
   cell: (ctx) => {
-    const [firstBridge] = ctx.row.original.bridges
-
-    if (!firstBridge) {
+    const [bridge] = ctx.row.original.bridges
+    if (!bridge) {
       return EM_DASH
     }
-
-    const risks = mapBridgeRisksToRosetteValues(firstBridge.risks)
-
     return (
-      <GrissiniCell values={risks} hasNoBridge={firstBridge.risks.isNoBridge} />
+      <GrissiniCell
+        values={bridge.risks.values}
+        hasNoBridge={bridge.risks.isNoBridge}
+      />
     )
   },
   meta: {
@@ -80,17 +72,10 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
   header: () => <span className="text-right">Slashable</span>,
   cell: (ctx) => {
     const value = ctx.getValue()
-    if (ctx.row.original.risks.economicSecurity.type === 'Unknown') {
-      return (
-        <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-          {formatDollarValueNumber(0)}
-        </div>
-      )
-    }
 
     return (
       <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
-        <DaEconomicSecurityCell value={value} />
+        {formatDollarValueNumber(value ?? 0)}
       </div>
     )
   },
@@ -112,9 +97,9 @@ const membersColumn = columnHelper.display({
 const challengeMechanismColumn = columnHelper.display({
   header: 'Challenge\nmechanism',
   cell: (ctx) => (
-    <TwoRowCell>
-      <TwoRowCell.First>{ctx.row.original.challengeMechanism}</TwoRowCell.First>
-    </TwoRowCell>
+    <TableValueCell
+      value={{ value: ctx.row.original.challengeMechanism ?? '' }}
+    />
   ),
   meta: {
     tooltip:
@@ -124,7 +109,9 @@ const challengeMechanismColumn = columnHelper.display({
 
 const fallbackColumn = columnHelper.display({
   header: 'Fallback',
-  cell: (ctx) => <DaFallbackCell fallback={ctx.row.original.fallback} />,
+  cell: (ctx) => (
+    <TableValueCell value={ctx.row.original.fallback ?? { value: 'None' }} />
+  ),
   meta: {
     tooltip:
       'Is there a mechanism that allows data to be posted to an alternative DA layer in case of downtime or unavailability of the primary layer? If so, where is the data posted?',
@@ -141,7 +128,6 @@ export const customColumns = [
   membersColumn,
   fallbackColumn,
   challengeMechanismColumn,
-  slashableStakeColumn,
 ]
 
 const daLayerGroup = columnHelper.group({
@@ -208,20 +194,8 @@ function sortSlashableStake(
   rowA: Row<DaSummaryEntry>,
   rowB: Row<DaSummaryEntry>,
 ) {
-  const rowAValue = slashableStakeToValue(rowA.original)
-  const rowBValue = slashableStakeToValue(rowB.original)
+  const rowAValue = rowA.original.economicSecurity ?? 0
+  const rowBValue = rowB.original.economicSecurity ?? 0
 
   return rowBValue - rowAValue
-}
-
-function slashableStakeToValue(entry: DaSummaryEntry) {
-  if (entry.risks.economicSecurity.type === 'Unknown') {
-    return 0
-  }
-
-  if (!entry.economicSecurity || entry.economicSecurity.status !== 'Synced') {
-    return 0
-  }
-
-  return entry.economicSecurity.economicSecurity
 }

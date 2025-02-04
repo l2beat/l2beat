@@ -1,5 +1,6 @@
 'use client'
-import { type KeyboardEvent, type MouseEvent, useCallback } from 'react'
+import type { KeyboardEvent, MouseEvent } from 'react'
+import { useCallback } from 'react'
 import {
   Select,
   SelectContent,

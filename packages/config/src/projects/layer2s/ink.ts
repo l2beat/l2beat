@@ -20,15 +20,18 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('ink')
 
@@ -147,8 +150,6 @@ export const ink: Layer2 = {
     stack: 'OP Stack',
     links: {
       websites: ['https://inkonchain.com/en-US'],
-      apps: [],
-      documentation: [],
       explorers: [
         'https://explorer.inkonchain.com',
         'https://okx.com/en-au/web3/explorer/inkchain',
@@ -229,11 +230,11 @@ export const ink: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS_OR_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   riskView: {
     stateValidation: (() => {
       assert(
@@ -354,7 +355,7 @@ export const ink: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED('all-withdrawals'),
+        ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
             title: 'Forced withdrawal from an OP Stack blockchain',
@@ -470,9 +471,9 @@ export const ink: Layer2 = {
       type: 'general',
     },
   ],
-  permissions: discovery.getDiscoveredPermissions(),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be stolen if',

@@ -12,3 +12,6 @@ export * from './starkex/StarkexClient'
 export * from './blobs/BlobClient'
 export * from './coingecko/CoingeckoClient'
 export * from './coingecko/types'
+
+export * from './blobscan/BlobscanClient'
+export * from './blobscan/types'

@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('gravity')
 
@@ -80,21 +80,26 @@ export const gravity: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Gravity',
-        'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Gravity',
+          'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
+        ),
+      ],
+    },
     risks: [],
     isIncomplete: true,
   },
-  permissions: [
-    {
-      name: 'Cosmos Validators',
-      description:
-        'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
-      accounts: [],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Cosmos Validators',
+          [],
+          'Control Gravity contract on Ethereum, funds cannot be transfer without the signature of at least 2/3 of the validator set.',
+        ),
+      ],
     },
-  ],
+  },
 }

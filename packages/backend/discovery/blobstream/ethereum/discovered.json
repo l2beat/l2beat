@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21686332,
-  "configHash": "0x6570390d3b073adfa72b0b46b5d441d74bfc4ecdc4b413fdfb9b8d1cc117b1ca",
+  "configHash": "0xf7279a74e50acb483760e304d032f6ec3a43c811d7d0e7a8917bef8720eb8e6c",
   "contracts": [
     {
       "name": "NextHeaderVerifier",
@@ -40,13 +40,13 @@
       "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
@@ -95,7 +95,7 @@
       "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
           "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.",
           "via": []
@@ -150,19 +150,19 @@
       "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
           "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "via": []
@@ -246,7 +246,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "can freeze the bridge contract and update the list of authorized relayers."
         },
@@ -289,7 +289,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
@@ -325,7 +325,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
           "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
         }
@@ -372,7 +372,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
@@ -402,7 +402,7 @@
       "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
@@ -419,7 +419,7 @@
       "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
         }
@@ -679,9 +679,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "succinct/SP1Blobstream": "0xc923f0ea69810f65b34ffc59eaa1cd6fdf2a924dba13dc8cbfa71ddde982ead2",
-    "succinct/SP1SuccinctGateway": "0xdffa954da9f9e5a14a8da6adcdac47a00ceca0950311adc899da5a6983719276",
-    "succinct/SuccinctGateway": "0x6b44128c0a4c6cf1adb6fd78a757b40be48d8b70234442deb52fa64c906d1a42"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
+    "succinct/SP1SuccinctGateway": "0xddf7c5c632f3cb0a4055a574c75ebf95a7599c66d18d65a94e314628b9681708",
+    "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
   }
 }

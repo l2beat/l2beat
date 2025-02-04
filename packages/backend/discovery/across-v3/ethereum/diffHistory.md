@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xaa2d1977472327aec38f40d945810841efd7dcc8
+
+# Diff at Thu, 30 Jan 2025 10:04:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21628877
+- current block number: 21736634
+
+## Description
+
+Minor upgrade to the Ethereum SpokePool, `hubPool` now called `withdrawalRecipient`.
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x7bae4a313d267e381b0aa01e463be4435e016d0c53c26b0f4136d4caa180fa88"
++        "0xf5ec60450a251965f87d58578708ae6f3718afe7721e152b6983ca8d18ec3362"
+      values.$implementation:
+-        "0x48Dcf75EA18233BA947E4480dCd70594720449C1"
++        "0xD576931ab0bDC3dfdc2c041d3C7b9d2ED0c6dd9a"
+      values.$pastUpgrades.7:
++        ["2025-01-29T00:44:11.000Z","0x4d37ad20bb31cedba7434223e08229ca95fbfd32eaf2bcbd456af0d0a32bba8b",["0xD576931ab0bDC3dfdc2c041d3C7b9d2ED0c6dd9a"]]
+      values.$upgradeCount:
+-        7
++        8
+      values.hubPool:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.withdrawalRecipient:
++        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 249 ++++++++++-----------
+ 1 file changed, 118 insertions(+), 131 deletions(-)
+```
+
 Generated with discovered.json: 0x1608f8395ca3960349c8322a8a60274fdea21e37
 
 # Diff at Mon, 20 Jan 2025 11:09:12 GMT:

@@ -1,7 +1,8 @@
 'use client'
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import { type VariantProps, cva } from 'class-variance-authority'
+import type { VariantProps } from 'class-variance-authority'
+import { cva } from 'class-variance-authority'
 import React, { useRef, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { mergeRefs } from '~/utils/merge-refs'

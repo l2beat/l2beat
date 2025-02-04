@@ -3,9 +3,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ancient')
 
@@ -35,7 +35,6 @@ export const ancient: Layer2 = opStackL2({
       apps: ['https://bridge.ancient8.gg/', 'https://space3.gg/A8Layer2'],
       documentation: ['https://docs.ancient8.gg/'],
       explorers: ['https://scan.ancient8.gg/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/Ancient8_gg',
         'https://discord.gg/ancient8',
@@ -67,11 +66,11 @@ export const ancient: Layer2 = opStackL2({
     },
   ],
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ConduitMultisig',
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
-    ...discovery.getMultisigPermission(
+    discovery.getMultisigPermission(
       'ChallengerMultisig',
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),

@@ -2,14 +2,14 @@
 
 {
   dataAvailability: {
-    definingMetric: Infinity
     description: "All of the data needed for proof construction is published on Ethereum L1. Unlike most ZK rollups transactions are posted instead of state diffs."
+    orderHint: Infinity
     sentiment: "good"
     value: "Onchain"
   }
   exitWindow: {
-    definingMetric: -432000
     description: "Even though there is a 10d Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to 15d."
+    orderHint: -432000
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -30,8 +30,8 @@
     value: "No mechanism"
   }
   stateValidation: {
-    definingMetric: Infinity
     description: "STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup."
+    orderHint: Infinity
     secondLine: undefined
     sentiment: "good"
     value: "ZK proofs (ST, SN)"

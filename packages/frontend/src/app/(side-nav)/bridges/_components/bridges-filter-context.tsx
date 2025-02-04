@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
+import type { CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
 
 export type BridgesFilterContextValue = {
   validatedBy?: string

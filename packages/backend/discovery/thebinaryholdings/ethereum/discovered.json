@@ -2,7 +2,7 @@
   "name": "thebinaryholdings",
   "chain": "ethereum",
   "blockNumber": 21429035,
-  "configHash": "0xd5a3241fe82244195ec4f8af875635cb9001c71478c99a3d5c5484e604ea8a6f",
+  "configHash": "0xb585346548f7b1407405fcd4b522dcdc832b1393abb8d8f2702267aa0efa7792",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -216,7 +216,7 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8173904703995c6BbA59a42B8bBf8405F978758a",
           "description": "set and change address mappings."
         },
@@ -364,7 +364,7 @@
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x666372fEfB85dA96a1a56667638321605afe95bC",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
@@ -517,7 +517,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x666372fEfB85dA96a1a56667638321605afe95bC",
           "description": "set and change address mappings.",
           "via": [
@@ -526,7 +526,7 @@
           ]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xE559cf25AE191566d4A2E1cd5A533475179672A0",
           "description": "set and change address mappings.",
           "via": [
@@ -641,12 +641,12 @@
       "address": "0x666372fEfB85dA96a1a56667638321605afe95bC",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8173904703995c6BbA59a42B8bBf8405F978758a",
           "description": "set and change address mappings.",
           "via": [
@@ -749,7 +749,7 @@
       "address": "0xE559cf25AE191566d4A2E1cd5A533475179672A0",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8173904703995c6BbA59a42B8bBf8405F978758a",
           "description": "set and change address mappings.",
           "via": [
@@ -1218,16 +1218,16 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3",
-    "opstack/L1CrossDomainMessenger": "0x9e831004c1ab0c5084fef52513c31af6a52f5f336ee79a7f6e3f638677a91138",
-    "opstack/L1ERC721Bridge": "0x597905c209b546f9d70c98674823b68e0a156ca904d559323057dc4987b98132",
-    "opstack/L1StandardBridge": "0x729a91b023ae7723021e67dd101f787d0b555eeb8d7e6c9c517abb9cead40d84",
-    "opstack/L2OutputOracle": "0x87c55e0604c870f8dd948c9668cc222d196858641968b5dd3c6e9d63acb2a202",
-    "opstack/OptimismMintableERC20Factory": "0x64cb1472d54c0965d50a3c62611a8f94c2d2e391d563c34811ec883332ea32bc",
-    "opstack/OptimismPortal": "0x5b6ac4a1df6dfc8cbaf2c6fb761942c6e7acf219455ec64523721dadbd88ac72",
-    "opstack/SuperchainConfigFake": "0xd77424fc35a4341d407a53ab0f6429b965260a24986a559c5e66fdf02b5e71d9",
-    "opstack/SystemConfig": "0x457b38796870e7b88601a526617976a05fa1fc993a103ad4ece0a101b7e2cc30"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
+    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
+    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

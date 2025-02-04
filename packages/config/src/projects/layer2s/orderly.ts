@@ -3,9 +3,9 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('orderly')
 
@@ -34,7 +34,6 @@ export const orderly: Layer2 = opStackL2({
         'https://orderly.network/docs/build-on-evm/building-on-evm',
       ],
       explorers: ['https://explorer.orderly.network/'],
-      repositories: [],
       socialMedia: [
         'https://twitter.com/OrderlyNetwork',
         'https://discord.gg/orderlynetwork',

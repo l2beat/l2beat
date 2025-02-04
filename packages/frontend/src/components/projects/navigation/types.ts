@@ -1,5 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
-import { type ProjectDetailsSection } from '../sections/types'
+import type { ProjectDetailsSection } from '../sections/types'
 
 export type ProjectNavigationSection = {
   id: string

@@ -1,8 +1,8 @@
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Square } from '~/components/square'
-import { type CostsUnit } from '~/server/features/scaling/costs/types'
-import { type CostsResolution } from '~/server/features/scaling/costs/utils/range'
+import type { CostsUnit } from '~/server/features/scaling/costs/types'
+import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 
 export interface CostsChartPointData {

@@ -1,12 +1,12 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21715743,
-  "configHash": "0xeb2736b5a23e55e0c96155217f7e32af852d30797153f143e5116665c0e9dc6b",
+  "blockNumber": 21765269,
+  "configHash": "0x25d6a45ee238010155ed7fa0750f5926320cff3fecc7f8655a1bc991f2a1356c",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
-      "name": "BridgeMultisig",
+      "name": "StarkgateBridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -15,6 +15,14 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+        },
         {
           "permission": "upgrade",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
@@ -53,7 +61,15 @@
         },
         {
           "permission": "upgrade",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+        },
+        {
+          "permission": "upgrade",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -72,7 +88,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 19,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -113,13 +129,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
         }
       ],
       "sinceTimestamp": 1707308579,
       "values": {
-        "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
         "$implementation": "0x64608BDF1867110f622391196989bF4cE37BBb33",
         "$pastUpgrades": [
@@ -137,25 +153,19 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
-          },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
-          },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
@@ -185,13 +195,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
         }
       ],
       "sinceTimestamp": 1707322595,
       "values": {
-        "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
         "$implementation": "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
         "$pastUpgrades": [
@@ -209,7 +219,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
@@ -217,11 +227,11 @@
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
@@ -471,7 +481,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ProxyMultisig",
+      "name": "StarknetAdminMultisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -502,13 +512,13 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ImplementationMultisig",
+      "name": "StarknetOpsMultisig",
       "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -533,7 +543,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -571,19 +581,11 @@
           "permission": "upgrade",
           "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-          "via": []
         }
       ],
       "sinceTimestamp": 1647857148,
       "values": {
-        "$admin": [
-          "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ],
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
         "$implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "$pastUpgrades": [
@@ -873,11 +875,6 @@
           "permission": "upgrade",
           "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
           "via": []
-        },
-        {
-          "permission": "upgrade",
-          "to": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-          "via": []
         }
       ],
       "ignoreInWatchMode": [
@@ -888,10 +885,7 @@
       ],
       "sinceTimestamp": 1636978914,
       "values": {
-        "$admin": [
-          "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-          "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
-        ],
+        "$admin": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
         "$immutable": false,
         "$implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
         "$pastUpgrades": [
@@ -947,16 +941,13 @@
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
-        "governors": [
-          "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
-          "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
-        ],
+        "governors": ["0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"],
         "identify": "StarkWare_Starknet_2024_9",
         "implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1667396,
+        "l1ToL2MessageNonce": 1667577,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -977,13 +968,17 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1765069427118211687099019552194988527763461213833501536024075799106890470161",
-        "stateBlockNumber": 1100906,
-        "stateRoot": "1359773789923668695414103416557920983748450774052197950332836268252996722604",
+        "stateBlockHash": "1620150398917403969517043005363893325728572571010079629934267469015438575076",
+        "stateBlockNumber": 1120181,
+        "stateRoot": "2335006280029751023161001366184258563639794806346611939790707522253144931083",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
         "programHash": {
           "severity": "HIGH",
           "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
@@ -1418,13 +1413,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
         }
       ],
       "sinceTimestamp": 1707322643,
       "values": {
-        "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
         "$implementation": "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A",
         "$pastUpgrades": [
@@ -1442,25 +1437,19 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "APP_GOVERNOR": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
-          },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
-          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
@@ -1597,13 +1586,13 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
           "via": []
         }
       ],
       "sinceTimestamp": 1698061847,
       "values": {
-        "$admin": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
         "$immutable": false,
         "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
         "$pastUpgrades": [
@@ -1631,7 +1620,7 @@
           },
           "GOVERNANCE_ADMIN": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
@@ -1639,11 +1628,11 @@
           "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
-            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_ADMIN": {
             "adminRole": "SECURITY_ADMIN",
-            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
@@ -1671,7 +1660,6 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0000000000000000000000000000000000455448" },
     { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
-    { "address": "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E" },
     { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
     { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
@@ -1680,55 +1668,16 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
-        },
-        {
-          "permission": "upgrade",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
         }
       ]
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
-    {
-      "address": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
-        }
-      ]
-    },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
     { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
-    {
-      "address": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
-        }
-      ]
-    },
-    {
-      "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
-        }
-      ]
-    },
     { "address": "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591" }
   ],
   "abis": {
@@ -2771,6 +2720,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
+import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
@@ -65,7 +66,7 @@ interface HeaderProps {
 
 function Header({ networks }: HeaderProps) {
   return (
-    <section className="overflow-hidden bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
+    <PrimaryCard className="overflow-hidden">
       <h1 className="mb-4 text-3xl font-bold md:hidden">Donate</h1>
       <div className="grid md:grid-cols-12">
         <div className="leading-normal md:col-span-7">
@@ -75,7 +76,7 @@ function Header({ networks }: HeaderProps) {
         </div>
         <QrCodeSection className="col-span-5 hidden md:flex" />
       </div>
-    </section>
+    </PrimaryCard>
   )
 }
 
@@ -165,19 +166,17 @@ function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
 
 function FundingSourcesSection() {
   return (
-    <section className="border-t border-divider md:mt-6 md:border-t-0">
-      <div className="bg-surface-primary px-4 py-12 md:rounded-lg md:p-6">
-        <h2 className="text-xl font-bold">Funding sources</h2>
-        <p className="mt-4 text-base leading-5">
-          As a public goods company, L2BEAT is financed in the open by the
-          community. For transparency, we are providing L2BEAT&apos;s funding
-          sources below.
-        </p>
-        <FundingTierDescriptions />
-        <FundingSourcesTable />
-        <div className="mt-8 font-bold">Last updated: {LAST_UPDATED}</div>
-      </div>
-    </section>
+    <PrimaryCard className="border-t border-divider md:mt-6 md:border-t-0">
+      <h2 className="text-xl font-bold">Funding sources</h2>
+      <p className="mt-4 text-base leading-5">
+        As a public goods company, L2BEAT is financed in the open by the
+        community. For transparency, we are providing L2BEAT&apos;s funding
+        sources below.
+      </p>
+      <FundingTierDescriptions />
+      <FundingSourcesTable />
+      <div className="mt-8 font-bold">Last updated: {LAST_UPDATED}</div>
+    </PrimaryCard>
   )
 }
 function FundingTierDescriptions() {

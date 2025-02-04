@@ -1,3 +1,199 @@
+Generated with discovered.json: 0x84b4a72176520f0a282c181935605f0c4a9d27be
+
+# Diff at Tue, 04 Feb 2025 12:33:24 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21736873
+- current block number: 21736873
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736873 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0x5891090d5085679714cb0e62f74950a3c19146a8) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xcf483c6972e1534b511c38b89b3b0e28b9f7862f
+
+# Diff at Thu, 30 Jan 2025 10:52:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 21694441
+- current block number: 21736873
+
+## Description
+
+Permissioned dispute game upgraded to known contracts.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0x48cf980849a7eEA03180f7dea4E21C112097b03E"
++        "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x48cf980849a7eEA03180f7dea4E21C112097b03E)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x8Ec1111f67Dad6b6A93B3F42DfBC92D81c98449A)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.6.from:
+-        "0x8Ec1111f67Dad6b6A93B3F42DfBC92D81c98449A"
++        "0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
+      receivedPermissions.5.from:
+-        "0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
++        "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
+      receivedPermissions.4.from:
+-        "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
++        "0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D) {
+    +++ description: None
+      directlyReceivedPermissions.6.from:
+-        "0x8Ec1111f67Dad6b6A93B3F42DfBC92D81c98449A"
++        "0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
+      directlyReceivedPermissions.5.from:
+-        "0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
++        "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
+      directlyReceivedPermissions.4.from:
+-        "0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
++        "0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@21694441 => .flat}/MIPS.sol    | 444 +++++++++++++++------
+ .../PermissionedDisputeGame.sol                    | 408 +++++++++----------
+ 2 files changed, 507 insertions(+), 345 deletions(-)
+```
+
 Generated with discovered.json: 0x82c7136e9bdfc905df454437022015db15bf933b
 
 # Diff at Fri, 24 Jan 2025 12:44:59 GMT:

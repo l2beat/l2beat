@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
-import type { Bridge } from './types'
+import type { Bridge } from '../../types'
 
 export const avalanche: Bridge = {
   type: 'bridge',
@@ -142,24 +142,33 @@ export const avalanche: Bridge = {
     },
   },
   contracts: {
-    addresses: [],
+    addresses: {},
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Bridge Wardens',
-      description:
-        'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
-      accounts: [
+  permissions: {
+    ethereum: {
+      actors: [
         {
-          address: EthereumAddress(
-            '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
-          ),
-          type: 'EOA',
+          name: 'Bridge Wardens',
+          description:
+            'Off-chain Multisig 6/8 using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
+          accounts: [
+            {
+              address: EthereumAddress(
+                '0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+              ),
+              type: 'EOA',
+              // NOTE(radomski): This is hardcoded because:
+              //
+              // - it's an EOA and we assume that all EOAs are verified
+              // - avalanche does not have it's own discovery to fetch it from there
+              isVerified: true,
+            },
+          ],
         },
       ],
     },
-  ],
+  },
   knowledgeNuggets: [
     {
       title: 'Avalanche Bridge deep dive',

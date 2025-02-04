@@ -7,36 +7,27 @@ import {
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('wirex')
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-const bridge = shared.getContract('Bridge')
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'WirexPayChainDAC',
+  'PolygonDataCommittee',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'WirexPayChainDAC',
+  'PolygonDataCommittee',
   'requiredAmountOfSignatures',
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'WirexPayChainValidium',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
-
-const upgradeability = {
-  upgradableBy: ['WirexPayChainDAC Upgrader'],
-  upgradeDelay: 'None',
-}
+  discovery.getContractValue<string>('Validium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 export const wirex: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
@@ -53,7 +44,6 @@ export const wirex: Layer2 = polygonCDKStack({
       apps: ['https://pay-chain-bridge.wirexpaychain.com/'],
       documentation: ['https://docs.wirexpaychain.com/tech/wirex-pay-chain'],
       explorers: ['https://pay-chain-blockscout.wirexpaychain.com/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/wirexpaychain',
         'https://discord.gg/f8UGp4dH6g',
@@ -100,11 +90,11 @@ export const wirex: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('WirexPayChainValidium'),
-  rollupVerifierContract: discovery.getContract('Verifier'),
+  rollupModuleContract: discovery.getContract('Validium'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
-    shared.getEscrowDetails({
+    discovery.getEscrowDetails({
       address: bridge.address,
       tokens: '*',
       sharedEscrow: {
@@ -128,36 +118,6 @@ export const wirex: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the WirexPayChainValidium contract.',
   },
-
-  nonTemplatePermissions: [
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('WirexPayChainValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin and ForceBatcher of the WirexPayChainValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, and set the DA committee members in the WirexPayChainDAC contract.',
-    },
-    {
-      name: 'WirexPayChainDAC Upgrader',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('DACProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        'Can upgrade the WirexPayChainDAC contract and thus change the data availability rules any time.',
-    },
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('WirexPayChainDAC', {
-      description:
-        'Validium committee contract that allows the owner to setup the members of the committee and stores the required amount of signatures threshold.',
-      ...upgradeability,
-    }),
-  ],
   milestones: [
     {
       title: 'Wirex Pay Chain Protocol Launch',
@@ -169,12 +129,10 @@ export const wirex: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  dataAvailabilitySolution: PolygoncdkDAC({
-    bridge: {
-      addedAt: new UnixTime(1723211933), // 2024-08-09T13:58:53Z
+  customDa: PolygoncdkDAC({
+    dac: {
       requiredMembers: requiredSignaturesDAC,
       membersCount: membersCountDAC,
-      transactionDataType: 'Transaction data',
     },
   }),
 })

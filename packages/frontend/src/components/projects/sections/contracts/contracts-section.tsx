@@ -4,14 +4,12 @@ import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
-import {
-  ContractEntry,
-  type TechnologyContract,
-  technologyContractKey,
-} from '../contract-entry'
+import type { TechnologyContract } from '../contract-entry'
+import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import { ReferenceList } from '../reference-list'
-import { RiskList, type TechnologyRisk } from '../risk-list'
+import type { TechnologyRisk } from '../risk-list'
+import { RiskList } from '../risk-list'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
@@ -22,8 +20,7 @@ export interface ContractsSectionProps {
   sectionOrder: string
   nested?: boolean
   chainName: string
-  contracts: TechnologyContract[]
-  nativeContracts: Record<string, TechnologyContract[]>
+  contracts: Record<string, TechnologyContract[]>
   daSolution?: DaSolutionWith<{
     contracts: TechnologyContract[]
   }>
@@ -37,8 +34,7 @@ export interface ContractsSectionProps {
 
 export function ContractsSection(props: ContractsSectionProps) {
   if (
-    props.contracts.length === 0 &&
-    Object.keys(props.nativeContracts).length === 0 &&
+    Object.keys(props.contracts).length === 0 &&
     props.daSolution?.contracts.length === 0 &&
     props.escrows.length === 0 &&
     props.risks.length === 0 &&
@@ -47,13 +43,8 @@ export function ContractsSection(props: ContractsSectionProps) {
     return null
   }
 
-  const [changedContracts, unchangedContracts] = partition(
-    props.contracts,
-    (c) => !!c.implementationChanged || !!c.highSeverityFieldChanged,
-  )
-
-  const paritionedNativeContracts = Object.fromEntries(
-    Object.entries(props.nativeContracts).map(([chainName, contracts]) => {
+  const partitionedContracts = Object.fromEntries(
+    Object.entries(props.contracts).map(([chainName, contracts]) => {
       return [
         chainName,
         partition(
@@ -68,11 +59,11 @@ export function ContractsSection(props: ContractsSectionProps) {
     props.escrows,
     (c) => c.implementationChanged || c.highSeverityFieldChanged,
   )
-  const hasImplementationChanged = props.contracts.some(
-    (c) => !!c.implementationChanged,
+  const hasImplementationChanged = Object.values(props.contracts).some((p) =>
+    p.some((c) => !!c.implementationChanged),
   )
-  const hasHighSeverityFieldChanged = props.contracts.some(
-    (c) => !!c.highSeverityFieldChanged,
+  const hasHighSeverityFieldChanged = Object.values(props.contracts).some((p) =>
+    p.some((c) => !!c.highSeverityFieldChanged),
   )
   const hasContractsChanged =
     hasImplementationChanged || hasHighSeverityFieldChanged
@@ -84,7 +75,6 @@ export function ContractsSection(props: ContractsSectionProps) {
       nested={props.nested}
       sectionOrder={props.sectionOrder}
       isUnderReview={props.isUnderReview}
-      includeChildrenIfUnderReview
     >
       {hasContractsChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}
@@ -96,30 +86,8 @@ export function ContractsSection(props: ContractsSectionProps) {
           </figcaption>
         </figure>
       )}
-      {props.contracts.length > 0 && (
-        <div className="mt-8">
-          <ChainNameHeader>{props.chainName}</ChainNameHeader>
-          <div className="my-4">
-            {unchangedContracts.map((contract) => (
-              <ContractEntry
-                key={technologyContractKey(contract)}
-                contract={contract}
-                className="my-4"
-                type="contract"
-              />
-            ))}
-            {changedContracts.length > 0 && (
-              <ImplementationHasChangedContracts
-                contracts={changedContracts}
-                hasImplementationChanged={hasImplementationChanged}
-                hasHighSeverityFieldChanged={hasHighSeverityFieldChanged}
-              />
-            )}
-          </div>
-        </div>
-      )}
-      {Object.keys(paritionedNativeContracts).length > 0 &&
-        Object.entries(paritionedNativeContracts).map(
+      {Object.keys(partitionedContracts).length > 0 &&
+        Object.entries(partitionedContracts).map(
           ([chainName, [changedContracts, unchangedContracts]]) => {
             return (
               <div key={chainName} className="mt-8">

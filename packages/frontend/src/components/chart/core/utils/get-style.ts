@@ -1,9 +1,5 @@
-import {
-  FILL_STYLES,
-  LINE_STYLES,
-  type SeriesStyleFill,
-  type SeriesStyleLine,
-} from '../styles'
+import type { SeriesStyleFill, SeriesStyleLine } from '../styles'
+import { FILL_STYLES, LINE_STYLES } from '../styles'
 
 export function getFillStyle(
   ctx: CanvasRenderingContext2D,

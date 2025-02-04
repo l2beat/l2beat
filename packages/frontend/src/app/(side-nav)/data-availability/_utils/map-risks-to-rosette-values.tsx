@@ -1,75 +1,37 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
-import { type RosetteValue } from '~/components/rosette/types'
+import type { DaBridgeRisks, DaLayerRisks } from '@l2beat/config'
+import type { RosetteValue } from '~/components/rosette/types'
 
 export function mapLayerRisksToRosetteValues(
-  risks: DaLayer['risks'],
+  risks: DaLayerRisks,
 ): RosetteValue[] {
-  if (!('economicSecurity' in risks)) {
-    return [
-      {
-        name: 'DA Layer',
-        value: risks.value,
-        sentiment: risks.sentiment,
-        description: risks.description,
-        warning: undefined,
-      },
-    ]
+  const values: RosetteValue[] = []
+  if (risks.daLayer) {
+    values.push({ name: 'DA Layer', ...risks.daLayer })
   }
-
-  return [
-    {
-      name: 'Economic security',
-      value: risks.economicSecurity.value,
-      sentiment: risks.economicSecurity.sentiment,
-      description: risks.economicSecurity.description,
-      warning: undefined,
-    },
-    {
-      name: 'Fraud detection',
-      value: risks.fraudDetection.value,
-      sentiment: risks.fraudDetection.sentiment,
-      description: risks.fraudDetection.description,
-      warning: undefined,
-    },
-  ]
+  if (risks.economicSecurity) {
+    values.push({ name: 'Economic security', ...risks.economicSecurity })
+  }
+  if (risks.fraudDetection) {
+    values.push({ name: 'Fraud detection', ...risks.fraudDetection })
+  }
+  return values
 }
 
 export function mapBridgeRisksToRosetteValues(
-  risks: DaBridge['risks'],
+  risks: DaBridgeRisks,
 ): RosetteValue[] {
-  if (!('committeeSecurity' in risks)) {
-    return [
-      {
-        name: 'DA Bridge',
-        value: risks.value,
-        sentiment: risks.sentiment,
-        description: risks.description,
-        warning: undefined,
-      },
-    ]
+  const values: RosetteValue[] = []
+  if (risks.daBridge) {
+    values.push({ name: 'DA Bridge', ...risks.daBridge })
   }
-
-  return [
-    {
-      name: 'Committee security',
-      value: risks.committeeSecurity.value,
-      sentiment: risks.committeeSecurity.sentiment,
-      description: risks.committeeSecurity.description,
-      warning: undefined,
-    },
-    {
-      name: 'Upgradeability',
-      value: risks.upgradeability.value,
-      sentiment: risks.upgradeability.sentiment,
-      description: risks.upgradeability.description,
-      warning: undefined,
-    },
-    {
-      name: 'Relayer failure',
-      value: risks.relayerFailure.value,
-      sentiment: risks.relayerFailure.sentiment,
-      description: risks.relayerFailure.description,
-      warning: undefined,
-    },
-  ]
+  if (risks.committeeSecurity) {
+    values.push({ name: 'Committee security', ...risks.committeeSecurity })
+  }
+  if (risks.upgradeability) {
+    values.push({ name: 'Upgradeability', ...risks.upgradeability })
+  }
+  if (risks.relayerFailure) {
+    values.push({ name: 'Relayer failure', ...risks.relayerFailure })
+  }
+  return values
 }

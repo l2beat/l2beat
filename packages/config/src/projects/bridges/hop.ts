@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('hop')
 
@@ -135,24 +135,30 @@ export const hop: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('USDC Bridge'),
-      discovery.getContractDetails('DAI Bridge'),
-      discovery.getContractDetails('USDT Bridge'),
-      discovery.getContractDetails('ETH Bridge'),
-      discovery.getContractDetails('MATIC Bridge'),
-      discovery.getContractDetails('WBTC Bridge'),
-      discovery.getContractDetails('SNX Bridge'),
-      discovery.getContractDetails('HOP Bridge'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('USDC Bridge'),
+        discovery.getContractDetails('DAI Bridge'),
+        discovery.getContractDetails('USDT Bridge'),
+        discovery.getContractDetails('ETH Bridge'),
+        discovery.getContractDetails('MATIC Bridge'),
+        discovery.getContractDetails('WBTC Bridge'),
+        discovery.getContractDetails('SNX Bridge'),
+        discovery.getContractDetails('HOP Bridge'),
+      ],
+    },
     risks: [],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'Hop Multisig',
-      'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'Hop Multisig',
+          'Sets bridge parameters including bond size, challenge period length, etc... Manages whitelist of Bonders.',
+        ),
+      ],
+    },
+  },
   knowledgeNuggets: [
     {
       title: 'Hop protocol deep dive',

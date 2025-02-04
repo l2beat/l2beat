@@ -1,10 +1,10 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('corn')
 
@@ -107,10 +107,5 @@ export const corn: Layer2 = orbitStackL2({
       type: 'general',
     },
   ],
-  dataAvailabilitySolution: AnytrustDAC({
-    bridge: {
-      addedAt: new UnixTime(1737096804),
-    },
-    discovery,
-  }),
+  customDa: AnytrustDAC({ discovery }),
 })

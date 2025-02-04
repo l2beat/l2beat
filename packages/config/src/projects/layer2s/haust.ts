@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const haust: Layer2 = upcomingL2({
   id: 'haust',
@@ -16,7 +16,6 @@ export const haust: Layer2 = upcomingL2({
     stack: 'Polygon',
     links: {
       websites: ['https://haust.network/'],
-      apps: [],
       documentation: ['https://docs.haust.network/'],
       explorers: ['https://explorer-test.haust.network'],
       repositories: ['https://github.com/Haust-Labs'],

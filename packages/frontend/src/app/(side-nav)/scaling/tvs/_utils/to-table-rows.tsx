@@ -1,50 +1,50 @@
-import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
+import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
 export function toTableRows({
   projects,
   excludeAssociatedTokens,
 }: {
-  projects: ScalingTvlEntry[]
+  projects: ScalingTvsEntry[]
   excludeAssociatedTokens?: boolean
 }) {
   return projects.map((project) => {
     return {
       ...project,
-      tvl: {
-        ...project.tvl,
-        data: project.tvl.data && {
-          total: project.tvl.data.breakdown.total,
+      tvs: {
+        ...project.tvs,
+        data: project.tvs.data && {
+          total: project.tvs.data.breakdown.total,
           breakdown: {
-            ...project?.tvl.data.breakdown,
+            ...project?.tvs.data.breakdown,
             external: excludeAssociatedTokens
-              ? project.tvl.data.breakdown.external -
-                project.tvl.data.associated.external
-              : project.tvl.data.breakdown.external,
+              ? project.tvs.data.breakdown.external -
+                project.tvs.data.associated.external
+              : project.tvs.data.breakdown.external,
             canonical: excludeAssociatedTokens
-              ? project.tvl.data.breakdown.canonical -
-                project.tvl.data.associated.canonical
-              : project.tvl.data.breakdown.canonical,
+              ? project.tvs.data.breakdown.canonical -
+                project.tvs.data.associated.canonical
+              : project.tvs.data.breakdown.canonical,
             native: excludeAssociatedTokens
-              ? project.tvl.data.breakdown.native -
-                project.tvl.data.associated.native
-              : project.tvl.data.breakdown.native,
+              ? project.tvs.data.breakdown.native -
+                project.tvs.data.associated.native
+              : project.tvs.data.breakdown.native,
             associated: !excludeAssociatedTokens
-              ? project.tvl.data.associated
+              ? project.tvs.data.associated
               : { native: 0, canonical: 0, external: 0 },
           },
           change: {
             total: excludeAssociatedTokens
-              ? project.tvl.data.changeExcludingAssociated.total
-              : project.tvl.data.change.total,
+              ? project.tvs.data.changeExcludingAssociated.total
+              : project.tvs.data.change.total,
             canonical: excludeAssociatedTokens
-              ? project.tvl.data.changeExcludingAssociated.canonical
-              : project.tvl.data.change.canonical,
+              ? project.tvs.data.changeExcludingAssociated.canonical
+              : project.tvs.data.change.canonical,
             native: excludeAssociatedTokens
-              ? project.tvl.data.changeExcludingAssociated.native
-              : project.tvl.data.change.native,
+              ? project.tvs.data.changeExcludingAssociated.native
+              : project.tvs.data.change.native,
             external: excludeAssociatedTokens
-              ? project.tvl.data.changeExcludingAssociated.external
-              : project.tvl.data.change.external,
+              ? project.tvs.data.changeExcludingAssociated.external
+              : project.tvs.data.change.external,
           },
         },
       },
@@ -52,4 +52,4 @@ export function toTableRows({
   })
 }
 
-export type ScalingTvlTableRow = ReturnType<typeof toTableRows>[number]
+export type ScalingTvsTableRow = ReturnType<typeof toTableRows>[number]

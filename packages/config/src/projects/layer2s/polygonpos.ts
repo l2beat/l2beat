@@ -5,17 +5,12 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import {
-  CONTRACTS,
-  DA_MODES,
-  NUGGETS,
-  addSentimentToDataAvailability,
-} from '../../common'
+import { CONTRACTS, DA_MODES, NUGGETS } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -125,8 +120,8 @@ export const polygonpos: Layer2 = {
       startBlock: 5000000,
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.POLYGON_POS_DA],
+  dataAvailability: {
+    layer: DA_LAYERS.POLYGON_POS_DA,
     bridge: {
       value: `${currentValidatorSetSize} validators`,
       sentiment: 'warning',
@@ -134,7 +129,7 @@ export const polygonpos: Layer2 = {
         'The bridge verifies that at least 2/3+1 of the Polygon PoS stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set.',
     },
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_POS,
@@ -192,76 +187,82 @@ export const polygonpos: Layer2 = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('RootChain', {
-        description:
-          'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'StateSender',
-        'Smart contract allowing whitelisted addresses to send messages to contracts on Polygon PoS chain.',
-      ),
-      discovery.getContractDetails('RootChainManager', {
-        description:
-          'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('RootChain', {
+          description:
+            'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails(
+          'StateSender',
+          'Smart contract allowing whitelisted addresses to send messages to contracts on Polygon PoS chain.',
+        ),
+        discovery.getContractDetails('RootChainManager', {
+          description:
+            'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
           It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('StakeManager', {
-        description:
-          'Main configuration contract to manage stakers and their voting power and validate checkpoint signatures.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'StakingInfo',
-        'Contains logging and getter functions about staking on Polygon.',
-      ),
-      discovery.getContractDetails('Registry', {
-        description:
-          'Maintains the addresses of the contracts used in the system.',
-      }),
-      discovery.getContractDetails('DepositManager', {
-        description:
-          'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('WithdrawManager', {
-        description:
-          "Contract handling users' withdrawal finalization for tokens escrowed in DepositManager.",
-        ...upgrades,
-      }),
-      discovery.getContractDetails('ERC20PredicateBurnOnly', {
-        description:
-          'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-      }),
-      discovery.getContractDetails('ERC721PredicateBurnOnly', {
-        description:
-          'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
-      }),
+          ...upgrades,
+        }),
+        discovery.getContractDetails('StakeManager', {
+          description:
+            'Main configuration contract to manage stakers and their voting power and validate checkpoint signatures.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails(
+          'StakingInfo',
+          'Contains logging and getter functions about staking on Polygon.',
+        ),
+        discovery.getContractDetails('Registry', {
+          description:
+            'Maintains the addresses of the contracts used in the system.',
+        }),
+        discovery.getContractDetails('DepositManager', {
+          description:
+            'Contract to deposit and escrow ETH, ERC20 or ERC721 tokens. Currently only used for POL.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('WithdrawManager', {
+          description:
+            "Contract handling users' withdrawal finalization for tokens escrowed in DepositManager.",
+          ...upgrades,
+        }),
+        discovery.getContractDetails('ERC20PredicateBurnOnly', {
+          description:
+            'Contract used to initiate ERC20 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+        }),
+        discovery.getContractDetails('ERC721PredicateBurnOnly', {
+          description:
+            'Contract used to initiate ERC721 token withdrawals. The function to handle Plasma proofs is empty, meaning exits cannot be challenged.',
+        }),
 
-      discovery.getContractDetails('EventsHub', {
-        description: 'Contains events used by other contracts in the system.',
-        ...upgrades,
-      }),
+        discovery.getContractDetails('EventsHub', {
+          description: 'Contains events used by other contracts in the system.',
+          ...upgrades,
+        }),
 
-      discovery.getContractDetails(
-        'ExitNFT',
-        'NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).',
-      ),
-      discovery.getContractDetails(
-        'Timelock',
-        `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
-      ),
-    ],
+        discovery.getContractDetails(
+          'ExitNFT',
+          'NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).',
+        ),
+        discovery.getContractDetails(
+          'Timelock',
+          `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'PolygonMultisig',
-      'Can propose and execute code upgrades.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'PolygonMultisig',
+          'Can propose and execute code upgrades.',
+        ),
+      ],
+    },
+  },
   knowledgeNuggets: [
     {
       title: 'Is Polygon a side-chain?',

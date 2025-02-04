@@ -77,14 +77,14 @@ export function contractFlatteningHash(
 }
 
 export function flatteningHash(source: string): Hash256 {
-  const blake = createHash('blake2s256').update(source).digest('hex')
-  const cached = cache.get(blake)
+  const hashed = sha2_256bit(source)
+  const cached = cache.get(hashed)
   if (cached !== undefined) {
     return cached
   }
 
   const value = sha2_256bit(formatIntoHashable(source))
-  cache.set(blake, value)
+  cache.set(hashed, value)
   return value
 }
 

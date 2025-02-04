@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('ham', 'base')
 
@@ -35,7 +35,6 @@ export const ham: Layer3 = opStackL3({
         'https://ham.fun/developers',
       ],
       explorers: ['https://explorer.ham.fun/'],
-      repositories: [],
       socialMedia: [
         'https://x.com/HamOnWarpcast',
         'https://warpcast.com/~/channel/lp',

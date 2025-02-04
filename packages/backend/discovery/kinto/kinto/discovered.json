@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 715537,
-  "configHash": "0xe3290819b25a7b783233526f669d65593a882e85ef0c077f6737f6db3a0b5225",
+  "configHash": "0xa108b6251f7df884991091759eec8c1333155a28fd3841696f5ca90d7150331c",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -13,7 +13,7 @@
       "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT.",
           "via": []
@@ -53,7 +53,7 @@
       "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
         }
@@ -352,7 +352,7 @@
       "name": "KintoWallet",
       "address": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c",
       "sourceHashes": [
-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4",
+        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d",
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
@@ -597,14 +597,24 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9",
           "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address."
         },
         {
           "permission": "upgrade",
@@ -906,7 +916,7 @@
       "description": "Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2.",
           "via": []
@@ -1140,7 +1150,7 @@
       "description": "Kinto Treasury.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "description": "send tokens and ETH from the Treasury to any address without delay.",
           "via": []
@@ -1269,7 +1279,7 @@
       "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer.",
           "via": []
@@ -1485,17 +1495,17 @@
       "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
           "description": "manage addresses that are callable by EOAs and other white-/blacklists that are enforced globally on the Kinto L2."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
           "description": "send tokens and ETH from the Treasury to any address without delay."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
           "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
         },
@@ -1708,43 +1718,55 @@
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
           "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "description": "transfer KYC NFTs to a different address.",
+          "via": []
+        },
+        {
+          "permission": "interact",
           "to": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
@@ -1920,7 +1942,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
@@ -1932,7 +1954,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
@@ -1943,7 +1965,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
@@ -1954,7 +1976,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
@@ -1968,7 +1990,7 @@
       "severity": "MEDIUM",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
         }
@@ -2206,10 +2228,82 @@
       "function walletTs(address) view returns (uint256)"
     ],
     "0x25EA8c663BA8cCd79284B8c4001e7A245071885c": [
-      "constructor(address beacon, bytes data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
+      "constructor(address __entryPoint, address _kintoID, address _kintoApp, address _factory)",
+      "error AppNotSponsored(address app, address addr)",
+      "error AppNotWhitelisted(address app, address addr)",
+      "error DuplicateSigner()",
+      "error EmptySigners()",
+      "error InvalidApp()",
+      "error InvalidDevMode(uint256 newDevMode)",
+      "error InvalidInsurancePayment(address token)",
+      "error InvalidInsurancePolicy(uint256 newPolicy)",
+      "error InvalidPolicy(uint8 newPolicy, uint256 newSigners)",
+      "error InvalidRecoverer()",
+      "error InvalidSignatureLength()",
+      "error InvalidSigner()",
+      "error KYCRequired()",
+      "error LengthMismatch()",
+      "error MaxSignersExceeded(uint256 newSigners)",
+      "error OnlyFactory()",
+      "error OnlySelf()",
+      "error OwnerKYCMustBeBurned()",
+      "error RecoveryNotStarted()",
+      "error RecoveryTimeNotElapsed()",
+      "event AppKeyCreated(address indexed appKey, address indexed signer)",
+      "event Initialized(uint8 version)",
+      "event InsurancePolicyChanged(uint256 indexed newPolicy, uint256 indexed oldPolicy)",
+      "event KintoWalletInitialized(address indexed entryPoint, address indexed owner)",
+      "event RecovererChanged(address indexed newRecoverer, address indexed recoverer)",
+      "event SignersChanged(address[] newSigners, address[] oldSigners)",
+      "event WalletPolicyChanged(uint256 newPolicy, uint256 oldPolicy)",
+      "function ALL_SIGNERS() view returns (uint8)",
+      "function MAX_SIGNERS() view returns (uint8)",
+      "function MINUS_ONE_SIGNER() view returns (uint8)",
+      "function RECOVERY_PRICE() view returns (uint256)",
+      "function RECOVERY_TIME() view returns (uint256)",
+      "function SINGLE_SIGNER() view returns (uint8)",
+      "function TWO_SIGNERS() view returns (uint8)",
+      "function WALLET_TARGET_LIMIT() view returns (uint256)",
+      "function appRegistry() view returns (address)",
+      "function appSigner(address) view returns (address)",
+      "function appWhitelist(address) view returns (bool)",
+      "function cancelRecovery()",
+      "function changeRecoverer(address newRecoverer)",
+      "function completeRecovery(address[] newSigners)",
+      "function entryPoint() view returns (address)",
+      "function execute(address dest, uint256 value, bytes func)",
+      "function executeBatch(address[] dest, uint256[] values, bytes[] func)",
+      "function factory() view returns (address)",
+      "function funderWhitelist(address) view returns (bool)",
+      "function getAccessPoint() view returns (address)",
+      "function getInsurancePrice(uint256 newPolicy, address paymentToken) pure returns (uint256)",
+      "function getNonce() view returns (uint256)",
+      "function getOwners() view returns (address[])",
+      "function getOwnersCount() view returns (uint256)",
+      "function inRecovery() view returns (uint256)",
+      "function initialize(address anOwner, address _recoverer)",
+      "function insurancePolicy() view returns (uint256)",
+      "function insuranceTimestamp() view returns (uint256)",
+      "function isAppApproved(address app) view returns (bool)",
+      "function isFunderWhitelisted(address funder) view returns (bool)",
+      "function kintoID() view returns (address)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
+      "function owners(uint256) view returns (address)",
+      "function recoverer() view returns (address)",
+      "function resetSigners(address[] newSigners, uint8 newPolicy)",
+      "function setAppKey(address app, address signer)",
+      "function setFunderWhitelist(address[] newWhitelist, bool[] flags)",
+      "function setInsurancePolicy(uint256 newPolicy, address paymentToken)",
+      "function setSignerPolicy(uint8 newPolicy)",
+      "function signerPolicy() view returns (uint8)",
+      "function startRecovery()",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function tokensReceived(address, address, address, uint256, bytes, bytes) pure",
+      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)",
+      "function whitelistApp(address[] apps, bool[] flags)",
+      "function whitelistAppAndSetKey(address app, address signer)"
     ],
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
       "error DelegateAndRevert(bool success, bytes ret)",
@@ -3107,6 +3201,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }

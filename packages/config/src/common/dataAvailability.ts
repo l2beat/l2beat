@@ -1,39 +1,8 @@
-import type {
-  DataAvailabilityConfig,
-  DataAvailabilityLayer,
-  ProjectDataAvailability,
-} from '../types'
+import type { ProjectId } from '@l2beat/shared-pure'
+import type { TableReadyValue } from '../types'
 
-export function addSentimentToDataAvailability(
-  data: DataAvailabilityConfig,
-): ProjectDataAvailability {
-  return {
-    layer: addSentimentToLayers(data.layers),
-    bridge: data.bridge,
-    mode: data.mode,
-  }
-}
-
-function addSentimentToLayers(layers: DataAvailabilityLayer[]) {
-  const sentiment = layers[0].sentiment
-  return {
-    value: layers.map((l) => l.value).join(' or '),
-    secondLine: layers[0].secondLine,
-    sentiment,
-    description: layers
-      .map((layer, i) => {
-        if (i === 0) {
-          return layer.description
-        }
-        if (layer.fallbackDescription) {
-          return layer.fallbackDescription
-        }
-        throw new Error(
-          `Fallback is missing or too many layers! Revisit this function to fix!`,
-        )
-      })
-      .join(' '),
-  }
+export interface DaProjectTableValue extends TableReadyValue {
+  projectId?: ProjectId
 }
 
 export function getDacSentiment(config?: {

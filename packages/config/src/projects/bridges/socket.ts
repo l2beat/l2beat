@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('socket')
 
@@ -400,71 +400,73 @@ export const socket: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Socket',
-        'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
-      ),
-      discovery.getContractDetails(
-        'FastSwitchboard',
-        'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
-      ),
-      discovery.getContractDetails(
-        'PolygonL1Switchboard',
-        'Switchboard using native Polygon message passing.',
-      ),
-      discovery.getContractDetails(
-        'OptimismSwitchboard',
-        'Switchboard using native Optimism message passing.',
-      ),
-      discovery.getContractDetails(
-        'ArbitrumL1Switchboard',
-        'Switchboard using native Arbitrum message passing.',
-      ),
-      discovery.getContractDetails(
-        'ExecutionManager',
-        'Manages crosschain execution and fees.',
-      ),
-      discovery.getContractDetails(
-        'TransmitManager',
-        'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Socket',
+          'Central contract in Socket SuperBridge holding configuration of all Plugs and associated Switchboards.',
+        ),
+        discovery.getContractDetails(
+          'FastSwitchboard',
+          'Fast Switchboard having a set of Watchers authorizing transfers. If the transfer is not explicitly authorized within certain period of time, it is optimistically considered to be valid. Watchers can also stop (trip) an invalid transfer.',
+        ),
+        discovery.getContractDetails(
+          'PolygonL1Switchboard',
+          'Switchboard using native Polygon message passing.',
+        ),
+        discovery.getContractDetails(
+          'OptimismSwitchboard',
+          'Switchboard using native Optimism message passing.',
+        ),
+        discovery.getContractDetails(
+          'ArbitrumL1Switchboard',
+          'Switchboard using native Arbitrum message passing.',
+        ),
+        discovery.getContractDetails(
+          'ExecutionManager',
+          'Manages crosschain execution and fees.',
+        ),
+        discovery.getContractDetails(
+          'TransmitManager',
+          'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,
   },
-  permissions: [
-    {
-      name: 'socketadmin.eth EOA',
-      description:
-        'Account privileged to set up different roles in the main Socket contract.',
-      accounts: [discovery.getPermissionedAccount('Socket', 'owner')],
-    },
-    ...discovery.getMultisigPermission(
-      'LyraMultisig',
-      'Multisig that owns the Socket Vaults associated with Lyra.',
-    ),
-    ...discovery.getMultisigPermission(
-      'KintoMultisig',
-      'Multisig that owns the Socket Vaults associated with Kinto.',
-    ),
-    {
-      name: 'KintoEOA',
-      description: 'owns some Vaults associated with Kinto.',
-      accounts: [discovery.getPermissionedAccount('PAXG Vault Kinto', 'owner')],
-    },
-    ...discovery.getMultisigPermission(
-      'LooksRareMultisig',
-      'Multisig that owns a Socket Vault associated with LOOKS token.',
-    ),
-    {
-      name: 'PolynomialEOA',
-      description:
-        'EOA that owns the Socket Vaults associated with Polynomial L2.',
-      accounts: [
-        discovery.getPermissionedAccount('USDC Vault Polynomial', 'owner'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'socketadmin.eth EOA',
+          discovery.getPermissionedAccounts('Socket', 'owner'),
+          'Account privileged to set up different roles in the main Socket contract.',
+        ),
+        discovery.getMultisigPermission(
+          'LyraMultisig',
+          'Multisig that owns the Socket Vaults associated with Lyra.',
+        ),
+        discovery.getMultisigPermission(
+          'KintoMultisig',
+          'Multisig that owns the Socket Vaults associated with Kinto.',
+        ),
+        discovery.getPermissionDetails(
+          'KintoEOA',
+          discovery.getPermissionedAccounts('PAXG Vault Kinto', 'owner'),
+          'owns some Vaults associated with Kinto.',
+        ),
+        discovery.getMultisigPermission(
+          'LooksRareMultisig',
+          'Multisig that owns a Socket Vault associated with LOOKS token.',
+        ),
+        discovery.getPermissionDetails(
+          'PolynomialEOA',
+          discovery.getPermissionedAccounts('USDC Vault Polynomial', 'owner'),
+          'EOA that owns the Socket Vaults associated with Polynomial L2.',
+        ),
       ],
     },
-  ],
+  },
   knowledgeNuggets: [],
 }

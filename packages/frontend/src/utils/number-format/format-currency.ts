@@ -1,4 +1,5 @@
-import { assert, type StringWithAutocomplete } from '@l2beat/shared-pure'
+import type { StringWithAutocomplete } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { formatNumber } from './format-number'
 
 const currencyToSymbol: Record<string, string> = {

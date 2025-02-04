@@ -4,7 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -14,11 +13,11 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
+import { generateDiscoveryDrivenContracts } from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('aztec')
 
@@ -65,8 +64,6 @@ export const aztecV1: Layer2 = {
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
@@ -138,11 +135,11 @@ export const aztecV1: Layer2 = {
       },
     },
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -292,22 +289,24 @@ export const aztecV1: Layer2 = {
     ],
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
-  permissions: [
-    {
-      name: 'Rollup Providers',
-      description: `Addresses that can propose new blocks during regular rollup operation. Since the private key of one of them is public (first Anvil address), anyone can in principle resume regular operations. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
-      accounts: getRollupProviders().map((account) =>
-        discovery.formatPermissionedAccount(account),
-      ),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Rollup Providers',
+          discovery.formatPermissionedAccounts(getRollupProviders()),
+          `Addresses that can propose new blocks during regular rollup operation. Since the private key of one of them is public (first Anvil address), anyone can in principle resume regular operations. Every ${formatSeconds(escapeBlockUpperBound * assumedBlockTime)} a special ${formatSeconds((escapeBlockUpperBound - escapeBlockLowerBound) * assumedBlockTime)} window (escape hatch) is open during which anyone can propose new blocks.`,
+        ),
+        discovery.getMultisigPermission(
+          'AztecMultisig',
+          "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism, but it can halt regular operations by setting a reimbursement constant that is too high.",
+        ),
+      ],
     },
-    ...discovery.getMultisigPermission(
-      'AztecMultisig',
-      "Can update parameters related to the reimbursement of gas to permissioned rollup providers. It doesn't affect the escape hatch mechanism, but it can halt regular operations by setting a reimbursement constant that is too high.",
-    ),
-  ],
+  },
   milestones: [
     {
       title: 'Aztec operator sunset',

@@ -1,6 +1,19 @@
 {
   "ethereum": [
     {
+      "symbol": "LUMIA",
+      "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+      "coingeckoId": "lumia"
+    },
+    {
+      "symbol": "EURC",
+      "address": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c"
+    },
+    {
+      "symbol": "CAPS",
+      "address": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2"
+    },
+    {
       "symbol": "KNINE",
       "address": "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE"
     },
@@ -813,10 +826,6 @@
     {
       "symbol": "DPX",
       "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81"
-    },
-    {
-      "symbol": "DVF",
-      "address": "0xDDdddd4301A082e62E84e43F474f044423921918"
     },
     {
       "symbol": "DYDX",

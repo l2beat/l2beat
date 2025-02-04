@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x5812ce5ee82fb07774d2e3aba934fc6fe53010a77e6330f8bef8278ed17eb6ce",
+  "configHash": "0x58c97ac9be53efca56c3f570ddefd6e2429a368a9601a183e06d1357654e4416",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -158,7 +158,7 @@
       "description": "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x918778e825747a892b17C66fe7D24C618262867d",
           "description": "set and change address mappings."
         },
@@ -404,7 +404,7 @@
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
           "description": "set and change address mappings.",
           "via": []
@@ -700,6 +700,7 @@
     { "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751" },
     { "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F" },
     { "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5" },
+    { "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914" },
     { "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69" },
     { "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6" },
     { "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01" },
@@ -1325,8 +1326,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x3ec0d7a5571009f00435beb21498c26a54ac2a14bd808660530aa034901db34d",
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5",
-    "opstack/AddressManager": "0xf7171b165cab3adf08aa938964e46a997088e3a63fe6a94887a0fbee94994db3"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37"
   }
 }

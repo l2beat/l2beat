@@ -7,8 +7,8 @@
     value: "PoS network"
   }
   exitWindow: {
-    definingMetric: 0
     description: "There is no window for users to exit in case of an unwanted regular upgrade since contracts are instantly upgradable."
+    orderHint: 0
     secondLine: undefined
     sentiment: "bad"
     value: "None"
@@ -24,8 +24,8 @@
     value: "Enqueue via L1"
   }
   stateValidation: {
-    definingMetric: -Infinity
     description: "Currently the system permits invalid state roots. More details in project overview."
+    orderHint: -Infinity
     sentiment: "bad"
     value: "None"
   }

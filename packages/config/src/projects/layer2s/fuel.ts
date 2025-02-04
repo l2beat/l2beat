@@ -13,15 +13,14 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -43,13 +42,13 @@ const challengePeriod = discovery.getContractValue<number>(
 
 export const fuel: Layer2 = {
   id: ProjectId('fuel'),
-  capability: 'appchain',
+  capability: 'universal',
   addedAt: new UnixTime(1729589660), // 2024-10-22T09:34:20Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_BLOBS],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_BLOBS,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-  }),
+  },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Fuel Ignition',
@@ -217,8 +216,8 @@ export const fuel: Layer2 = {
       ],
     },
     exitMechanisms: [
-      EXITS.REGULAR('optimistic', 'merkle proof'),
-      EXITS.FORCED('all-withdrawals'),
+      EXITS.REGULAR_MESSAGING('optimistic'),
+      EXITS.FORCED_MESSAGING('all-messages'),
     ],
     otherConsiderations: [
       {
@@ -235,74 +234,74 @@ export const fuel: Layer2 = {
       },
     ],
   },
-  permissions: [
-    {
-      name: 'ERC20Gateway pausers',
-      description: 'Whitelisted addresses that can pause the ERC20Gateway.',
-      accounts: discovery.getAccessControlRolePermission(
-        'FuelERC20Gateway',
-        'PAUSER_ROLE',
-      ),
-    },
-    {
-      name: 'FuelMessagePortal pausers',
-      description:
-        'Whitelisted addresses that can pause the FuelMessagePortal and blacklist L2->L1 messages.',
-      accounts: discovery.getAccessControlRolePermission(
-        'FuelMessagePortal',
-        'PAUSER_ROLE',
-      ),
-    },
-    {
-      name: 'FuelChainState pausers',
-      description: 'Whitelisted addresses that can pause the FuelChainState.',
-      accounts: discovery.getAccessControlRolePermission(
-        'FuelChainState',
-        'PAUSER_ROLE',
-      ),
-    },
-    {
-      name: 'Sequencer',
-      description: 'Permissioned address submitting tx data as blobs.',
-      accounts: [
-        {
-          address: sequencerAddress,
-          type: 'EOA',
-        },
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'ERC20Gateway pausers',
+          discovery.getAccessControlRolePermission(
+            'FuelERC20Gateway',
+            'PAUSER_ROLE',
+          ),
+          'Whitelisted addresses that can pause the ERC20Gateway.',
+        ),
+        discovery.getPermissionDetails(
+          'FuelMessagePortal pausers',
+          discovery.getAccessControlRolePermission(
+            'FuelMessagePortal',
+            'PAUSER_ROLE',
+          ),
+          'Whitelisted addresses that can pause the FuelMessagePortal and blacklist L2->L1 messages.',
+        ),
+        discovery.getPermissionDetails(
+          'FuelChainState pausers',
+          discovery.getAccessControlRolePermission(
+            'FuelChainState',
+            'PAUSER_ROLE',
+          ),
+          'Whitelisted addresses that can pause the FuelChainState.',
+        ),
+        discovery.getPermissionDetails(
+          'Sequencer',
+          discovery.formatPermissionedAccounts([sequencerAddress]),
+          'Permissioned address submitting tx data as blobs.',
+        ),
+        discovery.getPermissionDetails(
+          'Proposer',
+          discovery.getAccessControlRolePermission(
+            'FuelChainState',
+            'COMMITTER_ROLE',
+          ),
+          'Permissioned address that can propose new state roots.',
+        ),
+        discovery.getMultisigPermission(
+          'FuelSecurityCouncil',
+          'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
+        ),
       ],
     },
-    {
-      name: 'Proposer',
-      description: 'Permissioned address that can propose new state roots.',
-      accounts: discovery.getAccessControlRolePermission(
-        'FuelChainState',
-        'COMMITTER_ROLE',
-      ),
-    },
-    ...discovery.getMultisigPermission(
-      'FuelSecurityCouncil',
-      'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
-    ),
-  ],
+  },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('FuelERC20Gateway', {
-        description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-      discovery.getContractDetails('FuelMessagePortal', {
-        description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-      discovery.getContractDetails('FuelChainState', {
-        description:
-          'Contract that allows state root submissions and settlement.',
-        upgradableBy: ['FuelSecurityCouncil'],
-        upgradeDelay: 'None',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('FuelERC20Gateway', {
+          description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+        discovery.getContractDetails('FuelMessagePortal', {
+          description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+        discovery.getContractDetails('FuelChainState', {
+          description:
+            'Contract that allows state root submissions and settlement.',
+          upgradableBy: ['FuelSecurityCouncil'],
+          upgradeDelay: 'None',
+        }),
+      ],
+    },
     risks: [
       {
         category: 'Funds can be stolen if',

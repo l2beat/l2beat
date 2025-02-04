@@ -3,8 +3,8 @@ import { utils } from 'ethers'
 
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
-import type { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('near')
 
@@ -136,28 +136,35 @@ export const near: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('NearBridge', {
-        description: 'Contract storing Near state checkpoints.',
-      }),
-      discovery.getContractDetails('NearProver', {
-        description: 'Contract verifying merkle proofs, used for withdrawals.',
-      }),
-      discovery.getContractDetails(
-        'ERC20Locker',
-        'Escrow contract for ERC20 tokens.',
-      ),
-      discovery.getContractDetails(
-        'EthCustodian',
-        'Escrow contract for ETH tokens.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('NearBridge', {
+          description: 'Contract storing Near state checkpoints.',
+        }),
+        discovery.getContractDetails('NearProver', {
+          description:
+            'Contract verifying merkle proofs, used for withdrawals.',
+        }),
+        discovery.getContractDetails(
+          'ERC20Locker',
+          'Escrow contract for ERC20 tokens.',
+        ),
+        discovery.getContractDetails(
+          'EthCustodian',
+          'Escrow contract for ETH tokens.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'BridgeAdminMultisig',
-      'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
-    ),
-  ],
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getMultisigPermission(
+          'BridgeAdminMultisig',
+          'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
+        ),
+      ],
+    },
+  },
 }

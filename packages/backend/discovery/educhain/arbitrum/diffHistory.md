@@ -1,4 +1,82 @@
-Generated with discovered.json: 0xc6cbefb91ccd73e6d2ed97d65e70219527ffc4f1
+Generated with discovered.json: 0x9959a9957034e8917aca28df6afd08aab9741636
+
+# Diff at Tue, 04 Feb 2025 12:33:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 298084261
+- current block number: 298084261
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 298084261 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x9132151475ACCf0662C545Bc81FbC1741d978EE0) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.5.permission:
+-        "fastconfirm"
++        "interact"
+      issuedPermissions.5.to:
+-        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.5.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.5.via.0.address:
+-        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
++        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
+      issuedPermissions.4.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
+      issuedPermissions.3.to:
+-        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
++        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
+      issuedPermissions.2.to:
+-        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
++        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
+      issuedPermissions.1.to:
+-        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
++        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
+      issuedPermissions.0.permission:
+-        "configure"
++        "fastconfirm"
+      issuedPermissions.0.to:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.via.0.address:
+-        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
++        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x31e70c52bbd57ad0aad8c4f23108d655605da244
 
 # Diff at Wed, 22 Jan 2025 12:13:06 GMT:
 

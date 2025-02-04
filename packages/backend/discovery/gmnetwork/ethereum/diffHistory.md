@@ -1,4 +1,67 @@
-Generated with discovered.json: 0x01a1b4adb9fe43763982f5c38866943492fac5f6
+Generated with discovered.json: 0xa1caf380818608eda6297ff2166ff3653050c627
+
+# Diff at Tue, 04 Feb 2025 12:31:28 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21235441
+- current block number: 21235441
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21235441 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x081A54442Af40a26Ae453Da0F044a49Aa3314453) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0x8C467dAC40f01DFA83666F39108992a0635faeD9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0xCD749A3e59543B31658b725136Ef3616bE7001bc) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract DataAvailabilityChallenge (0xd1fe2EEb5637b0F78BfcEd9186ebE716aC73DEb6) {
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract GmMultisig (0xf040a7A04e914E1b4383C04359D03Ab5F12E7828) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xcfcaaab272ce2fe9521df7028334c0a36279de1c
 
 # Diff at Mon, 20 Jan 2025 11:09:33 GMT:
 

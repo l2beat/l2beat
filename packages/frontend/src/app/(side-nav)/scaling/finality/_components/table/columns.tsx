@@ -1,14 +1,18 @@
 import { formatSeconds } from '@l2beat/shared-pure'
-import { type Row, createColumnHelper } from '@tanstack/react-table'
+import type { Row } from '@tanstack/react-table'
+import { createColumnHelper } from '@tanstack/react-table'
 import { Badge } from '~/components/badge/badge'
-import { TwoRowCell } from '~/components/table/cells/two-row-cell'
+import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
-  TypeCell,
   TypeExplanationTooltip,
-} from '~/components/table/cells/type-cell'
-import { sortTwoRowCell } from '~/components/table/sorting/functions/sort-two-row-cell'
+  TypeInfo,
+} from '~/components/table/cells/type-info'
+import {
+  adjustTableValue,
+  sortTableValues,
+} from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { FinalityDurationCell } from './finality-duration-cell'
 
 const sortFinality =
@@ -30,36 +34,28 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeCell provider={ctx.row.original.stack}>{ctx.getValue()}</TypeCell>
+      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
-  columnHelper.accessor('dataAvailabilityMode.value', {
+  columnHelper.accessor((e) => adjustTableValue(e.dataAvailabilityMode), {
     header: 'DA Mode',
-    cell: (ctx) => {
-      const daMode = ctx.row.original.dataAvailabilityMode
-      if (!daMode) {
-        return <span>&mdash;</span>
-      }
-
-      return (
-        <TwoRowCell>
-          <TwoRowCell.First>{daMode.value}</TwoRowCell.First>
-          {daMode.secondLine && (
-            <TwoRowCell.Second>{daMode.secondLine}</TwoRowCell.Second>
-          )}
-        </TwoRowCell>
-      )
-    },
     meta: {
       cellClassName: 'whitespace-nowrap',
       tooltip:
         'The type shows whether projects are posting transaction data batches or state diffs to the L1.',
     },
+    cell: (ctx) => (
+      <TableValueCell
+        emptyMode="em-dash"
+        value={ctx.row.original.dataAvailabilityMode}
+      />
+    ),
+    sortUndefined: 'last',
     sortingFn: (a, b) =>
-      sortTwoRowCell(
+      sortTableValues(
         a.original.dataAvailabilityMode,
         b.original.dataAvailabilityMode,
       ),

@@ -1,11 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  CONTRACTS,
-  DA_BRIDGES,
-  DA_LAYERS,
-  DA_MODES,
-  addSentimentToDataAvailability,
-} from '../../common'
+import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { EXITS } from '../../common/exits'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
@@ -14,9 +8,9 @@ import { RISK_VIEW } from '../../common/riskView'
 import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
-import type { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('termstructure')
 
@@ -52,11 +46,11 @@ export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
   capability: 'appchain',
   addedAt: new UnixTime(1709724246), // 2024-03-06T11:24:06Z
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.STATE_DIFFS,
-  }),
+  },
   badges: [
     Badge.VM.AppChain,
     Badge.DA.EthereumCalldata,
@@ -236,7 +230,7 @@ export const termstructure: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('zk', 'no proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('zk'),
         references: [
           {
             title:
@@ -250,7 +244,7 @@ export const termstructure: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED(),
+        ...EXITS.FORCED_WITHDRAWAL(),
         references: [
           {
             title:
@@ -295,78 +289,70 @@ export const termstructure: Layer2 = {
       },
     ],
   },
-  permissions: [
-    {
-      name: 'Admins',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZkTrueUp',
-        'ADMIN_ROLE',
-      ),
-      description:
-        'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Admins',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'ADMIN_ROLE'),
+          'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
+        ),
+        discovery.getMultisigPermission(
+          'TermStructureMultisig',
+          'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
+        ),
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'OPERATOR_ROLE'),
+          'Can add tokens to the system.',
+        ),
+        discovery.getPermissionDetails(
+          'Committers',
+          discovery.getAccessControlRolePermission(
+            'ZkTrueUp',
+            'COMMITTER_ROLE',
+          ),
+          'Can commit blocks on L1 and revert pending (i.e. not yet executed) blocks.',
+        ),
+        discovery.getPermissionDetails(
+          'Verifiers',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'VERIFIER_ROLE'),
+          'Can verify blocks on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'Executers',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'EXECUTER_ROLE'),
+          'Can execute blocks on L1.',
+        ),
+        discovery.getMultisigPermission(
+          'VaultMultisig',
+          `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
+        ),
+        discovery.getMultisigPermission(
+          'InsuranceMultisig',
+          `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
+        ),
+        discovery.getMultisigPermission(
+          'TreasuryMultisig',
+          `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
+        ),
+      ],
     },
-    ...discovery.getMultisigPermission(
-      'TermStructureMultisig',
-      'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
-    ),
-    {
-      name: 'Operators',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZkTrueUp',
-        'OPERATOR_ROLE',
-      ),
-      description: 'Can add tokens to the system.',
-    },
-    {
-      name: 'Committers',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZkTrueUp',
-        'COMMITTER_ROLE',
-      ),
-      description:
-        'Can commit blocks on L1 and revert pending (i.e. not yet executed) blocks.',
-    },
-    {
-      name: 'Verifiers',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZkTrueUp',
-        'VERIFIER_ROLE',
-      ),
-      description: 'Can verify blocks on L1.',
-    },
-    {
-      name: 'Executers',
-      accounts: discovery.getAccessControlRolePermission(
-        'ZkTrueUp',
-        'EXECUTER_ROLE',
-      ),
-      description: 'Can execute blocks on L1.',
-    },
-    ...discovery.getMultisigPermission(
-      'VaultMultisig',
-      `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
-    ),
-    ...discovery.getMultisigPermission(
-      'InsuranceMultisig',
-      `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
-    ),
-    ...discovery.getMultisigPermission(
-      'TreasuryMultisig',
-      `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
-    ),
-  ],
+  },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('ZkTrueUp', {
-        description:
-          'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('Verifier', {
-        description: 'Verifier contract used to verify the SNARK proofs.',
-        ...upgrades,
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('ZkTrueUp', {
+          description:
+            'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',
+          ...upgrades,
+        }),
+        discovery.getContractDetails('Verifier', {
+          description: 'Verifier contract used to verify the SNARK proofs.',
+          ...upgrades,
+        }),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

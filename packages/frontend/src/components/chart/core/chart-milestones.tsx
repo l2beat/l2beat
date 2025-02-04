@@ -1,4 +1,4 @@
-import { type Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'

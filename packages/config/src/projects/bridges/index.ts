@@ -1,3 +1,4 @@
+import type { Bridge } from '../../types'
 import { acrossV3 } from './acrossV3'
 import { allbridge } from './allbridge'
 import { amarok } from './amarok'
@@ -34,17 +35,15 @@ import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
 import { socket } from './socket'
 import { sollet } from './sollet'
+import { sonicgateway } from './sonicgateway'
 import { stargate } from './stargate'
 import { stargatev2 } from './stargatev2'
 import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { transporter } from './transporter'
-import type { Bridge } from './types'
 import { wormholeV1 } from './wormholeV1'
 import { xdai } from './xdai'
-
-export * from './types'
 
 export const bridges: Bridge[] = [
   acrossV3,
@@ -82,6 +81,7 @@ export const bridges: Bridge[] = [
   skaleIMA,
   socket,
   sollet,
+  sonicgateway,
   stargate,
   stargatev2,
   sygma,

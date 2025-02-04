@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import type { Layer3 } from '../../types'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
-import type { Layer3 } from './types'
 
 export const lumiterra: Layer3 = upcomingL3({
   id: 'lumiterra',
@@ -22,8 +22,6 @@ export const lumiterra: Layer3 = upcomingL3({
       documentation: [
         'https://docs.lumiterra.net/docs/overview/mainnet-beta/beta-test-arbiturm',
       ],
-      explorers: [],
-      repositories: [],
       socialMedia: [
         'https://x.com/LumiterraGame',
         'https://discord.com/invite/q3P5hjqsuE',

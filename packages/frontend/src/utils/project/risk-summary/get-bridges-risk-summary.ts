@@ -1,6 +1,7 @@
-import { type Bridge, CONTRACTS, type ScalingProjectRisk } from '@l2beat/config'
-import { type RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
-import { type ProjectSectionProps } from '../../../components/projects/sections/types'
+import type { Bridge, ScalingProjectRisk } from '@l2beat/config'
+import { CONTRACTS } from '@l2beat/config'
+import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
+import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './group-risks'
 
 export function getBridgesRiskSummarySection(

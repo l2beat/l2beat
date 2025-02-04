@@ -1,3 +1,155 @@
+Generated with discovered.json: 0x114989a1caf806304df73e9e09dde64321c94c90
+
+# Diff at Tue, 04 Feb 2025 12:34:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 25722659
+- current block number: 25722659
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25722659 (main branch discovery), not current.
+
+```diff
+    contract UTBDecent (0x43019F8BE1F192587883b67dEA2994999f5a2de2) {
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.1.permission:
+-        "fastconfirm"
++        "interact"
+      issuedPermissions.1.to:
+-        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.1.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      issuedPermissions.1.via.0.address:
+-        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
++        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+      issuedPermissions.0.permission:
+-        "configure"
++        "fastconfirm"
+      issuedPermissions.0.to:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
+      issuedPermissions.0.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      issuedPermissions.0.via.0.address:
+-        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+    }
+```
+
+```diff
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52) {
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x0c344801c24d8ddad064ab70959560d2d70bd81d
+
+# Diff at Thu, 30 Jan 2025 10:58:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2da0612158e4fa23c41926c49e88a7b955a8c5dc block: 25417259
+- current block number: 25722659
+
+## Description
+
+Add 1/1 fastConfirmer.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.4:
++        {"permission":"validate","to":"0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[{"address":"0xc207cbC35DD3CD172059730380A45aE14eb0e403"}]}
+      issuedPermissions.3:
++        {"permission":"validate","to":"0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.2.permission:
+-        "validate"
++        "upgrade"
+      issuedPermissions.2.to:
+-        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
++        "0x871e290d5447b958131F6d44f915F10032436ee6"
+      issuedPermissions.2.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      issuedPermissions.2.via.0:
++        {"address":"0xaA3A7A2ec2477A61082E1C41a2c6710587917028"}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "fastconfirm"
+      issuedPermissions.1.to:
+-        "0x871e290d5447b958131F6d44f915F10032436ee6"
++        "0x3cAF7ceF6B2aECA72102E8835325B26BF99FE9E0"
+      issuedPermissions.1.via.0.address:
+-        "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+      issuedPermissions.1.description:
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.1:
++        "0xc207cbC35DD3CD172059730380A45aE14eb0e403"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DegenFastConfirmerMultisig (0xc207cbC35DD3CD172059730380A45aE14eb0e403)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DegenFastConfirmerMultisig/GnosisSafeL2.sol    | 1032 ++++++++++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0x6c53dc37c04560e441e33841b7872f63689aa38e
 
 # Diff at Fri, 24 Jan 2025 10:54:05 GMT:

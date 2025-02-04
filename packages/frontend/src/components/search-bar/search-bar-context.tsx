@@ -3,7 +3,7 @@
 import { createContext, useContext, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { SearchBarDialog } from './search-bar-dialog'
-import { type SearchBarProject } from './search-bar-entry'
+import type { SearchBarProject } from './search-bar-entry'
 
 type SearchBarContextValue = {
   open: boolean

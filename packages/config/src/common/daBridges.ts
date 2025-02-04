@@ -1,39 +1,44 @@
-import type { DataAvailabilityBridge } from '../types'
-import { getDacSentiment } from './dataAvailability'
+import { ProjectId } from '@l2beat/shared-pure'
+import { probabilityOfCompromise } from '../projects/da-beat/common'
+import { type DaProjectTableValue, getDacSentiment } from './dataAvailability'
 
-const NONE: DataAvailabilityBridge = {
+const NONE: DaProjectTableValue = {
   value: 'None',
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available.',
+  orderHint: -2,
 }
 
-const NONE_WITH_DA_CHALLENGES: DataAvailabilityBridge = {
+const NONE_WITH_DA_CHALLENGES: DaProjectTableValue = {
   value: 'None + DA challenges',
   sentiment: 'bad',
   description:
     'There is no bridge that can attest if the data has been made available. However, there is a mechanism that allows users to challenge the unavailability of data.',
+  orderHint: -1,
 }
 
-const ENSHRINED: DataAvailabilityBridge = {
+const ENSHRINED: DaProjectTableValue = {
   value: 'Enshrined',
   sentiment: 'good',
   description:
     'The validating bridge has access to all the data, as it is posted onchain.',
+  projectId: ProjectId('enshrined-bridge'),
 }
 
-const OPTIMISTIC: DataAvailabilityBridge = {
+const OPTIMISTIC: DaProjectTableValue = {
   value: 'Optimistic',
   sentiment: 'bad',
   description:
     'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
 }
 
-const BLOBSTREAM: DataAvailabilityBridge = {
+const BLOBSTREAM: DaProjectTableValue = {
   value: 'Blobstream',
   sentiment: 'warning',
   description:
     'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
+  projectId: ProjectId('blobstream'),
 }
 
 function DAC_MEMBERS({
@@ -42,7 +47,7 @@ function DAC_MEMBERS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): DataAvailabilityBridge {
+}): DaProjectTableValue {
   return {
     value: requiredSignatures
       ? `${requiredSignatures}/${membersCount} DAC Members`
@@ -54,6 +59,7 @@ function DAC_MEMBERS({
     description: requiredSignatures
       ? `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`
       : `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 
@@ -63,11 +69,12 @@ function STAKED_OPERATORS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): DataAvailabilityBridge {
+}): DaProjectTableValue {
   return {
     value: `${requiredSignatures}/${membersCount} Staked Operators`,
     sentiment: 'warning',
     description: `There is a threshold of ${requiredSignatures}/${membersCount} of staked operators that must sign and attest that the data has been made available.`,
+    orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }
 

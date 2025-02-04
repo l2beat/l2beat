@@ -8,14 +8,13 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
 import { getStage } from '../layer2s/common/stages/getStage'
-import type { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
@@ -53,7 +52,6 @@ export const bugbuster: Layer3 = {
         'https://t.me/+G_CPMEhCHC04MzA5',
       ],
       websites: ['https://bugbuster.app/'],
-      apps: [],
       explorers: [
         'https://optimism.cartesiscan.io/applications/0x3ff5c7383f614256053c3f6b86a47ba974937299',
       ],
@@ -143,17 +141,17 @@ export const bugbuster: Layer3 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR_WITHDRAWAL('optimistic'),
         references: [],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.ETH_CALLDATA],
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
 
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
@@ -171,50 +169,46 @@ export const bugbuster: Layer3 = {
     ),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  permissions: [
-    {
-      name: 'BugBuster Owner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('BugBuster', 'owner'),
+  permissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'BugBuster Owner',
+          discovery.getPermissionedAccounts('BugBuster', 'owner'),
+          'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
+        ),
+        discovery.getPermissionDetails(
+          'Authority Owner',
+          discovery.getPermissionedAccounts('Authority', 'owner'),
+          'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
         ),
       ],
-      description:
-        'Owner of the Bug Buster Cartesi DApp. Can change the consensus reference and therefore steal all funds.',
     },
-    {
-      name: 'Authority Owner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('Authority', 'owner'),
-        ),
-      ],
-      description:
-        'Owner of the Authority contract - the current consensus implementation. Can make arbitrary claims about the current state of Bug Buster and steal all funds in the absence of fraud proofs.',
-    },
-  ],
+  },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('BugBuster', {
-        description:
-          'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
-      }),
-      discovery.getContractDetails('InputBox', {
-        description:
-          'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
-      }),
-      discovery.getContractDetails('ERC20Portal', {
-        description:
-          'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps (like e.g. Bug Buster).',
-      }),
-      discovery.getContractDetails('Authority', {
-        description:
-          'Simple consensus model controlled by a single address, the owner.',
-      }),
-      discovery.getContractDetails('History', {
-        description: 'Contract that stores claims for Cartesi DApps.',
-      }),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('BugBuster', {
+          description:
+            'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
+        }),
+        discovery.getContractDetails('InputBox', {
+          description:
+            'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
+        }),
+        discovery.getContractDetails('ERC20Portal', {
+          description:
+            'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps (like e.g. Bug Buster).',
+        }),
+        discovery.getContractDetails('Authority', {
+          description:
+            'Simple consensus model controlled by a single address, the owner.',
+        }),
+        discovery.getContractDetails('History', {
+          description: 'Contract that stores claims for Cartesi DApps.',
+        }),
+      ],
+    },
     risks: [],
   },
 }

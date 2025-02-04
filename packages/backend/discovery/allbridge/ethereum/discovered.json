@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 21723681,
-  "configHash": "0xaf03b60016afcda3d9ddc459329d032404d8bdeea67bdbc378015ef02ebfbf83",
+  "configHash": "0xf6abd1ca8c2c5d9df8983509d9931874a08441ba3364d0733276cd128eee3f84",
   "contracts": [
     {
       "name": "GasOracle",
@@ -276,9 +276,12 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x01a494079DCB715f622340301463cE50cd69A4D0" },
+    { "address": "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5" },
     { "address": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622" },
     { "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074" },
+    { "address": "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA" },
     { "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E" },
+    { "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414" },
     { "address": "0xF62e459Aa6a959c4224A7315F85e4703f462918A" }
   ],
   "abis": {
@@ -613,6 +616,6 @@
     ]
   },
   "usedTemplates": {
-    "allbridge/pool": "0x6132a09ee1d6cf569910eab3f2112ca582d44919a52d15cd81b207a9acd3c006"
+    "allbridge/pool": "0xbbbfefab6d94d83468f96bce57a610832cd0fa979f9add0c9a2210df8de7adfe"
   }
 }

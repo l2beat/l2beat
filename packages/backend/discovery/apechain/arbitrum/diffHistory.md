@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x48ac6972cbf5db4b129647b8f3d4bff8e9fca6c9
+Generated with discovered.json: 0x38f26a13abbbe44a534f45f77a817999644354dc
+
+# Diff at Tue, 04 Feb 2025 12:33:46 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 287770407
+- current block number: 287770407
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287770407 (main branch discovery), not current.
+
+```diff
+    contract ApeChainMultisig (0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xe032d15909e90f9A36901abB08944653e9E87d72) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xf5c710feb7246afcd7c7f163c168a7ae730c99be
 
 # Diff at Mon, 20 Jan 2025 11:10:27 GMT:
 

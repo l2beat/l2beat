@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x447083d82059c0c2abf97f51a8436085bf296fe6
+Generated with discovered.json: 0xcac0238baa8a3f9854e2b53ebfeb029b9b0f2274
+
+# Diff at Tue, 04 Feb 2025 12:31:33 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21465186
+- current block number: 21465186
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465186 (main branch discovery), not current.
+
+```diff
+    contract HychainMultisig (0x798Fa726f0B4DF564681446D051b344E3FE4a6ca) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0x8f98f9ae2f2836Ed3a628c23311Ad9976B9fBF1B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x87b238bb5a1c976380c812e83187af26ba873805
 
 # Diff at Mon, 20 Jan 2025 11:09:35 GMT:
 

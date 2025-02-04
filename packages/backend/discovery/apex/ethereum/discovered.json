@@ -1,8 +1,8 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 19825348,
-  "configHash": "0x3d1fdfc99f2044bbaa42f4026f6f57fdfd74dfa5caa83cdc851bdf4d95b3eb36",
+  "blockNumber": 21736735,
+  "configHash": "0xa4b75f61d0a63fb34ec59e1aa98fe7af447fc9772628387ec77bf5d23a1384a9",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -108,7 +108,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 464,
+        "nonce": 479,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -239,7 +239,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 8670,
+        "getLastBatchId": 13900,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -250,12 +250,12 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 8550,
+        "getSequenceNumber": 13780,
         "getSystemAssetType": "1147032829293317481173155891309375254605214077236177772270270553197624560221",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "getValidiumVaultRoot": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "globalConfigurationHash": "0x01897348c8e7a04145727a7d369a76c01711a828d58afeca4c3e7d86596b85ba",
+        "globalConfigurationHash": "0x0274c9dc2096cfe79c5f28f5bfb3a95b3bd0692430b4f9ba79f871068611804a",
         "implementation": "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
         "initializerSize": 0,
         "isFrozen": false,
@@ -408,7 +408,7 @@
         "escapeVerifier": "0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD",
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 0,
-        "getLastBatchId": 1837,
+        "getLastBatchId": 3311,
         "getOrderRoot": "3531663064398379414392103051782416009365270089329406087415787723190509217307",
         "getOrderTreeHeight": 64,
         "getRegisteredAvailabilityVerifiers": [
@@ -419,7 +419,7 @@
         ],
         "getRollupTreeHeight": 64,
         "getRollupVaultRoot": "2342595862804194058781558162417993093531983529298102817989527487868713080358",
-        "getSequenceNumber": 1837,
+        "getSequenceNumber": 3311,
         "getSystemAssetType": "1269275113502683198091459784363068703822460788394621599952252545182480283333",
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
@@ -460,7 +460,7 @@
         "hasRegisteredFact": true,
         "identify": "StarkWare_FinalizableGpsFactAdapter_2022_1",
         "isFinalized": false,
-        "programHash": "3114724292040200590153042023978438629733352741898912919152162079752811928849"
+        "programHash": "2530337539466159944237001094809327283009177793361359619481044346150483328860"
       },
       "derivedName": "FinalizableGpsFactAdapter"
     },
@@ -1252,6 +1252,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

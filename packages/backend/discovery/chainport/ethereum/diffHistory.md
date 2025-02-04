@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xb7361fabb5c4f220896fcdfd4c4e95882f669b47
+Generated with discovered.json: 0x62b39caadea590261b199975d1a82d720d150219
+
+# Diff at Fri, 31 Jan 2025 11:13:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@84b1296dd423a2ef9361874d922cd6911109ba10 block: 21543439
+- current block number: 21744139
+
+## Description
+
+Proposal to transfer 4 945 441 MBDAO tokens to `0x6b779ae702A4E139039151b05bEB2730356047DA`.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        62
++        63
+    }
+```
+
+Generated with discovered.json: 0x5a7b7dccee4729f6da35484409dc7b7b4377701e
 
 # Diff at Mon, 20 Jan 2025 11:09:21 GMT:
 

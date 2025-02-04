@@ -1,3 +1,152 @@
+Generated with discovered.json: 0x03e194cfb852407363ed04e2f64b9f55a96784f7
+
+# Diff at Tue, 04 Feb 2025 12:31:38 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      issuedPermissions.3.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.2.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.1.permission:
+-        "configure"
++        "interact"
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.1.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0x874bd8e09d9a59b1655c8a383934c39acfab39fd
+
+# Diff at Wed, 29 Jan 2025 09:52:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@5741cb966172a3b26ba8279dd9fe4323805a53c2 block: 21434844
+- current block number: 21434844
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21434844 (main branch discovery), not current.
+
+```diff
+    contract LineaAdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]}
+      receivedPermissions.2.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.1.via:
+-        [{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}]
+      receivedPermissions.1.description:
++        "propose transactions in the Timelock."
+      receivedPermissions.0.description:
+-        "propose transactions in the Timelock."
++        "cancel transactions that are waiting in the Timelock."
+    }
+```
+
+```diff
+    contract Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A Timelock with currently 0s minimum delay.
+      issuedPermissions.3:
++        {"permission":"configure","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"propose transactions in the Timelock.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.2:
++        {"permission":"configure","to":"0xF24f1DC519d88246809B660eb56D94048575d083","description":"cancel transactions that are waiting in the Timelock.","via":[{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      issuedPermissions.1.to:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      issuedPermissions.1.via.0:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      issuedPermissions.0.description:
+-        "propose transactions in the Timelock."
++        "cancel transactions that are waiting in the Timelock."
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac roles module for Safe multisigs allows defining roles that are allowed to call preconfigured targets on behalf of the Gnosis Safe.
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"0xd19d4B5d358258f05D7B411E21A1460D11B0876F","via":[{"address":"0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"},{"address":"0xd6B95c960779c72B8C6752119849318E5d550574"},{"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}]}
+      receivedPermissions.2.from:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "configure"
+      receivedPermissions.1.from:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.1.via.2:
+-        {"address":"0x892bb7EeD71efB060ab90140e7825d8127991DD3"}
+      receivedPermissions.1.via.1:
+-        {"address":"0xd6B95c960779c72B8C6752119849318E5d550574"}
+      receivedPermissions.1.via.0.address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      receivedPermissions.1.description:
++        "propose transactions in the Timelock."
+      receivedPermissions.0.description:
+-        "propose transactions in the Timelock."
++        "cancel transactions that are waiting in the Timelock."
+    }
+```
+
 Generated with discovered.json: 0x72516bc727c7c6f1a4b40a5e8bc54fa05c8c22a8
 
 # Diff at Mon, 20 Jan 2025 11:09:42 GMT:

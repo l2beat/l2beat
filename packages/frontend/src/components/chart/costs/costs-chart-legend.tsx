@@ -1,4 +1,4 @@
-import { type ClassNameValue } from 'tailwind-merge'
+import type { ClassNameValue } from 'tailwind-merge'
 import { ChartLegend } from '../core/chart-legend'
 
 export function CostsChartLegend({

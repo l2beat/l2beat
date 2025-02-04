@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
+import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
 import { aiechain } from './aiechain'
@@ -38,6 +39,7 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { degenlayer } from './degenlayer'
+import { destra } from './destra'
 import { dydx } from './dydx'
 import { ebichain } from './ebichain'
 import { eclipse } from './eclipse'
@@ -197,8 +199,6 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
-export * from './common'
-export * from './types'
 
 export const layer2s: Layer2[] = [
   abstract,
@@ -241,6 +241,7 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   degenlayer,
+  destra,
   dydx,
   edgeless,
   ethernity,

@@ -11,7 +11,7 @@ describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
     const graph: Node<string>[] = [
       node('contract1', [
-        edge('configure', 'guardian', { delay: 7 }),
+        edge('interact', 'guardian', { delay: 7 }),
         edge('upgrade', 'l1Proxy'),
       ]),
       node('contract2', [edge('upgrade', 'l1Proxy')]),
@@ -37,7 +37,7 @@ describe(resolvePermissions.name, () => {
         path: [
           pathElem({
             address: 'contract1',
-            gives: 'configure',
+            gives: 'interact',
             delay: 7,
           }),
           pathElem({ address: 'guardian', gives: 'act' }),
@@ -48,7 +48,7 @@ describe(resolvePermissions.name, () => {
         path: [
           pathElem({
             address: 'contract1',
-            gives: 'configure',
+            gives: 'interact',
             delay: 7,
           }),
           pathElem({ address: 'guardian', gives: 'act' }),
@@ -96,7 +96,7 @@ describe(resolvePermissions.name, () => {
         'zkSync',
         [
           edge('upgrade', 'upgradeGatekeeper'),
-          edge('configure', 'zkSync'),
+          edge('interact', 'zkSync'),
           edge('member', 'actorA'),
           edge('member', 'actorB'),
         ],
@@ -132,7 +132,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'zkSync', gives: 'configure' }), // contract
+          pathElem({ address: 'zkSync', gives: 'interact' }), // contract
           pathElem({ address: 'zkSync' }), // embedded security council
         ],
       },
@@ -140,12 +140,12 @@ describe(resolvePermissions.name, () => {
   })
 
   it('A->A (zksync lite simplified)', () => {
-    const graph: Node<string>[] = [node('A', [edge('configure', 'A')])]
+    const graph: Node<string>[] = [node('A', [edge('interact', 'A')])]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'A', gives: 'configure' }),
+          pathElem({ address: 'A', gives: 'interact' }),
           pathElem({ address: 'A' }),
         ],
       },
@@ -154,14 +154,14 @@ describe(resolvePermissions.name, () => {
 
   it('A->A->B', () => {
     const graph: Node<string>[] = [
-      node('A', [edge('configure', 'A'), edge('act', 'B')]),
+      node('A', [edge('interact', 'A'), edge('act', 'B')]),
       node('B'),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'A', gives: 'configure' }),
+          pathElem({ address: 'A', gives: 'interact' }),
           pathElem({ address: 'A', gives: 'act' }),
           pathElem({ address: 'B' }),
         ],
@@ -171,14 +171,14 @@ describe(resolvePermissions.name, () => {
 
   it('A->B->A', () => {
     const graph: Node<string>[] = [
-      node('A', [edge('configure', 'B')]),
+      node('A', [edge('interact', 'B')]),
       node('B', [edge('act', 'A')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'A', gives: 'configure' }),
+          pathElem({ address: 'A', gives: 'interact' }),
           pathElem({ address: 'B', gives: 'act' }),
           pathElem({ address: 'A' }),
         ],
@@ -217,13 +217,48 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('one actor, one contract, multiple configures', () => {
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelock', [
+        edge('interact', 'actor', { description: 'can zig', delay: 100 }),
+        edge('interact', 'actor', { description: 'can zag', delay: 200 }),
+      ]),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        path: [
+          pathElem({
+            address: 'timelock',
+            gives: 'interact',
+            description: 'can zig',
+            delay: 100,
+          }),
+          pathElem({ address: 'actor' }),
+        ],
+      },
+      {
+        path: [
+          pathElem({
+            address: 'timelock',
+            gives: 'interact',
+            description: 'can zag',
+            delay: 200,
+          }),
+          pathElem({ address: 'actor' }),
+        ],
+      },
+    ])
+  })
+
   it('one actor, four contracts, two timelocks with same delays', () => {
     const graph: Node<string>[] = [
       node('actor'),
       node('timelockA', [edge('act', 'actor', { delay: 100 })]),
       node('timelockB', [edge('act', 'actor', { delay: 100 })]),
       node('proxy', [edge('act', 'timelockB')]),
-      node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
+      node('vault', [edge('interact', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -237,7 +272,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'timelockA', gives: 'act', delay: 100 }),
           pathElem({ address: 'actor' }),
         ],
@@ -251,7 +286,7 @@ describe(resolvePermissions.name, () => {
       node('timelockA', [edge('act', 'actor', { delay: 90 })]),
       node('timelockB', [edge('act', 'actor', { delay: 100 })]),
       node('proxy', [edge('act', 'timelockB')]),
-      node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
+      node('vault', [edge('interact', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -265,7 +300,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'timelockA', gives: 'act', delay: 90 }),
           pathElem({ address: 'actor' }),
         ],
@@ -279,7 +314,7 @@ describe(resolvePermissions.name, () => {
       node('timelockA', [edge('act', 'actor', { delay: 110 })]),
       node('timelockB', [edge('act', 'actor', { delay: 100 })]),
       node('proxy', [edge('act', 'timelockB')]),
-      node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
+      node('vault', [edge('interact', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -293,7 +328,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'timelockA', gives: 'act', delay: 110 }),
           pathElem({ address: 'actor' }),
         ],
@@ -395,13 +430,13 @@ describe(resolvePermissions.name, () => {
       node('timelockA', [edge('act', 'actor', { delay: 10 })]),
       node('timelockB', [edge('act', 'actor', { delay: 100 })]),
       node('proxy', [edge('act', 'timelockB')]),
-      node('vault', [edge('configure', 'timelockA'), edge('upgrade', 'proxy')]),
+      node('vault', [edge('interact', 'timelockA'), edge('upgrade', 'proxy')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'timelockA', gives: 'act', delay: 10 }),
           pathElem({ address: 'actor' }),
         ],
@@ -419,7 +454,7 @@ describe(resolvePermissions.name, () => {
 
   it('three actors, four contracts, three multisigs with members, mixed threshold', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msigM')]),
+      node('vault', [edge('interact', 'msigM')]),
       node('msigM', [edge('member', 'msigA'), edge('member', 'msigB')]),
       node(
         'msigB',
@@ -439,14 +474,14 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msigM', gives: 'member' }),
           pathElem({ address: 'msigB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msigM', gives: 'member' }),
           pathElem({ address: 'msigA', gives: 'member' }),
           pathElem({ address: 'actorA' }),
@@ -454,7 +489,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msigM', gives: 'member' }),
           pathElem({ address: 'msigA', gives: 'member' }),
           pathElem({ address: 'actorB' }),
@@ -463,7 +498,27 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
-  it('two actors, three contracts', () => {
+  it("two actors, three contracts, one final node can't act independently", () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('upgrade', 'timelock')]),
+      node('timelock', [edge('act', 'proxy')]),
+      node('proxy', [edge('act', 'actorA'), edge('act', 'noOpStub')]),
+      node('actorA'),
+      node('noOpStub', undefined, { canActIndependently: false }),
+    ]
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        path: [
+          pathElem({ address: 'vault', gives: 'upgrade' }),
+          pathElem({ address: 'timelock', gives: 'act' }),
+          pathElem({ address: 'proxy', gives: 'act' }),
+          pathElem({ address: 'actorA' }),
+        ],
+      },
+    ])
+  })
+
+  it('two actors, three contracts, proxy can act independently', () => {
     const graph: Node<string>[] = [
       node('vault', [edge('upgrade', 'timelock')]),
       node('timelock', [edge('act', 'proxy')]),
@@ -503,7 +558,7 @@ describe(resolvePermissions.name, () => {
 
   it('two actors, one contract, one multisig with members and module, threshold is one', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
       node(
         'msig',
         [
@@ -521,21 +576,21 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member' }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member' }),
           pathElem({ address: 'actorB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'act' }),
           pathElem({ address: 'module' }),
         ],
@@ -545,7 +600,7 @@ describe(resolvePermissions.name, () => {
 
   it('two actors, one contract, one multisig with members and module, threshold greater than one', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
       node(
         'msig',
         [
@@ -563,13 +618,13 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'act' }),
           pathElem({ address: 'module' }),
         ],
@@ -579,7 +634,7 @@ describe(resolvePermissions.name, () => {
 
   it('three actors, two contracts, one multisig with members, threshold greater than one with delay', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
       node(
         'msig',
         [
@@ -597,7 +652,7 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig' }),
         ],
       },
@@ -618,13 +673,13 @@ describe(resolvePermissions.name, () => {
         ],
         { threshold: 2 },
       ),
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig' }),
         ],
       },
@@ -633,7 +688,7 @@ describe(resolvePermissions.name, () => {
 
   it('three actors, two contracts, one multisig with members, threshold one and delay', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
       node(
         'msig',
         [
@@ -651,21 +706,21 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member', delay: 10 }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member', delay: 10 }),
           pathElem({ address: 'actorB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member', delay: 10 }),
           pathElem({ address: 'actorC' }),
         ],
@@ -675,7 +730,7 @@ describe(resolvePermissions.name, () => {
 
   it('three actors, two contracts, one multisig with members, threshold one', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'msig')]),
+      node('vault', [edge('interact', 'msig')]),
       node('msig', [
         edge('member', 'actorA'),
         edge('member', 'actorB'),
@@ -689,21 +744,21 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member' }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member' }),
           pathElem({ address: 'actorB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'msig', gives: 'member' }),
           pathElem({ address: 'actorC' }),
         ],
@@ -713,7 +768,7 @@ describe(resolvePermissions.name, () => {
 
   it('three actors, one contract, shared ownership of a single contract with proxy', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'proxy')]),
+      node('vault', [edge('interact', 'proxy')]),
       node('proxy', [
         edge('act', 'actorA'),
         edge('act', 'actorB'),
@@ -727,21 +782,21 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'proxy', gives: 'act' }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'proxy', gives: 'act' }),
           pathElem({ address: 'actorB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'proxy', gives: 'act' }),
           pathElem({ address: 'actorC' }),
         ],
@@ -752,9 +807,9 @@ describe(resolvePermissions.name, () => {
   it('three actors, one contract, shared ownership of a single contract', () => {
     const graph: Node<string>[] = [
       node('vault', [
-        edge('configure', 'actorA'),
-        edge('configure', 'actorB'),
-        edge('configure', 'actorC'),
+        edge('interact', 'actorA'),
+        edge('interact', 'actorB'),
+        edge('interact', 'actorC'),
       ]),
       node('actorA'),
       node('actorB'),
@@ -764,19 +819,19 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actorB' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actorC' }),
         ],
       },
@@ -894,10 +949,7 @@ describe(resolvePermissions.name, () => {
 
   it('single actor, three contracts, proxy with act and timelock with delay', () => {
     const graph: Node<string>[] = [
-      node('vault', [
-        edge('configure', 'timelock'),
-        edge('configure', 'actorB'),
-      ]),
+      node('vault', [edge('interact', 'timelock'), edge('interact', 'actorB')]),
       node('timelock', [edge('act', 'actorA', { delay: 42069 })]),
       node('actorA'),
       node('actorB'),
@@ -906,14 +958,14 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'timelock', gives: 'act', delay: 42069 }),
           pathElem({ address: 'actorA' }),
         ],
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actorB' }),
         ],
       },
@@ -942,7 +994,7 @@ describe(resolvePermissions.name, () => {
 
   it('two actors, two contracts, proxy with act and single configure', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('upgrade', 'proxy'), edge('configure', 'actorA')]),
+      node('vault', [edge('upgrade', 'proxy'), edge('interact', 'actorA')]),
       node('proxy', [edge('act', 'actorB')]),
       node('actorA'),
       node('actorB'),
@@ -958,7 +1010,7 @@ describe(resolvePermissions.name, () => {
       },
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actorA' }),
         ],
       },
@@ -1001,14 +1053,14 @@ describe(resolvePermissions.name, () => {
 
   it('single actor, single contract, no proxy', () => {
     const graph: Node<string>[] = [
-      node('vault', [edge('configure', 'actor')]),
+      node('vault', [edge('interact', 'actor')]),
       node('actor'),
     ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         path: [
-          pathElem({ address: 'vault', gives: 'configure' }),
+          pathElem({ address: 'vault', gives: 'interact' }),
           pathElem({ address: 'actor' }),
         ],
       },
@@ -1101,7 +1153,7 @@ function node(
     delay: 0,
     threshold: 1,
     edges: edges ?? [],
-    canActIndependently: false,
+    canActIndependently: undefined,
     ...options,
   }
 }

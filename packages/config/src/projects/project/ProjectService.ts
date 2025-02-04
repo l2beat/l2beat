@@ -1,5 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import type { BaseProject } from './BaseProject'
+import type { BaseProject } from '../../types'
 import { getProjects } from './getProjects'
 
 type BasicKeys = 'id' | 'slug' | 'name' | 'shortName' | 'addedAt'

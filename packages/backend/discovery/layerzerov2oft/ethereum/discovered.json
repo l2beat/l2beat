@@ -1,8 +1,8 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 21723792,
-  "configHash": "0xf2830209197d6a2c1360bb0d3be7bd27eb8d7e7d1c92784dfabf9e964d6377d0",
+  "blockNumber": 21736831,
+  "configHash": "0x62942373b69e84d5fe177472b0c4a990c35774c44f660bd0cba14cf4fb465b90",
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -272,7 +272,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "DVN",
+      "name": "HorizenDVN",
       "address": "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
@@ -289,7 +289,8 @@
         "signerSize": 2,
         "vid": 101,
         "workerFeeLib": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
-      }
+      },
+      "derivedName": "DVN"
     },
     {
       "name": "EvmMptValidator",
@@ -705,8 +706,8 @@
           0,
           0,
           [
-            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
-            "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+            "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
           []
         ],
@@ -793,7 +794,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 219,
+        "nonce": 221,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -2878,6 +2879,6 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x3bcf33ed6f18164e0f29fd7841eefc3065b5dccf264f99ccfbc89d92be5d60a5"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
   }
 }

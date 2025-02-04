@@ -1,4 +1,4 @@
-import { type SortDirection } from '@tanstack/react-table'
+import type { SortDirection } from '@tanstack/react-table'
 import React from 'react'
 
 import { cn } from '~/utils/cn'

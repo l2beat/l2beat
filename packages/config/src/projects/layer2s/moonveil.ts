@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import type { Layer2 } from '../../types'
 import { upcomingL2 } from './templates/upcoming'
-import type { Layer2 } from './types'
 
 export const moonveil: Layer2 = upcomingL2({
   id: 'moonveil',
@@ -16,8 +16,6 @@ export const moonveil: Layer2 = upcomingL2({
     links: {
       websites: ['https://moonveil.gg/'],
       apps: ['https://moonveil.gg/AstrArk/'],
-      documentation: [],
-      explorers: [],
       repositories: ['https://github.com/SwellNetwork'],
       socialMedia: [
         'https://x.com/Moonveil_Studio',

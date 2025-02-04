@@ -19,7 +19,6 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
-  addSentimentToDataAvailability,
   pickWorseRisk,
   sumRisk,
 } from '../../../common'
@@ -29,13 +28,23 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  ChainConfig,
+  CustomDa,
+  KnowledgeNugget,
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+  Layer3,
   Milestone,
+  ProjectContract,
   ProjectEscrow,
+  ProjectPermission,
+  ProjectPermissions,
   ProjectTechnologyChoice,
+  ReasonForBeingInOther,
   ScalingProjectCapability,
-  ScalingProjectContract,
   ScalingProjectDisplay,
-  ScalingProjectPermission,
   ScalingProjectPurpose,
   ScalingProjectRisk,
   ScalingProjectRiskView,
@@ -43,27 +52,23 @@ import type {
   ScalingProjectStateValidation,
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
+  StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import type {
-  ChainConfig,
-  KnowledgeNugget,
-  ReasonForBeingInOther,
-} from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
-import type { DacDaLayer } from '../../da-beat/types'
-import type { Layer3 } from '../../layer3s/types'
-import type { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import type {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TxConfig,
-} from '../types'
-import { generateDiscoveryDrivenSections } from './generateDiscoveryDrivenSections'
-import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './generateDiscoveryDrivenSections'
+import {
+  explorerReferences,
+  mergeBadges,
+  mergeContracts,
+  mergePermissions,
+  safeGetImplementation,
+} from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -129,10 +134,10 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateContracts?: ScalingProjectContract[]
+  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
@@ -147,13 +152,12 @@ interface OrbitStackConfigCommon {
   stateDerivation?: ScalingProjectStateDerivation
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
-  nativeAddresses?: Record<string, ScalingProjectContract[]>
-  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   additionalPurposes?: ScalingProjectPurpose[]
+  overridingPurposes?: ScalingProjectPurpose[]
   discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
-  dataAvailabilitySolution?: DacDaLayer
+  customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -205,20 +209,20 @@ export function getNitroGovernance(
   l2TreasuryQuorumPercent: number,
 ): string {
   return `
-  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO) 
-  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s. 
-  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through 
-  the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions, 
+  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
+  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
+  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
+  the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions,
   their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One and crosschain transactions.
-  
-  
-  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One 
-  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs 
-  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. 
+
+
+  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One
+  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
+  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
   These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-  
-  
-  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a 
+
+
+  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
   CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
     l2TimelockDelay,
   )} delay and then sends it to the Outbox contract on Ethereum. This incurs another delay (the challenge period) of ${formatSeconds(
@@ -226,19 +230,19 @@ export function getNitroGovernance(
   )}.
   When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
-  )}. Both timelocks serve as delays during which the transparent transaction contents can be audited, 
-  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts 
+  )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
+  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts
   through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-  
-  
-  Operator roles like the Sequencers and Validators are managed using the same paths. 
+
+
+  Operator roles like the Sequencers and Validators are managed using the same paths.
   Sequencer changes can be delegated to a Batch Poster Manager.
-  
-  
+
+
   Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
-  )} 
-  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel 
+  )}
+  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel
   these transactions or schedule different ones but can overwrite them anyway by having full admin upgrade permissions for all the underlying smart contracts.`
 }
 
@@ -320,6 +324,9 @@ const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
 
+// TO DO: Add blobstream delay when timelock is enabled
+const BLOBSTREAM_DELAY_SECONDS = 0
+
 function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
@@ -329,14 +336,10 @@ function orbitStackCommon(
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const discoveryDrivenSections = templateVars.discoveryDrivenData
-    ? generateDiscoveryDrivenSections(
-        templateVars.discovery,
-        nativeContractRisks,
-        templateVars.additionalDiscoveries,
-      )
-    : undefined
-
+  const allDiscoveries = [
+    templateVars.discovery,
+    ...Object.values(templateVars.additionalDiscoveries ?? {}),
+  ]
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -380,25 +383,26 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ScalingProjectPermission = {
-    name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
-    description:
+  const validators: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Validators/Proposers',
+      templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    chain: templateVars.discovery.chain,
-  }
+    )
+
   if (validators.accounts.length === 0) {
     throw new Error(
       `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
     )
   }
 
-  const sequencers: ScalingProjectPermission = {
-    name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
-    description: 'Central actors allowed to submit transaction batches to L1.',
-    chain: templateVars.discovery.chain,
-  }
+  const sequencers: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Sequencers',
+      templateVars.discovery.getPermissionsByRole('sequence'),
+      'Central actors allowed to submit transaction batches to L1.',
+    )
+
   if (sequencers.accounts.length === 0) {
     throw new Error(
       `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
@@ -424,21 +428,24 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: discoveryDrivenSections
-      ? discoveryDrivenSections.contracts
+    contracts: templateVars.discoveryDrivenData
+      ? {
+          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+          risks: nativeContractRisks,
+        }
       : {
-          addresses: unionBy(
-            [
-              ...(templateVars.nonTemplateContracts ?? []),
-              ...templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            ],
-            'address',
+          addresses: mergeContracts(
+            {
+              [templateVars.discovery.chain]:
+                templateVars.discovery.resolveOrbitStackTemplates().contracts,
+            },
+            templateVars.nonTemplateContracts ?? {},
           ),
-          nativeAddresses: templateVars.nativeAddresses,
           risks: nativeContractRisks,
         },
     chainConfig: templateVars.chainConfig,
     technology: {
+      sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
@@ -512,7 +519,7 @@ function orbitStackCommon(
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR_MESSAGING('optimistic'),
           references: [
             {
               title: 'Transaction lifecycle - Arbitrum documentation',
@@ -547,17 +554,21 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: discoveryDrivenSections
-      ? discoveryDrivenSections.permissions
-      : [
-          sequencers,
-          validators,
-          ...templateVars.discovery.resolveOrbitStackTemplates().permissions,
-          ...(templateVars.nonTemplatePermissions ?? []),
-        ],
-    nativePermissions: discoveryDrivenSections
-      ? discoveryDrivenSections.nativePermissions
-      : templateVars.nativePermissions,
+    permissions: templateVars.discoveryDrivenData
+      ? generateDiscoveryDrivenPermissions(allDiscoveries)
+      : mergePermissions(
+          {
+            [templateVars.discovery.chain]: {
+              actors: [
+                sequencers,
+                validators,
+                ...templateVars.discovery.resolveOrbitStackTemplates()
+                  .permissions,
+              ],
+            },
+          },
+          templateVars.nonTemplatePermissions ?? {},
+        ),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -574,7 +585,7 @@ function orbitStackCommon(
       [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
       templateVars.additionalBadges ?? [],
     ),
-    dataAvailabilitySolution: templateVars.dataAvailabilitySolution,
+    customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
@@ -663,7 +674,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      (isUsingValidBlobstreamWmr
+        ? pickWorseRisk(
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       secondLine: formatDelay(selfSequencingDelaySeconds),
@@ -737,7 +753,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -781,11 +800,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -793,14 +812,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
       : baseChain.dataAvailability,
@@ -918,7 +937,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
-      purposes: ['Universal', ...(templateVars.additionalPurposes ?? [])],
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
@@ -977,11 +999,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.CELESTIA],
+            return {
+              layer: DA_LAYERS.CELESTIA,
               bridge: DA_BRIDGES.BLOBSTREAM,
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           } else {
             const DAC = templateVars.discovery.getContractValue<{
               membersCount: number
@@ -989,25 +1011,23 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }>('SequencerInbox', 'dacKeyset')
             const { membersCount, requiredSignatures } = DAC
 
-            return addSentimentToDataAvailability({
-              layers: [DA_LAYERS.DAC],
+            return {
+              layer: DA_LAYERS.DAC,
               bridge: DA_BRIDGES.DAC_MEMBERS({
                 membersCount,
                 requiredSignatures,
               }),
               mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            })
+            }
           }
         })()
-      : addSentimentToDataAvailability({
-          layers: [
-            usesBlobs
-              ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-              : DA_LAYERS.ETH_CALLDATA,
-          ],
+      : {
+          layer: usesBlobs
+            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+            : DA_LAYERS.ETH_CALLDATA,
           bridge: DA_BRIDGES.ENSHRINED,
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        }),
+        },
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
@@ -1038,7 +1058,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        (isUsingValidBlobstreamWmr
+          ? pickWorseRisk(
+              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+            )
+          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
       sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),

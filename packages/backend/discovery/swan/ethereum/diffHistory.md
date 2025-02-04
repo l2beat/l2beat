@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x05602784dacbf8ee49ce40781707f60d64d192c2
+Generated with discovered.json: 0x9311d992c9b98dae347e6fa6309a3956666c9f3b
+
+# Diff at Tue, 04 Feb 2025 12:33:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 20413034
+- current block number: 20413034
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x504D56cf68f791B45E3A2e895B0e1562f3431328) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xced6e73004067d25115165964ad507ff361b4b7a
 
 # Diff at Mon, 20 Jan 2025 11:10:13 GMT:
 
