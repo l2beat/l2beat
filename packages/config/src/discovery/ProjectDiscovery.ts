@@ -101,7 +101,7 @@ export class ProjectDiscovery {
 
     return {
       name: contract.name,
-      isVerified: contract.unverified !== true,
+      isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -201,6 +201,8 @@ export class ProjectDiscovery {
   transformToPermissions(resolved: Record<string, PermissionedContract>) {
     return Object.values(resolved)
       .map((contract) => {
+        const entry = this.getEntryByAddress(contract.address)
+        assert(isNonNullable(entry), `Entry not found in the discovery`)
         const description = contract.generateDescription()
         if (description !== '') {
           return {
@@ -208,6 +210,7 @@ export class ProjectDiscovery {
             accounts: this.formatPermissionedAccounts([contract.address]),
             description,
             chain: this.chain,
+            isVerified: isEntryVerified(entry),
           }
         }
       })
@@ -416,6 +419,7 @@ export class ProjectDiscovery {
       chain: this.chain,
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
+      isVerified: isEntryVerified(contract),
     }
   }
 
@@ -586,6 +590,11 @@ export class ProjectDiscovery {
       description,
       chain: this.chain,
       ...(opts ?? {}),
+      isVerified: accounts.every((a) => {
+        const entry = this.getEntryByAddress(a.address)
+        assert(isNonNullable(entry), `Entry not found in the discovery`)
+        return isEntryVerified(entry)
+      }),
     }
   }
 
@@ -605,7 +614,7 @@ export class ProjectDiscovery {
     }
     return {
       address: contract.address,
-      isVerified: contract.unverified !== true,
+      isVerified: isEntryVerified(contract),
       name: contract.name,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
@@ -631,6 +640,7 @@ export class ProjectDiscovery {
         url: x.href,
       })),
       description,
+      isVerified: isEntryVerified(contract),
     }
   }
 
@@ -652,6 +662,7 @@ export class ProjectDiscovery {
         url: x.href,
       })),
       description,
+      isVerified: isEntryVerified(eoa),
     }
   }
 
@@ -889,6 +900,11 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
+        isVerified: addresses.every((a) => {
+          const entry = this.getEntryByAddress(a)
+          assert(isNonNullable(entry), `Entry not found in the discovery`)
+          return isEntryVerified(entry)
+        }),
       })
     }
     return result
@@ -1123,6 +1139,7 @@ export class ProjectDiscovery {
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
         description,
+        isVerified: isEntryVerified(eoa),
       })
     }
 
@@ -1329,4 +1346,12 @@ function isMultisigLike(contract: ContractParameters | undefined): boolean {
   const hasThreshold = contract.values?.['$threshold'] !== undefined
 
   return hasMembers && hasThreshold
+}
+
+function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
+  if ('unverified' in entry) {
+    return entry.unverified !== true
+  }
+
+  return true
 }

@@ -145,6 +145,7 @@ export const bridge2WithDups: Bridge = {
       actors: [
         {
           name: 'Duplicate Layer2a MultiSig',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -156,6 +157,7 @@ export const bridge2WithDups: Bridge = {
           description: '',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -169,6 +171,7 @@ export const bridge2WithDups: Bridge = {
             'Can add new bridge contracts (Escrows, LockProxy), pause the bridge, and transfer to itself all funds and ERC20 tokens of the Wrapper contract.',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -182,6 +185,7 @@ export const bridge2WithDups: Bridge = {
             'Unverified contract on Etherscan. Can pause the contracts and update implementation of EthCrossChainData contract.',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -195,6 +199,7 @@ export const bridge2WithDups: Bridge = {
             'Can update address of EthCrossChainManagerProxy contract.',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -208,6 +213,7 @@ export const bridge2WithDups: Bridge = {
             'Can update address of EthCrossChainManagerProxy contract.',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(

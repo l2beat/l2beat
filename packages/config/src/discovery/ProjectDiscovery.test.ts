@@ -238,6 +238,7 @@ describe(ProjectDiscovery.name, () => {
               type: 'Contract',
             },
           ],
+          isVerified: true,
           description:
             'Admin of SystemConfig, L2OutputOracle, L1StandardBridge.',
           name: 'ProxyAdmin',

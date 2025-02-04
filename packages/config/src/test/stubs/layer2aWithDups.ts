@@ -103,6 +103,7 @@ export const layer2aWithDups: Layer2 = {
       actors: [
         {
           name: 'Layer2a MultiSig',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -115,6 +116,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate Layer2a MultiSig',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -127,6 +129,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Duplicate CanonicalTransactionChain',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -139,6 +142,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'MultiSig participants',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -193,6 +197,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'Sequencer',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -205,6 +210,7 @@ export const layer2aWithDups: Layer2 = {
         },
         {
           name: 'State Root Proposer',
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(

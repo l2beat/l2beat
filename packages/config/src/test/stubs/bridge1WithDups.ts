@@ -107,6 +107,7 @@ export const bridge1WithDups: Bridge = {
     ethereum: {
       actors: [
         {
+          isVerified: true,
           name: 'Duplicate Layer2a MultiSig',
           accounts: [
             {
@@ -119,6 +120,7 @@ export const bridge1WithDups: Bridge = {
           description: '',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -132,6 +134,7 @@ export const bridge1WithDups: Bridge = {
             'Can update bridge contracts, validator set, signature thresholds and bridge parameters',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(
@@ -234,6 +237,7 @@ export const bridge1WithDups: Bridge = {
           description: 'Participants in Bridge Governance 7/16 MultiSig',
         },
         {
+          isVerified: true,
           accounts: [
             {
               address: EthereumAddress(

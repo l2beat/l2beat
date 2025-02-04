@@ -154,10 +154,7 @@ export const hyperliquid: Layer3 = {
         ),
         discovery.getPermissionDetails(
           'Cold validators',
-          coldAddresses.map((address, _) => ({
-            address,
-            type: 'EOA',
-          })),
+          discovery.formatPermissionedAccounts(coldAddresses),
           `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
         ),
         discovery.getPermissionDetails(
