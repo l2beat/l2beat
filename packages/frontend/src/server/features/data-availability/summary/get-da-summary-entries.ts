@@ -28,7 +28,6 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaLayerRisks } from '../utils/get-da-risks'
-import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
@@ -124,7 +123,7 @@ function getDaSummaryEntry(
     id: ProjectId(project.id),
     slug: project.display.slug,
     name: project.display.name,
-    nameSecondLine: kindToType(project.daLayer.kind),
+    nameSecondLine: project.daLayer.type,
     href: bridges[0]?.href,
     statuses: {
       underReview: !!project.isUnderReview ? 'config' : undefined,
@@ -215,7 +214,7 @@ function getEthereumEntry(
     id: ProjectId.ETHEREUM,
     slug: ethereumDaLayer.display.slug,
     name: ethereumDaLayer.display.name,
-    nameSecondLine: kindToType(ethereumDaLayer.daLayer.kind),
+    nameSecondLine: ethereumDaLayer.daLayer.type,
     href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.daLayer.bridges[0]?.display.slug}`,
     statuses: {},
     economicSecurity: economicSecurity,

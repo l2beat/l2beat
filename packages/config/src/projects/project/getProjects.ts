@@ -88,6 +88,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
+    milestones: p.milestones,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -162,6 +163,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    milestones: p.milestones,
     // tags
     isBridge: true,
     isArchived: p.isArchived ? true : undefined,
@@ -188,6 +190,7 @@ function daToProject(p: DaProject): BaseProject {
       links: p.display.links,
     },
     daBridges: p.daLayer.bridges,
+    milestones: p.milestones,
     // tags
     isDaLayer: true,
     isUpcoming: p.isUpcoming ? true : undefined,

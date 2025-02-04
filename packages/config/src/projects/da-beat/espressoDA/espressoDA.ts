@@ -32,7 +32,7 @@ export const espressoDA: DaProject = {
     },
   },
   daLayer: {
-    kind: 'DA Service',
+    type: 'DA Service',
     systemCategory: 'public',
     technology: {
       description: `

@@ -38,7 +38,7 @@ export const avail: DaProject = {
     },
   },
   daLayer: {
-    kind: 'PublicBlockchain',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     technology: {
       description: `

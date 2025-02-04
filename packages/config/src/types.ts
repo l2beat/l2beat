@@ -744,16 +744,13 @@ export interface DaProject {
 export interface DaLayer {
   name?: string
   description?: string
-  kind: 'DA Service' | 'DAC' | 'No DAC' | 'EthereumDaLayer' | 'PublicBlockchain'
+  type: string
   systemCategory: 'public' | 'custom'
   bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
   usedWithoutBridgeIn: UsedInProject[]
 
-  fallback?: TableReadyValue
-  challengeMechanism?: DaChallengeMechanism
-  numberOfOperators?: number
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
   consensusAlgorithm?: DaConsensusAlgorithm
@@ -1009,6 +1006,7 @@ export interface BaseProject {
   proofVerification?: ProofVerification
   daBridges?: DaBridge[]
   countdowns?: ProjectCountdowns
+  milestones?: Milestone[]
   // tags
   isBridge?: true
   isScaling?: true

@@ -22,7 +22,7 @@ export const eigenDA: DaProject = {
     },
   },
   daLayer: {
-    kind: 'DA Service',
+    type: 'DA Service',
     systemCategory: 'public',
     technology: {
       description: `

@@ -8,7 +8,6 @@ import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaRiskEntries() {
   const uniqueProjectsInUse = getUniqueProjectsInUse()
@@ -60,7 +59,7 @@ function getDaRiskEntry(
   return {
     id: ProjectId(project.id),
     name: project.display.name,
-    nameSecondLine: kindToType(project.daLayer.kind),
+    nameSecondLine: project.daLayer.type,
     slug: project.display.slug,
     href: bridges[0]?.href,
     statuses: {},

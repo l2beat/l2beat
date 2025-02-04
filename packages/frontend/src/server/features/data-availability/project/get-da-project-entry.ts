@@ -26,14 +26,13 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaRisks } from '../utils/get-da-risks'
-import { kindToType } from '../utils/kind-to-layer-type'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
 
 interface CommonDaProjectPageEntry {
   isVerified: boolean
   name: string
   slug: string
-  kind: DaLayer['kind']
+  kind: DaLayer['type']
   type: string
   description: string
   isUnderReview: boolean
@@ -99,8 +98,8 @@ export async function getDaProjectEntry(
     isVerified: isDaBridgeVerified(daBridge),
     name: project.display.name,
     slug: project.display.slug,
-    kind: project.daLayer.kind,
-    type: kindToType(project.daLayer.kind),
+    kind: project.daLayer.type,
+    type: project.daLayer.type,
     description: `${project.display.description} ${daBridge.display.description}`,
     isUnderReview: project.isUnderReview ?? false,
     isUpcoming: project.isUpcoming ?? false,
@@ -196,8 +195,8 @@ export async function getEthereumDaProjectEntry(
     isVerified: true,
     name: project.display.name,
     slug: project.display.slug,
-    kind: project.daLayer.kind,
-    type: kindToType(project.daLayer.kind),
+    kind: project.daLayer.type,
+    type: project.daLayer.type,
     description: `${project.display.description} ${daBridge.display.description}`,
     isUnderReview: project.isUnderReview ?? false,
     isUpcoming: project.isUpcoming ?? false,

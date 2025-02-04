@@ -29,7 +29,7 @@ export const ethereum: DaProject = {
     },
   },
   daLayer: {
-    kind: 'EthereumDaLayer',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     technology: {
       description: `

@@ -35,7 +35,7 @@ export const celestia: DaProject = {
     },
   },
   daLayer: {
-    kind: 'PublicBlockchain',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     technology: {
       description: `

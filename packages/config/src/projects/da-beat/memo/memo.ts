@@ -23,7 +23,7 @@ export const memo: DaProject = {
     },
   },
   daLayer: {
-    kind: 'PublicBlockchain',
+    type: 'Public Blockchain',
     systemCategory: 'public',
     consensusAlgorithm: {
       name: '',
