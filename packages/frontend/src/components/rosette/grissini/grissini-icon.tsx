@@ -14,6 +14,9 @@ interface Props {
   hasNoBridge?: boolean
 }
 
+const EMPTY: RosetteValue = { name: '', value: '' }
+const EMPTY_GRISSINI = [EMPTY, EMPTY, EMPTY]
+
 export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
   const containerRef = useRef(null)
   const context = useRosetteTooltipContext()
@@ -26,6 +29,8 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
     setSelectedRisk?.(risk)
   }
 
+  const display = hasNoBridge ? EMPTY_GRISSINI : values
+
   return (
     <div
       ref={containerRef}
@@ -34,7 +39,7 @@ export function GrissiniIcon({ values, className, hasNoBridge }: Props) {
         className,
       )}
     >
-      {values.map((value, i) => (
+      {display.map((value, i) => (
         <SingleGrissini
           sentiment={
             hasNoBridge ? 'UnderReview' : (value.sentiment ?? 'neutral')

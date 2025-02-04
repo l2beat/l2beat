@@ -64,7 +64,6 @@ export async function getL2ProjectDetails({
       architectureImage: project.display.architectureImage,
       daSolution,
     },
-    contractsVerificationStatuses,
     projectsChangeReport,
   )
 

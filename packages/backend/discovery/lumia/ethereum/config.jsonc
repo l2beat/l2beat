@@ -6,31 +6,15 @@
     "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "names": {
-    "0x92726F7dE49300DBdb60930066bc1d0803c0740B": "LumiaValidium",
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "Verifier",
-    "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": "LumiaDAC",
-    "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": "DACProxyAdmin"
-    // "0x0000": "LocalAdmin" // currently EOA
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
+  "names": {
+    "0x92726F7dE49300DBdb60930066bc1d0803c0740B": "Validium"
+  },
   "overrides": {
-    "LumiaDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 50
-          }
-        }
-      }
-    },
-    "LumiaValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"],
-      "ignoreRelatives": ["gasTokenAddress"]
+    "0x92726F7dE49300DBdb60930066bc1d0803c0740B": {
+      "extends": "polygon-cdk/PolygonZkEVM" // temporary due to shape match bug
     }
   }
 }

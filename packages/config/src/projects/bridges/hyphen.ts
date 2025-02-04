@@ -103,48 +103,46 @@ export const hyphen: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('LiquidityPool'),
-      discovery.getContractDetails(
-        'TokenManager',
-        'Configures limits and other aspects of supported assets.',
-      ),
-      discovery.getContractDetails(
-        'ExecutorManager',
-        'Manages a list of addresses with Executor role.',
-      ),
-      discovery.getContractDetails(
-        'LiquidityProviders',
-        'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('LiquidityPool'),
+        discovery.getContractDetails(
+          'TokenManager',
+          'Configures limits and other aspects of supported assets.',
+        ),
+        discovery.getContractDetails(
+          'ExecutorManager',
+          'Manages a list of addresses with Executor role.',
+        ),
+        discovery.getContractDetails(
+          'LiquidityProviders',
+          'Liquidity pool logic (not escrow - funds are sent to LiquidityPool).',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'ProxyAdmin owner',
-          description:
-            'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-          accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
-        },
-        {
-          name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
-          description:
-            'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-          accounts: [
-            discovery.getPermissionedAccount('LiquidityPool', 'owner'),
-          ],
-        },
-        {
-          name: 'Executors',
-          description: 'Executor is able to release funds from LiquidityPool.',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'ProxyAdmin owner',
+          discovery.getPermissionedAccounts('ProxyAdmin', 'owner'),
+          'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
+        ),
+        discovery.getPermissionDetails(
+          'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
+          discovery.getPermissionedAccounts('LiquidityPool', 'owner'),
+          'Can pause contracts, change configuration and change proxy admin or update Executor list.',
+        ),
+        discovery.getPermissionDetails(
+          'Executors',
+          discovery.getPermissionedAccounts(
             'ExecutorManager',
             'getAllExecutors',
           ),
-        },
+          'Executor is able to release funds from LiquidityPool.',
+        ),
       ],
     },
   },

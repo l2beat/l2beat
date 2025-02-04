@@ -12,37 +12,37 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   describe(DataAvailabilityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
       ])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
       ])
     })
 
     it('merges on conflict', async () => {
       await repository.upsertMany([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
       ])
-      await repository.upsertMany([record('a', START, 150)])
+      await repository.upsertMany([record('a', START, 150n)])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        record('a', START, 150),
-        record('a', START.add(1, 'days'), 200),
+        record('a', START, 150n),
+        record('a', START.add(1, 'days'), 200n),
       ])
     })
 
     it('returns number of processed records', async () => {
       const records = [
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
       ]
       const result = await repository.upsertMany(records)
       expect(result).toEqual(2)
@@ -57,8 +57,8 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
   describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
       ])
 
       const deleteResult = await repository.deleteAll()
@@ -73,10 +73,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     .name, () => {
     it('should delete all rows after a given timestamp for a project', async () => {
       await repository.upsertMany([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
-        record('b', START.add(2, 'days'), 400),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
+        record('b', START.add(2, 'days'), 400n),
       ])
 
       const deleteResult = await repository.deleteByProjectFrom(
@@ -88,8 +88,8 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
       expect(deleteResult).toEqual(2)
       expect(results).toEqualUnsorted([
-        record('a', START, 100),
-        record('b', START.add(2, 'days'), 400),
+        record('a', START, 100n),
+        record('b', START.add(2, 'days'), 400n),
       ])
     })
   })
@@ -98,10 +98,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     .name, () => {
     it('should return all rows in a given time range for a project', async () => {
       const records = [
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
-        record('b', START.add(1, 'days'), 400),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
+        record('b', START.add(1, 'days'), 400n),
       ]
 
       await repository.upsertMany(records)
@@ -112,8 +112,8 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       expect(results).toEqual([
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
       ])
     })
   })
@@ -122,10 +122,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     .name, () => {
     it('should return all rows from given timestamp for a project', async () => {
       await repository.upsertMany([
-        record('a', START, 100),
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
-        record('b', START.add(1, 'days'), 400),
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
+        record('b', START.add(1, 'days'), 400n),
       ])
 
       const results = await repository.getByProjectIdAndFrom(
@@ -134,8 +134,8 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       )
 
       expect(results).toEqual([
-        record('a', START.add(1, 'days'), 200),
-        record('a', START.add(2, 'days'), 300),
+        record('a', START.add(1, 'days'), 200n),
+        record('a', START.add(2, 'days'), 300n),
       ])
     })
   })
@@ -148,7 +148,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 function record(
   projectId: string,
   timestamp: UnixTime,
-  totalSize: number,
+  totalSize: bigint,
 ): DataAvailabilityRecord {
   return {
     projectId: projectId,

@@ -58,10 +58,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
         results.push({
           ...common,
           id: `${p.id}-${b.id}`,
-          name:
-            b.type === 'StandaloneDacBridge'
-              ? p.name
-              : `${p.name} with ${b.display.name}`,
+          name: `${p.name} with ${b.display.name}`,
           href: `/data-availability/projects/${p.slug}/${b.display.slug}`,
           category: 'da',
           tags: [p.slug, b.display.slug],

@@ -2,7 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DaProject } from '../../../types'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
-import { NO_BRIDGE } from '../templates/no-bridge-template'
+import { linkByDA } from '../utils/link-by-da'
 
 export const near: DaProject = {
   type: 'DaLayer',
@@ -131,15 +131,11 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
         },
       ],
     },
-    bridges: [
-      NO_BRIDGE({
-        addedAt: new UnixTime(1721664340), // 2024-07-22T16:05:40Z
-        layer: 'NearDA',
-        technology: {
-          description: `There is no DA bridge on Ethereum allowing to verify blob inclusion in the NEAR blockchain.`,
-        },
-      }),
-    ],
+    usedWithoutBridgeIn: linkByDA({
+      layer: ProjectId('near-da'),
+      bridge: undefined,
+    }),
+    bridges: [],
     pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
     throughput: {
       size: 16000, // 16 MB , 4MB per 4 shard

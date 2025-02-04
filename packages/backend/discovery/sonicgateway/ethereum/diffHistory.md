@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xf5b69a81dddebbacb8edc3189c8961f47288f338
+Generated with discovered.json: 0x6d993ba7c51f734ec2d2ecdb561813ab96c9507a
+
+# Diff at Mon, 03 Feb 2025 14:40:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f48b05175a82517aba519a7273477b15b3c1ad94 block: 21744201
+- current block number: 21766633
+
+## Description
+
+New relayer added.
+
+## Watched changes
+
+```diff
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4) {
+    +++ description: Entry point for state (oracle) updates.
+      issuedPermissions.5:
++        {"permission":"relay","to":"0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D","via":[]}
+      values.accessControl.RELAY_ROLE.members.1:
++        "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+      values.acRelay.1:
++        "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+    }
+```
+
+Generated with discovered.json: 0x6cf6874469b11f691b52488765fc560da6584d86
 
 # Diff at Wed, 29 Jan 2025 16:28:39 GMT:
 

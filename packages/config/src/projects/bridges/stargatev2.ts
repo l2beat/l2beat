@@ -20,12 +20,15 @@ const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
 const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
 const discoveredOAppOwners = [
-  discovery.getPermissionedAccount('CreditMessaging', 'owner'),
-  discovery.getPermissionedAccount('TokenMessaging', 'owner'),
+  ...discovery.getPermissionedAccounts('CreditMessaging', 'owner'),
+  ...discovery.getPermissionedAccounts('TokenMessaging', 'owner'),
 ]
 const discoveredDelegates = [
-  discovery.getPermissionedAccount('EndpointV2', 'delegatesCreditMessaging'),
-  discovery.getPermissionedAccount('EndpointV2', 'delegatesTokenMessaging'),
+  ...discovery.getPermissionedAccounts(
+    'EndpointV2',
+    'delegatesCreditMessaging',
+  ),
+  ...discovery.getPermissionedAccounts('EndpointV2', 'delegatesTokenMessaging'),
 ]
 const discoveredSendLib = <string>(
   discovery.getContractValue('EndpointV2', 'getSendLibrary')
@@ -104,14 +107,14 @@ export const stargatev2: Bridge = {
       name: 'Principle of operation',
       description: `
       On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations.
-      
+
       While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
       Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
-      
+
       The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
-      They are only a relayer and depend on LayerZero DVNs (distributed validator networks) to verify the message coming from the source chain. These DVNs can be freely configured by the OApp owner (Stargate) for each pair of endpoints. 
+      They are only a relayer and depend on LayerZero DVNs (distributed validator networks) to verify the message coming from the source chain. These DVNs can be freely configured by the OApp owner (Stargate) for each pair of endpoints.
       Stargatev2 currently has two DVNs configured: Stargate and Nethermind. From the viewpoint of the LayerZero message protocol, each DVN is a single signer and the current threshold for verification is 2.
-      
+
       Just like the assets themselves, so-called *credits* are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
       These credits can be moved and rebalanced (but not minted) by a permissioned Planner.`,
       references: [
@@ -298,24 +301,26 @@ export const stargatev2: Bridge = {
     ],
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'TokenMessaging',
-        "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
-      ),
-      discovery.getContractDetails(
-        'CreditMessaging',
-        'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
-      ),
-      discovery.getContractDetails(
-        'Stargate Verifier',
-        'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-      ),
-      discovery.getContractDetails(
-        'Nethermind Verifier',
-        'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'TokenMessaging',
+          "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
+        ),
+        discovery.getContractDetails(
+          'CreditMessaging',
+          'A LayerZero OApp owned by Stargate that is used for the virtual accounting of available tokens to the local pools. A local pool thus has a record of how many tokens are available when bridging to another remote pool. The permissioned Planner role can move these credits.',
+        ),
+        discovery.getContractDetails(
+          'Stargate Verifier',
+          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
+        ),
+        discovery.getContractDetails(
+          'Nethermind Verifier',
+          'One of the registered DVNs for the OApp acts through this smart contract. They are allowed to verify LayerZero messages for the Stargate bridge and enable their execution at the destination.',
+        ),
+      ],
+    },
     ...(() => {
       assert(
         EthereumAddress(discoveredReceiveLib[0]) ===
@@ -370,24 +375,21 @@ export const stargatev2: Bridge = {
             'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
           )
           return [
-            ...discovery.getMultisigPermission(
+            discovery.getMultisigPermission(
               'Stargate Multisig',
               'Owner of all pools and the associated OApps, can create new pools and endpoints, set fees and modify the OApp configuration to change DVNs and executors.',
             ),
           ]
         })(),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LayerZero Multisig',
           'The owner of the LayerZero contracts EndpointV2, Uln302 and Treasury. Can register and set default MessageLibraries (used e.g. for verification of Stargate messages) and change the Treasury address (LayerZero fee collector).',
         ),
-        {
-          name: 'Planner',
-          accounts: [
-            discovery.getPermissionedAccount('CreditMessaging', 'planner'),
-          ],
-          description:
-            'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
-        },
+        discovery.getPermissionDetails(
+          'Planner',
+          discovery.getPermissionedAccounts('CreditMessaging', 'planner'),
+          'Central actor who can move credits (see CreditMessaging contract) among chains and thus move liquidity claims of the Stargate pools. Abuse of this permission can impact liveness but not security.',
+        ),
       ],
     },
   },

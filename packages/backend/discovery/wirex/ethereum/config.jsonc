@@ -6,31 +6,10 @@
     "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "names": {
-    "0x78253E2E6120164bd826668A4C96Db20f78A94c9": "WirexPayChainValidium",
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "Verifier",
-    "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5": "WirexPayChainDAC",
-    "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78": "DACProxyAdmin"
-    // "0x0000": "LocalAdmin" // currently EOA
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
-  "overrides": {
-    "WirexPayChainDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 50
-          }
-        }
-      }
-    },
-    "WirexPayChainValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"],
-      "ignoreRelatives": ["gasTokenAddress"]
-    }
+  "names": {
+    "0x78253E2E6120164bd826668A4C96Db20f78A94c9": "Validium"
   }
 }

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { DaBridge } from '../../../types'
 import {
@@ -6,14 +6,14 @@ import {
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
 } from '../common'
+import { linkByDA } from '../utils/link-by-da'
 
 const discovery = new ProjectDiscovery('espresso')
 const updateInterval = 12 // hours
 
-export const HotShotLightClient = {
-  id: 'HotShotLightClient',
+export const hotshot: DaBridge = {
+  id: ProjectId('espresso'), // TODO: merge with main espresso project
   addedAt: new UnixTime(1725372159), // 2024-09-03T14:02:39Z
-  type: 'StandaloneDacBridge',
   display: {
     name: 'HotShot Light Client',
     slug: 'hotshot',
@@ -189,7 +189,10 @@ export const HotShotLightClient = {
       },
     ],
   },
-  usedIn: [],
+  usedIn: linkByDA({
+    layer: ProjectId('espressoDA'),
+    bridge: ProjectId('espresso'),
+  }),
   risks: {
     committeeSecurity: DaCommitteeSecurityRisk.LimitedCommitteeSecurity(
       'Permissioned',

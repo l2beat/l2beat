@@ -1,29 +1,39 @@
 {
   "name": "gpt",
   "chain": "ethereum",
-  "blockNumber": 21628462,
-  "configHash": "0xd237a84e00773fdcf6ea4f2b601105e4c04a58638a6deaa5395389736fdcfc9f",
+  "blockNumber": 21744154,
+  "configHash": "0xb363ccd3c4ba85477ad86943d003d2439adca801ee06d57f717e434ed52a41b7",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
-      "name": "Verifier",
+      "name": "FflonkVerifier",
       "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
       ],
+      "displayName": "Verifier",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1711291211,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier"
+      "values": { "$immutable": true }
     },
     {
-      "name": "GptProtocolDAC",
+      "name": "PolygonDataCommittee",
       "address": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+      "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0xf7c38d00c4b6000f1840ed38f9ae99d753da8ac69ee1b6ac9ed614f2b60d470f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).",
       "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
@@ -57,17 +67,15 @@
         ],
         "owner": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
         "requiredAmountOfSignatures": 1
-      },
-      "derivedName": "PolygonDataCommittee"
+      }
     },
     {
-      "name": "DACProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0xada59D145126A746976F0F56477aafFEB3acc8e3",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
         "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
       ],
-      "displayName": "ProxyAdmin",
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
@@ -78,17 +86,38 @@
       "values": {
         "$immutable": true,
         "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
-      "name": "GptProtocolValidium",
+      "name": "Validium",
       "address": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+      "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
         "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "PolygonZkEVM",
+      "description": "The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "via": []
+        },
+        {
+          "permission": "configure",
+          "to": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
+          "description": "sole address that can force batches.",
+          "via": []
+        },
+        {
+          "permission": "sequence",
+          "to": "0x3451F208447c4D81346c10239eF92A1eB98b65C3",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1716807971,
       "values": {
@@ -135,16 +164,49 @@
         "trustedSequencer": "0x3451F208447c4D81346c10239eF92A1eB98b65C3",
         "trustedSequencerURL": "https://sequencer.gptprotocol.io/"
       },
+      "fieldMeta": {
+        "forceBatchAddress": {
+          "severity": "HIGH",
+          "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
+        }
+      },
       "derivedName": "PolygonValidiumStorageMigration"
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x208C0bCD77F921209932081c27C543098838BF9e" },
-    { "address": "0x3451F208447c4D81346c10239eF92A1eB98b65C3" },
-    { "address": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40" },
+    {
+      "address": "0x3451F208447c4D81346c10239eF92A1eB98b65C3",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
+        }
+      ]
+    },
+    {
+      "address": "0x5B8C9f36c8F84E49EC89Ae2881D920Ceb36D7F40",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "from": "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8",
+          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+        },
+        {
+          "permission": "configure",
+          "from": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+        },
+        {
+          "permission": "configure",
+          "from": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+          "description": "sole address that can force batches."
+        }
+      ]
+    },
     { "address": "0x7417EDBE8906093Ef3a5eF67D9d422aBe3398527" },
-    { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
     {
       "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "receivedPermissions": [
@@ -338,6 +400,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "polygon-cdk/PolygonDataCommittee": "0x58ce1862c8d49fde644d9f781393f6601777c752dace60d22cb08718cb9bff8a",
+    "polygon-cdk/PolygonZkEVM": "0x1b875d2c93809cbc2714ed3e0d71fa66d182e0082a816b78492fd220fe9fcd86",
+    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

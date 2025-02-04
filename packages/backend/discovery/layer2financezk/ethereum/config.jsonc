@@ -11,7 +11,12 @@
     // mind that these addresses could not be used by the project anymore. Decide
     // for yourself whether keep them here or should they be removed or fetched
     // from some fields of other contracts.
-    "0x5b000954F70B0410685193B0afd3074B744B5C97"
+    "0x5b000954F70B0410685193B0afd3074B744B5C97",
+
+    // These addresses where hardcoded in .ts file of this project. We require
+    // having them in the discovery in order to be able to tell if this address
+    // is verified or not.
+    "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" // SHARP Verifier Governor
   ],
   "names": {
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",

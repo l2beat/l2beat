@@ -3,16 +3,13 @@ import type {
   DaProject,
   Layer2,
   Layer3,
+  ProjectContract,
+  ProjectContracts,
   ProjectEscrow,
   ReferenceLink,
-  ScalingProjectContract,
-  ScalingProjectContracts,
 } from '@l2beat/config'
 import { CONTRACTS, layer2s } from '@l2beat/config'
-import type {
-  ContractsVerificationStatuses,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
@@ -32,12 +29,12 @@ import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
-  id: string
+  id?: string
   slug: string
   isUnderReview?: boolean
   isVerified: boolean
   architectureImage?: string
-  contracts: ScalingProjectContracts
+  contracts: ProjectContracts
   daSolution?: DaSolution
   escrows: ProjectEscrow[] | undefined
 } & (
@@ -57,48 +54,28 @@ type ContractsSection = Omit<
 
 export function getContractsSection(
   projectParams: ProjectParams,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
   projectsChangeReport: ProjectsChangeReport,
 ): ContractsSection | undefined {
   if (
-    projectParams.contracts.addresses.length === 0 &&
+    Object.values(projectParams.contracts.addresses).flat().length === 0 &&
     projectParams.daSolution?.contracts?.length === 0
   ) {
     return undefined
   }
-  const projectChangeReport = projectsChangeReport?.projects[projectParams.id]
+  const projectChangeReport = projectParams.id
+    ? projectsChangeReport?.projects[projectParams.id]
+    : undefined
 
-  const contracts = projectParams.contracts.addresses.map((contract) => {
-    const isUnverified = isContractUnverified(
-      contract,
-      contractsVerificationStatuses,
-    )
-
-    return makeTechnologyContract(
-      contract,
-      projectParams,
-      isUnverified,
-      contractsVerificationStatuses,
-      projectChangeReport,
-    )
-  })
-
-  const nativeContracts = Object.fromEntries(
-    Object.entries(projectParams.contracts.nativeAddresses ?? {}).map(
+  const contracts = Object.fromEntries(
+    Object.entries(projectParams.contracts.addresses ?? {}).map(
       ([chainName, contracts]) => {
         return [
           slugToDisplayName(chainName),
           contracts.map((contract) => {
-            const isUnverified = isContractUnverified(
-              contract,
-              contractsVerificationStatuses,
-            )
-
             return makeTechnologyContract(
               contract,
               projectParams,
-              isUnverified,
-              contractsVerificationStatuses,
+              !contract.isVerified,
               projectChangeReport,
             )
           }),
@@ -115,16 +92,10 @@ export function getContractsSection(
           bridgeName: projectParams.daSolution?.bridgeName,
           hostChain: slugToDisplayName(projectParams.daSolution?.hostChain),
           contracts: projectParams.daSolution.contracts.flatMap((contract) => {
-            const isUnverified = isContractUnverified(
-              contract,
-              contractsVerificationStatuses,
-            )
-
             return makeTechnologyContract(
               contract,
               projectParams,
-              isUnverified,
-              contractsVerificationStatuses,
+              !contract.isVerified,
               projectChangeReport,
             )
           }),
@@ -136,17 +107,12 @@ export function getContractsSection(
       ?.filter((escrow) => escrow.contract && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
-        const isUnverified = isEscrowUnverified(
-          escrow,
-          contractsVerificationStatuses,
-        )
         const contract = escrowToProjectContract(escrow)
 
         return makeTechnologyContract(
           contract,
           projectParams,
-          isUnverified,
-          contractsVerificationStatuses,
+          !contract.isVerified,
           projectChangeReport,
           true,
         )
@@ -154,10 +120,6 @@ export function getContractsSection(
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
 
-  /*
-    TODO: isVerified should not be required after https://linear.app/l2beat/issue/L2B-6497/refactor-verification-status is done
-    That's because contractsVerificationStatuses should only contain the verification status of the contracts that are actually used in the project thus you can derive isVerified from that.
-  */
   if (projectParams.isVerified === false) {
     risks.push({
       text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
@@ -176,7 +138,6 @@ export function getContractsSection(
 
   return {
     chainName,
-    nativeContracts,
     contracts,
     escrows,
     risks,
@@ -193,15 +154,13 @@ export function getContractsSection(
 }
 
 function makeTechnologyContract(
-  item: ScalingProjectContract,
+  item: ProjectContract,
   projectParams: ProjectParams,
   isUnverified: boolean,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = getChain(projectParams, item)
-  const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 
   const getAddress = (opts: {
@@ -215,9 +174,7 @@ function makeTechnologyContract(
     return {
       name: name,
       address: opts.address.toString(),
-      verificationStatus: toVerificationStatus(
-        verificationStatusForChain[opts.address.toString()],
-      ),
+      verificationStatus: toVerificationStatus(!isUnverified),
       href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
       isAdmin: !!opts.isAdmin,
     }
@@ -233,19 +190,6 @@ function makeTechnologyContract(
       description = unverifiedText
     } else {
       description += ' ' + unverifiedText
-    }
-  }
-
-  const areImplementationsUnverified = addresses
-    .filter((c) => !c.isAdmin && c.verificationStatus !== 'unverified')
-    .map((c) => verificationStatusForChain[c.address])
-    .some((c) => c === false)
-
-  if (areImplementationsUnverified) {
-    if (!description) {
-      description = CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
-    } else {
-      description += ' ' + CONTRACTS.UNVERIFIED_IMPLEMENTATIONS_DESCRIPTION
     }
   }
 
@@ -313,7 +257,7 @@ function makeTechnologyContract(
 }
 
 function getAddresses(
-  contract: ScalingProjectContract,
+  contract: ProjectContract,
   getAddress: (opts: {
     address: EthereumAddress
     name?: string
@@ -351,30 +295,7 @@ function getAddresses(
   return addresses
 }
 
-function isContractUnverified(
-  contract: ScalingProjectContract,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
-): boolean {
-  const chain = contract.chain ?? 'ethereum'
-  return (
-    contractsVerificationStatuses[chain]?.[contract.address.toString()] ===
-    false
-  )
-}
-
-function isEscrowUnverified(
-  escrow: ProjectEscrow,
-  contractsVerificationStatuses: ContractsVerificationStatuses,
-): boolean {
-  const chain = escrow.contract?.chain ?? 'ethereum'
-  return (
-    contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false
-  )
-}
-
-function escrowToProjectContract(
-  escrow: ProjectEscrow,
-): ScalingProjectContract {
+function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   assert(escrow.contract, 'Old escrow format used') // old format misses upgradeability info
 
   const genericName =

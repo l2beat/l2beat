@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x0a278ac2a987b39905de989c422590eca974f1d6
+
+# Diff at Mon, 03 Feb 2025 13:17:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3a66ce5694d8c3f9dfc80675eaa6c0bc1a2489b3 block: 20842982
+- current block number: 21766214
+
+## Description
+
+Removed EOA permission.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","via":[]}
+      values.$admin:
+-        ["0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6","0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"]
++        "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20842982 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierAdminMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      name:
+-        "SHARPVerifierGovernorMultisig"
++        "SHARPVerifierAdminMultisig"
+    }
+```
+
 Generated with discovered.json: 0x3dfb5f7729604707a3662c768eb267e9ca64202e
 
 # Diff at Mon, 20 Jan 2025 11:10:05 GMT:

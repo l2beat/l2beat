@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 21630127,
-  "configHash": "0x71880cdd686617dcb78c3cff71fc0825f8ded222d00be9f049f47b21718954a6",
+  "blockNumber": 21744722,
+  "configHash": "0xbaedab6db13baa91db4f7d1c2a3f43dc9eeeb3316eec2f8402710a42d2ccd2c9",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {
@@ -13,6 +13,7 @@
         "0x608730e7656b64bd18a9a04f2b0024b9dc95d2145d3e6cde1f5d590f31f4fff4"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -58,11 +59,21 @@
     {
       "name": "PolygonZkEVMEtrog",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+      "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
         "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
         "0x5912938b92e53d8eb670cbaff45effa91dca7caafcb389b57bf161cdd7585fa3"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "PolygonZkEVM",
+      "description": "The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.",
+      "issuedPermissions": [
+        {
+          "permission": "sequence",
+          "to": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["lastAccInputHash"],
       "sinceTimestamp": 1706364971,
       "values": {
@@ -113,7 +124,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xd702f4fdf81a5538fe26737b475a8bc52774aacc95f7e910273d1fa9ee445569",
+        "lastAccInputHash": "0x8f9d81a5d219711c4c870792df7c3fd5f3046c46c28365564edbc409ae51296b",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -127,7 +138,12 @@
         "trustedSequencer": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
         "trustedSequencerURL": "https://zkevm-rpc.com/"
       },
-      "derivedName": "PolygonZkEVMEtrog"
+      "fieldMeta": {
+        "forceBatchAddress": {
+          "severity": "HIGH",
+          "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
+        }
+      }
     },
     {
       "name": "usdcBridge",
@@ -137,6 +153,7 @@
         "0xefc52c461b0de070fb85381ef77033d1a68b13e59d2ca477477b766802ab1164"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -166,14 +183,16 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "PolygonzkEVMVerifier",
+      "name": "FflonkVerifier_11",
       "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+      "template": "polygon-cdk/Verifier",
       "sourceHashes": [
         "0x1b9299553467d8c5557640b4aa02efa58c4fd2cec8e008db1a70ce0a1c5a131b"
       ],
+      "displayName": "Verifier",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1726821035,
-      "values": { "$immutable": true },
-      "derivedName": "FflonkVerifier_11"
+      "values": { "$immutable": true }
     },
     {
       "name": "wstETHBridge",
@@ -183,6 +202,7 @@
         "0x768cec78a852b6918281dca4675713010a4e764f5eb658f4f98c8ae258523e62"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -224,14 +244,7 @@
       "derivedName": "WstETHBridgeL1"
     },
     {
-      "name": "",
-      "address": "0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9",
-      "unverified": true,
-      "sinceTimestamp": 1651947248,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "EscrowsAdmin",
+      "name": "PolygonZkEvmEscrowsMultisig",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -284,10 +297,17 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3" },
-    { "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800" },
+    {
+      "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+        }
+      ]
+    },
     { "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed" },
     { "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E" },
-    { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
     { "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5" },
     { "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189" },
     { "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D" },
@@ -642,6 +662,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "polygon-cdk/PolygonZkEVM": "0x1b875d2c93809cbc2714ed3e0d71fa66d182e0082a816b78492fd220fe9fcd86",
+    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
   }
 }

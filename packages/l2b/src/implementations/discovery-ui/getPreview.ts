@@ -1,7 +1,4 @@
-import type {
-  ScalingProjectContract,
-  ScalingProjectPermissions,
-} from '@l2beat/config'
+import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/src/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
 import { type ContractsMeta, getMeta } from './getMeta'
@@ -30,11 +27,11 @@ export function getPreview(
 
   const permissionsPerChain: {
     chain: string
-    permissions: ScalingProjectPermissions
+    permissions: ProjectPermissions
   }[] = []
   const contractsPerChain: {
     chain: string
-    contracts: ScalingProjectContract[]
+    contracts: ProjectContract[]
   }[] = []
 
   const metaPerChain: { [chain: string]: ContractsMeta } = {}
@@ -64,7 +61,7 @@ export function getPreview(
 function getPermissionsPreview(
   permissionsPerChain: {
     chain: string
-    permissions: ScalingProjectPermissions
+    permissions: ProjectPermissions
   }[],
   metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; permissions: ApiPreviewPermissions }[] {
@@ -96,7 +93,7 @@ function getPermissionsPreview(
 }
 
 function getContractsPreview(
-  contractsPerChain: { chain: string; contracts: ScalingProjectContract[] }[],
+  contractsPerChain: { chain: string; contracts: ProjectContract[] }[],
   metaPerChain: { [chain: string]: ContractsMeta },
 ): { chain: string; contracts: ApiPreviewContract[] }[] {
   return contractsPerChain.map(({ chain, contracts }) => ({

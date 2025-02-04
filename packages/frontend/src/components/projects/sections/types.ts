@@ -1,6 +1,5 @@
 import type { ChartSectionProps } from './chart-section'
 import type { ContractsSectionProps } from './contracts/contracts-section'
-import type { MultiChainContractsSectionProps } from './contracts/multichain-contracts-section'
 import type { CostsSectionProps } from './costs/costs-section'
 import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
 import type { DetailedDescriptionSectionProps } from './detailed-description-section'
@@ -127,11 +126,6 @@ interface ProjectDetailsContractsSection {
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
-interface ProjectDetailsMultiChainContractsSection {
-  type: 'MultichainContractsSection'
-  props: ProjectDetailsProps<MultiChainContractsSectionProps>
-}
-
 interface ProjectDetailsKnowledgeNuggetsSection {
   type: 'KnowledgeNuggetsSection'
   props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
@@ -171,7 +165,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
-  | ProjectDetailsMultiChainContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup

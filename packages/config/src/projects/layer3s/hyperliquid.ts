@@ -4,24 +4,16 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import {
-  DA_LAYERS,
-  DA_MODES,
-  OPERATOR,
-  RISK_VIEW,
-  addSentimentToDataAvailability,
-} from '../../common'
+import { DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
+import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
-const constructorHotAddress = EthereumAddress(
-  '0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A',
-) // also initial locker and finalizer
-
+// TODO(radomski): Where are they from?
 const hotAddresses = [
   EthereumAddress('0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc'),
   EthereumAddress('0xda6816df552c3f9e0FB64979fb357800d690d79B'),
@@ -90,8 +82,8 @@ export const hyperliquid: Layer3 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: [DA_LAYERS.HYPERLIQUID_DA],
+  dataAvailability: {
+    layer: DA_LAYERS.HYPERLIQUID_DA,
     bridge: {
       value: `${validatorSetSize} validators`,
       sentiment: 'bad',
@@ -99,7 +91,7 @@ export const hyperliquid: Layer3 = {
         'The bridge verifies that at least 2/3+1 of the Huperliquid validators have signed off a withdrawal request.',
     },
     mode: DA_MODES.TRANSACTION_DATA,
-  }),
+  },
   riskView: {
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL,
@@ -143,53 +135,57 @@ export const hyperliquid: Layer3 = {
     },
   },
   contracts: {
-    addresses: discovery.getDiscoveredContracts(),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Hot validators',
-          accounts: hotAddresses.map((address, _) => ({
+        discovery.getPermissionDetails(
+          'Hot validators',
+          discovery.formatPermissionedAccounts(hotAddresses),
+          'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
+        ),
+        discovery.getPermissionDetails(
+          'Cold validators',
+          coldAddresses.map((address, _) => ({
             address,
             type: 'EOA',
           })),
-          description:
-            'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
-          chain: 'arbitrum',
-        },
-        {
-          name: 'Cold validators',
-          accounts: coldAddresses.map((address, _) => ({
-            address,
-            type: 'EOA',
-          })),
-          description: `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
-        },
-        {
-          name: 'Lockers',
-          accounts: [
+          `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
+        ),
+        discovery.getPermissionDetails(
+          'Lockers',
+          [
             ...discovery.getPermissionedAccounts(
               'HyperliquidBridge',
               'lockers',
             ),
-            { address: constructorHotAddress, type: 'EOA' },
+            ...discovery.formatPermissionedAccounts(
+              discovery.getContractValue<{ hotAddresses: string[] }>(
+                'HyperliquidBridge',
+                'constructorArgs',
+              )['hotAddresses'],
+            ),
           ],
-          description: `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
-        },
-        {
-          name: 'Finalizers',
-          accounts: [
+          `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
+        ),
+        discovery.getPermissionDetails(
+          'Finalizers',
+          [
             ...discovery.getPermissionedAccounts(
               'HyperliquidBridge',
               'finalizers',
             ),
-            { address: constructorHotAddress, type: 'EOA' },
+            ...discovery.formatPermissionedAccounts(
+              discovery.getContractValue<{ hotAddresses: string[] }>(
+                'HyperliquidBridge',
+                'constructorArgs',
+              )['hotAddresses'],
+            ),
           ],
-          description:
-            'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
-        },
+          'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
+        ),
       ],
     },
   },

@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x46964d2c67619ab761f587e6be3beb1ece7a30d1eed3734e9a95e45918e37e46",
+  "configHash": "0xa4b175788cdf6a4e93d17efb1e40d9323bd3151a51d4f4a66a868aa0624432e9",
   "contracts": [
     {
       "name": "AnyswapV4Router",
@@ -38,7 +38,10 @@
       "derivedName": "AnyswapV6Router"
     }
   ],
-  "eoas": [{ "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869" }],
+  "eoas": [
+    { "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869" },
+    { "address": "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00" }
+  ],
   "abis": {
     "0x6b7a87899490EcE95443e979cA9485CBE7E71522": [
       "constructor(address _factory, address _wNATIVE, address _mpc)",

@@ -116,61 +116,56 @@ export const satellite: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'MintLimiter Multisig',
-          accounts: discovery.getPermissionedAccounts(
-            'Multisig',
-            'signerAccounts',
+        discovery.getPermissionDetails(
+          'MintLimiter Multisig',
+          discovery.getPermissionedAccounts('Multisig', 'signerAccounts'),
+          'Members of the Multisig that can set mint limits.',
+        ),
+        discovery.getPermissionDetails(
+          'Operators',
+          [],
+          'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
+        ),
+        discovery.getPermissionDetails(
+          'AxelarGasService Admin',
+          discovery.getPermissionedAccounts(
+            'AxelarGasServiceOperators',
+            'owner',
           ),
-          description: 'Members of the Multisig that can set mint limits.',
-        },
-        {
-          name: 'Operators',
-          accounts: [],
-          description:
-            'Axelar operators are a list of Axelar validators for the current epoch that can relay messages.',
-        },
-        {
-          name: 'AxelarGasService Admin',
-          accounts: [
-            discovery.getPermissionedAccount(
-              'AxelarGasServiceOperators',
-              'owner',
-            ),
-          ],
-          description:
-            'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
-        },
+          'Can set arbitrary addresses as AxelarGasService admins, who can in turn modify the gas price for all chains. Is also the upgradeability admin of AxelarGasService and can withdraw accumulated fees.',
+        ),
       ],
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'Gateway',
-        'Main Gateway contract acting also as an escrow for bridged tokens.',
-      ),
-      discovery.getContractDetails(
-        'AxelarAuthWeighted',
-        'Contract verifying  Axelar network Verifier signatures. It stores the list of operators that can relay messages. Operators can be changed by the owner of this contract. Owner is set to be the Gateway itself.',
-      ),
-      discovery.getContractDetails(
-        'InterchainGovernance',
-        'Governance contract that executes onchain governance proposals from Axelar network. It is authorised to upgrade Axelar Gateway.',
-      ),
-      discovery.getContractDetails(
-        'Multisig',
-        `Admin Multisig setting mint limits. Acts as a ${mintLimiterThreshold}-of-${mintLimiterSigners.length} multisig.`,
-      ),
-      {
-        ...discovery.getContractDetails(
-          'AxelarGasService',
-          'Allows users to pay for native gas at the destination with tokens or ETH. It also manages refunds.',
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'Gateway',
+          'Main Gateway contract acting also as an escrow for bridged tokens.',
         ),
-        upgradableBy: ['AxelarGasService Admin'],
-        upgradeDelay: 'none',
-      },
-    ],
+        discovery.getContractDetails(
+          'AxelarAuthWeighted',
+          'Contract verifying  Axelar network Verifier signatures. It stores the list of operators that can relay messages. Operators can be changed by the owner of this contract. Owner is set to be the Gateway itself.',
+        ),
+        discovery.getContractDetails(
+          'InterchainGovernance',
+          'Governance contract that executes onchain governance proposals from Axelar network. It is authorised to upgrade Axelar Gateway.',
+        ),
+        discovery.getContractDetails(
+          'Multisig',
+          `Admin Multisig setting mint limits. Acts as a ${mintLimiterThreshold}-of-${mintLimiterSigners.length} multisig.`,
+        ),
+        {
+          ...discovery.getContractDetails(
+            'AxelarGasService',
+            'Allows users to pay for native gas at the destination with tokens or ETH. It also manages refunds.',
+          ),
+          upgradableBy: ['AxelarGasService Admin'],
+          upgradeDelay: 'none',
+        },
+      ],
+    },
     risks: [],
   },
 }

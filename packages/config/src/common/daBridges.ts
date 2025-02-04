@@ -1,8 +1,8 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { probabilityOfCompromise } from '../projects/da-beat/common'
-import type { TableReadyValue } from '../types'
-import { getDacSentiment } from './dataAvailability'
+import { type DaProjectTableValue, getDacSentiment } from './dataAvailability'
 
-const NONE: TableReadyValue = {
+const NONE: DaProjectTableValue = {
   value: 'None',
   sentiment: 'bad',
   description:
@@ -10,7 +10,7 @@ const NONE: TableReadyValue = {
   orderHint: -2,
 }
 
-const NONE_WITH_DA_CHALLENGES: TableReadyValue = {
+const NONE_WITH_DA_CHALLENGES: DaProjectTableValue = {
   value: 'None + DA challenges',
   sentiment: 'bad',
   description:
@@ -18,25 +18,27 @@ const NONE_WITH_DA_CHALLENGES: TableReadyValue = {
   orderHint: -1,
 }
 
-const ENSHRINED: TableReadyValue = {
+const ENSHRINED: DaProjectTableValue = {
   value: 'Enshrined',
   sentiment: 'good',
   description:
     'The validating bridge has access to all the data, as it is posted onchain.',
+  projectId: ProjectId('enshrined-bridge'),
 }
 
-const OPTIMISTIC: TableReadyValue = {
+const OPTIMISTIC: DaProjectTableValue = {
   value: 'Optimistic',
   sentiment: 'bad',
   description:
     'There is a mechanism that allows validators to request that the Sequencer posts data onchain via L1 contract if they find that data is unavailable.',
 }
 
-const BLOBSTREAM: TableReadyValue = {
+const BLOBSTREAM: DaProjectTableValue = {
   value: 'Blobstream',
   sentiment: 'warning',
   description:
     'The Blobstream DA bridge is used to attest to the data availability on Celestia.',
+  projectId: ProjectId('blobstream'),
 }
 
 function DAC_MEMBERS({
@@ -45,7 +47,7 @@ function DAC_MEMBERS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): TableReadyValue {
+}): DaProjectTableValue {
   return {
     value: requiredSignatures
       ? `${requiredSignatures}/${membersCount} DAC Members`
@@ -67,7 +69,7 @@ function STAKED_OPERATORS({
 }: {
   requiredSignatures: number
   membersCount: number
-}): TableReadyValue {
+}): DaProjectTableValue {
   return {
     value: `${requiredSignatures}/${membersCount} Staked Operators`,
     sentiment: 'warning',

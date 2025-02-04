@@ -1,9 +1,10 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import type { DaBridge } from '../../../types'
 import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import { CELESTIA_BLOBSTREAM } from './template'
+import { linkByDA } from '../utils/link-by-da'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -13,15 +14,18 @@ const ethereumUpdateInterval = 4 // hours
 const arbitrumUpdateInterval = 1 // hours
 const baseUpdateInterval = 1 // hours
 
-export const SP1Blobstream = CELESTIA_BLOBSTREAM({
+export const blobstream: DaBridge = {
+  id: ProjectId('blobstream'),
   addedAt: new UnixTime(1729253328), // 2024-10-18T12:08:48Z
-  usedIn: [
-    {
-      id: ProjectId('rari'),
-      name: 'RARI Chain',
-      slug: 'rari',
-    },
-  ],
+  display: {
+    name: 'Blobstream',
+    slug: 'blobstream',
+    description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
+  },
+  usedIn: linkByDA({
+    layer: ProjectId('celestia'),
+    bridge: ProjectId('blobstream'),
+  }),
   technology: {
     description: `
 
@@ -88,4 +92,4 @@ export const SP1Blobstream = CELESTIA_BLOBSTREAM({
     upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(0), // TIMELOCK_ROLE is 4/6 multisig
     relayerFailure: DaRelayerFailureRisk.NoMechanism,
   },
-})
+}
