@@ -112,7 +112,7 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OwnerMultisig',
           'Multisig controlling the ProxyAdmin, potentially stealing all locked funds.',
         ),

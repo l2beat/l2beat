@@ -261,7 +261,7 @@ export const polygonpos: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'PolygonMultisig',
           'Can propose and execute code upgrades.',
         ),

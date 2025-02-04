@@ -27,17 +27,6 @@ const upgradesTaikoMultisig = {
   upgradeDelay: 'No delay',
 }
 
-const chainWatchdog = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'chain_watchdog',
-)
-
-// sequencer for block 1
-const proposerOne = discovery.getContractValue<string>(
-  'TaikoL1Contract',
-  'proposer_one',
-)
-
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
 const TIER_SGX = discovery.getContractValue<{
@@ -488,39 +477,36 @@ export const taiko: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TaikoAdmin',
           'Currently also designated as the Security Council. Can upgrade proxies without delay, remove SGX attestation certificates, pause block proposals and block proving, among other permissions.',
         ),
-        {
-          name: 'GuardianProvers',
-          description: `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
-          accounts: discovery.getPermissionedAccounts(
-            'GuardianProver',
-            'guardians',
-          ),
-        },
-        {
-          name: 'GuardianMinorityProver',
-          description: `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'GuardianProvers',
+          discovery.getPermissionedAccounts('GuardianProver', 'guardians'),
+          `Guardians can prove blocks on the highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianProverMinSigners}/${NumGuardiansProver} multisig.`,
+        ),
+        discovery.getPermissionDetails(
+          'GuardianMinorityProver',
+          discovery.getPermissionedAccounts(
             'GuardianMinorityProver',
             'guardians',
           ),
-        },
-        {
-          name: 'ChainWatchdog',
-          accounts: [
-            { address: EthereumAddress(chainWatchdog), type: 'Contract' },
-          ],
-          description: 'The chain watchdog role can pause proving of blocks.',
-        },
-        {
-          name: 'SequencerBlockOne',
-          accounts: [{ address: EthereumAddress(proposerOne), type: 'EOA' }],
-          description:
-            'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
-        },
+          `Minority guardians can prove blocks on the second highest tier. Guardians are selected by the TaikoAdmin multisig. Acts as a ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} multisig.`,
+        ),
+        discovery.getPermissionDetails(
+          'ChainWatchdog',
+          discovery.getPermissionedAccounts(
+            'TaikoL1Contract',
+            'chain_watchdog',
+          ),
+          'The chain watchdog role can pause proving of blocks.',
+        ),
+        discovery.getPermissionDetails(
+          'SequencerBlockOne',
+          discovery.getPermissionedAccounts('TaikoL1Contract', 'proposer_one'),
+          'The authorized sequencer (in Taiko called “proposer”) of block one, hardcoded to vitalik.eth address.',
+        ),
       ],
     },
   },

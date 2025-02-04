@@ -119,24 +119,16 @@ export const zkswap2: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'zkSwap 2.0 Admin',
-          accounts: discovery.getPermissionedAccounts(
-            'UpgradeGatekeeper',
-            'getMaster',
-          ),
-          description:
-            'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
-        },
-        {
-          name: 'Active validator',
-          accounts: discovery.getPermissionedAccounts(
-            'Governance',
-            'validators',
-          ),
-          description:
-            'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
-        },
+        discovery.getPermissionDetails(
+          'zkSwap 2.0 Admin',
+          discovery.getPermissionedAccounts('UpgradeGatekeeper', 'getMaster'),
+          'This address is the master of Upgrade Gatekeeper contract, which is allowed to perform upgrades for Governance, Verifier, VerifierExit, PairManager and ZkSync contracts.',
+        ),
+        discovery.getPermissionDetails(
+          'Active validator',
+          discovery.getPermissionedAccounts('Governance', 'validators'),
+          'This actor is allowed to propose, revert and execute L2 blocks on L1. A list of active validators is kept inside Governance contract and can be updated by zkSwap 2.0 Admin.',
+        ),
       ],
     },
   },

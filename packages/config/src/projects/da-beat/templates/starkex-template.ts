@@ -1,6 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { getCommittee } from '../../../discovery/starkware'
+import {
+  type CommitteeResult,
+  getCommittee,
+} from '../../../discovery/starkware'
 import type {
   CustomDa,
   DaBridgeRisks,
@@ -19,12 +22,12 @@ interface TemplateVars {
 }
 
 export function StarkexDAC(template: TemplateVars): CustomDa {
-  const committee = template.discovery
-    ? getCommittee(template.discovery)
-    : undefined
+  const { committeePermission, minSigners }: Partial<CommitteeResult> =
+    template.discovery ? getCommittee(template.discovery) : {}
 
-  const membersCount = committee?.accounts.length ?? template.dac?.membersCount
-  const requiredMembers = committee?.minSigners ?? template.dac?.requiredMembers
+  const membersCount =
+    committeePermission?.accounts.length ?? template.dac?.membersCount
+  const requiredMembers = minSigners ?? template.dac?.requiredMembers
 
   assert(
     membersCount,

@@ -238,51 +238,44 @@ export const fuel: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'ERC20Gateway pausers',
-          description: 'Whitelisted addresses that can pause the ERC20Gateway.',
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'ERC20Gateway pausers',
+          discovery.getAccessControlRolePermission(
             'FuelERC20Gateway',
             'PAUSER_ROLE',
           ),
-        },
-        {
-          name: 'FuelMessagePortal pausers',
-          description:
-            'Whitelisted addresses that can pause the FuelMessagePortal and blacklist L2->L1 messages.',
-          accounts: discovery.getAccessControlRolePermission(
+          'Whitelisted addresses that can pause the ERC20Gateway.',
+        ),
+        discovery.getPermissionDetails(
+          'FuelMessagePortal pausers',
+          discovery.getAccessControlRolePermission(
             'FuelMessagePortal',
             'PAUSER_ROLE',
           ),
-        },
-        {
-          name: 'FuelChainState pausers',
-          description:
-            'Whitelisted addresses that can pause the FuelChainState.',
-          accounts: discovery.getAccessControlRolePermission(
+          'Whitelisted addresses that can pause the FuelMessagePortal and blacklist L2->L1 messages.',
+        ),
+        discovery.getPermissionDetails(
+          'FuelChainState pausers',
+          discovery.getAccessControlRolePermission(
             'FuelChainState',
             'PAUSER_ROLE',
           ),
-        },
-        {
-          name: 'Sequencer',
-          description: 'Permissioned address submitting tx data as blobs.',
-          accounts: [
-            {
-              address: sequencerAddress,
-              type: 'EOA',
-            },
-          ],
-        },
-        {
-          name: 'Proposer',
-          description: 'Permissioned address that can propose new state roots.',
-          accounts: discovery.getAccessControlRolePermission(
+          'Whitelisted addresses that can pause the FuelChainState.',
+        ),
+        discovery.getPermissionDetails(
+          'Sequencer',
+          discovery.formatPermissionedAccounts([sequencerAddress]),
+          'Permissioned address submitting tx data as blobs.',
+        ),
+        discovery.getPermissionDetails(
+          'Proposer',
+          discovery.getAccessControlRolePermission(
             'FuelChainState',
             'COMMITTER_ROLE',
           ),
-        },
-        ...discovery.getMultisigPermission(
+          'Permissioned address that can propose new state roots.',
+        ),
+        discovery.getMultisigPermission(
           'FuelSecurityCouncil',
           'Can upgrade the FuelERC20Gateway, FuelMessagePortal and FuelChainState contracts, potentially gaining access to all funds. It can unpause contracts and remove L2->L1 messages from the blacklist. It can also limit the tokens that can be bridged to L2.',
         ),

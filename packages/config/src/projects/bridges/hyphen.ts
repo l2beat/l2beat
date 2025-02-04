@@ -125,26 +125,24 @@ export const hyphen: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'ProxyAdmin owner',
-          description:
-            'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
-          accounts: discovery.getPermissionedAccounts('ProxyAdmin', 'owner'),
-        },
-        {
-          name: 'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
-          description:
-            'Can pause contracts, change configuration and change proxy admin or update Executor list.',
-          accounts: discovery.getPermissionedAccounts('LiquidityPool', 'owner'),
-        },
-        {
-          name: 'Executors',
-          description: 'Executor is able to release funds from LiquidityPool.',
-          accounts: discovery.getPermissionedAccounts(
+        discovery.getPermissionDetails(
+          'ProxyAdmin owner',
+          discovery.getPermissionedAccounts('ProxyAdmin', 'owner'),
+          'Can upgrade implementation of LiquidityPool, TokenManager and LiquidityProviders.',
+        ),
+        discovery.getPermissionDetails(
+          'Owner of LiquidityPool, TokenManager, LiquidityProviders and ExecutorManager',
+          discovery.getPermissionedAccounts('LiquidityPool', 'owner'),
+          'Can pause contracts, change configuration and change proxy admin or update Executor list.',
+        ),
+        discovery.getPermissionDetails(
+          'Executors',
+          discovery.getPermissionedAccounts(
             'ExecutorManager',
             'getAllExecutors',
           ),
-        },
+          'Executor is able to release funds from LiquidityPool.',
+        ),
       ],
     },
   },

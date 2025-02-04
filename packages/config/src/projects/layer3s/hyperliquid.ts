@@ -19,10 +19,7 @@ import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateD
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
-const constructorHotAddress = EthereumAddress(
-  '0x45C3bbc5cA908ab49441FFe9742b919fC6dDb10A',
-) // also initial locker and finalizer
-
+// TODO(radomski): Where are they from?
 const hotAddresses = [
   EthereumAddress('0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc'),
   EthereumAddress('0xda6816df552c3f9e0FB64979fb357800d690d79B'),
@@ -150,47 +147,51 @@ export const hyperliquid: Layer3 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Hot validators',
-          accounts: hotAddresses.map((address, _) => ({
+        discovery.getPermissionDetails(
+          'Hot validators',
+          discovery.formatPermissionedAccounts(hotAddresses),
+          'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
+        ),
+        discovery.getPermissionDetails(
+          'Cold validators',
+          coldAddresses.map((address, _) => ({
             address,
             type: 'EOA',
           })),
-          description:
-            'Permissioned actors responsible for initiating withdrawals upon user requests. They can also update the challenge period, both hot and cold validator sets with a delay, and add or remove lockers and finalizers. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.',
-          chain: 'arbitrum',
-        },
-        {
-          name: 'Cold validators',
-          accounts: coldAddresses.map((address, _) => ({
-            address,
-            type: 'EOA',
-          })),
-          description: `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
-        },
-        {
-          name: 'Lockers',
-          accounts: [
+          `Permissioned actors responsible for vetoing withdrawals and validator set rotations initiated by hot validators within ${formatSeconds(challengePeriod)}. They can also update the block time, change the lockers threshold, and rotate the hot validator set in case of a failure, and its own set. The system accepts a request if signed by 2/3+1 of validators power. Currently all validators have equal power.`,
+        ),
+        discovery.getPermissionDetails(
+          'Lockers',
+          [
             ...discovery.getPermissionedAccounts(
               'HyperliquidBridge',
               'lockers',
             ),
-            { address: constructorHotAddress, type: 'EOA' },
+            ...discovery.formatPermissionedAccounts(
+              discovery.getContractValue<{ hotAddresses: string[] }>(
+                'HyperliquidBridge',
+                'constructorArgs',
+              )['hotAddresses'],
+            ),
           ],
-          description: `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
-        },
-        {
-          name: 'Finalizers',
-          accounts: [
+          `Permissioned actors responsible for pausing the bridge in case of an emergency. The current threshold to activate a pause is ${lockerThreshold}.`,
+        ),
+        discovery.getPermissionDetails(
+          'Finalizers',
+          [
             ...discovery.getPermissionedAccounts(
               'HyperliquidBridge',
               'finalizers',
             ),
-            { address: constructorHotAddress, type: 'EOA' },
+            ...discovery.formatPermissionedAccounts(
+              discovery.getContractValue<{ hotAddresses: string[] }>(
+                'HyperliquidBridge',
+                'constructorArgs',
+              )['hotAddresses'],
+            ),
           ],
-          description:
-            'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
-        },
+          'Permissioned actors responsible for finalizing withdrawals and validator set updates.',
+        ),
       ],
     },
   },

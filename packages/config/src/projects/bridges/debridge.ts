@@ -117,19 +117,15 @@ export const debridge: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'Admin Multisig',
           'Admin for all upgradable proxy smart contracts. It can change the implementations of all proxies through the ProxyAdmin contract.',
         ),
-        {
-          name: 'Oracles',
-          description:
-            'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
-          accounts: discovery.getPermissionedAccounts(
-            'SignatureVerifier',
-            'oracles',
-          ),
-        },
+        discovery.getPermissionDetails(
+          'Oracles',
+          discovery.getPermissionedAccounts('SignatureVerifier', 'oracles'),
+          'Accounts permitted to sign the message coming from other chain. Currently at least 8 of them are need to sign the message.',
+        ),
       ],
     },
   },

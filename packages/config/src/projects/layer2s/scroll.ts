@@ -703,36 +703,32 @@ export const scroll: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ScrollOpsMultisig',
           'Can propose transactions via the TimelockFast, which currently can manage all roles in the ScrollOwner and thus get access to full upgrade and system functions. The ScrollExecutorMultisig needs to execute these proposals once ready.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'SecurityCouncil',
           'Can upgrade all system contracts via the TimelockSC and the ProxyAdmin and manage all critical roles in the ScrollOwner via the TimelockSlow. The ScrollExecutorMultisig can execute these proposals, but the SC is also permissioned to execute them.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ScrollExecutorMultisig',
           'Can execute timelock transactions in all four timelocks.',
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ScrollEmergencyMultisig',
           'Can revert batches, remove sequencers and provers, and pause contracts via the TimelockEmergency. The ScrollExecutorMultisig needs to execute these proposals.',
         ),
-        {
-          name: 'Sequencers',
-          accounts: discovery.getPermissionedAccounts(
-            'ScrollChain',
-            'sequencers',
-          ),
-          description: 'Actors allowed to commit transaction batches.',
-        },
-        {
-          name: 'Proposers',
-          accounts: discovery.getPermissionedAccounts('ScrollChain', 'provers'),
-          description:
-            'Actors allowed to prove transaction batches and publish state root updates.',
-        },
+        discovery.getPermissionDetails(
+          'Sequencers',
+          discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),
+          'Actors allowed to commit transaction batches.',
+        ),
+        discovery.getPermissionDetails(
+          'Proposers',
+          discovery.getPermissionedAccounts('ScrollChain', 'provers'),
+          'Actors allowed to prove transaction batches and publish state root updates.',
+        ),
       ],
     },
   },

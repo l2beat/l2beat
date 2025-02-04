@@ -160,7 +160,7 @@ export const near: Bridge = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'BridgeAdminMultisig',
           'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
         ),

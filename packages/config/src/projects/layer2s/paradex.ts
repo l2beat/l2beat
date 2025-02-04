@@ -311,33 +311,29 @@ export const paradex: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Paradex owner',
-          accounts: getProxyGovernance(discovery, 'Paradex'),
-          description:
-            'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
+        discovery.getPermissionDetails(
+          'Paradex owner',
+          getProxyGovernance(discovery, 'Paradex'),
+          'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge and potentially allowing fraudulent state to be posted. ' +
             delayDescriptionFromSeconds(upgradeDelaySeconds),
-        },
-        {
-          name: 'Paradex Implementation Governors',
-          accounts: discovery.getPermissionedAccounts('Paradex', 'governors'),
-          description:
-            'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
-        },
+        ),
+        discovery.getPermissionDetails(
+          'Paradex Implementation Governors',
+          discovery.getPermissionedAccounts('Paradex', 'governors'),
+          'The governors are responsible for: appointing operators, changing program hash, changing config hash, changing message cancellation delay. There is no delay on governor actions.',
+        ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
-        {
-          name: 'Operators',
-          accounts: discovery.getPermissionedAccounts('Paradex', 'operators'),
-          description:
-            'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        },
-        {
-          name: 'USDC Escrow owner',
-          accounts: getProxyGovernance(discovery, 'USDC Bridge'),
-          description:
-            'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getPermissionedAccounts('Paradex', 'operators'),
+          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        ),
+        discovery.getPermissionDetails(
+          'USDC Escrow owner',
+          getProxyGovernance(discovery, 'USDC Bridge'),
+          'Can upgrade implementation of the USDC Escrow, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(escrowUSDCDelaySeconds),
-        },
+        ),
       ],
     },
   },

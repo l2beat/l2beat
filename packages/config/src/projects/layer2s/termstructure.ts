@@ -298,61 +298,47 @@ export const termstructure: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        {
-          name: 'Admins',
-          accounts: discovery.getAccessControlRolePermission(
-            'ZkTrueUp',
-            'ADMIN_ROLE',
-          ),
-          description:
-            'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
-        },
-        ...discovery.getMultisigPermission(
+        discovery.getPermissionDetails(
+          'Admins',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'ADMIN_ROLE'),
+          'Can update the main verifier, the evacuation verifier, can set the flash loan premium, set the half liquidation threshold, the liquidation factor, the borrow rate, the rollover fee, the withdraw protocol fee, the price feed, the stablecoin used, the minimum deposit amount and it can pause the system.',
+        ),
+        discovery.getMultisigPermission(
           'TermStructureMultisig',
           'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
         ),
-        {
-          name: 'Operators',
-          accounts: discovery.getAccessControlRolePermission(
-            'ZkTrueUp',
-            'OPERATOR_ROLE',
-          ),
-          description: 'Can add tokens to the system.',
-        },
-        {
-          name: 'Committers',
-          accounts: discovery.getAccessControlRolePermission(
+        discovery.getPermissionDetails(
+          'Operators',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'OPERATOR_ROLE'),
+          'Can add tokens to the system.',
+        ),
+        discovery.getPermissionDetails(
+          'Committers',
+          discovery.getAccessControlRolePermission(
             'ZkTrueUp',
             'COMMITTER_ROLE',
           ),
-          description:
-            'Can commit blocks on L1 and revert pending (i.e. not yet executed) blocks.',
-        },
-        {
-          name: 'Verifiers',
-          accounts: discovery.getAccessControlRolePermission(
-            'ZkTrueUp',
-            'VERIFIER_ROLE',
-          ),
-          description: 'Can verify blocks on L1.',
-        },
-        {
-          name: 'Executers',
-          accounts: discovery.getAccessControlRolePermission(
-            'ZkTrueUp',
-            'EXECUTER_ROLE',
-          ),
-          description: 'Can execute blocks on L1.',
-        },
-        ...discovery.getMultisigPermission(
+          'Can commit blocks on L1 and revert pending (i.e. not yet executed) blocks.',
+        ),
+        discovery.getPermissionDetails(
+          'Verifiers',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'VERIFIER_ROLE'),
+          'Can verify blocks on L1.',
+        ),
+        discovery.getPermissionDetails(
+          'Executers',
+          discovery.getAccessControlRolePermission('ZkTrueUp', 'EXECUTER_ROLE'),
+          'Can execute blocks on L1.',
+        ),
+        discovery.getMultisigPermission(
           'VaultMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${vaultWeight}% of the fees.`,
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'InsuranceMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${insuranceWeight}% of the fees.`,
         ),
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'TreasuryMultisig',
           `Address collecting a portion of protocol fees. Currently set to ${treasuryWeight}% of the fees.`,
         ),

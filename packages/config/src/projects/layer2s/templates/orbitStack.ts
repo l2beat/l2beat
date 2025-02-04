@@ -384,25 +384,26 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ProjectPermission = {
-    name: 'Validators/Proposers',
-    accounts: templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
-    description:
+  const validators: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Validators/Proposers',
+      templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
       'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    chain: templateVars.discovery.chain,
-  }
+    )
+
   if (validators.accounts.length === 0) {
     throw new Error(
       `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
     )
   }
 
-  const sequencers: ProjectPermission = {
-    name: 'Sequencers',
-    accounts: templateVars.discovery.getPermissionsByRole('sequence'),
-    description: 'Central actors allowed to submit transaction batches to L1.',
-    chain: templateVars.discovery.chain,
-  }
+  const sequencers: ProjectPermission =
+    templateVars.discovery.getPermissionDetails(
+      'Sequencers',
+      templateVars.discovery.getPermissionsByRole('sequence'),
+      'Central actors allowed to submit transaction batches to L1.',
+    )
+
   if (sequencers.accounts.length === 0) {
     throw new Error(
       `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,

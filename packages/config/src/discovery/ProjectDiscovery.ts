@@ -205,7 +205,7 @@ export class ProjectDiscovery {
         if (description !== '') {
           return {
             name: contract.name,
-            accounts: [this.formatPermissionedAccount(contract.address)],
+            accounts: this.formatPermissionedAccounts([contract.address]),
             description,
             chain: this.chain,
           }
@@ -378,7 +378,7 @@ export class ProjectDiscovery {
     description: string | string[],
     userReferences?: ReferenceLink[],
     useBulletPoints: boolean = false,
-  ): ProjectPermission[] {
+  ): ProjectPermission {
     const contract = this.getContract(identifier)
 
     const passedDescription = Array.isArray(description)
@@ -404,21 +404,19 @@ export class ProjectDiscovery {
       })),
     ]
 
-    return [
-      {
-        name: contract.name,
-        description: descriptionWithContractNames,
-        accounts: [
-          {
-            address: contract.address,
-            type: 'Contract',
-          },
-        ],
-        chain: this.chain,
-        references,
-        participants: this.getPermissionedAccounts(identifier, '$members'),
-      },
-    ]
+    return {
+      name: contract.name,
+      description: descriptionWithContractNames,
+      accounts: [
+        {
+          address: contract.address,
+          type: 'Contract',
+        },
+      ],
+      chain: this.chain,
+      references,
+      participants: this.getPermissionedAccounts(identifier, '$members'),
+    }
   }
 
   getAccessControlRolePermission(
@@ -426,7 +424,7 @@ export class ProjectDiscovery {
     role: string,
   ): ProjectPermissionedAccount[] {
     const { members } = this.getAccessControlField(contractIdentifier, role)
-    return members.map((member) => this.formatPermissionedAccount(member))
+    return this.formatPermissionedAccounts(members)
   }
 
   getContract(identifier: string): ContractParameters {
@@ -539,18 +537,24 @@ export class ProjectDiscovery {
     return EthereumAddress(address)
   }
 
-  formatPermissionedAccount(
-    account: ContractValue | EthereumAddress,
-  ): ProjectPermissionedAccount {
-    assert(
-      isString(account) && EthereumAddress.check(account),
-      `Values must be Ethereum addresses`,
-    )
-    const address = EthereumAddress(account)
-    const isEOA = this.isEOA(address)
-    const type = isEOA ? 'EOA' : 'Contract'
+  formatPermissionedAccounts(
+    accounts: (ContractValue | EthereumAddress)[],
+  ): ProjectPermissionedAccount[] {
+    const result: ProjectPermissionedAccount[] = []
 
-    return { address: address, type }
+    for (const account of accounts) {
+      assert(
+        isString(account) && EthereumAddress.check(account),
+        `Values must be Ethereum addresses`,
+      )
+      const address = EthereumAddress(account)
+      const isEOA = this.isEOA(address)
+      const type = isEOA ? 'EOA' : 'Contract'
+
+      result.push({ address: address, type })
+    }
+
+    return result
   }
 
   getPermissionedAccounts(
@@ -565,7 +569,24 @@ export class ProjectDiscovery {
       addresses.push(value)
     }
 
-    return addresses.map(this.formatPermissionedAccount.bind(this))
+    return this.formatPermissionedAccounts(addresses)
+  }
+
+  getPermissionDetails(
+    name: string,
+    accounts: ProjectPermissionedAccount[],
+    description: string,
+    opts?: {
+      references?: ReferenceLink[]
+    },
+  ): ProjectPermission {
+    return {
+      name,
+      accounts,
+      description,
+      chain: this.chain,
+      ...(opts ?? {}),
+    }
   }
 
   getContractFromValue(
@@ -775,11 +796,13 @@ export class ProjectDiscovery {
   getPermissionsByRole(
     role: (typeof RolePermissionEntries)[number],
   ): ProjectPermissionedAccount[] {
-    return this.getContractsAndEoas()
+    const addresses = this.getContractsAndEoas()
       .filter((x) =>
         (x.receivedPermissions ?? []).find((p) => p.permission === role),
       )
-      .map((x) => this.formatPermissionedAccount(x.address))
+      .map((x) => x.address)
+
+    return this.formatPermissionedAccounts(addresses)
   }
 
   describeGnosisSafeMembership(
@@ -862,11 +885,10 @@ export class ProjectDiscovery {
         }
       }
 
-      const accounts = addresses.map((a) => this.formatPermissionedAccount(a))
       result.push({
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
-        accounts,
+        accounts: this.formatPermissionedAccounts(addresses),
       })
     }
     return result
@@ -1072,7 +1094,7 @@ export class ProjectDiscovery {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
         actors.push(
-          ...this.getMultisigPermission(
+          this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
             [],
@@ -1098,7 +1120,7 @@ export class ProjectDiscovery {
       )
       actors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
-        accounts: [this.formatPermissionedAccount(eoa.address)],
+        accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
         description,
       })
