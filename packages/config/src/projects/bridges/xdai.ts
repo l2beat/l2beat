@@ -135,35 +135,35 @@ export const xdai: Bridge = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails(
-        'SDaiForeignBridge',
-        'Bridge Contract and Escrow for (s)DAI.',
-      ),
-      discovery.getContractDetails(
-        'BridgeValidators',
-        'Validator Management Contract.',
-      ),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails(
+          'SDaiForeignBridge',
+          'Bridge Contract and Escrow for (s)DAI.',
+        ),
+        discovery.getContractDetails(
+          'BridgeValidators',
+          'Validator Management Contract.',
+        ),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {
       actors: [
-        ...discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'GnosisBridgeGovernanceMultisig',
           'Can update bridge contracts, validator set, signature thresholds and bridge parameters.',
         ),
-        {
-          accounts: [
-            ...discovery.getPermissionedAccounts(
-              'BridgeValidators',
-              'validatorList',
-            ),
-          ],
-          name: `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
-          description: 'Bridge Validators.',
-        },
+        discovery.getPermissionDetails(
+          `Participants in the BridgeValidators ${validatorThresholdstring} MultiSig`,
+          discovery.getPermissionedAccounts(
+            'BridgeValidators',
+            'validatorList',
+          ),
+          'Bridge Validators.',
+        ),
       ],
     },
   },

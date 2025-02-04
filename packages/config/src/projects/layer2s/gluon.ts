@@ -114,18 +114,20 @@ export const gluon: Layer2 = {
     },
   },
   contracts: {
-    addresses: [
-      discovery.getContractDetails('Gluon'),
-      discovery.getContractDetails('RegistryLogic'),
-      discovery.getContractDetails('RegistryData'),
-      discovery.getContractDetails('StakeLogic'),
-      discovery.getContractDetails('StakeData'),
-      discovery.getContractDetails('SpotLogic'),
-      discovery.getContractDetails('SpotData'),
-      discovery.getContractDetails('DerivativesLogic'),
-      discovery.getContractDetails('DerivativesData'),
-      discovery.getContractDetails('LegacyTokensExtension'),
-    ],
+    addresses: {
+      [discovery.chain]: [
+        discovery.getContractDetails('Gluon'),
+        discovery.getContractDetails('RegistryLogic'),
+        discovery.getContractDetails('RegistryData'),
+        discovery.getContractDetails('StakeLogic'),
+        discovery.getContractDetails('StakeData'),
+        discovery.getContractDetails('SpotLogic'),
+        discovery.getContractDetails('SpotData'),
+        discovery.getContractDetails('DerivativesLogic'),
+        discovery.getContractDetails('DerivativesData'),
+        discovery.getContractDetails('LegacyTokensExtension'),
+      ],
+    },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

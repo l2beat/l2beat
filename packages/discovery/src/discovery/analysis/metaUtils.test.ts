@@ -26,12 +26,12 @@ describe('metaUtils', () => {
         description: 'description 1',
         permissions: [
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0x1234'),
           },
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0x5678'),
           },
@@ -49,12 +49,12 @@ describe('metaUtils', () => {
         description: 'description 2',
         permissions: [
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0xabcd'),
           },
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0x1234'),
           },
@@ -77,17 +77,17 @@ describe('metaUtils', () => {
         canActIndependently: undefined,
         permissions: [
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0x1234'),
           },
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0x5678'),
           },
           {
-            type: 'configure',
+            type: 'interact',
             delay: 0,
             target: EthereumAddress.from('0xabcd'),
           },
@@ -112,21 +112,21 @@ describe('metaUtils', () => {
   describe('mergePermissions', () => {
     it('should merge two permission objects correctly', () => {
       const a: PermissionConfiguration[] = [
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
       ]
       const b: PermissionConfiguration[] = [
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0xabcd') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
         { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
       ]
 
       expect(mergePermissions(a, b)).toEqual([
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0xabcd') },
         { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
       ])
     })
@@ -137,7 +137,7 @@ describe('metaUtils', () => {
 
     it('returns the non-empty array if the other is empty', () => {
       const a: PermissionConfiguration[] = [
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x1234') },
       ]
       expect(mergePermissions(a, [])).toEqual(a)
       expect(mergePermissions([], a)).toEqual(a)
@@ -145,23 +145,23 @@ describe('metaUtils', () => {
 
     it('keeps only entries with the highest delay', () => {
       const a: PermissionConfiguration[] = [
-        { type: 'configure', delay: 5, target: EthereumAddress.from('0x1234') },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 5, target: EthereumAddress.from('0x1234') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
       ]
       const b: PermissionConfiguration[] = [
         {
-          type: 'configure',
+          type: 'interact',
           delay: 10,
           target: EthereumAddress.from('0x1234'),
         },
       ]
       expect(mergePermissions(a, b)).toEqual([
         {
-          type: 'configure',
+          type: 'interact',
           delay: 10,
           target: EthereumAddress.from('0x1234'),
         },
-        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'interact', delay: 0, target: EthereumAddress.from('0x5678') },
       ])
     })
 
@@ -199,7 +199,7 @@ describe('metaUtils', () => {
     it('retains multiple described entries if they share the same largest delay', () => {
       const a: PermissionConfiguration[] = [
         {
-          type: 'configure',
+          type: 'interact',
           delay: 7,
           target: EthereumAddress.from('0x2222'),
           description: 'Description A',
@@ -207,7 +207,7 @@ describe('metaUtils', () => {
       ]
       const b: PermissionConfiguration[] = [
         {
-          type: 'configure',
+          type: 'interact',
           delay: 7,
           target: EthereumAddress.from('0x2222'),
           description: 'Description B',
@@ -216,13 +216,13 @@ describe('metaUtils', () => {
       const result = mergePermissions(a, b)
       expect(result ?? []).toEqualUnsorted([
         {
-          type: 'configure',
+          type: 'interact',
           delay: 7,
           target: EthereumAddress.from('0x2222'),
           description: 'Description A',
         },
         {
-          type: 'configure',
+          type: 'interact',
           delay: 7,
           target: EthereumAddress.from('0x2222'),
           description: 'Description B',
@@ -233,7 +233,7 @@ describe('metaUtils', () => {
     it('merges permissions even if they differ by condition', () => {
       const a: PermissionConfiguration[] = [
         {
-          type: 'configure',
+          type: 'interact',
           delay: 0,
           target: EthereumAddress.from('0x3333'),
           condition: 'some-condition',
@@ -241,20 +241,20 @@ describe('metaUtils', () => {
       ]
       const b: PermissionConfiguration[] = [
         {
-          type: 'configure',
+          type: 'interact',
           delay: 0,
           target: EthereumAddress.from('0x3333'),
         },
       ]
       expect(mergePermissions(a, b)).toEqual([
         {
-          type: 'configure',
+          type: 'interact',
           delay: 0,
           target: EthereumAddress.from('0x3333'),
           condition: 'some-condition',
         },
         {
-          type: 'configure',
+          type: 'interact',
           delay: 0,
           target: EthereumAddress.from('0x3333'),
         },
@@ -297,7 +297,7 @@ describe('metaUtils', () => {
       const fields: { [address: string]: DiscoveryContractField } = {
         overhead: {
           target: {
-            permissions: [{ type: 'configure', delay: 0 }],
+            permissions: [{ type: 'interact', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -307,7 +307,7 @@ describe('metaUtils', () => {
           target: {
             permissions: [
               {
-                type: 'configure',
+                type: 'interact',
                 delay: 0,
                 description:
                   'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
@@ -329,7 +329,7 @@ describe('metaUtils', () => {
                   'upgrading the {{ $.address }} contract gives access to all funds',
               },
               {
-                type: 'configure',
+                type: 'interact',
                 condition: 'condition C1 is met',
                 delay: 0,
                 description:
@@ -344,7 +344,7 @@ describe('metaUtils', () => {
         scalar: {
           target: {
             // description: 'The scalar of the contract',
-            permissions: [{ type: 'configure', delay: 0 }],
+            permissions: [{ type: 'interact', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -374,7 +374,7 @@ describe('metaUtils', () => {
           permissions: [
             { type: 'upgrade', delay: 0, target: selfAddress },
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: selfAddress,
               description:
@@ -402,7 +402,7 @@ describe('metaUtils', () => {
               condition: undefined,
             },
             {
-              type: 'configure',
+              type: 'interact',
               condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
@@ -429,7 +429,7 @@ describe('metaUtils', () => {
               condition: undefined,
             },
             {
-              type: 'configure',
+              type: 'interact',
               condition: 'condition C1 is met',
               delay: 0,
               target: selfAddress,
@@ -467,7 +467,7 @@ describe('metaUtils', () => {
             description: 'Important contract',
             permissions: [
               {
-                type: 'configure',
+                type: 'interact',
                 delay: 0,
                 target: EthereumAddress.from('0x1234'),
               },
@@ -482,7 +482,7 @@ describe('metaUtils', () => {
             description: 'The resource config of the contract',
             permissions: [
               {
-                type: 'configure',
+                type: 'interact',
                 delay: 0,
                 target: EthereumAddress.from('0x1234'),
               },
@@ -503,7 +503,7 @@ describe('metaUtils', () => {
             description: 'Very important contract',
             permissions: [
               {
-                type: 'configure',
+                type: 'interact',
                 delay: 0,
                 target: EthereumAddress.from('0xbeef'),
               },
@@ -518,7 +518,7 @@ describe('metaUtils', () => {
             description: 'The resource config of the contract',
             permissions: [
               {
-                type: 'configure',
+                type: 'interact',
                 delay: 0,
                 target: EthereumAddress.from('0xbeef'),
               },
@@ -544,12 +544,12 @@ describe('metaUtils', () => {
           description: 'Important contract',
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: EthereumAddress.from('0x1234'),
             },
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: EthereumAddress.from('0xbeef'),
             },
@@ -565,7 +565,7 @@ describe('metaUtils', () => {
           description: 'The resource config of the contract',
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: EthereumAddress.from('0x1234'),
             },
@@ -586,7 +586,7 @@ describe('metaUtils', () => {
           description: 'The resource config of the contract',
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: EthereumAddress.from('0xbeef'),
             },

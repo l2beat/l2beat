@@ -16,6 +16,7 @@ import {
 } from '~/components/scaling-tabs-info'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/utils/group-by-tabs'
 import { useScalingFilter } from '../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../_components/scaling-filters'
@@ -34,7 +35,7 @@ export function ScalingRiskTables(props: Props) {
     others: props.others.filter(includeFilters),
   }
   const entries = checked
-    ? getRecategorisedEntries(props, (a, b) => b.tvsOrder - a.tvsOrder)
+    ? getRecategorisedEntries(props, compareStageAndTvs)
     : filteredEntries
 
   const projectToBeMigratedToOthers = useMemo(

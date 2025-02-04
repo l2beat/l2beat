@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0xf2ff7ec1850f1de7f50fab7b876a8dabd6393b4ebc76795e305a630a8dc40132",
+  "configHash": "0xb97d19431de1cdcef4f99ce492eefd1011b924e9ea6dff1fc95376b5ae4b2378",
   "contracts": [
     {
       "name": "L1Staking",
@@ -520,7 +520,7 @@
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
           "via": []
@@ -635,12 +635,12 @@
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "description": "can pause and unpause"
         }
@@ -681,7 +681,7 @@
       "description": "Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
           "description": "can pause and unpause",
           "via": []

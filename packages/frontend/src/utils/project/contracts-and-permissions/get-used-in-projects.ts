@@ -6,11 +6,11 @@ import type { UsedInProject } from '../../../components/projects/sections/permis
 
 type ProjectParams =
   | {
-      id: string
+      id?: string
       type: (Layer2 | Bridge | DaProject)['type']
     }
   | {
-      id: string
+      id?: string
       type: Layer3['type']
       hostChain: string
     }
@@ -20,6 +20,9 @@ export function getUsedInProjects(
   addresses: TechnologyContractAddress[],
   implementationAddresses: TechnologyContractAddress[],
 ): UsedInProject[] {
+  if (projectParams.id === undefined) {
+    return []
+  }
   if (projectParams.type === 'DaLayer') {
     return []
   }

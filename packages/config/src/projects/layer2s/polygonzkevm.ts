@@ -1,10 +1,6 @@
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
-  ChainId,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
-import {
+  ESCROW,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -21,15 +17,12 @@ const isForcedBatchDisallowed =
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
-const bridge = discovery.getContract('Bridge')
-const upgradeDelayString = formatSeconds(
-  discovery.getContractValue<number>('Timelock', 'getMinDelay'),
-)
+const bridge = discovery.getContract('PolygonZkEVMBridgeV2')
 
 export const polygonzkevm: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
-  rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
+  rollupVerifierContract: discovery.getContract('FflonkVerifier_11'),
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -39,19 +32,17 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       'Polygon zkEVM is an EVM-compatible ZK Rollup built by Polygon Labs.',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
-      apps: ['https://bridge.zkevm-rpc.com'],
-      documentation: [
-        'https://wiki.polygon.technology/docs/zkEVM/introduction',
-      ],
-      explorers: [
-        'https://zkevm.polygonscan.com/',
-        'https://explorer.mainnet.zkevm-test.net/',
-      ],
+      apps: ['https://portal.polygon.technology/bridge'],
+      documentation: ['https://docs.polygon.technology/zkEVM/'],
+      explorers: ['https://zkevm.polygonscan.com/'],
       repositories: ['https://github.com/0xPolygonHermez'],
       socialMedia: [
-        'https://twitter.com/0xPolygon',
-        'https://discord.gg/XvpHAxZ',
-        'https://polygon.technology/blog-tags/polygon-zk',
+        'https://x.com/0xPolygon',
+        'https://t.me/polygonofficial',
+        'https://reddit.com/r/0xPolygon/',
+        'https://discord.com/invite/0xPolygonCommunity',
+        'https://discord.com/invite/0xpolygonRnD',
+        'https://polygon.technology/blog',
       ],
       rollupCodes: 'https://rollup.codes/polygon-zkevm',
     },
@@ -86,26 +77,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         version: '3',
       },
     ],
-  },
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        ...discovery.getMultisigPermission(
-          'EscrowsAdmin',
-          'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
-        ),
-        {
-          name: 'LocalAdmin',
-          accounts: [
-            discovery.formatPermissionedAccount(
-              discovery.getContractValue('PolygonZkEVMEtrog', 'admin'),
-            ),
-          ],
-          description:
-            'Admin of the PolygonZkEVMEtrog contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode. In the case on Polygon zkEVM, this is also the RollupManagerAdminMultisig.',
-        },
-      ],
-    },
   },
   nonTemplateTrackedTxs: [
     {
@@ -163,6 +134,27 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         premintedAmount: '200000000000000000000000000',
       },
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'),
+      tokens: ['USDC'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'),
+      tokens: ['wstETH'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'),
+      tokens: ['DAI', 'sDAI'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
+    }),
   ],
   nonTemplateTechnology: {
     newCryptography: {
@@ -196,19 +188,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
-  upgradesAndGovernance: [
-    `All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats(
-      'RollupManagerAdminMultisig',
-    )} \`ProxyAdminOwner\` through a timelock that owns \`SharedProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`ProxyAdminOwner\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats(
-      'EscrowsAdmin',
-    )} multisig.`,
-    `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
-    `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`ProxyAdminOwner\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`ProxyAdminOwner\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
-    `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`ProxyAdminOwner\` directly.`,
-    `The ${discovery.getMultisigStats(
-      'SecurityCouncil',
-    )} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
-  ].join('\n\n'),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -247,7 +226,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       ],
       verifiers: [
         {
-          name: 'PolygonZkEvmVerifier (current RollupType 5)',
+          name: 'PolygonZkEvmVerifier (old RollupType 5 and current RollupType 6)',
           description:
             'Polygon zkEVM utilizes [PIL-STARK](https://github.com/0xPolygonHermez/pil-stark) as the main proving stack for their system. PIL-STARK is an implementation of the [eSTARK](https://eprint.iacr.org/2023/474) protocol. The circuits and the computations are represented using the PIL and zkASM custom languages. The protocol makes use of recursive proof aggregation. The final eSTARK proof is wrapped in a fflonk proof.',
           verified: 'no',

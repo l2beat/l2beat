@@ -4,7 +4,7 @@
   "name": "shared-sharp-verifier",
   "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
   "names": {
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig",
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierAdminMultisig",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": "SHARPVerifier", // always change this to the latest verifier to recognize it easily, the deprecated ones will be discovered automatically
     "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "OldSHARPVerifier",
@@ -75,9 +75,6 @@
           }
         }
       }
-    },
-    "SHARPVerifierGovernorMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

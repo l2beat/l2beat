@@ -1,8 +1,8 @@
 {
   "name": "sonicgateway",
   "chain": "ethereum",
-  "blockNumber": 21744201,
-  "configHash": "0xef5bfd8375fbcac1983e84dfb9428030bc566acdcccdd798e77db2aeadfa86c8",
+  "blockNumber": 21766633,
+  "configHash": "0xb4d74f2a1d08050bd88dcdf6b5f5fffeb7a212a049c8d3a90907a95844a3ec13",
   "contracts": [
     {
       "name": "ValidatorsRegistry",
@@ -92,7 +92,7 @@
       "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
           "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed."
         }
@@ -114,17 +114,17 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set permissioned relayers."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set the fast lane fee."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat)."
         }
@@ -144,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -171,27 +171,27 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
           "description": "set the proof verifier and the exit administrator."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "manage all access control roles."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "add tokens to the whitelist."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "manage access control roles."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "remove tokens from the whitelist."
         },
@@ -232,13 +232,13 @@
       "description": "Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
           "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "set the proof verifier and the exit administrator.",
           "via": []
@@ -298,25 +298,25 @@
       "description": "Entry point for state (oracle) updates.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
           "description": "set permissioned relayers.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
           "description": "set the fast lane fee.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
           "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat).",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "manage all access control roles.",
           "via": []
@@ -325,11 +325,16 @@
           "permission": "relay",
           "to": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
           "via": []
+        },
+        {
+          "permission": "relay",
+          "to": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
+          "via": []
         }
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
           "description": "update the state root."
         }
@@ -368,7 +373,10 @@
           },
           "RELAY_ROLE": {
             "adminRole": "RELAY_ADMIN_ROLE",
-            "members": ["0x11b0E7Bef4046dD43b09489926F30514584B1161"]
+            "members": [
+              "0x11b0E7Bef4046dD43b09489926F30514584B1161",
+              "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+            ]
           },
           "RELAY_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -377,7 +385,10 @@
         },
         "acFeeSetter": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
         "acHeartbeat": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
-        "acRelay": ["0x11b0E7Bef4046dD43b09489926F30514584B1161"],
+        "acRelay": [
+          "0x11b0E7Bef4046dD43b09489926F30514584B1161",
+          "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+        ],
         "acRelayAdmin": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
         "activityMonitor": "0x0000000000000000000000000000000000000000",
         "chainId": 146,
@@ -388,7 +399,7 @@
         "FEE_SETTER_ROLE": "0xe6ad9a47fbda1dc18de1eb5eeb7d935e5e81b4748f3cfc61e233e64f88182060",
         "heartbeat": 6300,
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
-        "lastBlockNum": 6003900,
+        "lastBlockNum": 6407100,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
         "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
         "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
@@ -409,7 +420,7 @@
       "description": "Simple contract that saves the latest state root.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "update the state root.",
           "via": []
@@ -420,9 +431,9 @@
       "values": {
         "$immutable": true,
         "chainId": 146,
-        "lastBlockNum": 6003900,
-        "lastState": "0x062bff595072fc6dd3a3daecfe2dc705b36b579b3a3bb3100301fa9f0c0520c6",
-        "lastUpdateTime": 1738319207,
+        "lastBlockNum": 6407100,
+        "lastState": "0x1e4dd2c7434e8393889f81a784a5baaf0930e50c8e620e5c4c774ef53eaf3c29",
+        "lastUpdateTime": 1738593395,
         "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "derivedName": "StateOracle"
@@ -438,19 +449,19 @@
       "description": "Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "add tokens to the whitelist.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "manage access control roles.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
           "description": "remove tokens from the whitelist.",
           "via": []
@@ -585,6 +596,15 @@
         {
           "permission": "validateBridge",
           "from": "0x72965045A6691E5A74299D1e878f303264D4D910"
+        }
+      ]
+    },
+    {
+      "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
+      "receivedPermissions": [
+        {
+          "permission": "relay",
+          "from": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
         }
       ]
     },

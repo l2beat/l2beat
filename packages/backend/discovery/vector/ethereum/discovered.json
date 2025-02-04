@@ -16,13 +16,13 @@
       "description": "The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
           "description": "can freeze the Vector contract and update the list of authorized relayers.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
           "description": "can call commitHeaderRange() to commit block ranges to the Vector contract.",
           "via": []
@@ -99,13 +99,13 @@
       "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
           "via": []
@@ -155,7 +155,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
           "description": "can freeze the Vector contract and update the list of authorized relayers."
         },
@@ -199,7 +199,7 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
@@ -245,7 +245,7 @@
       ],
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
         }
@@ -280,7 +280,7 @@
       "address": "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x02993cdC11213985b9B13224f3aF289F03bf298d",
           "description": "can call commitHeaderRange() to commit block ranges to the Vector contract."
         }
@@ -461,7 +461,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "succinct/SP1SuccinctGateway": "0x314e4bceb58474f5dc58b1d972ba8b8c7acb4b7abfe92b5ee54c9f79a3fc2a9b",
-    "succinct/SP1Vector": "0xabce535851f2d3ff2948c4794ecf8d3a59181562b4d2b0051cf010195291c3ca"
+    "succinct/SP1SuccinctGateway": "0xddf7c5c632f3cb0a4055a574c75ebf95a7599c66d18d65a94e314628b9681708",
+    "succinct/SP1Vector": "0x65bac712eedd5dff4048b58e0ff75e82f43bd797a0d34109736e092b0cded606"
   }
 }

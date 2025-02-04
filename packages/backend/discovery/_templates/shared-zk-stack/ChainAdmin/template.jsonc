@@ -15,7 +15,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "set the conversion factor for gas token deposits."
           }
         ]

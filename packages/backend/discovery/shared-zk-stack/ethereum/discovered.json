@@ -109,17 +109,17 @@
       ],
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager."
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "register new Elastic Chains in the shared bridge."
         }
@@ -154,7 +154,7 @@
       "description": "Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
           "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
@@ -351,19 +351,19 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "register new tokens in the BridgeHub and create new chains sharing the Elastic Chain contracts.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "register new Elastic Chains in the shared bridge.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
@@ -606,19 +606,19 @@
       "description": "The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "start (queue) upgrades.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xBDFfCC71FE84020238F2990a6D2954e87355De0D",
           "description": "soft freeze, hard freeze, approve a protocol upgrade.",
           "via": []
         },
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xD677e09324F8Bb3cC64F009973693f751c33A888",
           "description": "extend the legal veto period, approve a protocol upgrade.",
           "via": []
@@ -786,7 +786,7 @@
       "description": "Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
           "description": "soft freeze, hard freeze, approve a protocol upgrade."
         }
@@ -887,7 +887,7 @@
       "description": "Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
           "description": "manage the shared ValidatorTimelock contract address, revert batches and set permissioned validators for all chains connected to the StateTransitionManager.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
@@ -1014,7 +1014,7 @@
       "description": "Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
           "description": "extend the legal veto period, approve a protocol upgrade."
         }
@@ -1070,7 +1070,7 @@
       "description": "This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
           "description": "register new Elastic Chains in the shared bridge.",
           "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
@@ -1203,7 +1203,7 @@
       "address": "0x0000000000000000000000000000000000000000",
       "directlyReceivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x2cf3bD6a9056b39999F3883955E183F655345063",
           "description": "set the conversion factor for gas token deposits."
         }
@@ -1230,7 +1230,7 @@
       "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897",
           "description": "start (queue) upgrades."
         }
@@ -1794,14 +1794,14 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "shared-zk-stack/BridgeHub": "0x50713115cd5d39deae3a03533127a9af99b3ca51c2d8b760810fbbd98be32eb1",
-    "shared-zk-stack/ChainAdmin": "0x8ec8acbff3be82b53cdc97244336ee589a872235b0383506534d0bae9463feb9",
+    "shared-zk-stack/BridgeHub": "0x50673b2776e86157908a9abad2272f5f1be81dcbc17dc2b0a1ad674e80e524bf",
+    "shared-zk-stack/ChainAdmin": "0x9e6c69705a47c98e16eb9d2fc299b67fbc863a6d7315b4b3519eecb96f5b20e5",
     "shared-zk-stack/EmergencyUpgradeBoard": "0xd2c003ba542c948d40157c8a7f6063ee4baae7f7ddb0e403960a5953b338df05",
     "shared-zk-stack/GenesisUpgrade": "0x72a1c243c1a0b0bd5ca442b3746ffc2f7ffa645ed13529bad13e515264e18d6b",
     "shared-zk-stack/Guardians": "0x3592a220130238ec08b2fa983b8468f927149ec8ae54a34751ed6a3987e50316",
-    "shared-zk-stack/L1SharedBridge": "0xbf508a17820a60780298eb12c4f079446095a70bde5813181b2974250a6f3de1",
-    "shared-zk-stack/ProtocolUpgradeHandler": "0x97d28aabe1e0b986b613e38e9d80080a065d9602b415cb871b2c7782c7e75cad",
+    "shared-zk-stack/L1SharedBridge": "0x5e200cbf2118a7974fe79c938780232b663438e34bc603974740bceb42fb2036",
+    "shared-zk-stack/ProtocolUpgradeHandler": "0x244b68da8814229584b9d9561f4d08307b2d203b972e0204fa741a2b6630d32a",
     "shared-zk-stack/SecurityCouncil": "0x5f387d9c32588f862d7069c10e8bb49218ac9cd0155d39b43db3770ced8ce63b",
-    "shared-zk-stack/StateTransitionManager": "0x479e894463c6c168f25866767d4638dbad02f2f0fcd47e0faa99366719c99ab9"
+    "shared-zk-stack/StateTransitionManager": "0xab8279f00640345e03c6390759cebb40d8a98fcbf4d329274af78fb30a245034"
   }
 }

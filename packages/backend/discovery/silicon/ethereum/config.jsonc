@@ -6,31 +6,10 @@
     "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
   ],
-  "names": {
-    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "SiliconValidium",
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "Verifier",
-    "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": "SiliconDAC",
-    "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": "DACProxyAdmin"
-    // "0x0000": "LocalAdmin" // currently EOA
-  },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
-  "overrides": {
-    "SiliconDAC": {
-      "fields": {
-        "members": {
-          "handler": {
-            "type": "array",
-            "method": "members",
-            "maxLength": 50
-          }
-        }
-      }
-    },
-    "SiliconValidium": {
-      "ignoreInWatchMode": ["lastAccInputHash"],
-      "ignoreRelatives": ["gasTokenAddress"]
-    }
+  "names": {
+    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "Validium"
   }
 }

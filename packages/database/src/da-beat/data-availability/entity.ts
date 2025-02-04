@@ -5,13 +5,13 @@ import type { DataAvailability } from '../../kysely/generated/types'
 export interface DataAvailabilityRecord {
   projectId: string
   timestamp: UnixTime
-  totalSize: number
+  totalSize: bigint
 }
 
 export interface DataAvailabilityRow {
   projectId: string
   timestamp: Date
-  totalSize: number
+  totalSize: bigint
 }
 
 export function toRecord(
@@ -20,7 +20,7 @@ export function toRecord(
   return {
     projectId: row.projectId,
     timestamp: UnixTime.fromDate(row.timestamp),
-    totalSize: row.totalSize,
+    totalSize: BigInt(row.totalSize),
   }
 }
 
@@ -30,6 +30,6 @@ export function toRow(
   return {
     projectId: record.projectId,
     timestamp: record.timestamp.toDate(),
-    totalSize: record.totalSize,
+    totalSize: record.totalSize.toString(),
   }
 }

@@ -28,12 +28,9 @@
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "ETHBridge",
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
-    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "ProxyMultisig",
-    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "ImplementationMultisig",
     "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": "L1DaiGateway",
     "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": "wstETHBridge",
     "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": "rETHBridge",
-    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "BridgeMultisig",
     "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": "UNIBridge",
     "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": "FRAXBridge",
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "FXSBridge",
@@ -44,7 +41,10 @@
     "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge", // this is a multi-token bridge: We currently only track EKUBO in the .ts
     "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
     "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry",
-    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateETHSecurityAgentMultisig"
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateETHSecurityAgentMultisig",
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "StarknetAdminMultisig",
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "StarknetOpsMultisig",
+    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "StarkgateBridgeMultisig"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "shared-sharp-verifier"
@@ -90,6 +90,10 @@
     },
     "Starknet": {
       "fields": {
+        "isFinalized": {
+          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade).",
+          "severity": "HIGH"
+        },
         "programHashHistory": {
           "handler": {
             "type": "event",
@@ -138,9 +142,6 @@
         "stateBlockHash",
         "stateRoot"
       ]
-    },
-    "ProxyMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "WBTCBridge": {
       "fields": {
@@ -462,9 +463,6 @@
     },
     "L1DaiGateway": {
       "ignoreRelatives": ["dai"]
-    },
-    "BridgeMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "STRKBridge": {
       "fields": {

@@ -23,7 +23,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "propose transactions."
           }
         ]
@@ -37,7 +37,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "cancel queued transactions."
           }
         ]
@@ -51,7 +51,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "execute transactions that are ready."
           },
           {

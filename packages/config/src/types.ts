@@ -105,9 +105,9 @@ export interface ScalingProject {
   /** Explains how project validates state */
   stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
-  contracts: ScalingProjectContracts
+  contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -139,53 +139,6 @@ export interface ScalingProjectConfig {
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig
-}
-
-export interface ScalingProjectContracts {
-  /** List of the contracts on hosted chain */
-  addresses: ScalingProjectContract[]
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
-  /** List of the contracts on the chain itself */
-  nativeAddresses?: Record<string, ScalingProjectContract[]>
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
-}
-
-export interface ScalingProjectContract {
-  /** Address of the contract */
-  address: EthereumAddress
-  /** Verification status of the contract */
-  isVerified: boolean
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
-  /** Solidity name of the contract */
-  name: string
-  /** Description of the contract's role in the system */
-  description?: string
-  /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
-  /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
-  /** Other considerations worth mentioning about the upgrade process */
-  upgradeConsiderations?: string
-  /** Pasuable contract */
-  pausable?: {
-    /** Is it paused? **/
-    paused: boolean
-    /** Who can pause/unpause the contract */
-    pausableBy: string[]
-  }
-  /** List of references */
-  references?: ReferenceLink[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
 export interface ScalingProjectUpgradeability {
@@ -239,7 +192,7 @@ export interface ProjectEscrow {
   /** Should use name of the contract for escrow name */
   useContractName?: boolean
   /** All the data about the escrow contract */
-  contract?: Omit<ScalingProjectContract, 'address'>
+  contract?: Omit<ProjectContract, 'address'>
   /** Timestamp of the deployment transaction of the escrow contract. */
   sinceTimestamp: UnixTime
   /** List of token tickers (e.g. ETH, DAI) to track. Use '*' for all tokens */
@@ -314,16 +267,16 @@ export interface ProjectLinks {
   rollupCodes?: string
 }
 
-export interface ScalingProjectPermissions {
+export interface ProjectPermissions {
   /** List of roles */
-  roles?: ScalingProjectPermission[]
+  roles?: ProjectPermission[]
   /** List of actors */
-  actors?: ScalingProjectPermission[]
+  actors?: ProjectPermission[]
 }
 
-export interface ScalingProjectPermission {
+export interface ProjectPermission {
   /** List of the accounts */
-  accounts: ScalingProjectPermissionedAccount[]
+  accounts: ProjectPermissionedAccount[]
   /** Name of this group */
   name: string
   /** Description of the permissions */
@@ -333,14 +286,15 @@ export interface ScalingProjectPermission {
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
-  participants?: ScalingProjectPermissionedAccount[]
+  participants?: ProjectPermissionedAccount[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
 }
 
-export interface ScalingProjectPermissionedAccount {
+export interface ProjectPermissionedAccount {
+  isVerified: boolean
   address: EthereumAddress
-  type: 'EOA' | 'MultiSig' | 'Contract'
+  type: 'EOA' | 'Contract'
 }
 
 export type ScalingProjectStack =
@@ -529,8 +483,8 @@ export interface CustomTransactionApi<T extends string> {
 }
 
 export interface ProjectDataAvailability {
-  layer: TableReadyValue
-  bridge: TableReadyValue
+  layer: TableReadyValue & { projectId?: ProjectId }
+  bridge: TableReadyValue & { projectId?: ProjectId }
   mode: TableReadyValue
 }
 
@@ -742,8 +696,8 @@ export interface Bridge {
   config: BridgeConfig
   riskView: BridgeRiskView
   technology: BridgeTechnology
-  contracts?: ScalingProjectContracts
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -780,25 +734,11 @@ export interface BridgeTechnology {
   isUnderReview?: boolean
 }
 
-// I HATE THIS
-export type EthereumDaProject = Omit<DaProject, 'daLayer'> & {
-  daLayer: Omit<DaLayer, 'risks' | 'bridges'> & {
-    risks: TableReadyValue
-    bridges: EthereumDaBridge[]
-  }
-}
-export type EthereumDaBridge = Omit<DaBridge, 'risks'> & {
-  risks: TableReadyValue
-  /** Replaces risk grissini */
-  callout: string
-}
-
 export interface CustomDa {
   /** Will show the project name if not provided. */
   name?: string
   description?: string
   type: string
-  isNoBridge?: boolean
   risks: DaLayerRisks & DaBridgeRisks
   technology: DaTechnology
   dac?: DacInfo
@@ -827,6 +767,7 @@ export interface DaLayer {
   bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
 
   fallback?: TableReadyValue
   challengeMechanism?: DaChallengeMechanism
@@ -843,8 +784,19 @@ export interface DaLayer {
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
 export interface DaLayerRisks {
-  economicSecurity: TableReadyValue
-  fraudDetection: TableReadyValue
+  daLayer?: TableReadyValue
+  economicSecurity?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
+export interface DaBridgeRisks {
+  isNoBridge?: boolean
+  /** Replaces risk grissini */
+  callout?: string
+  daBridge?: TableReadyValue
+  committeeSecurity?: TableReadyValue
+  upgradeability?: TableReadyValue
+  relayerFailure?: TableReadyValue
 }
 
 export interface DaLayerDisplay {
@@ -900,15 +852,7 @@ export interface DaTechnology {
 }
 
 export interface DaBridge {
-  /** Optional: Unique identifier of the data availability bridge. */
-  id?: string
-  type:
-    | 'Enshrined'
-    | 'NoDacBridge'
-    | 'NoBridge'
-    | 'OnChainBridge'
-    | 'IntegratedDacBridge'
-    | 'StandaloneDacBridge'
+  id: ProjectId
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
   display: DaBridgeDisplay
@@ -918,9 +862,9 @@ export interface DaBridge {
   risks: DaBridgeRisks
   dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
-  permissions?: Record<string, ScalingProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
   /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts?: DaBridgeContracts
+  contracts?: ProjectContracts
 }
 
 export interface DacInfo {
@@ -936,35 +880,10 @@ export interface DacInfo {
   hideMembers?: boolean
 }
 
-export type DacTransactionDataType =
-  | 'Transaction data (compressed)'
-  | 'Transaction data'
-  | 'State diffs (compressed)'
-  | 'State diffs'
-
 export interface DaBridgeDisplay {
   name: string
   slug: string
   description: string
-}
-
-export interface DaBridgeRisks {
-  committeeSecurity: TableReadyValue
-  upgradeability: TableReadyValue
-  relayerFailure: TableReadyValue
-}
-
-export interface DaBridgeContracts {
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
-  /** List of the contracts on each chain */
-  addresses: Record<string, ScalingProjectContract[]>
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
 }
 
 export interface UsedInProject {
@@ -1115,6 +1034,51 @@ export interface BaseProject {
   isUpcoming?: true
   isArchived?: true
   hasActivity?: true
+}
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: EthereumAddress
+  /** Verification status of the contract */
+  isVerified: boolean
+  /** Name of the chain of this address. Optional for backwards compatibility */
+  chain?: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** Details about upgradeability */
+  upgradeability?: ScalingProjectUpgradeability
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  upgradeDelay?: string
+  /** Which actors from permissions can upgrade */
+  upgradableBy?: string[]
+  /** Other considerations worth mentioning about the upgrade process */
+  upgradeConsiderations?: string
+  /** Pasuable contract */
+  pausable?: {
+    /** Is it paused? **/
+    paused: boolean
+    /** Who can pause/unpause the contract */
+    pausableBy: string[]
+  }
+  /** List of references */
+  references?: ReferenceLink[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
+}
+
+export interface ProjectContracts {
+  /** List of the contracts on a given chain */
+  addresses: Record<string, ProjectContract[]>
+  /** List of risks associated with the contracts */
+  risks: ScalingProjectRisk[]
+  /** List of references backing up the claim */
+  references?: ReferenceLink[]
+  /** The description and research is incomplete */
+  isIncomplete?: boolean
+  /** The description and research is under review */
+  isUnderReview?: boolean
 }
 
 export interface ProjectStatuses {
