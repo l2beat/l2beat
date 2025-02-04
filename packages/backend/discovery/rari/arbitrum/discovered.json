@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 302526019,
+  "blockNumber": 302591167,
   "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
@@ -191,11 +191,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 192130,
+        "delayedMessageCount": 192151,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 10149,
-        "sequencerReportedSubMessageCount": 1500337
+        "sequencerMessageCount": 10166,
+        "sequencerReportedSubMessageCount": 1500871
       }
     },
     {
@@ -331,12 +331,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 8794,
+        "firstUnresolvedNode": 8799,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 8793,
-        "latestNodeCreated": 8941,
+        "latestConfirmed": 8798,
+        "latestNodeCreated": 8946,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -902,7 +902,7 @@
       "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.",
       "issuedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "to": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
           "description": "Add/remove batchPosters (Sequencers).",
           "via": []
@@ -955,7 +955,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 10149,
+        "batchCount": 10166,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -988,7 +988,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 192128,
+        "totalDelayedMessagesRead": 192150,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1116,11 +1116,6 @@
           "permission": "fastconfirm",
           "from": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-        },
-        {
-          "permission": "interact",
-          "from": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-          "description": "Add/remove batchPosters (Sequencers)."
         }
       ]
     },
@@ -1151,7 +1146,7 @@
       "address": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
       "receivedPermissions": [
         {
-          "permission": "configure",
+          "permission": "interact",
           "from": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
           "description": "Add/remove batchPosters (Sequencers)."
         },
@@ -2135,8 +2130,8 @@
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0x632e80b226338badc60fe5be816d84d735e6a943e8d0283d083fc8084678642f",
-    "orbitstack/SequencerInbox_Celestia_Espresso": "0x8452150ffc2fd5be4a0a2e432e2e6068447f8c4c02bad16297680c424db48e20",
+    "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
+    "orbitstack/SequencerInbox_Celestia_Espresso": "0x05c4b118384308c97dfc9a7ab49212c7ca8567a0f7f2da74cf8c320e46ac3ee0",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3ab488307c78e9b5e0650774bc5c77f2559f3b68
+Generated with discovered.json: 0x3163fabc7b24650503d3209509a7dee49ed1f9e1
 
-# Diff at Tue, 04 Feb 2025 11:04:11 GMT:
+# Diff at Tue, 04 Feb 2025 15:36:03 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
-- current block number: 302526019
+- current block number: 302591167
 
 ## Description
 
@@ -41,7 +41,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 +        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
       issuedPermissions.0.permission:
 -        "sequence"
-+        "configure"
++        "interact"
       issuedPermissions.0.to:
 -        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
 +        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
@@ -163,18 +163,7 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
  .../rari/arbitrum/.flat/V3QuoteVerifier.sol        | 2547 +++++++++++++++++
  .../rari/arbitrum/.flat/X509CRLHelper.sol          | 2485 ++++++++++++++++
  13 files changed, 21414 insertions(+), 6 deletions(-)
-
-Generated with discovered.json: 0xa17f3fb2888edcfb26dd6f8767766d96af24a021
-
-# Diff at Tue, 04 Feb 2025 12:33:57 GMT:
-
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 286430025
-- current block number: 286430025
-
-## Description
-
-Rename 'configure' permission to 'interact'
+```
 
 ## Config/verification related changes
 
@@ -207,7 +196,6 @@ discovery. Values are for block 286430025 (main branch discovery), not current.
 -        "configure"
 +        "interact"
     }
-
 ```
 
 Generated with discovered.json: 0x63729782dddf45505acdc0541899a78e0e7e5577
