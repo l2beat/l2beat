@@ -71,10 +71,11 @@ export const morph: Layer2 = {
       explorers: ['https://explorer.morphl2.io'],
       repositories: ['https://github.com/morph-l2'],
       socialMedia: [
-        'https://twitter.com/MorphL2',
+        'https://x.com/MorphLayer',
         'https://t.me/MorphL2official',
+        'https://blog.morphl2.io/',
         'https://medium.com/@morphlayer2',
-        'https://discord.com/invite/L2Morph',
+        'https://discord.com/invite/MorphLayer',
         'https://youtube.com/@morphofficiall2',
       ],
     },

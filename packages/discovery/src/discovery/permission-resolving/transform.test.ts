@@ -17,7 +17,7 @@ describe(transformToReceived.name, () => {
               '0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef',
             ),
             delay: 112233,
-            gives: 'configure',
+            gives: 'interact',
           },
           {
             address: EthereumAddress(
@@ -68,7 +68,7 @@ describe(transformToReceived.name, () => {
         delay: 0,
       },
       {
-        type: 'configure',
+        type: 'interact',
         delay: 112233,
         target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
       },
@@ -81,7 +81,7 @@ describe(transformToReceived.name, () => {
       {
         description: undefined,
         condition: undefined,
-        permission: 'configure',
+        permission: 'interact',
         from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         via: undefined,
@@ -98,7 +98,7 @@ describe(transformToReceived.name, () => {
 
     expect(receivedPermissions).toEqual([
       {
-        permission: 'configure',
+        permission: 'interact',
         from: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
         delay: 112233,
         description: undefined,
@@ -143,7 +143,7 @@ describe(transformToReceived.name, () => {
               '0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef',
             ),
             delay: 0,
-            gives: 'configure',
+            gives: 'interact',
           },
           {
             address: EthereumAddress(
@@ -179,7 +179,7 @@ describe(transformToReceived.name, () => {
               '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
             ),
             delay: 0,
-            gives: 'configure',
+            gives: 'interact',
           },
           {
             address: EthereumAddress(
@@ -207,13 +207,13 @@ describe(transformToReceived.name, () => {
       },
       {
         // this one is already in received so should be ignored
-        type: 'configure',
+        type: 'interact',
         delay: 0,
         target: EthereumAddress('0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef'),
       },
       {
         // this one is already in received but with via, so should not be ignored
-        type: 'configure',
+        type: 'interact',
         delay: 0,
         target: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
       },
@@ -230,7 +230,7 @@ describe(transformToReceived.name, () => {
         delay: undefined,
         description: undefined,
         condition: undefined,
-        permission: 'configure',
+        permission: 'interact',
         from: EthereumAddress('0xC72aE5c7cc9a332699305E29F68Be66c73b60542'),
         via: undefined,
       },

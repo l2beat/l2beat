@@ -135,8 +135,6 @@ export async function getDaProjectEntry(
     daLayer: project,
     daBridge,
     isVerified: common.isVerified,
-    // TODO: Fix
-    contractsVerificationStatuses: {},
     projectsChangeReport,
     layerGrissiniValues,
     bridgeGrissiniValues,

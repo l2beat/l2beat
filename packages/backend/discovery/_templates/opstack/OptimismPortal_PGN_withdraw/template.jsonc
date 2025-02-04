@@ -19,7 +19,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "withdraw ETH escrowed in the OptimismPortal."
           }
         ]

@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x520c73f0fb9a967919e92633af4b0ee2b7a378a1
+
+# Diff at Tue, 04 Feb 2025 12:31:35 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21580548
+- current block number: 21580548
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21580548 (main branch discovery), not current.
+
+```diff
+    contract Kinto SecurityCouncil (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      receivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.permission:
+-        "configure"
++        "interact"
+    }
+```
+
 Generated with discovered.json: 0x4e8a5917ca4010498cbdaea6d35e04be8e1b2abb
 
 # Diff at Mon, 20 Jan 2025 11:09:38 GMT:

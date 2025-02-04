@@ -41,7 +41,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: vaultAddress,
             },
@@ -60,7 +60,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual([
       {
         path: [
-          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: vaultAddress, gives: 'interact' }),
           pathElem({ address: msigAddress }),
         ],
       },
@@ -87,7 +87,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: vaultAddress,
             },
@@ -106,7 +106,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual([
       {
         path: [
-          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: vaultAddress, gives: 'interact' }),
           pathElem({ address: msigAddress }),
         ],
       },
@@ -133,7 +133,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: vaultAddress,
             },
@@ -152,7 +152,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
         path: [
-          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: vaultAddress, gives: 'interact' }),
           pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
@@ -180,7 +180,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: vaultAddress,
             },
@@ -199,7 +199,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
         path: [
-          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: vaultAddress, gives: 'interact' }),
           pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
@@ -227,7 +227,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 0,
               target: vaultAddress,
             },
@@ -246,7 +246,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual(
       members.map((m) => ({
         path: [
-          pathElem({ address: vaultAddress, gives: 'configure' }),
+          pathElem({ address: vaultAddress, gives: 'interact' }),
           pathElem({ address: msigAddress, gives: 'member' }),
           pathElem({ address: m }),
         ],
@@ -264,7 +264,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 10,
               target: targetAddress,
             },
@@ -276,7 +276,7 @@ describe(resolveAnalysis.name, () => {
     expect(resolveAnalysis(input)).toEqual([
       {
         path: [
-          pathElem({ address: targetAddress, delay: 10, gives: 'configure' }),
+          pathElem({ address: targetAddress, delay: 10, gives: 'interact' }),
           pathElem({ address: contractAddress }),
         ],
       },
@@ -304,7 +304,7 @@ describe(resolveAnalysis.name, () => {
         combinedMeta: {
           permissions: [
             {
-              type: 'configure',
+              type: 'interact',
               delay: 10,
               description: 'description',
               condition: 'condition',
@@ -321,7 +321,7 @@ describe(resolveAnalysis.name, () => {
           pathElem({
             address: targetAddress,
             delay: 10,
-            gives: 'configure',
+            gives: 'interact',
             description: 'description',
             condition: 'condition',
           }),

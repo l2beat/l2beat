@@ -10,6 +10,7 @@ import { blessnet } from './blessnet'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
+import { datalake } from './datalake'
 import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
@@ -63,6 +64,7 @@ export const layer3s: Layer3[] = [
   b3,
   cheese,
   clique,
+  datalake,
   degen,
   deri,
   dodochain,

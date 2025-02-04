@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xd0125312e0466d2c5bc093609133cfee74d28c80
+
+# Diff at Tue, 04 Feb 2025 12:34:02 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 25121106
+- current block number: 25121106
+
+## Description
+
+Rename 'configure' permission to 'interact'
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 25121106 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x25aBB510386A658c622280f488844BD3b485DC32) {
+    +++ description: None
+      directlyReceivedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract AddressManager (0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract SystemConfig (0x52c901666Cfc8AeE9b46A3b7C101688351529B37) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.0.permission:
+-        "configure"
++        "interact"
+    }
+```
+
+```diff
+    contract ConduitMultisig3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      receivedPermissions.3.permission:
+-        "guard"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
++        "0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
+      receivedPermissions.3.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.2.permission:
+-        "configure"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
++        "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"
+      receivedPermissions.2.description:
+-        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
++        "set and change address mappings."
+      receivedPermissions.2.via:
++        [{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]
+      receivedPermissions.1.permission:
+-        "configure"
++        "guard"
+      receivedPermissions.1.from:
+-        "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"
++        "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
+      receivedPermissions.1.via:
+-        [{"address":"0x25aBB510386A658c622280f488844BD3b485DC32"}]
+    }
+```
+
 Generated with discovered.json: 0x5e3d125284f483dd9cd4747694d83ca277459d0c
 
 # Diff at Mon, 20 Jan 2025 11:10:39 GMT:

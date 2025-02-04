@@ -285,7 +285,6 @@
   "kontos.png": "2990cd8382e92982c087fe7334590d21",
   "ink.png": "98a2c5f0a9cf427b2948cb7c7f3b58a5",
   "t1.png": "af448b77b5d1fe2cf49ec4235d5e1f77",
-  "river.png": "db7c1342044f187502ef34ef8b1f5336",
   "shape.png": "027704dfe2268b7dd32a38dc9b744317",
   "fluence.png": "18b94a9b0462ec69387f3fdc3d962a77",
   "blessnet.png": "cd2022600e8be3a9b1f817110d63e4be",
@@ -319,5 +318,7 @@
   "arenaz.png": "0e9278a736a7f897ca992bbcb10cd8c4",
   "optimism.png": "4a6ad22b2b9724d793cca478a3016e9c",
   "shibarium.png": "f72a08f348df1e9923d5fd81eac58fcb",
-  "sonicgateway.png": "663794adf65a91f1915773fad2ba16d5"
+  "sonicgateway.png": "663794adf65a91f1915773fad2ba16d5",
+  "towns.png": "5351e760f43428458ff35275d6bfd0d1",
+  "datalake.png": "b178aa3a52f90021780d28362ebdbbd9"
 }

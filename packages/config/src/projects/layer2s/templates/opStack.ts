@@ -838,6 +838,7 @@ function getTechnology(
         ],
       },
     ],
+    sequencing: templateVars.nonTemplateTechnology?.sequencing,
   }
 }
 

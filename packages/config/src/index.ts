@@ -43,5 +43,4 @@ export {
   arePermissionsDiscoveryDriven,
   isDiscoveryDriven,
 } from './utils/discoveryDriven'
-export { getContractsVerificationStatuses } from './verification/getContractsVerificationStatuses'
 export { isDaBridgeVerified, isVerified } from './verification/isVerified'

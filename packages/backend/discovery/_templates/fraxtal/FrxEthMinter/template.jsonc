@@ -10,7 +10,7 @@
       "target": {
         "permissions": [
           {
-            "type": "configure",
+            "type": "interact",
             "description": "can withdraw all escrowed ETH, pause the contract and set user fees for minting frxETH (`submit()`)."
           }
         ]
