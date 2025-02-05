@@ -25,7 +25,7 @@ export function RecategorisationPreviewBanner({
         You&apos;re viewing a preview of the recategorisation that will come
         into force in{' '}
         <TextCountdown
-          expiresAt={PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber()}
+          expiresAt={PROJECT_COUNTDOWNS.otherMigration.toNumber()}
         />
         .
       </div>
