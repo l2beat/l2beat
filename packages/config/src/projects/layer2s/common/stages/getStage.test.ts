@@ -40,6 +40,7 @@ describe(getStage.name, () => {
         short: 'short notice',
         long: 'long notice',
       },
+      downgradePending: undefined,
       missing: {
         nextStage: 'Stage 2',
         principle: undefined,
@@ -103,7 +104,11 @@ describe(getStage.name, () => {
             },
           ],
           stage: 'Stage 1',
-          principle: undefined,
+          principle: {
+            description:
+              'Compromising ≥75% of the Security Council is the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal).',
+            satisfied: true,
+          },
         },
         {
           requirements: [
