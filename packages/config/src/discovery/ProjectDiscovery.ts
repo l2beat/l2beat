@@ -1152,7 +1152,6 @@ export class ProjectDiscovery {
       const discoveryName = this.getEntryByAddress(account.address)?.name
       if (discoveryName !== undefined) {
         entry.name = discoveryName
-        entry.url = `#${discoveryName}`
       }
 
       const actorName = actorNameLUT[account.address]
