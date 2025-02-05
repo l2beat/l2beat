@@ -37,8 +37,8 @@ export const hashkey = opStackL2({
   rpcUrl: 'https://mainnet.hsk.xyz',
   finality: {
     type: 'OPStack',
-    minTimestamp: new UnixTime(1734347135),
-    genesisTimestamp: new UnixTime(1734347135),
+    minTimestamp: genesisTimestamp,
+    genesisTimestamp: genesisTimestamp,
     l2BlockTimeSeconds: 2,
     lag: 0,
     stateUpdate: 'disabled',
@@ -48,6 +48,6 @@ export const hashkey = opStackL2({
   nonTemplateOptimismPortalEscrowTokens: ['HSK'],
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('HASHKEY'),
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
   discoveryDrivenData: true,
 })
