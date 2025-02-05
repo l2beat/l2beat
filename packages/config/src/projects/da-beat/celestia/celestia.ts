@@ -40,7 +40,7 @@ export const celestia: BaseProject = {
       ],
       explorers: ['https://celenium.io/'],
       socialMedia: [
-        'https://x.com/CelestiaOrg',
+        'https://x.com/Celestia',
         'https://discord.com/invite/YsnTPcSfWQ',
         'https://t.me/CelestiaCommunity',
       ],
