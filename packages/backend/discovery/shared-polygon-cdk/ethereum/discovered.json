@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21745064,
+  "blockNumber": 21772665,
   "configHash": "0xece1e516b4d6c8360cf38bcef6633134c0fb72adc9e6773ecb060a535ddcb57e",
   "contracts": [
     {
@@ -55,7 +55,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -63,7 +63,7 @@
         {
           "permission": "interact",
           "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
         },
         {
           "permission": "interact",
@@ -72,7 +72,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -89,7 +89,7 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -101,7 +101,7 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -113,7 +113,7 @@
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -123,7 +123,7 @@
         {
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 864000,
+          "delay": 259200,
           "condition": "there is no emergency state, in which case there is no delay"
         }
       ],
@@ -142,7 +142,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 64,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -165,7 +165,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
@@ -194,7 +194,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x011d046f51626a6b85a68761894b1e0d08dabe8c34889aea1fdd48b3222522ba",
+        "getRoot": "0x20c08ddfc6efaca570f8ed1a8556889bdf0e9ef01a76c232da1d3e193c09fe19",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -252,13 +252,13 @@
     {
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-      "template": "polygon-cdk/PolygonRollupManager",
+      "template": "polygon-cdk/PolygonRollupManager_pessimistic",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
+        "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers.",
+      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
       "issuedPermissions": [
         {
           "permission": "aggregatePolygon",
@@ -283,7 +283,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -291,7 +291,7 @@
         {
           "permission": "interact",
           "to": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "description": "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations).",
+          "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
           "via": []
         },
         {
@@ -312,7 +312,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
@@ -329,7 +329,7 @@
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d",
+        "$implementation": "0xA33619940bceb9be7c9679Dd80FA2918C2476382",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:23.000Z",
@@ -355,9 +355,14 @@
             "2024-10-30T11:11:59.000Z",
             "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
             ["0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]
+          ],
+          [
+            "2025-02-03T14:55:59.000Z",
+            "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e",
+            ["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
           ]
         ],
-        "$upgradeCount": 5,
+        "$upgradeCount": 6,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -433,7 +438,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xa00fca521c0fcd8a9a4af2b5cd6ec38ae8627e0f8b871cdcea4baac5f1663bcc",
+        "getRollupExitRoot": "0x779840b4b5315947a2a15bdac4b1b3584e318081b7c27e339626b88b22b0d0c3",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -449,151 +454,236 @@
           [true],
           [true],
           [true],
-          [true]
+          [true],
+          [false]
         ],
-        "lastAggregationTimestamp": 1738332791,
+        "lastAggregationTimestamp": 1738665827,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "nondeterministicPendingState": [],
-        "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupCount": 13,
-        "rollupsData": [
+        "ROLLUP_MANAGER_VERSION": "pessimistic",
+        "rollupCount": 14,
+        "rollupsDataV2": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             1101,
             "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            6
+            12,
+            6,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
             3776,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
             196,
             "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
-            8
+            13,
+            8,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
             4913,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
             1511670449,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
             1702448187,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             994873017,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
             31415,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
             511252203,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
             2355,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
             999,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
             938,
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-            4
+            9,
+            4,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
             752025,
             "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
-            7
+            12,
+            7,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+            9369,
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            12,
+            9,
+            1,
+            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "rollupTypeCount": 8,
+        "rollupTypeCount": 9,
         "rollupTypes": [
           [
             "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+            7,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+            8,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            9,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            9,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+            "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            11,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ],
           [
             "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+            "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            13,
+            0,
+            false,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          [
+            "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            12,
+            1,
+            false,
+            "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 574255,
-        "totalVerifiedBatches": 573751,
+        "totalSequencedBatches": 581266,
+        "totalVerifiedBatches": 580763,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
         ],
-        "trustedAggregatorTimeout": 432000,
-        "tweakParametersAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
-        "verifyBatchTimeTarget": 1800
+        "tweakParametersAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
       },
       "fieldMeta": {
-        "nondeterministicPendingState": { "severity": "HIGH" },
         "isEmergencyState": {
           "severity": "HIGH",
           "description": "pauses all connected chains and the bridge, allows for immediate upgrades through the timelock."
         },
-        "rollupsData": {
+        "rollupsDataV2": {
           "severity": "MEDIUM",
-          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"
         },
         "rollupTypes": {
-          "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
+          "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
         },
         "isVerifyingBatches": {
           "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
@@ -619,7 +709,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             },
             { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" }
@@ -650,8 +740,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 53325,
-        "getRoot": "0xd6a1aea456be6e177b1420df92bd5f899fdda3f03654dc2fd2ddd33035195e0b",
+        "depositCount": 53566,
+        "getRoot": "0x04ce7c970f6113dc3d9cc5a053401d45acdfcbdf98922e06c9d5eb28308be1d7",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       }
     },
@@ -691,7 +781,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -704,7 +794,7 @@
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
       "displayName": "Timelock",
-      "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d.",
+      "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -719,7 +809,7 @@
           "via": [
             {
               "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "delay": 864000,
+              "delay": 259200,
               "condition": "there is no emergency state, in which case there is no delay"
             }
           ]
@@ -733,7 +823,7 @@
         {
           "permission": "act",
           "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "delay": 864000,
+          "delay": 259200,
           "condition": "there is no emergency state, in which case there is no delay"
         },
         {
@@ -775,8 +865,8 @@
             "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
-        "getMinDelay": 864000,
-        "getMinDelayFormatted": "10d",
+        "getMinDelay": 259200,
+        "getMinDelayFormatted": "3d",
         "polygonZkEVM": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "scheduledTransactionsDecoded": [
           {
@@ -1197,143 +1287,6 @@
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
       "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
-    "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d": [
-      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
-      "error AccessControlOnlyCanRenounceRolesForSelf()",
-      "error AddressDoNotHaveRequiredRole()",
-      "error AllBatchesMustBeVerified()",
-      "error AllSequencedMustBeVerified()",
-      "error AllzkEVMSequencedBatchesMustBeVerified()",
-      "error BatchFeeOutOfRange()",
-      "error CannotUpdateWithUnconsolidatedPendingState()",
-      "error ChainIDAlreadyExist()",
-      "error ChainIDOutOfRange()",
-      "error EmptyVerifySequencesData()",
-      "error ExceedMaxVerifyBatches()",
-      "error FinalNumBatchBelowLastVerifiedBatch()",
-      "error FinalNumBatchDoesNotMatchPendingState()",
-      "error FinalNumSequenceBelowLastVerifiedSequence()",
-      "error FinalNumSequenceDoesNotMatchPendingState()",
-      "error FinalPendingStateNumInvalid()",
-      "error HaltTimeoutNotExpired()",
-      "error InitBatchMustMatchCurrentForkID()",
-      "error InitNumBatchAboveLastVerifiedBatch()",
-      "error InitNumBatchDoesNotMatchPendingState()",
-      "error InitSequenceMustMatchCurrentForkID()",
-      "error InitSequenceNumDoesNotMatchPendingState()",
-      "error InvalidProof()",
-      "error InvalidRangeBatchTimeTarget()",
-      "error InvalidRangeMultiplierBatchFee()",
-      "error InvalidRangeMultiplierZkGasPrice()",
-      "error InvalidRangeSequenceTimeTarget()",
-      "error MustSequenceSomeBatch()",
-      "error MustSequenceSomeBlob()",
-      "error NewAccInputHashDoesNotExist()",
-      "error NewPendingStateTimeoutMustBeLower()",
-      "error NewStateRootNotInsidePrime()",
-      "error NewTrustedAggregatorTimeoutMustBeLower()",
-      "error NotAllowedAddress()",
-      "error OldAccInputHashDoesNotExist()",
-      "error OldStateRootDoesNotExist()",
-      "error OnlyEmergencyState()",
-      "error OnlyNotEmergencyState()",
-      "error OnlyRollupAdmin()",
-      "error PendingStateDoesNotExist()",
-      "error PendingStateInvalid()",
-      "error PendingStateNotConsolidable()",
-      "error RollbackBatchIsNotEndOfSequence()",
-      "error RollbackBatchIsNotValid()",
-      "error RollupAddressAlreadyExist()",
-      "error RollupIDNotAscendingOrder()",
-      "error RollupMustExist()",
-      "error RollupTypeDoesNotExist()",
-      "error RollupTypeObsolete()",
-      "error SenderMustBeRollup()",
-      "error StoredRootMustBeDifferentThanNewRoot()",
-      "error TrustedAggregatorTimeoutNotExpired()",
-      "error UpdateNotCompatible()",
-      "error UpdateToOldRollupTypeID()",
-      "error UpdateToSameRollupTypeID()",
-      "error zkGasPriceOfRange()",
-      "event AddExistingRollup(uint32 indexed rollupID, uint64 forkID, address rollupAddress, uint64 chainID, uint8 rollupCompatibilityID, uint64 lastVerifiedBatchBeforeUpgrade)",
-      "event AddNewRollupType(uint32 indexed rollupTypeID, address consensusImplementation, address verifier, uint64 forkID, uint8 rollupCompatibilityID, bytes32 genesis, string description)",
-      "event ConsolidatePendingState(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, uint64 pendingStateNum)",
-      "event CreateNewRollup(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, address gasTokenAddress)",
-      "event EmergencyStateActivated()",
-      "event EmergencyStateDeactivated()",
-      "event Initialized(uint8 version)",
-      "event ObsoleteRollupType(uint32 indexed rollupTypeID)",
-      "event OnSequenceBatches(uint32 indexed rollupID, uint64 lastBatchSequenced)",
-      "event OverridePendingState(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address aggregator)",
-      "event ProveNonDeterministicPendingState(bytes32 storedStateRoot, bytes32 provedStateRoot)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RollbackBatches(uint32 indexed rollupID, uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
-      "event SetBatchFee(uint256 newBatchFee)",
-      "event SetMultiplierBatchFee(uint16 newMultiplierBatchFee)",
-      "event SetPendingStateTimeout(uint64 newPendingStateTimeout)",
-      "event SetTrustedAggregator(address newTrustedAggregator)",
-      "event SetTrustedAggregatorTimeout(uint64 newTrustedAggregatorTimeout)",
-      "event SetVerifyBatchTimeTarget(uint64 newVerifyBatchTimeTarget)",
-      "event UpdateRollup(uint32 indexed rollupID, uint32 newRollupTypeID, uint64 lastVerifiedBatchBeforeUpgrade)",
-      "event VerifyBatches(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address indexed aggregator)",
-      "event VerifyBatchesTrustedAggregator(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address indexed aggregator)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function activateEmergencyState()",
-      "function addExistingRollup(address rollupAddress, address verifier, uint64 forkID, uint64 chainID, bytes32 genesis, uint8 rollupCompatibilityID)",
-      "function addNewRollupType(address consensusImplementation, address verifier, uint64 forkID, uint8 rollupCompatibilityID, bytes32 genesis, string description)",
-      "function bridgeAddress() view returns (address)",
-      "function calculateRewardPerBatch() view returns (uint256)",
-      "function chainIDToRollupID(uint64 chainID) view returns (uint32 rollupID)",
-      "function consolidatePendingState(uint32 rollupID, uint64 pendingStateNum)",
-      "function createNewRollup(uint32 rollupTypeID, uint64 chainID, address admin, address sequencer, address gasTokenAddress, string sequencerURL, string networkName)",
-      "function deactivateEmergencyState()",
-      "function getBatchFee() view returns (uint256)",
-      "function getForcedBatchFee() view returns (uint256)",
-      "function getInputSnarkBytes(uint32 rollupID, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 oldStateRoot, bytes32 newStateRoot) view returns (bytes)",
-      "function getLastVerifiedBatch(uint32 rollupID) view returns (uint64)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getRollupBatchNumToStateRoot(uint32 rollupID, uint64 batchNum) view returns (bytes32)",
-      "function getRollupExitRoot() view returns (bytes32)",
-      "function getRollupPendingStateTransitions(uint32 rollupID, uint64 batchNum) view returns (tuple(uint64 timestamp, uint64 lastVerifiedBatch, bytes32 exitRoot, bytes32 stateRoot))",
-      "function getRollupSequencedBatches(uint32 rollupID, uint64 batchNum) view returns (tuple(bytes32 accInputHash, uint64 sequencedTimestamp, uint64 previousLastBatchSequenced))",
-      "function globalExitRootManager() view returns (address)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function isEmergencyState() view returns (bool)",
-      "function isPendingStateConsolidable(uint32 rollupID, uint64 pendingStateNum) view returns (bool)",
-      "function lastAggregationTimestamp() view returns (uint64)",
-      "function lastDeactivatedEmergencyStateTimestamp() view returns (uint64)",
-      "function multiplierBatchFee() view returns (uint16)",
-      "function obsoleteRollupType(uint32 rollupTypeID)",
-      "function onSequenceBatches(uint64 newSequencedBatches, bytes32 newAccInputHash) returns (uint64)",
-      "function overridePendingState(uint32 rollupID, uint64 initPendingStateNum, uint64 finalPendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, bytes32[24] proof)",
-      "function pendingStateTimeout() view returns (uint64)",
-      "function pol() view returns (address)",
-      "function proveNonDeterministicPendingState(uint32 rollupID, uint64 initPendingStateNum, uint64 finalPendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, bytes32[24] proof)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function rollbackBatches(address rollupContract, uint64 targetBatch)",
-      "function rollupAddressToID(address rollupAddress) view returns (uint32 rollupID)",
-      "function rollupCount() view returns (uint32)",
-      "function rollupIDToRollupData(uint32 rollupID) view returns (address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastPendingState, uint64 lastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupCompatibilityID)",
-      "function rollupTypeCount() view returns (uint32)",
-      "function rollupTypeMap(uint32 rollupTypeID) view returns (address consensusImplementation, address verifier, uint64 forkID, uint8 rollupCompatibilityID, bool obsolete, bytes32 genesis)",
-      "function setBatchFee(uint256 newBatchFee)",
-      "function setMultiplierBatchFee(uint16 newMultiplierBatchFee)",
-      "function setPendingStateTimeout(uint64 newPendingStateTimeout)",
-      "function setTrustedAggregatorTimeout(uint64 newTrustedAggregatorTimeout)",
-      "function setVerifyBatchTimeTarget(uint64 newVerifyBatchTimeTarget)",
-      "function totalSequencedBatches() view returns (uint64)",
-      "function totalVerifiedBatches() view returns (uint64)",
-      "function trustedAggregatorTimeout() view returns (uint64)",
-      "function updateRollup(address rollupContract, uint32 newRollupTypeID, bytes upgradeData)",
-      "function updateRollupByRollupAdmin(address rollupContract, uint32 newRollupTypeID)",
-      "function verifyBatchTimeTarget() view returns (uint64)",
-      "function verifyBatches(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
-      "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)"
-    ],
     "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
       "constructor(address _singleton)"
     ],
@@ -1395,6 +1348,135 @@
       "function rollupManager() view returns (address)",
       "function updateExitRoot(bytes32 newRoot)",
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
+    ],
+    "0xA33619940bceb9be7c9679Dd80FA2918C2476382": [
+      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
+      "error AccessControlOnlyCanRenounceRolesForSelf()",
+      "error AddressDoNotHaveRequiredRole()",
+      "error AllBatchesMustBeVerified()",
+      "error AllSequencedMustBeVerified()",
+      "error AllzkEVMSequencedBatchesMustBeVerified()",
+      "error BatchFeeOutOfRange()",
+      "error CannotUpdateWithUnconsolidatedPendingState()",
+      "error ChainIDAlreadyExist()",
+      "error ChainIDOutOfRange()",
+      "error EmptyVerifySequencesData()",
+      "error ExceedMaxVerifyBatches()",
+      "error FinalNumBatchBelowLastVerifiedBatch()",
+      "error FinalNumBatchDoesNotMatchPendingState()",
+      "error FinalNumSequenceBelowLastVerifiedSequence()",
+      "error FinalNumSequenceDoesNotMatchPendingState()",
+      "error FinalPendingStateNumInvalid()",
+      "error HaltTimeoutNotExpired()",
+      "error InitBatchMustMatchCurrentForkID()",
+      "error InitNumBatchAboveLastVerifiedBatch()",
+      "error InitNumBatchDoesNotMatchPendingState()",
+      "error InitSequenceMustMatchCurrentForkID()",
+      "error InitSequenceNumDoesNotMatchPendingState()",
+      "error InvalidPessimisticProof()",
+      "error InvalidProof()",
+      "error InvalidRangeBatchTimeTarget()",
+      "error InvalidRangeMultiplierBatchFee()",
+      "error InvalidRangeMultiplierZkGasPrice()",
+      "error InvalidRangeSequenceTimeTarget()",
+      "error InvalidRollup()",
+      "error InvalidRollupType()",
+      "error InvalidVerifierType()",
+      "error L1InfoTreeLeafCountInvalid()",
+      "error MustSequenceSomeBatch()",
+      "error MustSequenceSomeBlob()",
+      "error NewAccInputHashDoesNotExist()",
+      "error NewPendingStateTimeoutMustBeLower()",
+      "error NewStateRootNotInsidePrime()",
+      "error NewTrustedAggregatorTimeoutMustBeLower()",
+      "error NotAllowedAddress()",
+      "error OldAccInputHashDoesNotExist()",
+      "error OldStateRootDoesNotExist()",
+      "error OnlyChainsWithPessimisticProofs()",
+      "error OnlyEmergencyState()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyRollupAdmin()",
+      "error OnlyStateTransitionChains()",
+      "error PendingStateDoesNotExist()",
+      "error PendingStateInvalid()",
+      "error PendingStateNotConsolidable()",
+      "error PendingStateNumExist()",
+      "error RollbackBatchIsNotEndOfSequence()",
+      "error RollbackBatchIsNotValid()",
+      "error RollupAddressAlreadyExist()",
+      "error RollupIDNotAscendingOrder()",
+      "error RollupMustExist()",
+      "error RollupTypeDoesNotExist()",
+      "error RollupTypeObsolete()",
+      "error SenderMustBeRollup()",
+      "error StoredRootMustBeDifferentThanNewRoot()",
+      "error TrustedAggregatorTimeoutNotExpired()",
+      "error UpdateNotCompatible()",
+      "error UpdateToOldRollupTypeID()",
+      "error UpdateToSameRollupTypeID()",
+      "error zkGasPriceOfRange()",
+      "event AddExistingRollup(uint32 indexed rollupID, uint64 forkID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, uint64 lastVerifiedBatchBeforeUpgrade, bytes32 programVKey)",
+      "event AddNewRollupType(uint32 indexed rollupTypeID, address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "event CreateNewRollup(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, address gasTokenAddress)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
+      "event Initialized(uint8 version)",
+      "event ObsoleteRollupType(uint32 indexed rollupTypeID)",
+      "event OnSequenceBatches(uint32 indexed rollupID, uint64 lastBatchSequenced)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollbackBatches(uint32 indexed rollupID, uint64 indexed targetBatch, bytes32 accInputHashToRollback)",
+      "event SetBatchFee(uint256 newBatchFee)",
+      "event SetTrustedAggregator(address newTrustedAggregator)",
+      "event UpdateRollup(uint32 indexed rollupID, uint32 newRollupTypeID, uint64 lastVerifiedBatchBeforeUpgrade)",
+      "event UpdateRollupManagerVersion(string rollupManagerVersion)",
+      "event VerifyBatchesTrustedAggregator(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address indexed aggregator)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function ROLLUP_MANAGER_VERSION() view returns (string)",
+      "function activateEmergencyState()",
+      "function addExistingRollup(address rollupAddress, address verifier, uint64 forkID, uint64 chainID, bytes32 initRoot, uint8 rollupVerifierType, bytes32 programVKey)",
+      "function addNewRollupType(address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "function bridgeAddress() view returns (address)",
+      "function calculateRewardPerBatch() view returns (uint256)",
+      "function chainIDToRollupID(uint64 chainID) view returns (uint32 rollupID)",
+      "function createNewRollup(uint32 rollupTypeID, uint64 chainID, address admin, address sequencer, address gasTokenAddress, string sequencerURL, string networkName)",
+      "function deactivateEmergencyState()",
+      "function getBatchFee() view returns (uint256)",
+      "function getForcedBatchFee() view returns (uint256)",
+      "function getInputPessimisticBytes(uint32 rollupID, bytes32 l1InfoTreeRoot, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot) view returns (bytes)",
+      "function getInputSnarkBytes(uint32 rollupID, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 oldStateRoot, bytes32 newStateRoot) view returns (bytes)",
+      "function getLastVerifiedBatch(uint32 rollupID) view returns (uint64)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRollupBatchNumToStateRoot(uint32 rollupID, uint64 batchNum) view returns (bytes32)",
+      "function getRollupExitRoot() view returns (bytes32)",
+      "function getRollupSequencedBatches(uint32 rollupID, uint64 batchNum) view returns (tuple(bytes32 accInputHash, uint64 sequencedTimestamp, uint64 previousLastBatchSequenced))",
+      "function globalExitRootManager() view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize()",
+      "function isEmergencyState() view returns (bool)",
+      "function lastAggregationTimestamp() view returns (uint64)",
+      "function lastDeactivatedEmergencyStateTimestamp() view returns (uint64)",
+      "function obsoleteRollupType(uint32 rollupTypeID)",
+      "function onSequenceBatches(uint64 newSequencedBatches, bytes32 newAccInputHash) returns (uint64)",
+      "function pol() view returns (address)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollbackBatches(address rollupContract, uint64 targetBatch)",
+      "function rollupAddressToID(address rollupAddress) view returns (uint32 rollupID)",
+      "function rollupCount() view returns (uint32)",
+      "function rollupIDToRollupData(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 _legacyLastPendingState, uint64 _legacyLastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType) rollupData)",
+      "function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)",
+      "function rollupTypeCount() view returns (uint32)",
+      "function rollupTypeMap(uint32 rollupTypeID) view returns (address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bool obsolete, bytes32 genesis, bytes32 programVKey)",
+      "function setBatchFee(uint256 newBatchFee)",
+      "function totalSequencedBatches() view returns (uint64)",
+      "function totalVerifiedBatches() view returns (uint64)",
+      "function updateRollup(address rollupContract, uint32 newRollupTypeID, bytes upgradeData)",
+      "function updateRollupByRollupAdmin(address rollupContract, uint32 newRollupTypeID)",
+      "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
+      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof)"
     ],
     "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
@@ -1492,7 +1574,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager": "0x46dae75c4ecc2f97347a8689444844b2e39c53446fab1c308c6e7e1de848bed0",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x3242399a042899dc2e4c499787d41db79155837a2732592be96895174fbb8f3a",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
   }

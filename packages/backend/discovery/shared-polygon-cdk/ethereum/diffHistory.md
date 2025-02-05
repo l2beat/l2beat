@@ -1,14 +1,270 @@
-Generated with discovered.json: 0x48a6e2b88c8f617f45641e2060f877c2d94a5d28
+Generated with discovered.json: 0x6e0bf9ef2ea555f5959e94c27880677b5ef2a461
 
-# Diff at Tue, 04 Feb 2025 12:32:02 GMT:
+# Diff at Tue, 04 Feb 2025 13:45:04 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 21745064
-- current block number: 21745064
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@142491370256d9fb936a347e610d0ac200e9e51c block: 21745064
+- current block number: 21772665
 
 ## Description
 
-Rename 'configure' permission to 'interact'
+Upgrade PolygonRollupManager to the version "pessimistic" (yes this is the version string).
+
+Reduce timelock delay from 10d to 3d.
+
+This upgrade introduces an enum `VerifierType` that replaces the old `rollupCompatibilityID`. It can be either `StateTransition` or `Pessimistic`, and currently cannot be changed for a project.
+- `StateTransition` Layer 2s (Rollups or Validiums) are using their normal verifier contracts for state validation as before: (`verifyBatchesTrustedAggregator()`)
+- `Pessimistic` projects must post accounting proofs to the Rollupmanager with `verifyPessimisticTrustedAggregator()` in order to be able to use the shared bridge. These projects can be ['CDK Sovereign'](https://docs.polygon.technology/agglayer/modes-of-integration/polygon-cdk/#cdk-sovereign), without full state validation or DA on Ethereum.
+
+### PolygonRollupManager
+
+- add `rollupIDToRollupDataV2()` in addition to the old v1 function to accomodate the new members of the RollupData struct:
+  - VerifierType rollupVerifierType: a rename of the old rollupCompatibilityID, `StateTransition` or `Pessimistic`
+  - bytes32 lastPessimisticRoot
+  - bytes32 programVKey: SP1 program vKey 
+- remove `verifyBatches()` after timeout of proposer being unlive: leaves only the trusted aggregator version (risk rosette red for prop fail)
+- remove pending state (and consolidatePendingState) since there is no permissionless proposer/prover anymore (this also removes the `proveNonDeterministicState` entry into emergency state)
+- `verifyPessimisticTrustedAggregator()`: verifies pessimistic proof, equivalent to `verifyBatchesTrustedAggregator()` for the legacy projects
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.7.via.1.delay:
+-        864000
++        259200
+      receivedPermissions.6.via.1.delay:
+-        864000
++        259200
+      receivedPermissions.5.via.1.delay:
+-        864000
++        259200
+      receivedPermissions.3.via.0.delay:
+-        864000
++        259200
+      receivedPermissions.2.description:
+-        "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+      receivedPermissions.1.via.0.delay:
+-        864000
++        259200
+      directlyReceivedPermissions.0.delay:
+-        864000
++        259200
+    }
+```
+
+```diff
+    contract PolygonZkEVMBridgeV2 (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.
+      issuedPermissions.0.via.0.delay:
+-        864000
++        259200
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      template:
+-        "polygon-cdk/PolygonRollupManager"
++        "polygon-cdk/PolygonRollupManager_pessimistic"
+      sourceHashes.1:
+-        "0x970ba596f805bae56173fc8c6865317fd90b24c1871f324ff19f0fc8a8b81069"
++        "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
+      description:
+-        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone able to prove a non-deterministic pending state or after 1 week of inactive verifiers."
++        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
+      issuedPermissions.7.via.0.delay:
+-        864000
++        259200
+      issuedPermissions.4.description:
+-        "manage parameters like permissioned timeouts and fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types (implementations)."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+      issuedPermissions.3.via.0.delay:
+-        864000
++        259200
+      values.$implementation:
+-        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
++        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
+      values.$pastUpgrades.5:
++        ["2025-02-03T14:55:59.000Z","0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e",["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]]
+      values.$upgradeCount:
+-        5
++        6
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.13:
++        [false]
+      values.nondeterministicPendingState:
+-        []
+      values.pendingStateTimeout:
+-        432000
+      values.rollupCount:
+-        13
++        14
+      values.rollupsData:
+-        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",6],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",8],["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4],["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",7]]
+      values.rollupTypeCount:
+-        8
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.8:
++        ["0x18C45DD422f6587357a6d3b23307E75D42b2bc5B","0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,1,false,"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"]
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.7.2:
++        13
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.6.2:
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.5.2:
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.4.2:
++        11
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.3.2:
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.2.2:
++        9
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.1.2:
++        8
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.5:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.4:
++        false
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.3:
++        0
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.0.2:
++        7
+      values.trustedAggregatorTimeout:
+-        432000
+      values.verifyBatchTimeTarget:
+-        1800
+      values.ROLLUP_MANAGER_VERSION:
++        "pessimistic"
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2:
++        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,6,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",196,"0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",13,8,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x88AaB361f108C3c959F2928Da3cD8e47298016B5",4913,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",1511670449,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",1702448187,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",2355,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xB234F18738d9531CAD6ae6d9A587d09fe200272C",999,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",938,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",9,4,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",752025,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"],["0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",9369,"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",12,9,1,"0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"]]
+      fieldMeta.nondeterministicPendingState:
+-        {"severity":"HIGH"}
+      fieldMeta.rollupsData:
+-        {"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"}
+      fieldMeta.rollupTypes.description:
+-        "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
++        "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
+      fieldMeta.rollupsDataV2:
++        {"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]"}
+    }
+```
+
+```diff
+    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      issuedPermissions.0.via.0.delay:
+-        864000
++        259200
+    }
+```
+
+```diff
+    contract PolygonZkEVMTimelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      description:
+-        "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 10d."
++        "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d."
+      issuedPermissions.1.via.0.delay:
+-        864000
++        259200
+      directlyReceivedPermissions.1.delay:
+-        864000
++        259200
+      values.getMinDelay:
+-        864000
++        259200
+      values.getMinDelayFormatted:
+-        "10d"
++        "3d"
+    }
+```
+
+## Source code changes
+
+```diff
+.../PolygonRollupManager/PolygonRollupManager.sol  | 1305 ++++++++------------
+ 1 file changed, 515 insertions(+), 790 deletions(-)
+```
 
 ## Config/verification related changes
 
