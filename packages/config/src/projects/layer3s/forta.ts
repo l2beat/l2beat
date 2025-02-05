@@ -26,7 +26,13 @@ export const forta: Layer3 = underReviewL3({
       socialMedia: ['https://x.com/FortaNetwork'],
     },
   },
-  rpcUrl: 'https://rpc-forta-chain-8gj1qndmfc.t.conduit.xyz/',
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    defaultUrl: 'https://rpc-forta-chain-8gj1qndmfc.t.conduit.xyz/',
+    defaultCallsPerMinute: 1500,
+    adjustCount: { type: 'SubtractOne' },
+  },
   escrows: [
     {
       address: EthereumAddress('0x9afa3dac8a88b56a7dafe9b300d65fd039b8e4c7'), // Bridge
