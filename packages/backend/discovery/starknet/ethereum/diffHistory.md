@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x99f128e8053ca8b32bccf74a8aa15f2e0a07625f
+
+# Diff at Wed, 05 Feb 2025 06:38:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 21765269
+- current block number: 21778537
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      values.operators.1:
+-        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
++        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.operators.0:
+-        "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
++        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarknetOperatorMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/StarknetOperatorMultisig/Safe.sol        | 1088 ++++++++++++++++++++
+ .../.flat/StarknetOperatorMultisig/SafeProxy.p.sol |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0xd63083b31c120e6eaa19d4fff58d8b9323daf233
 
 # Diff at Mon, 03 Feb 2025 12:59:47 GMT:
