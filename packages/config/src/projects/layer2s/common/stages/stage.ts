@@ -194,8 +194,7 @@ function getDescription(
       ? blueprint.positive
       : blueprint.negative
 
-  // If value is object
-  if (typeof value === 'object' && value !== null) {
+  if (isObject(value)) {
     switch (value.mode) {
       case 'append':
         return `${baseDescription} ${value.message}`
@@ -227,19 +226,18 @@ function getMessage(
   return stageKeyBlueprint.warningMessage
 }
 
-export function isSatisfied(
-  stageKeyChecklist: ChecklistValue,
-): Satisfied | null {
-  if (stageKeyChecklist === null) return null
+export function isSatisfied(value: ChecklistValue): Satisfied | null {
+  if (value === null) return null
 
   if (
-    stageKeyChecklist === 'UnderReview' ||
-    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0] === 'UnderReview')
+    value === 'UnderReview' ||
+    (isObject(value) && value.satisfied === 'UnderReview')
   )
     return 'UnderReview'
 
-  return (
-    stageKeyChecklist === true ||
-    (Array.isArray(stageKeyChecklist) && stageKeyChecklist[0])
-  )
+  return value === true || (isObject(value) && value.satisfied)
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
 }
