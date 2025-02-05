@@ -18,3 +18,6 @@ export * from './blobscan/types'
 
 export * from './rpc-polkadot/PolkadotRpcClient'
 export * from './rpc-polkadot/types'
+
+export * from './rpc-celestia/CelestiaRpcClient'
+export * from './rpc-celestia/types'
