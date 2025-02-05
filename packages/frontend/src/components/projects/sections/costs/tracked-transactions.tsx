@@ -254,9 +254,9 @@ function TransactionDetails({
                 <InfoIcon className="size-3" />
               </TooltipTrigger>
               <TooltipContent>
-                Multiple projects are using the same contract. Therefore,
-                transaction costs are split between the projects, and the
-                multiplier shows how much of the cost is attributed to the
+                Multiple projects are included in the same function call.
+                Therefore, transaction costs are split between the projects, and
+                the multiplier shows how much of the cost is attributed to the
                 specific project.
               </TooltipContent>
             </Tooltip>
