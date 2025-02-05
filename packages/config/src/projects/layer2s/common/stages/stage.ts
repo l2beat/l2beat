@@ -85,7 +85,6 @@ export function createGetStage<T extends StageBlueprint>(
         // Add to missing
         if (
           requirement.satisfied !== true &&
-          // Stage 0 is special. Even if you are failing you get it
           blueprintStage.name !== 'Stage 0'
         ) {
           if (missing === undefined) {
@@ -103,21 +102,15 @@ export function createGetStage<T extends StageBlueprint>(
         // Raise warning or under review message
         if (
           requirement.satisfied !== true &&
-          // Stage 0 is special. Even if you are failing you get it so we need to warn
-          blueprintStage.name === 'Stage 0' &&
-          requirement.message
+          requirement.message &&
+          blueprintStage.name === 'Stage 0'
         ) {
           if (message !== undefined) {
             throw new Error('We are currently not handling multiple messages')
           }
-          message = {
-            type:
-              requirement.satisfied === 'UnderReview'
-                ? 'underReview'
-                : 'warning',
-            text: requirement.message,
-          }
-          continue
+          const type =
+            requirement.satisfied === 'UnderReview' ? 'underReview' : 'warning'
+          message = { type, text: requirement.message }
         }
       }
 
