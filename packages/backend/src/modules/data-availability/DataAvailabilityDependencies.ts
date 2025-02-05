@@ -1,10 +1,11 @@
 import type { Database } from '@l2beat/database'
+import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 
 export class DataAvailabilityDependencies {
   constructor(
-    private readonly _config: unknown,
+    readonly config: DataAvailabilityTrackingConfig,
     readonly database: Database,
-    private readonly _providers: Providers,
+    readonly providers: Providers,
   ) {}
 }

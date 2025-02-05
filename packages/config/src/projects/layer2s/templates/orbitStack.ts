@@ -38,6 +38,7 @@ import type {
   Layer3,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissions,
@@ -158,6 +159,7 @@ interface OrbitStackConfigCommon {
   isArchived?: boolean
   gasTokens?: string[]
   customDa?: CustomDa
+  daTracking?: ProjectDaTrackingConfig
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -843,6 +845,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: templateVars.daTracking,
     },
   }
 }
@@ -1091,6 +1094,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : undefined),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
+      daTracking: templateVars.daTracking,
     },
   }
 }

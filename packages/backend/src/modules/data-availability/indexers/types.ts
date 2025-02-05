@@ -1,5 +1,5 @@
 import type { BlockTargetIndexer } from './BlockTargetIndexer'
-import type { EthereumDaIndexer } from './EthereumDaIndexer'
+import type { DaIndexer } from './DaIndexer'
 
 // Re-used from activity module for now
-export type DataAvailabilityIndexer = BlockTargetIndexer | EthereumDaIndexer
+export type DataAvailabilityIndexer = BlockTargetIndexer | DaIndexer
