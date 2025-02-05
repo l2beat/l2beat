@@ -44,7 +44,6 @@ export const hypr: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  discoveryDrivenData: true,
   // rpcUrl: 'https://rpc.hypr.network',
   // associatedTokens: ['HYPR'], removed due to insufficient price data
 })

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb5d5de4f2fd12bbffe6cb9fdb73582e1f0424c5a
+
+# Diff at Wed, 05 Feb 2025 06:34:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 21766636
+- current block number: 21778531
+
+## Description
+
+Deficit offset raised for ETH pool. This mainly affects fees, see below.
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.deficitOffset:
+-        0
++        "90000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x5f3681a6bdd635ad1f16b6c710568f36523a6f6f
 
 # Diff at Mon, 03 Feb 2025 14:40:47 GMT:

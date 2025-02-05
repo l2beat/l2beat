@@ -15,6 +15,24 @@ export function getDaBridges(project: Project<'daLayer' | 'daBridges'>) {
       },
       risks: {
         isNoBridge: true,
+        committeeSecurity: {
+          value: 'N/A',
+          sentiment: 'bad',
+          description:
+            'There is no committee attesting to the availability of data. ',
+        },
+        upgradeability: {
+          value: 'N/A',
+          sentiment: 'bad',
+          description:
+            'Without the bridge, users cannot react in time to malicious actions by the sequencer.',
+        },
+        relayerFailure: {
+          value: 'N/A',
+          sentiment: 'bad',
+          description:
+            "The relayer does not contribute to the DA bridge liveness since data availability attestations are not integrated in the scaling solution's proof system.",
+        },
       },
       technology: {
         description:

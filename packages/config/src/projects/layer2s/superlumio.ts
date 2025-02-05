@@ -49,5 +49,4 @@ export const superlumio: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  discoveryDrivenData: true,
 })

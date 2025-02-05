@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x09e958ab16068dbfc6aefa91ed1dcefd93f10d2e
+
+# Diff at Wed, 05 Feb 2025 07:24:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 301169405
+- current block number: 302816612
+
+## Description
+
+Increase stake requirement (for orbit validators) by 50%.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.currentRequiredStake:
+-        "200000000000000000"
++        "300000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xc02bc721274adb26749f9e07433b8298f8caa435
 
 # Diff at Tue, 04 Feb 2025 12:33:53 GMT:

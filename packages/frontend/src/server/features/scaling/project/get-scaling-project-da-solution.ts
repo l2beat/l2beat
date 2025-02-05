@@ -47,10 +47,7 @@ export async function getDaSolution(
     contracts: allDaBridgeContracts,
   } = daSolution.bridge
 
-  const daBridgePermissions =
-    allDaBridgePermissions !== 'UnderReview'
-      ? allDaBridgePermissions?.[hostChainSelector]
-      : undefined
+  const daBridgePermissions = allDaBridgePermissions?.[hostChainSelector]
 
   const daBridgeContracts = allDaBridgeContracts?.addresses[hostChainSelector]
 

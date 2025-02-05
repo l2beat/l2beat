@@ -120,7 +120,6 @@ export const aptos: Bridge = {
       ],
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    isIncomplete: true,
   },
   permissions: {
     [discovery.chain]: {

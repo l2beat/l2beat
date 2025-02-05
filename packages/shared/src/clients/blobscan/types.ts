@@ -18,6 +18,10 @@ export const BlobSchema = z.object({
   blockHash: z.string(),
   blockNumber: z.number(),
   blockTimestamp: z.string(),
+  transaction: z.object({
+    from: z.string(),
+    to: z.string(),
+  }),
 })
 
 export const GetBlobsResponseSchema = z.object({

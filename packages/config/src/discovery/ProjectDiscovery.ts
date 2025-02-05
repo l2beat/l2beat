@@ -39,11 +39,6 @@ import type {
   SharedEscrow,
 } from '../types'
 import {
-  OP_STACK_CONTRACT_DESCRIPTION,
-  OP_STACK_PERMISSION_TEMPLATES,
-  type OpStackContractName,
-} from './OpStackTypes'
-import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
   type OrbitStackContractTemplate,
@@ -215,18 +210,6 @@ export class ProjectDiscovery {
         }
       })
       .filter(notUndefined)
-  }
-
-  getOpStackPermissions(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): ProjectPermission[] {
-    const resolved = this.computeStackContractPermissions(
-      OP_STACK_PERMISSION_TEMPLATES,
-      overrides,
-      contractOverrides,
-    )
-    return this.transformToPermissions(resolved)
   }
 
   resolveOrbitStackTemplates(
@@ -755,23 +738,6 @@ export class ProjectDiscovery {
     )
   }
 
-  getOpStackContractDetails(
-    upgradesProxy: Partial<ProjectContract>,
-    overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ProjectContract[] {
-    return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
-      this.hasContract(overrides?.[d.name] ?? d.name),
-    ).map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...upgradesProxy,
-      }),
-    )
-  }
-
   private getContractByName(name: string): ContractParameters[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
@@ -1054,12 +1020,12 @@ export class ProjectDiscovery {
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
+      contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
       ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
         : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-      contractOrEoa.description,
     ].filter(notUndefined)
   }
 
@@ -1097,11 +1063,11 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    const actors: ProjectPermission[] = []
+    const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
-        actors.push(
+        allActors.push(
           this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -1110,7 +1076,7 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        actors.push(
+        allActors.push(
           this.contractAsPermissioned(
             contract,
             formatAsBulletPoints(descriptions),
@@ -1126,7 +1092,7 @@ export class ProjectDiscovery {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
-      actors.push({
+      allActors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
@@ -1135,29 +1101,67 @@ export class ProjectDiscovery {
     }
 
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
-    assert(actors.every((actor) => actor.accounts.length === 1))
-    assert(allUnique(actors.map((actor) => actor.accounts[0].address)))
-    assert(allUnique(actors.map((actor) => actor.accounts[0].name)))
+    assert(allActors.every((actor) => actor.accounts.length === 1))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+
+    // NOTE(radomski): There are two groups of "permissions" we show. Roles and
+    // actors.
+    //
+    // Roles are grouping of actors that have the ability to do _something_.
+    // Actors are entities which have some power in the system.
+    //
+    // To minimize the amount of redundant information we choose to show an
+    // actor only if:
+    //
+    // - it's a contract
+    // - it's an EOA with permissions to interact with parts of the system
+    // - it's an EOA that's shared between projects[1]
+    //
+    // We can remove EOAs that have only role permissions since their
+    // involvement in the system has already been taken into account when
+    // listing accounts with a given role.
+    //
+    // [1] that's currently not possible to achieve. With the config refactor
+    // moving forward when we reach a point where the config will be able to
+    // introspect itself (reach into the configs of other projects) this point
+    // will be true. As for now we don't know if such a occurrence has taken
+    // place.
+    const actors = allActors.filter((actor) => {
+      const account = actor.accounts[0]
+      const isEOA = account.type === 'EOA'
+      if (!isEOA) {
+        return true
+      }
+
+      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      assert(eoa?.receivedPermissions !== undefined)
+      const hasOnlyRole = eoa.receivedPermissions.every((p) =>
+        RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
+      )
+
+      return !hasOnlyRole
+    })
 
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
       if (permission.participants !== undefined) {
-        permission.participants = linkupActorsIntoAccounts(
+        permission.participants = this.linkupActorsIntoAccounts(
           permission.participants,
           actors,
         )
       }
     })
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
-
     roles.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
-      permission.accounts = linkupActorsIntoAccounts(
+      permission.accounts = this.linkupActorsIntoAccounts(
         permission.accounts,
         actors,
       )
@@ -1167,6 +1171,36 @@ export class ProjectDiscovery {
       roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
       actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
     }
+  }
+
+  linkupActorsIntoAccounts(
+    accountsToLink: ProjectPermissionedAccount[],
+    actors: ProjectPermission[],
+  ): ProjectPermissionedAccount[] {
+    const result: ProjectPermissionedAccount[] = []
+    const actorNameLUT: Record<string, string> = {}
+    for (const actor of actors) {
+      assert(actor.accounts.length === 1)
+      actorNameLUT[actor.accounts[0].address] = actor.name
+    }
+
+    for (const account of accountsToLink) {
+      const entry = structuredClone(account)
+
+      const discoveryName = this.getEntryByAddress(account.address)?.name
+      if (discoveryName !== undefined) {
+        entry.name = discoveryName
+      }
+
+      const actorName = actorNameLUT[account.address]
+      if (actorName !== undefined) {
+        entry.name = actorName
+        entry.url = `#${actorName}`
+      }
+
+      result.push(entry)
+    }
+    return result
   }
 
   getDiscoveredContracts(): ProjectContract[] {
@@ -1366,29 +1400,4 @@ function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
 
 function allUnique(arr: string[]): boolean {
   return new Set(arr).size === arr.length
-}
-
-function linkupActorsIntoAccounts(
-  accountsToLink: ProjectPermissionedAccount[],
-  actors: ProjectPermission[],
-): ProjectPermissionedAccount[] {
-  const result: ProjectPermissionedAccount[] = []
-  const actorNameLUT: Record<string, string> = {}
-  for (const actor of actors) {
-    assert(actor.accounts.length === 1)
-    actorNameLUT[actor.accounts[0].address] = actor.name
-  }
-
-  for (const account of accountsToLink) {
-    const entry = structuredClone(account)
-
-    const actorName = actorNameLUT[account.address]
-    if (actorName !== undefined) {
-      entry.name = actorName
-      entry.url = `#${actorName}`
-    }
-
-    result.push(entry)
-  }
-  return result
 }

@@ -318,6 +318,13 @@ export const zkfair: Layer2 = {
         discovery.getContractDetails('ZKFairValidium', {
           description: `The main contract of the Polygon CDK Validium. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the ZkFair Owner, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction roots, L2 state roots as well as ZK proofs. It also holds the address of ZKFairValidiumDAC.`,
           ...timelockUpgrades,
+          references: [
+            {
+              title:
+                'State injections - stateRoot and exitRoot are part of the validity proof input.',
+              url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
+            },
+          ],
         }),
         discovery.getContractDetails('Bridge', {
           description:
@@ -343,13 +350,6 @@ export const zkfair: Layer2 = {
         }),
       ],
     },
-    references: [
-      {
-        title:
-          'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
-      },
-    ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   milestones: [

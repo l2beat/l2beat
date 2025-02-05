@@ -1,8 +1,8 @@
 {
   "name": "hermez",
   "chain": "ethereum",
-  "blockNumber": 21387322,
-  "configHash": "0x43a5f39a10425e670ce6fd9511abc7204f734a34f5fa394d6c012b80e0e92137",
+  "blockNumber": 21778467,
+  "configHash": "0x4fd1c674c2cb6f576ff4e3d13a08b20201dafba4e3b7f06b9cefaa674ca3bece",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -265,28 +265,6 @@
         "NAME": "Gnosis Safe",
         "nonce": 1,
         "VERSION": "1.1.1"
-      }
-    },
-    {
-      "name": "HEZ",
-      "address": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
-      "sourceHashes": [
-        "0xa15ef72c2c8140dc14b04f0f86a2a26e2c4cb4cdf2cb4ef536035232f9c46a9c"
-      ],
-      "sinceTimestamp": 1602717322,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "EIP712DOMAIN_HASH": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
-        "getChainId": 1,
-        "initialBalance": "100000000000000000000000000",
-        "name": "Hermez Network Token",
-        "NAME_HASH": "0x64c0a41a0260272b78f2a5bd50d5ff7c1779bc3bba16dcff4550c7c642b0e4b4",
-        "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
-        "symbol": "HEZ",
-        "totalSupply": "11079624218370194826498052",
-        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
-        "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6"
       }
     },
     {
@@ -569,33 +547,6 @@
     ],
     "0xe1bbC673E537053c3536310851C6554BcfcF11Cd": [
       "constructor(address _masterCopy)"
-    ],
-    "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE": [
-      "constructor(address initialHolder)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function EIP712DOMAIN_HASH() view returns (bytes32)",
-      "function NAME_HASH() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function TRANSFER_WITH_AUTHORIZATION_TYPEHASH() view returns (bytes32)",
-      "function VERSION_HASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function authorizationState(address, bytes32) view returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(uint256 value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function getChainId() pure returns (uint256 chainId)",
-      "function initialBalance() view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferWithAuthorization(address from, address to, uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce, uint8 v, bytes32 r, bytes32 s)"
     ],
     "0xf1B3b124842555782F98bE08d1357ABb8013F11c": [
       "constructor(address communityCouncil)",

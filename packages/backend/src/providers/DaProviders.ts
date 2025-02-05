@@ -1,12 +1,15 @@
-import type { BlobScanClient, DaProvider } from '@l2beat/shared'
+import {
+  type BlobScanClient,
+  type DaProvider,
+  EthereumDaProvider,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { BlobScanDaProvider } from '../modules/data-availability/providers/BlobscanDaProvider'
 
 export class DaProviders {
   daProviders: Map<string, DaProvider> = new Map()
 
   constructor(readonly client: BlobScanClient) {
-    this.daProviders.set('ethereum', new BlobScanDaProvider(client))
+    this.daProviders.set('ethereum', new EthereumDaProvider(client))
   }
 
   getDaProvider(chain: string) {

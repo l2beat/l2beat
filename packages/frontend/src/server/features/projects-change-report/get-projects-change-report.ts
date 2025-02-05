@@ -99,11 +99,25 @@ const getCachedProjectsChangeReport = cache(
           continue
         }
 
-        const latestContracts = newDiscovery.discovery.contracts
-        const discoveryDiffs = diffDiscovery(
-          onDiskDiscovery.contracts,
-          latestContracts,
-        )
+        const onDiskContracts = [
+          ...onDiskDiscovery.contracts,
+          ...(onDiskDiscovery.sharedModules ?? []).flatMap(
+            (module) => onDiskChainDiscovery[module]?.contracts ?? [],
+          ),
+        ]
+        const latestContracts = [
+          ...newDiscovery.discovery.contracts,
+          ...(newDiscovery.discovery.sharedModules ?? []).flatMap((module) =>
+            newDiscoveries
+              .filter(
+                (d) =>
+                  d.chainId === newDiscovery.chainId &&
+                  d.discovery.name === module,
+              )
+              .flatMap((d) => d.discovery.contracts ?? []),
+          ),
+        ]
+        const discoveryDiffs = diffDiscovery(onDiskContracts, latestContracts)
 
         const implementationChanges = discoveryDiffs.filter((discoveryDiff) =>
           discoveryDiff.diff?.some(

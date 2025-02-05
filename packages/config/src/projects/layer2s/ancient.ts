@@ -65,5 +65,4 @@ export const ancient: Layer2 = opStackL2({
       thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
-  discoveryDrivenData: true,
 })

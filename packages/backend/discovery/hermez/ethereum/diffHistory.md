@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x24735ee7c5e5839e967bdaa2846c98d3fb63f90b
+
+# Diff at Wed, 05 Feb 2025 06:23:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 21387322
+- current block number: 21778467
+
+## Description
+
+config: remove token from discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387322 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract HEZ (0xEEF9f339514298C6A857EfCfC1A762aF84438dEE)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb4193f12680d977cb7e9125096f365a6517c886d
 
 # Diff at Mon, 20 Jan 2025 11:09:34 GMT:

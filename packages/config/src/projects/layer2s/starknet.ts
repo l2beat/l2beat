@@ -1099,6 +1099,11 @@ export const starknet: Layer2 = {
           discovery.getPermissionedAccounts('Starknet', 'operators'),
           'Allowed to post state updates. When the operator is down the state cannot be updated.',
         ),
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        discovery.getMultisigPermission(
+          'StarknetOperatorMultisig',
+          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        ),
         discovery.getPermissionDetails(
           'StarkGate LUSD owner',
           getProxyGovernance(discovery, ESCROW_LUSD_ADDRESS),

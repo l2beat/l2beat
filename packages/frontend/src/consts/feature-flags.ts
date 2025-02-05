@@ -4,7 +4,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 
 export const featureFlags = {
-  othersMigrated: () =>
-    PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()),
+  othersMigrated: () => PROJECT_COUNTDOWNS.otherMigration.lt(UnixTime.now()),
   stageSorting: env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
 }

@@ -25,13 +25,15 @@
   },
   "overrides": {
     "Hermez": {
-      "ignoreMethods": ["tokenList", "unpackBucket"]
+      "ignoreMethods": ["tokenList", "unpackBucket"],
+      "ignoreRelatives": ["tokenHEZ"]
     },
     "Hermez2": {
       "ignoreMethods": ["unpackBucket"]
     },
     "HermezAuctionProtocol": {
-      "ignoreMethods": ["getCurrentSlotNumber"]
+      "ignoreMethods": ["getCurrentSlotNumber"],
+      "ignoreRelatives": ["tokenHEZ"]
     },
     "HermezAuctionProtocol2": {
       "ignoreMethods": ["getCurrentSlotNumber"]
