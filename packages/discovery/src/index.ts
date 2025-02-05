@@ -29,7 +29,10 @@ export {
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
 } from './discovery/output/diffToMarkdown'
-export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
+export {
+  toDiscoveryOutput,
+  toRawDiscoveryOutput,
+} from './discovery/output/toDiscoveryOutput'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
