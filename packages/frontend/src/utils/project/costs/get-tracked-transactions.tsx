@@ -3,6 +3,7 @@ import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
 } from '@l2beat/shared'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 export type TrackedTransactionsByType = {
@@ -61,7 +62,10 @@ export function getTrackedTransactions(
 
   const now = UnixTime.now()
 
-  function filterByType(trackedTxsConfig: Layer2TxConfig, type: string) {
+  function filterByType(
+    trackedTxsConfig: Layer2TxConfig,
+    type: TrackedTxsConfigSubtype,
+  ) {
     return (
       trackedTxsConfig.uses.some((use) => use.subtype === type) &&
       trackedTxsConfig.query.sinceTimestamp.lt(now)
