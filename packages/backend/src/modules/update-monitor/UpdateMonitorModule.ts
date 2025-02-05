@@ -13,6 +13,7 @@ import { UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
+import { join } from 'path'
 
 export function createUpdateMonitorModule(
   config: Config,
@@ -27,7 +28,7 @@ export function createUpdateMonitorModule(
 
   logger = logger.tag({ feature: 'update_monitor', module: 'update_monitor' })
 
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
 
   const discordClient = config.updateMonitor.discord
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
