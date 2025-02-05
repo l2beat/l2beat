@@ -367,6 +367,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                 rollupNodeSourceAvailable: true,
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,

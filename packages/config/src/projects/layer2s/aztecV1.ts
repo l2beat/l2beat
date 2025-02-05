@@ -164,6 +164,7 @@ export const aztecV1: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,

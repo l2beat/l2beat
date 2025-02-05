@@ -746,6 +746,7 @@ function computedStage(
         rollupNodeSourceAvailable: templateVars.isNodeAvailable,
       },
       stage1: {
+        principle: true,
         stateVerificationOnL1: fraudProofType !== 'None',
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
         usersHave7DaysToExit: false,

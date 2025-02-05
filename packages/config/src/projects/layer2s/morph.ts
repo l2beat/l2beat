@@ -88,6 +88,7 @@ export const morph: Layer2 = {
       rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
+      principle: true,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: false,
       usersHave7DaysToExit: false,

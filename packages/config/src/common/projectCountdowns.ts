@@ -17,7 +17,13 @@ export const PROJECT_COUNTDOWNS = {
       }
     },
   },
-} as const
+  stageOneRequirementsChange: {
+    expiresAt: new UnixTime(1750284000), // 2025-06-19T00:00:00Z
+    getContext: (project: Layer2 | Layer3) => {
+      return project.display.slug === 'optimism'
+    },
+  },
+}
 
 export const REASON_FOR_BEING_OTHER = {
   NO_PROOFS: {

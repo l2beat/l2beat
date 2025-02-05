@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { PROJECT_COUNTDOWNS } from '../../../../common'
 import type {
   ChecklistTemplate,
   ChecklistValue,
@@ -25,12 +27,18 @@ export function createGetStage<T extends StageBlueprint>(
     )) {
       const checklistStage = checklist[blueprintStageKey]
 
-      const principle = blueprintStage.principle
-        ? normalizeKeyChecklist(
-            blueprintStage.principle,
-            checklistStage.principle,
-          )
-        : undefined
+      const stageOneRequirementsCountdownExpired =
+        PROJECT_COUNTDOWNS.stageOneRequirementsChange.expiresAt.lt(
+          UnixTime.now(),
+        )
+
+      const principle =
+        blueprintStage.principle && stageOneRequirementsCountdownExpired
+          ? normalizeKeyChecklist(
+              blueprintStage.principle,
+              checklistStage.principle,
+            )
+          : undefined
 
       const summaryStage: StageSummary = {
         stage: blueprintStage.name,

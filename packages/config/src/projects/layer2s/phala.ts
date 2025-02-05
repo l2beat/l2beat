@@ -178,6 +178,7 @@ export const phala: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
