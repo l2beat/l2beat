@@ -1020,12 +1020,12 @@ export class ProjectDiscovery {
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
+      contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
       ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
         : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-      contractOrEoa.description,
     ].filter(notUndefined)
   }
 
