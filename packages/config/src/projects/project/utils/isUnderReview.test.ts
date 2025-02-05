@@ -52,17 +52,6 @@ describe(isUnderReview.name, () => {
       expect(isUnderReview(mock)).toEqual(true)
     })
 
-    it('project.contracts.isUnderReview is true', () => {
-      const mock = {
-        ...mockProject,
-        contracts: {
-          ...mockProject.contracts,
-          isUnderReview: true,
-        },
-      }
-      expect(isUnderReview(mock)).toEqual(true)
-    })
-
     it('project.riskView has a underReview risk', () => {
       const mock = {
         ...mockProject,
