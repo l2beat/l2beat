@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import type {
   ContractParameters,
@@ -48,7 +49,7 @@ describe('verification status', () => {
 })
 
 function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
-  const configReader = new ConfigReader('../config')
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
 
   let discovery = undefined
   try {

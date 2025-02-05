@@ -1,6 +1,7 @@
 // TODO(radomski): This is duplicated in the l2b package, shouldn't be
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import type { DiscoveryConfig, TemplateService } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -10,7 +11,7 @@ import { Hash256 } from '@l2beat/shared-pure'
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 export function getDiscoveryHash(projectName: string, chain: string): Hash160 {
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const hasher = createHash('sha1')
   hasher.update(JSON.stringify(curDiscovery))

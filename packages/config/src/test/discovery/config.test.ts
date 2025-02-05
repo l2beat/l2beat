@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
 import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
@@ -13,7 +14,7 @@ import {
 } from './helper'
 
 describe('discovery config.jsonc', () => {
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
   const templateService = new TemplateService()
 
   const chainConfigs = configReader
