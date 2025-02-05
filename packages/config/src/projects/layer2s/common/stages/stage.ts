@@ -1,95 +1,93 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../../../common'
 import type {
-  ChecklistTemplate,
-  ChecklistValue,
   MissingStageDetails,
-  Satisfied,
   Stage,
-  StageBlueprint,
   StageConfigured,
   StageConfiguredMessage,
+  StageDowngrade,
   StageSummary,
 } from '../../../../types'
+
+type Satisfied = boolean | 'UnderReview'
+
+interface BlueprintItem {
+  positive: string
+  negative: string
+  negativeMessage?: string
+  underReviewMessage?: string
+}
+
+type StageBlueprint = Record<
+  string,
+  {
+    name: Stage
+    principle?: BlueprintItem
+    items: Record<string, BlueprintItem>
+  }
+>
+
+type ChecklistValue = Satisfied | null | [Satisfied, string]
+
+export type ChecklistTemplate<T extends StageBlueprint> = {
+  [K in keyof T]: {
+    [L in keyof T[K]['items']]: ChecklistValue
+  } & (T[K] extends { principle: unknown }
+    ? {
+        principle: ChecklistValue
+      }
+    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
+      {})
+}
 
 export function createGetStage<T extends StageBlueprint>(
   blueprint: T,
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
-    let lastStage: Stage = 'Stage 0'
-    let missing: MissingStageDetails | undefined = undefined
-    let message: StageConfiguredMessage | undefined = undefined
-    const messages: string[] = []
+    const countdownExpired = PROJECT_COUNTDOWNS.stageChanges.lt(UnixTime.now())
     const summary: StageSummary[] = []
+    let highestStageReached: Stage = 'Stage 0'
+    let missing: MissingStageDetails | undefined
+    let message: StageConfiguredMessage | undefined
+    let downgradePending: StageDowngrade | undefined
 
-    for (const [blueprintStageKey, blueprintStage] of Object.entries(
-      blueprint,
-    )) {
-      const checklistStage = checklist[blueprintStageKey]
-
-      const stageOneRequirementsCountdownExpired =
-        PROJECT_COUNTDOWNS.stageOneRequirementsChange.expiresAt.lt(
-          UnixTime.now(),
-        )
-
-      const principle =
-        blueprintStage.principle && stageOneRequirementsCountdownExpired
-          ? normalizeKeyChecklist(
-              blueprintStage.principle,
-              checklistStage.principle,
-            )
-          : undefined
+    // Loop through stages
+    for (const [stage, blueprintStage] of Object.entries(blueprint)) {
+      const principle = evaluate(
+        blueprintStage.principle,
+        checklist[stage].principle,
+      )
 
       const summaryStage: StageSummary = {
         stage: blueprintStage.name,
         requirements: [],
         principle: principle
           ? {
-              satisfied: principle[0] ?? false,
-              description: principle[1],
+              satisfied: principle.satisfied ?? false,
+              description: principle.description,
             }
           : undefined,
       }
-      summary.push(summaryStage)
 
-      if (summaryStage.principle?.satisfied === false) {
-        missing = {
-          nextStage: blueprintStage.name,
-          requirements: [],
-          principle: summaryStage.principle?.description,
-        }
-      }
-
-      for (const [blueprintItemKey, blueprintItem] of Object.entries(
-        blueprintStage.items,
-      )) {
-        const checklistItem = checklistStage[blueprintItemKey]
-
-        const [satisfied, description, messageText] = normalizeKeyChecklist(
-          blueprintItem,
-          checklistItem,
-        )
-
-        if (satisfied !== null) {
-          summaryStage.requirements.push({ satisfied, description })
-        }
-
-        if (
-          (satisfied === false || satisfied === 'UnderReview') &&
-          blueprintStage.name === 'Stage 0' &&
-          messageText
-        ) {
-          if (message !== undefined) {
-            throw new Error('We are currently not handling multiple messages')
-          }
-          message = {
-            type: satisfied === 'UnderReview' ? 'underReview' : 'warning',
-            text: messageText,
-          }
+      // Loop through stage requirements
+      for (const [key, blueprintItem] of Object.entries(blueprintStage.items)) {
+        const requirement = evaluate(blueprintItem, checklist[stage][key])
+        if (!requirement || requirement.isOmitted) {
           continue
         }
 
-        if (satisfied === false || satisfied === 'UnderReview') {
+        // Add to output
+        summaryStage.requirements.push({
+          satisfied: requirement.satisfied,
+          description: requirement.description,
+        })
+
+        // Add to missing
+        if (
+          requirement.satisfied !== true &&
+          // Stage 0 is special. Even if you are failing you get it
+          blueprintStage.name !== 'Stage 0'
+        ) {
           if (missing === undefined) {
             missing = {
               nextStage: blueprintStage.name,
@@ -98,18 +96,62 @@ export function createGetStage<T extends StageBlueprint>(
             }
           }
           if (missing.nextStage === blueprintStage.name) {
-            missing.requirements.push(description)
+            missing.requirements.push(requirement.description)
+          }
+        }
+
+        // Raise warning or under review message
+        if (
+          requirement.satisfied !== true &&
+          // Stage 0 is special. Even if you are failing you get it so we need to warn
+          blueprintStage.name === 'Stage 0' &&
+          requirement.message
+        ) {
+          if (message !== undefined) {
+            throw new Error('We are currently not handling multiple messages')
+          }
+          message = {
+            type:
+              requirement.satisfied === 'UnderReview'
+                ? 'underReview'
+                : 'warning',
+            text: requirement.message,
+          }
+          continue
+        }
+      }
+
+      if (principle && principle.satisfied !== true) {
+        if (missing && missing.nextStage === blueprintStage.name) {
+          missing.principle = principle.description
+        }
+
+        if (!missing && countdownExpired) {
+          missing = {
+            nextStage: blueprintStage.name,
+            requirements: [],
+            principle: principle.description,
+          }
+        }
+
+        if (!missing && !countdownExpired) {
+          downgradePending = {
+            expiresAt: PROJECT_COUNTDOWNS.stageChanges.toNumber(),
+            reason: principle.description,
+            toStage: highestStageReached,
           }
         }
       }
 
-      if (missing === undefined && messages.length === 0) {
-        lastStage = blueprintStage.name
+      if (missing === undefined) {
+        highestStageReached = blueprintStage.name
       }
+      summary.push(summaryStage)
     }
 
     return {
-      stage: lastStage,
+      stage: highestStageReached,
+      downgradePending,
       missing,
       summary,
       message,
@@ -117,26 +159,34 @@ export function createGetStage<T extends StageBlueprint>(
   }
 }
 
-function normalizeKeyChecklist(
-  stageKeyBlueprint: { positive: string; negative: string },
-  stageKeyChecklist: ChecklistValue,
-): [Satisfied | null, string, string | undefined] {
-  const satisfied = isSatisfied(stageKeyChecklist)
-
-  const description = getDescription(
-    satisfied,
-    stageKeyBlueprint,
-    stageKeyChecklist,
-  )
-
-  const message = getWarning(satisfied, stageKeyBlueprint)
-
-  return [satisfied, description, message]
+function evaluate(
+  blueprint: BlueprintItem | undefined,
+  value: ChecklistValue | undefined,
+):
+  | {
+      satisfied: Satisfied
+      isOmitted: boolean
+      description: string
+      message: string | undefined
+    }
+  | undefined {
+  if (blueprint === undefined || value === undefined) {
+    return
+  }
+  const satisfied = isSatisfied(value)
+  const description = getDescription(satisfied, blueprint, value)
+  const message = getMessage(satisfied, blueprint)
+  return {
+    satisfied: satisfied !== null ? satisfied : false,
+    isOmitted: satisfied === null,
+    description,
+    message,
+  }
 }
 
 function getDescription(
   satisfied: Satisfied | null,
-  stageKeyBlueprint: { positive: string; negative: string },
+  stageKeyBlueprint: BlueprintItem,
   stageKeyChecklist: ChecklistValue,
 ) {
   if (Array.isArray(stageKeyChecklist)) {
@@ -148,7 +198,7 @@ function getDescription(
     : stageKeyBlueprint.negative
 }
 
-function getWarning(
+function getMessage(
   satisfied: Satisfied | null,
   stageKeyBlueprint: {
     positive: string

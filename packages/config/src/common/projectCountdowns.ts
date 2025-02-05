@@ -17,18 +17,7 @@ export const PROJECT_COUNTDOWNS = {
       }
     },
   },
-  stageOneRequirementsChange: {
-    expiresAt: new UnixTime(1750284000), // 2025-06-19T00:00:00Z
-    getContext: (project: Layer2 | Layer3) => {
-      if (project.display.slug !== 'op-mainnet') {
-        return undefined
-      }
-      return {
-        reason:
-          'Compromising ≥75% of the Security Council should be the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal).',
-      }
-    },
-  },
+  stageChanges: UnixTime.fromDate(new Date('2025-06-19T00:00:00Z')),
 }
 
 export const REASON_FOR_BEING_OTHER = {

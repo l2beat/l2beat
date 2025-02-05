@@ -1,5 +1,4 @@
-import type { ChecklistTemplate } from '../../../../types'
-import { createGetStage, isSatisfied } from './stage'
+import { type ChecklistTemplate, createGetStage, isSatisfied } from './stage'
 
 interface GetStageOptions {
   rollupNodeLink?: string

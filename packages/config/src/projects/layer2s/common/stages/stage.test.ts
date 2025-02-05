@@ -9,38 +9,33 @@ const getTestStage = createGetStage({
     name: 'Stage 0',
     items: {
       callsItselfRollup: {
-        positive: 'The project calls itself a rollup.',
-        negative: "The project doesn't call itself a rollup.",
-        warningMessage: 'Warning: The project calls itself a rollup.',
-        underReviewMessage:
-          'We are reviewing if the project calls itself a rollup.',
+        positive: 'ROLLUP_TRUE',
+        negative: 'ROLLUP_FALSE',
+        warningMessage: 'ROLLUP_WARNING',
+        underReviewMessage: 'ROLLUP_UNDER_REVIEW',
       },
       rollupNodeSourceAvailable: {
-        positive:
-          'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-        negative:
-          'No source-available node exists that can recreate the state from L1 data.',
-        underReviewMessage:
-          'The requirement for available node software is under review',
-        warningMessage:
-          'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
+        positive: 'SOURCE_TRUE',
+        negative: 'SOURCE_FALSE',
+        warningMessage: 'SOURCE_WARNING',
+        underReviewMessage: 'SOURCE_UNDER_REVIEW',
       },
     },
   },
   stage1: {
     name: 'Stage 1',
     principle: {
-      positive: 'Project has one way to interact.',
-      negative: 'Project should have one way to interact.',
+      positive: 'PRINCIPLE_TRUE',
+      negative: 'PRINCIPLE_FALSE',
     },
     items: {
       hasEscapeHatch: {
-        positive: 'The project has an escape hatch.',
-        negative: "The project doesn't have an escape hatch.",
+        positive: 'ESCAPE_HATCH_TRUE',
+        negative: 'ESCAPE_HATCH_FALSE',
       },
       isCouncil8Members: {
-        positive: 'The project has at least 8 council members.',
-        negative: "The project doesn't have 8 council members.",
+        positive: 'COUNCIL_TRUE',
+        negative: 'COUNCIL_FALSE',
       },
     },
   },
@@ -66,7 +61,7 @@ describe(createGetStage.name, () => {
   it('Returns Stage 0 with warning message if project does not fulfill stage 0 requirements', () => {
     const x = getTestStage({
       stage0: {
-        callsItselfRollup: [false, 'The project calls itself a chicken.'],
+        callsItselfRollup: [false, 'OVERRIDE'],
         rollupNodeSourceAvailable: true,
       },
       stage1: {
@@ -78,47 +73,32 @@ describe(createGetStage.name, () => {
 
     expect(x).toEqual({
       stage: 'Stage 0',
+      downgradePending: undefined,
       message: {
         type: 'warning',
-        text: 'Warning: The project calls itself a rollup.',
+        text: 'ROLLUP_WARNING',
       },
       missing: {
         nextStage: 'Stage 1',
-        requirements: [
-          "The project doesn't have an escape hatch.",
-          "The project doesn't have 8 council members.",
-        ],
-        principle: undefined,
+        requirements: ['ESCAPE_HATCH_FALSE', 'COUNCIL_FALSE'],
+        principle: 'PRINCIPLE_FALSE',
       },
       summary: [
         {
-          requirements: [
-            {
-              description: 'The project calls itself a chicken.',
-              satisfied: false,
-            },
-            {
-              description:
-                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-              satisfied: true,
-            },
-          ],
           stage: 'Stage 0',
           principle: undefined,
+          requirements: [
+            { satisfied: false, description: 'OVERRIDE' },
+            { satisfied: true, description: 'SOURCE_TRUE' },
+          ],
         },
         {
-          requirements: [
-            {
-              description: "The project doesn't have an escape hatch.",
-              satisfied: false,
-            },
-            {
-              description: "The project doesn't have 8 council members.",
-              satisfied: false,
-            },
-          ],
           stage: 'Stage 1',
-          principle: undefined,
+          principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
+          requirements: [
+            { satisfied: false, description: 'ESCAPE_HATCH_FALSE' },
+            { satisfied: false, description: 'COUNCIL_FALSE' },
+          ],
         },
       ],
     })
@@ -127,10 +107,7 @@ describe(createGetStage.name, () => {
   it('Returns Stage 0 with under review message if stage 0 requirement is being reviewed', () => {
     const x = getTestStage({
       stage0: {
-        callsItselfRollup: [
-          'UnderReview',
-          'The project calls itself a chicken.',
-        ],
+        callsItselfRollup: ['UnderReview', 'OVERRIDE'],
         rollupNodeSourceAvailable: true,
       },
       stage1: {
@@ -142,47 +119,32 @@ describe(createGetStage.name, () => {
 
     expect(x).toEqual({
       stage: 'Stage 0',
+      downgradePending: undefined,
       message: {
         type: 'underReview',
-        text: 'We are reviewing if the project calls itself a rollup.',
+        text: 'ROLLUP_UNDER_REVIEW',
       },
       missing: {
         nextStage: 'Stage 1',
-        requirements: [
-          "The project doesn't have an escape hatch.",
-          "The project doesn't have 8 council members.",
-        ],
-        principle: undefined,
+        requirements: ['ESCAPE_HATCH_FALSE', 'COUNCIL_FALSE'],
+        principle: 'PRINCIPLE_FALSE',
       },
       summary: [
         {
-          requirements: [
-            {
-              description: 'The project calls itself a chicken.',
-              satisfied: 'UnderReview',
-            },
-            {
-              description:
-                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-              satisfied: true,
-            },
-          ],
           stage: 'Stage 0',
           principle: undefined,
+          requirements: [
+            { satisfied: 'UnderReview', description: 'OVERRIDE' },
+            { satisfied: true, description: 'SOURCE_TRUE' },
+          ],
         },
         {
-          requirements: [
-            {
-              description: "The project doesn't have an escape hatch.",
-              satisfied: false,
-            },
-            {
-              description: "The project doesn't have 8 council members.",
-              satisfied: false,
-            },
-          ],
           stage: 'Stage 1',
-          principle: undefined,
+          principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
+          requirements: [
+            { satisfied: false, description: 'ESCAPE_HATCH_FALSE' },
+            { satisfied: false, description: 'COUNCIL_FALSE' },
+          ],
         },
       ],
     })
@@ -203,109 +165,94 @@ describe(createGetStage.name, () => {
 
     expect(result).toEqual({
       stage: 'Stage 0',
+      downgradePending: undefined,
       missing: {
         nextStage: 'Stage 1',
-        requirements: ["The project doesn't have 8 council members."],
-        principle: undefined,
+        requirements: ['COUNCIL_FALSE'],
+        principle: 'PRINCIPLE_FALSE',
       },
       message: undefined,
       summary: [
         {
           stage: 'Stage 0',
-          requirements: [
-            {
-              satisfied: true,
-              description: 'The project calls itself a rollup.',
-            },
-            {
-              description:
-                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-              satisfied: true,
-            },
-          ],
           principle: undefined,
+          requirements: [
+            { satisfied: true, description: 'ROLLUP_TRUE' },
+            { satisfied: true, description: 'SOURCE_TRUE' },
+          ],
         },
         {
           stage: 'Stage 1',
+          principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
           requirements: [
-            {
-              satisfied: true,
-              description: 'The project has an escape hatch.',
-            },
-            {
-              satisfied: false,
-              description: "The project doesn't have 8 council members.",
-            },
+            { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+            { satisfied: false, description: 'COUNCIL_FALSE' },
           ],
-          principle: undefined,
         },
       ],
     })
   })
 
   describe('Stage 1', () => {
-    it('works', () => {
-      const result = getTestStage({
-        stage0: {
-          callsItselfRollup: true,
-          rollupNodeSourceAvailable: true,
-        },
-        stage1: {
-          principle: false,
-          hasEscapeHatch: true,
-          isCouncil8Members: true,
-        },
-      })
-
-      expect(result).toEqual({
-        stage: 'Stage 1',
-        missing: undefined,
-        message: undefined,
-        summary: [
-          {
-            stage: 'Stage 0',
-            requirements: [
-              {
-                satisfied: true,
-                description: 'The project calls itself a rollup.',
-              },
-              {
-                description:
-                  'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                satisfied: true,
-              },
-            ],
-            principle: undefined,
-          },
-          {
-            stage: 'Stage 1',
-            requirements: [
-              {
-                satisfied: true,
-                description: 'The project has an escape hatch.',
-              },
-              {
-                satisfied: true,
-                description: 'The project has at least 8 council members.',
-              },
-            ],
-            principle: undefined,
-          },
-        ],
-      })
-    })
-
     describe('principle', () => {
-      const expiresAt = PROJECT_COUNTDOWNS.stageOneRequirementsChange.expiresAt
-      beforeEach(() => {
-        PROJECT_COUNTDOWNS.stageOneRequirementsChange.expiresAt =
-          UnixTime.now().add(-30, 'days')
-      })
+      const expiresAt = PROJECT_COUNTDOWNS.stageChanges
       afterEach(() => {
-        PROJECT_COUNTDOWNS.stageOneRequirementsChange.expiresAt = expiresAt
+        PROJECT_COUNTDOWNS.stageChanges = expiresAt
       })
 
-      it('handles false', () => {
+      const FUTURE_TIME = UnixTime.now().add(30, 'days')
+      const PAST_TIME = UnixTime.now().add(-30, 'days')
+
+      describe('timer expired', () => {})
+
+      it('false, timer not expired', () => {
+        PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
+
+        const result = getTestStage({
+          stage0: {
+            callsItselfRollup: true,
+            rollupNodeSourceAvailable: true,
+          },
+          stage1: {
+            principle: false,
+            hasEscapeHatch: true,
+            isCouncil8Members: true,
+          },
+        })
+
+        expect(result).toEqual({
+          stage: 'Stage 1',
+          downgradePending: {
+            expiresAt: FUTURE_TIME.toNumber(),
+            reason: 'PRINCIPLE_FALSE',
+            toStage: 'Stage 0',
+          },
+          missing: undefined,
+          message: undefined,
+          summary: [
+            {
+              stage: 'Stage 0',
+              principle: undefined,
+              requirements: [
+                { satisfied: true, description: 'ROLLUP_TRUE' },
+                { satisfied: true, description: 'SOURCE_TRUE' },
+              ],
+            },
+            {
+              stage: 'Stage 1',
+              principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
+              requirements: [
+                { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+                { satisfied: true, description: 'COUNCIL_TRUE' },
+              ],
+            },
+          ],
+        })
+      })
+
+      it('false, timer expired', () => {
+        PROJECT_COUNTDOWNS.stageChanges = PAST_TIME
+
         const result = getTestStage({
           stage0: {
             callsItselfRollup: true,
@@ -320,50 +267,37 @@ describe(createGetStage.name, () => {
 
         expect(result).toEqual({
           stage: 'Stage 0',
+          downgradePending: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [],
-            principle: 'Project should have one way to interact.',
+            principle: 'PRINCIPLE_FALSE',
           },
           message: undefined,
           summary: [
             {
               stage: 'Stage 0',
-              requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project calls itself a rollup.',
-                },
-                {
-                  description:
-                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                  satisfied: true,
-                },
-              ],
               principle: undefined,
+              requirements: [
+                { satisfied: true, description: 'ROLLUP_TRUE' },
+                { satisfied: true, description: 'SOURCE_TRUE' },
+              ],
             },
             {
               stage: 'Stage 1',
+              principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
               requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project has an escape hatch.',
-                },
-                {
-                  satisfied: true,
-                  description: 'The project has at least 8 council members.',
-                },
+                { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+                { satisfied: true, description: 'COUNCIL_TRUE' },
               ],
-              principle: {
-                satisfied: false,
-                description: 'Project should have one way to interact.',
-              },
             },
           ],
         })
       })
 
-      it('handles true', () => {
+      it('true, timer not expired', () => {
+        PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
+
         const result = getTestStage({
           stage0: {
             callsItselfRollup: true,
@@ -378,40 +312,66 @@ describe(createGetStage.name, () => {
 
         expect(result).toEqual({
           stage: 'Stage 1',
+          downgradePending: undefined,
           missing: undefined,
           message: undefined,
           summary: [
             {
               stage: 'Stage 0',
-              requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project calls itself a rollup.',
-                },
-                {
-                  description:
-                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                  satisfied: true,
-                },
-              ],
               principle: undefined,
+              requirements: [
+                { satisfied: true, description: 'ROLLUP_TRUE' },
+                { satisfied: true, description: 'SOURCE_TRUE' },
+              ],
             },
             {
               stage: 'Stage 1',
+              principle: { satisfied: true, description: 'PRINCIPLE_TRUE' },
               requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project has an escape hatch.',
-                },
-                {
-                  satisfied: true,
-                  description: 'The project has at least 8 council members.',
-                },
+                { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+                { satisfied: true, description: 'COUNCIL_TRUE' },
               ],
-              principle: {
-                satisfied: true,
-                description: 'Project has one way to interact.',
-              },
+            },
+          ],
+        })
+      })
+
+      it('true, timer expired', () => {
+        PROJECT_COUNTDOWNS.stageChanges = PAST_TIME
+
+        const result = getTestStage({
+          stage0: {
+            callsItselfRollup: true,
+            rollupNodeSourceAvailable: true,
+          },
+          stage1: {
+            principle: true,
+            hasEscapeHatch: true,
+            isCouncil8Members: true,
+          },
+        })
+
+        expect(result).toEqual({
+          stage: 'Stage 1',
+          downgradePending: undefined,
+          missing: undefined,
+          message: undefined,
+          summary: [
+            {
+              stage: 'Stage 0',
+              principle: undefined,
+              requirements: [
+                { satisfied: true, description: 'ROLLUP_TRUE' },
+                { satisfied: true, description: 'SOURCE_TRUE' },
+              ],
+            },
+            {
+              stage: 'Stage 1',
+              principle: { satisfied: true, description: 'PRINCIPLE_TRUE' },
+              requirements: [
+                { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+                { satisfied: true, description: 'COUNCIL_TRUE' },
+              ],
             },
           ],
         })
@@ -424,7 +384,7 @@ describe(createGetStage.name, () => {
             rollupNodeSourceAvailable: true,
           },
           stage1: {
-            principle: [true, 'But something something.'],
+            principle: [true, 'OVERRIDE'],
             hasEscapeHatch: true,
             isCouncil8Members: true,
           },
@@ -432,40 +392,25 @@ describe(createGetStage.name, () => {
 
         expect(result).toEqual({
           stage: 'Stage 1',
+          downgradePending: undefined,
           missing: undefined,
           message: undefined,
           summary: [
             {
               stage: 'Stage 0',
-              requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project calls itself a rollup.',
-                },
-                {
-                  description:
-                    'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                  satisfied: true,
-                },
-              ],
               principle: undefined,
+              requirements: [
+                { satisfied: true, description: 'ROLLUP_TRUE' },
+                { satisfied: true, description: 'SOURCE_TRUE' },
+              ],
             },
             {
               stage: 'Stage 1',
+              principle: { satisfied: true, description: 'OVERRIDE' },
               requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project has an escape hatch.',
-                },
-                {
-                  satisfied: true,
-                  description: 'The project has at least 8 council members.',
-                },
+                { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
+                { satisfied: true, description: 'COUNCIL_TRUE' },
               ],
-              principle: {
-                satisfied: true,
-                description: 'But something something.',
-              },
             },
           ],
         })
@@ -488,33 +433,22 @@ describe(createGetStage.name, () => {
 
     expect(result).toEqual({
       stage: 'Stage 1',
+      downgradePending: undefined,
       missing: undefined,
       message: undefined,
       summary: [
         {
           stage: 'Stage 0',
           requirements: [
-            {
-              satisfied: true,
-              description: 'The project calls itself a rollup.',
-            },
-            {
-              description:
-                'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-              satisfied: true,
-            },
+            { satisfied: true, description: 'ROLLUP_TRUE' },
+            { satisfied: true, description: 'SOURCE_TRUE' },
           ],
           principle: undefined,
         },
         {
           stage: 'Stage 1',
-          requirements: [
-            {
-              satisfied: true,
-              description: 'The project has an escape hatch.',
-            },
-          ],
-          principle: undefined,
+          principle: { satisfied: true, description: 'PRINCIPLE_TRUE' },
+          requirements: [{ satisfied: true, description: 'ESCAPE_HATCH_TRUE' }],
         },
       ],
     })
@@ -529,51 +463,36 @@ describe(createGetStage.name, () => {
         },
         stage1: {
           principle: false,
-          hasEscapeHatch: [
-            'UnderReview',
-            'Escape hatch requirement is under review.',
-          ],
+          hasEscapeHatch: ['UnderReview', 'OVERRIDE'],
           isCouncil8Members: true,
         },
       })
 
       expect(result).toEqual({
         stage: 'Stage 0',
+        downgradePending: undefined,
         missing: {
           nextStage: 'Stage 1',
-          requirements: ['Escape hatch requirement is under review.'],
-          principle: undefined,
+          requirements: ['OVERRIDE'],
+          principle: 'PRINCIPLE_FALSE',
         },
         message: undefined,
         summary: [
           {
             stage: 'Stage 0',
-            requirements: [
-              {
-                satisfied: true,
-                description: 'The project calls itself a rollup.',
-              },
-              {
-                description:
-                  'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                satisfied: true,
-              },
-            ],
             principle: undefined,
+            requirements: [
+              { satisfied: true, description: 'ROLLUP_TRUE' },
+              { satisfied: true, description: 'SOURCE_TRUE' },
+            ],
           },
           {
             stage: 'Stage 1',
+            principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
             requirements: [
-              {
-                satisfied: 'UnderReview',
-                description: 'Escape hatch requirement is under review.',
-              },
-              {
-                satisfied: true,
-                description: 'The project has at least 8 council members.',
-              },
+              { satisfied: 'UnderReview', description: 'OVERRIDE' },
+              { satisfied: true, description: 'COUNCIL_TRUE' },
             ],
-            principle: undefined,
           },
         ],
       })
@@ -594,41 +513,32 @@ describe(createGetStage.name, () => {
 
       expect(result).toEqual({
         stage: 'Stage 0',
+        downgradePending: undefined,
         missing: {
           nextStage: 'Stage 1',
-          requirements: ['The project has an escape hatch.'],
-          principle: undefined,
+          requirements: ['ESCAPE_HATCH_TRUE'],
+          principle: 'PRINCIPLE_FALSE',
         },
         message: undefined,
         summary: [
           {
             stage: 'Stage 0',
-            requirements: [
-              {
-                satisfied: true,
-                description: 'The project calls itself a rollup.',
-              },
-              {
-                description:
-                  'A source-available node exists that can recreate the state from L1 data. Please note that the L2BEAT team has not verified the validity of the node source code.',
-                satisfied: true,
-              },
-            ],
             principle: undefined,
+            requirements: [
+              { satisfied: true, description: 'ROLLUP_TRUE' },
+              { satisfied: true, description: 'SOURCE_TRUE' },
+            ],
           },
           {
             stage: 'Stage 1',
+            principle: { satisfied: false, description: 'PRINCIPLE_FALSE' },
             requirements: [
               {
                 satisfied: 'UnderReview',
-                description: 'The project has an escape hatch.',
+                description: 'ESCAPE_HATCH_TRUE',
               },
-              {
-                satisfied: true,
-                description: 'The project has at least 8 council members.',
-              },
+              { satisfied: true, description: 'COUNCIL_TRUE' },
             ],
-            principle: undefined,
           },
         ],
       })
