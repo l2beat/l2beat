@@ -39,13 +39,14 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
       // countdowns
-      otherMigration: p.reasonsForBeingOther
-        ? {
-            expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
-            pretendingToBe: p.display.category,
-            reasons: p.reasonsForBeingOther,
-          }
-        : undefined,
+      otherMigration:
+        p.reasonsForBeingOther && p.display.category !== 'Other'
+          ? {
+              expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+              pretendingToBe: p.display.category,
+              reasons: p.reasonsForBeingOther,
+            }
+          : undefined,
     },
     display: {
       description: p.display.description,

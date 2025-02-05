@@ -18,12 +18,13 @@ export function getCountdowns(
   project: Layer2 | Layer3,
 ): ProjectCountdownsWithContext {
   return {
-    otherMigration: project.reasonsForBeingOther
-      ? {
-          expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
-          pretendingToBe: project.display.category,
-          reasons: project.reasonsForBeingOther,
-        }
-      : undefined,
+    otherMigration:
+      project.reasonsForBeingOther && project.display.category !== 'Other'
+        ? {
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+            pretendingToBe: project.display.category,
+            reasons: project.reasonsForBeingOther,
+          }
+        : undefined,
   }
 }
