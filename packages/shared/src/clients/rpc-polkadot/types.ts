@@ -1,4 +1,3 @@
-
 import { z } from 'zod'
 
 export const PolkadotErrorResponse = z.object({
@@ -24,19 +23,21 @@ const PolkadotBlock = z.object({
       V3: z.object({
         appLookup: z.object({
           size: z.number(),
-          index: z.array(z.object({
-            appId: z.number(),
-            start: z.number(),
-          }))
+          index: z.array(
+            z.object({
+              appId: z.number(),
+              start: z.number(),
+            }),
+          ),
         }),
         commitment: z.object({
           rows: z.number(),
           cols: z.number(),
           commitment: z.array(z.number()),
-          dataRoot: z.string()
-        })
-      })
-    })
+          dataRoot: z.string(),
+        }),
+      }),
+    }),
   }),
   extrinsics: z.array(z.string()),
 })

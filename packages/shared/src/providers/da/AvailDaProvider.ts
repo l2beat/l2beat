@@ -6,6 +6,9 @@ export type AvailBlob = DaBlob & {
   appId: number
 }
 
+const TIMESTAMP_SHIFT = 4300
+const DATA_EXTRINSIC_SHIFT = 236
+
 export class AvailDaProvider implements DaProvider {
   constructor(private readonly rpcClient: PolkadotRpcClient) {}
 
@@ -54,8 +57,8 @@ export class AvailDaProvider implements DaProvider {
 
     for (const index in appIndex) {
       // actual data starts at byte ~236
-      const shift = 236
-      const sizeInBytes = (targetExtrinsics[index].length - shift) / 2
+      const sizeInBytes =
+        (targetExtrinsics[index].length - DATA_EXTRINSIC_SHIFT) / 2
 
       blobs.push({
         blockTimestamp: timestamp,
@@ -70,7 +73,6 @@ export class AvailDaProvider implements DaProvider {
   private calculateAvailTimestamp(blockNumber: number): UnixTime {
     const referenceBlock = 1
     const referenceTimestamp = 1720082320
-    const shift = 4300
 
     // Define the block time interval in milliseconds (20 seconds)
     const blockInterval = 20 // 20 seconds
@@ -80,7 +82,7 @@ export class AvailDaProvider implements DaProvider {
 
     // Calculate the timestamp by adding the time difference to the reference timestamp
     const timestamp =
-      referenceTimestamp + blockDifference * blockInterval + shift
+      referenceTimestamp + blockDifference * blockInterval + TIMESTAMP_SHIFT
 
     return new UnixTime(timestamp)
   }

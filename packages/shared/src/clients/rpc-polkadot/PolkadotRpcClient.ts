@@ -2,10 +2,10 @@ import type { json } from '@l2beat/shared-pure'
 import { generateId } from '../../tools'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
+  type PolkadotBlock,
   PolkadotErrorResponse,
   PolkadotGetBlockHashResponse,
   PolkadotGetBlockResponse,
-  type PolkadotBlock,
 } from './types'
 
 interface Dependencies extends ClientCoreDependencies {
