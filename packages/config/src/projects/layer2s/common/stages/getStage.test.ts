@@ -103,10 +103,7 @@ describe(getStage.name, () => {
             },
           ],
           stage: 'Stage 1',
-          principle: {
-            satisfied: true,
-            description: 'The project has one specific principle.',
-          },
+          principle: undefined,
         },
         {
           requirements: [
