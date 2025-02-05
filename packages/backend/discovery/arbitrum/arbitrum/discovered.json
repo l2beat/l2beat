@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 295612328,
-  "configHash": "0x2a898dfc0f1486f37894b511fcb13e77417bba0efdfd494d62dfb40c93b038ea",
+  "blockNumber": 302894999,
+  "configHash": "0x3abb3dce7cb49b0ed47b6b096b7b9eb6bf74489d734a533a3d92d8ac5ca0aeb0",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -53,7 +53,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 29521,
+        "exitNum": 30100,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -407,6 +407,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -666,7 +667,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2009,
+        "exitNum": 2014,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -990,6 +991,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",

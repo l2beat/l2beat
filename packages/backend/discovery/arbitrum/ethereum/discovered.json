@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 21628418,
-  "configHash": "0x3225b0900f678fa874dad1c6ebbdf2211f8f62598003801c3238141d87da67ab",
+  "blockNumber": 21781127,
+  "configHash": "0x23d2e7d0157019d1bcaa5e9d746b81efb99a0c22ea6429bac84d59c4584ef451",
   "contracts": [
     {
       "name": "Outbox",
@@ -218,7 +218,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 793092,
+        "batchCount": 811022,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -249,7 +249,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1835288,
+        "totalDelayedMessagesRead": 1863564,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -331,6 +331,11 @@
           "permission": "interact",
           "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "can cancel scheduled transactions"
         },
         {
           "permission": "upgrade",
@@ -806,12 +811,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 19754,
+        "firstUnresolvedNode": 20264,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 19753,
-        "latestNodeCreated": 19906,
+        "latestConfirmed": 20263,
+        "latestNodeCreated": 20415,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1171,6 +1176,13 @@
           ]
         }
       ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "schedule new proposal transactions"
+        }
+      ],
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
@@ -1203,11 +1215,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1835294,
+        "delayedMessageCount": 1863574,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 793092,
-        "sequencerReportedSubMessageCount": 273400024
+        "sequencerMessageCount": 811022,
+        "sequencerReportedSubMessageCount": 280721152
       },
       "derivedName": "Bridge"
     },
@@ -1512,7 +1524,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 198,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1768,6 +1780,18 @@
       "proxyType": "EIP1967 proxy",
       "issuedPermissions": [
         {
+          "permission": "interact",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "description": "schedule new proposal transactions",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "can cancel scheduled transactions",
+          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+        },
+        {
           "permission": "upgrade",
           "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "via": [
@@ -1781,6 +1805,12 @@
           "permission": "interact",
           "from": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "can cancel scheduled transactions",
           "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         },
         {
@@ -1939,12 +1969,15 @@
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "cancellersAC": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "executorsAC": ["0x0000000000000000000000000000000000000000"],
         "getMinDelay": 259200,
         "governanceChainInbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "l2Timelock": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "proposersAC": ["0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"],
         "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
         "scheduledTransactions": [
           {
@@ -3535,7 +3568,21 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "delay": 259200
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "execute scheduled transactions after the delay"
+        }
+      ]
+    },
     { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
     { "address": "0x07D4692291B9E30E326fd31706f686f83f331B82" },
     { "address": "0x096760F208390250649E3e8763348E783AEF5562" },

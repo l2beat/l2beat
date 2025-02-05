@@ -1,3 +1,158 @@
+Generated with discovered.json: 0x78b6f912c4f0a32de44d8ab8f4183f741e40db52
+
+# Diff at Wed, 05 Feb 2025 15:16:24 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2061023b431baba3e5db4c021fc2fe8a84244dd3 block: 21628418
+- current block number: 21781127
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628418 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"}
+      directlyReceivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      directlyReceivedPermissions.5.description:
++        "can cancel scheduled transactions"
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      receivedPermissions:
++        [{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"schedule new proposal transactions"}]
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"can cancel scheduled transactions","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.1:
+-        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.0.via.0:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.description:
++        "schedule new proposal transactions"
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}]}
+      receivedPermissions.14.from:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+      receivedPermissions.14.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.13.from:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      receivedPermissions.13.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.12.from:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+      receivedPermissions.11.from:
+-        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      receivedPermissions.11.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.10.from:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+      receivedPermissions.9.from:
+-        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
++        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      receivedPermissions.9.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.8.from:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+      receivedPermissions.8.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.7.from:
+-        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
++        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
+      receivedPermissions.7.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.7.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.6.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.6.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.6.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.5.from:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      receivedPermissions.4.from:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.4.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
+      receivedPermissions.3.from:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+      receivedPermissions.3.via.0.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.2.from:
+-        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.1.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.1.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.1.description:
++        "can cancel scheduled transactions"
+      values.cancellersAC:
++        ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+      values.executorsAC:
++        ["0x0000000000000000000000000000000000000000"]
+      values.proposersAC:
++        ["0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"]
+    }
+```
+
 Generated with discovered.json: 0xdb61a13c9764b40ef78bcfb951eeb009ec22d1d9
 
 # Diff at Tue, 04 Feb 2025 12:30:48 GMT:
