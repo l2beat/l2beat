@@ -68,8 +68,10 @@ const getBlueprint = (opts?: GetStageOptions) =>
     stage1: {
       name: 'Stage 1',
       principle: {
-        positive: 'The project has one specific principle.',
-        negative: 'The project has multiple principles.',
+        positive:
+          'Compromising ≥75% of the Security Council is NOT the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal).',
+        negative:
+          'Compromising ≥75% of the Security Council should be the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal).',
       },
       items: {
         stateVerificationOnL1: {
