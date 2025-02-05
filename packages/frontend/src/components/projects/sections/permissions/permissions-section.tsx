@@ -70,13 +70,15 @@ export function PermissionsSection({
           )
         })}
       </div>
-      {daSolution?.permissions && (
-        <h3 className="mt-4 font-bold">
-          The project uses {daSolution.layerName} with the{' '}
-          {daSolution.bridgeName} DA Bridge that consist of the following
-          permissions on the {daSolution.hostChain}:
-        </h3>
-      )}
+      {daSolution?.permissions &&
+        (daSolution.permissions.roles.length > 0 ||
+          daSolution.permissions.actors.length > 0) && (
+          <h3 className="mt-4 font-bold">
+            The project uses {daSolution.layerName} with the{' '}
+            {daSolution.bridgeName} DA Bridge that consist of the following
+            permissions on the {daSolution.hostChain}:
+          </h3>
+        )}
       {daSolution?.permissions.roles?.map((permission) => (
         <ContractEntry
           key={technologyContractKey(permission)}
