@@ -89,7 +89,6 @@ export const gravity: Bridge = {
       ],
     },
     risks: [],
-    isIncomplete: true,
   },
   permissions: {
     [discovery.chain]: {

@@ -132,7 +132,6 @@ export const pNetwork: Bridge = {
   },
 
   contracts: {
-    isIncomplete: true,
     addresses: {
       [discovery.chain]: [
         discovery.getContractDetails(

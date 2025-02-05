@@ -1,5 +1,4 @@
 'use client'
-import type { ReferenceLink } from '@l2beat/config'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
@@ -7,12 +6,10 @@ import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
 import { ProjectSection } from '../project-section'
-import { ReferenceList } from '../reference-list'
 import type { TechnologyRisk } from '../risk-list'
 import { RiskList } from '../risk-list'
 import type { ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
-import { TechnologyIncompleteNote } from './technology-incomplete-note'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -26,9 +23,7 @@ export interface ContractsSectionProps {
   }>
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
-  references: ReferenceLink[]
   diagram?: DiagramParams
-  isIncomplete?: boolean
   isUnderReview?: boolean
 }
 
@@ -77,7 +72,6 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
     >
       {hasContractsChanged && <ContractsUpdated />}
-      {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.diagram && (
         <figure className="mb-8 mt-4 text-center">
           <DiagramImage diagram={props.diagram} />
@@ -166,7 +160,6 @@ export function ContractsSection(props: ContractsSectionProps) {
           <RiskList risks={props.risks} />
         </>
       )}
-      <ReferenceList references={props.references} />
     </ProjectSection>
   )
 }

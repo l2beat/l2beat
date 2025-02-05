@@ -22,9 +22,7 @@ describe(isUnderReview.name, () => {
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,
     }),
-    contracts: mockObject<ProjectContracts>({
-      isUnderReview: undefined,
-    }),
+    contracts: mockObject<ProjectContracts>({}),
     riskView: mockObject<ScalingProjectRiskView>(),
     config: mockObject<Layer2Config>(),
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),
@@ -48,17 +46,6 @@ describe(isUnderReview.name, () => {
         ...mockProject,
         technology: {
           ...mockProject.technology,
-          isUnderReview: true,
-        },
-      }
-      expect(isUnderReview(mock)).toEqual(true)
-    })
-
-    it('project.contracts.isUnderReview is true', () => {
-      const mock = {
-        ...mockProject,
-        contracts: {
-          ...mockProject.contracts,
           isUnderReview: true,
         },
       }

@@ -140,7 +140,6 @@ export const lzOmnichain: Bridge = {
       ],
     },
     risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
-    isIncomplete: true,
   },
   permissions: {
     [discovery.chain]: {

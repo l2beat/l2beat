@@ -219,7 +219,6 @@ export const cBridge: Bridge = {
         ),
       ],
     },
-    references: [],
     risks: [],
   },
   permissions: {
