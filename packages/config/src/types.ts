@@ -7,7 +7,7 @@ import type {
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
+import type { REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -19,7 +19,6 @@ export interface WarningWithSentiment {
   sentiment: WarningSentiment
 }
 
-export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =
   (typeof REASON_FOR_BEING_OTHER)[keyof typeof REASON_FOR_BEING_OTHER]
 
@@ -998,7 +997,6 @@ export interface BaseProject {
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridges?: DaBridge[]
-  countdowns?: ProjectCountdowns
   milestones?: Milestone[]
   // tags
   isBridge?: true
