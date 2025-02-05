@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../../../common'
 import type {
   MissingStageDetails,
@@ -27,7 +27,14 @@ type StageBlueprint = Record<
   }
 >
 
-type ChecklistValue = Satisfied | null | [Satisfied, string]
+type ChecklistValue =
+  | Satisfied
+  | null
+  | {
+      satisfied: Satisfied
+      message: string
+      mode: 'append' | 'replace'
+    }
 
 export type ChecklistTemplate<T extends StageBlueprint> = {
   [K in keyof T]: {
@@ -179,16 +186,27 @@ function evaluate(
 
 function getDescription(
   satisfied: Satisfied | null,
-  stageKeyBlueprint: BlueprintItem,
-  stageKeyChecklist: ChecklistValue,
+  blueprint: BlueprintItem,
+  value: ChecklistValue,
 ) {
-  if (Array.isArray(stageKeyChecklist)) {
-    return stageKeyChecklist[1]
+  const baseDescription =
+    satisfied === 'UnderReview' || satisfied
+      ? blueprint.positive
+      : blueprint.negative
+
+  // If value is object
+  if (typeof value === 'object' && value !== null) {
+    switch (value.mode) {
+      case 'append':
+        return `${baseDescription} ${value.message}`
+      case 'replace':
+        return value.message
+      default:
+        assertUnreachable(value.mode)
+    }
   }
 
-  return satisfied === 'UnderReview' || satisfied
-    ? stageKeyBlueprint.positive
-    : stageKeyBlueprint.negative
+  return baseDescription
 }
 
 function getMessage(

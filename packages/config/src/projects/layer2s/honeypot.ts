@@ -7,10 +7,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
@@ -75,10 +75,11 @@ export const honeypot: Layer2 = {
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: [
-          false,
-          'There is no onchain fraud proof system.',
-        ],
+        stateVerificationOnL1: {
+          satisfied: false,
+          message: 'There is no onchain fraud proof system.',
+          mode: 'replace',
+        },
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,

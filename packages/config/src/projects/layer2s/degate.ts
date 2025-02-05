@@ -157,10 +157,12 @@ export const degate: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: [
-          true,
-          'Users have at least 30d to exit as the system cannot be upgraded.',
-        ],
+        delayWith30DExitWindow: {
+          satisfied: true,
+          message:
+            'Users have at least 30d to exit as the system cannot be upgraded.',
+          mode: 'replace',
+        },
       },
     },
     {

@@ -61,7 +61,11 @@ describe(createGetStage.name, () => {
   it('Returns Stage 0 with warning message if project does not fulfill stage 0 requirements', () => {
     const x = getTestStage({
       stage0: {
-        callsItselfRollup: [false, 'OVERRIDE'],
+        callsItselfRollup: {
+          satisfied: false,
+          message: 'OVERRIDE',
+          mode: 'replace',
+        },
         rollupNodeSourceAvailable: true,
       },
       stage1: {
@@ -107,7 +111,11 @@ describe(createGetStage.name, () => {
   it('Returns Stage 0 with under review message if stage 0 requirement is being reviewed', () => {
     const x = getTestStage({
       stage0: {
-        callsItselfRollup: ['UnderReview', 'OVERRIDE'],
+        callsItselfRollup: {
+          satisfied: 'UnderReview',
+          message: 'OVERRIDE',
+          mode: 'replace',
+        },
         rollupNodeSourceAvailable: true,
       },
       stage1: {
@@ -384,7 +392,11 @@ describe(createGetStage.name, () => {
             rollupNodeSourceAvailable: true,
           },
           stage1: {
-            principle: [true, 'OVERRIDE'],
+            principle: {
+              satisfied: true,
+              message: 'OVERRIDE',
+              mode: 'replace',
+            },
             hasEscapeHatch: true,
             isCouncil8Members: true,
           },
@@ -463,7 +475,11 @@ describe(createGetStage.name, () => {
         },
         stage1: {
           principle: false,
-          hasEscapeHatch: ['UnderReview', 'OVERRIDE'],
+          hasEscapeHatch: {
+            satisfied: 'UnderReview',
+            message: 'OVERRIDE',
+            mode: 'replace',
+          },
           isCouncil8Members: true,
         },
       })

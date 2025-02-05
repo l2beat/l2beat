@@ -2,9 +2,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
@@ -224,10 +224,12 @@ export const degate3: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: [
-          true,
-          'Users have at least 30d to exit as the system upgrades have a 45d delay.',
-        ],
+        delayWith30DExitWindow: {
+          satisfied: true,
+          message:
+            'Users have at least 30d to exit as the system upgrades have a 45d delay.',
+          mode: 'replace',
+        },
       },
     },
     {
