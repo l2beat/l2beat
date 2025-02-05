@@ -24,6 +24,7 @@ export const getStage = (
   }
 
   const blueprint = getBlueprint(opts)
+
   return {
     ...createGetStage(blueprint)(blueprintChecklist),
     additionalConsiderations: opts?.additionalConsiderations,
@@ -66,6 +67,10 @@ const getBlueprint = (opts?: GetStageOptions) =>
     },
     stage1: {
       name: 'Stage 1',
+      principle: {
+        positive: 'The project has one specific principle.',
+        negative: 'The project has multiple principles.',
+      },
       items: {
         stateVerificationOnL1: {
           positive: 'A complete and functional proof system is deployed.',

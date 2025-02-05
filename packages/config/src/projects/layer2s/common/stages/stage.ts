@@ -1,7 +1,7 @@
 import type {
   ChecklistTemplate,
   ChecklistValue,
-  MissingStageRequirements,
+  MissingStageDetails,
   Satisfied,
   Stage,
   StageBlueprint,
@@ -15,7 +15,7 @@ export function createGetStage<T extends StageBlueprint>(
 ): (checklist: ChecklistTemplate<T>) => StageConfigured {
   return function getStage(checklist) {
     let lastStage: Stage = 'Stage 0'
-    let missing: MissingStageRequirements | undefined = undefined
+    let missing: MissingStageDetails | undefined = undefined
     let message: StageConfiguredMessage | undefined = undefined
     const messages: string[] = []
     const summary: StageSummary[] = []
@@ -24,11 +24,33 @@ export function createGetStage<T extends StageBlueprint>(
       blueprint,
     )) {
       const checklistStage = checklist[blueprintStageKey]
+
+      const principle = blueprintStage.principle
+        ? normalizeKeyChecklist(
+            blueprintStage.principle,
+            checklistStage.principle,
+          )
+        : undefined
+
       const summaryStage: StageSummary = {
         stage: blueprintStage.name,
         requirements: [],
+        principle: principle
+          ? {
+              satisfied: principle[0] ?? false,
+              description: principle[1],
+            }
+          : undefined,
       }
       summary.push(summaryStage)
+
+      if (summaryStage.principle?.satisfied === false) {
+        missing = {
+          nextStage: blueprintStage.name,
+          requirements: [],
+          principle: summaryStage.principle?.description,
+        }
+      }
 
       for (const [blueprintItemKey, blueprintItem] of Object.entries(
         blueprintStage.items,
@@ -61,7 +83,11 @@ export function createGetStage<T extends StageBlueprint>(
 
         if (satisfied === false || satisfied === 'UnderReview') {
           if (missing === undefined) {
-            missing = { nextStage: blueprintStage.name, requirements: [] }
+            missing = {
+              nextStage: blueprintStage.name,
+              requirements: [],
+              principle: undefined,
+            }
           }
           if (missing.nextStage === blueprintStage.name) {
             missing.requirements.push(description)

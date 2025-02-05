@@ -931,6 +931,10 @@ export type StageBlueprint = Record<
   string,
   {
     name: Stage
+    principle?: {
+      positive: string
+      negative: string
+    }
     items: Record<
       string,
       {
@@ -950,21 +954,33 @@ export type ChecklistValue = Satisfied | null | [Satisfied, string]
 export type ChecklistTemplate<T extends StageBlueprint> = {
   [K in keyof T]: {
     [L in keyof T[K]['items']]: ChecklistValue
-  }
+  } & (T[K] extends { principle: unknown }
+    ? {
+        principle: ChecklistValue
+      }
+    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
+      {})
 }
 
 export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageSummary {
   stage: Stage
+  principle:
+    | {
+        satisfied: Satisfied
+        description: string
+      }
+    | undefined
   requirements: {
     satisfied: Satisfied
     description: string
   }[]
 }
 
-export interface MissingStageRequirements {
+export interface MissingStageDetails {
   nextStage: Stage
+  principle: string | undefined
   requirements: string[]
 }
 
@@ -976,7 +992,7 @@ export type UsableStageConfig = StageUnderReview | StageConfigured
 
 export interface StageConfigured {
   stage: Stage
-  missing?: MissingStageRequirements
+  missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
   additionalConsiderations?: {

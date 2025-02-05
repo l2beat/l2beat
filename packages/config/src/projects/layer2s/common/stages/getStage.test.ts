@@ -13,6 +13,7 @@ describe(getStage.name, () => {
           rollupNodeSourceAvailable: true,
         },
         stage1: {
+          principle: true,
           stateVerificationOnL1: true,
           fraudProofSystemAtLeast5Outsiders: true,
           usersHave7DaysToExit: true,
@@ -41,6 +42,7 @@ describe(getStage.name, () => {
       },
       missing: {
         nextStage: 'Stage 2',
+        principle: undefined,
         requirements: [
           'Fraud proof submission is open only to whitelisted actors.',
           'Upgrades unrelated to onchain provable bugs provide less than 30d to exit.',
@@ -71,6 +73,7 @@ describe(getStage.name, () => {
             },
           ],
           stage: 'Stage 0',
+          principle: undefined,
         },
         {
           requirements: [
@@ -100,6 +103,10 @@ describe(getStage.name, () => {
             },
           ],
           stage: 'Stage 1',
+          principle: {
+            satisfied: true,
+            description: 'The project has one specific principle.',
+          },
         },
         {
           requirements: [
@@ -120,6 +127,7 @@ describe(getStage.name, () => {
             },
           ],
           stage: 'Stage 2',
+          principle: undefined,
         },
       ],
     })
@@ -135,6 +143,7 @@ describe(getStage.name, () => {
           rollupNodeSourceAvailable: true,
         },
         stage1: {
+          principle: true,
           stateVerificationOnL1: true,
           fraudProofSystemAtLeast5Outsiders: true,
           usersHave7DaysToExit: true,
