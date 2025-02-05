@@ -107,7 +107,7 @@ export interface ScalingProject {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -684,7 +684,7 @@ export interface Bridge {
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -832,7 +832,7 @@ export interface DaBridge {
   risks: DaBridgeRisks
   dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts?: ProjectContracts
 }

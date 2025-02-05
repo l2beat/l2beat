@@ -7,7 +7,6 @@ export function isUnderReview(project: Layer2 | Bridge | Layer3): boolean {
     (project.type === 'layer2' && project.stage.stage === 'UnderReview') ||
     !!project.technology.isUnderReview ||
     !!project.contracts?.isUnderReview ||
-    project.permissions === 'UnderReview' ||
     Object.values(project.riskView).some(
       (risk: TableReadyValue) => risk.sentiment === 'UnderReview',
     )

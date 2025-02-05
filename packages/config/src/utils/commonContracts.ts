@@ -217,10 +217,7 @@ function getPermissionContainingAddress(
   project: Pick<CommonProject, 'permissions'>,
   address: string,
 ): ProjectPermission | undefined {
-  if (
-    project.permissions === undefined ||
-    project.permissions === 'UnderReview'
-  ) {
+  if (!project.permissions) {
     return undefined
   }
 
