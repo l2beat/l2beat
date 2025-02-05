@@ -1063,11 +1063,11 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    const actors: ProjectPermission[] = []
+    const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
-        actors.push(
+        allActors.push(
           this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -1076,7 +1076,7 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        actors.push(
+        allActors.push(
           this.contractAsPermissioned(
             contract,
             formatAsBulletPoints(descriptions),
@@ -1092,7 +1092,7 @@ export class ProjectDiscovery {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
-      actors.push({
+      allActors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
@@ -1101,9 +1101,49 @@ export class ProjectDiscovery {
     }
 
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
-    assert(actors.every((actor) => actor.accounts.length === 1))
-    assert(allUnique(actors.map((actor) => actor.accounts[0].address)))
-    assert(allUnique(actors.map((actor) => actor.accounts[0].name)))
+    assert(allActors.every((actor) => actor.accounts.length === 1))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+
+    // NOTE(radomski): There are two groups of "permissions" we show. Roles and
+    // actors.
+    //
+    // Roles are grouping of actors that have the ability to do _something_.
+    // Actors are entities which have some power in the system.
+    //
+    // To minimize the amount of redundant information we choose to show an
+    // actor only if:
+    //
+    // - it's a contract
+    // - it's an EOA with permissions to interact with parts of the system
+    // - it's an EOA that's shared between projects[1]
+    //
+    // We can remove EOAs that have only role permissions since their
+    // involvement in the system has already been taken into account when
+    // listing accounts with a given role.
+    //
+    // [1] that's currently not possible to achieve. With the config refactor
+    // moving forward when we reach a point where the config will be able to
+    // introspect itself (reach into the configs of other projects) this point
+    // will be true. As for now we don't know if such a occurrence has taken
+    // place.
+    const actors = allActors.filter((actor) => {
+      const account = actor.accounts[0]
+      const isEOA = account.type === 'EOA'
+      if (!isEOA) {
+        return true
+      }
+
+      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      assert(eoa?.receivedPermissions !== undefined)
+      const hasOnlyRole = eoa.receivedPermissions.every((p) =>
+        RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
+      )
+
+      return !hasOnlyRole
+    })
 
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
@@ -1116,8 +1156,6 @@ export class ProjectDiscovery {
         )
       }
     })
-
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
     roles.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
