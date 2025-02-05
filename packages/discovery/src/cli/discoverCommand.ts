@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import chalk from 'chalk'
@@ -114,7 +115,7 @@ export async function discover(
   logger: Logger = Logger.DEBUG,
 ): Promise<void> {
   const http = new HttpClient()
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
 
   if (config.dryRun) {
     logger = logger.for('DryRun')
