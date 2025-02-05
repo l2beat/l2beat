@@ -1,5 +1,5 @@
 import type { json } from '@l2beat/shared-pure'
-import { generateId } from '../../tools'
+import { generateId } from '../../tools/generateId'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   type PolkadotBlock,
