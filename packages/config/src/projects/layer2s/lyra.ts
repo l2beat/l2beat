@@ -43,7 +43,6 @@ export const lyra: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1700022479),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Derive rebrand',

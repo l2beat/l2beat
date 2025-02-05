@@ -52,5 +52,4 @@ export const metal: Layer2 = opStackL2({
   // Set explicitly since finality calculation returns weird results
   finality: undefined,
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
 })

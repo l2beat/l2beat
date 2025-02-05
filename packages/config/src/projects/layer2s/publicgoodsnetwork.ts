@@ -75,5 +75,4 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  discoveryDrivenData: true,
 })

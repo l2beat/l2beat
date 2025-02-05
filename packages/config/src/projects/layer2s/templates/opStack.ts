@@ -40,11 +40,9 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
-  ProjectContract,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
-  ProjectPermission,
   ProjectTechnologyChoice,
   ReasonForBeingInOther,
   ScalingProject,
@@ -68,12 +66,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
-import {
-  explorerReferences,
-  mergeBadges,
-  mergeContracts,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   layer: DA_LAYERS.CELESTIA,
@@ -146,9 +139,6 @@ interface OpStackConfigCommon {
   stateValidation?: ScalingProjectStateValidation
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
-  roleOverrides?: Record<string, string>
-  nonTemplatePermissions?: ProjectPermission[]
-  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -163,7 +153,6 @@ interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: StageConfig
   additionalBadges?: BadgeId[]
-  discoveryDrivenData?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
@@ -335,46 +324,17 @@ function opStackCommon(
       ],
     },
     technology: getTechnology(templateVars, explorerUrl),
-    permissions: templateVars.discoveryDrivenData
-      ? generateDiscoveryDrivenPermissions(allDiscoveries)
-      : {
-          [templateVars.discovery.chain]: {
-            actors: [
-              ...templateVars.discovery.getOpStackPermissions({
-                batcherHash: 'Sequencer',
-                PROPOSER: 'Proposer',
-                GUARDIAN: 'Guardian',
-                CHALLENGER: 'Challenger',
-                ...(templateVars.roleOverrides ?? {}),
-              }),
-              ...(templateVars.nonTemplatePermissions ?? []),
-            ],
-          },
-        },
-    contracts: templateVars.discoveryDrivenData
-      ? {
-          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
-          risks: nativeContractRisks,
-        }
-      : {
-          addresses: mergeContracts(
-            {
-              [templateVars.discovery.chain]:
-                templateVars.discovery.getOpStackContractDetails(
-                  upgradeability,
-                ),
-            },
-            templateVars.nonTemplateContracts ?? {},
-          ),
-          risks: nativeContractRisks,
-        },
+    permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+      risks: nativeContractRisks,
+    },
     milestones: templateVars.milestones ?? [],
     knowledgeNuggets: [
       ...(templateVars.knowledgeNuggets ?? []),
       {
         title: 'How Optimism compresses data',
         url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
       {
         title: 'Superchain Explainer',

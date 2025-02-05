@@ -60,7 +60,6 @@ export const redstone: Layer2 = opStackL2({
     'https://github.com/latticexyz/redstone',
     DA_LAYERS.OP_ALT_DA,
   ),
-  discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1712192291),
   isNodeAvailable: 'UnderReview',
   rpcUrl: 'https://rpc.redstonechain.com',

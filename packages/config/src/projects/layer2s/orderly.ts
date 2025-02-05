@@ -121,7 +121,6 @@ export const orderly: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
   isNodeAvailable: false,
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'ORDER Token Airdrop',

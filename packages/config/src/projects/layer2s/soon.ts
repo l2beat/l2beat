@@ -54,5 +54,4 @@ export const soon: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1696566432), // TODO: update
   isNodeAvailable: false,
-  discoveryDrivenData: true,
 })

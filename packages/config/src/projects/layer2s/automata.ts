@@ -67,7 +67,6 @@ export const automata: Layer2 = opStackL2({
     'https://github.com/ethereum-optimism/optimism/releases/tag/v1.7.7',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
-  discoveryDrivenData: true,
   customDa: {
     type: 'DA Challenges',
     name: 'Automata DA',

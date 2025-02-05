@@ -98,7 +98,6 @@ export const zircuit: Layer2 = opStackL2({
       },
     },
   ],
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Zircuit Mainnet Launch',

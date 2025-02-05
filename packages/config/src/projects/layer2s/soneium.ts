@@ -41,7 +41,6 @@ export const soneium = opStackL2({
   },
   isNodeAvailable: 'UnderReview',
   stateDerivation: DERIVATION.OPSTACK('SONEIUM'),
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'soneium',
     chainId: 1868,

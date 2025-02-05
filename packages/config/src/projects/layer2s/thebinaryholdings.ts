@@ -43,6 +43,5 @@ export const thebinaryholdings: Layer2 = opStackL2({
   },
   isNodeAvailable: 'UnderReview',
   milestones: [],
-  discoveryDrivenData: true,
   nonTemplateOptimismPortalEscrowTokens: ['BNRY'],
 })

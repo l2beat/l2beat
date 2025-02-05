@@ -87,7 +87,6 @@ export const cyber: Layer2 = opStackL2({
       },
     ],
   },
-  discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1713428569),
   isNodeAvailable: 'UnderReview',
   rpcUrl: 'https://cyber.alt.technology/',
