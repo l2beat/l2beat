@@ -50,6 +50,7 @@ export const immutablezkevm: Layer2 = {
       websites: ['https://immutable.com/products/immutable-zkevm'],
       documentation: ['https://docs.x.immutable.com/docs/zkEVM/overview'],
       socialMedia: ['https://twitter.com/Immutable'],
+      explorers: ['https://explorer.immutable.com/'],
     },
   },
   stage: {
@@ -65,6 +66,12 @@ export const immutablezkevm: Layer2 = {
         chain: 'ethereum',
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.immutable.com',
+      startBlock: 1,
+      defaultCallsPerMinute: 500,
+    },
   },
   dataAvailability: {
     layer: DA_LAYERS.NONE,
