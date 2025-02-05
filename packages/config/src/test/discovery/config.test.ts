@@ -1,10 +1,16 @@
-import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
+import { isDeepStrictEqual } from 'util'
 import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { isEqual } from 'lodash'
-import { discoveryNeedsRefresh } from '../../../tools/discoveryNeedsRefresh'
-import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
+import { bridges } from '../../projects/bridges'
+import { layer2s } from '../../projects/layer2s'
+import { layer3s } from '../../projects/layer3s'
+import { onChainProjects } from '../../projects/onChainProjects'
+import {
+  discoveryNeedsRefresh,
+  getDiffHistoryHash,
+  getDiscoveryHash,
+} from './helper'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -68,7 +74,7 @@ describe('discovery config.jsonc', () => {
         const discovery = configReader.readDiscovery(c.name, c.chain)
 
         if (
-          !isEqual(
+          !isDeepStrictEqual(
             discovery.contracts,
             discovery.contracts
               .slice()
@@ -189,12 +195,12 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it('discovered.json hash matches the one stored in diffHistory.md', async () => {
+  it('discovered.json hash matches the one stored in diffHistory.md', () => {
     for (const configs of chainConfigs ?? []) {
       if (configs.length > 0) {
         for (const c of configs) {
           const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
-          const currentHash = await getDiscoveryHash(c.name, c.chain)
+          const currentHash = getDiscoveryHash(c.name, c.chain)
           const savedHash = getDiffHistoryHash(diffHistoryPath)
           assert(
             savedHash !== undefined,
