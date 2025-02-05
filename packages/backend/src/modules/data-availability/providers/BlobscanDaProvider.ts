@@ -1,4 +1,4 @@
-import type { BlobScanClient, BlobSizeData, DaProvider } from '@l2beat/shared'
+import type { BlobScanClient, DaBlob, DaProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
 // each blob is 128 KiB so 131,072 B
@@ -12,7 +12,7 @@ export class BlobScanDaProvider implements DaProvider {
     to: number,
     toAddress: string,
     fromAddresses?: string[],
-  ): Promise<BlobSizeData[]> {
+  ): Promise<DaBlob[]> {
     let txs = await this.client.getTransactionsWithBlobsByAddress(
       from,
       to,
@@ -31,7 +31,7 @@ export class BlobScanDaProvider implements DaProvider {
     )
   }
 
-  async getBlobs(from: number, to: number): Promise<BlobSizeData[]> {
+  async getBlobs(from: number, to: number): Promise<DaBlob[]> {
     const blobs = await this.client.getBlobs(from, to)
 
     return blobs.map((blob) => ({

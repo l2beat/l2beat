@@ -15,3 +15,6 @@ export * from './coingecko/types'
 
 export * from './blobscan/BlobscanClient'
 export * from './blobscan/types'
+
+export * from './rpc-polkadot/PolkadotRpcClient'
+export * from './rpc-polkadot/types'
