@@ -8,7 +8,7 @@ Generated with discovered.json: 0x99f128e8053ca8b32bccf74a8aa15f2e0a07625f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Multisig added as operator.
 
 ## Watched changes
 
