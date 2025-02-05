@@ -84,7 +84,7 @@ export class FinalityIndexer extends ChildIndexer {
           finalityData.averageTimeToInclusion > 0 &&
           finalityData.maximumTimeToInclusion > 0 &&
           (finalityData.averageStateUpdate === null ||
-            finalityData.averageStateUpdate > 0),
+            finalityData.averageStateUpdate >= 0),
         `Finality data cannot be negative: ${this.configuration.projectId}`,
       )
 
