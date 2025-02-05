@@ -53,7 +53,14 @@ export const layer2finance: Layer2 = {
   contracts: {
     addresses: {
       [discovery.chain]: [
-        discovery.getContractDetails('RollupChain'),
+        discovery.getContractDetails('RollupChain', {
+          references: [
+            {
+              title: 'RollupChain.sol#L460-L496 - Layer2.Finance source code',
+              url: 'https://github.com/celer-network/layer2-finance-contracts/blob/61ed0f17a15e8ba06778776ade1a82956a9de842/contracts/RollupChain.sol#L460-L496',
+            },
+          ],
+        }),
         discovery.getContractDetails('TransitionDisputer'),
         discovery.getContractDetails('Registry'),
       ],
