@@ -98,7 +98,6 @@ export function getRegularDaProjectSections({
       isUnderReview: daLayer.statuses.isUnderReview,
       isVerified,
       bridgeGrissiniValues,
-      hideRisks: !!daBridge.risks.isNoBridge,
       hideTitle: true,
     },
   })
