@@ -28,10 +28,9 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "Currently the system permits invalid state roots. More details in project overview."
-    orderHint: -Infinity
-    secondLine: "7d challenge period"
+    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed."
+    orderHint: Infinity
     sentiment: "bad"
-    value: "None"
+    value: "Fraud proofs (INT)"
   }
 }
