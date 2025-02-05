@@ -536,18 +536,6 @@ function orbitStackCommon(
           ],
           risks: [],
         },
-        {
-          name: 'Tradeable Bridge Exit',
-          description:
-            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. The user will get the funds immediately, however the third party has to wait for the block to be finalized. This is implemented as a first party functionality inside Arbitrum's token bridge.",
-          risks: [],
-          references: [
-            {
-              title: 'Tradeable Bridge Exits - Arbitrum documentation',
-              url: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
-            },
-          ],
-        },
         EXITS.AUTONOMOUS,
       ],
       otherConsiderations:
