@@ -1110,7 +1110,7 @@ export class ProjectDiscovery {
         permission.description,
       )
       if (permission.participants !== undefined) {
-        permission.participants = linkupActorsIntoAccounts(
+        permission.participants = this.linkupActorsIntoAccounts(
           permission.participants,
           actors,
         )
@@ -1123,7 +1123,7 @@ export class ProjectDiscovery {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
-      permission.accounts = linkupActorsIntoAccounts(
+      permission.accounts = this.linkupActorsIntoAccounts(
         permission.accounts,
         actors,
       )
@@ -1133,6 +1133,37 @@ export class ProjectDiscovery {
       roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
       actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
     }
+  }
+
+  linkupActorsIntoAccounts(
+    accountsToLink: ProjectPermissionedAccount[],
+    actors: ProjectPermission[],
+  ): ProjectPermissionedAccount[] {
+    const result: ProjectPermissionedAccount[] = []
+    const actorNameLUT: Record<string, string> = {}
+    for (const actor of actors) {
+      assert(actor.accounts.length === 1)
+      actorNameLUT[actor.accounts[0].address] = actor.name
+    }
+
+    for (const account of accountsToLink) {
+      const entry = structuredClone(account)
+
+      const discoveryName = this.getEntryByAddress(account.address)?.name
+      if (discoveryName !== undefined) {
+        entry.name = discoveryName
+        entry.url = `#${discoveryName}`
+      }
+
+      const actorName = actorNameLUT[account.address]
+      if (actorName !== undefined) {
+        entry.name = actorName
+        entry.url = `#${actorName}`
+      }
+
+      result.push(entry)
+    }
+    return result
   }
 
   getDiscoveredContracts(): ProjectContract[] {
@@ -1332,29 +1363,4 @@ function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
 
 function allUnique(arr: string[]): boolean {
   return new Set(arr).size === arr.length
-}
-
-function linkupActorsIntoAccounts(
-  accountsToLink: ProjectPermissionedAccount[],
-  actors: ProjectPermission[],
-): ProjectPermissionedAccount[] {
-  const result: ProjectPermissionedAccount[] = []
-  const actorNameLUT: Record<string, string> = {}
-  for (const actor of actors) {
-    assert(actor.accounts.length === 1)
-    actorNameLUT[actor.accounts[0].address] = actor.name
-  }
-
-  for (const account of accountsToLink) {
-    const entry = structuredClone(account)
-
-    const actorName = actorNameLUT[account.address]
-    if (actorName !== undefined) {
-      entry.name = actorName
-      entry.url = `#${actorName}`
-    }
-
-    result.push(entry)
-  }
-  return result
 }
