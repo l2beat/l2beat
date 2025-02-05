@@ -22,9 +22,7 @@ describe(isUnderReview.name, () => {
     technology: mockObject<ScalingProjectTechnology>({
       isUnderReview: undefined,
     }),
-    contracts: mockObject<ProjectContracts>({
-      isUnderReview: undefined,
-    }),
+    contracts: mockObject<ProjectContracts>({}),
     riskView: mockObject<ScalingProjectRiskView>(),
     config: mockObject<Layer2Config>(),
     stage: mockObject<StageConfig>({ stage: 'Stage 1' }),

@@ -343,13 +343,6 @@ export const zkfair: Layer2 = {
         }),
       ],
     },
-    references: [
-      {
-        title:
-          'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        url: 'https://etherscan.io/address/0x668965757127549f8755D2eEd10494B06420213b#code#F8#L809',
-      },
-    ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   milestones: [

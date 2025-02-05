@@ -1047,12 +1047,6 @@ export interface ProjectContracts {
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
 }
 
 export interface ProjectStatuses {

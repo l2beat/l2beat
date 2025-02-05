@@ -334,20 +334,6 @@ export const layerzerov2oft: Bridge = {
       ],
     },
     risks: [],
-    references: [
-      {
-        title: 'LayerZero Docs: OFT Adapter',
-        url: 'https://docs.layerzero.network/v2/developers/evm/oft/adapter',
-      },
-      {
-        title: 'LayerZero Docs: Deployed contracts and supported chains',
-        url: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/deployed-contracts',
-      },
-      {
-        title: 'LayerZero Docs: DVN addresses',
-        url: 'https://docs.layerzero.network/v2/developers/evm/technical-reference/dvn-addresses',
-      },
-    ],
   },
   permissions: {
     [discovery.chain]: {
