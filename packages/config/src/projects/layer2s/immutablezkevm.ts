@@ -65,6 +65,12 @@ export const immutablezkevm: Layer2 = {
         chain: 'ethereum',
       },
     ],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.immutable.com',
+      startBlock: 1,
+      defaultCallsPerMinute: 500,
+    },
   },
   dataAvailability: {
     layer: DA_LAYERS.NONE,
