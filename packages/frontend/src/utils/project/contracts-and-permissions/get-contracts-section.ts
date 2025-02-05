@@ -17,7 +17,6 @@ import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
 import type { ContractsSectionProps } from '../../../components/projects/sections/contracts/contracts-section'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
-import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
@@ -147,7 +146,7 @@ function makeTechnologyContract(
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
-  const chain = getChain(projectParams, item)
+  const chain = item.chain
   const etherscanUrl = getExplorerUrl(chain)
 
   const getAddress = (opts: {

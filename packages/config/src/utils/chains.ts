@@ -47,7 +47,7 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
     ...Object.values(project.contracts?.addresses ?? {}).flat(),
     ...permissions,
   ]
-  const devIds = allContracts.map((c) => c.chain ?? 'ethereum')
+  const devIds = allContracts.map((c) => c.chain)
 
   return devIds
 }
@@ -79,9 +79,7 @@ function getProjectDevIdsForDA(p: BaseProject): string[] {
       return result
     }) ?? []
 
-  const devIds = [...addresses, ...permissions].map(
-    (c) => c.chain ?? 'ethereum',
-  )
+  const devIds = [...addresses, ...permissions].map((c) => c.chain)
 
   return devIds
 }
