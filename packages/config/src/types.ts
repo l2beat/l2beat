@@ -265,7 +265,7 @@ export interface ProjectPermission {
   /** Description of the permissions */
   description: string
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
@@ -275,8 +275,10 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
-  isVerified: boolean
+  name: string
+  url: string
   address: EthereumAddress
+  isVerified: boolean
   type: 'EOA' | 'Contract'
 }
 
@@ -1014,7 +1016,7 @@ export interface ProjectContract {
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */

@@ -42,7 +42,6 @@ export const optopia: Layer2 = opStackL2({
   // },
   isNodeAvailable: true,
   rpcUrl: 'https://rpc-mainnet-2.optopia.ai', // chainId: 62050
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Optopia Mainnet Launch',

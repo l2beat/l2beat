@@ -41,6 +41,5 @@ export const shape: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.shape.network',
   genesisTimestamp: new UnixTime(1721744473),
-  discoveryDrivenData: true,
   stateDerivation: DERIVATION.OPSTACK('SHAPE'),
 })

@@ -49,5 +49,4 @@ export const hashkey = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('HASHKEY'),
   isNodeAvailable: true,
-  discoveryDrivenData: true,
 })

@@ -27,6 +27,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
+import { EXPLORER_URLS } from '../chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,
@@ -37,11 +38,6 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
-import {
-  OP_STACK_CONTRACT_DESCRIPTION,
-  OP_STACK_PERMISSION_TEMPLATES,
-  type OpStackContractName,
-} from './OpStackTypes'
 import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
@@ -214,18 +210,6 @@ export class ProjectDiscovery {
         }
       })
       .filter(notUndefined)
-  }
-
-  getOpStackPermissions(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): ProjectPermission[] {
-    const resolved = this.computeStackContractPermissions(
-      OP_STACK_PERMISSION_TEMPLATES,
-      overrides,
-      contractOverrides,
-    )
-    return this.transformToPermissions(resolved)
   }
 
   resolveOrbitStackTemplates(
@@ -409,13 +393,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name,
       description: descriptionWithContractNames,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
@@ -557,7 +535,15 @@ export class ProjectDiscovery {
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
       const isVerified = isEntryVerified(entry)
 
-      result.push({ address: address, type, isVerified })
+      const name = `${address.slice(0, 6)}…${address.slice(38, 42)}`
+      const explorerUrl = EXPLORER_URLS[this.chain]
+      assert(
+        isNonNullable(explorerUrl),
+        `Failed to find explorer url for chain [${this.chain}]`,
+      )
+      const url = `${explorerUrl}/address/${address}`
+
+      result.push({ address: address, type, isVerified, name, url })
     }
 
     return result
@@ -625,13 +611,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: contract.name,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -647,13 +627,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: eoa.name ?? eoa.address,
-      accounts: [
-        {
-          isVerified: isEntryVerified(eoa),
-          address: eoa.address,
-          type: 'EOA',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([eoa.address]),
       chain: this.chain,
       references: eoa.references?.map((x) => ({
         title: x.text,
@@ -761,23 +735,6 @@ export class ProjectDiscovery {
     })
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
-    )
-  }
-
-  getOpStackContractDetails(
-    upgradesProxy: Partial<ProjectContract>,
-    overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ProjectContract[] {
-    return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
-      this.hasContract(overrides?.[d.name] ?? d.name),
-    ).map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...upgradesProxy,
-      }),
     )
   }
 
@@ -897,6 +854,7 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
+        chain: this.chain,
       })
     }
     return result
@@ -1105,8 +1063,6 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
-
     const actors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
@@ -1144,15 +1100,32 @@ export class ProjectDiscovery {
       })
     }
 
+    // NOTE(radomski): Checking for assumptions made about discovery driven actors
+    assert(actors.every((actor) => actor.accounts.length === 1))
+    assert(allUnique(actors.map((actor) => actor.accounts[0].address)))
+    assert(allUnique(actors.map((actor) => actor.accounts[0].name)))
+
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
+      if (permission.participants !== undefined) {
+        permission.participants = linkupActorsIntoAccounts(
+          permission.participants,
+          actors,
+        )
+      }
     })
+
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
 
     roles.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
+      )
+      permission.accounts = linkupActorsIntoAccounts(
+        permission.accounts,
+        actors,
       )
     })
 
@@ -1355,4 +1328,33 @@ function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
   }
 
   return true
+}
+
+function allUnique(arr: string[]): boolean {
+  return new Set(arr).size === arr.length
+}
+
+function linkupActorsIntoAccounts(
+  accountsToLink: ProjectPermissionedAccount[],
+  actors: ProjectPermission[],
+): ProjectPermissionedAccount[] {
+  const result: ProjectPermissionedAccount[] = []
+  const actorNameLUT: Record<string, string> = {}
+  for (const actor of actors) {
+    assert(actor.accounts.length === 1)
+    actorNameLUT[actor.accounts[0].address] = actor.name
+  }
+
+  for (const account of accountsToLink) {
+    const entry = structuredClone(account)
+
+    const actorName = actorNameLUT[account.address]
+    if (actorName !== undefined) {
+      entry.name = actorName
+      entry.url = `#${actorName}`
+    }
+
+    result.push(entry)
+  }
+  return result
 }
