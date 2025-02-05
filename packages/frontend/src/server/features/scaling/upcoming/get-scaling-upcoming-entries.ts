@@ -3,13 +3,13 @@ import type {
   ScalingProjectCategory,
   ScalingProjectStack,
 } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { groupByTabs } from '~/utils/group-by-tabs'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export async function getScalingUpcomingEntries() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo'],
     where: ['isScaling', 'isUpcoming'],
   })

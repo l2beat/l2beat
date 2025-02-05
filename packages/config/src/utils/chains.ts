@@ -1,6 +1,6 @@
 import type {
+  BaseProject,
   Bridge,
-  DaProject,
   Layer2,
   Layer3,
   ProjectContract,
@@ -47,39 +47,39 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
     ...Object.values(project.contracts?.addresses ?? {}).flat(),
     ...permissions,
   ]
-  const devIds = allContracts.map((c) => c.chain ?? 'ethereum')
+  const devIds = allContracts.map((c) => c.chain)
 
   return devIds
 }
 
-export function getChainNamesForDA(...projects: DaProject[]): string[] {
+export function getChainNamesForDA(...projects: BaseProject[]): string[] {
   return projects
     .flatMap(getProjectDevIdsForDA)
     .filter((x, i, a) => a.indexOf(x) === i)
 }
 
-function getProjectDevIdsForDA(p: DaProject): string[] {
-  const addresses = p.daLayer.bridges.flatMap((b) =>
-    Object.values(b.contracts?.addresses ?? {}).flat(),
-  )
+function getProjectDevIdsForDA(p: BaseProject): string[] {
+  const addresses =
+    p.daBridges?.flatMap((b) =>
+      Object.values(b.contracts?.addresses ?? {}).flat(),
+    ) ?? []
 
-  const permissions = p.daLayer.bridges.flatMap((b) => {
-    const result = []
-    if (b.permissions && b.permissions !== 'UnderReview') {
-      const values = Object.values(b.permissions)
-        .flatMap((p) => [...(p?.roles ?? []), ...(p?.actors ?? [])])
-        .filter((p) => {
-          const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-          return nonEoaAddresses.length > 0
-        })
-      result.push(...values)
-    }
-    return result
-  })
+  const permissions =
+    p.daBridges?.flatMap((b) => {
+      const result = []
+      if (b.permissions && b.permissions !== 'UnderReview') {
+        const values = Object.values(b.permissions)
+          .flatMap((p) => [...(p?.roles ?? []), ...(p?.actors ?? [])])
+          .filter((p) => {
+            const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+            return nonEoaAddresses.length > 0
+          })
+        result.push(...values)
+      }
+      return result
+    }) ?? []
 
-  const devIds = [...addresses, ...permissions].map(
-    (c) => c.chain ?? 'ethereum',
-  )
+  const devIds = [...addresses, ...permissions].map((c) => c.chain)
 
   return devIds
 }

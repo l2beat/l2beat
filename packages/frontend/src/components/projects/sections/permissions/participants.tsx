@@ -3,6 +3,7 @@ import { HighlightableLink } from '~/components/link/highlightable/highlightable
 export interface Participant {
   name: string
   href: string
+  address: string
 }
 
 export function ParticipantsEntry({
@@ -17,6 +18,7 @@ export function ParticipantsEntry({
         <HighlightableLink
           key={i}
           href={address.href}
+          address={address.address}
           className="flex items-center gap-0.5"
         >
           {address.name}

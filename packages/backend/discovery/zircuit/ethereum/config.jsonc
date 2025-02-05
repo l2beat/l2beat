@@ -7,30 +7,14 @@
     "0x912C7271a6A3622dfb8B218eb46a6122aB046C79" // wsteth escrow
   ],
   "names": {
-    "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": "OptimismPortal",
-    "0x2a721cBE81a128be0F01040e3353c3805A5EA091": "L1CrossDomainMessenger",
-    "0x92Ef6Af472b39F1b363da45E35530c24619245A4": "L2OutputOracle",
-    "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff": "SystemConfig",
     "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0": "ZircuitSuperchainConfig",
-    "0x994eEb321F9cD79B077a5455fC248c77f30Dd244": "L1ERC721Bridge",
-    "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8": "L1StandardBridge",
-    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "ZircuitMultiSig",
+    "0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "ZircuitAdminMultiSig",
     "0x2c0B27F7C8F083B539557a0bA787041BF22DB276": "ZircuitGuardianMultiSig",
     "0x6BCe7408c0781dcE7b71494274302D4b75a1447c": "Verifier"
   },
   "overrides": {
-    "ZircuitSuperchainConfig": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl",
-            "roleNames": {
-              "0x8227712ef8ad39d0f26f06731ef0df8665eb7ada7f41b1ee089adf3c238862a2": "MONITOR",
-              "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR"
-            }
-          }
-        }
-      }
+    "Verifier": {
+      "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
     }
   }
 }

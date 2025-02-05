@@ -1,4 +1,4 @@
-import type { DaBridge, DaProject } from '@l2beat/config'
+import type { DaBridge, Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -8,7 +8,10 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 
 type RegularDetailsParams = {
-  daLayer: DaProject
+  daLayer: Project<
+    'daLayer' | 'statuses' | 'display',
+    'milestones' | 'isUpcoming'
+  >
   daBridge: DaBridge
   isVerified: boolean
   projectsChangeReport: ProjectsChangeReport
@@ -27,9 +30,9 @@ export function getRegularDaProjectSections({
   const permissionsSection =
     daBridge.permissions &&
     getPermissionsSection({
+      type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
       id: daLayer.id,
-      type: 'DaLayer',
-      isUnderReview: !!daLayer.isUnderReview,
+      isUnderReview: daLayer.statuses.isUnderReview,
       permissions: daBridge.permissions,
     })
 
@@ -37,13 +40,13 @@ export function getRegularDaProjectSections({
     daBridge.contracts &&
     getContractsSection(
       {
-        type: 'DaLayer',
+        type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
         id: daBridge.id,
         isVerified,
         slug: daBridge.display.slug,
         contracts: daBridge.contracts ?? {},
         escrows: undefined,
-        isUnderReview: daLayer.isUnderReview,
+        isUnderReview: daLayer.statuses.isUnderReview,
       },
       projectsChangeReport,
     )
@@ -61,7 +64,7 @@ export function getRegularDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: !!daLayer.isUnderReview,
+      isUnderReview: daLayer.statuses.isUnderReview,
       isVerified,
       layerGrissiniValues,
       hideTitle: true,
@@ -75,7 +78,7 @@ export function getRegularDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: daLayer.display.slug,
+        slug: daLayer.slug,
       },
       content: daLayer.daLayer.technology.description,
       mdClassName:
@@ -92,7 +95,7 @@ export function getRegularDaProjectSections({
     props: {
       id: 'da-bridge-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: !!daLayer.isUnderReview,
+      isUnderReview: daLayer.statuses.isUnderReview,
       isVerified,
       bridgeGrissiniValues,
       hideRisks: !!daBridge.risks.isNoBridge,
@@ -107,7 +110,7 @@ export function getRegularDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-bridge-technology',
-        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+        slug: `${daLayer.slug}-${daBridge.display.slug}`,
       },
       content: daBridge.technology.description,
       mdClassName:
@@ -178,7 +181,7 @@ export function getRegularDaProjectSections({
     type: 'Group',
     props: {
       id: 'da-layer',
-      title: daLayer.display.name,
+      title: daLayer.name,
       description: daLayer.display.description,
       items: daLayerItems,
     },
@@ -201,7 +204,7 @@ export function getRegularDaProjectSections({
 }
 
 type EthereumDetailsParams = {
-  daLayer: DaProject
+  daLayer: Project<'daLayer' | 'statuses' | 'display'>
   daBridge: DaBridge
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
@@ -242,7 +245,7 @@ export function getEthereumDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: !!daLayer.isUnderReview,
+      isUnderReview: daLayer.statuses.isUnderReview,
       isVerified,
       layerGrissiniValues,
       bridgeGrissiniValues,
@@ -258,7 +261,7 @@ export function getEthereumDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: daLayer.display.slug,
+        slug: daLayer.slug,
       },
       content: daLayer.daLayer.technology.description.concat(
         '\n\n',

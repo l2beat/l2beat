@@ -1,7 +1,6 @@
-import { ethereumDaLayer } from '@l2beat/config'
-import { daLayers } from '@l2beat/config'
 import { notFound, redirect } from 'next/navigation'
 import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
+import { ps } from '~/server/projects'
 
 interface Props {
   params: Promise<{
@@ -12,14 +11,16 @@ interface Props {
 
 export default async function RedirectPage(props: Props) {
   const { layer } = await props.params
-  const project = [...daLayers, ethereumDaLayer].find(
-    (p) => p.display.slug === layer,
-  )
+  const project = await ps.getProject({
+    slug: layer,
+    select: ['daLayer', 'daBridges'],
+  })
+
   const firstBridge = project && getDaBridges(project)[0]
   if (!project || !firstBridge) {
     return notFound()
   }
   redirect(
-    `/data-availability/projects/${project.display.slug}/${firstBridge.display.slug}`,
+    `/data-availability/projects/${project.slug}/${firstBridge.display.slug}`,
   )
 }

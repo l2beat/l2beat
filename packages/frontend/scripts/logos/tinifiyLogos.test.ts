@@ -13,11 +13,11 @@ describe('icons', () => {
     .sort()
 
   it('every project has an icon', async () => {
-    const projects = await ProjectService.STATIC.getProjects({})
+    const ps = new ProjectService()
+    const projects = await ps.getProjects({})
     const uniqueSlugs = projects
       .map((x) => x.slug)
       .filter((x, i, a) => a.indexOf(x) === i) // unique
-      .concat('ethereum')
       .sort()
     const requiredIcons = icons.filter((x) => uniqueSlugs.includes(x))
 

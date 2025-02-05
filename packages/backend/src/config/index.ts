@@ -6,7 +6,7 @@ import { makeConfig } from './makeConfig'
 
 export type { Config }
 
-export function getConfig(): Config {
+export function getConfig(): Promise<Config> {
   const env = getEnv()
   const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
   console.log('Loading config for:', deploymentEnv)

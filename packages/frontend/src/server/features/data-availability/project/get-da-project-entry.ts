@@ -2,7 +2,7 @@ import type {
   DaBridge,
   DaLayer,
   DaLayerThroughput,
-  DaProject,
+  Project,
 } from '@l2beat/config'
 import { isDaBridgeVerified } from '@l2beat/config'
 import type { UsedInProject } from '@l2beat/config'
@@ -25,14 +25,13 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaRisks } from '../utils/get-da-risks'
-import { kindToType } from '../utils/kind-to-layer-type'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
 
 interface CommonDaProjectPageEntry {
   isVerified: boolean
   name: string
   slug: string
-  kind: DaLayer['kind']
+  kind: DaLayer['type']
   type: string
   description: string
   isUnderReview: boolean
@@ -91,17 +90,20 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export async function getDaProjectEntry(
-  project: DaProject,
+  project: Project<
+    'daLayer' | 'daBridges' | 'display' | 'statuses',
+    'isUpcoming' | 'milestones'
+  >,
   daBridge: DaBridge,
 ): Promise<DaProjectPageEntry> {
   const common = {
     isVerified: isDaBridgeVerified(daBridge),
-    name: project.display.name,
-    slug: project.display.slug,
-    kind: project.daLayer.kind,
-    type: kindToType(project.daLayer.kind),
+    name: project.name,
+    slug: project.slug,
+    kind: project.daLayer.type,
+    type: project.daLayer.type,
     description: `${project.display.description} ${daBridge.display.description}`,
-    isUnderReview: project.isUnderReview ?? false,
+    isUnderReview: project.statuses.isUnderReview,
     isUpcoming: project.isUpcoming ?? false,
   }
 
@@ -173,26 +175,23 @@ export async function getDaProjectEntry(
     sections,
     projectVariants: getDaBridges(project).map((bridge) => ({
       title: bridge.display.name,
-      href: `/data-availability/projects/${project.display.slug}/${bridge.display.slug}`,
+      href: `/data-availability/projects/${project.slug}/${bridge.display.slug}`,
     })),
   }
 }
 
 export async function getEthereumDaProjectEntry(
-  project: DaProject,
+  project: Project<'daLayer' | 'display' | 'statuses', 'isUpcoming'>,
+  daBridge: DaBridge,
 ): Promise<EthereumDaProjectPageEntry> {
-  const [daBridge] = project.daLayer.bridges
-  if (!daBridge) {
-    throw new Error('Ethereum bridge missing')
-  }
   const common = {
     isVerified: true,
-    name: project.display.name,
-    slug: project.display.slug,
-    kind: project.daLayer.kind,
-    type: kindToType(project.daLayer.kind),
+    name: project.name,
+    slug: project.slug,
+    kind: project.daLayer.type,
+    type: project.daLayer.type,
     description: `${project.display.description} ${daBridge.display.description}`,
-    isUnderReview: project.isUnderReview ?? false,
+    isUnderReview: project.statuses.isUnderReview,
     isUpcoming: project.isUpcoming ?? false,
   }
 

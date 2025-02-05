@@ -33,11 +33,6 @@ const ZIRCUIT_STATE_CORRECTNESS: ProjectTechnologyChoice = {
   ],
 }
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const zircuit: Layer2 = opStackL2({
   addedAt: new UnixTime(1712559704), // 2024-04-08T07:01:44Z
   discovery,
@@ -61,8 +56,6 @@ export const zircuit: Layer2 = opStackL2({
       ],
     },
     architectureImage: 'zircuit',
-    warning:
-      'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
   },
   genesisTimestamp: new UnixTime(1719936217),
   rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
@@ -89,53 +82,6 @@ export const zircuit: Layer2 = opStackL2({
         'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
     }),
   ],
-  nonTemplatePermissions: [
-    discovery.getPermissionDetails(
-      'Admins of SuperchainConfig',
-      discovery.getAccessControlRolePermission(
-        'ZircuitSuperchainConfig',
-        'DEFAULT_ADMIN_ROLE',
-      ),
-      'Admin of the SuperChainConfig, can configure other roles.',
-    ),
-    discovery.getPermissionDetails(
-      'Monitors of SuperchainConfig',
-      discovery.getAccessControlRolePermission(
-        'ZircuitSuperchainConfig',
-        'MONITOR_ROLE',
-      ),
-      'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
-    ),
-    discovery.getMultisigPermission(
-      'ZircuitMultiSig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \
-      It is also designated as a Challenger and SystemOwner of the L2OutputOracle, meaning it can remove L2 state roots and reconfigure \
-      L2OutputOracle, including changing the Verifier contract. \
-      It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
-    ),
-    discovery.getMultisigPermission(
-      'ZircuitGuardianMultiSig',
-      'This address is the permissioned guardian of the system, meaning it can pause all withdrawals. \
-      It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',
-    ),
-  ],
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('Verifier', {
-        description:
-          'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
-        ...upgradeability,
-      }),
-      discovery.getContractDetails('ZircuitSuperchainConfig', {
-        description:
-          'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
-        however this is a separate instance of the SuperChain contract. It manages the PAUSED_SLOT, a boolean value \
-        indicating whether the chain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. It also defines OPERATOR and MONITOR roles\
-        which are used to manage throttling (withdrawal limits) on OptimismPortal.',
-        ...upgradeability,
-      }),
-    ],
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -152,6 +98,7 @@ export const zircuit: Layer2 = opStackL2({
       },
     },
   ],
+  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Zircuit Mainnet Launch',

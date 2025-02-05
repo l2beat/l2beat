@@ -75,7 +75,7 @@ export async function getL3ProjectDetails({
     ? getScalingRiskSummarySection(hostChain, isHostChainVerified)
     : hostChain
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
-  const technologySection = getScalingTechnologySection(project)
+  const technologySection = await getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
@@ -188,6 +188,7 @@ export async function getL3ProjectDetails({
         id: 'risk-summary',
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
+        isUnderReview: project.isUnderReview,
       },
     })
   }
@@ -279,6 +280,7 @@ export async function getL3ProjectDetails({
         title: 'Data availability',
         items: dataAvailabilitySection,
         description: project.customDa?.description,
+        isUnderReview: project.isUnderReview,
       },
     })
   }

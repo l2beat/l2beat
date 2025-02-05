@@ -1,8 +1,8 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 21637075,
-  "configHash": "0x3ea409074bced1a554faf1a4d6bb741f0683ea9981d0f3fb04c9c391727eee4e",
+  "blockNumber": 21773864,
+  "configHash": "0x6118c78d073d3d89fb3f4f810acd02afcd506704ccc1606c8a08501c5ab2eecc",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -34,7 +34,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620451",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620464",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -47,8 +47,7 @@
         "ResolvedDelegateProxy_addressManager": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "SystemConfig",
@@ -120,8 +119,7 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
       "name": "L1StandardBridge",
@@ -152,8 +150,25 @@
         "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
-      },
-      "derivedName": "L1StandardBridge"
+      }
+    },
+    {
+      "name": "L1ERC721Bridge",
+      "address": "0x132b3456300332d488f946B818eB9512931eBCAa",
+      "template": "opstack/L1ERC721Bridge",
+      "sourceHashes": [
+        "0x95c690f70db8f82a05347087d704333c180048757ff015d74a5b186c1b6b24ab"
+      ],
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
+      "sinceTimestamp": 1706027447,
+      "values": {
+        "$immutable": true,
+        "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
+        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "version": "1.1.2"
+      }
     },
     {
       "name": "AddressManager",
@@ -175,11 +190,10 @@
       "values": {
         "$immutable": true,
         "owner": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492"
-      },
-      "derivedName": "AddressManager"
+      }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "Ancient8GuardianMultisig",
       "address": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -295,7 +309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 74,
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -341,13 +355,12 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 796584,
-          "prevBlockNum": 21632146
+          "prevBlockNum": 21764234
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
         "version": "1.7.2"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -441,10 +454,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 15498000,
-        "latestOutputIndex": 8609,
-        "nextBlockNumber": 15499800,
-        "nextOutputIndex": 8610,
+        "latestBlockNumber": 16322400,
+        "latestOutputIndex": 9067,
+        "nextBlockNumber": 16324200,
+        "nextOutputIndex": 9068,
         "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,
@@ -455,8 +468,7 @@
         "FINALIZATION_PERIOD_SECONDS": {
           "description": "Challenge period (Number of seconds until a state root is finalized)."
         }
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "L1ERC721Bridge",

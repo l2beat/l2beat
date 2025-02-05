@@ -61,7 +61,7 @@ export async function getL2ProjectDetails({
   )
 
   const riskSummary = getScalingRiskSummarySection(project, isVerified)
-  const technologySection = getScalingTechnologySection(project)
+  const technologySection = await getScalingTechnologySection(project)
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
@@ -182,6 +182,7 @@ export async function getL2ProjectDetails({
       props: {
         id: 'risk-summary',
         title: 'Risk summary',
+        isUnderReview: project.isUnderReview,
         ...riskSummary,
       },
     })
@@ -258,7 +259,8 @@ export async function getL2ProjectDetails({
       props: {
         id: 'state-derivation',
         title: 'State derivation',
-        isUnderReview: project.isUnderReview,
+        isUnderReview:
+          !!project.isUnderReview || !!project.stateDerivation.isUnderReview,
         ...project.stateDerivation,
       },
     })
@@ -275,7 +277,8 @@ export async function getL2ProjectDetails({
           'state-validation',
           project.display.stateValidationImage ?? project.display.slug,
         ),
-        isUnderReview: project.isUnderReview,
+        isUnderReview:
+          !!project.isUnderReview || !!project.stateValidation.isUnderReview,
       },
     })
   }
@@ -337,7 +340,6 @@ export async function getL2ProjectDetails({
         },
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: project.isUnderReview,
-        includeChildrenIfUnderReview: true,
       },
     })
   }

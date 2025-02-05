@@ -250,23 +250,6 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export interface ProjectLinks {
-  /** Links to marketing landing pages. */
-  websites?: string[]
-  /** Links to web apps connected to the layer2. */
-  apps?: string[]
-  /** Links to documentation pages. */
-  documentation?: string[]
-  /** Links to transaction explorers. */
-  explorers?: string[]
-  /** Links to source code repositories. */
-  repositories?: string[]
-  /** Links to social media pages. */
-  socialMedia?: string[]
-  /** Link to rollup codes. */
-  rollupCodes?: string
-}
-
 export interface ProjectPermissions {
   /** List of roles */
   roles?: ProjectPermission[]
@@ -282,7 +265,7 @@ export interface ProjectPermission {
   /** Description of the permissions */
   description: string
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
@@ -292,8 +275,10 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
-  isVerified: boolean
+  name: string
+  url: string
   address: EthereumAddress
+  isVerified: boolean
   type: 'EOA' | 'Contract'
 }
 
@@ -384,6 +369,7 @@ export interface ScalingProjectStateDerivation {
   compressionScheme?: string
   genesisState: string
   dataFormat: string
+  isUnderReview?: boolean
 }
 
 type CategoryTitle =
@@ -408,6 +394,7 @@ export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
   proofVerification?: ProofVerification
+  isUnderReview?: boolean
 }
 
 export interface ScalingProjectTechnology {
@@ -746,32 +733,15 @@ export interface CustomDa {
   challengeMechanism?: DaChallengeMechanism
 }
 
-export interface DaProject {
-  type: 'DaLayer'
-  id: ProjectId
-  display: DaLayerDisplay
-  /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isUnderReview?: boolean
-  daLayer: DaLayer
-  milestones?: Milestone[]
-}
-
 export interface DaLayer {
   name?: string
   description?: string
-  kind: 'DA Service' | 'DAC' | 'No DAC' | 'EthereumDaLayer' | 'PublicBlockchain'
+  type: string
   systemCategory: 'public' | 'custom'
-  bridges: DaBridge[]
   risks: DaLayerRisks
   technology: DaTechnology
   usedWithoutBridgeIn: UsedInProject[]
 
-  fallback?: TableReadyValue
-  challengeMechanism?: DaChallengeMechanism
-  numberOfOperators?: number
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
   consensusAlgorithm?: DaConsensusAlgorithm
@@ -1018,10 +988,12 @@ export interface BaseProject {
   id: ProjectId
   slug: string
   name: string
+  /** Used in place of name in tables to save space. */
   shortName: string | undefined
   addedAt: UnixTime
   // data
   statuses?: ProjectStatuses
+  display?: ProjectDisplay
   bridgeInfo?: ProjectBridgeInfo
   bridgeRisks?: BridgeRiskView
   scalingInfo?: ProjectScalingInfo
@@ -1040,8 +1012,10 @@ export interface BaseProject {
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
+  daLayer?: DaLayer
   daBridges?: DaBridge[]
   countdowns?: ProjectCountdowns
+  milestones?: Milestone[]
   // tags
   isBridge?: true
   isScaling?: true
@@ -1058,7 +1032,7 @@ export interface ProjectContract {
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -1108,6 +1082,23 @@ export interface ProjectStatuses {
     pretendingToBe: ScalingProjectCategory
     reasons: ReasonForBeingInOther[]
   }
+}
+
+export interface ProjectDisplay {
+  description: string
+  links: ProjectLinks
+}
+
+export interface ProjectLinks {
+  /** Links to marketing landing pages. */
+  websites?: string[]
+  /** Links to web apps. */
+  apps?: string[]
+  documentation?: string[]
+  explorers?: string[]
+  repositories?: string[]
+  socialMedia?: string[]
+  rollupCodes?: string
 }
 
 export interface ProjectBridgeInfo {

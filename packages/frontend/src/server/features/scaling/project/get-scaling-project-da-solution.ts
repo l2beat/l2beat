@@ -1,5 +1,5 @@
-import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
-import { daLayers } from '@l2beat/config'
+import { type ProjectContract, type ProjectPermissions } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { getDaBridges } from '../../data-availability/utils/get-da-bridges'
 import type { ScalingProject } from './get-scaling-project-entry'
 
@@ -16,8 +16,14 @@ export type DaSolution = Common & {
 
 export type DaSolutionWith<T> = Common & T
 
-export function getDaSolution(project: ScalingProject): DaSolution | undefined {
-  const layerBridgePairs = daLayers.flatMap((layer) =>
+export async function getDaSolution(
+  project: ScalingProject,
+): Promise<DaSolution | undefined> {
+  const projects = await ps.getProjects({
+    select: ['daLayer', 'daBridges'],
+  })
+
+  const layerBridgePairs = projects.flatMap((layer) =>
     getDaBridges(layer).flatMap((bridge) => ({ layer, bridge })),
   )
 
@@ -49,7 +55,7 @@ export function getDaSolution(project: ScalingProject): DaSolution | undefined {
   const daBridgeContracts = allDaBridgeContracts?.addresses[hostChainSelector]
 
   return {
-    layerName: daSolution.layer.display.name,
+    layerName: daSolution.layer.name,
     bridgeName: daSolution.bridge.display.name,
     hostChain: hostChainSelector,
     permissions: daBridgePermissions,

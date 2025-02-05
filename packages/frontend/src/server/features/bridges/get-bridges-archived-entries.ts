@@ -1,5 +1,5 @@
 import type { BridgeDisplay, BridgeRiskView } from '@l2beat/config'
-import { ProjectService } from '@l2beat/config'
+import { ps } from '~/server/projects'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { compareTvs } from '../scaling/tvs/utils/compare-tvs'
 import { get7dTokenBreakdown } from '../scaling/tvs/utils/get-7d-token-breakdown'
@@ -19,7 +19,7 @@ export async function getBridgesArchivedEntries(): Promise<
   const [tvs7dBreakdown, projectsChangeReport, projects] = await Promise.all([
     get7dTokenBreakdown({ type: 'bridge' }),
     getProjectsChangeReport(),
-    ProjectService.STATIC.getProjects({
+    ps.getProjects({
       select: ['statuses', 'bridgeInfo', 'bridgeRisks'],
       where: ['isBridge', 'isArchived'],
     }),

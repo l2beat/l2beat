@@ -1,17 +1,10 @@
 import type {
   DaChallengeMechanism,
-  DaProject,
+  Project,
   TableReadyValue,
   UsedInProject,
 } from '@l2beat/config'
-import {
-  daLayers,
-  ethereumDaLayer,
-  isDaBridgeVerified,
-  layer2s,
-  layer3s,
-  toUsedInProject,
-} from '@l2beat/config'
+import { isDaBridgeVerified, layer2s, layer3s } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import {
@@ -19,6 +12,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/components/rosette/types'
+import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { getDaBridges } from '../utils/get-da-bridges'
 import { getUniqueProjectsInUse } from '../utils/get-da-projects'
@@ -28,25 +22,26 @@ import {
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
 import { getDaLayerRisks } from '../utils/get-da-risks'
-import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
-  const uniqueProjectsInUse = getUniqueProjectsInUse()
+  const uniqueProjectsInUse = await getUniqueProjectsInUse()
   const [economicSecurity, tvsPerProject] = await Promise.all([
     getDaProjectsEconomicSecurity(),
     getDaProjectsTvs(uniqueProjectsInUse),
   ])
   const getTvs = pickTvsForProjects(tvsPerProject)
   const dacEntries = getDacEntries(getTvs)
-  const entries = daLayers.map((daLayer) =>
-    getDaSummaryEntry(daLayer, economicSecurity[daLayer.id], getTvs),
+
+  const projects = await ps.getProjects({
+    select: ['daLayer', 'daBridges', 'statuses'],
+  })
+  const entries = projects.map((project) =>
+    project.id === ProjectId.ETHEREUM
+      ? getEthereumEntry(project, economicSecurity[project.id], getTvs)
+      : getDaSummaryEntry(project, economicSecurity[project.id], getTvs),
   )
 
-  return [
-    ...dacEntries,
-    ...entries,
-    getEthereumEntry(economicSecurity[ethereumDaLayer.id], getTvs),
-  ].sort((a, b) => b.tvs - a.tvs)
+  return [...dacEntries, ...entries].sort((a, b) => b.tvs - a.tvs)
 }
 
 export interface DaSummaryEntry extends CommonProjectEntry {
@@ -76,7 +71,7 @@ export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
 }
 
 function getDaSummaryEntry(
-  project: DaProject,
+  project: Project<'daLayer' | 'daBridges' | 'statuses'>,
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
@@ -85,11 +80,11 @@ function getDaSummaryEntry(
       return {
         name: daBridge.display.name,
         slug: daBridge.display.slug,
-        href: `/data-availability/projects/${project.display.slug}/${daBridge.display.slug}`,
+        href: `/data-availability/projects/${project.slug}/${daBridge.display.slug}`,
         statuses: {
           verificationWarning: isDaBridgeVerified(daBridge) ? undefined : true,
           underReview:
-            !!project.isUnderReview || daBridge.isUnderReview
+            !!project.statuses.isUnderReview || daBridge.isUnderReview
               ? 'config'
               : undefined,
         },
@@ -122,12 +117,12 @@ function getDaSummaryEntry(
 
   return {
     id: ProjectId(project.id),
-    slug: project.display.slug,
-    name: project.display.name,
-    nameSecondLine: kindToType(project.daLayer.kind),
+    slug: project.slug,
+    name: project.name,
+    nameSecondLine: project.daLayer.type,
     href: bridges[0]?.href,
     statuses: {
-      underReview: !!project.isUnderReview ? 'config' : undefined,
+      underReview: project.statuses.isUnderReview ? 'config' : undefined,
     },
     isPublic: project.daLayer.systemCategory === 'public',
     economicSecurity,
@@ -157,7 +152,13 @@ function getDacEntries(
         return undefined
       }
 
-      const usedIn = toUsedInProject([parentProject])
+      const usedIn: UsedInProject[] = [
+        {
+          id: parentProject.id,
+          name: parentProject.display.name,
+          slug: parentProject.display.slug,
+        },
+      ]
       const tvs = getTvs([parentProject.id])
       const dacInfo = customDa.dac
         ? {
@@ -205,49 +206,40 @@ function getDacEntries(
 }
 
 function getEthereumEntry(
+  project: Project<'daLayer' | 'daBridges' | 'statuses'>,
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => number,
 ): DaSummaryEntry {
-  const bridge = ethereumDaLayer.daLayer.bridges[0]
+  const bridge = project.daBridges[0]
   assert(bridge, 'Ethereum DA layer has no bridges')
 
   return {
     id: ProjectId.ETHEREUM,
-    slug: ethereumDaLayer.display.slug,
-    name: ethereumDaLayer.display.name,
-    nameSecondLine: kindToType(ethereumDaLayer.daLayer.kind),
-    href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${ethereumDaLayer.daLayer.bridges[0]?.display.slug}`,
+    slug: project.slug,
+    name: project.name,
+    nameSecondLine: project.daLayer.type,
+    href: `/data-availability/projects/${project.slug}/${bridge.display.slug}`,
     statuses: {},
     economicSecurity: economicSecurity,
-    tvs: getTvs(
-      ethereumDaLayer.daLayer.bridges
-        .flatMap((bridge) => bridge.usedIn)
-        .map((usedIn) => usedIn.id),
-    ),
+    tvs: getTvs(bridge.usedIn.map((usedIn) => usedIn.id)),
     bridges: [
       {
         name: bridge.display.name,
         slug: bridge.display.slug,
-        href: `/data-availability/projects/${ethereumDaLayer.display.slug}/${bridge.display.slug}`,
+        href: `/data-availability/projects/${project.slug}/${bridge.display.slug}`,
         statuses: {},
-        tvs: getTvs(
-          ethereumDaLayer.daLayer.bridges
-            .flatMap((bridge) => bridge.usedIn)
-            .map((usedIn) => usedIn.id),
-        ),
+        tvs: getTvs(bridge.usedIn.map((usedIn) => usedIn.id)),
         risks: {
           values: mapBridgeRisksToRosetteValues(bridge.risks),
           isNoBridge: false,
         },
         dacInfo: undefined,
-        usedIn: ethereumDaLayer.daLayer.bridges.flatMap(
-          (bridge) => bridge.usedIn,
-        ),
+        usedIn: bridge.usedIn,
       },
     ],
     isPublic: true,
     challengeMechanism: undefined,
     fallback: undefined,
-    risks: mapLayerRisksToRosetteValues(ethereumDaLayer.daLayer.risks),
+    risks: mapLayerRisksToRosetteValues(project.daLayer.risks),
   }
 }

@@ -1,8 +1,8 @@
-import { ProjectService } from '@l2beat/config'
 import { UnixTime, branded } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export async function getVerifiers() {
   if (env.MOCK) {
@@ -10,7 +10,7 @@ export async function getVerifiers() {
   }
 
   const db = getDb()
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['proofVerification'],
     whereNot: ['isArchived'],
   })
@@ -32,7 +32,7 @@ export async function getVerifiers() {
 }
 
 async function getMockVerifiers() {
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     select: ['proofVerification'],
     whereNot: ['isArchived'],
   })

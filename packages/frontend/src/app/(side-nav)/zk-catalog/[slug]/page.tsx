@@ -1,4 +1,3 @@
-import { ProjectService } from '@l2beat/config'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -16,6 +15,7 @@ import { PrimaryCard } from '~/components/primary-card'
 import { env } from '~/env'
 import { InfoIcon } from '~/icons/info'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
+import { ps } from '~/server/projects'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ProjectHeader } from './_components/project-header'
 import { RequiredTools } from './_components/required-tools'
@@ -34,7 +34,7 @@ interface Props {
 
 export async function generateStaticParams(): Promise<Params[]> {
   if (env.VERCEL_ENV !== 'production') return []
-  const projects = await ProjectService.STATIC.getProjects({
+  const projects = await ps.getProjects({
     where: ['proofVerification'],
     whereNot: ['isArchived'],
   })
@@ -43,7 +43,7 @@ export async function generateStaticParams(): Promise<Params[]> {
 
 export async function generateMetadata(props: Props): Promise<Metadata | null> {
   const params = await props.params
-  const project = await ProjectService.STATIC.getProject({
+  const project = await ps.getProject({
     slug: params.slug,
     where: ['proofVerification'],
     whereNot: ['isArchived'],
@@ -58,7 +58,7 @@ export async function generateMetadata(props: Props): Promise<Metadata | null> {
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const project = await ProjectService.STATIC.getProject({
+  const project = await ps.getProject({
     slug: params.slug,
     select: ['proofVerification'],
     optional: ['isScaling'],
