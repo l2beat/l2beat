@@ -18,7 +18,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
-import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
+import { updateDiffHistoryHash } from './hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -121,7 +121,7 @@ export async function updateDiffHistory(
     await revertDiffHistory(diffHistoryPath, historyFileFromMainBranch)
   }
 
-  await updateDiffHistoryHash(diffHistoryPath, projectName, chain)
+  updateDiffHistoryHash(diffHistoryPath, projectName, chain)
 }
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {

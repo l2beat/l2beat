@@ -4,12 +4,12 @@ import {
   TemplateService,
   getChainConfig,
 } from '@l2beat/discovery'
-import { boolean, command, flag, option, optional, run, string } from 'cmd-ts'
+import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { discoveryNeedsRefresh } from '../src/tools/discoveryNeedsRefresh'
-import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
+import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
+import { discoveryNeedsRefresh } from '../implementations/refresh-discovery/discoveryNeedsRefresh'
 
-const cmd = command({
+export const RefreshDiscovery = command({
   name: 'refresh-discovery',
   args: {
     all: flag({
@@ -104,5 +104,3 @@ const cmd = command({
     }
   },
 })
-
-run(cmd, process.argv.slice(2))

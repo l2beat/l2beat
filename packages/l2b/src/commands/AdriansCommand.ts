@@ -3,6 +3,7 @@ import type {
   ContractParameters,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
+import { command, positional, string } from 'cmd-ts'
 
 interface TemplateFieldRelation {
   sourceTemplate: string
@@ -16,35 +17,39 @@ interface ProjectChain {
   chain: string
 }
 
-async function main() {
-  const { chain, project } = parseCliArguments()
-  const configReader = new ConfigReader()
+export const AdriansCommand = command({
+  name: 'adriansCommand',
+  description: 'builds some _knowledge base_',
+  args: {
+    chain: positional({
+      type: string,
+      displayName: 'chain',
+    }),
+    project: positional({
+      type: string,
+      displayName: 'project',
+    }),
+  },
+  handler: ({ chain, project }) => {
+    const configReader = new ConfigReader()
 
-  const allDiscoveries = await getAllDiscoveriesExcept(configReader, {
-    chain,
-    project,
-  })
-  const relations = buildKnowledgeBase(allDiscoveries)
+    const allDiscoveries = getAllDiscoveriesExcept(configReader, {
+      chain,
+      project,
+    })
+    const relations = buildKnowledgeBase(allDiscoveries)
 
-  const targetDiscovery = await configReader.readDiscovery(project, chain)
-  const suggestions = generateSuggestions(targetDiscovery, relations)
+    const targetDiscovery = configReader.readDiscovery(project, chain)
+    const suggestions = generateSuggestions(targetDiscovery, relations)
 
-  outputSuggestions(suggestions, project, chain)
-}
+    outputSuggestions(suggestions, project, chain)
+  },
+})
 
-function parseCliArguments(): ProjectChain {
-  const [chain, project] = process.argv.slice(2)
-  if (!chain || !project) {
-    console.log('Usage: pnpm analyze-project <chain> <project>')
-    process.exit(1)
-  }
-  return { chain, project }
-}
-
-async function getAllDiscoveriesExcept(
+function getAllDiscoveriesExcept(
   configReader: ConfigReader,
   toExclude: ProjectChain,
-): Promise<DiscoveryOutput[]> {
+): DiscoveryOutput[] {
   const allProjects = configReader
     .readAllChains()
     .flatMap((chain) =>
@@ -59,7 +64,7 @@ async function getAllDiscoveriesExcept(
 
   const discoveries: DiscoveryOutput[] = []
   for (const { chain, project } of allProjects) {
-    const discovery = await configReader.readDiscovery(project, chain)
+    const discovery = configReader.readDiscovery(project, chain)
     discoveries.push(discovery)
   }
 
@@ -199,5 +204,3 @@ function outputSuggestions(
     suggestions.forEach((s) => console.log(s))
   }
 }
-
-main().catch(console.error)

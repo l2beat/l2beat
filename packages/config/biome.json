@@ -1,11 +1,20 @@
 {
   "extends": ["../../biome.json"],
   "files": {
+    "maxSize": 10485760,
     "ignore": [
       "src/projects/bridges/multichain-config.json",
       "src/projects/bridges/socket-vaults.json",
       "scripts/multichain/cache.json",
-      "scripts/multichain/intermediate.json"
+      "scripts/multichain/intermediate.json",
+      "cache/",
+      "discovery/**/.code",
+      "discovery/**/.code@*",
+      "discovery/**/.flat*",
+      "discovery/**/mermaid",
+      "discovery/**/.mermaid",
+      "discovery/**/.flat",
+      "discovery/**/script-ts"
     ]
   }
 }
