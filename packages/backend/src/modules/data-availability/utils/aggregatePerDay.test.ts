@@ -1,4 +1,4 @@
-import type { BlobSizeData } from '@l2beat/shared'
+import type { DaBlob } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { aggregatePerDay } from './aggregatePerDay'
@@ -9,7 +9,7 @@ describe('aggregatePerDay', () => {
   const THIRD_DAY = SECOND_DAY.add(1, 'days')
 
   it('aggregates single blob in a day', () => {
-    const blobs: BlobSizeData[] = [
+    const blobs: DaBlob[] = [
       {
         blockTimestamp: FIRST_DAY,
         size: 100n,
@@ -28,7 +28,7 @@ describe('aggregatePerDay', () => {
   })
 
   it('aggregates multiple blobs in the same day', () => {
-    const blobs: BlobSizeData[] = [
+    const blobs: DaBlob[] = [
       {
         blockTimestamp: FIRST_DAY,
         size: 100n,
@@ -55,7 +55,7 @@ describe('aggregatePerDay', () => {
   })
 
   it('separates blobs from different days', () => {
-    const blobs: BlobSizeData[] = [
+    const blobs: DaBlob[] = [
       {
         blockTimestamp: FIRST_DAY,
         size: 100n,

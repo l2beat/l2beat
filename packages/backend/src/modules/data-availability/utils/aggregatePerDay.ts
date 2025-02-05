@@ -1,9 +1,9 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { BlobSizeData } from '@l2beat/shared'
+import type { DaBlob } from '@l2beat/shared'
 
 export function aggregatePerDay(
   project: string,
-  blobs: BlobSizeData[],
+  blobs: DaBlob[],
 ): DataAvailabilityRecord[] {
   const result = new Map<number, DataAvailabilityRecord>()
 
