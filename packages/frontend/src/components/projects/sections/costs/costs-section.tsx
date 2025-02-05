@@ -22,7 +22,7 @@ export function CostsSection({
   return (
     <ProjectSection {...sectionProps}>
       <p className="text-base">
-        The section shows the costs that L2s pay to Ethereum for security.
+        The section shows the operating costs that L2s pay to Ethereum.
       </p>
       <HorizontalSeparator className="my-4" />
       <ProjectCostsChart milestones={milestones} projectId={projectId} />
