@@ -100,5 +100,4 @@ export const mode: Layer2 = opStackL2({
     coingeckoPlatform: 'mode',
   },
   nonTemplateExcludedTokens: ['rsETH'],
-  discoveryDrivenData: true,
 })

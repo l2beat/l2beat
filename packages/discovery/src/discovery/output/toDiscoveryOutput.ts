@@ -19,6 +19,22 @@ export function toDiscoveryOutput(
   blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
+  const discovery = toRawDiscoveryOutput(config, blockNumber, results)
+
+  discovery.contracts.forEach((c) => {
+    if (c.errors !== undefined) {
+      c.errors = sortByKeys(neuterErrors(c.errors))
+    }
+  })
+
+  return discovery
+}
+
+export function toRawDiscoveryOutput(
+  config: DiscoveryConfig,
+  blockNumber: number,
+  results: Analysis[],
+): DiscoveryOutput {
   return withoutUndefinedKeys({
     name: config.name,
     chain: config.chain,
@@ -92,7 +108,7 @@ export function processAnalysis(
           errors:
             Object.keys(x.errors).length === 0
               ? undefined
-              : sortByKeys(neuterErrors(x.errors)),
+              : sortByKeys(x.errors),
           fieldMeta:
             Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,

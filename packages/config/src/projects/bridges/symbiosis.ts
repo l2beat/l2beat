@@ -135,7 +135,6 @@ export const symbiosis: Bridge = {
       ],
     },
     risks: [],
-    isIncomplete: true,
   },
   permissions: {
     [discovery.chain]: {

@@ -43,5 +43,4 @@ export const stack: Layer3 = opStackL3({
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
 })

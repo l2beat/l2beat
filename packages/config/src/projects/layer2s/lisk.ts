@@ -52,7 +52,6 @@ export const lisk: Layer2 = opStackL2({
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xE3622468Ea7dD804702B56ca2a4f88C0936995e6'),

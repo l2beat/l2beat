@@ -91,7 +91,6 @@ export const facet: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  discoveryDrivenData: true,
   usesBlobs: false, // uses calldata
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/0xFacet/facet-node',

@@ -64,7 +64,6 @@ export const aevo: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Aevo switches to EigenDA',

@@ -228,7 +228,7 @@ function getDaBridgePermissionsForChain(
   bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
-  if (!bridge.permissions || bridge.permissions === 'UnderReview') {
+  if (!bridge.permissions) {
     return []
   }
 
@@ -245,12 +245,12 @@ function getDaBridgePermissionsForChain(
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {
-  if (project.permissions === 'UnderReview') {
+  if (!project.permissions) {
     return []
   }
 
   const all = []
-  const perChain = project.permissions?.[chain] ?? {}
+  const perChain = project.permissions[chain] ?? {}
   all.push(...(perChain.roles ?? []))
   all.push(...(perChain.actors ?? []))
 

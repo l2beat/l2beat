@@ -5,7 +5,6 @@ import {
   type BlobSchema,
   BlobscanErrorSchema,
   GetBlobsResponseSchema,
-  GetTransactionsWithBlobsSchema,
 } from './types'
 
 // API does not limit it in anyway, so arbitrary limit
@@ -50,67 +49,6 @@ export class BlobScanClient extends ClientCore {
     return blobs.totalBlobs
   }
 
-  async getTransactionsWithBlobsByAddress(
-    fromBlock: number,
-    toBlock: number,
-    address: string,
-  ) {
-    const txs: GetTransactionsWithBlobsSchema['transactions'] = []
-
-    const firstPage = await this._getBlobsByAddress(
-      fromBlock,
-      toBlock,
-      address,
-      1, // first page
-    )
-
-    txs.push(...firstPage.transactions)
-
-    if (
-      firstPage.totalTransactions &&
-      firstPage.totalTransactions > MAX_PER_PAGE
-    ) {
-      const expectedPages =
-        Math.ceil(firstPage.totalTransactions / MAX_PER_PAGE) - 1
-
-      const pages = Array.from({ length: expectedPages }, (_, i) => i + 2)
-
-      await Promise.all(
-        pages.map(async (page) => {
-          const response = await this._getBlobsByAddress(
-            fromBlock,
-            toBlock,
-            address,
-            page,
-          )
-          txs.push(...response.transactions)
-        }),
-      )
-    }
-
-    return txs
-  }
-
-  private async _getBlobsByAddress(
-    fromBlock: number,
-    toBlock: number,
-    address: string,
-    page: number,
-  ) {
-    const params = new URLSearchParams({
-      startBlock: fromBlock.toString(),
-      endBlock: toBlock.toString(),
-      to: address,
-      p: page.toString(),
-      ps: (this.$.maxPerPage ?? MAX_PER_PAGE).toString(),
-      count: 'true',
-    })
-
-    const response = await this.call(`transactions?${params.toString()}`)
-
-    return GetTransactionsWithBlobsSchema.parse(response)
-  }
-
   private async _getBlobs(fromBlock: number, toBlock: number, page: number) {
     const params = new URLSearchParams({
       startBlock: fromBlock.toString(),
@@ -121,6 +59,8 @@ export class BlobScanClient extends ClientCore {
       count: 'true',
       // Per Page
       ps: MAX_PER_PAGE.toString(),
+      // expand property to get transaction data
+      expand: 'transaction',
     })
 
     const response = await this.call(`blobs?${params.toString()}`)

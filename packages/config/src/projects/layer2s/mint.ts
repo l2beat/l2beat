@@ -59,7 +59,6 @@ export const mint: Layer2 = opStackL2({
   },
   isNodeAvailable: true,
   genesisTimestamp: new UnixTime(1715608931),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mint Mainnet Launch',

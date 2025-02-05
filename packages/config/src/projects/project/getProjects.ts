@@ -1,7 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
-import type { Bridge, Layer2, Layer3, ProjectLivenessInfo } from '../../types'
-import type { BaseProject, ProjectCostsInfo } from '../../types'
+import type {
+  BaseProject,
+  Bridge,
+  Layer2,
+  Layer3,
+  ProjectCostsInfo,
+  ProjectLivenessInfo,
+} from '../../types'
 import { isVerified } from '../../verification/isVerified'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
@@ -20,7 +26,6 @@ export function getProjects(): BaseProject[] {
 }
 
 function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
-  const otherMigrationContext = PROJECT_COUNTDOWNS.otherMigration.getContext(p)
   return {
     id: p.id,
     name: p.display.name,
@@ -34,11 +39,11 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       isUnderReview: isUnderReview(p),
       isUnverified: !isVerified(p),
       // countdowns
-      otherMigration: otherMigrationContext
+      otherMigration: p.reasonsForBeingOther
         ? {
-            expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
             pretendingToBe: p.display.category,
-            reasons: otherMigrationContext.reasonsForBeingOther,
+            reasons: p.reasonsForBeingOther,
           }
         : undefined,
     },
@@ -52,9 +57,8 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       capability: p.capability,
       isOther:
         p.display.category === 'Other' ||
-        (PROJECT_COUNTDOWNS.otherMigration.expiresAt.lt(UnixTime.now()) &&
-          !!p.reasonsForBeingOther &&
-          p.reasonsForBeingOther.length > 0),
+        (PROJECT_COUNTDOWNS.otherMigration.lt(UnixTime.now()) &&
+          !!p.reasonsForBeingOther),
       hostChain: getHostChain(
         p.type === 'layer2' ? ProjectId.ETHEREUM : p.hostChain,
       ),

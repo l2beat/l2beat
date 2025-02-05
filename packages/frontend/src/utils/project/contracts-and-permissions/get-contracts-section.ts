@@ -131,10 +131,7 @@ export function getContractsSection(
       'architecture',
       projectParams.architectureImage ?? projectParams.slug,
     ),
-    references: projectParams.contracts?.references ?? [],
-    isIncomplete: projectParams.contracts?.isIncomplete,
-    isUnderReview:
-      projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
+    isUnderReview: projectParams.isUnderReview,
     daSolution,
   }
 }

@@ -3,14 +3,9 @@ import type { Layer2, Layer3 } from '../'
 export function arePermissionsDiscoveryDriven(
   project: Layer2 | Layer3,
 ): boolean {
-  if (project.permissions === undefined) {
+  if (!project.permissions) {
     return true
   }
-
-  if (project.permissions === 'UnderReview') {
-    return true
-  }
-
   return Object.values(project.permissions).every((e) => {
     const all = [...(e?.roles ?? []), ...(e?.actors ?? [])]
     return all.every((p) => p.discoveryDrivenData === true)

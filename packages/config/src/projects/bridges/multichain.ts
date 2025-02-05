@@ -110,7 +110,6 @@ export const multichain: Bridge = {
     },
   },
   contracts: {
-    isIncomplete: true,
     addresses: {
       [discovery.chain]: [
         discovery.getContractDetails(
