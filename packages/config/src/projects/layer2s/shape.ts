@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
@@ -11,7 +11,7 @@ export const shape: Layer2 = opStackL2({
   addedAt: new UnixTime(1730131160), // 2024-10-28
   additionalBadges: [Badge.RaaS.Alchemy],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Shape',
     slug: 'shape',
@@ -30,7 +30,16 @@ export const shape: Layer2 = opStackL2({
       ],
     },
   },
+  finality: {
+    type: 'OPStack',
+    minTimestamp: new UnixTime(1721744473),
+    genesisTimestamp: new UnixTime(1721744473),
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+    stateUpdate: 'disabled',
+  },
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.shape.network',
   genesisTimestamp: new UnixTime(1721744473),
+  stateDerivation: DERIVATION.OPSTACK('SHAPE'),
 })

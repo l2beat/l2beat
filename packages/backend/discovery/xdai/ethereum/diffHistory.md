@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xdd4fd39e32b8055a9cfcda21ff50c869e6cc63c9
+
+# Diff at Wed, 05 Feb 2025 07:21:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 21744313
+- current block number: 21778563
+
+## Description
+
+Config: Remove comp related relatives.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744313 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Unitroller (0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0x6d903f6003cca6255D85CcA4D3B5E5146dC33925)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GovernorBravoDelegate (0x6F6e4785c97885d26466945055d4Ae8931bE6f7a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Comptroller (0xBafE01ff935C7305907c33BF824352eE5979B526)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Comp (0xc00e94Cb662C3520282E6f5717214004A7f26888)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GovernorBravoDelegator (0xc0Da02939E1441F497fd74F78cE7Decb17B66529)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe61fb30c6922d0705a3e14573a5806ed3e6c7f19
 
 # Diff at Fri, 31 Jan 2025 11:49:16 GMT:

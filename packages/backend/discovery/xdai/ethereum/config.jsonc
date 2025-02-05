@@ -17,14 +17,18 @@
   "names": {
     "0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473": "DaiForeignBridge",
     "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": "SDaiForeignBridge",
-    "0x6F6e4785c97885d26466945055d4Ae8931bE6f7a": "GovernorBravoDelegate",
     "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": "BridgeValidators",
-    "0xBafE01ff935C7305907c33BF824352eE5979B526": "Comptroller",
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": "GnosisBridgeGovernanceMultisig"
   },
   "overrides": {
     "DaiForeignBridge": {
-      "ignoreRelatives": ["compToken", "cDaiToken", "daiToken", "erc20token"],
+      "ignoreRelatives": [
+        "compToken",
+        "cDaiToken",
+        "daiToken",
+        "erc20token",
+        "comptroller"
+      ],
       "ignoreMethods": [
         "totalExecutedPerDay",
         "totalSpentPerDay",
@@ -61,14 +65,8 @@
       ],
       "ignoreInWatchMode": ["maxAvailablePerTx"]
     },
-    "GovernorBravoDelegate": {
-      "ignoreMethods": ["getActions", "proposals"]
-    },
     "BridgeValidators": {
       "proxyType": "Eternal Storage proxy"
-    },
-    "Comptroller": {
-      "ignoreMethods": ["getBlockNumber"]
     }
   }
 }
