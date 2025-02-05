@@ -91,7 +91,6 @@ export const fraxtal: Layer2 = opStackL2({
   },
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
-  discoveryDrivenData: true,
   customDa: {
     type: 'Custom',
     name: 'FraxtalDA',

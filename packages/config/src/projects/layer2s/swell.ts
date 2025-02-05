@@ -44,7 +44,6 @@ export const swell = opStackL2({
   },
   stateDerivation: DERIVATION.OPSTACK('SWELL'),
   isNodeAvailable: true,
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'swell',
     chainId: 1923,

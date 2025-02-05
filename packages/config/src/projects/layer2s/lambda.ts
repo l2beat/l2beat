@@ -65,5 +65,4 @@ export const lambda: Layer2 = opStackL2({
       // },
     ],
   },
-  discoveryDrivenData: true,
 })

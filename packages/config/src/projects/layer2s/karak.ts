@@ -36,7 +36,6 @@ export const karak: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
   isNodeAvailable: true,
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'K2 Network Early Access Launch',

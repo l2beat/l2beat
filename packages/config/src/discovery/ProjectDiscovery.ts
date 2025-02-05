@@ -39,11 +39,6 @@ import type {
   SharedEscrow,
 } from '../types'
 import {
-  OP_STACK_CONTRACT_DESCRIPTION,
-  OP_STACK_PERMISSION_TEMPLATES,
-  type OpStackContractName,
-} from './OpStackTypes'
-import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
   type OrbitStackContractTemplate,
@@ -215,18 +210,6 @@ export class ProjectDiscovery {
         }
       })
       .filter(notUndefined)
-  }
-
-  getOpStackPermissions(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): ProjectPermission[] {
-    const resolved = this.computeStackContractPermissions(
-      OP_STACK_PERMISSION_TEMPLATES,
-      overrides,
-      contractOverrides,
-    )
-    return this.transformToPermissions(resolved)
   }
 
   resolveOrbitStackTemplates(
@@ -752,23 +735,6 @@ export class ProjectDiscovery {
     })
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
-    )
-  }
-
-  getOpStackContractDetails(
-    upgradesProxy: Partial<ProjectContract>,
-    overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ProjectContract[] {
-    return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
-      this.hasContract(overrides?.[d.name] ?? d.name),
-    ).map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...upgradesProxy,
-      }),
     )
   }
 

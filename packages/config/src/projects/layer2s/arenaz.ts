@@ -39,7 +39,6 @@ export const arenaz = opStackL2({
     stateUpdate: 'disabled',
   },
   genesisTimestamp,
-  discoveryDrivenData: true,
   stateDerivation: DERIVATION.OPSTACK('ARENAZ'),
   isNodeAvailable: 'UnderReview',
 })

@@ -52,7 +52,6 @@ export const bobanetwork: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
   nonTemplateTrackedTxs: [
     {
       uses: [

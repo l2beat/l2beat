@@ -41,5 +41,4 @@ export const syndicateframe: Layer3 = opStackL3({
   rpcUrl: 'https://rpc-frame.syndicate.io',
   genesisTimestamp: new UnixTime(1707371473),
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
 })
