@@ -2875,6 +2875,13 @@
           }
         ]
       }
+    },
+    {
+      "symbol": "FORT",
+      "address": "0x3A1429d50E0cBBc45c997aF600541Fe1cc3D2923",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "forta"
     }
   ],
   "nova": [
