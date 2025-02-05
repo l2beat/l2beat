@@ -1,7 +1,7 @@
+import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { PolkadotRpcClient } from './PolkadotRpcClient'
-import { Logger } from '@l2beat/backend-tools'
 
 describe(PolkadotRpcClient.name, () => {
   describe(PolkadotRpcClient.prototype.getBlock.name, () => {

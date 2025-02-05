@@ -1,7 +1,7 @@
-import { expect, mockFn, mockObject } from 'earl'
-import { type AvailBlob, AvailDaProvider } from './AvailDaProvider'
-import type { PolkadotRpcClient } from '../../clients'
 import { UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
+import type { PolkadotRpcClient } from '../../clients'
+import { type AvailBlob, AvailDaProvider } from './AvailDaProvider'
 
 describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlobs.name, () => {
