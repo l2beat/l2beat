@@ -539,7 +539,7 @@ function orbitStackCommon(
         {
           name: 'Tradeable Bridge Exit',
           description:
-            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. The user will get the funds immediately, however the third party has to wait for the block to be finalized. This is implemented as a first party functionality inside Arbitrum's token bridge.",
+            "When a user initiates a regular withdrawal a third party verifying the chain can offer to buy this withdrawal by paying the user on L1. The user will get the funds immediately, however the third party has to wait for the block to be finalized. Although implemented as a first party functionality inside Arbitrum's token bridge, this feature is rarely used.",
           risks: [],
           references: [
             {
