@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { OtherMigrationNotice } from '~/components/countdowns/other-migration/other-migration-notice'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/why-am-i-here-notice'
+import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-notice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
@@ -101,6 +102,14 @@ export default async function Page(props: Props) {
                 projectEntry.reasonsForBeingOther.length > 0 && (
                   <WhyAmIHereNotice
                     reasons={projectEntry.reasonsForBeingOther}
+                  />
+                )}
+              {projectEntry.stageConfig.stage !== 'NotApplicable' &&
+                projectEntry.stageConfig.stage !== 'UnderReview' &&
+                projectEntry.stageConfig.downgradePending &&
+                !featureFlags.stageOneRequirementsChanged() && (
+                  <StageOneRequirementsChangeNotice
+                    downgradePending={projectEntry.stageConfig.downgradePending}
                   />
                 )}
               <HighlightableLinkContextProvider>

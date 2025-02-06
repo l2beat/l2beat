@@ -16,6 +16,7 @@ export const externalLinks = {
       'https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe',
     finality:
       'https://medium.com/l2beat/tracking-time-to-finality-of-l2-transactions-051d32f5d5ba',
+    stageOneRequirementsChange: 'FILL THIS',
   },
   askForZkCatalogVerification:
     'https://l2beat.notion.site/ZK-Catalog-Verification-94e940aa2bff4287bb15a19f66e3cead?pvs=25',

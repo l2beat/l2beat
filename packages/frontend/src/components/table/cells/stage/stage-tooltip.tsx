@@ -5,6 +5,7 @@ import {
 } from '~/components/badge/stage-badge'
 import { Callout } from '~/components/callout'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-tooltip-content'
 import { WarningBar } from '~/components/warning-bar'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
@@ -21,7 +22,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
 
   return (
-    <div className="flex max-w-[300px] flex-col py-1">
+    <div className="flex flex-col py-1">
       <div
         className={cn('flex gap-2', isAppchain ? 'flex-col' : 'items-baseline')}
       >
@@ -53,17 +54,18 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
           stageConfig.additionalConsiderations.short
         )
       ) : null}
-      <HorizontalSeparator className="my-4" />
+      <HorizontalSeparator className="my-3" />
 
-      {stageConfig.stage === 'UnderReview' ? (
-        <>
+      {stageConfig.stage === 'UnderReview' && (
+        <p>
           Projects under review might present uncompleted information & data.
           <br />
           L2BEAT Team is working to research & validate content before
           publishing.
-        </>
-      ) : (
-        <>
+        </p>
+      )}
+      {stageConfig.stage !== 'UnderReview' && !stageConfig.downgradePending && (
+        <div>
           {stageConfig.message && (
             <WarningBar
               color="yellow"
@@ -97,14 +99,20 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
               </ul>
             </div>
           )}
-        </>
+        </div>
+      )}
+
+      {stageConfig.stage !== 'UnderReview' && stageConfig.downgradePending && (
+        <StageOneRequirementsChangeTooltipContent
+          downgradePending={stageConfig.downgradePending}
+        />
       )}
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="size-4" variant="blue" />}
+        icon={<InfoIcon className="-mt-px size-4 fill-blue-600" />}
         className={cn(
-          'p-4 font-medium',
+          '!gap-1 p-3 text-[13px] font-medium',
           stageConfig.stage !== 'Stage 2' && 'mt-4',
         )}
       />

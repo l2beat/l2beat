@@ -1046,6 +1046,10 @@ export interface ProjectStatuses {
     pretendingToBe: ScalingProjectCategory
     reasons: ReasonForBeingInOther[]
   }
+  stageOneRequirementsChange?: {
+    expiresAt: number
+    reason: string
+  }
 }
 
 export interface ProjectDisplay {

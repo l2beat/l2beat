@@ -1,4 +1,4 @@
-import type { UsableStageConfig } from '@l2beat/config'
+import { type UsableStageConfig } from '@l2beat/config'
 
 import Image from 'next/image'
 import {
@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-notice'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { InfoIcon } from '~/icons/info'
@@ -114,6 +115,11 @@ export function StageSection({
           )}
         </div>
       )}
+      {stageConfig.downgradePending && (
+        <StageOneRequirementsChangeStageSectionNotice
+          downgradePending={stageConfig.downgradePending}
+        />
+      )}
       {stageConfig.message && (
         <WarningBar
           color="yellow"
@@ -164,8 +170,30 @@ export function StageSection({
                   )}
                 </div>
               </AccordionTrigger>
-              <AccordionContent className="text-lg">
-                <ul className="mx-6 space-y-1 px-2 md:space-y-2">
+              <AccordionContent className="mx-6 space-y-1 text-lg md:space-y-2">
+                {stage.principle && (
+                  <div className="rounded-lg border border-brand p-2">
+                    <p className="ml-6 text-[13px] uppercase">
+                      {stageConfig.downgradePending
+                        ? 'Upcoming principle'
+                        : 'Principle'}
+                    </p>
+                    <div className="flex">
+                      {stage.principle.satisfied === 'UnderReview' ? (
+                        <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
+                      ) : stage.principle.satisfied === true ? (
+                        <SatisfiedIcon className="mt-0.5 size-4 shrink-0 fill-positive" />
+                      ) : (
+                        <MissingIcon className="mt-0.5 size-4 shrink-0 fill-negative" />
+                      )}
+                      <Markdown className="ml-2 font-medium leading-tight max-md:text-base">
+                        {stage.principle.description}
+                      </Markdown>
+                    </div>
+                  </div>
+                )}
+
+                <ul className="space-y-1 px-2 md:space-y-2">
                   {satisfied.map((req, i) => (
                     <li key={i} className="flex">
                       <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive" />

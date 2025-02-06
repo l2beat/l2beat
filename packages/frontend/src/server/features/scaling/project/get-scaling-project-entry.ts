@@ -28,7 +28,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const changes = projectsChangeReport.getChanges(project.id)
-
   const common = {
     type: project.type,
     capability: project.capability,
