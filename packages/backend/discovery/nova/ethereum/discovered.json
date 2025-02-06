@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 21628479,
+  "blockNumber": 21786859,
   "configHash": "0x2f18b76f8ec1ee0143d8241d7b3b22097b19df584865d7bfa4543b4a843649ed",
   "contracts": [
     {
@@ -117,7 +117,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 174350,
+        "batchCount": 184229,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -155,7 +155,7 @@
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 419772,
+        "totalDelayedMessagesRead": 429691,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -886,11 +886,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 419775,
+        "delayedMessageCount": 429694,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 174350,
-        "sequencerReportedSubMessageCount": 81620611
+        "sequencerMessageCount": 184229,
+        "sequencerReportedSubMessageCount": 82160093
       }
     },
     {
@@ -942,7 +942,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 198,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1592,12 +1592,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 21871,
+        "firstUnresolvedNode": 22399,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 21870,
-        "latestNodeCreated": 22023,
+        "latestConfirmed": 22398,
+        "latestNodeCreated": 22551,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -1688,7 +1688,10 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
+    {
+      "name": "bartek.eth-L2BEAT",
+      "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+    },
     {
       "address": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
       "receivedPermissions": [
@@ -1711,10 +1714,19 @@
     },
     { "address": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8" },
     { "address": "0x290Aa3E7533c873B3326DabFe7579e86ed951428" },
-    { "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93" },
+    {
+      "name": "EmilianoBonassi-Conduit",
+      "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+    },
     { "address": "0x375906ADFD34D93236084F462BB2dB0D92129Fe1" },
-    { "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71" },
-    { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
+    {
+      "name": "AleksanderKryukov-Certora",
+      "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+    },
+    {
+      "name": "yoav.eth-EF",
+      "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+    },
     { "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C" },
     {
       "address": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
@@ -1726,8 +1738,14 @@
         }
       ]
     },
-    { "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B" },
-    { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
+    {
+      "name": "DennisonBertram-Tally",
+      "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    },
+    {
+      "name": "cts-Zellic",
+      "address": "0x5a09A94eE8198D3c474d723337aa58023810022C"
+    },
     {
       "address": "0x5B3E4404d05339D41A7E672BC912CBf511Cca294",
       "receivedPermissions": [
@@ -1744,7 +1762,10 @@
         }
       ]
     },
-    { "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1" },
+    {
+      "name": "fred-Arbitrum",
+      "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+    },
     {
       "address": "0x610Aa279989F440820e14248BD3879B148717974",
       "receivedPermissions": [
@@ -1756,11 +1777,23 @@
       ]
     },
     { "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7" },
-    { "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67" },
+    {
+      "name": "JohnMorrow-Gauntlet",
+      "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+    },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
-    { "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F" },
-    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
-    { "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8" },
+    {
+      "name": "GriffGreen-Giveth",
+      "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+    },
+    {
+      "name": "StevenThornton-OpenZeppelin",
+      "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    },
+    {
+      "name": "GoncaloMagalhaes-Immunefi",
+      "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    },
     {
       "address": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47",
       "receivedPermissions": [
@@ -1858,7 +1891,10 @@
         }
       ]
     },
-    { "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33" },
+    {
+      "name": "gzeon-OffchainLabs",
+      "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+    },
     { "address": "0xfE2bf40f2A9183774BF8E871d634A4E50255158B" }
   ],
   "abis": {

@@ -13,7 +13,35 @@
     "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig",
     "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2",
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "LidoDaoAgent",
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress"
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress",
+    // eoa names (mostly for SCs)
+    // arbitrum SC
+    "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
+    "0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
+    "0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
+    "0x444edf8b90763be7015f1f099a0da0ef10250c71": "AleksanderKryukov-Certora",
+    "0x5dd2205c3aac13e592f0a3d85188c948d1781df1": "fred-Arbitrum",
+    "0x0275b3d54a5ddbf8205a75984796efe8b7357bae": "bartek.eth-L2BEAT",
+    "0x9a301de96b15db3ab778e2969bf6caa909ca56e8": "GoncaloMagalhaes-Immunefi",
+    "0x882c6fcb3d358b9d70b97c6999159cea64168b6f": "GriffGreen-Giveth",
+    "0xe2e9d5b97d8c0457b1cf80bc93802bce4df03e33": "gzeon-OffchainLabs",
+    "0x5a09a94ee8198d3c474d723337aa58023810022c": "cts-Zellic",
+    "0x475816ca2a31d601b4e336f5c2418a67978abf09": "yoav.eth-EF",
+    "0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc": "StevenThornton-OpenZeppelin",
+    // kinto SC
+    "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "KintoFoundation",
+    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "MamoriLabs",
+    "0x94561e98DD5E55271f91A103e4979aa6C493745E": "MamoriLabs2",
+    "0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera",
+    "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B": "Hypernative",
+    "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2": "Venn/Ironblocks",
+    "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": "Certora",
+    // kinto validators
+    "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a": "Caldera2",
+    "0x944eB0a2829A859959586b10D54229278534a696": "MamoriLabs3",
+    "0x2bfDA59220413DEd39dD0E443620b5277EcE6348": "Ankr",
+    "0x58028fFbc25aE2e12b96276bDB125955F41D41f3": "Hypernative2",
+    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2"
   },
   "ethereum": {
     "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d": "AlchemyMultisig1"
