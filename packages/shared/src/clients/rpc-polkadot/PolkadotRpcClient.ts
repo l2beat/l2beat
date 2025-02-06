@@ -27,6 +27,10 @@ export class PolkadotRpcClient extends ClientCore {
     const hash = PolkadotGetBlockHashResponse.safeParse(hashResponse)
 
     if (!hash.success) {
+      this.$.logger.warn(`Invalid response`, {
+        height,
+        response: JSON.stringify(hash),
+      })
       throw new Error(`Block ${height ?? 'latest'}: Error during parsing`)
     }
 
@@ -35,7 +39,10 @@ export class PolkadotRpcClient extends ClientCore {
     const block = PolkadotGetBlockResponse.safeParse(blockResponse)
 
     if (!block.success) {
-      console.log(block.error)
+      this.$.logger.warn(`Invalid response`, {
+        height,
+        response: JSON.stringify(blockResponse),
+      })
       throw new Error(`Block ${height ?? 'latest'}: Error during parsing`)
     }
 
