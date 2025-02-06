@@ -62,7 +62,10 @@ export class DaService {
 
       const hasInboxMatch = ethereumConfig.inbox === blob.inbox
 
-      if (!ethereumConfig.sequencers || ethereumConfig.sequencers.length > 0) {
+      if (
+        !ethereumConfig.sequencers ||
+        ethereumConfig.sequencers.length === 0
+      ) {
         return hasInboxMatch
       }
 
