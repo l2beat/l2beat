@@ -5,24 +5,6 @@ import { PROJECT_COUNTDOWNS } from '../../../../common/projectCountdowns'
 import type { Stage } from '../../../../types'
 import { createGetStage } from './stage'
 
-/**
- * PERFECT STAGES TESTS
- * - it goes up to the last stage if all requirements are met
- * - it goes up to the last stage where requirements are met
- * - it handles custom messages
- * - it handles under review state
- * - it omits null checklist item from requirements and summary
- * PRINCIPLE HANDLING
- * - all cases
- * STAGE 0 HANDLING
- * - it is minimum stage 0 even if requirements are not met
- * - it returns Stage 0 with warning message if project does not fulfill stage 0 requirements
- * - it returns Stage 0 with under review message if stage 0 requirement is being reviewed
- * - it throws error if more than one message should be returned
- *
- * PLEASE DO CHECK IF I MISSED ANYTHING WHILE REVIEWING THE CODE
- */
-
 describe(createGetStage.name, () => {
   it('goes up to the last stage if all requirements are met', () => {
     const result = getTestStage({
@@ -402,7 +384,7 @@ describe(createGetStage.name, () => {
       })
     })
 
-    it('handles stage assesment noramally if principle met and timer not expired', () => {
+    it('handles stage assessment normally if principle met and timer not expired', () => {
       PROJECT_COUNTDOWNS.stageChanges = FUTURE_TIME
 
       const result = getTestStage({
@@ -443,7 +425,7 @@ describe(createGetStage.name, () => {
       })
     })
 
-    it('handles stage assesment noramally if principle met and timer expired', () => {
+    it('handles stage assessment normally if principle met and timer expired', () => {
       PROJECT_COUNTDOWNS.stageChanges = PAST_TIME
 
       const result = getTestStage({
