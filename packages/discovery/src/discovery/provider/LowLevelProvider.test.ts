@@ -1,11 +1,11 @@
-import { expect, mockFn, mockObject } from 'earl'
-import { LowLevelProvider } from './LowLevelProvider'
-import type { IEtherscanClient } from '../../utils/IEtherscanClient'
-import type { providers } from 'ethers'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
+import { expect, mockFn, mockObject } from 'earl'
+import type { providers } from 'ethers'
+import type { IEtherscanClient } from '../../utils/IEtherscanClient'
+import { LowLevelProvider } from './LowLevelProvider'
 
-describe.only(LowLevelProvider.name, () => {
+describe(LowLevelProvider.name, () => {
   const ETHERSCAN_PROVIDER = mockObject<IEtherscanClient>()
   let time: InstalledClock
   let originalConsole: {
