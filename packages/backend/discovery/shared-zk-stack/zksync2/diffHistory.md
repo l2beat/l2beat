@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x87a103e7bdd583bf98d644f5d93ee53440ea0eae
+
+# Diff at Thu, 06 Feb 2025 09:34:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 55181277
+- current block number: 55387644
+
+## Description
+
+Seems to be the execution of [AAVE DAO Airdrop Claim Extension Request](https://www.tally.xyz/gov/zksync/proposal/57908166665921469155508302947951953966033148387652385473031300159207145997268?govId=eip155:324:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) TPP.
+
+## Watched changes
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.19:
++        "0x721b6d77a58FaaF540bE49F28D668a46214Ba44c"
+    }
+```
+
 Generated with discovered.json: 0xd294fbd6e769de9056e40610ba279d1fd676df80
 
 # Diff at Tue, 04 Feb 2025 12:33:45 GMT:
