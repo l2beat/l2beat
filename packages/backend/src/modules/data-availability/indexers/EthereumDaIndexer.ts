@@ -56,7 +56,7 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
         fillBackSince,
       )
 
-    const records = this.daService.processBlobs(blobs, presentRecords)
+    const records = this.daService.generateRecords(blobs, presentRecords)
 
     await this.$.db.dataAvailability.upsertMany(records)
 

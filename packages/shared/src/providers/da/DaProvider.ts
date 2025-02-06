@@ -1,22 +1,22 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 
-export type DaBlobBase = {
+export interface DaBlobBase {
   blockTimestamp: UnixTime
   size: bigint
 }
 
-export type EthereumBlob = DaBlobBase & {
+export interface EthereumBlob extends DaBlobBase {
   type: 'ethereum'
   inbox: string
   sequencer: string
 }
 
-export type AvailBlob = DaBlobBase & {
+export interface AvailBlob extends DaBlobBase {
   type: 'avail'
   appId: string
 }
 
-export type CelestiaBlob = DaBlobBase & {
+export interface CelestiaBlob extends DaBlobBase {
   type: 'celestia'
   namespace: string
 }

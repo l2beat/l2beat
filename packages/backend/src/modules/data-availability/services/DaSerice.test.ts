@@ -44,7 +44,7 @@ const MOCK_PROJECT_CONFIGS = [
 
 describe(DaService.name, () => {
   // biome-ignore lint/suspicious/noFocusedTests: <explanation>
-  describe.only(DaService.prototype.processBlobs.name, () => {
+  describe.only(DaService.prototype.generateRecords.name, () => {
     it('should match ethereum blobs', async () => {
       const TIME = UnixTime.now()
 
@@ -86,7 +86,7 @@ describe(DaService.name, () => {
       const mockRecords: DataAvailabilityRecord[] = []
 
       const service = new DaService(MOCK_PROJECT_CONFIGS)
-      const result = service.processBlobs(mockBlobs, mockRecords)
+      const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
         {
@@ -130,7 +130,7 @@ describe(DaService.name, () => {
       const mockRecords: DataAvailabilityRecord[] = []
 
       const service = new DaService(MOCK_PROJECT_CONFIGS)
-      const result = service.processBlobs(mockBlobs, mockRecords)
+      const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
         {
@@ -169,7 +169,7 @@ describe(DaService.name, () => {
       const mockRecords: DataAvailabilityRecord[] = []
 
       const service = new DaService(MOCK_PROJECT_CONFIGS)
-      const result = service.processBlobs(mockBlobs, mockRecords)
+      const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
         {
@@ -251,7 +251,7 @@ describe(DaService.name, () => {
       ]
 
       const service = new DaService(MOCK_PROJECT_CONFIGS)
-      const result = service.processBlobs(mockBlobs, mockRecords)
+      const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
         {

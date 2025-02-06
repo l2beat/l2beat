@@ -16,11 +16,11 @@ export class DaService {
     }[],
   ) {}
 
-  processBlobs(
+  generateRecords(
     blobs: DaBlob[],
-    records: DataAvailabilityRecord[],
+    previousRecords: DataAvailabilityRecord[],
   ): DataAvailabilityRecord[] {
-    const updatedRecords = [...records]
+    const updatedRecords = [...previousRecords]
 
     const addOrMerge = (record: DataAvailabilityRecord) => {
       const existing = updatedRecords.find(
