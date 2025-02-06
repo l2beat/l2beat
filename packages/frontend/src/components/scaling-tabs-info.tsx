@@ -23,10 +23,11 @@ export function ValidiumsAndOptimiumsInfo() {
   return (
     <InfoWithMobileDrawer
       title="What are Validiums and Optimiums?"
-      content="Alt-DAs are L2s that, similarly to Rollups, periodically post state
-      commitments to Ethereum that are validated by it, however data is not
-      posted to Ethereum. This means that additional trust assumptions, external
-      to Ethereum, are introduced to prevent data withholding attacks."
+      content="Validiums and Optimiums are L2s that, similarly to Rollups,
+      periodically post state commitments to Ethereum that are validated by it,
+      however data is not posted to Ethereum. This means that additional trust
+      assumptions, external to Ethereum, are introduced to prevent data
+      withholding attacks."
     />
   )
 }
