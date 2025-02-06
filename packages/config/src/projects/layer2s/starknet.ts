@@ -246,10 +246,14 @@ const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
 assert(
   proxyGovernors[0].address ===
     discovery.getContract('StarknetAdminMultisig').address &&
-    proxyGovernors.length === 1 &&
+    proxyGovernors[1].address ===
+      discovery.getContract('StarknetSecurityCouncil').address &&
+    proxyGovernors.length === 2 &&
     governors[0].address ===
       discovery.getContract('StarknetOpsMultisig').address &&
-    governors.length === 1,
+    governors[1].address ===
+      discovery.getContract('StarknetSecurityCouncil').address &&
+    governors.length === 2,
   'gov has changed, review non-discodriven perms and gov section.',
 )
 
@@ -1044,7 +1048,7 @@ export const starknet: Layer2 = {
           upgradeDelay: starknetDelaySeconds
             ? formatSeconds(starknetDelaySeconds)
             : 'No delay',
-          upgradableBy: ['StarknetAdminMultisig'],
+          upgradableBy: ['StarknetAdminMultisig', 'StarknetSecurityCouncil'],
         }),
         ...getSHARPVerifierContracts(discovery, verifierAddress),
         discovery.getContractDetails(
@@ -1079,6 +1083,11 @@ export const starknet: Layer2 = {
   permissions: {
     [discovery.chain]: {
       actors: [
+        discovery.getMultisigPermission(
+          'StarknetSecurityCouncil',
+          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
+            delayDescriptionFromSeconds(starknetDelaySeconds),
+        ),
         discovery.getMultisigPermission(
           'StarknetAdminMultisig',
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
