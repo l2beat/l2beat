@@ -6,9 +6,16 @@ export function getContractName(
 ): ApiAddressEntry['name'] {
   if (c.values?.['$members']) {
     const threshold = c.values?.['$threshold'] as number
-    const members = c.values?.['$members'] as string[]
+    const members = (c.values?.['$members'] as string[]).length
+    const percentage = ((threshold / members) * 100).toFixed(0)
 
-    return `${c.name} | ${threshold}/${members.length}`
+    const nodeName = [
+      `${threshold}/${members}`,
+      ...(threshold === members ? [] : [`${percentage}%`]),
+      c.name,
+    ].join(' ')
+
+    return nodeName
   }
 
   return c.name
