@@ -769,6 +769,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,
@@ -968,6 +969,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,

@@ -151,6 +151,7 @@ export const fuel: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: null,
         usersCanExitWithoutCooperation: false,
