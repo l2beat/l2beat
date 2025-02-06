@@ -135,7 +135,7 @@ export const zkspace: Layer2 = {
       rollupNodeSourceAvailable: false,
     },
     stage1: {
-      principle: true,
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,

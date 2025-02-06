@@ -157,7 +157,7 @@ export const termstructure: Layer2 = {
       rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
-      principle: true,
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,

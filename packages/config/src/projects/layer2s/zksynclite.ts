@@ -197,7 +197,7 @@ export const zksynclite: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: true,
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,

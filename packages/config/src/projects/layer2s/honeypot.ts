@@ -74,7 +74,7 @@ export const honeypot: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: true,
+        principle: false,
         stateVerificationOnL1: {
           satisfied: false,
           message: 'There is no onchain fraud proof system.',

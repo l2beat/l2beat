@@ -432,7 +432,7 @@ export const ink: Layer2 = {
       rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
-      principle: true,
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: true,
       usersHave7DaysToExit: true,

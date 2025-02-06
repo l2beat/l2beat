@@ -259,7 +259,7 @@ export const kroma: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: true,
+        principle: false,
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: false,
