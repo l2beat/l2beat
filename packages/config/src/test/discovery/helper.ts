@@ -1,6 +1,6 @@
 // TODO(radomski): This is duplicated in the l2b package, shouldn't be
 import { createHash } from 'crypto'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync } from 'fs'
 import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import type { DiscoveryConfig, TemplateService } from '@l2beat/discovery'
@@ -16,23 +16,6 @@ export function getDiscoveryHash(projectName: string, chain: string): Hash160 {
   const hasher = createHash('sha1')
   hasher.update(JSON.stringify(curDiscovery))
   return Hash160(`0x${hasher.digest('hex')}`)
-}
-
-export function updateDiffHistoryHash(
-  diffHistoryPath: string,
-  projectName: string,
-  chain: string,
-) {
-  let content = readFileSync(diffHistoryPath, 'utf-8')
-
-  if (content.startsWith(HASH_LINE_PREFIX)) {
-    content = content.split('\n').slice(2).join('\n')
-  }
-
-  const hash = getDiscoveryHash(projectName, chain)
-  const hashLine = `${HASH_LINE_PREFIX}${hash.toString()}\n`
-
-  writeFileSync(diffHistoryPath, `${hashLine}\n${content}`)
 }
 
 export function getDiffHistoryHash(
