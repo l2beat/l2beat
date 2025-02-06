@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xc1e43b3b90793a3739173b71a2c7dce6122f42ca
+
+# Diff at Thu, 06 Feb 2025 09:08:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21736634
+- current block number: 21786466
+
+## Description
+
+Adapter for Doctor Who (??) deployed, not yet in use.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.130:
++        "0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
+      values.CrossChainContracts.130:
++        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DoctorWho_Adapter (0xFADcC43096756e1527306FD92982FEbBe3c629Fa)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/DoctorWho_Adapter.sol | 588 +++++++++++++++++++++
+ 1 file changed, 588 insertions(+)
+```
+
 Generated with discovered.json: 0xaa2d1977472327aec38f40d945810841efd7dcc8
 
 # Diff at Thu, 30 Jan 2025 10:04:12 GMT:
