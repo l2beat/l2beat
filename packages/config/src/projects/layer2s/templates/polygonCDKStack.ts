@@ -2,9 +2,9 @@ import type { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
 } from '@l2beat/shared-pure'
 import { ethereum } from '../../../chains/ethereum'
 import {
