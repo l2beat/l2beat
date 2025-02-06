@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 303209778,
+  "blockNumber": 303211044,
   "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
@@ -192,11 +192,8 @@
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
         "delayedMessageCount": 192374,
-        "delayedMessageCount": 192374,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 10322,
-        "sequencerReportedSubMessageCount": 1505007
         "sequencerMessageCount": 10322,
         "sequencerReportedSubMessageCount": 1505007
       }
@@ -322,12 +319,9 @@
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 8841,
-        "firstUnresolvedNode": 8841,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 8840,
-        "latestNodeCreated": 8989,
         "latestConfirmed": 8840,
         "latestNodeCreated": 8989,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
@@ -854,7 +848,6 @@
         ],
         "$upgradeCount": 5,
         "batchCount": 10322,
-        "batchCount": 10322,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -887,7 +880,6 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 5,
-        "totalDelayedMessagesRead": 192372,
         "totalDelayedMessagesRead": 192372,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"

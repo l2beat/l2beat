@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x83f1fe38988c0215bd699e7c5fbef4b4aead1a88
+Generated with discovered.json: 0x79d39c51058c7f289a5d331853b305e9a0fe88dd
 
-# Diff at Thu, 06 Feb 2025 10:59:31 GMT:
+# Diff at Thu, 06 Feb 2025 11:01:39 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@c54a05b364470dff320b43e7d32479f51cdddc7b block: 286430025
-- current block number: 303210532
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2061023b431baba3e5db4c021fc2fe8a84244dd3 block: 286430025
+- current block number: 303211044
 
 ## Description
 
@@ -76,68 +76,8 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 
 ```diff
 +   Status: CREATED
-    contract AutomataDaoStorage (0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AutomataPckDao (0x31F18aA7B4cbAD7A726BCBF5AB3e286fC0b02A82)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AutomataEnclaveIdentityDao (0x45f91C0d9Cf651785d93fcF7e9E97dE952CdB910)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract V3QuoteVerifier (0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1)
     +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.
-```
-
-```diff
-+   Status: CREATED
-    contract PCKHelper (0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract X509CRLHelper (0x6e204fEAe40F668a06E78a83b66185FFC8892DDA)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract FmspcTcbHelper (0x71056B540b4E60D0E8eFb55FAd487C486B09FFF5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract PCCSRouter (0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AutomataFmspcTcbDao (0x9c54C72867b07caF2e6255CE32983c28aFE40F26)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract EnclaveIdentityHelper (0xae27D762EED6958bc34b358bd7C78c7211fe77F8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AutomataPcsDao (0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1)
-    +++ description: None
 ```
 
 ```diff
@@ -149,20 +89,10 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
 ## Source code changes
 
 ```diff
-.../rari/arbitrum/.flat/AutomataDaoStorage.sol     |  899 ++++++
- .../arbitrum/.flat/AutomataEnclaveIdentityDao.sol  |  698 +++++
- .../rari/arbitrum/.flat/AutomataFmspcTcbDao.sol    |  733 +++++
- .../rari/arbitrum/.flat/AutomataPckDao.sol         | 2437 ++++++++++++++++
- .../rari/arbitrum/.flat/AutomataPcsDao.sol         | 1935 +++++++++++++
- .../rari/arbitrum/.flat/EnclaveIdentityHelper.sol  | 2685 ++++++++++++++++++
- .../rari/arbitrum/.flat/EspressoTEEVerifier.sol    |  637 +++++
- .../rari/arbitrum/.flat/FmspcTcbHelper.sol         | 2988 ++++++++++++++++++++
- .../rari/arbitrum/.flat/PCCSRouter.sol             |  610 ++++
- .../rari/arbitrum/.flat/PCKHelper.sol              | 2625 +++++++++++++++++
+.../rari/arbitrum/.flat/EspressoTEEVerifier.sol    |  637 +++++
  .../SequencerInbox/SequencerInbox.sol              |  141 +-
- .../rari/arbitrum/.flat/V3QuoteVerifier.sol        | 2547 +++++++++++++++++
- .../rari/arbitrum/.flat/X509CRLHelper.sol          | 2485 ++++++++++++++++
- 13 files changed, 21414 insertions(+), 6 deletions(-)
+ .../rari/arbitrum/.flat/V3QuoteVerifier.sol        | 2547 ++++++++++++++++++++
+ 3 files changed, 3319 insertions(+), 6 deletions(-)
 ```
 
 Generated with discovered.json: 0xa17f3fb2888edcfb26dd6f8767766d96af24a021
