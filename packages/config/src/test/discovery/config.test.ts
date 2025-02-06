@@ -7,11 +7,7 @@ import { bridges } from '../../projects/bridges'
 import { layer2s } from '../../projects/layer2s'
 import { layer3s } from '../../projects/layer3s'
 import { onChainProjects } from '../../projects/onChainProjects'
-import {
-  discoveryNeedsRefresh,
-  getDiffHistoryHash,
-  getDiscoveryHash,
-} from './helper'
+import { getDiffHistoryHash } from './helper'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader(join(process.cwd(), '../config'))
@@ -98,15 +94,11 @@ describe('discovery config.jsonc', () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = configReader.readDiscovery(c.name, c.chain)
+        const reason = templateService.discoveryNeedsRefresh(discovery, c)
 
-        const needsDiscoveryReason = discoveryNeedsRefresh(
-          discovery,
-          c,
-          templateService,
-        )
         assert(
-          needsDiscoveryReason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${needsDiscoveryReason}.\n Run "pnpm refresh-discovery"`,
+          reason === undefined,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
         )
       }
     }
@@ -200,8 +192,8 @@ describe('discovery config.jsonc', () => {
     for (const configs of chainConfigs ?? []) {
       if (configs.length > 0) {
         for (const c of configs) {
+          const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
           const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
-          const currentHash = getDiscoveryHash(c.name, c.chain)
           const savedHash = getDiffHistoryHash(diffHistoryPath)
           assert(
             savedHash !== undefined,
