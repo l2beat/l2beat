@@ -743,6 +743,8 @@ export interface DaLayer {
 
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
+  /** The time it takes to finalize the data. @unit seconds */
+  finality?: number
   consensusAlgorithm?: DaConsensusAlgorithm
   throughput?: DaLayerThroughput
   dataAvailabilitySampling?: DataAvailabilitySampling
