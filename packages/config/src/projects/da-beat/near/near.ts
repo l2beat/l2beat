@@ -162,7 +162,6 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       },
     },
   },
-  daBridges: [],
   milestones: [
     {
       title: 'Near mainnet launch',
