@@ -3,6 +3,6 @@
   "displayName": "QuoteVerifier",
   "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.",
   "ignoreInWatchMode": [""],
-  "ignoreRelatives": [""],
+  "ignoreRelatives": ["pccsRouter"],
   "fields": {}
 }

@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 303210532,
+  "blockNumber": 303209778,
   "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
   "contracts": [
     {
@@ -192,8 +192,11 @@
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
         "delayedMessageCount": 192374,
+        "delayedMessageCount": 192374,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+        "sequencerMessageCount": 10322,
+        "sequencerReportedSubMessageCount": 1505007
         "sequencerMessageCount": 10322,
         "sequencerReportedSubMessageCount": 1505007
       }
@@ -237,19 +240,6 @@
         "owner": "0x139C5A235632EDdad741ff380112B3161d31a21C",
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
-    },
-    {
-      "name": "AutomataDaoStorage",
-      "address": "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2",
-      "sourceHashes": [
-        "0xda62cad27d07c1aac70e964a1ac56719266d50567c0f90a2a3c1dba2f1c32a36"
-      ],
-      "sinceTimestamp": 1732458843,
-      "values": {
-        "$immutable": true,
-        "owner": "0x7E212E611826122dC69098FBe0F4057B823751F1",
-        "paused": false
       }
     },
     {
@@ -332,9 +322,12 @@
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 8841,
+        "firstUnresolvedNode": 8841,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
+        "latestConfirmed": 8840,
+        "latestNodeCreated": 8989,
         "latestConfirmed": 8840,
         "latestNodeCreated": 8989,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
@@ -408,23 +401,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "AutomataPckDao",
-      "address": "0x31F18aA7B4cbAD7A726BCBF5AB3e286fC0b02A82",
-      "sourceHashes": [
-        "0xd0a8f081fa62caaa8d1c56572d76049b52cc962756bbeffd9a2e8fc32f89dd97"
-      ],
-      "sinceTimestamp": 1732458850,
-      "values": {
-        "$immutable": true,
-        "crlLib": "0x6e204fEAe40F668a06E78a83b66185FFC8892DDA",
-        "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
-        "pckLib": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B",
-        "Pcs": "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1",
-        "resolver": "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2",
-        "x509": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B"
-      }
     },
     {
       "name": "Inbox",
@@ -520,26 +496,6 @@
       }
     },
     {
-      "name": "AutomataEnclaveIdentityDao",
-      "address": "0x45f91C0d9Cf651785d93fcF7e9E97dE952CdB910",
-      "sourceHashes": [
-        "0xa605f1b3d42c21cecc568c977508d220a842e1617e2af424fa2dd476a344b58d"
-      ],
-      "sinceTimestamp": 1732458853,
-      "values": {
-        "$immutable": true,
-        "EnclaveIdentityLib": "0xae27D762EED6958bc34b358bd7C78c7211fe77F8",
-        "getEnclaveIdentityIssuerChain": {
-          "signingCert": "0x",
-          "rootCert": "0x"
-        },
-        "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
-        "Pcs": "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1",
-        "resolver": "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2",
-        "x509": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B"
-      }
-    },
-    {
       "name": "V3QuoteVerifier",
       "address": "0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1",
       "template": "espresso/Sequencing/QuoteVerifier",
@@ -597,24 +553,6 @@
         "router": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
         "whitelist": "0x0000000000000000000000000000000000000000"
       }
-    },
-    {
-      "name": "PCKHelper",
-      "address": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B",
-      "sourceHashes": [
-        "0xec3401025e8dbc64b99a7d4f8207af5217d9d1127897d7139c2d18f89381130f"
-      ],
-      "sinceTimestamp": 1732458755,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "X509CRLHelper",
-      "address": "0x6e204fEAe40F668a06E78a83b66185FFC8892DDA",
-      "sourceHashes": [
-        "0x525d23dde5a4eb277f8234e434d77ce8ff8c50f73881be34389f44254552e3d0"
-      ],
-      "sinceTimestamp": 1732458794,
-      "values": { "$immutable": true }
     },
     {
       "name": "Caldera Multisig",
@@ -746,33 +684,6 @@
       "derivedName": "GnosisSafeL2"
     },
     {
-      "name": "FmspcTcbHelper",
-      "address": "0x71056B540b4E60D0E8eFb55FAd487C486B09FFF5",
-      "sourceHashes": [
-        "0x07b3ad406551134a71e5b9dd801ff9c0f2eb036bc2102f02eacaae811a8fafc6"
-      ],
-      "sinceTimestamp": 1732458711,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "PCCSRouter",
-      "address": "0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5",
-      "sourceHashes": [
-        "0x2fe5fe695107c0e252fcd2824b1b7d0db23b52694c21ba0d024db7d66f2b8f9a"
-      ],
-      "sinceTimestamp": 1732459175,
-      "values": {
-        "$immutable": true,
-        "crlHelperAddr": "0x6e204fEAe40F668a06E78a83b66185FFC8892DDA",
-        "fmspcTcbDaoAddr": "0x9c54C72867b07caF2e6255CE32983c28aFE40F26",
-        "owner": "0x7E212E611826122dC69098FBe0F4057B823751F1",
-        "pckDaoAddr": "0x31F18aA7B4cbAD7A726BCBF5AB3e286fC0b02A82",
-        "pckHelperAddr": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B",
-        "pcsDaoAddr": "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1",
-        "qeIdDaoAddr": "0x45f91C0d9Cf651785d93fcF7e9E97dE952CdB910"
-      }
-    },
-    {
       "name": "L1CustomGateway",
       "address": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
       "template": "orbitstack/CustomGateway",
@@ -867,23 +778,6 @@
       }
     },
     {
-      "name": "AutomataFmspcTcbDao",
-      "address": "0x9c54C72867b07caF2e6255CE32983c28aFE40F26",
-      "sourceHashes": [
-        "0xd0893b8c3916ecfd55988bb79e060d538400ed8f26f86b7c2bd935a7382a3bcf"
-      ],
-      "sinceTimestamp": 1732458857,
-      "values": {
-        "$immutable": true,
-        "FmspcTcbLib": "0x71056B540b4E60D0E8eFb55FAd487C486B09FFF5",
-        "getTcbIssuerChain": { "signingCert": "0x", "rootCert": "0x" },
-        "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
-        "Pcs": "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1",
-        "resolver": "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2",
-        "x509": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B"
-      }
-    },
-    {
       "name": "ValidatorUtils",
       "address": "0x9e83136d4B3AD04C766591EA51712F9aEa3194C0",
       "template": "orbitstack/ValidatorUtils",
@@ -960,6 +854,7 @@
         ],
         "$upgradeCount": 5,
         "batchCount": 10322,
+        "batchCount": 10322,
         "batchPosterManager": "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77",
         "batchPosters": ["0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -992,6 +887,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 5,
+        "totalDelayedMessagesRead": 192372,
         "totalDelayedMessagesRead": 192372,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
@@ -1072,30 +968,6 @@
       }
     },
     {
-      "name": "EnclaveIdentityHelper",
-      "address": "0xae27D762EED6958bc34b358bd7C78c7211fe77F8",
-      "sourceHashes": [
-        "0x8cb9bf27f546c16015d047c116995a1a8698ef9b3f17674dc106b8c79966fa41"
-      ],
-      "sinceTimestamp": 1732458619,
-      "values": { "$immutable": true }
-    },
-    {
-      "name": "AutomataPcsDao",
-      "address": "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1",
-      "sourceHashes": [
-        "0x2fb6af8afb617d93e97cf97cc322dd628e0787969eea1d5b3e7607a5997a28ed"
-      ],
-      "sinceTimestamp": 1732458846,
-      "values": {
-        "$immutable": true,
-        "crlLib": "0x6e204fEAe40F668a06E78a83b66185FFC8892DDA",
-        "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
-        "resolver": "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2",
-        "x509": "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B"
-      }
-    },
-    {
       "name": "EspressoTEEVerifier",
       "address": "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb",
       "template": "espresso/Sequencing/EspressoTEEVerifier",
@@ -1130,7 +1002,6 @@
     { "address": "0x0CA4c24079a191e08F659699292e5C75274EF253" },
     { "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A" },
     { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
-    { "address": "0x7E212E611826122dC69098FBe0F4057B823751F1" },
     { "address": "0x90E43f5d772e50B01B3F9596f65AD5653467d010" },
     { "address": "0x93616128705070474e0D8EdD11349c45668ac9DC" },
     { "address": "0x9a2859B2a83148b8DE25d26643B5407555D219E1" },
@@ -1484,77 +1355,12 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x2bBc0Ccc218E63Ad4D2bbb7bdE1375B092FD38a2": [
-      "constructor()",
-      "error AlreadyInitialized()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error NewOwnerIsZeroAddress()",
-      "error NoHandoverRequest()",
-      "error Unauthorized()",
-      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
-      "event OwnershipHandoverRequested(address indexed pendingOwner)",
-      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function attest(bytes32 key, bytes attData, bytes32 attDataHash) returns (bytes32 attestationId, bytes32 hashAttestationid)",
-      "function cancelOwnershipHandover() payable",
-      "function collateralHashPointer(bytes32 key) pure returns (bytes32 collateralHashAttId)",
-      "function collateralPointer(bytes32 key) pure returns (bytes32 collateralAttId)",
-      "function completeOwnershipHandover(address pendingOwner) payable",
-      "function getTcbm(bytes32 rawTcbKey) view returns (bytes18 tcbm)",
-      "function isAuthorizedCaller(address caller) view returns (bool)",
-      "function owner() view returns (address result)",
-      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
-      "function pauseCallerRestriction()",
-      "function paused() view returns (bool)",
-      "function printTcbmSet(bytes16 qeid, bytes2 pceid) view returns (bytes18[] set)",
-      "function readAttestation(bytes32 attestationId) view returns (bytes attData)",
-      "function renounceOwnership() payable",
-      "function requestOwnershipHandover() payable",
-      "function revokeDao(address revoked)",
-      "function setCallerAuthorization(address caller, bool authorized)",
-      "function setTcbm(bytes16 qeid, bytes2 pceid, bytes18 tcbm)",
-      "function setTcbrMapping(bytes32 rawTcbKey, bytes18 tcbm)",
-      "function transferOwnership(address newOwner) payable",
-      "function unpauseCallerRestriction()",
-      "function updateDao(address _pcsDao, address _pckDao, address _fmspcTcbDao, address _enclaveIdDao)"
-    ],
     "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
-    ],
-    "0x31F18aA7B4cbAD7A726BCBF5AB3e286fC0b02A82": [
-      "constructor(address _storage, address _p256, address _pcs, address _x509, address _crl)",
-      "error Certificate_Expired()",
-      "error Certificate_Revoked(uint256 serialNum)",
-      "error Expired_Certificates()",
-      "error Invalid_Issuer_Name()",
-      "error Invalid_PCK_CA(uint8 ca)",
-      "error Invalid_Signature()",
-      "error Invalid_Subject_Name()",
-      "error Missing_Issuer()",
-      "error Pck_Not_Found()",
-      "error TCB_Mismatch()",
-      "function P256_VERIFIER() view returns (address)",
-      "function PCK_KEY(bytes16 qeidBytes, bytes2 pceidBytes, bytes18 tcbmBytes) pure returns (bytes32 key)",
-      "function Pcs() view returns (address)",
-      "function TCB_MAPPING_KEY(bytes16 qeid, bytes2 pceid, bytes16 platformCpuSvn, bytes2 platformPceSvn) pure returns (bytes32 key)",
-      "function crlLib() view returns (address)",
-      "function getAttestedData(bytes32 key) view returns (bytes attestationData)",
-      "function getCert(string qeid, string platformCpuSvn, string platformPceSvn, string pceid) view returns (bytes pckCert)",
-      "function getCerts(string qeid, string pceid) view returns (string[] tcbms, bytes[] pckCerts)",
-      "function getCollateralHash(bytes32 key) view returns (bytes32 collateralHash)",
-      "function getPckCertChain(uint8 ca) view returns (bytes intermediateCert, bytes rootCert)",
-      "function getPlatformTcbByIdAndSvns(string qeid, string pceid, string platformCpuSvn, string platformPceSvn) view returns (string tcbm)",
-      "function pckLib() view returns (address)",
-      "function resolver() view returns (address)",
-      "function upsertPckCert(uint8 ca, string qeid, string pceid, string tcbm, bytes cert) returns (bytes32 attestationId)",
-      "function upsertPlatformTcbs(string qeid, string pceid, string platformCpuSvn, string platformPceSvn, string tcbm) returns (bytes32)",
-      "function x509() view returns (address)"
     ],
     "0x37e60F80d921dc5E7f501a7130F31f6548dBa564": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1638,24 +1444,6 @@
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
     ],
-    "0x45f91C0d9Cf651785d93fcF7e9E97dE952CdB910": [
-      "constructor(address _storage, address _p256, address _pcs, address _enclaveIdentityHelper, address _x509Helper)",
-      "error Enclave_Id_Expired()",
-      "error Enclave_Id_Mismatch()",
-      "error Incorrect_Enclave_Id_Version()",
-      "error Invalid_TCB_Cert_Signature()",
-      "function ENCLAVE_ID_KEY(uint256 id, uint256 version) pure returns (bytes32 key)",
-      "function EnclaveIdentityLib() view returns (address)",
-      "function P256_VERIFIER() view returns (address)",
-      "function Pcs() view returns (address)",
-      "function getAttestedData(bytes32 key) view returns (bytes attestationData)",
-      "function getCollateralHash(bytes32 key) view returns (bytes32 collateralHash)",
-      "function getEnclaveIdentity(uint256 id, uint256 version) view returns (tuple(string identityStr, bytes signature) enclaveIdObj)",
-      "function getEnclaveIdentityIssuerChain() view returns (bytes signingCert, bytes rootCert)",
-      "function resolver() view returns (address)",
-      "function upsertEnclaveIdentity(uint256 id, uint256 version, tuple(string identityStr, bytes signature) enclaveIdentityObj) returns (bytes32 attestationId)",
-      "function x509() view returns (address)"
-    ],
     "0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1": [
       "constructor(address _ecdsaVerifier, address _router)",
       "function P256_VERIFIER() view returns (address)",
@@ -1669,16 +1457,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x4Aca9C0EB063401C9F5c2Fc4487DBC5ccF1C9E2B": [
-      "function certIsNotExpired(bytes der) view returns (bool isValid)",
-      "function getIssuerCommonName(bytes der) pure returns (string issuerCommonName)",
-      "function getSerialNumber(bytes der) pure returns (uint256 serialNum)",
-      "function getSubjectCommonName(bytes der) pure returns (string subjectCommonName)",
-      "function getSubjectPublicKey(bytes der) pure returns (bytes pubKey)",
-      "function getTbsAndSig(bytes der) pure returns (bytes tbs, bytes sig)",
-      "function parsePckExtension(bytes der, uint256 extensionPtr) pure returns (uint16 pcesvn, uint8[] cpusvns, bytes fmspcBytes, bytes pceidBytes)",
-      "function parseX509DER(bytes der) pure returns (tuple(uint256 serialNumber, string issuerCommonName, uint256 validityNotBefore, uint256 validityNotAfter, string subjectCommonName, bytes subjectPublicKey, uint256 extensionPtr, bytes signature, bytes tbs) cert)"
     ],
     "0x532Ba80626DF9042353fa9509A66a25eE90fc51B": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -1709,64 +1487,8 @@
       "function updateWhitelistSource(address newSource)",
       "function whitelist() view returns (address)"
     ],
-    "0x6e204fEAe40F668a06E78a83b66185FFC8892DDA": [
-      "function crlIsNotExpired(bytes der) view returns (bool isValid)",
-      "function getIssuerCommonName(bytes der) pure returns (string issuerCommonName)",
-      "function getSerialNumber(bytes der) pure returns (uint256 serialNum)",
-      "function getTbsAndSig(bytes der) pure returns (bytes tbs, bytes sig)",
-      "function parseCRLDER(bytes der) pure returns (tuple(uint256 serialNumber, string issuerCommonName, uint256 validityNotBefore, uint256 validityNotAfter, uint256[] serialNumbersRevoked, bytes signature, bytes tbs) crl)",
-      "function serialNumberIsRevoked(uint256 serialNumber, bytes der) pure returns (bool revoked)"
-    ],
     "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
       "constructor(address _singleton)"
-    ],
-    "0x71056B540b4E60D0E8eFb55FAd487C486B09FFF5": [
-      "error TCBInfo_Invalid()",
-      "error TCB_TDX_ID_Invalid()",
-      "error TCB_TDX_Version_Invalid()",
-      "function parseTcbLevels(string tcbInfoStr) pure returns (uint256 version, tuple(uint16 pcesvn, uint8[] sgxComponentCpuSvns, uint8[] tdxSvns, uint64 tcbDateTimestamp, uint8 status, string[] advisoryIDs)[] tcbLevels)",
-      "function parseTcbString(string tcbInfoStr) pure returns (tuple(uint8 tcbType, uint8 id, uint32 version, uint64 issueDate, uint64 nextUpdate, uint32 evaluationDataNumber, bytes6 fmspc, bytes2 pceid) tcbInfo)",
-      "function parseTcbTdxModules(string tcbInfoStr) pure returns (tuple(bytes mrsigner, bytes8 attributes, bytes8 attributesMask) module, tuple(string id, bytes8 attributes, bytes8 attributesMask, bytes mrsigner, tuple(uint8 isvsvn, uint64 tcbDateTimestamp, uint8 status)[] tcbLevels)[] moduleIdentities)"
-    ],
-    "0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5": [
-      "constructor(address _qeid, address _fmspcTcb, address _pcs, address _pck, address _pckHelper, address _crlHelper)",
-      "error AlreadyInitialized()",
-      "error CertNotFound(uint8 ca)",
-      "error CrlNotFound(uint8 ca)",
-      "error FmspcTcbNotFound(uint8 id, uint256 tcbVersion)",
-      "error Forbidden()",
-      "error NewOwnerIsZeroAddress()",
-      "error NoHandoverRequest()",
-      "error QEIdentityNotFound(uint8 id, uint256 quoteVersion)",
-      "error Unauthorized()",
-      "event OwnershipHandoverCanceled(address indexed pendingOwner)",
-      "event OwnershipHandoverRequested(address indexed pendingOwner)",
-      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
-      "function cancelOwnershipHandover() payable",
-      "function completeOwnershipHandover(address pendingOwner) payable",
-      "function crlHelperAddr() view returns (address)",
-      "function disableCallerRestriction()",
-      "function enableCallerRestriction()",
-      "function fmspcTcbDaoAddr() view returns (address)",
-      "function getCert(uint8 ca) view returns (bool success, bytes x509Der)",
-      "function getCertHash(uint8 ca) view returns (bool success, bytes32 hash)",
-      "function getCrl(uint8 ca) view returns (bool success, bytes x509CrlDer)",
-      "function getCrlHash(uint8 ca) view returns (bool success, bytes32 hash)",
-      "function getFmspcTcbV2(bytes6 fmspc) view returns (bool valid, tuple(uint16 pcesvn, uint8[] sgxComponentCpuSvns, uint8[] tdxSvns, uint64 tcbDateTimestamp, uint8 status, string[] advisoryIDs)[] tcbLevelsV2)",
-      "function getFmspcTcbV3(uint8 id, bytes6 fmspc) view returns (bool valid, tuple(uint16 pcesvn, uint8[] sgxComponentCpuSvns, uint8[] tdxSvns, uint64 tcbDateTimestamp, uint8 status, string[] advisoryIDs)[] tcbLevelsV3, tuple(bytes mrsigner, bytes8 attributes, bytes8 attributesMask) tdxModule, tuple(string id, bytes8 attributes, bytes8 attributesMask, bytes mrsigner, tuple(uint8 isvsvn, uint64 tcbDateTimestamp, uint8 status)[] tcbLevels)[] tdxModuleIdentities)",
-      "function getPckCert(string qeid, string platformCpuSvn, string platformPceSvn, string pceid) view returns (bool success, bytes pckDer)",
-      "function getQeIdentity(uint8 id, uint256 quoteVersion) view returns (bool valid, tuple(uint8 id, uint32 version, uint64 issueDateTimestamp, uint64 nextUpdateTimestamp, uint32 tcbEvaluationDataNumber, bytes4 miscselect, bytes4 miscselectMask, bytes16 attributes, bytes16 attributesMask, bytes32 mrsigner, uint16 isvprodid, tuple(uint16 isvsvn, uint256 dateTimestamp, uint8 status)[] tcb) identity)",
-      "function owner() view returns (address result)",
-      "function ownershipHandoverExpiresAt(address pendingOwner) view returns (uint256 result)",
-      "function pckDaoAddr() view returns (address)",
-      "function pckHelperAddr() view returns (address)",
-      "function pcsDaoAddr() view returns (address)",
-      "function qeIdDaoAddr() view returns (address)",
-      "function renounceOwnership() payable",
-      "function requestOwnershipHandover() payable",
-      "function setAuthorized(address caller, bool authorized)",
-      "function setConfig(address _qeid, address _fmspcTcb, address _pcs, address _pck, address _pckHelper, address _crlHelper)",
-      "function transferOwnership(address newOwner) payable"
     ],
     "0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7": [
       "constructor()",
@@ -1959,22 +1681,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9c54C72867b07caF2e6255CE32983c28aFE40F26": [
-      "constructor(address _storage, address _p256, address _pcs, address _fmspcHelper, address _x509Helper)",
-      "error Invalid_TCB_Cert_Signature()",
-      "error TCB_Expired()",
-      "function FMSPC_TCB_KEY(uint8 tcbType, bytes6 fmspc, uint32 version) pure returns (bytes32 key)",
-      "function FmspcTcbLib() view returns (address)",
-      "function P256_VERIFIER() view returns (address)",
-      "function Pcs() view returns (address)",
-      "function getAttestedData(bytes32 key) view returns (bytes attestationData)",
-      "function getCollateralHash(bytes32 key) view returns (bytes32 collateralHash)",
-      "function getTcbInfo(uint256 tcbType, string fmspc, uint256 version) view returns (tuple(string tcbInfoStr, bytes signature) tcbObj)",
-      "function getTcbIssuerChain() view returns (bytes signingCert, bytes rootCert)",
-      "function resolver() view returns (address)",
-      "function upsertFmspcTcb(tuple(string tcbInfoStr, bytes signature) tcbInfoObj) returns (bytes32 attestationId)",
-      "function x509() view returns (address)"
-    ],
     "0x9e83136d4B3AD04C766591EA51712F9aEa3194C0": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
       "function checkDecidableNextNode(address rollup) view returns (uint8)",
@@ -2015,10 +1721,6 @@
       "function CELESTIA_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0xae27D762EED6958bc34b358bd7C78c7211fe77F8": [
-      "error Invalid_ID()",
-      "function parseIdentityString(string identityStr) pure returns (tuple(uint8 id, uint32 version, uint64 issueDateTimestamp, uint64 nextUpdateTimestamp, uint32 tcbEvaluationDataNumber, bytes4 miscselect, bytes4 miscselectMask, bytes16 attributes, bytes16 attributesMask, bytes32 mrsigner, uint16 isvprodid, tuple(uint16 isvsvn, uint256 dateTimestamp, uint8 status)[] tcb) identity)"
-    ],
     "0xcc6DcB3FaA2436270E696994f326426B76A9f731": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
@@ -2042,31 +1744,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
-    ],
-    "0xcf171ACd6c0a776f9d3E1F6Cac8067c982Ac6Ce1": [
-      "constructor(address _storage, address _p256, address _x509, address _crl)",
-      "error Certificate_Expired()",
-      "error Certificate_Revoked(uint8 ca, uint256 serialNum)",
-      "error Expired_Certificates()",
-      "error Invalid_Issuer_Name()",
-      "error Invalid_PCK_CA(uint8 ca)",
-      "error Invalid_Signature()",
-      "error Invalid_Subject_Name()",
-      "error Missing_Certificate(uint8 ca)",
-      "error Missing_Issuer()",
-      "error Root_Key_Mismatch()",
-      "error TCB_Mismatch()",
-      "function P256_VERIFIER() view returns (address)",
-      "function PCS_KEY(uint8 ca, bool isCrl) pure returns (bytes32 key)",
-      "function crlLib() view returns (address)",
-      "function getAttestedData(bytes32 key) view returns (bytes attestationData)",
-      "function getCertificateById(uint8 ca) view returns (bytes cert, bytes crl)",
-      "function getCollateralHash(bytes32 key) view returns (bytes32 collateralHash)",
-      "function resolver() view returns (address)",
-      "function upsertPckCrl(uint8 ca, bytes crl) returns (bytes32 attestationId)",
-      "function upsertPcsCertificates(uint8 ca, bytes cert) returns (bytes32 attestationId)",
-      "function upsertRootCACrl(bytes rootcacrl) returns (bytes32 attestationId)",
-      "function x509() view returns (address)"
     ],
     "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb": [
       "constructor(bytes32 _mrEnclave, bytes32 _mrSigner, address _quoteVerifier)",
@@ -2123,7 +1800,7 @@
   },
   "usedTemplates": {
     "espresso/Sequencing/EspressoTEEVerifier": "0xb314995d86c96fc069a0a02f7d04af82cc04b03f1be94e31ccac61034197ab1c",
-    "espresso/Sequencing/QuoteVerifier": "0x7c016e0f3ca53f7dbd6d1b90231b9c54e4e8fa9230aa41f61a3ea3371d3dc29f",
+    "espresso/Sequencing/QuoteVerifier": "0xef7ab1615baea337f231b2d3ae609496b77f1c2d3959895f1133e867a6c020a0",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
