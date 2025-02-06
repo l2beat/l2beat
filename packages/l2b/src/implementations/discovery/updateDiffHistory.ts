@@ -18,6 +18,8 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
+import path from 'path'
+import { readConfig } from '../../config/readConfig'
 import { updateDiffHistoryHash } from './hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
@@ -30,7 +32,9 @@ export async function updateDiffHistory(
 ) {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
-  const configReader = new ConfigReader()
+  const discoveryPath = readConfig().discoveryPath
+  assert(discoveryPath !== undefined)
+  const configReader = new ConfigReader(path.dirname(discoveryPath))
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
@@ -121,7 +125,7 @@ export async function updateDiffHistory(
     await revertDiffHistory(diffHistoryPath, historyFileFromMainBranch)
   }
 
-  updateDiffHistoryHash(diffHistoryPath, projectName, chain)
+  updateDiffHistoryHash(configReader, diffHistoryPath, projectName, chain)
 }
 
 function removeIgnoredFields(diffs: DiscoveryDiff[]) {
