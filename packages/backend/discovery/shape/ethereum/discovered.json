@@ -1,7 +1,7 @@
 {
   "name": "shape",
   "chain": "ethereum",
-  "blockNumber": 21778483,
+  "blockNumber": 21786508,
   "configHash": "0x76afd95386b272bb094f8dbf9f4f3be11851dcb523de7b615fdbeabada6b3c70",
   "contracts": [
     {
@@ -244,7 +244,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 89,
+        "gameCount": 102,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xeFcb9D8FD3e21346a26791359a015c2304582238",
@@ -254,7 +254,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 89,
+        "permissionedGamesTotal": 102,
         "version": "1.0.0"
       }
     },
@@ -832,7 +832,7 @@
           "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
           "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-          "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
+          "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "0xE895076cD050F1f042d1040E47b5929bE989E514"
@@ -842,7 +842,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1225,6 +1225,7 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
+    { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x0D8a607F3d2de86adD04Df00f06794cB339A40de" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x2e42cEfC761e64Bf4442694220d31C2464a6EE21" },
@@ -1241,7 +1242,6 @@
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
-    { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9C66333c504F3A4f5593D0e9739434744cCC5B5d" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },

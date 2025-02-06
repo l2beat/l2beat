@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 21715455,
+  "blockNumber": 21786506,
   "configHash": "0x58bcf46f979d0927881ebf04616bfd267dc9d8e9e2001e64273760ba63eb88c6",
   "contracts": [
     {
@@ -114,7 +114,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620277",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620330",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -306,10 +306,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 13197600,
-        "latestOutputIndex": 610,
-        "nextBlockNumber": 13219200,
-        "nextOutputIndex": 611,
+        "latestBlockNumber": 13629600,
+        "latestOutputIndex": 630,
+        "nextBlockNumber": 13651200,
+        "nextOutputIndex": 631,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -400,7 +400,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21710200
+          "prevBlockNum": 21785956
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -432,7 +432,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 54,
+        "nonce": 55,
         "VERSION": "1.3.0"
       }
     },
@@ -477,7 +477,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 74,
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1003,7 +1003,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 100,
+        "nonce": 101,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -1044,7 +1044,7 @@
           "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
           "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-          "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
+          "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "0xE895076cD050F1f042d1040E47b5929bE989E514"
@@ -1054,7 +1054,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1133,6 +1133,7 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
+    { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
@@ -1148,7 +1149,6 @@
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
-    { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2" },

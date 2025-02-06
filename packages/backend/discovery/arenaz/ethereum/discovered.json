@@ -1,7 +1,7 @@
 {
   "name": "arenaz",
   "chain": "ethereum",
-  "blockNumber": 21715233,
+  "blockNumber": 21786502,
   "configHash": "0x9cb8f55a9e9a9a59ddf19d8b4d8a47b677d99a5fa75722c6727ce022ff354eae",
   "contracts": [
     {
@@ -95,7 +95,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619833",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619857",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -394,7 +394,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 54,
+        "nonce": 55,
         "VERSION": "1.3.0"
       }
     },
@@ -589,7 +589,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 95,
+        "gameCount": 105,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x227882E5972EbAd990dcF04E2dbe2fC84094E146",
@@ -599,7 +599,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 95,
+        "permissionedGamesTotal": 105,
         "version": "1.0.0"
       }
     },
@@ -816,7 +816,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 100,
+        "nonce": 101,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -955,7 +955,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21706837
+          "prevBlockNum": 21781143
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1091,7 +1091,7 @@
           "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
           "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
           "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
-          "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
+          "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
           "0xE895076cD050F1f042d1040E47b5929bE989E514"
@@ -1101,7 +1101,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 12,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1215,6 +1215,7 @@
     { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
+    { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     {
@@ -1242,7 +1243,6 @@
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52" },
-    { "address": "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },

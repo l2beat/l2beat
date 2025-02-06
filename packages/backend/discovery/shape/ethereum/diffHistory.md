@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x715b254bad6aa568e1ab905af06fcb0bb92ffe51
+
+# Diff at Thu, 06 Feb 2025 09:17:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778483
+- current block number: 21786508
+
+## Description
+
+OP Stack SC signer rotation.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.permissionedGamesTotal:
+-        89
++        102
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.9:
+-        "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4"
++        "0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
+    }
+```
+
 Generated with discovered.json: 0x0bb7f1bd068fba5f1baee6e37857fcf15d1599b5
 
 # Diff at Wed, 05 Feb 2025 06:24:28 GMT:
