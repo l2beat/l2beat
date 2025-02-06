@@ -1,11 +1,9 @@
 import type {
-  DaBridge,
   DaLayer,
   DaLayerThroughput,
   Project,
+  UsedInProject,
 } from '@l2beat/config'
-import { isDaBridgeVerified } from '@l2beat/config'
-import type { UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -17,6 +15,7 @@ import {
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getDaBridges } from '../utils/get-da-bridges'
@@ -90,29 +89,40 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export async function getDaProjectEntry(
-  project: Project<
-    'daLayer' | 'daBridges' | 'display' | 'statuses',
+  layer: Project<
+    'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones'
   >,
-  daBridge: DaBridge,
+  bridge: Project<
+    'daBridge' | 'display' | 'statuses',
+    'permissions' | 'contracts'
+  >,
 ): Promise<DaProjectPageEntry> {
   const common = {
-    isVerified: isDaBridgeVerified(daBridge),
-    name: project.name,
-    slug: project.slug,
-    kind: project.daLayer.type,
-    type: project.daLayer.type,
-    description: `${project.display.description} ${daBridge.display.description}`,
-    isUnderReview: project.statuses.isUnderReview,
-    isUpcoming: project.isUpcoming ?? false,
+    isVerified: !bridge ? true : !bridge.statuses.isUnverified,
+    name: layer.name,
+    slug: layer.slug,
+    kind: layer.daLayer.type,
+    type: layer.daLayer.type,
+    description: `${layer.display.description} ${bridge?.display.description ?? ''}`,
+    isUnderReview: layer.statuses.isUnderReview,
+    isUpcoming: layer.isUpcoming ?? false,
   }
 
-  const uniqueProjectsInUse = getUniqueProjectsInUse(getDaBridges(project))
+  const allBridges = (
+    await ps.getProjects({
+      select: ['daBridge'],
+    })
+  ).filter((x) => x.daBridge.daLayer === layer.id)
+
+  const allUsedIn = layer.daLayer.usedWithoutBridgeIn.concat(
+    allBridges.flatMap((x) => x.daBridge.usedIn),
+  )
 
   const [economicSecurity, tvsPerProject, projectsChangeReport] =
     await Promise.all([
-      getDaProjectEconomicSecurity(project.daLayer.economicSecurity),
-      getDaProjectsTvs(uniqueProjectsInUse),
+      getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+      getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
     ])
 
@@ -122,8 +132,8 @@ export async function getDaProjectEntry(
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
   const evaluatedRisks = getDaRisks(
-    project.daLayer,
-    daBridge,
+    layer.daLayer,
+    bridge.daBridge,
     layerTvs,
     economicSecurity,
   )
@@ -132,8 +142,8 @@ export async function getDaProjectEntry(
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(evaluatedRisks)
 
   const sections = getRegularDaProjectSections({
-    daLayer: project,
-    daBridge,
+    layer: layer,
+    bridge,
     isVerified: common.isVerified,
     projectsChangeReport,
     layerGrissiniValues,
@@ -143,106 +153,94 @@ export async function getDaProjectEntry(
   return {
     ...common,
     selectedBridge: {
-      id: daBridge.id ?? 'unknown',
-      name: daBridge.display.name,
-      slug: daBridge.display.slug,
-      isNoBridge: !!daBridge.risks.isNoBridge,
+      id: bridge.id ?? 'unknown',
+      name: bridge.name,
+      slug: bridge.slug,
+      isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
-    bridges: getDaBridges(project).map((bridge) => ({
+    bridges: getDaBridges(layer).map((bridge) => ({
       id: bridge.id ?? 'unknown',
       name: bridge.display.name,
       slug: bridge.display.slug,
       isNoBridge: !!bridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.risks),
-      tvs: getSumFor(bridge.usedIn.map((project) => project.id)),
+      tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
       usedIn: bridge.usedIn.sort(
         (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
       ),
     })),
     header: {
-      links: getProjectLinks(project.display.links),
+      links: getProjectLinks(layer.display.links),
       daLayerGrissiniValues: layerGrissiniValues,
       daBridgeGrissiniValues: bridgeGrissiniValues,
       tvs: layerTvs,
       economicSecurity,
-      durationStorage: project.daLayer.pruningWindow,
-      throughput: project.daLayer.throughput,
-      usedIn: getDaBridges(project)
-        .flatMap((bridge) => bridge.usedIn)
-        .sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
+      durationStorage: layer.daLayer.pruningWindow,
+      throughput: layer.daLayer.throughput,
+      usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
-    projectVariants: getDaBridges(project).map((bridge) => ({
+    projectVariants: getDaBridges(layer).map((bridge) => ({
       title: bridge.display.name,
-      href: `/data-availability/projects/${project.slug}/${bridge.display.slug}`,
+      href: `/data-availability/projects/${layer.slug}/${bridge.display.slug}`,
     })),
   }
 }
 
 export async function getEthereumDaProjectEntry(
-  project: Project<'daLayer' | 'display' | 'statuses', 'isUpcoming'>,
-  daBridge: DaBridge,
+  layer: Project<'daLayer' | 'display' | 'statuses', 'isUpcoming'>,
+  bridge: Project<'daBridge' | 'display', 'contracts'>,
 ): Promise<EthereumDaProjectPageEntry> {
-  const common = {
-    isVerified: true,
-    name: project.name,
-    slug: project.slug,
-    kind: project.daLayer.type,
-    type: project.daLayer.type,
-    description: `${project.display.description} ${daBridge.display.description}`,
-    isUnderReview: project.statuses.isUnderReview,
-    isUpcoming: project.isUpcoming ?? false,
-  }
-
   const [economicSecurity, tvsPerProject] = await Promise.all([
-    getDaProjectEconomicSecurity(project.daLayer.economicSecurity),
-    getDaProjectsTvs(daBridge.usedIn.map((x) => x.id)),
+    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+    getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
   ])
 
   const layerTvs =
     tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
 
-  const layerGrissiniValues = mapLayerRisksToRosetteValues(
-    project.daLayer.risks,
+  const layerGrissiniValues = mapLayerRisksToRosetteValues(layer.daLayer.risks)
+  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
+    bridge.daBridge.risks,
   )
-  const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(daBridge.risks)
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
   const sections = getEthereumDaProjectSections({
-    daLayer: project,
-    daBridge,
-    isVerified: common.isVerified,
+    layer,
+    bridge,
+    isVerified: true,
     layerGrissiniValues,
     bridgeGrissiniValues,
   })
 
-  const usedInByTvsDesc = daBridge.usedIn.sort(
+  const usedInByTvsDesc = bridge.daBridge.usedIn.sort(
     (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
   )
 
   return {
-    ...common,
+    isVerified: true,
+    name: layer.name,
+    slug: layer.slug,
+    kind: layer.daLayer.type,
+    type: layer.daLayer.type,
+    description: `${layer.display.description} ${bridge.display.description}`,
+    isUnderReview: layer.statuses.isUnderReview,
+    isUpcoming: false,
     header: {
-      links: getProjectLinks(project.display.links),
+      links: getProjectLinks(layer.display.links),
       tvs: layerTvs,
       economicSecurity: economicSecurity,
-      durationStorage: project.daLayer.pruningWindow ?? 0,
-      throughput: project.daLayer.throughput,
+      durationStorage: layer.daLayer.pruningWindow ?? 0,
+      throughput: layer.daLayer.throughput,
       usedIn: usedInByTvsDesc,
-      bridgeName: daBridge.display.name,
+      bridgeName: bridge.name,
       callout: {
-        title: daBridge.display.name,
-        description: daBridge.risks.callout ?? '',
+        title: bridge.name,
+        description: bridge.daBridge.risks.callout ?? '',
       },
     },
     sections,
   }
-}
-
-function getUniqueProjectsInUse(bridges: DaBridge[]) {
-  return [
-    ...new Set(bridges.flatMap((bridge) => bridge.usedIn.map((p) => p.id))),
-  ]
 }
