@@ -2153,6 +2153,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDT",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "XBG",
       "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
       "source": "external",
@@ -2444,13 +2459,6 @@
       "symbol": "wstETH",
       "category": "ether",
       "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "symbol": "USDT",
-      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-      "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
     },
