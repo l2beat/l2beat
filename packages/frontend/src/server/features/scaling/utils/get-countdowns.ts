@@ -17,15 +17,14 @@ export interface ProjectCountdownsWithContext {
 export function getCountdowns(
   project: Layer2 | Layer3,
 ): ProjectCountdownsWithContext {
-  const otherMigrationContext =
-    PROJECT_COUNTDOWNS.otherMigration.getContext(project)
   return {
-    otherMigration: otherMigrationContext
-      ? {
-          expiresAt: PROJECT_COUNTDOWNS.otherMigration.expiresAt.toNumber(),
-          pretendingToBe: project.display.category,
-          reasons: otherMigrationContext.reasonsForBeingOther,
-        }
-      : undefined,
+    otherMigration:
+      project.reasonsForBeingOther && project.display.category !== 'Other'
+        ? {
+            expiresAt: PROJECT_COUNTDOWNS.otherMigration.toNumber(),
+            pretendingToBe: project.display.category,
+            reasons: project.reasonsForBeingOther,
+          }
+        : undefined,
   }
 }

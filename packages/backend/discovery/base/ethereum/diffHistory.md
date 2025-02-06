@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xaf1bb18c41bc80f3b933bc6bdfe541efca344777
+
+# Diff at Wed, 05 Feb 2025 06:17:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@24a3610845e7ae2b3cc2daf90feff25e498e4068 block: 21736764
+- current block number: 21778446
+
+## Description
+
+Upgrade to new SystemConfig (known implementation). maximumGasLimit halved but due to the new logic effectively minor change in the L2 gas limit.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x1fdf490a723dc133305fa86c7ce08d98470bf7c9de74ece4ef8bc280d2355d50"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"
++        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.7:
++        ["2025-02-04T20:28:47.000Z","0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b",["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$pastUpgrades.6:
++        ["2025-02-04T20:28:47.000Z","0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$upgradeCount:
+-        6
++        8
+      values.maximumGasLimit:
+-        400000000
++        200000000
+      values.version:
+-        "2.2.0+max-gas-limit-400M"
++        "2.3.0"
+      values.basefeeScalar:
++        2269
+      values.blobbasefeeScalar:
++        1055762
+      values.eip1559Denominator:
++        250
+      values.eip1559Elasticity:
++        2
+      values.gasPayingToken:
++        {"addr_":"0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE","decimals_":18}
+      values.gasPayingTokenName:
++        "Ether"
+      values.gasPayingTokenSymbol:
++        "ETH"
+      values.isCustomGasToken:
++        false
+    }
+```
+
+## Source code changes
+
+```diff
+.../SystemConfig/SystemConfig.sol                  | 1460 +++++++++++++++++++-
+ 1 file changed, 1437 insertions(+), 23 deletions(-)
+```
+
 Generated with discovered.json: 0x28176b14555d05177f0006f71459e066e264c831
 
 # Diff at Tue, 04 Feb 2025 12:30:49 GMT:

@@ -9812,6 +9812,20 @@
       }
     },
     {
+      "name": "Forta",
+      "coingeckoId": "forta",
+      "address": "0x3A1429d50E0cBBc45c997aF600541Fe1cc3D2923",
+      "symbol": "FORT",
+      "decimals": 18,
+      "deploymentTimestamp": 1660114872,
+      "coingeckoListingTimestamp": 1655251200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25060/large/Forta_lgo_%281%29.png?1696524210",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Frax",
       "coingeckoId": "frax",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",

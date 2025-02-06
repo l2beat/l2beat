@@ -12,6 +12,7 @@ type SupportedOPStackChains =
   | 'SONEIUM'
   | 'SWELL'
   | 'WORLD'
+  | 'SHAPE'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -58,6 +59,10 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   WORLD: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/worldchain.toml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/worldchain.json.zst',
+  ],
+  SHAPE: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/shape.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/shape.json.zst',
   ],
 }
 

@@ -78,6 +78,7 @@ export const kinto: Layer2 = orbitStackL2({
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: false,

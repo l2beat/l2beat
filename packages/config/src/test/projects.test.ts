@@ -92,26 +92,24 @@ describe('projects', () => {
               })
             }
 
-            if (project.permissions !== 'UnderReview') {
-              const upgradableBy = contract.upgradableBy
-              const permissionsForChain = (project.permissions ?? {})[chain]
-              const all = [
-                ...(permissionsForChain?.roles ?? []),
-                ...(permissionsForChain?.actors ?? []),
-              ]
-              const actors = all.map((x) => {
-                if (x.name === 'EOA') {
-                  assert(x.accounts[0].type === 'EOA')
-                  return x.accounts[0].address
-                }
-                return x.name
-              })
-
-              if (upgradableBy) {
-                it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
-                  expect(actors).toInclude(...upgradableBy)
-                })
+            const upgradableBy = contract.upgradableBy
+            const permissionsForChain = (project.permissions ?? {})[chain]
+            const all = [
+              ...(permissionsForChain?.roles ?? []),
+              ...(permissionsForChain?.actors ?? []),
+            ]
+            const actors = all.map((x) => {
+              if (x.name === 'EOA') {
+                assert(x.accounts[0].type === 'EOA')
+                return x.accounts[0].address
               }
+              return x.name
+            })
+
+            if (upgradableBy) {
+              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
+                expect(actors).toInclude(...upgradableBy)
+              })
             }
           }
         }

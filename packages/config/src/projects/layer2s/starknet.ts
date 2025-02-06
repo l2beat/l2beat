@@ -922,6 +922,7 @@ export const starknet: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
@@ -1096,6 +1097,11 @@ export const starknet: Layer2 = {
         discovery.getPermissionDetails(
           'Operators',
           discovery.getPermissionedAccounts('Starknet', 'operators'),
+          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+        ),
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
+        discovery.getMultisigPermission(
+          'StarknetOperatorMultisig',
           'Allowed to post state updates. When the operator is down the state cannot be updated.',
         ),
         discovery.getPermissionDetails(

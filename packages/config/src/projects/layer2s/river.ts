@@ -31,7 +31,6 @@ export const river: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.rpc.river.build',
   genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'River Protocol is now Towns Protocol',

@@ -27,6 +27,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
+import { EXPLORER_URLS } from '../chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,
@@ -37,11 +38,6 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
-import {
-  OP_STACK_CONTRACT_DESCRIPTION,
-  OP_STACK_PERMISSION_TEMPLATES,
-  type OpStackContractName,
-} from './OpStackTypes'
 import {
   ORBIT_STACK_CONTRACT_DESCRIPTION,
   ORBIT_STACK_PERMISSION_TEMPLATES,
@@ -214,18 +210,6 @@ export class ProjectDiscovery {
         }
       })
       .filter(notUndefined)
-  }
-
-  getOpStackPermissions(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): ProjectPermission[] {
-    const resolved = this.computeStackContractPermissions(
-      OP_STACK_PERMISSION_TEMPLATES,
-      overrides,
-      contractOverrides,
-    )
-    return this.transformToPermissions(resolved)
   }
 
   resolveOrbitStackTemplates(
@@ -409,13 +393,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name,
       description: descriptionWithContractNames,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references,
       participants: this.getPermissionedAccounts(identifier, '$members'),
@@ -557,7 +535,15 @@ export class ProjectDiscovery {
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
       const isVerified = isEntryVerified(entry)
 
-      result.push({ address: address, type, isVerified })
+      const name = `${address.slice(0, 6)}…${address.slice(38, 42)}`
+      const explorerUrl = EXPLORER_URLS[this.chain]
+      assert(
+        isNonNullable(explorerUrl),
+        `Failed to find explorer url for chain [${this.chain}]`,
+      )
+      const url = `${explorerUrl}/address/${address}`
+
+      result.push({ address: address, type, isVerified, name, url })
     }
 
     return result
@@ -625,13 +611,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: contract.name,
-      accounts: [
-        {
-          isVerified: isEntryVerified(contract),
-          address: contract.address,
-          type: 'Contract',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
         title: x.text,
@@ -647,13 +627,7 @@ export class ProjectDiscovery {
   ): ProjectPermission {
     return {
       name: eoa.name ?? eoa.address,
-      accounts: [
-        {
-          isVerified: isEntryVerified(eoa),
-          address: eoa.address,
-          type: 'EOA',
-        },
-      ],
+      accounts: this.formatPermissionedAccounts([eoa.address]),
       chain: this.chain,
       references: eoa.references?.map((x) => ({
         title: x.text,
@@ -761,23 +735,6 @@ export class ProjectDiscovery {
     })
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
-    )
-  }
-
-  getOpStackContractDetails(
-    upgradesProxy: Partial<ProjectContract>,
-    overrides?: Partial<Record<OpStackContractName, string>>,
-  ): ProjectContract[] {
-    return OP_STACK_CONTRACT_DESCRIPTION.filter((d) =>
-      this.hasContract(overrides?.[d.name] ?? d.name),
-    ).map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...upgradesProxy,
-      }),
     )
   }
 
@@ -897,6 +854,7 @@ export class ProjectDiscovery {
         ...roleDescriptions[role],
         description: finalDescription.join('\n'),
         accounts: this.formatPermissionedAccounts(addresses),
+        chain: this.chain,
       })
     }
     return result
@@ -1062,12 +1020,12 @@ export class ProjectDiscovery {
     includeDirectPermissions: boolean = true,
   ): string[] {
     return [
+      contractOrEoa.description,
       ...this.describeGnosisSafeMembership(contractOrEoa),
       ...(includeDirectPermissions
         ? this.describeDirectlyReceivedPermissions(contractOrEoa)
         : []),
       ...this.describeUltimatelyReceivedPermissions(contractOrEoa),
-      contractOrEoa.description,
     ].filter(notUndefined)
   }
 
@@ -1105,13 +1063,11 @@ export class ProjectDiscovery {
     ]
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
 
-    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
-
-    const actors: ProjectPermission[] = []
+    const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
       const descriptions = this.describeContractOrEoa(contract, true)
       if (isMultisigLike(contract)) {
-        actors.push(
+        allActors.push(
           this.getMultisigPermission(
             contract.address.toString(),
             descriptions,
@@ -1120,7 +1076,7 @@ export class ProjectDiscovery {
           ),
         )
       } else {
-        actors.push(
+        allActors.push(
           this.contractAsPermissioned(
             contract,
             formatAsBulletPoints(descriptions),
@@ -1136,7 +1092,7 @@ export class ProjectDiscovery {
       const description = formatAsBulletPoints(
         this.describeContractOrEoa(eoa, false),
       )
-      actors.push({
+      allActors.push({
         name: eoa.name ?? this.getEOAName(eoa.address),
         accounts: this.formatPermissionedAccounts([eoa.address]),
         chain: this.chain,
@@ -1144,15 +1100,70 @@ export class ProjectDiscovery {
       })
     }
 
+    // NOTE(radomski): Checking for assumptions made about discovery driven actors
+    assert(allActors.every((actor) => actor.accounts.length === 1))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
+    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+
+    const roles = this.describeRolePermissions([...relevantContracts, ...eoas])
+
+    // NOTE(radomski): There are two groups of "permissions" we show. Roles and
+    // actors.
+    //
+    // Roles are grouping of actors that have the ability to do _something_.
+    // Actors are entities which have some power in the system.
+    //
+    // To minimize the amount of redundant information we choose to show an
+    // actor only if:
+    //
+    // - it's a contract
+    // - it's an EOA with permissions to interact with parts of the system
+    // - it's an EOA that's shared between projects[1]
+    //
+    // We can remove EOAs that have only role permissions since their
+    // involvement in the system has already been taken into account when
+    // listing accounts with a given role.
+    //
+    // [1] that's currently not possible to achieve. With the config refactor
+    // moving forward when we reach a point where the config will be able to
+    // introspect itself (reach into the configs of other projects) this point
+    // will be true. As for now we don't know if such a occurrence has taken
+    // place.
+    const actors = allActors.filter((actor) => {
+      const account = actor.accounts[0]
+      const isEOA = account.type === 'EOA'
+      if (!isEOA) {
+        return true
+      }
+
+      const eoa = eoas.find((eoa) => eoa.address === account.address)
+      assert(eoa?.receivedPermissions !== undefined)
+      const hasOnlyRole = eoa.receivedPermissions.every((p) =>
+        RolePermissionEntries.map((x) => x.toString()).includes(p.permission),
+      )
+
+      return !hasOnlyRole
+    })
+
     actors.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
       )
+      if (permission.participants !== undefined) {
+        permission.participants = this.linkupActorsIntoAccounts(
+          permission.participants,
+          actors,
+        )
+      }
     })
 
     roles.forEach((permission) => {
       permission.description = this.replaceAddressesWithNames(
         permission.description,
+      )
+      permission.accounts = this.linkupActorsIntoAccounts(
+        permission.accounts,
+        actors,
       )
     })
 
@@ -1160,6 +1171,36 @@ export class ProjectDiscovery {
       roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
       actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
     }
+  }
+
+  linkupActorsIntoAccounts(
+    accountsToLink: ProjectPermissionedAccount[],
+    actors: ProjectPermission[],
+  ): ProjectPermissionedAccount[] {
+    const result: ProjectPermissionedAccount[] = []
+    const actorNameLUT: Record<string, string> = {}
+    for (const actor of actors) {
+      assert(actor.accounts.length === 1)
+      actorNameLUT[actor.accounts[0].address] = actor.name
+    }
+
+    for (const account of accountsToLink) {
+      const entry = structuredClone(account)
+
+      const discoveryName = this.getEntryByAddress(account.address)?.name
+      if (discoveryName !== undefined) {
+        entry.name = discoveryName
+      }
+
+      const actorName = actorNameLUT[account.address]
+      if (actorName !== undefined) {
+        entry.name = actorName
+        entry.url = `#${actorName}`
+      }
+
+      result.push(entry)
+    }
+    return result
   }
 
   getDiscoveredContracts(): ProjectContract[] {
@@ -1312,7 +1353,7 @@ const roleDescriptions: {
   aggregatePolygon: {
     name: 'Trusted Aggregator (Proposer)',
     description:
-      "Permissioned to post new state roots and global exit roots accompanied by ZK proofs. Can also settle verified state roots without a timeout ('consolidate pending state').",
+      'Permissioned to post new state roots and global exit roots accompanied by ZK proofs.', // and accounting proofs for CDK sovereign (others) chains
   },
 }
 
@@ -1355,4 +1396,8 @@ function isEntryVerified(entry: ContractParameters | EoaParameters): boolean {
   }
 
   return true
+}
+
+function allUnique(arr: string[]): boolean {
+  return new Set(arr).size === arr.length
 }

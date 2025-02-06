@@ -182,7 +182,6 @@ export const stargate: Bridge = {
       ],
     },
     risks: [],
-    isIncomplete: true,
   },
   permissions: {
     [discovery.chain]: {

@@ -64,7 +64,6 @@ export const xterio: Layer2 = opStackL2({
     'https://github.com/ethereum-optimism/optimism/releases/tag/op-node%2Fv1.7.5',
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
-  discoveryDrivenData: true,
   genesisTimestamp: new UnixTime(1716537433),
   rpcUrl: 'https://xterio-eth.alt.technology/',
   customDa: {

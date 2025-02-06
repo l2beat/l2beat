@@ -1,23 +1,9 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import type { Layer2, Layer3 } from '../types'
 
 export const PROJECT_COUNTDOWNS = {
-  otherMigration: {
-    expiresAt: new UnixTime(1750284000), // 2025-06-19T00:00:00Z
-    getContext: (project: Layer2 | Layer3) => {
-      if (
-        project.display.category === 'Other' ||
-        !project.reasonsForBeingOther ||
-        project.reasonsForBeingOther.length === 0
-      ) {
-        return undefined
-      }
-      return {
-        reasonsForBeingOther: project.reasonsForBeingOther,
-      }
-    },
-  },
-} as const
+  stageChanges: UnixTime.fromDate(new Date('2025-06-19T00:00:00Z')),
+  otherMigration: UnixTime.fromDate(new Date('2025-06-19T00:00:00Z')),
+}
 
 export const REASON_FOR_BEING_OTHER = {
   NO_PROOFS: {

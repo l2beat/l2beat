@@ -31,15 +31,13 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
     },
   )
   const permissions = []
-  if (project.permissions !== 'UnderReview') {
-    for (const perChain of Object.values(project.permissions ?? {})) {
-      const all = [...(perChain?.roles ?? []), ...(perChain?.actors ?? [])]
-      const filtered = all.filter((p) => {
-        const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
-        return nonEoaAddresses.length > 0
-      })
-      permissions.push(...filtered)
-    }
+  for (const perChain of Object.values(project.permissions ?? {})) {
+    const all = [...(perChain?.roles ?? []), ...(perChain?.actors ?? [])]
+    const filtered = all.filter((p) => {
+      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+      return nonEoaAddresses.length > 0
+    })
+    permissions.push(...filtered)
   }
 
   const allContracts = [
@@ -47,7 +45,7 @@ function getProjectDevIds(project: Layer2 | Layer3 | Bridge): string[] {
     ...Object.values(project.contracts?.addresses ?? {}).flat(),
     ...permissions,
   ]
-  const devIds = allContracts.map((c) => c.chain ?? 'ethereum')
+  const devIds = allContracts.map((c) => c.chain)
 
   return devIds
 }
@@ -67,7 +65,7 @@ function getProjectDevIdsForDA(p: BaseProject): string[] {
   const permissions =
     p.daBridges?.flatMap((b) => {
       const result = []
-      if (b.permissions && b.permissions !== 'UnderReview') {
+      if (b.permissions) {
         const values = Object.values(b.permissions)
           .flatMap((p) => [...(p?.roles ?? []), ...(p?.actors ?? [])])
           .filter((p) => {
@@ -79,9 +77,7 @@ function getProjectDevIdsForDA(p: BaseProject): string[] {
       return result
     }) ?? []
 
-  const devIds = [...addresses, ...permissions].map(
-    (c) => c.chain ?? 'ethereum',
-  )
+  const devIds = [...addresses, ...permissions].map((c) => c.chain)
 
   return devIds
 }

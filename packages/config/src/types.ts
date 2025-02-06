@@ -7,7 +7,7 @@ import type {
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { PROJECT_COUNTDOWNS, REASON_FOR_BEING_OTHER } from './common'
+import type { REASON_FOR_BEING_OTHER } from './common'
 import type { BadgeId } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -19,7 +19,6 @@ export interface WarningWithSentiment {
   sentiment: WarningSentiment
 }
 
-export type ProjectCountdowns = typeof PROJECT_COUNTDOWNS
 export type ReasonForBeingInOther =
   (typeof REASON_FOR_BEING_OTHER)[keyof typeof REASON_FOR_BEING_OTHER]
 
@@ -107,7 +106,7 @@ export interface ScalingProject {
   /** List of smart contracts used in the layer2 */
   contracts: ProjectContracts
   /** List of permissioned addresses on a given chain */
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
@@ -265,7 +264,7 @@ export interface ProjectPermission {
   /** Description of the permissions */
   description: string
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** List of source code permalinks and useful materials */
   references?: ReferenceLink[]
   /** List of accounts that are participants in this permission, mainly used for MultiSigs */
@@ -275,8 +274,10 @@ export interface ProjectPermission {
 }
 
 export interface ProjectPermissionedAccount {
-  isVerified: boolean
+  name: string
+  url: string
   address: EthereumAddress
+  isVerified: boolean
   type: 'EOA' | 'Contract'
 }
 
@@ -682,7 +683,7 @@ export interface Bridge {
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -830,7 +831,7 @@ export interface DaBridge {
   risks: DaBridgeRisks
   dac?: DacInfo
   /** Data about related permissions - preferably from discovery. */
-  permissions?: Record<string, ProjectPermissions> | 'UnderReview'
+  permissions?: Record<string, ProjectPermissions>
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts?: ProjectContracts
 }
@@ -895,44 +896,25 @@ export type ProjectDaTrackingConfig =
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
 
-export type StageBlueprint = Record<
-  string,
-  {
-    name: Stage
-    items: Record<
-      string,
-      {
-        positive: string
-        negative: string
-        negativeMessage?: string
-        underReviewMessage?: string
-      }
-    >
-  }
->
-
-export type Satisfied = boolean | 'UnderReview'
-
-export type ChecklistValue = Satisfied | null | [Satisfied, string]
-
-export type ChecklistTemplate<T extends StageBlueprint> = {
-  [K in keyof T]: {
-    [L in keyof T[K]['items']]: ChecklistValue
-  }
-}
-
 export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageSummary {
   stage: Stage
+  principle:
+    | {
+        satisfied: boolean | 'UnderReview'
+        description: string
+      }
+    | undefined
   requirements: {
-    satisfied: Satisfied
+    satisfied: boolean | 'UnderReview'
     description: string
   }[]
 }
 
-export interface MissingStageRequirements {
+export interface MissingStageDetails {
   nextStage: Stage
+  principle: string | undefined
   requirements: string[]
 }
 
@@ -942,9 +924,16 @@ export type StageConfig =
   | StageConfigured
 export type UsableStageConfig = StageUnderReview | StageConfigured
 
+export interface StageDowngrade {
+  expiresAt: number
+  reason: string
+  toStage: Stage
+}
+
 export interface StageConfigured {
   stage: Stage
-  missing?: MissingStageRequirements
+  downgradePending: StageDowngrade | undefined
+  missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
   additionalConsiderations?: {
@@ -996,7 +985,6 @@ export interface BaseProject {
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridges?: DaBridge[]
-  countdowns?: ProjectCountdowns
   milestones?: Milestone[]
   // tags
   isBridge?: true
@@ -1014,7 +1002,7 @@ export interface ProjectContract {
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
-  chain?: string
+  chain: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
@@ -1045,12 +1033,6 @@ export interface ProjectContracts {
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
-  /** List of references backing up the claim */
-  references?: ReferenceLink[]
-  /** The description and research is incomplete */
-  isIncomplete?: boolean
-  /** The description and research is under review */
-  isUnderReview?: boolean
 }
 
 export interface ProjectStatuses {

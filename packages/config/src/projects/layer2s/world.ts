@@ -51,7 +51,6 @@ export const world = opStackL2({
   },
   stateDerivation: DERIVATION.OPSTACK('WORLD'),
   isNodeAvailable: 'UnderReview',
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'World Chain Launch',

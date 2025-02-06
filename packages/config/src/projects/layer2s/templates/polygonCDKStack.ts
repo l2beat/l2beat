@@ -21,10 +21,12 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../../common'
-import { formatDelay, formatExecutionDelay } from '../../../common/formatDelays'
+import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  ChainConfig,
   CustomDa,
+  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -42,7 +44,6 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -109,36 +110,16 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     'getMinDelay',
   )
   const upgradeDelayString = formatSeconds(upgradeDelay)
-  const trustedAggregatorTimeout = shared.getContractValue<number>(
-    rollupManagerContract.name,
-    'trustedAggregatorTimeout',
-  )
-  const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
-  const pendingStateTimeout = shared.getContractValue<number>(
-    rollupManagerContract.name,
-    'pendingStateTimeout',
-  )
-  const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
-
-  const forceBatchTimeout = templateVars.discovery.getContractValue<number>(
-    templateVars.rollupModuleContract.name,
-    'forceBatchTimeout',
-  )
-
   const emergencyActivatedCount = shared.getContractValue<number>(
     'PolygonRollupManager',
     'emergencyStateCount',
   )
 
   const exitWindowRisk = {
-    ...RISK_VIEW.EXIT_WINDOW(
-      upgradeDelay,
-      trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-      { upgradeDelay2: 0 },
-    ),
-    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-      trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    )}.`,
+    value: 'None',
+    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled.`,
+    sentiment: 'bad',
+    orderHint: -1, // worse than forced tx available but instantly upgradable
     warning: {
       value: 'The Security Council can remove the delay on upgrades.',
       sentiment: 'bad',
@@ -347,13 +328,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       sequencerFailure: SEQUENCER_NO_MECHANISM(
         templateVars.isForcedBatchDisallowed,
       ),
-      proposerFailure: {
-        ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-        description:
-          RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
-          ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-        secondLine: formatDelay(trustedAggregatorTimeout + pendingStateTimeout),
-      },
+      proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
     },
     stage:
       daProvider !== undefined
@@ -367,14 +342,16 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                 rollupNodeSourceAvailable: true,
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
-                securityCouncilProperlySetUp: [
-                  false,
-                  'Security Council members are not publicly known.',
-                ],
+                securityCouncilProperlySetUp: {
+                  satisfied: false,
+                  message: 'Security Council members are not publicly known.',
+                  mode: 'replace',
+                },
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: false,

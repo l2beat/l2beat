@@ -39,7 +39,6 @@ export const ethernity: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['ERN'],
-  discoveryDrivenData: true,
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.ethernitychain.io',
   genesisTimestamp: new UnixTime(1723547737),

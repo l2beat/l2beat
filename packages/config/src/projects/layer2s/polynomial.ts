@@ -49,7 +49,6 @@ export const polynomial: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     {
       address: EthereumAddress('0xDf9Fa2b420689384E8DD55a706262DC0ED37020F'),

@@ -1,5 +1,5 @@
 import type { Database } from '@l2beat/database'
-import type { BlobSizeData, BlockProvider, DaProvider } from '@l2beat/shared'
+import type { BlockProvider, DaBlob, DaProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import {
@@ -52,12 +52,10 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
         fillBackSince,
       )
 
-    const presentBlobSizeData: BlobSizeData[] = presentRecords.map(
-      (record) => ({
-        blockTimestamp: record.timestamp,
-        size: record.totalSize,
-      }),
-    )
+    const presentBlobSizeData: DaBlob[] = presentRecords.map((record) => ({
+      blockTimestamp: record.timestamp,
+      size: record.totalSize,
+    }))
 
     // It will reduce previous aggregate with new blobs
     const records = aggregatePerDay(this.$.selector, [

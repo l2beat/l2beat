@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import type { DaSolutionWith } from '~/server/features/scaling/project/get-scaling-project-da-solution'
 import type { TechnologyContract } from '../contract-entry'
 import { ContractEntry, technologyContractKey } from '../contract-entry'
@@ -70,13 +71,15 @@ export function PermissionsSection({
           )
         })}
       </div>
-      {daSolution?.permissions && (
-        <h3 className="mt-4 font-bold">
-          The project uses {daSolution.layerName} with the{' '}
-          {daSolution.bridgeName} DA Bridge that consist of the following
-          permissions on the {daSolution.hostChain}:
-        </h3>
-      )}
+      {daSolution &&
+        (!isEmpty(daSolution.permissions.actors) ||
+          !isEmpty(daSolution.permissions.roles)) && (
+          <h3 className="mt-4 font-bold">
+            The project uses {daSolution.layerName} with the{' '}
+            {daSolution.bridgeName} DA Bridge that consist of the following
+            permissions on the {daSolution.hostChain}:
+          </h3>
+        )}
       {daSolution?.permissions.roles?.map((permission) => (
         <ContractEntry
           key={technologyContractKey(permission)}

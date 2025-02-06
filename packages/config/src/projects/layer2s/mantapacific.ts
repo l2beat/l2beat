@@ -75,7 +75,6 @@ export const mantapacific: Layer2 = opStackL2({
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Manta Pacific Network Launch',

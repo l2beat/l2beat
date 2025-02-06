@@ -5,7 +5,14 @@ import type { CustomLinkProps } from '../custom-link'
 import { CustomLink } from '../custom-link'
 import { useHiglightableLinkContext } from './highlightable-link-context'
 
-export function HighlightableLink({ className, ...props }: CustomLinkProps) {
+export type HighlightableLinkProps = {
+  address: string
+} & CustomLinkProps
+
+export function HighlightableLink({
+  className,
+  ...props
+}: HighlightableLinkProps) {
   const { current, setCurrent } = useHiglightableLinkContext()
 
   return (
@@ -13,7 +20,7 @@ export function HighlightableLink({ className, ...props }: CustomLinkProps) {
       {...props}
       className={cn(
         className,
-        current === props.href && [
+        current === props.address && [
           'relative z-10',
           'before:absolute before:-inset-x-1 before:-inset-y-0.5',
           'before:-z-10 before:rounded before:border',
@@ -21,7 +28,7 @@ export function HighlightableLink({ className, ...props }: CustomLinkProps) {
           'before:dark:border-yellow-250 before:dark:bg-yellow-250/10',
         ],
       )}
-      onMouseEnter={() => setCurrent(props.href)}
+      onMouseEnter={() => setCurrent(props.address)}
       onMouseLeave={() => setCurrent(undefined)}
     />
   )

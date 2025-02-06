@@ -115,7 +115,6 @@ function createIndexer(
       deps?.daProvider ??
       mockObject<DaProvider>({
         getBlobs: mockFn().resolvesTo([]),
-        getBlobsByAddress: mockFn().resolvesTo([]),
       }),
     blockProvider:
       deps?.blockProvider ??

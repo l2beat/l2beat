@@ -61,7 +61,6 @@ export const b3: Layer3 = opStackL3({
   },
   genesisTimestamp: new UnixTime(1722378840),
   isNodeAvailable: false,
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'B3 Open Mainnet Launch',

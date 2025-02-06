@@ -292,8 +292,6 @@ describe('layer2s', () => {
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 
-          if (layer2.permissions === 'UnderReview') continue
-
           for (const perChain of Object.values(layer2.permissions ?? {})) {
             const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
             for (const { name, references } of all) {

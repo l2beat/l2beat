@@ -167,7 +167,6 @@ export const mantle: Layer2 = opStackL2({
     ],
     coingeckoPlatform: 'mantle',
   },
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

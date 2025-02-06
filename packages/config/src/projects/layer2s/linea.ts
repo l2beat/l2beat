@@ -12,20 +12,19 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ProjectPermissionedAccount } from '../../types'
-import type { Layer2 } from '../../types'
+import type { Layer2, ProjectPermissionedAccount } from '../../types'
 import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
@@ -417,14 +416,16 @@ export const linea: Layer2 = {
       rollupNodeSourceAvailable: false,
     },
     stage1: {
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: [
-        false,
-        'Security Council members are not publicly known.',
-      ],
+      securityCouncilProperlySetUp: {
+        satisfied: false,
+        message: 'Security Council members are not publicly known.',
+        mode: 'replace',
+      },
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
