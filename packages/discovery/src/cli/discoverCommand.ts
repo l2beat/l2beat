@@ -121,7 +121,13 @@ export async function discover(
     logger = logger.for('DryRun')
     logger.info('Starting')
 
-    await dryRunDiscovery(http, configReader, config, chainConfigs)
+    await dryRunDiscovery(
+      configReader.rootPath,
+      http,
+      configReader,
+      config,
+      chainConfigs,
+    )
     return
   }
 

@@ -12,7 +12,7 @@ const C = { address: EthereumAddress.random() }
 describe(findUnknownContracts.name, () => {
   it('finds contracts not present in discovered.json', () => {
     const configReader = mockObject<ConfigReader>({
-      readDiscovery: mockFn().resolvesTo({
+      readDiscovery: mockFn().returns({
         contracts: [A, B],
       }),
     })
@@ -24,7 +24,7 @@ describe(findUnknownContracts.name, () => {
 
   it('works for empty arrays', () => {
     const configReader = mockObject<ConfigReader>({
-      readDiscovery: mockFn().resolvesTo({
+      readDiscovery: mockFn().returns({
         contracts: [],
       }),
     })

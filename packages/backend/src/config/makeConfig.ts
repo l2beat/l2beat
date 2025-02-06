@@ -1,3 +1,4 @@
+import { join } from 'path'
 import {
   bridgeToBackendProject,
   layer2ToBackendProject,
@@ -21,7 +22,6 @@ import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
 import { getGitCommitHash } from './getGitCommitHash'
-import { join } from 'path'
 
 interface MakeConfigOptions {
   name: string
