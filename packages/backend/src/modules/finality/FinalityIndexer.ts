@@ -77,6 +77,17 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (finalityData) {
+      // Sometimes if finality is wrongly configured we get negative values,
+      // we do not want to save those data to db
+      assert(
+        finalityData.minimumTimeToInclusion > 0 &&
+          finalityData.averageTimeToInclusion > 0 &&
+          finalityData.maximumTimeToInclusion > 0 &&
+          (finalityData.averageStateUpdate === null ||
+            finalityData.averageStateUpdate >= 0),
+        `Finality data cannot be negative: ${this.configuration.projectId}`,
+      )
+
       await this.db.finality.insert(finalityData)
     }
 
