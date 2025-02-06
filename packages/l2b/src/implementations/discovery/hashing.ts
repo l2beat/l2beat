@@ -1,20 +1,8 @@
-import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import type { ConfigReader } from '@l2beat/discovery'
 import { Hash160 } from '@l2beat/shared-pure'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
-
-export function getDiscoveryHash(
-  configReader: ConfigReader,
-  projectName: string,
-  chain: string,
-): Hash160 {
-  const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const hasher = createHash('sha1')
-  hasher.update(JSON.stringify(curDiscovery))
-  return Hash160(`0x${hasher.digest('hex')}`)
-}
 
 export function updateDiffHistoryHash(
   configReader: ConfigReader,
@@ -28,7 +16,7 @@ export function updateDiffHistoryHash(
     content = content.split('\n').slice(2).join('\n')
   }
 
-  const hash = getDiscoveryHash(configReader, projectName, chain)
+  const hash = configReader.readDiscoveryHash(projectName, chain)
   const hashLine = `${HASH_LINE_PREFIX}${hash.toString()}\n`
 
   writeFileSync(diffHistoryPath, `${hashLine}\n${content}`)
