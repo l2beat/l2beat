@@ -2,10 +2,7 @@ import type { Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
-import {
-  type ThroughputData,
-  getDaThroughputData,
-} from '../utils/get-da-throuput-data'
+import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const projects = await ps.getProjects({
@@ -16,7 +13,7 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   if (projectsWithDaTracking.length === 0) {
     return []
   }
-  const latestData = await getDaThroughputData(projectsWithDaTracking)
+  const latestData = await getDaThroughput(projectsWithDaTracking)
 
   const entries = projectsWithDaTracking.map((project) =>
     getDaThroughputEntry(project, latestData[project.id]),

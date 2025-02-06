@@ -1,13 +1,20 @@
 import type { Project } from '@l2beat/config'
 import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 
-export type ThroughputData = Awaited<ReturnType<typeof getDaThroughputData>>
-
-export async function getDaThroughputData(
+export async function getDaThroughput(
   projects: Project<'daLayer' | 'statuses'>[],
 ) {
+  if (env.MOCK) {
+    return getMockThroughputData(projects)
+  }
+  return getThroughputData(projects)
+}
+
+export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
+async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
   const db = getDb()
 
   const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
@@ -51,6 +58,28 @@ export async function getDaThroughputData(
             maxThroughput,
             pastDayAvgCapacityUtilization,
             totalPosted: Number(lastRecord.totalSize) / 1_000_000,
+          },
+        ] as const
+      })
+      .filter(notUndefined),
+  )
+}
+
+function getMockThroughputData(
+  projects: Project<'daLayer' | 'statuses'>[],
+): ThroughputData {
+  return Object.fromEntries(
+    projects
+      .map((project) => {
+        return [
+          project.id,
+          {
+            totalSize: 101312n,
+            syncedUntil: UnixTime.now().toStartOf('day').add(-1, 'days'),
+            pastDayAvgThroughput: 1.5,
+            maxThroughput: 4.3,
+            pastDayAvgCapacityUtilization: 24,
+            totalPosted: 203.14,
           },
         ] as const
       })
