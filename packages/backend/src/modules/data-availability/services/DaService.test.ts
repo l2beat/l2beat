@@ -9,7 +9,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DaService } from './DaService'
 
-const MOCK_PROJECT_CONFIGS = [
+const MOCK_ETHEREUM_CONFIGS = [
   {
     id: ProjectId('project-ethereum-1'),
     config: {
@@ -26,13 +26,9 @@ const MOCK_PROJECT_CONFIGS = [
       sequencers: [],
     } as EthereumDaTrackingConfig,
   },
-  {
-    id: ProjectId('project-avail-1'),
-    config: {
-      type: 'avail',
-      appId: 'avail-1',
-    } as AvailDaTrackingConfig,
-  },
+]
+
+const MOCK_CELESTIA_CONFIGS = [
   {
     id: ProjectId('project-celestia-1'),
     config: {
@@ -41,6 +37,22 @@ const MOCK_PROJECT_CONFIGS = [
     } as CelestiaDaTrackingConfig,
   },
 ]
+
+const MOCK_AVAIL_CONFIGS = [
+  {
+    id: ProjectId('project-avail-1'),
+    config: {
+      type: 'avail',
+      appId: 'avail-1',
+    } as AvailDaTrackingConfig,
+  },
+]
+
+const MOCK_PROJECT_CONFIGS = {
+  ethereum: MOCK_ETHEREUM_CONFIGS,
+  celestia: MOCK_CELESTIA_CONFIGS,
+  avail: MOCK_AVAIL_CONFIGS,
+}
 
 describe(DaService.name, () => {
   // biome-ignore lint/suspicious/noFocusedTests: <explanation>

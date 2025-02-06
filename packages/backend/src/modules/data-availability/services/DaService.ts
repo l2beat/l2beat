@@ -2,18 +2,32 @@ import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
-  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { DaBlob } from '@l2beat/shared'
+import type {
+  AvailBlob,
+  CelestiaBlob,
+  DaBlob,
+  EthereumBlob,
+} from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 
 export class DaService {
   constructor(
-    private readonly projectConfigs: {
-      id: ProjectId
-      config: ProjectDaTrackingConfig
-    }[],
+    private readonly configs: {
+      ethereum: {
+        id: ProjectId
+        config: EthereumDaTrackingConfig
+      }[]
+      celestia: {
+        id: ProjectId
+        config: CelestiaDaTrackingConfig
+      }[]
+      avail: {
+        id: ProjectId
+        config: AvailDaTrackingConfig
+      }[]
+    },
   ) {}
 
   generateRecords(
@@ -55,59 +69,22 @@ export class DaService {
       totalSize: blob.size,
     }
 
-    const matchEthereumProject = (config: ProjectDaTrackingConfig): boolean => {
-      if (blob.type !== 'ethereum') return false
-
-      const ethereumConfig = config as EthereumDaTrackingConfig
-
-      const hasInboxMatch = ethereumConfig.inbox === blob.inbox
-
-      if (
-        !ethereumConfig.sequencers ||
-        ethereumConfig.sequencers.length === 0
-      ) {
-        return hasInboxMatch
-      }
-
-      const hasMatchingSequencer = ethereumConfig.sequencers.some(
-        (sequencer) => sequencer === blob.sequencer,
-      )
-
-      return hasInboxMatch && hasMatchingSequencer
-    }
-
-    const matchAvailProject = (config: ProjectDaTrackingConfig): boolean => {
-      if (blob.type !== 'avail') return false
-
-      const availConfig = config as AvailDaTrackingConfig
-
-      return availConfig.appId === blob.appId
-    }
-
-    const matchCelestiaProject = (config: ProjectDaTrackingConfig): boolean => {
-      if (blob.type !== 'celestia') return false
-
-      const availConfig = config as CelestiaDaTrackingConfig
-
-      return availConfig.namespace === blob.namespace
-    }
-
     let projectId = undefined
 
     switch (blob.type) {
       case 'ethereum':
-        projectId = this.projectConfigs.find((entry) =>
-          matchEthereumProject(entry.config),
-        )?.id
-        break
-      case 'avail':
-        projectId = this.projectConfigs.find((entry) =>
-          matchAvailProject(entry.config),
+        projectId = this.configs.ethereum.find((entry) =>
+          matchEthereumProject(blob, entry.config),
         )?.id
         break
       case 'celestia':
-        projectId = this.projectConfigs.find((entry) =>
-          matchCelestiaProject(entry.config),
+        projectId = this.configs.celestia.find((entry) =>
+          matchCelestiaProject(blob, entry.config),
+        )?.id
+        break
+      case 'avail':
+        projectId = this.configs.avail.find((entry) =>
+          matchAvailProject(blob, entry.config),
         )?.id
         break
     }
@@ -122,4 +99,32 @@ export class DaService {
 
     return [daLayerRecord, projectRecord]
   }
+}
+
+function matchEthereumProject(
+  blob: EthereumBlob,
+  config: EthereumDaTrackingConfig,
+) {
+  const hasInboxMatch = config.inbox === blob.inbox
+
+  if (!config.sequencers || config.sequencers.length === 0) {
+    return hasInboxMatch
+  }
+
+  const hasMatchingSequencer = config.sequencers.some(
+    (sequencer) => sequencer === blob.sequencer,
+  )
+
+  return hasInboxMatch && hasMatchingSequencer
+}
+
+function matchCelestiaProject(
+  blob: CelestiaBlob,
+  config: CelestiaDaTrackingConfig,
+) {
+  return config.namespace === blob.namespace
+}
+
+function matchAvailProject(blob: AvailBlob, config: AvailDaTrackingConfig) {
+  return config.appId === blob.appId
 }
