@@ -24,7 +24,9 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  ChainConfig,
   CustomDa,
+  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -42,7 +44,6 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import type { ChainConfig, KnowledgeNugget } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -341,14 +342,16 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                 rollupNodeSourceAvailable: true,
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
-                securityCouncilProperlySetUp: [
-                  false,
-                  'Security Council members are not publicly known.',
-                ],
+                securityCouncilProperlySetUp: {
+                  satisfied: false,
+                  message: 'Security Council members are not publicly known.',
+                  mode: 'replace',
+                },
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: false,

@@ -743,6 +743,8 @@ export interface DaLayer {
 
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
+  /** The time it takes to finalize the data. @unit seconds */
+  finality?: number
   consensusAlgorithm?: DaConsensusAlgorithm
   throughput?: DaLayerThroughput
   dataAvailabilitySampling?: DataAvailabilitySampling
@@ -896,44 +898,25 @@ export type ProjectDaTrackingConfig =
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
 
-export type StageBlueprint = Record<
-  string,
-  {
-    name: Stage
-    items: Record<
-      string,
-      {
-        positive: string
-        negative: string
-        negativeMessage?: string
-        underReviewMessage?: string
-      }
-    >
-  }
->
-
-export type Satisfied = boolean | 'UnderReview'
-
-export type ChecklistValue = Satisfied | null | [Satisfied, string]
-
-export type ChecklistTemplate<T extends StageBlueprint> = {
-  [K in keyof T]: {
-    [L in keyof T[K]['items']]: ChecklistValue
-  }
-}
-
 export type Stage = 'Stage 0' | 'Stage 1' | 'Stage 2'
 
 export interface StageSummary {
   stage: Stage
+  principle:
+    | {
+        satisfied: boolean | 'UnderReview'
+        description: string
+      }
+    | undefined
   requirements: {
-    satisfied: Satisfied
+    satisfied: boolean | 'UnderReview'
     description: string
   }[]
 }
 
-export interface MissingStageRequirements {
+export interface MissingStageDetails {
   nextStage: Stage
+  principle: string | undefined
   requirements: string[]
 }
 
@@ -943,9 +926,16 @@ export type StageConfig =
   | StageConfigured
 export type UsableStageConfig = StageUnderReview | StageConfigured
 
+export interface StageDowngrade {
+  expiresAt: number
+  reason: string
+  toStage: Stage
+}
+
 export interface StageConfigured {
   stage: Stage
-  missing?: MissingStageRequirements
+  downgradePending: StageDowngrade | undefined
+  missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
   additionalConsiderations?: {

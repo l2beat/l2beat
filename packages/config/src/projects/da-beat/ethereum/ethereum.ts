@@ -129,6 +129,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
       size: 750, // 0.75 MB
       frequency: 12, // 12 seconds
     },
+    finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,

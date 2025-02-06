@@ -156,6 +156,7 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       size: 8000, // 8 MB
       frequency: 6, // 6 seconds
     },
+    finality: 6, // seconds
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),

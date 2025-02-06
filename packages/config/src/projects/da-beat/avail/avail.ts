@@ -134,6 +134,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       size: 2000, // 2 MB
       frequency: 20, // 20 seconds
     },
+    finality: 60, // seconds
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Validity proofs',
