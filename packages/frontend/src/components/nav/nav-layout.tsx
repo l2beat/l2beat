@@ -124,6 +124,11 @@ export async function NavLayout({
           shortTitle: 'Risks',
           href: '/data-availability/risk',
         },
+        {
+          title: 'Throughput',
+          shortTitle: 'Throughput',
+          href: '/data-availability/throughput',
+        },
       ],
     },
     {
