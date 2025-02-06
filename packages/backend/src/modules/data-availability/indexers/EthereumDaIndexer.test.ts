@@ -41,19 +41,23 @@ describe(EthereumDaIndexer.name, () => {
       const daProvider = mockObject<DaProvider>({
         getBlobs: mockFn().resolvesTo([
           {
+            type: 'ethereum',
             size: 100n,
             blockTimestamp: START,
           },
           {
+            type: 'ethereum',
             size: 200n,
             blockTimestamp: START.add(1, 'hours'),
           },
           {
+            type: 'ethereum',
             size: 300n,
             blockTimestamp: START.add(2, 'hours'),
           },
           // Next day
           {
+            type: 'ethereum',
             size: 10000n,
             blockTimestamp: START.add(1, 'days'),
           },
