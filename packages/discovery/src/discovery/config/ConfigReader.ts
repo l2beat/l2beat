@@ -18,6 +18,8 @@ import {
   RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
 
+const HASH_LINE_PREFIX = 'Generated with discovered.json: '
+
 export class ConfigReader {
   public templateService: TemplateService
 
@@ -180,6 +182,29 @@ export class ConfigReader {
     }
 
     return projects
+  }
+
+  readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {
+    assert(
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
+      'Project not found, check if case matches',
+    )
+    assert(
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
+      'Chain not found in project, check if case matches',
+    )
+
+    const content = readFileSync(
+      path.join(this.rootPath, 'discovery', name, chain, 'diffHistory.md'),
+      'utf-8',
+    )
+    const hashLine = content.split('\n')[0]
+    if (hashLine !== undefined && hashLine.startsWith(HASH_LINE_PREFIX)) {
+      const hashString = hashLine.slice(HASH_LINE_PREFIX.length)
+      return Hash160(hashString)
+    }
   }
 
   private readCommonAddressNames(): CommonAddressNames {

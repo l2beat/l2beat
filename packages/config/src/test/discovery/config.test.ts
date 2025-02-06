@@ -7,7 +7,6 @@ import { bridges } from '../../projects/bridges'
 import { layer2s } from '../../projects/layer2s'
 import { layer3s } from '../../projects/layer3s'
 import { onChainProjects } from '../../projects/onChainProjects'
-import { getDiffHistoryHash } from './helper'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader(join(process.cwd(), '../config'))
@@ -193,8 +192,7 @@ describe('discovery config.jsonc', () => {
       if (configs.length > 0) {
         for (const c of configs) {
           const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
-          const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
-          const savedHash = getDiffHistoryHash(diffHistoryPath)
+          const savedHash = configReader.readDiffHistoryHash(c.name, c.chain)
           assert(
             savedHash !== undefined,
             `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
