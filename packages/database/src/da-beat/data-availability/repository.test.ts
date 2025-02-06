@@ -69,18 +69,23 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.getLatestByProjectIds
+  describe(DataAvailabilityRepository.prototype.getByProjectIdsAndTimeRange
     .name, () => {
     it('should return the latest record for each project', async () => {
       await repository.upsertMany([
         record('a', START, 100n),
         record('a', START.add(1, 'days'), 200n),
         record('b', START, 300n),
+        record('b', START.add(2, 'days'), 300n),
       ])
 
-      const results = await repository.getLatestByProjectIds(['a', 'b'])
+      const results = await repository.getByProjectIdsAndTimeRange(
+        ['a', 'b'],
+        [START, START.add(1, 'days')],
+      )
 
       expect(results).toEqualUnsorted([
+        record('a', START, 100n),
         record('a', START.add(1, 'days'), 200n),
         record('b', START, 300n),
       ])
@@ -92,9 +97,15 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('a', START.add(1, 'days'), 200n),
       ])
 
-      const results = await repository.getLatestByProjectIds(['a', 'b'])
+      const results = await repository.getByProjectIdsAndTimeRange(
+        ['a', 'b'],
+        [START, START.add(1, 'days')],
+      )
 
-      expect(results).toEqualUnsorted([record('a', START.add(1, 'days'), 200n)])
+      expect(results).toEqualUnsorted([
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+      ])
     })
   })
 

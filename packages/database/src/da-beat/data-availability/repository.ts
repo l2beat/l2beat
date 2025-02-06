@@ -69,25 +69,18 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatestByProjectIds(
+  async getByProjectIdsAndTimeRange(
     projectIds: string[],
+    timeRange: [UnixTime, UnixTime],
   ): Promise<DataAvailabilityRecord[]> {
-    const subquery = this.db
-      .selectFrom('DataAvailability')
-      .where('projectId', 'in', projectIds)
-      .select('projectId')
-      .select(this.db.fn.max('timestamp').as('maxTimestamp'))
-      .groupBy('projectId')
-      .as('sub')
-
+    const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('DataAvailability')
-      .innerJoin(subquery, (join) =>
-        join
-          .onRef('DataAvailability.projectId', '=', 'sub.projectId')
-          .onRef('DataAvailability.timestamp', '=', 'sub.maxTimestamp'),
-      )
-      .selectAll('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)
