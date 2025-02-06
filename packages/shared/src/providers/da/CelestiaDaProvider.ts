@@ -29,34 +29,35 @@ export class CelestiaDaProvider implements DaProvider {
       return []
     }
 
-    const events = block.txs_results
+    const blobEvents = block.txs_results
       .flatMap(({ log }) => log.flatMap(({ events }) => events))
       .filter(({ type }) => type === 'celestia.blob.v1.EventPayForBlobs')
 
-    const blobs: CelestiaBlob[] = []
-
-    for (const blobEvent of events) {
-      const n = blobEvent.attributes.find((a) => a.key === 'namespaces')
-      assert(n && n.value, `Namespaces should be defined`)
-      const namespaces = JSON.parse(n.value) as string[]
-
-      const b = blobEvent.attributes.find((a) => a.key === 'blob_sizes')
-      assert(b && b.value, `Blob sizes should be defined`)
-      const sizes = JSON.parse(b.value) as number[]
+    const blobs: CelestiaBlob[] = blobEvents.flatMap((blobEvent) => {
+      const namespaces = getAttributeValue<string[]>(blobEvent, 'namespaces')
+      const sizes = getAttributeValue<number[]>(blobEvent, 'blob_sizes')
 
       assert(
         namespaces.length === sizes.length,
-        `Namespaces and sizes should be equal length`,
+        'Namespaces and sizes should be equal length',
       )
 
-      for (const [i, nn] of namespaces.entries()) {
-        blobs.push({
-          namespace: nn,
-          blockTimestamp: UnixTime.ZERO,
-          size: BigInt(sizes[i]),
-        })
-      }
-    }
+      return namespaces.map((namespace, i) => ({
+        namespace,
+        blockTimestamp: UnixTime.ZERO,
+        size: BigInt(sizes[i]),
+      }))
+    })
+
     return blobs
   }
+}
+
+function getAttributeValue<T>(
+  event: { attributes: { key: string; value?: string }[] },
+  key: string,
+): T {
+  const attribute = event.attributes.find((a) => a.key === key)
+  assert(attribute && attribute.value, `${key} should be defined`)
+  return JSON.parse(attribute.value) as T
 }
