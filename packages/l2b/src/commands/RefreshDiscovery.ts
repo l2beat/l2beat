@@ -10,7 +10,6 @@ import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
 import { readConfig } from '../config/readConfig'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
-import { discoveryNeedsRefresh } from '../implementations/refresh-discovery/discoveryNeedsRefresh'
 
 export const RefreshDiscovery = command({
   name: 'refresh-discovery',
@@ -72,7 +71,7 @@ export const RefreshDiscovery = command({
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const needsRefreshReason = args.all
         ? '--all flag was provided'
-        : discoveryNeedsRefresh(discovery, config, templateService)
+        : templateService.discoveryNeedsRefresh(discovery, config)
       if (needsRefreshReason !== undefined) {
         toRefresh.push({
           config,
