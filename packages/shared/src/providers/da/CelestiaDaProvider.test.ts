@@ -12,21 +12,25 @@ describe(CelestiaDaProvider.name, () => {
 
       expect(blobs).toEqual([
         {
+          type: 'celestia',
           namespace: 'namespace1',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
           size: BigInt(100),
         },
         {
+          type: 'celestia',
           namespace: 'namespace2',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
           size: BigInt(200),
         },
         {
+          type: 'celestia',
           namespace: 'namespace3',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
           size: BigInt(300),
         },
         {
+          type: 'celestia',
           namespace: 'namespace4',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
           size: BigInt(400),

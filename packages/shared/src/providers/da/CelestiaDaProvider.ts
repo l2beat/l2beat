@@ -1,10 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
-import type { DaBlob, DaProvider } from './DaProvider'
-
-export type CelestiaBlob = DaBlob & {
-  namespace: string
-}
+import type { CelestiaBlob, DaProvider } from './DaProvider'
 
 export class CelestiaDaProvider implements DaProvider {
   constructor(private readonly rpcClient: CelestiaRpcClient) {}
@@ -46,6 +42,7 @@ export class CelestiaDaProvider implements DaProvider {
       )
 
       return namespaces.map((namespace, i) => ({
+        type: 'celestia',
         namespace,
         blockTimestamp,
         size: BigInt(sizes[i]),
