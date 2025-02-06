@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 21736968,
+  "blockNumber": 21786536,
   "configHash": "0xbd0d7a87123446674c46a4d5106feeac4a1cbafb715070cfdc12a6e6c91b5e37",
   "contracts": [
     {
@@ -61,7 +61,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1738198811,
+        "latestPress": 1738800023,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -500,7 +500,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -800,6 +800,30 @@
       "derivedName": "RewardsCoordinator"
     },
     {
+      "name": "Safe",
+      "address": "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1728099143,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": ["0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"],
+        "$threshold": 1,
+        "domainSeparator": "0x8d93468ebffa79901f086f2e11f14ab0aa2568948ed9d84f653bc646af4dec93",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 0,
+        "VERSION": "1.4.1"
+      }
+    },
+    {
       "name": "bEIGEN token",
       "address": "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
       "sourceHashes": [
@@ -876,7 +900,7 @@
         "name": "Backing Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1705832181136288076923076949",
+        "totalSupply": "1707119601650353200000000027",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1090,7 +1114,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 32901,
+        "numPods": 32938,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -1619,7 +1643,7 @@
         "name": "Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1705832181136288076923076949",
+        "totalSupply": "1707119601650353200000000027",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1722,8 +1746,8 @@
           "0x17919FAC7024d5b770322E5Cb81607D247654116",
           "0x34C37613e1680efD9e203C979658e1d058b4B2BC",
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-          "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7",
-          "0x313011Ee87b12700E29B0D1136Ae3d64665F3939",
+          "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1",
+          "0xED732DEb32034e603bEEEdA84605dAbb8933594b",
           "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
           "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
           "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
@@ -1738,7 +1762,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 13 (69%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1751,7 +1775,6 @@
     { "address": "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30" },
     { "address": "0x2E158da11961426E2A1Cc9e79f40244486b6845C" },
     { "address": "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a" },
-    { "address": "0x313011Ee87b12700E29B0D1136Ae3d64665F3939" },
     { "address": "0x33E816008E7bc7798A73d0eaa640CC24f34d1626" },
     { "address": "0x34C37613e1680efD9e203C979658e1d058b4B2BC" },
     { "address": "0x34D64c402cA43C1c4B368e16130C64aC245718C6" },
@@ -1759,13 +1782,13 @@
     { "address": "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1" },
     { "address": "0x4a3CD82B73821d075799680AcDff3e884B726777" },
     { "address": "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71" },
+    { "address": "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5" },
     { "address": "0x60bbde47423D62F6d7658bb3654869dfA397bF3D" },
     { "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F" },
     { "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f" },
     { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
     { "address": "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835" },
     { "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B" },
-    { "address": "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7" },
     { "address": "0x8f94F55fD8c9E090296283137C303fE97d32A9e2" },
     { "address": "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95" },
     { "address": "0x9229C290F60F303884073F28EB8E81F9B82506d5" },
@@ -1785,6 +1808,7 @@
     { "address": "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60" },
     { "address": "0xe7fFd467F7526abf9c8796EDeE0AD30110419127" },
     { "address": "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e" },
+    { "address": "0xED732DEb32034e603bEEEdA84605dAbb8933594b" },
     { "address": "0xEFca484E497a9de170Da32abfa11650957dD2a95" }
   ],
   "abis": {
@@ -2355,6 +2379,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1": [
+      "constructor(address _singleton)"
     ],
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": [
       "constructor(address _logic, address admin_, bytes _data) payable",

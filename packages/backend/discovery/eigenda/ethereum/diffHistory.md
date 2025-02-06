@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x3af8a224f797588da25b9bfe888a67517baf2ac3
+
+# Diff at Thu, 06 Feb 2025 09:19:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21736785
+- current block number: 21786519
+
+## Description
+
+Signer rotation in EigenLayerCommunityMultisig.
+
+## Watched changes
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      values.$members.4:
+-        "0x313011Ee87b12700E29B0D1136Ae3d64665F3939"
++        "0xED732DEb32034e603bEEEdA84605dAbb8933594b"
+      values.$members.3:
+-        "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7"
++        "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../eigenda/ethereum/.flat/Safe/Safe.sol           | 1088 ++++++++++++++++++++
+ .../eigenda/ethereum/.flat/Safe/SafeProxy.p.sol    |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x249e03d6a3e6c8a451dbf9adbd7939a3f5cfb761
 
 # Diff at Tue, 04 Feb 2025 12:31:24 GMT:
