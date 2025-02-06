@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 21786508,
-  "configHash": "0x76afd95386b272bb094f8dbf9f4f3be11851dcb523de7b615fdbeabada6b3c70",
+  "configHash": "0xebe99147f4aff0eeb9def68b584f9b7d4198d7888b26f4ba27d393dc11c8e1da",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -231,7 +231,7 @@
           "via": [{ "address": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }]
         }
       ],
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1737735011,
       "values": {
         "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",

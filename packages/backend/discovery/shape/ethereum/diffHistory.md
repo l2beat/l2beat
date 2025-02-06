@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x715b254bad6aa568e1ab905af06fcb0bb92ffe51
+Generated with discovered.json: 0x4f9f8df0c3b11770236173b2eaaf61339365b642
 
-# Diff at Thu, 06 Feb 2025 09:17:08 GMT:
+# Diff at Thu, 06 Feb 2025 09:20:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778483
@@ -8,18 +8,9 @@ Generated with discovered.json: 0x715b254bad6aa568e1ab905af06fcb0bb92ffe51
 
 ## Description
 
-OP Stack SC signer rotation.
+OP Stack SC signer rotation. Ignored permissioned games count manually.
 
 ## Watched changes
-
-```diff
-    contract DisputeGameFactory (0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-      values.permissionedGamesTotal:
--        89
-+        102
-    }
-```
 
 ```diff
     contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
