@@ -139,9 +139,15 @@ function getDisplay(
     const members = (contract.values?.['$members'] as string[]).length
     const percentage = ((threshold / members) * 100).toFixed(0)
 
+    const nodeName = [
+      `${threshold}/${members}`,
+      ...(threshold === members ? [] : [`${percentage}%`]),
+      name,
+    ].join(' ')
+
     return {
       addressType: 'Multisig',
-      name: `${name} [${threshold}/${members} @ ${percentage}%]`,
+      name: nodeName,
     }
   }
   return { addressType: 'Contract', name }
