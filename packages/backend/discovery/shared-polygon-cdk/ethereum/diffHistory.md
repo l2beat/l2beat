@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xb2db688790975aa488dcb9282c4f2fdd43f4d85b
+
+# Diff at Thu, 06 Feb 2025 11:35:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@98889e54375709a199b6bf496cefcc776f3691b4 block: 21772665
+- current block number: 21787152
+
+## Description
+
+Add monitoring for accounting proofs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21772665 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Lists any rollupID that sends a pessimistic proof.
++++ severity: HIGH
+      values.pessimisticProofSenders:
++        []
+      fieldMeta.isVerifyingBatches.description:
+-        "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
++        "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1."
+      fieldMeta.pessimisticProofSenders:
++        {"severity":"HIGH","description":"Lists any rollupID that sends a pessimistic proof."}
+    }
+```
+
 Generated with discovered.json: 0x6e0bf9ef2ea555f5959e94c27880677b5ef2a461
 
 # Diff at Tue, 04 Feb 2025 13:45:04 GMT:

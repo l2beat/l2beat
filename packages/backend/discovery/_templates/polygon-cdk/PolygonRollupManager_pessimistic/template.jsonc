@@ -194,7 +194,7 @@
       }
     },
     "isVerifyingBatches": {
-      "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.",
+      "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.",
       "handler": {
         "type": "array",
         "method": "rollupIDToRollupData",
@@ -203,6 +203,22 @@
         "pickFields": ["lastVerifiedBatch"]
       },
       "returnType": "(IsGreaterThanOne[][])"
+    },
+    "pessimisticProofSenders": {
+      "description": "Lists any rollupID that sends a pessimistic proof.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "rollupID",
+        "add": {
+          "event": "VerifyBatchesTrustedAggregator",
+          "where": [
+            "=",
+            "#stateRoot",
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ]
+        }
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21772665,
+  "blockNumber": 21787152,
   "configHash": "0xece1e516b4d6c8360cf38bcef6633134c0fb72adc9e6773ecb060a535ddcb57e",
   "contracts": [
     {
@@ -194,7 +194,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x20c08ddfc6efaca570f8ed1a8556889bdf0e9ef01a76c232da1d3e193c09fe19",
+        "getRoot": "0x5f6af3c6509362c962b28444d07f2836673e0e846494a69ebdb6f521120cd7fa",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -438,7 +438,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x779840b4b5315947a2a15bdac4b1b3584e318081b7c27e339626b88b22b0d0c3",
+        "getRollupExitRoot": "0x4958dbd96c6bab607df5cc746f6a7b586c037c37519071f2db5dd46e0e73b794",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -457,8 +457,9 @@
           [true],
           [false]
         ],
-        "lastAggregationTimestamp": 1738665827,
+        "lastAggregationTimestamp": 1738840391,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
+        "pessimisticProofSenders": [],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
         "rollupCount": 14,
@@ -665,8 +666,8 @@
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 581266,
-        "totalVerifiedBatches": 580763,
+        "totalSequencedBatches": 586719,
+        "totalVerifiedBatches": 586142,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -686,7 +687,11 @@
           "description": "struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey"
         },
         "isVerifyingBatches": {
-          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
+          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1."
+        },
+        "pessimisticProofSenders": {
+          "severity": "HIGH",
+          "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
       "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }]
@@ -740,8 +745,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 53566,
-        "getRoot": "0x04ce7c970f6113dc3d9cc5a053401d45acdfcbdf98922e06c9d5eb28308be1d7",
+        "depositCount": 53741,
+        "getRoot": "0xaa4d9053b52df2e73ce4cf41036d8994e7dda50079f46c8f1a5cd66609b99e7a",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       }
     },
@@ -1574,7 +1579,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x3242399a042899dc2e4c499787d41db79155837a2732592be96895174fbb8f3a",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x893bd943a845e5be1f62ba8d29ea317de2eb25c6ed6f903ec6cb31636cc4e961",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
   }
