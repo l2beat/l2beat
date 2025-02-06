@@ -19,8 +19,6 @@ const CelestiaBlockResult = z.object({
   txs_results: z
     .array(
       z.object({
-        code: z.number().int(),
-        data: z.string().or(z.null()),
         log: z.preprocess(
           (val) => {
             try {
@@ -45,21 +43,6 @@ const CelestiaBlockResult = z.object({
               ),
             }),
           ),
-        ),
-        info: z.string(),
-        gas_wanted: z.string(),
-        gas_used: z.string(),
-        events: z.array(
-          z.object({
-            type: z.string(),
-            attributes: z.array(
-              z.object({
-                key: z.string(),
-                value: z.string().or(z.null()),
-                index: z.boolean(),
-              }),
-            ),
-          }),
         ),
       }),
     )
