@@ -1,5 +1,5 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import type { IProvider } from '../IProvider'
 import { MulticallClient } from './MulticallClient'
@@ -182,4 +182,41 @@ describe(MulticallClient.name, () => {
       bar: [{ success: false, data: Bytes.fromHex('0xdead') }],
     })
   })
+
+  const outOfGasMessage = [
+    'out of gas', // normal
+    'out of gas: out of gas', // whatever QucikNode is doing...
+  ]
+
+  for (const message of outOfGasMessage) {
+    it(`recalls everything individually if [${message}]`, async () => {
+      // NOTE(radomski): Amazing gambit ethers
+      const error = new Error('bad') as any
+      error['error'] = { error: { code: 123, message } }
+
+      const discoveryProvider = mockObject<IProvider>({
+        call: mockFn().throwsOnce(error).returns(Bytes.fromHex('0x42ab')),
+      })
+
+      const multicallClient = new MulticallClient(
+        discoveryProvider,
+        TEST_MULTICALL_CONFIG,
+      )
+      const blockNumber = MULTICALL3_BLOCK + 1
+      const result = await multicallClient.multicall(
+        [
+          { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
+          { address: ADDRESS_B, data: Bytes.fromHex('0x') },
+          { address: ADDRESS_C, data: Bytes.fromHex('0xdeadbeef') },
+        ],
+        blockNumber,
+      )
+
+      expect(result).toEqual([
+        { success: true, data: Bytes.fromHex('0x42ab') },
+        { success: true, data: Bytes.fromHex('0x42ab') },
+        { success: true, data: Bytes.fromHex('0x42ab') },
+      ])
+    })
+  }
 })
