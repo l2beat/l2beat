@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcClient'
 import type { DaBlob, DaProvider } from './DaProvider'
 
@@ -13,8 +13,8 @@ export class CelestiaDaProvider implements DaProvider {
     const blobs: CelestiaBlob[] = []
 
     for (let i = from; i <= to; i++) {
-      const blockBlobs = await this.getBlobsFromBlock(i)
-      blobs.push(...blockBlobs)
+      const blobsFromBlock = await this.getBlobsFromBlock(i)
+      blobs.push(...blobsFromBlock)
     }
 
     return blobs
@@ -23,7 +23,10 @@ export class CelestiaDaProvider implements DaProvider {
   private async getBlobsFromBlock(
     blockNumber: number,
   ): Promise<CelestiaBlob[]> {
-    const block = await this.rpcClient.getBlockResult(blockNumber)
+    const [block, blockTimestamp] = await Promise.all([
+      this.rpcClient.getBlockResult(blockNumber),
+      this.rpcClient.getBlockTimestamp(blockNumber),
+    ])
 
     if (block.txs_results === null) {
       return []
@@ -44,7 +47,7 @@ export class CelestiaDaProvider implements DaProvider {
 
       return namespaces.map((namespace, i) => ({
         namespace,
-        blockTimestamp: UnixTime.ZERO,
+        blockTimestamp,
         size: BigInt(sizes[i]),
       }))
     })

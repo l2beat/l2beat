@@ -1,6 +1,7 @@
-import type { json } from '@l2beat/shared-pure'
+import { type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
+  CelestiaBlockResponse,
   type CelestiaBlockResult,
   CelestiaBlockResultResponse,
   CelestiaErrorResponse,
@@ -14,6 +15,26 @@ interface Dependencies extends ClientCoreDependencies {
 export class CelestiaRpcClient extends ClientCore {
   constructor(private readonly $: Dependencies) {
     super($)
+  }
+
+  async getBlockTimestamp(height: number): Promise<UnixTime> {
+    const response = await this.query('block', {
+      height: height.toString(),
+    })
+
+    const blockResponse = CelestiaBlockResponse.safeParse(response)
+
+    if (!blockResponse.success) {
+      this.$.logger.warn(`Invalid response`, {
+        height,
+        response: JSON.stringify(blockResponse),
+      })
+      throw new Error(`Block ${height ?? 'latest'}: Error during parsing`)
+    }
+
+    return UnixTime.fromDate(
+      new Date(blockResponse.data.result.block.header.time),
+    )
   }
 
   async getBlockResult(height: number): Promise<CelestiaBlockResult> {

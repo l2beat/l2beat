@@ -1,5 +1,18 @@
 import { z } from 'zod'
 
+export type CelestiaBlock = z.infer<typeof CelestiaBlock>
+const CelestiaBlock = z.object({
+  block: z.object({
+    header: z.object({
+      time: z.string(),
+    }),
+  }),
+})
+
+export const CelestiaBlockResponse = z.object({
+  result: CelestiaBlock,
+})
+
 export type CelestiaBlockResult = z.infer<typeof CelestiaBlockResult>
 const CelestiaBlockResult = z.object({
   height: z.string(),
