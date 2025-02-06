@@ -1,3 +1,47 @@
+Generated with discovered.json: 0xf1e5fed307b8635c5552bff67a9b591c1abb4c1d
+
+# Diff at Thu, 06 Feb 2025 09:33:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778537
+- current block number: 21786555
+
+## Description
+
+Added SC.
+
+## Watched changes
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[]}
+      issuedPermissions.0.to:
+-        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$admin:
+-        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
++        ["0x83C0A700114101D1283D1405E2c8f21D3F03e988","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
+      values.governors.1:
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StarknetSecurityCouncil (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/StarknetSecurityCouncil/Safe.sol         | 1088 ++++++++++++++++++++
+ .../.flat/StarknetSecurityCouncil/SafeProxy.p.sol  |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x99f128e8053ca8b32bccf74a8aa15f2e0a07625f
 
 # Diff at Wed, 05 Feb 2025 06:38:06 GMT:

@@ -227,7 +227,11 @@
     },
     "KintoID": {
       "description": "Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.",
-      "ignoreMethods": ["proxiableUUID", "tokenByIndex"],
+      "ignoreMethods": [
+        "proxiableUUID",
+        "tokenByIndex",
+        "isSanctionsMonitored"
+      ],
       "ignoreInWatchMode": ["lastMonitoredAt", "totalSupply"],
       "fields": {
         "accessControl": {

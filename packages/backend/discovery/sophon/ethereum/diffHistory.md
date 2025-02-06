@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xcf99494b7cf147560b86fe20993ba8c5e3fc0e9e
+
+# Diff at Thu, 06 Feb 2025 09:23:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778526
+- current block number: 21786541
+
+## Description
+
+Upgrade successful.
+
+## Watched changes
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        13780
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        13780
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x09651d1b7e30dd2429ead720aa214443fc446788
 
 # Diff at Wed, 05 Feb 2025 06:33:01 GMT:

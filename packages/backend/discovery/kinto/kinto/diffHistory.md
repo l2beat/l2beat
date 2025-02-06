@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xf270c35d33d74b2b86de2691d762798419508bf0
+
+# Diff at Thu, 06 Feb 2025 08:52:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 715537
+- current block number: 725499
+
+## Description
+
+Small upgrade for KintoID: Intention here is assumed to want to remove the ability to effectively sanction wallets by just not bumping the `lastMonitoredAt` timestamp.
+This issue is now fixed, but due to double multiplication by `1 days` (at definition of `EXIT_WINDOW_PERIOD` and again inside `isSanctionsMonitored()`) the heartbeat check now only fails after ~2367 years, making `isSanctionsMonitored()` return true for this very long time.
+
+No gov changes yet.
+
+## Watched changes
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      sourceHashes.1:
+-        "0xdd266bc2e9cb84472ebc0a2583f1b1cbeb143cedb0763780f10d151ddff8f8ec"
++        "0xa0df8ed25313dba8d27c8b016413aa2843d038de01ddb01afe28b1d745427dbb"
+      values.$implementation:
+-        "0xaa0726829d41E3C70B84Bc5390cce82afC56871A"
++        "0x4aC06254558e144C41461a319822993900cE2eE4"
+      values.$pastUpgrades.9:
++        ["2025-02-05T15:37:41.000Z","0xee19b10811d98a79d18ea4dfd1684702c0e30070a2e3cf428de3799c257b83f8",["0x4aC06254558e144C41461a319822993900cE2eE4"]]
+      values.$upgradeCount:
+-        9
++        10
+    }
+```
+
+## Source code changes
+
+```diff
+discovery/kinto/kinto/{.flat@715537 => .flat}/KintoID/KintoID.sol | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 715537 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
 Generated with discovered.json: 0x1b42e603e4713a14ade31eaf3e26f9123526838d
 
 # Diff at Tue, 04 Feb 2025 12:34:05 GMT:

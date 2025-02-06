@@ -45,7 +45,8 @@
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "StarknetAdminMultisig",
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "StarknetOpsMultisig",
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "StarkgateBridgeMultisig",
-    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "StarknetOperatorMultisig"
+    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "StarknetOperatorMultisig",
+    "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "StarknetSecurityCouncil"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "shared-sharp-verifier"

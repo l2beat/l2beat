@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x4f9f8df0c3b11770236173b2eaaf61339365b642
+
+# Diff at Thu, 06 Feb 2025 09:20:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778483
+- current block number: 21786508
+
+## Description
+
+OP Stack SC signer rotation. Ignored permissioned games count manually.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.9:
+-        "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4"
++        "0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
+    }
+```
+
 Generated with discovered.json: 0x0bb7f1bd068fba5f1baee6e37857fcf15d1599b5
 
 # Diff at Wed, 05 Feb 2025 06:24:28 GMT:

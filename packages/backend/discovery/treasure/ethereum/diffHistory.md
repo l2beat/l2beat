@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x523ff2047e394e92aea9be2a9fe87a5a33edf1ab
+
+# Diff at Thu, 06 Feb 2025 09:24:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fa699ce266b15edb364aa471a661f580ea1a4529 block: 21778554
+- current block number: 21786543
+
+## Description
+
+Upgrade successful.
+
+## Watched changes
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. The operator commits blocks and provides a ZK proof which is validated by the Verifier contract and then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        278
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        278
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0xd3086b71c95ce83e7f3d30ab1890ada2334695a05b65715e56f42d96b22c8674"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xf5379ae2693ce0bafa4a5d797ddeb380251d1c15
 
 # Diff at Wed, 05 Feb 2025 06:38:42 GMT:
