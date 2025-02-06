@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 21781127,
+  "blockNumber": 21781202,
   "configHash": "0x23d2e7d0157019d1bcaa5e9d746b81efb99a0c22ea6429bac84d59c4584ef451",
   "contracts": [
     {
@@ -218,7 +218,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 811022,
+        "batchCount": 811033,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -249,7 +249,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1863564,
+        "totalDelayedMessagesRead": 1863583,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1215,11 +1215,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1863574,
+        "delayedMessageCount": 1863590,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 811022,
-        "sequencerReportedSubMessageCount": 280721152
+        "sequencerMessageCount": 811033,
+        "sequencerReportedSubMessageCount": 280724797
       },
       "derivedName": "Bridge"
     },
