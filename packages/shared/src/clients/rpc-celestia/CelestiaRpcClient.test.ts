@@ -36,7 +36,6 @@ describe(CelestiaRpcClient.name, () => {
     it('returns block result', async () => {
       const mockLogs = [
         {
-          msg_index: 0,
           events: [
             {
               type: 'celestia.blob.v1.EventPayForBlobs',
@@ -54,7 +53,6 @@ describe(CelestiaRpcClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: {
-            height: '100',
             txs_results: [
               {
                 log: JSON.stringify(mockLogs),
@@ -68,7 +66,6 @@ describe(CelestiaRpcClient.name, () => {
       const result = await rpc.getBlockResult(100)
 
       expect(result).toEqual({
-        height: '100',
         txs_results: [
           {
             log: mockLogs,

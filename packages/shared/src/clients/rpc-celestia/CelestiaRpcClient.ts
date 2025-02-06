@@ -1,4 +1,4 @@
-import { type json, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, type json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   CelestiaBlockResponse,

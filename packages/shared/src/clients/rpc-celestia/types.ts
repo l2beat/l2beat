@@ -15,7 +15,6 @@ export const CelestiaBlockResponse = z.object({
 
 export type CelestiaBlockResult = z.infer<typeof CelestiaBlockResult>
 const CelestiaBlockResult = z.object({
-  height: z.string(),
   txs_results: z
     .array(
       z.object({
@@ -29,7 +28,6 @@ const CelestiaBlockResult = z.object({
           },
           z.array(
             z.object({
-              msg_index: z.number(),
               events: z.array(
                 z.object({
                   type: z.string(),
