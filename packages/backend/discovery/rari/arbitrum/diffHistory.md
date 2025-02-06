@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xeade51474a29225918e591ff1e9d296d9dc464b3
+Generated with discovered.json: 0x83f1fe38988c0215bd699e7c5fbef4b4aead1a88
 
-# Diff at Tue, 04 Feb 2025 23:18:12 GMT:
+# Diff at Thu, 06 Feb 2025 10:59:31 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@761463c301f1f9581b9fd860c0d75d0e4c739faf block: 286430025
-- current block number: 302700506
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@c54a05b364470dff320b43e7d32479f51cdddc7b block: 286430025
+- current block number: 303210532
 
 ## Description
 
@@ -164,6 +164,18 @@ From Ethereum POV, there is no change in the external DA checks. The sequencer i
  .../rari/arbitrum/.flat/X509CRLHelper.sol          | 2485 ++++++++++++++++
  13 files changed, 21414 insertions(+), 6 deletions(-)
 ```
+
+Generated with discovered.json: 0xa17f3fb2888edcfb26dd6f8767766d96af24a021
+
+# Diff at Tue, 04 Feb 2025 12:33:57 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@145553eed7ba44636411ecb25e4099728acd02f9 block: 286430025
+- current block number: 286430025
+
+## Description
+
+Rename 'configure' permission to 'interact'
 
 ## Config/verification related changes
 
