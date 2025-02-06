@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x79d39c51058c7f289a5d331853b305e9a0fe88dd
+
+# Diff at Thu, 06 Feb 2025 11:01:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2061023b431baba3e5db4c021fc2fe8a84244dd3 block: 286430025
+- current block number: 303211044
+
+## Description
+
+Rari integrates with Espresso TEE. Batch poster was replaced with a new batch poster that runs inside a TEE. The sequencer inbox was updated so that the data posting function also includes an attestation as input, a "quote", that is verified for each batch tx by the EspressoTEEVerifier. The verifier checks this signature that can only originate from inside the TEE and reverts if unsuccessful, meaning that for every batch tx we can be sure it came from the TEE.
+From Ethereum POV, there is no change in the external DA checks. The sequencer is still supposed to post to Celestia, and the inbox still checks the commitment has the designated Celesita initial byte (0x63) and length (89). No changes to proof system either.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      template:
+-        "orbitstack/SequencerInbox_Celestia"
++        "orbitstack/SequencerInbox_Celestia_Espresso"
+      sourceHashes.1:
+-        "0x7c44d7be0909b7d0aaf2c476c9c337b43f59f311d40469f3e0cc99dc46308b56"
++        "0xe5b0341ccf50d77e60d2ef63d66c4e6c36835a85d9c0f58b35fc728a7cbc1d9c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia but does not reference a DA bridge."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia."
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF","via":[{"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"},{"address":"0x003e70B041abb993006C03E56c8515622a02928C"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.to:
+-        "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      issuedPermissions.1.via.1:
+-        {"address":"0x003e70B041abb993006C03E56c8515622a02928C"}
+      issuedPermissions.1.via.0:
+-        {"address":"0x139C5A235632EDdad741ff380112B3161d31a21C"}
+      issuedPermissions.1.description:
++        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+      issuedPermissions.0.permission:
+-        "sequence"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      issuedPermissions.0.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
++        "Add/remove batchPosters (Sequencers)."
+      values.$implementation:
+-        "0xa8968d1dbA3F93FB7412d15F4139C0f63537e9E2"
++        "0x805dc3546d99AfB35EfB261b907679b67A08256e"
+      values.$pastUpgrades.4:
++        ["2025-01-31T02:05:35.000Z","0x206804ee59ae4cd1cd13fc2c92c59958f3ecfcf3f210b2d583a6816e3a4a0b10",["0x805dc3546d99AfB35EfB261b907679b67A08256e"]]
+      values.$pastUpgrades.3:
++        ["2025-01-29T20:23:12.000Z","0xb59494487d444c465d61f19a4fe9830806da172e2883ae0861c155f3066592a7",["0xE2DdF957261A6d8a96A7eff29C51460707FfbBE5"]]
+      values.$upgradeCount:
+-        3
++        5
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      values.batchPosters.0:
+-        "0x974533F82B7BADF54Fb91C15f07F3f095e35321C"
++        "0xffE86271e68A0365d71B86b101Fc8CA5546E7E77"
+      values.setIsBatchPosterCount:
+-        1
++        5
+      values.BLOBSTREAM:
++        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
+      values.espressoTEEVerifier:
++        "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract V3QuoteVerifier (0x4613038C93aF8963dc9E5e46c9fb3cbc68724df1)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb)
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
+```
+
+## Source code changes
+
+```diff
+.../rari/arbitrum/.flat/EspressoTEEVerifier.sol    |  637 +++++
+ .../SequencerInbox/SequencerInbox.sol              |  141 +-
+ .../rari/arbitrum/.flat/V3QuoteVerifier.sol        | 2547 ++++++++++++++++++++
+ 3 files changed, 3319 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0xa17f3fb2888edcfb26dd6f8767766d96af24a021
 
 # Diff at Tue, 04 Feb 2025 12:33:57 GMT:

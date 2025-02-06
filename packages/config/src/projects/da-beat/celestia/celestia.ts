@@ -57,7 +57,7 @@ export const celestia: BaseProject = {
 
 ## Consensus
 Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
-Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
+Celestia achieves finality at each block, with an average time between blocks of 6 seconds.
 ## Blobs
 In Celestia, blobs are user-submitted data that do not modify the blockchain state.  
 Each blob has two components, one is a binary object of raw data bytes, and the other is the namespace of the specific application for which the blob data is intended for.\n
