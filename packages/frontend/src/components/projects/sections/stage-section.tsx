@@ -10,6 +10,7 @@ import {
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-notice'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
+import { featureFlags } from '~/consts/feature-flags'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -193,6 +194,9 @@ export function StageSection({
                   </div>
                 )}
 
+                {featureFlags.stageOneRequirementsChanged() && (
+                  <p className="ml-8 text-[13px] uppercase">Guidelines</p>
+                )}
                 <ul className="space-y-1 px-2 md:space-y-2">
                   {satisfied.map((req, i) => (
                     <li key={i} className="flex">
