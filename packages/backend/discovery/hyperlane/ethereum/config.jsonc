@@ -4,7 +4,11 @@
   "name": "hyperlane",
   "initialAddresses": [
     "0xc005dc82818d67AF737725bD4bf75435d065D239",
-    "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+    "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+    "0x647C621CEb36853Ef6A907E397Adf18568E70543",
+    "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+    "0x19e099B7aEd41FA52718D780dDA74678113C0b32",
+    "0xef899e92DA472E014bE795Ecce948308958E25A2"
   ],
   "names": {
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
@@ -13,11 +17,20 @@
     "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "HypERC20Collateral" // usdc lockbox
   },
   "overrides": {
+    "0x647C621CEb36853Ef6A907E397Adf18568E70543": {
+      "extends": "hyperlane/HypERC20Collateral"
+    },
+    "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A": {
+      "extends": "hyperlane/HypERC20Collateral"
+    },
+    "0x19e099B7aEd41FA52718D780dDA74678113C0b32": {
+      "extends": "hyperlane/HypERC20Collateral"
+    },
+    "0xef899e92DA472E014bE795Ecce948308958E25A2": {
+      "extends": "hyperlane/HypERC20Collateral"
+    },
     "Mailbox": {
       "ignoreRelatives": ["defaultHook", "requiredHook"]
-    },
-    "HypERC20Collateral": {
-      "ignoreRelatives": ["wrappedToken"]
     },
     "StaticAggregationIsm": {
       "fields": {
