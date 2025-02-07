@@ -411,10 +411,6 @@
       "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
     },
     {
-      "symbol": "wTIA",
-      "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
-    },
-    {
       "symbol": "sUSDz",
       "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
       "coingeckoId": "anzen-staked-usdz",

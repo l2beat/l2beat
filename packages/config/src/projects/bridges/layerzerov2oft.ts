@@ -129,19 +129,19 @@ export const layerzerov2oft: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Omnichain Fungible Tokens (OFTs) are individually configurable Token Bridges. This means that an asset is usually locked or burned at its origin to start the bridging. 
-      Then a witness event of this is emitted, verified and relayed to the destination by third verfiiers. Finally, a permissioned Executor submits a transaction at the destination chain to mint the bridged asset. 
-      
-      The shared feature among all OFTs is the messaging interface, which always uses the LayerZero message protocol (or arbitrary message bridge, AMB). 
-      Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, implementation details are highly customizable and vary widely. 
-      
+      description: `Omnichain Fungible Tokens (OFTs) are individually configurable Token Bridges. This means that an asset is usually locked or burned at its origin to start the bridging.
+      Then a witness event of this is emitted, verified and relayed to the destination by third verfiiers. Finally, a permissioned Executor submits a transaction at the destination chain to mint the bridged asset.
+
+      The shared feature among all OFTs is the messaging interface, which always uses the LayerZero message protocol (or arbitrary message bridge, AMB).
+      Apart from the OFT standard provided by LayerZero, which extends the ERC-20 standard, implementation details are highly customizable and vary widely.
+
       Each OFT is a LayerZero OApp and can be configured to use custom security settings when interacting with the AMB.
-      Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed. 
+      Among these OApp configuration parameters are the DVN(s) (who will read and verify the interchain messages), the executor (who will deliver and execute the transaction on the destination chain), and the minimum block confirmations needed.
       These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
       Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
-      
-      OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
-      Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
+
+      OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging.
+      Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting.
       To receive the original locked token back, a user would have to return to the main chain and unlock it from the adapter escrow.`,
       risks: [
         {
@@ -215,11 +215,6 @@ export const layerzerov2oft: Bridge = {
         address: EthereumAddress('0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E'),
         tokens: ['TRESTLE'],
         description: 'OFT adapter escrow for TRESTLE on Ethereum.',
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2'),
-        tokens: ['wTIA'],
-        description: 'OFT adapter escrow for Trestle Wrapped TIA on Ethereum.',
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x6182995916d79DeDb60db1570776F9994fCdCA0a'),
