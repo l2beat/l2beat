@@ -463,6 +463,7 @@ export interface BaseProject {
   shortName: string | undefined
   addedAt: number
   // data
+  badges?: string[]
   statuses?: ProjectStatuses
   display?: ProjectDisplay
   bridgeInfo?: ProjectBridgeInfo
