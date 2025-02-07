@@ -42,6 +42,7 @@ import { popboss } from './popboss'
 import { rari } from './rari'
 import { sanko } from './sanko'
 import { songprotocol } from './songprotocol'
+import { spheron } from './spheron'
 import { stack } from './stack'
 import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
@@ -103,6 +104,7 @@ export const layer3s: Layer3[] = [
   oursong,
   playblock,
   songprotocol,
+  spheron,
   superposition,
   syndr,
   winr,
