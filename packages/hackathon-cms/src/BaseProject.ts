@@ -539,7 +539,7 @@ export interface ProjectLinks {
   explorers?: string[]
   repositories?: string[]
   socialMedia?: string[]
-  rollupCodes?: string
+  rollupCodes?: string[]
 }
 
 interface ProjectBridgeInfo {

@@ -12,66 +12,47 @@ export function jsonToBaseProject_2(projectJSON: ProjectJSON): BaseProject {
     addedAt: Date.now(), // or explicitly set to 0 if needed
     name: '',
     slug: '',
-    shortName: undefined,
-    badges: [],
-    contracts: undefined,
-    milestones: [], // Milestones property for storing milestone data
-    display: {
-      description: '',
-      links: {
-        websites: [],
-        apps: [],
-        documentation: [],
-        explorers: [],
-        repositories: [],
-        socialMedia: [],
-        rollupCodes: [],
-      },
-    },
-    sections: [] // New property to record which sections were added
+    shortName: undefined
   };
 
-  // If projectJSON.sections exists and is an array, record section types
-  if (projectJSON.sections && Array.isArray(projectJSON.sections)) {
-    // Record the types of sections that were added.
-    baseProject.sections = projectJSON.sections.map(section => section.type);
-    
-    // Populate BaseProject dynamically based on the sections
-    for (const section of projectJSON.sections) {
-      switch (section.type) {
-        case 'BASIC_INFO':
-          baseProject.name = section.name || '';
-          baseProject.slug = section.slug || '';
-          break;
+  // Populate BaseProject dynamically based on the sections
+  for (const section of projectJSON.sections) {
+    switch (section.type) {
+      case 'BASIC_INFO':
+        baseProject.name = section.name || '';
+        baseProject.slug = section.slug || '';
+        break;
 
-        case 'BADGES':
-          baseProject.badges = section.badges || [];
-          break;
+      case 'BADGES':
+        baseProject.badges = section.badges || [];
+        break;
 
-        case 'DISCOVERY':
-          baseProject.contracts = arbProjectData.contracts;
-          break;
+      case 'DISCOVERY':
+        baseProject.contracts = arbProjectData.contracts;
+        break;
 
-        case 'LINKS':
-          // If a LINKS section exists, update display.links accordingly.
-          baseProject.display.links = section.links;
-          break;
+      case 'LINKS':
+        // If a LINKS section exists, update display.links accordingly.
+        baseProject.display = {
+          links: section.links,
+          description: ""
+        }
+        break;
 
-        case 'MILESTONES':
-          // If a MILESTONES section exists, update milestones accordingly.
-          baseProject.milestones = section.milestones;
-          break;
+      case 'MILESTONES':
+        // If a MILESTONES section exists, update milestones accordingly.
+        baseProject.milestones = section.milestones;
+        break;
 
-        case 'TECHNOLOGY':
-          const contracts: Record<string, unknown> = {}
-          for (const ctr of arbProjectData.contracts) {
-            contracts[ctr.name] = ctr.values
-          }
-          const template = Handlebars.compile(section.technology)
+      case 'TECHNOLOGY':
+        const contracts: Record<string, unknown> = {}
+        for (const ctr of arbProjectData.contracts) {
+          contracts[ctr.name] = ctr.values
+        }
+        const template = Handlebars.compile(section.technology)
 
-          baseProject.technology = template(contracts);
-          break;
-      }
+        baseProject.technology = template(contracts);
+        break;
     }
   }
 
@@ -92,7 +73,7 @@ export function jsonToBaseProject(_: ProjectJSON): BaseProject {
     addedAt: 0,
     name: 'Arbitrum',
     slug: 'arbitrum',
-    shortName: undefined,
+    shortName: '',
     badges: ["EVM", "WasmVM"],
     technology: template(contracts),
     milestones: [
@@ -150,7 +131,5 @@ export function jsonToBaseProject(_: ProjectJSON): BaseProject {
         rollupCodes: ['https://rollup.codes/arbitrum-one'],
       },
     },
-    // In this sample, we assume all sections are present.
-    sections: ["BASIC_INFO", "BADGES", "DISCOVERY", "LINKS", "MILESTONES", "TECHNOLOGY"]
   };
 }

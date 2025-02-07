@@ -24,7 +24,7 @@ export function Preview({ project }: PreviewProps) {
       </h1>
 
       {/* Basic Info Section */}
-      {project.sections && project.sections.includes("BASIC_INFO") && (
+      {project.name && (
         <div className="bg-gray-800 p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Basic Info</h2>
           <p className="mb-1">
@@ -37,10 +37,9 @@ export function Preview({ project }: PreviewProps) {
       )}
 
       {/* Badges Section */}
-      {project.sections && project.sections.includes("BADGES") && (
+      {project.badges && project.badges.length > 0 && (
         <div id="badges-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Badges</h2>
-          {project.badges && project.badges.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {project.badges.map((badge) => (
                 <img
@@ -51,14 +50,11 @@ export function Preview({ project }: PreviewProps) {
                 />
               ))}
             </div>
-          ) : (
-            <p>No badges added.</p>
-          )}
         </div>
       )}
 
       {/* Links Section */}
-      {project.sections && project.sections.includes("LINKS") && project.display && project.display.links && (
+      {project.display && project.display.links && (
         <div className="bg-gray-800 p-4 rounded-lg shadow-md" id="links-section">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Links</h2>
           {(
@@ -72,51 +68,34 @@ export function Preview({ project }: PreviewProps) {
               "rollupCodes",
             ] as (keyof ProjectLinks)[]
           ).map((key) => {
-            const links = project.display.links[key];
+            const links = project.display?.links[key];
             if (!links) return null;
-            if (Array.isArray(links)) {
-              const validLinks = links.filter(link => link.trim() !== "");
-              if (validLinks.length === 0) return null;
-              return (
-                <div key={key} className="mb-4">
-                  <h3 className="font-bold text-purple-300 capitalize mb-1">{key}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {validLinks.map((link, index) => (
-                      <a
-                        key={index}
-                        href={link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline text-blue-400 hover:text-blue-300"
-                      >
-                        {getHostname(link)}
-                      </a>
-                    ))}
-                  </div>
+            const validLinks = links.filter(link => link.trim() !== "");
+            if (validLinks.length === 0) return null;
+            return (
+              <div key={key} className="mb-4">
+                <h3 className="font-bold text-purple-300 capitalize mb-1">{key}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {validLinks.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-blue-400 hover:text-blue-300"
+                    >
+                      {getHostname(link)}
+                    </a>
+                  ))}
                 </div>
-              );
-            } else {
-              if (links.trim() === "") return null;
-              return (
-                <div key={key} className="mb-4">
-                  <h3 className="font-bold text-purple-300 capitalize mb-1">{key}</h3>
-                  <a
-                    href={links}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline text-blue-400 hover:text-blue-300"
-                  >
-                    {getHostname(links)}
-                  </a>
-                </div>
-              );
-            }
+              </div>
+            );
           })}
         </div>
       )}
 
       {/* Milestones & Incidents Section */}
-      {project.sections && project.sections.includes("MILESTONES") && (
+      {project.milestones && (
         <div id="milestones-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Milestones & Incidents</h2>
           {project.milestones && project.milestones.length > 0 ? (
@@ -164,7 +143,7 @@ export function Preview({ project }: PreviewProps) {
       )}
 
       {/* Technology Section */}
-      {project.sections && project.sections.includes("TECHNOLOGY") && (
+      {project.technology && (
         <div className="bg-gray-800 p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Technology</h2>
           <p className="mb-1">
@@ -174,7 +153,7 @@ export function Preview({ project }: PreviewProps) {
       )}
 
       {/* Discovery / Contracts Section */}
-      {project.sections && project.sections.includes("DISCOVERY") && project.contracts && (
+      {project.contracts && (
         <div id="contracts-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-bold text-purple-400 mb-2">Contracts</h2>
           <ul className="space-y-4">
