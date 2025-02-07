@@ -5,7 +5,7 @@ import { jsonToBaseProject } from './jsonToBaseProject'
 import type { ProjectJSON } from './types'
 
 export function App() {
-  const [data, setData] = useState<ProjectJSON>({})
+  const [data, setData] = useState<ProjectJSON>({sections:[]})
 
   const baseProject = jsonToBaseProject(data)
 

@@ -1,7 +1,54 @@
 import type { BaseProject } from './BaseProject'
 import type { ProjectJSON } from './types'
 
-export function jsonToBaseProject(_: ProjectJSON): BaseProject {
+export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
+  // Initialize an empty BaseProject object
+  const baseProject: BaseProject = {
+    id: '',
+    addedAt: Date.now(), // or explicitly set `0` if needed
+    name: '',
+    slug: '',
+    shortName: undefined,
+    badges: [],
+    display: {
+      description: '',
+      links: {
+        websites: [],
+        apps: [],
+        documentation: [],
+        explorers: [],
+        repositories: [],
+        socialMedia: [],
+        rollupCodes: '',
+      },
+    },
+  };
+
+  // Populate BaseProject dynamically based on the sections
+  for (const section of projectJSON.sections) {
+    switch (section.type) {
+      case 'BASIC_INFO':
+        baseProject.name = section.name || '';
+        baseProject.slug = section.slug || '';
+        break;
+
+      case 'BADGES':
+        baseProject.badges = section.badges || [];
+        break;
+
+      case 'DISCOVERY':
+        if (section.url) {
+          baseProject.display?.links.websites?.push(section.url);
+        }
+        break;
+    }
+  }
+
+  return baseProject;
+}
+
+
+export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
   return {
     id: 'arbitrum',
     addedAt: 0,
