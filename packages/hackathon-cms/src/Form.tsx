@@ -1,25 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import type { ProjectJSON, Section } from './types';
-
-// Define the keys used in a LINKS section.
-type LinkCategory =
-  | 'websites'
-  | 'apps'
-  | 'documentation'
-  | 'explorers'
-  | 'repositories'
-  | 'socialMedia'
-  | 'rollupCodes';
-
-// Define the Milestone type.
-interface Milestone {
-  title: string;
-  url: string;
-  date: string;
-  type: string;
-  description?: string;
-}
+import type { LinkCategory, Milestone, ProjectJSON, Section } from './types';
 
 interface FormProps {
   data: ProjectJSON;

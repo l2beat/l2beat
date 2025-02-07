@@ -5,7 +5,7 @@ import type { ProjectJSON } from './types';
 
 import arbProjectData from './arbitrum_discovered.json';
 
-export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
+export function jsonToBaseProject_2(projectJSON: ProjectJSON): BaseProject {
   // Initialize an empty BaseProject object
   const baseProject: BaseProject = {
     id: '',
@@ -59,7 +59,7 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
   return baseProject;
 }
 
-export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
+export function jsonToBaseProject(_: ProjectJSON): BaseProject {
 
   const contracts: Record<string, unknown> = {}
   for (const ctr of arbProjectData.contracts) {
