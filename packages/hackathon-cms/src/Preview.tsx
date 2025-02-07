@@ -34,7 +34,7 @@ export function Preview({ project }: PreviewProps) {
   return (
     <div className="preview-container">
       {/* Project Header */}
-      <h1 className="mb-4 text-xl font-bold">{project.name}</h1>
+      <h1 className="project-title">{project.name}</h1>
 
       {/* Links Section */}
       {project.display && (
@@ -82,7 +82,7 @@ export function Preview({ project }: PreviewProps) {
       {/* Badges Section */}
       {project.badges && (
         <div id="badges-section" className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Badges</h2>
+          <h2>Badges</h2>
           <ul>
             {project.badges.map(badge => (
               <li key={badge}>
@@ -102,7 +102,7 @@ export function Preview({ project }: PreviewProps) {
       )}
 
       {/* Milestones Section */}
-      {project.milestones && (
+      {project.milestones && project.milestones.length > 0 && (
         <div id="milestones-section" className="mb-8">
           <h2 className="mb-4 text-xl font-bold">Milestones & Incidents</h2>
           <ul>
@@ -114,7 +114,9 @@ export function Preview({ project }: PreviewProps) {
                 <br />
                 {milestone.description}
                 <br />
-                <a href={milestone.url}>Read more</a>
+                <a href={milestone.url} target="_blank" rel="noopener noreferrer">
+                  Read more
+                </a>
               </li>
             ))}
           </ul>

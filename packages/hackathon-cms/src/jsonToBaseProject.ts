@@ -3,15 +3,16 @@ import type { ProjectJSON } from './types';
 import arbProjectData from './arbitrum_discovered.json';
 
 export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
-  // Initialize an empty BaseProject object
+  // Initialize an empty BaseProject object with a milestones property added.
   const baseProject: BaseProject = {
     id: '',
-    addedAt: Date.now(), // or explicitly set `0` if needed
+    addedAt: Date.now(), // or explicitly set to 0 if needed
     name: '',
     slug: '',
     shortName: undefined,
     badges: [],
     contracts: undefined,
+    milestones: [], // New milestones property for storing milestone data
     display: {
       description: '',
       links: {
@@ -21,7 +22,7 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
         explorers: [],
         repositories: [],
         socialMedia: [],
-        rollupCodes: '',
+        rollupCodes: [],
       },
     },
   };
@@ -45,6 +46,11 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
       case 'LINKS':
         // If a LINKS section exists, update display.links accordingly.
         baseProject.display.links = section.links;
+        break;
+
+      case 'MILESTONES':
+        // If a MILESTONES section exists, update milestones accordingly.
+        baseProject.milestones = section.milestones;
         break;
     }
   }
@@ -70,7 +76,8 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
     ],
     contracts: arbProjectData.contracts,
     display: {
-      description: "Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.",
+      description:
+        "Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.",
       links: {
         websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
         apps: ['https://bridge.arbitrum.io'],
@@ -97,8 +104,8 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
           'https://youtube.com/@Arbitrum',
           'https://t.me/arbitrum',
         ],
-        rollupCodes: 'https://rollup.codes/arbitrum-one',
-      }
-    }
+        rollupCodes: ['https://rollup.codes/arbitrum-one'],
+      },
+    },
   };
 }

@@ -2,8 +2,17 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import type { ProjectJSON, Section } from './types';
 
-// Define the keys used in a LINKS section
+// Define the keys used in a LINKS section.
 type LinkCategory = 'websites' | 'apps' | 'documentation' | 'explorers' | 'repositories' | 'socialMedia' | 'rollupCodes';
+
+// Define the Milestone type.
+interface Milestone {
+  title: string;
+  url: string;
+  date: string;
+  type: string;
+  description?: string;
+}
 
 interface FormProps {
   data: ProjectJSON;
@@ -13,17 +22,23 @@ interface FormProps {
 export function Form({ data, setData }: FormProps) {
   const [sections, setSections] = useState<Section[]>(data.sections || []);
   const [isAddingSection, setIsAddingSection] = useState(false);
-  const [newSectionType, setNewSectionType] = useState<'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | ''>('');
+  const [newSectionType, setNewSectionType] = useState<
+    'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | ''
+  >('');
   const [isAddingBadge, setIsAddingBadge] = useState<number | null>(null);
 
-  // Global control state for adding a new link in a LINKS section:
+  // Global state for adding a new link in a LINKS section.
   const [addingLink, setAddingLink] = useState<{ sectionIndex: number; category: LinkCategory; value: string } | null>(null);
+
+  // Global state for adding a new milestone in a MILESTONES section.
+  const [addingMilestone, setAddingMilestone] = useState<{ sectionIndex: number; milestone: Milestone } | null>(null);
 
   const sectionTypes = [
     { label: 'Basic Info', value: 'BASIC_INFO' },
     { label: 'Badges', value: 'BADGES' },
     { label: 'Discovery', value: 'DISCOVERY' },
     { label: 'Links', value: 'LINKS' },
+    { label: 'Milestones', value: 'MILESTONES' },
   ];
 
   const availableBadges = ['EVM', 'WasmVM', 'ZK-Rollup', 'Optimistic Rollup'];
@@ -51,6 +66,11 @@ export function Form({ data, setData }: FormProps) {
           rollupCodes: [],
         },
       };
+    } else if (newSectionType === 'MILESTONES') {
+      newSection = {
+        type: 'MILESTONES',
+        milestones: [],
+      };
     } else {
       return;
     }
@@ -61,9 +81,7 @@ export function Form({ data, setData }: FormProps) {
   };
 
   const updateSection = (index: number, updatedSection: Section) => {
-    const updatedSections = sections.map((section, i) =>
-      i === index ? updatedSection : section
-    );
+    const updatedSections = sections.map((section, i) => (i === index ? updatedSection : section));
     setSections(updatedSections);
   };
 
@@ -78,14 +96,28 @@ export function Form({ data, setData }: FormProps) {
     const updatedLinks = section.links[category].filter((l: string) => l !== link);
     updateSection(sectionIndex, {
       ...section,
-      links: {
-        ...section.links,
-        [category]: updatedLinks,
-      },
+      links: { ...section.links, [category]: updatedLinks },
     });
   };
 
-  // Define link categories (all treated as arrays)
+  // Milestone helper functions.
+  const updateMilestone = (sectionIndex: number, milestoneIndex: number, updatedMilestone: Milestone) => {
+    const section = sections[sectionIndex];
+    if (section.type !== 'MILESTONES') return;
+    const updatedMilestones = section.milestones.map((m: Milestone, i: number) =>
+      i === milestoneIndex ? updatedMilestone : m
+    );
+    updateSection(sectionIndex, { ...section, milestones: updatedMilestones });
+  };
+
+  const removeMilestone = (sectionIndex: number, milestoneIndex: number) => {
+    const section = sections[sectionIndex];
+    if (section.type !== 'MILESTONES') return;
+    const updatedMilestones = section.milestones.filter((_: Milestone, i: number) => i !== milestoneIndex);
+    updateSection(sectionIndex, { ...section, milestones: updatedMilestones });
+  };
+
+  // Define link categories (all treated as arrays).
   const linkCategoryFields: { key: LinkCategory; label: string }[] = [
     { key: 'websites', label: 'Websites' },
     { key: 'apps', label: 'Apps' },
@@ -127,37 +159,27 @@ export function Form({ data, setData }: FormProps) {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <h3 className="font-semibold text-gray-300 uppercase text-sm mb-4">
-              {section.type}
-            </h3>
+            <h3 className="font-semibold text-gray-300 uppercase text-sm mb-4">{section.type}</h3>
 
             {/* BASIC_INFO Section */}
             {section.type === 'BASIC_INFO' && (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
-                    Name
-                  </label>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Name</label>
                   <input
                     type="text"
                     value={section.name}
-                    onChange={(e) =>
-                      updateSection(index, { ...section, name: e.target.value })
-                    }
+                    onChange={(e) => updateSection(index, { ...section, name: e.target.value })}
                     placeholder="Enter project name"
                     className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
-                    Slug
-                  </label>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Slug</label>
                   <input
                     type="text"
                     value={section.slug}
-                    onChange={(e) =>
-                      updateSection(index, { ...section, slug: e.target.value })
-                    }
+                    onChange={(e) => updateSection(index, { ...section, slug: e.target.value })}
                     placeholder="Enter project slug"
                     className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                   />
@@ -170,10 +192,7 @@ export function Form({ data, setData }: FormProps) {
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
                   {section.badges.map((badge, badgeIndex) => (
-                    <span
-                      key={badgeIndex}
-                      className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm"
-                    >
+                    <span key={badgeIndex} className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm">
                       {badge}
                     </span>
                   ))}
@@ -185,9 +204,7 @@ export function Form({ data, setData }: FormProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
-                      Select Badge
-                    </label>
+                    <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Select Badge</label>
                     <select
                       className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                       onChange={(e) => {
@@ -234,15 +251,11 @@ export function Form({ data, setData }: FormProps) {
             {/* DISCOVERY Section */}
             {section.type === 'DISCOVERY' && (
               <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
-                  URL
-                </label>
+                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">URL</label>
                 <input
                   type="text"
                   value={section.url}
-                  onChange={(e) =>
-                    updateSection(index, { ...section, url: e.target.value })
-                  }
+                  onChange={(e) => updateSection(index, { ...section, url: e.target.value })}
                   placeholder="Enter URL"
                   className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                 />
@@ -252,7 +265,6 @@ export function Form({ data, setData }: FormProps) {
             {/* LINKS Section */}
             {section.type === 'LINKS' && (
               <div className="space-y-4">
-                {/* Render only link categories that have at least one link */}
                 {linkCategoryFields
                   .filter(field => section.links[field.key] && section.links[field.key].length > 0)
                   .map(field => (
@@ -263,35 +275,22 @@ export function Form({ data, setData }: FormProps) {
                       <ul className="mt-2">
                         {section.links[field.key].map((link: string, linkIndex: number) => (
                           <li key={linkIndex} className="flex items-center justify-between bg-gray-800 p-1 rounded">
-                            <a
-                              href={link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="underline"
-                            >
+                            <a href={link} target="_blank" rel="noopener noreferrer" className="underline">
                               {link}
                             </a>
-                            <button
-                              className="text-xs text-red-400 hover:underline"
-                              onClick={() => removeLink(index, field.key, link)}
-                            >
+                            <button className="text-xs text-red-400 hover:underline" onClick={() => removeLink(index, field.key, link)}>
                               Remove
                             </button>
                           </li>
                         ))}
                       </ul>
                     </div>
-                  ))
-                }
-
-                {/* Global control for adding a new link */}
+                  ))}
                 <div className="mt-4 border p-4 rounded-md bg-gray-800">
                   {(!addingLink || addingLink.sectionIndex !== index) ? (
                     <button
                       className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600"
-                      onClick={() =>
-                        setAddingLink({ sectionIndex: index, category: '' as LinkCategory, value: '' })
-                      }
+                      onClick={() => setAddingLink({ sectionIndex: index, category: '' as LinkCategory, value: '' })}
                     >
                       Add New Link
                     </button>
@@ -300,9 +299,7 @@ export function Form({ data, setData }: FormProps) {
                       <select
                         className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg"
                         value={addingLink.category}
-                        onChange={(e) =>
-                          setAddingLink({ ...addingLink, category: e.target.value as LinkCategory })
-                        }
+                        onChange={(e) => setAddingLink({ ...addingLink, category: e.target.value as LinkCategory })}
                       >
                         <option value="" disabled>
                           Select Link Category
@@ -316,9 +313,7 @@ export function Form({ data, setData }: FormProps) {
                       <input
                         type="text"
                         value={addingLink.value}
-                        onChange={(e) =>
-                          setAddingLink({ ...addingLink, value: e.target.value })
-                        }
+                        onChange={(e) => setAddingLink({ ...addingLink, value: e.target.value })}
                         placeholder="Enter URL"
                         className="w-full px-4 py-2 bg-gray-600 text-gray-200 border border-gray-500 rounded-lg"
                       />
@@ -333,10 +328,7 @@ export function Form({ data, setData }: FormProps) {
                               ];
                               updateSection(index, {
                                 ...section,
-                                links: {
-                                  ...section.links,
-                                  [addingLink.category]: updatedLinks,
-                                },
+                                links: { ...section.links, [addingLink.category]: updatedLinks },
                               });
                               setAddingLink(null);
                             }
@@ -344,9 +336,180 @@ export function Form({ data, setData }: FormProps) {
                         >
                           Confirm
                         </button>
+                        <button className="bg-gray-600 text-white px-4 py-2 rounded-lg" onClick={() => setAddingLink(null)}>
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* MILESTONES Section */}
+            {section.type === 'MILESTONES' && (
+              <div className="space-y-4">
+                {section.milestones.map((milestone: Milestone, mIndex: number) => (
+                  <div key={mIndex} className="border p-2 rounded-md bg-gray-700 mb-2">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Title</label>
+                      <input
+                        type="text"
+                        value={milestone.title}
+                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, title: e.target.value })}
+                        placeholder="Milestone title"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">URL</label>
+                      <input
+                        type="text"
+                        value={milestone.url}
+                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, url: e.target.value })}
+                        placeholder="Milestone URL"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Date</label>
+                      <input
+                        type="text"
+                        value={milestone.date}
+                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, date: e.target.value })}
+                        placeholder="2024 Oct 25th"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Type</label>
+                      <input
+                        type="text"
+                        value={milestone.type}
+                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, type: e.target.value })}
+                        placeholder="Milestone type"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Description</label>
+                      <textarea
+                        value={milestone.description || ''}
+                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, description: e.target.value })}
+                        placeholder="Milestone description (optional)"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                    </div>
+                    <button
+                      className="mt-2 bg-red-600 text-white px-4 py-2 rounded-lg"
+                      onClick={() => removeMilestone(index, mIndex)}
+                    >
+                      Remove Milestone
+                    </button>
+                  </div>
+                ))}
+
+                {/* Global control for adding a new milestone */}
+                <div className="mt-4 border p-4 rounded-md bg-gray-800">
+                  {(!addingMilestone || addingMilestone.sectionIndex !== index) ? (
+                    <button
+                      className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600"
+                      onClick={() =>
+                        setAddingMilestone({
+                          sectionIndex: index,
+                          milestone: { title: '', url: '', date: '', type: '', description: '' },
+                        })
+                      }
+                    >
+                      Add New Milestone
+                    </button>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      <input
+                        type="text"
+                        value={addingMilestone.milestone.title}
+                        onChange={(e) =>
+                          setAddingMilestone({
+                            ...addingMilestone,
+                            milestone: { ...addingMilestone.milestone, title: e.target.value },
+                          })
+                        }
+                        placeholder="Title"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={addingMilestone.milestone.url}
+                        onChange={(e) =>
+                          setAddingMilestone({
+                            ...addingMilestone,
+                            milestone: { ...addingMilestone.milestone, url: e.target.value },
+                          })
+                        }
+                        placeholder="URL"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={addingMilestone.milestone.date}
+                        onChange={(e) =>
+                          setAddingMilestone({
+                            ...addingMilestone,
+                            milestone: { ...addingMilestone.milestone, date: e.target.value },
+                          })
+                        }
+                        placeholder="2024 Oct 25th"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                      <input
+                        type="text"
+                        value={addingMilestone.milestone.type}
+                        onChange={(e) =>
+                          setAddingMilestone({
+                            ...addingMilestone,
+                            milestone: { ...addingMilestone.milestone, type: e.target.value },
+                          })
+                        }
+                        placeholder="Type"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                      <textarea
+                        value={addingMilestone.milestone.description}
+                        onChange={(e) =>
+                          setAddingMilestone({
+                            ...addingMilestone,
+                            milestone: { ...addingMilestone.milestone, description: e.target.value },
+                          })
+                        }
+                        placeholder="Description (optional)"
+                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                          onClick={() => {
+                            if (
+                              addingMilestone.milestone.title.trim() !== '' &&
+                              addingMilestone.milestone.url.trim() !== '' &&
+                              addingMilestone.milestone.date.trim() !== '' &&
+                              addingMilestone.milestone.type.trim() !== ''
+                            ) {
+                              const section = sections[index];
+                              if (section.type !== 'MILESTONES') return;
+                              const updatedMilestones = [
+                                ...section.milestones,
+                                addingMilestone.milestone,
+                              ];
+                              updateSection(index, { ...section, milestones: updatedMilestones });
+                              setAddingMilestone(null);
+                            }
+                          }}
+                        >
+                          Confirm
+                        </button>
                         <button
                           className="bg-gray-600 text-white px-4 py-2 rounded-lg"
-                          onClick={() => setAddingLink(null)}
+                          onClick={() => setAddingMilestone(null)}
                         >
                           Cancel
                         </button>
@@ -381,16 +544,12 @@ export function Form({ data, setData }: FormProps) {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
-              Select Section Type
-            </label>
+            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Select Section Type</label>
             <select
               className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
               value={newSectionType}
               onChange={(e) =>
-                setNewSectionType(
-                  e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | ''
-                )
+                setNewSectionType(e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | '')
               }
             >
               <option value="" disabled>
