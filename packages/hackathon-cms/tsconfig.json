@@ -1,6 +1,13 @@
 {
   "extends": "@l2beat/typescript-config/react",
   "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "noEmit": true,
+    "jsx": "react-jsx",
     "paths": {
       "react": ["./node_modules/@types/react"]
     }

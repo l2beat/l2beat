@@ -28,7 +28,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@l2beat/shared-pure": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",

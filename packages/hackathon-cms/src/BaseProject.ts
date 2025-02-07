@@ -1,10 +1,3 @@
-import type {
-  ChainId,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
-
 type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
 type WarningSentiment = 'bad' | 'warning' | 'neutral'
@@ -35,8 +28,8 @@ type ScalingProjectCategory =
 interface ScalingProjectUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: string[]
+  implementations: string[]
 }
 
 interface ProjectPermissions {
@@ -66,7 +59,7 @@ interface ProjectPermission {
 interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: string
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }
@@ -154,8 +147,8 @@ interface ScalingProjectRiskView {
 }
 
 interface ProjectDataAvailability {
-  layer: TableReadyValue & { projectId?: ProjectId }
-  bridge: TableReadyValue & { projectId?: ProjectId }
+  layer: TableReadyValue & { number?: number }
+  bridge: TableReadyValue & { number?: number }
   mode: TableReadyValue
 }
 
@@ -200,20 +193,20 @@ type Layer2FinalityConfig =
         | 'Degate'
         | 'PolygonZkEvm'
 
-      minTimestamp: UnixTime
+      minTimestamp: number
       lag: number
       stateUpdate: StateUpdateMode
     }
   | {
       type: 'OPStack'
-      minTimestamp: UnixTime
+      minTimestamp: number
       lag: number
       // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
       // you can get this values by calling the RPC method optimism_rollupConfig
       // rollup config: curl -X POST -H "Content-Type: application/json" --data \
       // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
       // <rpc-url> | jq
-      genesisTimestamp: UnixTime
+      genesisTimestamp: number
       l2BlockTimeSeconds: number
       stateUpdate: StateUpdateMode
     }
@@ -228,8 +221,8 @@ interface ProofVerification {
 type OnchainVerifier = {
   name: string
   description: string
-  contractAddress: EthereumAddress
-  chainId: ChainId
+  contractAddress: string
+  number: number
   subVerifiers: SubVerifier[]
 } & (
   | {
@@ -354,9 +347,9 @@ interface DaTechnology {
 }
 
 interface DaBridge {
-  id: ProjectId
+  id: number
   /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
+  addedAt: number
   display: DaBridgeDisplay
   isUnderReview?: boolean
   technology: DaTechnology
@@ -389,7 +382,7 @@ interface DaBridgeDisplay {
 }
 
 interface UsedInProject {
-  id: ProjectId
+  id: number
   name: string
   slug: string
 }
@@ -463,12 +456,12 @@ interface StageNotApplicable {
 }
 
 export interface BaseProject {
-  id: ProjectId
+  id: string
   slug: string
   name: string
   /** Used in place of name in tables to save space. */
   shortName: string | undefined
-  addedAt: UnixTime
+  addedAt: number
   // data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
@@ -507,7 +500,7 @@ export interface BaseProject {
 
 interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: string
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -581,7 +574,7 @@ interface ProjectScalingInfo {
   /** In the future this will be reflected as `type === 'Other'` */
   isOther: boolean
   hostChain: {
-    id: ProjectId
+    id: number
     slug: string
     name: string
     shortName: string | undefined
