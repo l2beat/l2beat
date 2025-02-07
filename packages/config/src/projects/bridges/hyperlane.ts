@@ -57,13 +57,13 @@ export const hyperlane: Bridge = {
       }),
       discovery.getEscrowDetails({
         description:
-          'Escrow for USDT that is bridged from Ethereum to Eclipse.',
+          'Escrow for WBTC that is bridged from Ethereum to Eclipse.',
         address: EthereumAddress('0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A'),
         tokens: ['WBTC'],
       }),
       discovery.getEscrowDetails({
         description:
-          'Escrow for tETH that is bridged from Ethereum to Eclipse.',
+          'Escrow for tETH that is bridged from Ethereum to Eclipse (escrows the underlying tokens).',
         address: EthereumAddress('0x19e099B7aEd41FA52718D780dDA74678113C0b32'),
         tokens: ['rswETH', 'weETH', 'pufETH', 'ezETH', 'WETH'],
       }),
