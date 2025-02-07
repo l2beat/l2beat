@@ -10,9 +10,16 @@ export function App() {
   const baseProject = jsonToBaseProject(data)
 
   return (
-    <div className="flex h-full w-full">
-      <Form data={data} setData={setData} />
-      <Preview project={baseProject} />
+    <div className="flex h-screen w-screen">
+      {/* Left Column: Form */}
+      <div className="w-1/2 p-4 border-r overflow-auto">
+        <Form data={data} setData={setData} />
+      </div>
+
+      {/* Right Column: Preview */}
+      <div className="w-1/2 p-4 overflow-auto">
+        <Preview project={baseProject} />
+      </div>
     </div>
   )
 }
