@@ -41,6 +41,12 @@ export const hyperlane: Bridge = {
         address: EthereumAddress('0xe1De9910fe71cC216490AC7FCF019e13a34481D7'),
         tokens: ['USDC'],
       }),
+      discovery.getEscrowDetails({
+        description:
+          'Escrow for apxETH that is bridged from Ethereum to Eclipse.',
+        address: EthereumAddress('0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c'),
+        tokens: ['apxETH'],
+      }),
     ],
   },
   riskView: {
