@@ -16,41 +16,65 @@ function getHostname(link: string): string {
 }
 
 export function Preview({ project }: PreviewProps) {
-  // Define the link categories and corresponding icons.
-  const linkCategories: {
-    key: keyof ProjectLinks;
-    label: string;
-    icon: string;
-  }[] = [
-    { key: 'websites', label: 'Website', icon: '🌍' },
-    { key: 'apps', label: 'App', icon: '📱' },
-    { key: 'documentation', label: 'Docs', icon: '📖' },
-    { key: 'explorers', label: 'Explorer', icon: '🔍' },
-    { key: 'repositories', label: 'Repository', icon: '💻' },
-    { key: 'socialMedia', label: 'Social', icon: '📢' },
-    { key: 'rollupCodes', label: 'rollup.codes', icon: '🧑‍💻' },
-  ];
-
   return (
     <div className="preview-container">
       {/* Project Header */}
       <h1 className="project-title">{project.name}</h1>
 
-      {/* Links Section */}
-      {project.display && (
-        <div className="links-section">
-          {linkCategories.map(({ key, label, icon }) => {
-            const links = project.display?.links[key];
-            if (!links) return null;
+      {/* Basic Info Section – assumed always present if added */}
+      {project.sections && project.sections.includes("BASIC_INFO") && (
+        <div className="basic-info-section mb-8">
+          <h2>Basic Info</h2>
+          <p>
+            <strong>Name:</strong> {project.name}
+          </p>
+          <p>
+            <strong>Slug:</strong> {project.slug}
+          </p>
+        </div>
+      )}
 
-            // Handle array-based link fields.
+      {/* Badges Section */}
+      {project.sections && project.sections.includes("BADGES") && (
+        <div id="badges-section" className="mb-8">
+          <h2>Badges</h2>
+          {project.badges && project.badges.length > 0 ? (
+            <ul>
+              {project.badges.map((badge) => (
+                <li key={badge}>
+                  <img src={`https://l2beat.com/images/badges/${badge}.png`} alt={badge} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No badges added.</p>
+          )}
+        </div>
+      )}
+
+      {/* Links Section */}
+      {project.sections && project.sections.includes("LINKS") && project.display && project.display.links && (
+        <div className="links-section mb-8">
+          <h2>Links</h2>
+          {(
+            [
+              "websites",
+              "apps",
+              "documentation",
+              "explorers",
+              "repositories",
+              "socialMedia",
+              "rollupCodes",
+            ] as (keyof ProjectLinks)[]
+          ).map((key) => {
+            const links = project.display.links[key];
+            if (!links) return null;
             if (Array.isArray(links)) {
-              const validLinks = links.filter(link => link.trim() !== "");
+              const validLinks = links.filter((link) => link.trim() !== "");
               if (validLinks.length === 0) return null;
               return (
-                <div key={key} className="link-category">
-                  <span className="icon">{icon}</span>
-                  <span className="label">{label}</span>
+                <div key={key} className="link-category mb-4">
+                  <h3>{key}</h3>
                   <ul>
                     {validLinks.map((link, index) => (
                       <li key={index}>
@@ -63,12 +87,10 @@ export function Preview({ project }: PreviewProps) {
                 </div>
               );
             } else {
-              // Handle single-string link fields.
               if (links.trim() === "") return null;
               return (
-                <div key={key} className="link-category">
-                  <span className="icon">{icon}</span>
-                  <span className="label">{label}</span>
+                <div key={key} className="link-category mb-4">
+                  <h3>{key}</h3>
                   <a href={links} target="_blank" rel="noopener noreferrer">
                     {getHostname(links)}
                   </a>
@@ -79,14 +101,42 @@ export function Preview({ project }: PreviewProps) {
         </div>
       )}
 
-      {/* Badges Section */}
-      {project.badges && (
-        <div id="badges-section" className="mb-8">
-          <h2>Badges</h2>
+      {/* Milestones & Incidents Section */}
+      {project.sections && project.sections.includes("MILESTONES") && (
+        <div id="milestones-section" className="mb-8">
+          <h2>Milestones & Incidents</h2>
+          {project.milestones && project.milestones.length > 0 ? (
+            <ul>
+              {project.milestones.map((milestone) => (
+                <li key={milestone.title} className="mb-4">
+                  <b>{milestone.title}</b>
+                  <br />
+                  {milestone.date}
+                  <br />
+                  {milestone.description}
+                  <br />
+                  <a href={milestone.url} target="_blank" rel="noopener noreferrer">
+                    Read more
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No milestones added.</p>
+          )}
+        </div>
+      )}
+
+      {/* Discovery / Contracts Section */}
+      {project.sections && project.sections.includes("DISCOVERY") && project.contracts && (
+        <div id="contracts-section" className="mb-8">
+          <h2>Contracts</h2>
           <ul>
-            {project.badges.map(badge => (
-              <li key={badge}>
-                <img src={`https://l2beat.com/images/badges/${badge}.png`} alt={badge} />
+            {project.contracts.map((contract) => (
+              <li key={contract.address} className="mb-4">
+                <b>{contract.name}</b>: {contract.address}
+                <br />
+                {contract.description}
               </li>
             ))}
           </ul>
@@ -94,47 +144,10 @@ export function Preview({ project }: PreviewProps) {
       )}
 
       {/* About Section */}
-      {project.display?.description && (
+      {project.display && project.display.description && (
         <div id="about-section" className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">About</h2>
+          <h2>About</h2>
           <p>{project.display.description}</p>
-        </div>
-      )}
-
-      {/* Milestones Section */}
-      {project.milestones && project.milestones.length > 0 && (
-        <div id="milestones-section" className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Milestones & Incidents</h2>
-          <ul>
-            {project.milestones.map(milestone => (
-              <li key={milestone.title}>
-                <b>{milestone.title}</b>
-                <br />
-                {milestone.date}
-                <br />
-                {milestone.description}
-                <br />
-                <a href={milestone.url} target="_blank" rel="noopener noreferrer">
-                  Read more
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Contracts Section */}
-      {project.contracts && (
-        <div id="contracts-section" className="mb-8">
-          <h2 className="mb-4 text-xl font-bold">Contracts</h2>
-          <ul>
-            {project.contracts.map(contract => (
-              <li key={contract.address} className="mb-4">
-                <b>{contract.name}</b>: {contract.address} <br />
-                {contract.description}
-              </li>
-            ))}
-          </ul>
         </div>
       )}
     </div>

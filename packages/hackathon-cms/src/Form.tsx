@@ -81,7 +81,9 @@ export function Form({ data, setData }: FormProps) {
   };
 
   const updateSection = (index: number, updatedSection: Section) => {
-    const updatedSections = sections.map((section, i) => (i === index ? updatedSection : section));
+    const updatedSections = sections.map((section, i) =>
+      i === index ? updatedSection : section
+    );
     setSections(updatedSections);
   };
 
@@ -96,7 +98,10 @@ export function Form({ data, setData }: FormProps) {
     const updatedLinks = section.links[category].filter((l: string) => l !== link);
     updateSection(sectionIndex, {
       ...section,
-      links: { ...section.links, [category]: updatedLinks },
+      links: {
+        ...section.links,
+        [category]: updatedLinks,
+      },
     });
   };
 
@@ -159,27 +164,37 @@ export function Form({ data, setData }: FormProps) {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <h3 className="font-semibold text-gray-300 uppercase text-sm mb-4">{section.type}</h3>
+            <h3 className="font-semibold text-gray-300 uppercase text-sm mb-4">
+              {section.type}
+            </h3>
 
             {/* BASIC_INFO Section */}
             {section.type === 'BASIC_INFO' && (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Name</label>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                    Name
+                  </label>
                   <input
                     type="text"
                     value={section.name}
-                    onChange={(e) => updateSection(index, { ...section, name: e.target.value })}
+                    onChange={(e) =>
+                      updateSection(index, { ...section, name: e.target.value })
+                    }
                     placeholder="Enter project name"
                     className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Slug</label>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                    Slug
+                  </label>
                   <input
                     type="text"
                     value={section.slug}
-                    onChange={(e) => updateSection(index, { ...section, slug: e.target.value })}
+                    onChange={(e) =>
+                      updateSection(index, { ...section, slug: e.target.value })
+                    }
                     placeholder="Enter project slug"
                     className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                   />
@@ -192,7 +207,10 @@ export function Form({ data, setData }: FormProps) {
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
                   {section.badges.map((badge, badgeIndex) => (
-                    <span key={badgeIndex} className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm">
+                    <span
+                      key={badgeIndex}
+                      className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm"
+                    >
                       {badge}
                     </span>
                   ))}
@@ -204,7 +222,9 @@ export function Form({ data, setData }: FormProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Select Badge</label>
+                    <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                      Select Badge
+                    </label>
                     <select
                       className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                       onChange={(e) => {
@@ -251,11 +271,15 @@ export function Form({ data, setData }: FormProps) {
             {/* DISCOVERY Section */}
             {section.type === 'DISCOVERY' && (
               <div className="mt-2">
-                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">URL</label>
+                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                  URL
+                </label>
                 <input
                   type="text"
                   value={section.url}
-                  onChange={(e) => updateSection(index, { ...section, url: e.target.value })}
+                  onChange={(e) =>
+                    updateSection(index, { ...section, url: e.target.value })
+                  }
                   placeholder="Enter URL"
                   className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
                 />
@@ -275,10 +299,18 @@ export function Form({ data, setData }: FormProps) {
                       <ul className="mt-2">
                         {section.links[field.key].map((link: string, linkIndex: number) => (
                           <li key={linkIndex} className="flex items-center justify-between bg-gray-800 p-1 rounded">
-                            <a href={link} target="_blank" rel="noopener noreferrer" className="underline">
+                            <a
+                              href={link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline"
+                            >
                               {link}
                             </a>
-                            <button className="text-xs text-red-400 hover:underline" onClick={() => removeLink(index, field.key, link)}>
+                            <button
+                              className="text-xs text-red-400 hover:underline"
+                              onClick={() => removeLink(index, field.key, link)}
+                            >
                               Remove
                             </button>
                           </li>
@@ -290,7 +322,9 @@ export function Form({ data, setData }: FormProps) {
                   {(!addingLink || addingLink.sectionIndex !== index) ? (
                     <button
                       className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600"
-                      onClick={() => setAddingLink({ sectionIndex: index, category: '' as LinkCategory, value: '' })}
+                      onClick={() =>
+                        setAddingLink({ sectionIndex: index, category: '' as LinkCategory, value: '' })
+                      }
                     >
                       Add New Link
                     </button>
@@ -299,7 +333,9 @@ export function Form({ data, setData }: FormProps) {
                       <select
                         className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg"
                         value={addingLink.category}
-                        onChange={(e) => setAddingLink({ ...addingLink, category: e.target.value as LinkCategory })}
+                        onChange={(e) =>
+                          setAddingLink({ ...addingLink, category: e.target.value as LinkCategory })
+                        }
                       >
                         <option value="" disabled>
                           Select Link Category
@@ -313,7 +349,9 @@ export function Form({ data, setData }: FormProps) {
                       <input
                         type="text"
                         value={addingLink.value}
-                        onChange={(e) => setAddingLink({ ...addingLink, value: e.target.value })}
+                        onChange={(e) =>
+                          setAddingLink({ ...addingLink, value: e.target.value })
+                        }
                         placeholder="Enter URL"
                         className="w-full px-4 py-2 bg-gray-600 text-gray-200 border border-gray-500 rounded-lg"
                       />
@@ -336,7 +374,10 @@ export function Form({ data, setData }: FormProps) {
                         >
                           Confirm
                         </button>
-                        <button className="bg-gray-600 text-white px-4 py-2 rounded-lg" onClick={() => setAddingLink(null)}>
+                        <button
+                          className="bg-gray-600 text-white px-4 py-2 rounded-lg"
+                          onClick={() => setAddingLink(null)}
+                        >
                           Cancel
                         </button>
                       </div>
@@ -352,50 +393,71 @@ export function Form({ data, setData }: FormProps) {
                 {section.milestones.map((milestone: Milestone, mIndex: number) => (
                   <div key={mIndex} className="border p-2 rounded-md bg-gray-700 mb-2">
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Title</label>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                        Title
+                      </label>
                       <input
                         type="text"
                         value={milestone.title}
-                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, title: e.target.value })}
+                        onChange={(e) =>
+                          updateMilestone(index, mIndex, { ...milestone, title: e.target.value })
+                        }
                         placeholder="Milestone title"
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">URL</label>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                        URL
+                      </label>
                       <input
                         type="text"
                         value={milestone.url}
-                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, url: e.target.value })}
+                        onChange={(e) =>
+                          updateMilestone(index, mIndex, { ...milestone, url: e.target.value })
+                        }
                         placeholder="Milestone URL"
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Date</label>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                        Date
+                      </label>
                       <input
                         type="text"
                         value={milestone.date}
-                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, date: e.target.value })}
+                        onChange={(e) =>
+                          updateMilestone(index, mIndex, { ...milestone, date: e.target.value })
+                        }
                         placeholder="2024 Oct 25th"
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Type</label>
-                      <input
-                        type="text"
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                        Type
+                      </label>
+                      <select
                         value={milestone.type}
-                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, type: e.target.value })}
-                        placeholder="Milestone type"
+                        onChange={(e) =>
+                          updateMilestone(index, mIndex, { ...milestone, type: e.target.value })
+                        }
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
-                      />
+                      >
+                        <option value="general">Milestone (General)</option>
+                        <option value="incident">Incident (Incident)</option>
+                      </select>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">Description</label>
+                      <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                        Description
+                      </label>
                       <textarea
                         value={milestone.description || ''}
-                        onChange={(e) => updateMilestone(index, mIndex, { ...milestone, description: e.target.value })}
+                        onChange={(e) =>
+                          updateMilestone(index, mIndex, { ...milestone, description: e.target.value })
+                        }
                         placeholder="Milestone description (optional)"
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
@@ -461,18 +523,27 @@ export function Form({ data, setData }: FormProps) {
                         placeholder="2024 Oct 25th"
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
-                      <input
-                        type="text"
-                        value={addingMilestone.milestone.type}
-                        onChange={(e) =>
-                          setAddingMilestone({
-                            ...addingMilestone,
-                            milestone: { ...addingMilestone.milestone, type: e.target.value },
-                          })
-                        }
-                        placeholder="Type"
-                        className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
-                      />
+                      <div>
+                        <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
+                          Type
+                        </label>
+                        <select
+                          value={addingMilestone.milestone.type}
+                          onChange={(e) =>
+                            setAddingMilestone({
+                              ...addingMilestone,
+                              milestone: { ...addingMilestone.milestone, type: e.target.value },
+                            })
+                          }
+                          className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
+                        >
+                          <option value="" disabled>
+                            Select type
+                          </option>
+                          <option value="general">Milestone (General)</option>
+                          <option value="incident">Incident (Incident)</option>
+                        </select>
+                      </div>
                       <textarea
                         value={addingMilestone.milestone.description}
                         onChange={(e) =>
@@ -544,12 +615,16 @@ export function Form({ data, setData }: FormProps) {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">Select Section Type</label>
+            <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+              Select Section Type
+            </label>
             <select
               className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
               value={newSectionType}
               onChange={(e) =>
-                setNewSectionType(e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | '')
+                setNewSectionType(
+                  e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | ''
+                )
               }
             >
               <option value="" disabled>
