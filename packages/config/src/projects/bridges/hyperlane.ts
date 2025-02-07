@@ -196,7 +196,6 @@ export const hyperlane: Bridge = {
       Unless overridden with a custom ISM by an application, the default multisig ISM is used. The default ISM validates messages by verifying that a quorum of signatures from a set of configured validators is reached (similar to a Multisig).
       
       
-      The Nexus bridge
       To initiate a token transfer, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.
       The function call eventually dispatches a message to the origin chain Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
       ISM validators sign off on messages by producing attestations (called checkpoints) from the Mailbox, which commit to the Merkle root of all dispatched message IDs. 
