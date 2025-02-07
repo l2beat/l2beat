@@ -34,7 +34,7 @@ export function Preview({ project }: PreviewProps) {
   return (
     <div className="preview-container">
       {/* Project Header */}
-      <h1 className="project-title">{project.name}</h1>
+      <h1 className="mb-4 text-xl font-bold">{project.name}</h1>
 
       {/* Links Section */}
       {project.display && (
@@ -82,7 +82,7 @@ export function Preview({ project }: PreviewProps) {
       {/* Badges Section */}
       {project.badges && (
         <div id="badges-section" className="mb-8">
-          <h2>Badges</h2>
+          <h2 className="mb-4 text-xl font-bold">Badges</h2>
           <ul>
             {project.badges.map(badge => (
               <li key={badge}>
