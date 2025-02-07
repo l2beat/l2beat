@@ -40,9 +40,7 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
         break;
 
       case 'DISCOVERY':
-        if (section.url) {
-          baseProject.display?.links.websites?.push(section.url);
-        }
+        baseProject.contracts = arbProjectData.contracts
         break;
     }
   }
@@ -59,6 +57,14 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
     slug: 'arbitrum',
     shortName: undefined,
     badges: ["EVM", "WasmVM"],
+    milestones: [
+      {
+        title: "Exit window extension to 7 days",
+        url: "https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+        date: "2024 Oct 25th",
+        type: 'general'
+      }
+    ],
     contracts: arbProjectData.contracts,
     display: {
       description: "Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.",

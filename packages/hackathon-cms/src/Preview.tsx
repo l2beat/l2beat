@@ -108,6 +108,25 @@ export function Preview({ project }: PreviewProps) {
         </div>
       )}
 
+      {/* Milestones*/}
+      {project.milestones && (
+        <div id="milestones-section" className="mb-8">
+          <h2 className='mb-4 text-xl font-bold' >Milestones & Incidents</h2>
+          <ul>
+            {project.milestones.map(milestone => (
+              <li>
+                <b>{milestone.title}</b><br/>
+                {milestone.date}<br/>
+
+                {milestone.description}<br/>
+
+                <a href={`${milestone.url}`}>Read more</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {/* Contracts */}
       {project.contracts && (
         <div id="contracts-section" className="mb-8">
@@ -122,6 +141,7 @@ export function Preview({ project }: PreviewProps) {
           </ul>
         </div>
       )}
+
 
 
     </div>
