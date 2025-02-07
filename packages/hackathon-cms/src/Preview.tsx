@@ -1,16 +1,26 @@
-import type { BaseProject, ProjectLinks } from './BaseProject'
+import type { BaseProject, ProjectLinks } from './BaseProject';
 
 interface PreviewProps {
-  project: BaseProject
+  project: BaseProject;
+}
+
+// Helper function that safely returns the hostname from a URL.
+// If constructing a URL fails (or the link is empty), it returns the original string.
+function getHostname(link: string): string {
+  if (!link || link.trim() === "") return "";
+  try {
+    return new URL(link).hostname;
+  } catch {
+    return link;
+  }
 }
 
 export function Preview({ project }: PreviewProps) {
-
-  // Define categories and icons
+  // Define the link categories and corresponding icons.
   const linkCategories: {
-    key: keyof ProjectLinks,
-    label: string,
-    icon: string
+    key: keyof ProjectLinks;
+    label: string;
+    icon: string;
   }[] = [
     { key: 'websites', label: 'Website', icon: '🌍' },
     { key: 'apps', label: 'App', icon: '📱' },
@@ -18,8 +28,8 @@ export function Preview({ project }: PreviewProps) {
     { key: 'explorers', label: 'Explorer', icon: '🔍' },
     { key: 'repositories', label: 'Repository', icon: '💻' },
     { key: 'socialMedia', label: 'Social', icon: '📢' },
-    { key: 'rollupCodes', label: 'rollup.codes', icon: '🧑‍💻' }
-  ]
+    { key: 'rollupCodes', label: 'rollup.codes', icon: '🧑‍💻' },
+  ];
 
   return (
     <div className="preview-container">
@@ -28,46 +38,46 @@ export function Preview({ project }: PreviewProps) {
 
       {/* Links Section */}
       {project.display && (
-      <div className="links-section">
-        {linkCategories.map(({ key, label, icon }) => {
-          const links = project.display?.links[key]
-          if (!links) return null
+        <div className="links-section">
+          {linkCategories.map(({ key, label, icon }) => {
+            const links = project.display?.links[key];
+            if (!links) return null;
 
-          return (
-            <div key={key} className="link-category">
-              <span className="icon">{icon}</span>
-              <span className="label">{label}</span>
-              {Array.isArray(links) ? (
-                <ul>
-                  {links.map(link => (
-                    <li key={link}>
-                      <a href={link} target="_blank" rel="noopener noreferrer">
-                        {new URL(link).hostname}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <a href={links} target="_blank" rel="noopener noreferrer">
-                  {new URL(links).hostname}
-                </a>
-              )}
-            </div>
-          )
-        })}
-      </div>
+            // Handle array-based link fields.
+            if (Array.isArray(links)) {
+              const validLinks = links.filter(link => link.trim() !== "");
+              if (validLinks.length === 0) return null;
+              return (
+                <div key={key} className="link-category">
+                  <span className="icon">{icon}</span>
+                  <span className="label">{label}</span>
+                  <ul>
+                    {validLinks.map((link, index) => (
+                      <li key={index}>
+                        <a href={link} target="_blank" rel="noopener noreferrer">
+                          {getHostname(link)}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            } else {
+              // Handle single-string link fields.
+              if (links.trim() === "") return null;
+              return (
+                <div key={key} className="link-category">
+                  <span className="icon">{icon}</span>
+                  <span className="label">{label}</span>
+                  <a href={links} target="_blank" rel="noopener noreferrer">
+                    {getHostname(links)}
+                  </a>
+                </div>
+              );
+            }
+          })}
+        </div>
       )}
-
-      {/* TVS Section (Placeholder Values) */}
-      {/* <div className="tvs-section">
-        <h2>TVS</h2>
-        <p><strong>$13.57B</strong> <span className="tvs-change">-13.9%</span></p>
-        <ul>
-          <li>Canonical: <strong>$4.69B</strong> (35%)</li>
-          <li>External: <strong>$2.44B</strong> (18%)</li>
-          <li>Native: <strong>$6.43B</strong> (47%)</li>
-        </ul>
-      </div> */}
 
       {/* Badges Section */}
       {project.badges && (
@@ -83,67 +93,48 @@ export function Preview({ project }: PreviewProps) {
         </div>
       )}
 
-      {/* Data Visualization Section (Placeholder Values) */}
-      {/* <div className="data-section">
-        <div className="tokens">
-          <h3>Tokens</h3>
-          <p>Past day UOPS: <strong>22.56</strong> <span className="positive">+24.8%</span></p>
-          <p>30D ops count: <strong>61.22M</strong></p>
-        </div>
-        <div className="rollup-type">
-          <h3>Type</h3>
-          <p>Optimistic Rollup</p>
-        </div>
-        <div className="purpose">
-          <h3>Purpose</h3>
-          <p>Universal</p>
-        </div>
-      </div> */}
-
       {/* About Section */}
       {project.display?.description && (
         <div id="about-section" className="mb-8">
-          <h2 className='mb-4 text-xl font-bold'>About</h2><br/>
+          <h2 className="mb-4 text-xl font-bold">About</h2>
           <p>{project.display.description}</p>
         </div>
       )}
 
-      {/* Milestones*/}
+      {/* Milestones Section */}
       {project.milestones && (
         <div id="milestones-section" className="mb-8">
-          <h2 className='mb-4 text-xl font-bold' >Milestones & Incidents</h2>
+          <h2 className="mb-4 text-xl font-bold">Milestones & Incidents</h2>
           <ul>
             {project.milestones.map(milestone => (
-              <li>
-                <b>{milestone.title}</b><br/>
-                {milestone.date}<br/>
-
-                {milestone.description}<br/>
-
-                <a href={`${milestone.url}`}>Read more</a>
+              <li key={milestone.title}>
+                <b>{milestone.title}</b>
+                <br />
+                {milestone.date}
+                <br />
+                {milestone.description}
+                <br />
+                <a href={milestone.url}>Read more</a>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* Contracts */}
+      {/* Contracts Section */}
       {project.contracts && (
         <div id="contracts-section" className="mb-8">
-          <h2 className='mb-4 text-xl font-bold' >Contracts</h2>
+          <h2 className="mb-4 text-xl font-bold">Contracts</h2>
           <ul>
             {project.contracts.map(contract => (
-              <li key={contract.address} className='mb-4'>
-                <b>{contract.name}</b>: {contract.address} <br/>
+              <li key={contract.address} className="mb-4">
+                <b>{contract.name}</b>: {contract.address} <br />
                 {contract.description}
               </li>
             ))}
           </ul>
         </div>
       )}
-
-
-
     </div>
-  )
+  );
 }

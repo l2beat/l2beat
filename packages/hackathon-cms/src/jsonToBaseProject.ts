@@ -1,7 +1,6 @@
-import type { BaseProject } from './BaseProject'
-import type { ProjectJSON } from './types'
-import arbProjectData from './arbitrum_discovered.json'
-
+import type { BaseProject } from './BaseProject';
+import type { ProjectJSON } from './types';
+import arbProjectData from './arbitrum_discovered.json';
 
 export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
   // Initialize an empty BaseProject object
@@ -40,14 +39,18 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
         break;
 
       case 'DISCOVERY':
-        baseProject.contracts = arbProjectData.contracts
+        baseProject.contracts = arbProjectData.contracts;
+        break;
+
+      case 'LINKS':
+        // If a LINKS section exists, update display.links accordingly.
+        baseProject.display.links = section.links;
         break;
     }
   }
 
   return baseProject;
 }
-
 
 export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
   return {
@@ -97,5 +100,5 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
         rollupCodes: 'https://rollup.codes/arbitrum-one',
       }
     }
-  }
+  };
 }

@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import type { ProjectJSON, Section } from './types';
 
+// Define the keys used in a LINKS section
+type LinkCategory = 'websites' | 'apps' | 'documentation' | 'explorers' | 'repositories' | 'socialMedia' | 'rollupCodes';
+
 interface FormProps {
   data: ProjectJSON;
   setData: (data: ProjectJSON) => void;
@@ -10,13 +13,17 @@ interface FormProps {
 export function Form({ data, setData }: FormProps) {
   const [sections, setSections] = useState<Section[]>(data.sections || []);
   const [isAddingSection, setIsAddingSection] = useState(false);
-  const [newSectionType, setNewSectionType] = useState<'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | ''>('');
+  const [newSectionType, setNewSectionType] = useState<'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | ''>('');
   const [isAddingBadge, setIsAddingBadge] = useState<number | null>(null);
+
+  // Global control state for adding a new link in a LINKS section:
+  const [addingLink, setAddingLink] = useState<{ sectionIndex: number; category: LinkCategory; value: string } | null>(null);
 
   const sectionTypes = [
     { label: 'Basic Info', value: 'BASIC_INFO' },
     { label: 'Badges', value: 'BADGES' },
     { label: 'Discovery', value: 'DISCOVERY' },
+    { label: 'Links', value: 'LINKS' },
   ];
 
   const availableBadges = ['EVM', 'WasmVM', 'ZK-Rollup', 'Optimistic Rollup'];
@@ -29,8 +36,23 @@ export function Form({ data, setData }: FormProps) {
       newSection = { type: 'BASIC_INFO', name: '', slug: '' };
     } else if (newSectionType === 'BADGES') {
       newSection = { type: 'BADGES', badges: [] };
-    } else {
+    } else if (newSectionType === 'DISCOVERY') {
       newSection = { type: 'DISCOVERY', url: '' };
+    } else if (newSectionType === 'LINKS') {
+      newSection = {
+        type: 'LINKS',
+        links: {
+          websites: [],
+          apps: [],
+          documentation: [],
+          explorers: [],
+          repositories: [],
+          socialMedia: [],
+          rollupCodes: [],
+        },
+      };
+    } else {
+      return;
     }
 
     setSections([...sections, newSection]);
@@ -48,6 +70,31 @@ export function Form({ data, setData }: FormProps) {
   const saveData = () => {
     setData({ sections });
   };
+
+  // Remove a link from a LINKS section.
+  const removeLink = (sectionIndex: number, category: LinkCategory, link: string) => {
+    const section = sections[sectionIndex];
+    if (section.type !== 'LINKS') return;
+    const updatedLinks = section.links[category].filter((l: string) => l !== link);
+    updateSection(sectionIndex, {
+      ...section,
+      links: {
+        ...section.links,
+        [category]: updatedLinks,
+      },
+    });
+  };
+
+  // Define link categories (all treated as arrays)
+  const linkCategoryFields: { key: LinkCategory; label: string }[] = [
+    { key: 'websites', label: 'Websites' },
+    { key: 'apps', label: 'Apps' },
+    { key: 'documentation', label: 'Documentation' },
+    { key: 'explorers', label: 'Explorers' },
+    { key: 'repositories', label: 'Repositories' },
+    { key: 'socialMedia', label: 'Social Media' },
+    { key: 'rollupCodes', label: 'Rollup Codes' },
+  ];
 
   return (
     <motion.div
@@ -84,6 +131,41 @@ export function Form({ data, setData }: FormProps) {
               {section.type}
             </h3>
 
+            {/* BASIC_INFO Section */}
+            {section.type === 'BASIC_INFO' && (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={section.name}
+                    onChange={(e) =>
+                      updateSection(index, { ...section, name: e.target.value })
+                    }
+                    placeholder="Enter project name"
+                    className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                    Slug
+                  </label>
+                  <input
+                    type="text"
+                    value={section.slug}
+                    onChange={(e) =>
+                      updateSection(index, { ...section, slug: e.target.value })
+                    }
+                    placeholder="Enter project slug"
+                    className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* BADGES Section */}
             {section.type === 'BADGES' && (
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
@@ -148,6 +230,132 @@ export function Form({ data, setData }: FormProps) {
                 )}
               </div>
             )}
+
+            {/* DISCOVERY Section */}
+            {section.type === 'DISCOVERY' && (
+              <div className="mt-2">
+                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                  URL
+                </label>
+                <input
+                  type="text"
+                  value={section.url}
+                  onChange={(e) =>
+                    updateSection(index, { ...section, url: e.target.value })
+                  }
+                  placeholder="Enter URL"
+                  className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                />
+              </div>
+            )}
+
+            {/* LINKS Section */}
+            {section.type === 'LINKS' && (
+              <div className="space-y-4">
+                {/* Render only link categories that have at least one link */}
+                {linkCategoryFields
+                  .filter(field => section.links[field.key] && section.links[field.key].length > 0)
+                  .map(field => (
+                    <div key={field.key} className="border p-2 rounded-md bg-gray-700">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{field.label}:</span>
+                      </div>
+                      <ul className="mt-2">
+                        {section.links[field.key].map((link: string, linkIndex: number) => (
+                          <li key={linkIndex} className="flex items-center justify-between bg-gray-800 p-1 rounded">
+                            <a
+                              href={link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline"
+                            >
+                              {link}
+                            </a>
+                            <button
+                              className="text-xs text-red-400 hover:underline"
+                              onClick={() => removeLink(index, field.key, link)}
+                            >
+                              Remove
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                }
+
+                {/* Global control for adding a new link */}
+                <div className="mt-4 border p-4 rounded-md bg-gray-800">
+                  {(!addingLink || addingLink.sectionIndex !== index) ? (
+                    <button
+                      className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600"
+                      onClick={() =>
+                        setAddingLink({ sectionIndex: index, category: '' as LinkCategory, value: '' })
+                      }
+                    >
+                      Add New Link
+                    </button>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      <select
+                        className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg"
+                        value={addingLink.category}
+                        onChange={(e) =>
+                          setAddingLink({ ...addingLink, category: e.target.value as LinkCategory })
+                        }
+                      >
+                        <option value="" disabled>
+                          Select Link Category
+                        </option>
+                        {linkCategoryFields.map((field) => (
+                          <option key={field.key} value={field.key}>
+                            {field.label}
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="text"
+                        value={addingLink.value}
+                        onChange={(e) =>
+                          setAddingLink({ ...addingLink, value: e.target.value })
+                        }
+                        placeholder="Enter URL"
+                        className="w-full px-4 py-2 bg-gray-600 text-gray-200 border border-gray-500 rounded-lg"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                          onClick={() => {
+                            if (addingLink.category && addingLink.value.trim() !== '') {
+                              const updatedLinks = [
+                                ...section.links[addingLink.category],
+                                addingLink.value.trim(),
+                              ];
+                              updateSection(index, {
+                                ...section,
+                                links: {
+                                  ...section.links,
+                                  [addingLink.category]: updatedLinks,
+                                },
+                              });
+                              setAddingLink(null);
+                            }
+                          }}
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          className="bg-gray-600 text-white px-4 py-2 rounded-lg"
+                          onClick={() => setAddingLink(null)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -179,7 +387,11 @@ export function Form({ data, setData }: FormProps) {
             <select
               className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
               value={newSectionType}
-              onChange={(e) => setNewSectionType(e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY')}
+              onChange={(e) =>
+                setNewSectionType(
+                  e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | ''
+                )
+              }
             >
               <option value="" disabled>
                 Choose a type
