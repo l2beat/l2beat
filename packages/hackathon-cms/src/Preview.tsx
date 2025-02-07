@@ -17,18 +17,20 @@ function getHostname(link: string): string {
 
 export function Preview({ project }: PreviewProps) {
   return (
-    <div className="preview-container">
+    <div className="p-6 space-y-6 bg-gray-900 text-gray-300 rounded-lg shadow-lg max-w-3xl mx-auto">
       {/* Project Header */}
-      <h1 className="project-title">{project.name}</h1>
+      <h1 className="text-3xl font-bold text-purple-400 uppercase text-center">
+        {project.name}
+      </h1>
 
-      {/* Basic Info Section – assumed always present if added */}
+      {/* Basic Info Section */}
       {project.sections && project.sections.includes("BASIC_INFO") && (
-        <div className="basic-info-section mb-8">
-          <h2>Basic Info</h2>
-          <p>
+        <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Basic Info</h2>
+          <p className="mb-1">
             <strong>Name:</strong> {project.name}
           </p>
-          <p>
+          <p className="mb-1">
             <strong>Slug:</strong> {project.slug}
           </p>
         </div>
@@ -36,16 +38,19 @@ export function Preview({ project }: PreviewProps) {
 
       {/* Badges Section */}
       {project.sections && project.sections.includes("BADGES") && (
-        <div id="badges-section" className="mb-8">
-          <h2>Badges</h2>
+        <div id="badges-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Badges</h2>
           {project.badges && project.badges.length > 0 ? (
-            <ul>
+            <div className="flex flex-wrap gap-2">
               {project.badges.map((badge) => (
-                <li key={badge}>
-                  <img src={`https://l2beat.com/images/badges/${badge}.png`} alt={badge} />
-                </li>
+                <img
+                  key={badge}
+                  src={`https://l2beat.com/images/badges/${badge}.png`}
+                  alt={badge}
+                  className="h-10"
+                />
               ))}
-            </ul>
+            </div>
           ) : (
             <p>No badges added.</p>
           )}
@@ -54,8 +59,8 @@ export function Preview({ project }: PreviewProps) {
 
       {/* Links Section */}
       {project.sections && project.sections.includes("LINKS") && project.display && project.display.links && (
-        <div className="links-section mb-8">
-          <h2>Links</h2>
+        <div className="bg-gray-800 p-4 rounded-lg shadow-md" id="links-section">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Links</h2>
           {(
             [
               "websites",
@@ -70,28 +75,37 @@ export function Preview({ project }: PreviewProps) {
             const links = project.display.links[key];
             if (!links) return null;
             if (Array.isArray(links)) {
-              const validLinks = links.filter((link) => link.trim() !== "");
+              const validLinks = links.filter(link => link.trim() !== "");
               if (validLinks.length === 0) return null;
               return (
-                <div key={key} className="link-category mb-4">
-                  <h3>{key}</h3>
-                  <ul>
+                <div key={key} className="mb-4">
+                  <h3 className="font-bold text-purple-300 capitalize mb-1">{key}</h3>
+                  <div className="flex flex-wrap gap-2">
                     {validLinks.map((link, index) => (
-                      <li key={index}>
-                        <a href={link} target="_blank" rel="noopener noreferrer">
-                          {getHostname(link)}
-                        </a>
-                      </li>
+                      <a
+                        key={index}
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline text-blue-400 hover:text-blue-300"
+                      >
+                        {getHostname(link)}
+                      </a>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               );
             } else {
               if (links.trim() === "") return null;
               return (
-                <div key={key} className="link-category mb-4">
-                  <h3>{key}</h3>
-                  <a href={links} target="_blank" rel="noopener noreferrer">
+                <div key={key} className="mb-4">
+                  <h3 className="font-bold text-purple-300 capitalize mb-1">{key}</h3>
+                  <a
+                    href={links}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-blue-400 hover:text-blue-300"
+                  >
                     {getHostname(links)}
                   </a>
                 </div>
@@ -103,23 +117,45 @@ export function Preview({ project }: PreviewProps) {
 
       {/* Milestones & Incidents Section */}
       {project.sections && project.sections.includes("MILESTONES") && (
-        <div id="milestones-section" className="mb-8">
-          <h2>Milestones & Incidents</h2>
+        <div id="milestones-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Milestones & Incidents</h2>
           {project.milestones && project.milestones.length > 0 ? (
-            <ul>
-              {project.milestones.map((milestone) => (
-                <li key={milestone.title} className="mb-4">
-                  <b>{milestone.title}</b>
-                  <br />
-                  {milestone.date}
-                  <br />
-                  {milestone.description}
-                  <br />
-                  <a href={milestone.url} target="_blank" rel="noopener noreferrer">
-                    Read more
-                  </a>
-                </li>
-              ))}
+            <ul className="space-y-4">
+              {project.milestones.map((milestone) => {
+                // Set classes based on milestone type:
+                const milestoneCardClass =
+                  milestone.type === "general"
+                    ? "bg-green-900 border-green-700"
+                    : milestone.type === "incident"
+                    ? "bg-red-900 border-red-700"
+                    : "";
+                const milestoneTitleClass =
+                  milestone.type === "general"
+                    ? "text-green-400"
+                    : milestone.type === "incident"
+                    ? "text-red-400"
+                    : "text-purple-300";
+                return (
+                  <li
+                    key={milestone.title}
+                    className={`p-4 border rounded-lg ${milestoneCardClass}`}
+                  >
+                    <h3 className={`text-lg font-bold ${milestoneTitleClass}`}>
+                      {milestone.title}
+                    </h3>
+                    <p className="text-sm text-gray-400">{milestone.date}</p>
+                    <p className="mb-2">{milestone.description}</p>
+                    <a
+                      href={milestone.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline text-blue-400 hover:text-blue-300"
+                    >
+                      Read more
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <p>No milestones added.</p>
@@ -129,14 +165,14 @@ export function Preview({ project }: PreviewProps) {
 
       {/* Discovery / Contracts Section */}
       {project.sections && project.sections.includes("DISCOVERY") && project.contracts && (
-        <div id="contracts-section" className="mb-8">
-          <h2>Contracts</h2>
-          <ul>
+        <div id="contracts-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Contracts</h2>
+          <ul className="space-y-4">
             {project.contracts.map((contract) => (
-              <li key={contract.address} className="mb-4">
-                <b>{contract.name}</b>: {contract.address}
-                <br />
-                {contract.description}
+              <li key={contract.address} className="p-4 border border-gray-700 rounded-lg">
+                <h3 className="font-bold text-purple-300">{contract.name}</h3>
+                <p className="text-sm text-gray-400">{contract.address}</p>
+                <p>{contract.description}</p>
               </li>
             ))}
           </ul>
@@ -145,8 +181,8 @@ export function Preview({ project }: PreviewProps) {
 
       {/* About Section */}
       {project.display && project.display.description && (
-        <div id="about-section" className="mb-8">
-          <h2>About</h2>
+        <div id="about-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">About</h2>
           <p>{project.display.description}</p>
         </div>
       )}
