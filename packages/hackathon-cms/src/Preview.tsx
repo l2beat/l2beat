@@ -4,6 +4,6 @@ interface PreviewProps {
   project: BaseProject
 }
 
-export function Preview(_: PreviewProps) {
-  return <div>Preview</div>
+export function Preview({project}: PreviewProps) {
+  return <div>Preview: {JSON.stringify(project)}</div>
 }
