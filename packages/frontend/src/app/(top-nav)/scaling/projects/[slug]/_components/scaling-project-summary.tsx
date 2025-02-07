@@ -13,6 +13,7 @@ import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { ScalingProjectRosette } from './scaling-project-rosette'
 import { ScalingProjectStats } from './scaling-project-stats'
+import CaptureComponent from './screenshot-button'
 import { ValueSecuredSummary } from './value-secured-summary'
 
 interface Props {
@@ -25,7 +26,10 @@ export function ScalingProjectSummary({ project }: Props) {
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="flex gap-10">
           <div className="w-full space-y-4 md:space-y-6">
-            <ProjectHeader title={project.name} slug={project.slug} />
+            <div className="flex items-center">
+              <ProjectHeader title={project.name} slug={project.slug} />
+              <CaptureComponent project={project} />
+            </div>
             <div className="space-y-2">
               {project.isArchived && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}

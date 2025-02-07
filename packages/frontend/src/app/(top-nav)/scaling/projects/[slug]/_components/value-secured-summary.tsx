@@ -30,7 +30,7 @@ export interface ValueSecuredSummaryProps {
 }
 
 export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
-  const params = getParams(props.tvs)
+  const params = getTvsParams(props.tvs)
 
   const tvsStats = [
     {
@@ -132,7 +132,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
   )
 }
 
-function getParams(tvs: ValueSecuredSummaryProps['tvs']) {
+export function getTvsParams(tvs: ValueSecuredSummaryProps['tvs']) {
   if (!tvs?.breakdown) {
     return {
       breakdown: {

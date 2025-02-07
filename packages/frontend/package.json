@@ -54,6 +54,7 @@
     "dotenv": "^16.4.5",
     "fuzzysort": "^3.1.0",
     "gray-matter": "^4.0.3",
+    "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "markdown-it": "^14.1.0",
