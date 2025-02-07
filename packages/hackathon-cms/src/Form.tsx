@@ -3,7 +3,14 @@ import { useState } from 'react';
 import type { ProjectJSON, Section } from './types';
 
 // Define the keys used in a LINKS section.
-type LinkCategory = 'websites' | 'apps' | 'documentation' | 'explorers' | 'repositories' | 'socialMedia' | 'rollupCodes';
+type LinkCategory =
+  | 'websites'
+  | 'apps'
+  | 'documentation'
+  | 'explorers'
+  | 'repositories'
+  | 'socialMedia'
+  | 'rollupCodes';
 
 // Define the Milestone type.
 interface Milestone {
@@ -19,19 +26,27 @@ interface FormProps {
   setData: (data: ProjectJSON) => void;
 }
 
+// To avoid SWC issues with dot notation in JSX, assign motion components to variables:
+const MotionDiv = motion.div;
+const MotionButton = motion.button;
+
 export function Form({ data, setData }: FormProps) {
   const [sections, setSections] = useState<Section[]>(data.sections || []);
   const [isAddingSection, setIsAddingSection] = useState(false);
   const [newSectionType, setNewSectionType] = useState<
-    'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | ''
+    'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | 'TECHNOLOGY' | ''
   >('');
   const [isAddingBadge, setIsAddingBadge] = useState<number | null>(null);
 
   // Global state for adding a new link in a LINKS section.
-  const [addingLink, setAddingLink] = useState<{ sectionIndex: number; category: LinkCategory; value: string } | null>(null);
+  const [addingLink, setAddingLink] = useState<
+    { sectionIndex: number; category: LinkCategory; value: string } | null
+  >(null);
 
   // Global state for adding a new milestone in a MILESTONES section.
-  const [addingMilestone, setAddingMilestone] = useState<{ sectionIndex: number; milestone: Milestone } | null>(null);
+  const [addingMilestone, setAddingMilestone] = useState<
+    { sectionIndex: number; milestone: Milestone } | null
+  >(null);
 
   const sectionTypes = [
     { label: 'Basic Info', value: 'BASIC_INFO' },
@@ -39,6 +54,7 @@ export function Form({ data, setData }: FormProps) {
     { label: 'Discovery', value: 'DISCOVERY' },
     { label: 'Links', value: 'LINKS' },
     { label: 'Milestones', value: 'MILESTONES' },
+    { label: 'Technology', value: 'TECHNOLOGY' },
   ];
 
   const availableBadges = ['EVM', 'WasmVM', 'ZK-Rollup', 'Optimistic Rollup'];
@@ -70,6 +86,12 @@ export function Form({ data, setData }: FormProps) {
       newSection = {
         type: 'MILESTONES',
         milestones: [],
+      };
+    } else if (newSectionType === 'TECHNOLOGY') {
+      // TECHNOLOGY section with one field "content"
+      newSection = {
+        type: 'TECHNOLOGY',
+        content: '',
       };
     } else {
       return;
@@ -106,7 +128,11 @@ export function Form({ data, setData }: FormProps) {
   };
 
   // Milestone helper functions.
-  const updateMilestone = (sectionIndex: number, milestoneIndex: number, updatedMilestone: Milestone) => {
+  const updateMilestone = (
+    sectionIndex: number,
+    milestoneIndex: number,
+    updatedMilestone: Milestone
+  ) => {
     const section = sections[sectionIndex];
     if (section.type !== 'MILESTONES') return;
     const updatedMilestones = section.milestones.map((m: Milestone, i: number) =>
@@ -134,29 +160,29 @@ export function Form({ data, setData }: FormProps) {
   ];
 
   return (
-    <motion.div
-      className="p-6 space-y-6 bg-gray-900 text-gray-300 rounded-lg shadow-lg max-w-3xl mx-auto"
+    <MotionDiv
+      className="relative p-6 space-y-6 bg-gray-900 text-gray-300 rounded-lg shadow-lg max-w-3xl mx-auto"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
-      {/* Title */}
-      <div className="flex justify-between items-center">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-gray-900 p-4 flex justify-between items-center border-b border-gray-700">
         <h2 className="text-lg font-bold text-purple-400 uppercase">L2BEAT CMS</h2>
-        <motion.button
+        <MotionButton
           className="bg-purple-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring focus:ring-purple-300"
           onClick={saveData}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           Save
-        </motion.button>
+        </MotionButton>
       </div>
 
       {/* Dynamic Sections */}
       <div className="space-y-4">
         {sections.map((section, index) => (
-          <motion.div
+          <MotionDiv
             key={index}
             className="border rounded-lg p-4 bg-gray-800 shadow-md"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -216,7 +242,7 @@ export function Form({ data, setData }: FormProps) {
                   ))}
                 </div>
                 {isAddingBadge === index ? (
-                  <motion.div
+                  <MotionDiv
                     className="mt-4"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -246,24 +272,24 @@ export function Form({ data, setData }: FormProps) {
                         </option>
                       ))}
                     </select>
-                    <motion.button
+                    <MotionButton
                       className="mt-4 bg-gray-700 px-4 py-2 rounded-lg border border-gray-600 text-gray-300 shadow-sm hover:bg-gray-600 focus:outline-none"
                       onClick={() => setIsAddingBadge(null)}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       Cancel
-                    </motion.button>
-                  </motion.div>
+                    </MotionButton>
+                  </MotionDiv>
                 ) : (
-                  <motion.button
+                  <MotionButton
                     className="bg-purple-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring focus:ring-purple-300"
                     onClick={() => setIsAddingBadge(index)}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Add Badge
-                  </motion.button>
+                  </MotionButton>
                 )}
               </div>
             )}
@@ -356,7 +382,7 @@ export function Form({ data, setData }: FormProps) {
                         className="w-full px-4 py-2 bg-gray-600 text-gray-200 border border-gray-500 rounded-lg"
                       />
                       <div className="flex gap-2">
-                        <button
+                        <MotionButton
                           className="bg-green-600 text-white px-4 py-2 rounded-lg"
                           onClick={() => {
                             if (addingLink.category && addingLink.value.trim() !== '') {
@@ -373,13 +399,13 @@ export function Form({ data, setData }: FormProps) {
                           }}
                         >
                           Confirm
-                        </button>
-                        <button
+                        </MotionButton>
+                        <MotionButton
                           className="bg-gray-600 text-white px-4 py-2 rounded-lg"
                           onClick={() => setAddingLink(null)}
                         >
                           Cancel
-                        </button>
+                        </MotionButton>
                       </div>
                     </div>
                   )}
@@ -391,7 +417,10 @@ export function Form({ data, setData }: FormProps) {
             {section.type === 'MILESTONES' && (
               <div className="space-y-4">
                 {section.milestones.map((milestone: Milestone, mIndex: number) => (
-                  <div key={mIndex} className="border p-2 rounded-md bg-gray-700 mb-2">
+                  <div
+                    key={mIndex}
+                    className="border p-2 rounded-md mb-2 bg-gray-700"
+                  >
                     <div>
                       <label className="block text-xs font-medium text-gray-400 uppercase mb-1">
                         Title
@@ -556,7 +585,7 @@ export function Form({ data, setData }: FormProps) {
                         className="w-full px-2 py-1 bg-gray-600 text-gray-200 border border-gray-500 rounded"
                       />
                       <div className="flex gap-2">
-                        <button
+                        <MotionButton
                           className="bg-green-600 text-white px-4 py-2 rounded-lg"
                           onClick={() => {
                             if (
@@ -577,38 +606,55 @@ export function Form({ data, setData }: FormProps) {
                           }}
                         >
                           Confirm
-                        </button>
-                        <button
+                        </MotionButton>
+                        <MotionButton
                           className="bg-gray-600 text-white px-4 py-2 rounded-lg"
                           onClick={() => setAddingMilestone(null)}
                         >
                           Cancel
-                        </button>
+                        </MotionButton>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
             )}
-          </motion.div>
+
+            {/* TECHNOLOGY Section */}
+            {section.type === 'TECHNOLOGY' && (
+              <div className="mt-2">
+                <label className="block text-xs font-medium text-gray-400 uppercase mb-2">
+                  Technology
+                </label>
+                <textarea
+                  value={(section as any).content}
+                  onChange={(e) =>
+                    updateSection(index, { ...section, content: e.target.value })
+                  }
+                  placeholder="This contract has a delay of {{ ContractName.delay }}"
+                  className="w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:ring-purple-500"
+                />
+              </div>
+            )}
+          </MotionDiv>
         ))}
       </div>
 
       {/* Add Section Dropdown */}
       <div className="space-y-4">
         {!isAddingSection && (
-          <motion.button
+          <MotionButton
             className="w-full bg-gray-700 px-6 py-3 rounded-lg border border-gray-600 text-gray-300 shadow-md hover:bg-gray-600 focus:outline-none"
             onClick={() => setIsAddingSection(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             + Add Section
-          </motion.button>
+          </MotionButton>
         )}
 
         {isAddingSection && (
-          <motion.div
+          <MotionDiv
             className="w-full bg-gray-800 p-4 rounded-lg shadow-md border border-gray-600"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -623,7 +669,14 @@ export function Form({ data, setData }: FormProps) {
               value={newSectionType}
               onChange={(e) =>
                 setNewSectionType(
-                  e.target.value as 'BASIC_INFO' | 'BADGES' | 'DISCOVERY' | 'LINKS' | 'MILESTONES' | ''
+                  e.target.value as
+                    | 'BASIC_INFO'
+                    | 'BADGES'
+                    | 'DISCOVERY'
+                    | 'LINKS'
+                    | 'MILESTONES'
+                    | 'TECHNOLOGY'
+                    | ''
                 )
               }
             >
@@ -637,26 +690,26 @@ export function Form({ data, setData }: FormProps) {
               ))}
             </select>
             <div className="flex justify-end mt-4 gap-2">
-              <motion.button
+              <MotionButton
                 className="bg-purple-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring focus:ring-purple-300"
                 onClick={handleAddSection}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Add
-              </motion.button>
-              <motion.button
+              </MotionButton>
+              <MotionButton
                 className="bg-gray-700 px-4 py-2 rounded-lg border border-gray-600 text-gray-300 shadow-sm hover:bg-gray-600 focus:outline-none"
                 onClick={() => setIsAddingSection(false)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Cancel
-              </motion.button>
+              </MotionButton>
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </div>
-    </motion.div>
+    </MotionDiv>
   );
 }
