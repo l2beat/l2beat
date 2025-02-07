@@ -35,17 +35,43 @@ export const hyperlane: Bridge = {
   },
   config: {
     escrows: [
+      // to eclipse
       discovery.getEscrowDetails({
         description:
           'Escrow for USDC that is bridged from Ethereum to Eclipse.',
         address: EthereumAddress('0xe1De9910fe71cC216490AC7FCF019e13a34481D7'),
         tokens: ['USDC'],
       }),
+      // not on CG
+      // discovery.getEscrowDetails({
+      //   description:
+      //     'Escrow for apxETH that is bridged from Ethereum to Eclipse.',
+      //   address: EthereumAddress('0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c'),
+      //   tokens: ['apxETH'],
+      // }),
       discovery.getEscrowDetails({
         description:
-          'Escrow for apxETH that is bridged from Ethereum to Eclipse.',
-        address: EthereumAddress('0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c'),
-        tokens: ['apxETH'],
+          'Escrow for USDT that is bridged from Ethereum to Eclipse.',
+        address: EthereumAddress('0x647C621CEb36853Ef6A907E397Adf18568E70543'),
+        tokens: ['USDT'],
+      }),
+      discovery.getEscrowDetails({
+        description:
+          'Escrow for USDT that is bridged from Ethereum to Eclipse.',
+        address: EthereumAddress('0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A'),
+        tokens: ['WBTC'],
+      }),
+      discovery.getEscrowDetails({
+        description:
+          'Escrow for tETH that is bridged from Ethereum to Eclipse.',
+        address: EthereumAddress('0x19e099B7aEd41FA52718D780dDA74678113C0b32'),
+        tokens: ['rswETH', 'weETH', 'pufETH', 'ezETH', 'WETH'],
+      }),
+      discovery.getEscrowDetails({
+        description:
+          'Escrow for weETHs that is bridged from Ethereum to Eclipse.',
+        address: EthereumAddress('0xef899e92DA472E014bE795Ecce948308958E25A2'),
+        tokens: ['weETHs'],
       }),
     ],
   },
