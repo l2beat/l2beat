@@ -13,8 +13,6 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Logo } from '~/components/logo'
 import { NotSyncedBanner } from '~/components/not-synced/not-synced-banner'
-import { PizzaRosetteIcon } from '~/components/rosette/pizza/pizza-rosette-icon'
-import { PizzaRosetteLabels } from '~/components/rosette/pizza/pizza-rosette-labels'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import type { CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
@@ -88,10 +86,10 @@ export default function CaptureComponent({ project }: CaptureComponentProps) {
       <div
         ref={componentRef}
         style={{
-          visibility: 'visible',
+          visibility: 'hidden',
           position: 'fixed',
         }}
-        className="bottom-0 left-0 z-[1000] flex h-[900px]  w-[1600px] flex-col items-center justify-between gap-2 bg-gradient-to-br from-black from-30% to-[#F546C1] px-12 py-3 text-brand-black shadow-md"
+        className="bottom-0 left-0 z-[-1000] flex h-[900px]  w-[1600px] flex-col items-center justify-between gap-2 bg-gradient-to-br from-black from-30% to-[#F546C1] px-12 py-3 text-brand-black shadow-md"
       >
         <Logo animated={false} className="dark" />
         <div className="flex size-full flex-col rounded-md bg-zinc-100 p-12">
@@ -163,17 +161,6 @@ export default function CaptureComponent({ project }: CaptureComponentProps) {
             <CostsSection project={project} />
             <div className="relative row-span-2 flex flex-col rounded-xl bg-pure-white p-6">
               <span className="text-xl font-bold text-zinc-500">Risks</span>
-              <div className={cn('absolute w-[272px] scale-75 p-12')}>
-                <PizzaRosetteIcon
-                  values={project.header.rosetteValues}
-                  isUnderReview={project.underReviewStatus === 'config'}
-                />
-                <PizzaRosetteLabels
-                  values={project.header.rosetteValues}
-                  containerSize={272}
-                  textRadius={102}
-                />
-              </div>
             </div>
             <div className="row-span-1 flex flex-col rounded-xl bg-pure-white p-6">
               <span className="text-xl font-bold text-zinc-500">Finality</span>
