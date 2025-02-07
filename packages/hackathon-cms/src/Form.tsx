@@ -59,6 +59,14 @@ export function Form({ data, setData }: FormProps) {
 
   const availableBadges = ['EVM', 'WasmVM', 'ZK-Rollup', 'Optimistic Rollup'];
 
+  // Helper function to remove a badge from a BADGES section.
+  const removeBadge = (sectionIndex: number, badgeIndex: number) => {
+    const section = sections[sectionIndex];
+    if (section.type !== 'BADGES') return;
+    const updatedBadges = section.badges.filter((_, i) => i !== badgeIndex);
+    updateSection(sectionIndex, { ...section, badges: updatedBadges });
+  };
+
   const handleAddSection = () => {
     if (!newSectionType) return;
 
@@ -233,12 +241,17 @@ export function Form({ data, setData }: FormProps) {
               <div className="space-y-3">
                 <div className="flex flex-wrap gap-2">
                   {section.badges.map((badge, badgeIndex) => (
-                    <span
-                      key={badgeIndex}
-                      className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm"
-                    >
-                      {badge}
-                    </span>
+                    <div key={badgeIndex} className="flex items-center space-x-1">
+                      <span className="bg-gray-700 px-4 py-1 rounded-full text-sm font-medium text-gray-200 shadow-sm">
+                        {badge}
+                      </span>
+                      <button
+                        onClick={() => removeBadge(index, badgeIndex)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        &#x2715;
+                      </button>
+                    </div>
                   ))}
                 </div>
                 {isAddingBadge === index ? (
