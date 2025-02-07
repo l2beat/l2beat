@@ -487,7 +487,7 @@ export interface BaseProject {
   daLayer?: DaLayer
   daBridges?: DaBridge[]
   milestones?: Milestone[]
-  contracts?: ProjectContracts
+  contracts?: ProjectContract[]
   permissions?: Record<string, ProjectPermission>
   // tags
   isBridge?: true
@@ -503,39 +503,18 @@ interface ProjectContract {
   /** Address of the contract */
   address: string
   /** Verification status of the contract */
-  isVerified: boolean
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain: string
+  isVerified?: boolean
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
   description?: string
-  /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
-  /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
-  /** Other considerations worth mentioning about the upgrade process */
-  upgradeConsiderations?: string
-  /** Pasuable contract */
-  pausable?: {
-    /** Is it paused? **/
-    paused: boolean
-    /** Who can pause/unpause the contract */
-    pausableBy: string[]
-  }
-  /** List of references */
-  references?: ReferenceLink[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
 }
 
 interface ProjectContracts {
   /** List of the contracts on a given chain */
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
+  // risks: ScalingProjectRisk[]
 }
 
 interface ProjectStatuses {
@@ -550,7 +529,7 @@ interface ProjectDisplay {
   links: ProjectLinks
 }
 
-interface ProjectLinks {
+export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites?: string[]
   /** Links to web apps. */

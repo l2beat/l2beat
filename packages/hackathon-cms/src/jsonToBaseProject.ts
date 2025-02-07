@@ -1,5 +1,7 @@
 import type { BaseProject } from './BaseProject'
 import type { ProjectJSON } from './types'
+import arbProjectData from './arbitrum_discovered.json'
+
 
 export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
   // Initialize an empty BaseProject object
@@ -10,6 +12,7 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
     slug: '',
     shortName: undefined,
     badges: [],
+    contracts: undefined,
     display: {
       description: '',
       links: {
@@ -56,6 +59,7 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
     slug: 'arbitrum',
     shortName: undefined,
     badges: ["EVM", "WasmVM"],
+    contracts: arbProjectData.contracts,
     display: {
       description: "Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.",
       links: {
