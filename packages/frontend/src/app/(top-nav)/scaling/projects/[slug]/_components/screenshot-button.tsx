@@ -13,8 +13,11 @@ import { Chart } from '~/components/chart/core/chart'
 import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { Logo } from '~/components/logo'
 import { NotSyncedBanner } from '~/components/not-synced/not-synced-banner'
+import { PizzaRosetteIcon } from '~/components/rosette/pizza/pizza-rosette-icon'
+import { PizzaRosetteLabels } from '~/components/rosette/pizza/pizza-rosette-labels'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import type { CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
@@ -85,10 +88,10 @@ export default function CaptureComponent({ project }: CaptureComponentProps) {
       <div
         ref={componentRef}
         style={{
-          visibility: 'hidden',
+          visibility: 'visible',
           position: 'fixed',
         }}
-        className="bottom-0 left-0 z-[-1000] flex h-[900px]  w-[1600px] flex-col items-center justify-between gap-2 bg-gradient-to-br from-black from-30% to-[#F546C1] px-12 py-3 text-brand-black shadow-md"
+        className="bottom-0 left-0 z-[1000] flex h-[900px]  w-[1600px] flex-col items-center justify-between gap-2 bg-gradient-to-br from-black from-30% to-[#F546C1] px-12 py-3 text-brand-black shadow-md"
       >
         <Logo animated={false} className="dark" />
         <div className="flex size-full flex-col rounded-md bg-zinc-100 p-12">
@@ -143,7 +146,7 @@ export default function CaptureComponent({ project }: CaptureComponentProps) {
             </div>
           </div>
           {/* Body */}
-          <div className="mt-8 grid h-full grid-cols-2 grid-rows-4 gap-1">
+          <div className="mt-8 grid h-full grid-cols-2 grid-rows-4 gap-4">
             <div className="flex">
               {project.header.badges?.map((b) => (
                 <div className="shrink-0" key={b}>
@@ -157,6 +160,24 @@ export default function CaptureComponent({ project }: CaptureComponentProps) {
               ))}
             </div>
             <UopsSection project={project} />
+            <CostsSection project={project} />
+            <div className="relative row-span-2 flex flex-col rounded-xl bg-pure-white p-6">
+              <span className="text-xl font-bold text-zinc-500">Risks</span>
+              <div className={cn('absolute w-[272px] scale-75 p-12')}>
+                <PizzaRosetteIcon
+                  values={project.header.rosetteValues}
+                  isUnderReview={project.underReviewStatus === 'config'}
+                />
+                <PizzaRosetteLabels
+                  values={project.header.rosetteValues}
+                  containerSize={272}
+                  textRadius={102}
+                />
+              </div>
+            </div>
+            <div className="row-span-1 flex flex-col rounded-xl bg-pure-white p-6">
+              <span className="text-xl font-bold text-zinc-500">Finality</span>
+            </div>
           </div>
         </div>
         <span className="text-3xl font-semibold uppercase text-white">
@@ -205,10 +226,8 @@ function UopsSection({ project }: { project: ScalingProjectEntry }) {
     })
 
   return (
-    <div className="row-span-2 flex flex-col rounded-xl bg-white p-6">
-      <span className="text-2xl font-bold text-zinc-500">
-        Past Day User Ops
-      </span>
+    <div className="row-span-2 flex flex-col rounded-xl bg-pure-white p-6">
+      <span className="text-xl font-bold text-zinc-500">Past Day User Ops</span>
       {project.header.activity ? (
         <ValueWithPercentageChange
           change={project.header.activity.uopsWeeklyChange}
@@ -236,6 +255,106 @@ function UopsSection({ project }: { project: ScalingProjectEntry }) {
           )}
         </section>
       </ChartProvider>
+    </div>
+  )
+}
+
+const COST_PROPERTIES: {
+  id: keyof CostsTableData[string]['usd']
+  title: string
+  color: string
+}[] = [
+  {
+    id: 'blobs',
+    title: 'Blobs',
+    color: '#FFBF87',
+  },
+  {
+    id: 'calldata',
+    title: 'Calldata',
+    color: '#A080FF',
+  },
+  {
+    id: 'overhead',
+    title: 'Overhead',
+    color: '#FF80D2',
+  },
+  {
+    id: 'compute',
+    title: 'Compute',
+    color: '#87DBFF',
+  },
+]
+
+function CostsSection({ project }: { project: ScalingProjectEntry }) {
+  const { data } = api.costs.table.useQuery({
+    range: '30d',
+  })
+
+  if (!data) return null
+
+  const projectCostsData = data[project.slug]
+
+  if (!projectCostsData) return null
+
+  return (
+    <div className="row-span-2 flex flex-col rounded-xl bg-pure-white p-6">
+      <span className="text-xl font-bold text-zinc-500">
+        Last 30 days costs
+      </span>
+      <span className="text-xl font-bold">
+        {formatCurrency(projectCostsData?.usd.total, 'usd')}
+      </span>
+      <div className="mt-2 flex items-center gap-2">
+        {COST_PROPERTIES.map((l) => (
+          <div key={l.title} className="flex items-center gap-1">
+            <div
+              className="size-[10px] rounded-full"
+              style={{ backgroundColor: l.color }}
+            />
+            <span className="text-base font-medium text-zinc-500">
+              {l.title}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="flex w-[640px] gap-1">
+        {COST_PROPERTIES.map((p) => {
+          const data = projectCostsData.usd[p.id]
+          if (!data) return null
+
+          return (
+            <div
+              key={p.id}
+              style={{
+                backgroundColor: p.color,
+                width: `${(data / projectCostsData.usd.total) * 100}%`,
+              }}
+              className="relative h-10 rounded-full"
+            >
+              <span className="absolute -bottom-6 left-0 text-base font-bold text-zinc-500">
+                {Math.round((data / projectCostsData.usd.total) * 100)}%
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      {projectCostsData.uopsCount && (
+        <>
+          <span className="mt-8 text-xl font-bold text-zinc-500">
+            Last 30 days avg cost per l2 uop
+          </span>
+          <span className="text-xl font-bold">
+            {formatCurrency(
+              projectCostsData.usd.total / projectCostsData.uopsCount,
+              'usd',
+              {
+                decimals: 8,
+              },
+            )}
+          </span>
+        </>
+      )}
     </div>
   )
 }
