@@ -1,9 +1,12 @@
+import Handlebars from "handlebars";
+
 import type { BaseProject } from './BaseProject';
 import type { ProjectJSON } from './types';
+
 import arbProjectData from './arbitrum_discovered.json';
 
-export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
-  // Initialize an empty BaseProject object with a milestones property added.
+export function jsonToBaseProject_2(projectJSON: ProjectJSON): BaseProject {
+  // Initialize an empty BaseProject object
   const baseProject: BaseProject = {
     id: '',
     addedAt: Date.now(), // or explicitly set to 0 if needed
@@ -58,6 +61,16 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
           // If a MILESTONES section exists, update milestones accordingly.
           baseProject.milestones = section.milestones;
           break;
+
+        case 'TECHNOLOGY':
+          const contracts: Record<string, unknown> = {}
+          for (const ctr of arbProjectData.contracts) {
+            contracts[ctr.name] = ctr.values
+          }
+          const template = Handlebars.compile(section.technology)
+
+          baseProject.technology = template(contracts);
+          break;
       }
     }
   }
@@ -65,7 +78,15 @@ export function jsonToBaseProject(projectJSON: ProjectJSON): BaseProject {
   return baseProject;
 }
 
-export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
+export function jsonToBaseProject(_: ProjectJSON): BaseProject {
+
+  const contracts: Record<string, unknown> = {}
+  for (const ctr of arbProjectData.contracts) {
+    contracts[ctr.name] = ctr.values
+  }
+  const template = Handlebars.compile("Arbitrum technology is complex. Look, here's one contract - {{ Outbox.$admin }}")
+
+
   return {
     id: 'arbitrum',
     addedAt: 0,
@@ -73,12 +94,27 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
     slug: 'arbitrum',
     shortName: undefined,
     badges: ["EVM", "WasmVM"],
+    technology: template(contracts),
     milestones: [
       {
         title: "Exit window extension to 7 days",
         url: "https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
         date: "2024 Oct 25th",
         type: 'general'
+      },
+      {
+        title: "ArbOS 32 Emergency upgrade",
+        url: "https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0",
+        date: "2024 Sep 25th",
+        type: 'incident',
+        description: "SecurityCouncil emergency upgrades to fix attack vectors related to Stylus resource pricing."
+      },
+      {
+        title: "ArbOS 31 Bianca upgrade",
+        url: "https://www.tally.xyz/gov/arbitrum/proposal/108288822474129076868455956066667369439381709547570289793612729242368710728616",
+        date: "2024 Sep 3rd",
+        type: 'general',
+        description: "Arbitrum upgrades to ArbOS 31 activating Stylus (new languages for smart contracts)."
       }
     ],
     contracts: arbProjectData.contracts,
@@ -115,6 +151,6 @@ export function jsonToBaseProject_2(_: ProjectJSON): BaseProject {
       },
     },
     // In this sample, we assume all sections are present.
-    sections: ["BASIC_INFO", "BADGES", "DISCOVERY", "LINKS", "MILESTONES"]
+    sections: ["BASIC_INFO", "BADGES", "DISCOVERY", "LINKS", "MILESTONES", "TECHNOLOGY"]
   };
 }

@@ -163,6 +163,16 @@ export function Preview({ project }: PreviewProps) {
         </div>
       )}
 
+      {/* Technology Section */}
+      {project.sections && project.sections.includes("TECHNOLOGY") && (
+        <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-bold text-purple-400 mb-2">Technology</h2>
+          <p className="mb-1">
+            {project.technology}
+          </p>
+        </div>
+      )}
+
       {/* Discovery / Contracts Section */}
       {project.sections && project.sections.includes("DISCOVERY") && project.contracts && (
         <div id="contracts-section" className="bg-gray-800 p-4 rounded-lg shadow-md">
