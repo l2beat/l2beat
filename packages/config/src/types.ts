@@ -988,6 +988,8 @@ export interface BaseProject {
   daLayer?: DaLayer
   daBridges?: DaBridge[]
   milestones?: Milestone[]
+  contracts?: ProjectContracts
+  permissions?: Record<string, ProjectPermission>
   // tags
   isBridge?: true
   isScaling?: true
