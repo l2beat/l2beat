@@ -25,7 +25,7 @@ export interface MilestonesSection {
 
 export interface TechnologySection {
   type: 'TECHNOLOGY';
-  technology: string;
+  content: string;
 }
 
 export type Section =
