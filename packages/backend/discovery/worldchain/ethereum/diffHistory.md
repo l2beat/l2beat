@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x3399b030d045c64d4a8c7dbc625ae4c6d23a3115
+
+# Diff at Sat, 08 Feb 2025 15:58:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21786511
+- current block number: 21802840
+
+## Description
+
+Single SC member rotated.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.12:
+-        "0xE895076cD050F1f042d1040E47b5929bE989E514"
++        "0x92827223f6b397CE9F208eE352bacA710765cACb"
+      values.$members.1:
+-        "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8"
++        "0x652BC529E171847E2fFddCeA13567643C84ccB5f"
+    }
+```
+
 Generated with discovered.json: 0x0e944c5618e9444beaf1f4ec1224c9c00b981915
 
 # Diff at Thu, 06 Feb 2025 09:17:48 GMT:
