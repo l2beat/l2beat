@@ -2,6 +2,10 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../layer2s/templates/generateDiscoveryDrivenSections'
 import { RISK_VIEW } from './common'
 
 const PROJECT_ID = ProjectId('hyperlane')
@@ -242,19 +246,9 @@ export const hyperlane: Bridge = {
       ],
     },
   },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails(
-          'Mailbox',
-          'The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.',
-        ),
-        discovery.getContractDetails(
-          'StaticAggregationIsm',
-          'This specific Interchain Security Model (ISM) contract defines the security model for the nexus bridge, unless overridden by a custom ISM.',
-        ),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
 }

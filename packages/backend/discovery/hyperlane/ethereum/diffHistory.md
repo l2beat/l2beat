@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x808e57a8bf177bd66c898882264ba07a76c396d4
+Generated with discovered.json: 0xda2dc6c43d13f8f5f901c10a329483111de2d7de
 
-# Diff at Fri, 07 Feb 2025 18:06:30 GMT:
+# Diff at Sat, 08 Feb 2025 08:10:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21792734
+- current block number: 21800508
 
 ## Description
 
@@ -20,7 +20,7 @@ Initial discovery: Token bridge with lane-specific security and default security
 ```diff
 +   Status: CREATED
     contract BoringVault (0x19e099B7aEd41FA52718D780dDA74678113C0b32)
-    +++ description: None
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse (escrows the underlying tokens).
 ```
 
 ```diff
@@ -38,13 +38,13 @@ Initial discovery: Token bridge with lane-specific security and default security
 ```diff
 +   Status: CREATED
     contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A)
-    +++ description: None
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
 ```
 
 ```diff
 +   Status: CREATED
     contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543)
-    +++ description: None
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
 ```
 
 ```diff
@@ -62,7 +62,7 @@ Initial discovery: Token bridge with lane-specific security and default security
 ```diff
 +   Status: CREATED
     contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
-    +++ description: None
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
 ```
 
 ```diff
@@ -80,11 +80,11 @@ Initial discovery: Token bridge with lane-specific security and default security
 ```diff
 +   Status: CREATED
     contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7)
-    +++ description: None
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
 ```
 
 ```diff
 +   Status: CREATED
     contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
-    +++ description: None
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
 ```

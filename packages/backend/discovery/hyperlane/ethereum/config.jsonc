@@ -17,22 +17,31 @@
     "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "HypERC20Collateral" // usdc lockbox
   },
   "overrides": {
+    "HypERC20Collateral": {
+      "description": "Escrow for USDC that is bridged from Ethereum to Eclipse."
+    },
     "0x647C621CEb36853Ef6A907E397Adf18568E70543": {
+      "description": "Escrow for USDT that is bridged from Ethereum to Eclipse.",
       "extends": "hyperlane/HypERC20Collateral"
     },
     "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A": {
+      "description": "Escrow for WBTC that is bridged from Ethereum to Eclipse.",
       "extends": "hyperlane/HypERC20Collateral"
     },
     "0x19e099B7aEd41FA52718D780dDA74678113C0b32": {
+      "description": "Escrow for tETH that is bridged from Ethereum to Eclipse (escrows the underlying tokens).",
       "extends": "hyperlane/HypERC20Collateral"
     },
     "0xef899e92DA472E014bE795Ecce948308958E25A2": {
+      "description": "Escrow for weETHs that is bridged from Ethereum to Eclipse.",
       "extends": "hyperlane/HypERC20Collateral"
     },
     "Mailbox": {
+      "description": "The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.",
       "ignoreRelatives": ["defaultHook", "requiredHook"]
     },
     "StaticAggregationIsm": {
+      "description": "This specific Interchain Security Model (ISM) contract defines the security model for the nexus bridge, unless overridden by a custom ISM.",
       "fields": {
         "modulesAndThreshold": {
           //broken
