@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xafa07cd4db151f6fb9b0f4480e4bacfb3c117925
+Generated with discovered.json: 0x7a22454b0efeeff33b86aafa1dc9366d5228c37b
 
-# Diff at Sat, 08 Feb 2025 15:57:20 GMT:
+# Diff at Sat, 08 Feb 2025 16:14:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21786504
-- current block number: 21802833
+- current block number: 21802917
 
 ## Description
 
-Single SC member rotated.
+Two SC members rotated.
 
 ## Watched changes
 
