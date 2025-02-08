@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0c7f5ba04b1527cefb5e1be849aa2b7cd9ccf79d
+
+# Diff at Sat, 08 Feb 2025 16:13:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21388115
+- current block number: 21802905
+
+## Description
+
+Fraxtal MS single signer change.
+
+## Watched changes
+
+```diff
+    contract Frax Finance Multisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      values.$members.4:
+-        "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
++        "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+    }
+```
+
 Generated with discovered.json: 0xf75804d21302b2897149d7174b91655278712134
 
 # Diff at Thu, 12 Dec 2024 18:07:50 GMT:

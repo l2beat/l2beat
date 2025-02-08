@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6a0a5416c31f1dc9e0b988cbbee2ba12a736a76c
+
+# Diff at Sat, 08 Feb 2025 16:13:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21543769
+- current block number: 21802913
+
+## Description
+
+Fraxtal MS single signer change.
+
+## Watched changes
+
+```diff
+    contract FraxtalTimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      values.$members.4:
+-        "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
++        "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+    }
+```
+
 Generated with discovered.json: 0x361c16982e09de024bea226f48bddbb52b5617b0
 
 # Diff at Tue, 04 Feb 2025 12:31:26 GMT:
