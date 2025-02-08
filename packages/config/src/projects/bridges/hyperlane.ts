@@ -65,12 +65,13 @@ export const hyperlane: Bridge = {
         address: EthereumAddress('0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A'),
         tokens: ['WBTC'],
       }),
-      discovery.getEscrowDetails({
-        description:
-          'Escrow for tETH that is bridged from Ethereum to Eclipse (escrows the underlying tokens).',
-        address: EthereumAddress('0x19e099B7aEd41FA52718D780dDA74678113C0b32'),
-        tokens: ['rswETH', 'weETH', 'pufETH', 'ezETH', 'WETH'],
-      }),
+      // not on CG
+      // discovery.getEscrowDetails({
+      //   description:
+      //     'Escrow for tETH that is bridged from Ethereum to Eclipse.',
+      //   address: EthereumAddress('0xc2495f3183F043627CAECD56dAaa726e3B2D9c09'),
+      //   tokens: ['tETH'],
+      // }),
       discovery.getEscrowDetails({
         description:
           'Escrow for weETHs that is bridged from Ethereum to Eclipse.',
@@ -194,17 +195,18 @@ export const hyperlane: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      Hyperlane Nexus is a minimal Token Bridge, simply representing a certain configuration of the modular Hyperlane protocol. 
-      It consists of three main components: A Mailbox contract on each chain, Interchain Security Modules (ISMs), and Relayers. 
-      The Mailbox as the central Endpoint contract on each chain, befitting to its name, is used for dispatching and processing messages. The ISM contract defines the security model (validation logic) for a given message. 
-      Unless overridden with a custom ISM by an application, the default multisig ISM is used. The default ISM validates messages by verifying that a quorum of signatures from a set of configured validators is reached (similar to a Multisig).
+      Hyperlane Nexus is a minimal Token Bridge, simply representing a certain configuration of token routers (escrows) built on top of the modular Hyperlane messaging protocol. 
+      The Hyperlane messaging protocol consists of three main components: A Mailbox contract on each chain, Interchain Security Modules (ISMs), and Relayers. 
+      The Mailbox as the central Endpoint contract on each chain is used for dispatching and processing messages. ISM contracts define the security model (validation logic) for a given message. 
+      Unless overridden with a custom ISM config by an application or token router, the default 'multisig' ISM is used. It validates messages by verifying that a quorum of signatures from a set of preconfigured validators is reached. 
+      Post-dispatch hooks on the origin chain allow for added customizability and can be verified with a synchronized ISM logic at the destination. Hyperlane security and hook configurations have chain-specifc defaults but can be customized for each token route by the router owner.
       
       
-      To initiate a token transfer, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.
-      The function call eventually dispatches a message to the origin chain Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
+      To initiate a token transfer via the Nexus bridge, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.
+      The function call eventually dispatches a message through origin chain Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
       ISM validators sign off on messages by producing attestations (called checkpoints) from the Mailbox, which commit to the Merkle root of all dispatched message IDs. 
       On the destination chain, Relayers will then call the process() function on the receiving Mailbox, which verifies the relayed message with the ISM module. 
-      The Mailbox processing function will conclude the token transfer by calling the handle() function the destination token router contract, which will contain the logic for asset delivery to the user. 
+      The Mailbox's process() function will conclude the token transfer by calling handle() at the destination token router contract, which will contain the logic for asset delivery to the user. 
       Depending on the application, this can be releasing tokens from an escrow, or minting new tokens previously burnt on the origin chain.`,
       references: [
         {

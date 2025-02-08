@@ -1,27 +1,15 @@
-Generated with discovered.json: 0xda2dc6c43d13f8f5f901c10a329483111de2d7de
+Generated with discovered.json: 0x10a958263aab176be03b0ba8ad15a0ae39282594
 
-# Diff at Sat, 08 Feb 2025 08:10:16 GMT:
+# Diff at Sat, 08 Feb 2025 09:03:22 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 21800508
 
 ## Description
 
-Initial discovery: Token bridge with lane-specific security and default security configs.
+Initial discovery: Token bridge with lane-specific confiuigurable security and chain-specific default security configs.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x0000000000417626Ef34D62C4DC189b021603f2F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BoringVault (0x19e099B7aEd41FA52718D780dDA74678113C0b32)
-    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse (escrows the underlying tokens).
-```
 
 ```diff
 +   Status: CREATED
@@ -55,7 +43,13 @@ Initial discovery: Token bridge with lane-specific security and default security
 
 ```diff
 +   Status: CREATED
-    contract RolesAuthority (0xa9220c99Bf3620Ac7e6F0Ff1cbde410635Fb87Fa)
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
     +++ description: None
 ```
 
@@ -67,6 +61,12 @@ Initial discovery: Token bridge with lane-specific security and default security
 
 ```diff
 +   Status: CREATED
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09)
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
     contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96)
     +++ description: None
 ```
@@ -74,7 +74,13 @@ Initial discovery: Token bridge with lane-specific security and default security
 ```diff
 +   Status: CREATED
     contract StaticAggregationIsm (0xd27fe5631533a193776A61B600809a73256eF9a7)
-    +++ description: None
+    +++ description: This specific Interchain Security Model (ISM) contract defines the security model for the nexus bridge, unless overridden by a custom ISM.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c)
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
 ```
 
 ```diff
