@@ -1,3 +1,70 @@
+Generated with discovered.json: 0xc3539f6b4965f7e64096bdfbc9264a0f28a1fbaa
+
+# Diff at Sat, 08 Feb 2025 16:16:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21787152
+- current block number: 21802929
+
+## Description
+
+[First accounting proof delivered](https://etherscan.io/tx/0x154a56ea5953c367c7b5045496339b0b5d1f62fbd1f15cc37157de31c5313f17) for unknown chain with id 14, chainID 9369.
+
+New chain deployed, type 7 (validium), not active yet.
+
+🚀:active,✔️:reviewed,🚧:testnet,😵:died
+rollupIDs:
+1: pol zkEVM 1101 (type6) 🚀 ✔️
+2: astar 3776 (type4) 🚀 ✔️
+3: OkX X Layer 196 (type8) 🚀 ✔️
+4: OEV network chainid 4913 (type4) X (pivoted to orbit)😵
+5: gptprotocol.org 1511670449 (type4) 🚀 ✔️😵
+6: witnesschain 1702448187 (type4) 🚀 ✔️😵
+7: lumia.org 994873017 (type4) 🚀✔️
+8: pay network (wirex) 31415 (type4) 🚀 ✔️
+9: silicon-zk 511252203 (type4) 🚀🚧
+10: silicon-zk 2355 (type4) 🚀✔️
+11: haust.network 999 (type4) 🚀🚧
+12: haust.network 938 (type4) 🚀
+13: ternoa.network 752025 (type7) 🚀️✔️
+14: unknown cdk sov chain (z-chain, z token) 9369 (type9) 🚀️
+15: pentagon.games/pen-chain 623 (type7)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.14:
++        [false]
++++ description: Lists any rollupID that sends a pessimistic proof.
+      values.pessimisticProofSenders.0:
++        14
+      values.rollupCount:
+-        14
++        15
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, forkID, rollupVerifierType, programVKey]
++++ severity: MEDIUM
+      values.rollupsDataV2.14:
++        ["0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",623,"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",12,7,0,"0x0000000000000000000000000000000000000000000000000000000000000000"]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21787152 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      fieldMeta.pessimisticProofSenders.severity:
+-        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0xb2db688790975aa488dcb9282c4f2fdd43f4d85b
 
 # Diff at Thu, 06 Feb 2025 11:35:17 GMT:
