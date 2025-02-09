@@ -10,6 +10,15 @@ import { RISK_VIEW } from './common'
 
 const PROJECT_ID = ProjectId('hyperlane')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
+const multisigIsmThresholdString =
+  discovery.getContractValue<string>(
+    'StaticMessageIdMultisigIsm',
+    'threshold',
+  ) +
+  ' / ' +
+  discovery
+    .getContractValue<string[]>('StaticMessageIdMultisigIsm', 'validators')
+    .length.toString()
 
 export const hyperlane: Bridge = {
   type: 'bridge',
@@ -195,19 +204,19 @@ export const hyperlane: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      Hyperlane Nexus is a minimal Token Bridge, simply representing a certain configuration of token routers (escrows) built on top of the modular Hyperlane messaging protocol. 
+      Hyperlane Nexus is a minimal Token Bridge, simply representing a certain configuration of token routers (escrows) and ISMs (verifiers) built on top of the modular Hyperlane messaging protocol. 
       The Hyperlane messaging protocol consists of three main components: A Mailbox contract on each chain, Interchain Security Modules (ISMs), and Relayers. 
-      The Mailbox as the central Endpoint contract on each chain is used for dispatching and processing messages. ISM contracts define the security model (validation logic) for a given message. 
-      Unless overridden with a custom ISM config by an application or token router, the default 'multisig' ISM is used. It validates messages by verifying that a quorum of signatures from a set of preconfigured validators is reached. 
+      The Mailbox as the central Endpoint contract on each chain is used for dispatching (out) and processing (in) messages. ISM contracts define the security model (validation logic) for a given message. 
+      Unless overridden with a custom ISM config by an application or token router, the default 'multisig' ISM, configured by Hyperlane, is used. It validates messages by verifying that a threshold of ${multisigIsmThresholdString} signatures from a set of validators is reached.
       Post-dispatch hooks on the origin chain allow for added customizability and can be verified with a synchronized ISM logic at the destination. Hyperlane security and hook configurations have chain-specifc defaults but can be customized for each token route by the router owner.
       
       
       To initiate a token transfer via the Nexus bridge, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.
-      The function call eventually dispatches a message through origin chain Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
+      The function call eventually dispatches a message through origin chains Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
       ISM validators sign off on messages by producing attestations (called checkpoints) from the Mailbox, which commit to the Merkle root of all dispatched message IDs. 
-      On the destination chain, Relayers will then call the process() function on the receiving Mailbox, which verifies the relayed message with the ISM module. 
+      On the destination chain, Relayers will then call the process() function on the receiving Mailbox, which verifies the relayed message with the ISM module, which is either the default Multisig ISM ('StaticAggregationIsm') or an ISM configured by the destination contract owner.
       The Mailbox's process() function will conclude the token transfer by calling handle() at the destination token router contract, which will contain the logic for asset delivery to the user. 
-      Depending on the application, this can be releasing tokens from an escrow, or minting new tokens previously burnt on the origin chain.`,
+      Depending on the application, this can be releasing tokens from an escrow, minting new tokens or other transactions.`,
       references: [
         {
           title: 'Hyperlane documentation',
@@ -219,7 +228,7 @@ export const hyperlane: Bridge = {
     validation: {
       name: 'Modular ISMs',
       description:
-        'Each crosschain transaction is emitted on the origin chain and must be picked up and verified by preconfigured verifiers (Hyperlane calls these ISMs). If they agree on a message, it is considered verified and can be executed at the destination.',
+        'Each crosschain transaction is emitted on the origin chain and must be picked up by relayers and verified by preconfigured verifiers (Hyperlane calls these ISMs). If they agree on a message, it is considered verified and can be executed at the destination.',
       references: [
         {
           title:
@@ -228,8 +237,8 @@ export const hyperlane: Bridge = {
         },
         {
           title:
-            'Etherscan: Function verify() in StaticAggregationIsm (token router)',
-          url: 'https://etherscan.io/address//0xd27fe5631533a193776A61B600809a73256eF9a7#code#F2#L48',
+            'Etherscan: Function verify() in StaticMessageIdMultisigIsm (default Multisig ISM)',
+          url: 'https://etherscan.io/address//0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e#code#F2#L71',
         },
       ],
       risks: [

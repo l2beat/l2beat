@@ -897,6 +897,7 @@ export class ProjectDiscovery {
       validateZkStack: 'A Validator',
       relay: 'A Relayer',
       validateBridge: 'A Validator',
+      validateBridge2: 'A Validator',
       aggregatePolygon: 'A trusted Aggregator',
     }
 
@@ -972,6 +973,7 @@ export class ProjectDiscovery {
       validateZkStack: 'Can act as a Validator',
       relay: 'Can act as a Relayer',
       validateBridge: 'Can act as a Validator',
+      validateBridge2: 'Can act as a Validator',
       aggregatePolygon: 'Can act as a trusted Aggregator',
     }
 
@@ -1344,6 +1346,11 @@ const roleDescriptions: {
     name: 'Validator',
     description:
       'Actors permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
+  },
+  validateBridge2: {
+    name: 'Validator',
+    description:
+      'Actors permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks.',
   },
   relay: {
     name: 'Relayer',

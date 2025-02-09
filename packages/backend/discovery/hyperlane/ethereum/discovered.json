@@ -1,9 +1,60 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 21800508,
-  "configHash": "0xbf25f562df684d92af239d0bb8fa320086676ef1aa2672320007c8a12b368b1b",
+  "blockNumber": 21808054,
+  "configHash": "0xff110f0adc4294a01856dfa004a2cf1d3725fc3d42426774793d250995d83277",
   "contracts": [
+    {
+      "name": "DomainRoutingIsm",
+      "address": "0x011a0D839e043D74c1073337DBf449ac47b82405",
+      "sourceHashes": [
+        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
+      ],
+      "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
+          "description": "manage the domain -> ISM contract mapping.",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1738800167,
+      "values": {
+        "$immutable": true,
+        "domains": [
+          2741, 888888888, 1000041455, 33139, 466, 42161, 42170, 11820, 10242,
+          592, 3776, 1313161554, 253368190, 43114, 8333, 8453, 80094, 200901,
+          81457, 60808, 288, 56, 223, 42220, 383353, 1000088888, 1030, 668668,
+          1116, 21000000, 7560, 666666666, 2000, 5545, 1408864445, 648, 25327,
+          9001, 250, 14, 1000000747, 478, 252, 122, 1300, 100, 1625, 260,
+          1666600000, 43111, 1000013371, 2525, 57073, 6909546, 8217, 255, 59144,
+          1135, 42, 994873017, 1000073017, 169, 5000, 698, 4200, 1000001750,
+          1088, 185, 34443, 360, 1284, 2818, 1689, 1853125230, 970, 10, 291,
+          875, 137, 1101, 1000008008, 227, 70700, 1000012617, 111188, 690, 753,
+          1000000030, 1996, 534352, 1329, 109, 2192, 1399811149, 1868, 146,
+          507150715, 50075007, 745, 5330, 1000055244, 1923, 167000, 5845, 40,
+          21000, 61166, 4547, 130, 88811, 1480, 88, 480, 660279, 196, 37,
+          543210, 7000, 48900, 810180, 324, 7777777
+        ],
+        "module": "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c",
+        "moduleType": 1,
+        "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "module": { "severity": "HIGH" }
+      },
+      "derivedName": "DomainRoutingIsm"
+    },
+    {
+      "name": "UnknownIsm",
+      "address": "0x26a3D8C5b70abb99828997b94D53d3c193A0F24b",
+      "unverified": true,
+      "sinceTimestamp": 1738800215,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
     {
       "name": "ProxyAdmin",
       "address": "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
@@ -32,7 +83,13 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x011a0D839e043D74c1073337DBf449ac47b82405",
+          "description": "manage the domain -> ISM contract mapping."
+        },
         {
           "permission": "interact",
           "from": "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
@@ -261,6 +318,39 @@
       }
     },
     {
+      "name": "StaticAggregationIsm_eclipse",
+      "address": "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c",
+      "template": "hyperlane/StaticAggregationIsm",
+      "sourceHashes": [
+        "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
+      ],
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the 0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896 ISM contracts successfully verify a message.",
+      "sinceTimestamp": 1726246067,
+      "values": {
+        "$immutable": true,
+        "modules": [
+          "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
+        ],
+        "modulesAndThreshold": [
+          [
+            "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+            "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
+          ],
+          1
+        ],
+        "moduleType": 2,
+        "threshold": 1
+      },
+      "fieldMeta": {
+        "modulesAndThreshold": {
+          "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
+        },
+        "modules": { "severity": "HIGH" }
+      },
+      "derivedName": "StaticAggregationIsm"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
       "template": "GnosisSafe",
@@ -313,6 +403,42 @@
       }
     },
     {
+      "name": "StaticMerkleRootMultisigIsm",
+      "address": "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896",
+      "sourceHashes": [
+        "0x4da033269a6a7f9325fe80af4d4890a8181a0c28e33a596acae5bf6f4e736681"
+      ],
+      "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.",
+      "sinceTimestamp": 1726246031,
+      "values": {
+        "$immutable": true,
+        "moduleType": 4,
+        "threshold": 3,
+        "validators": [
+          "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+          "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+          "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+          "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
+        ],
+        "validatorsAndThreshold": [
+          [
+            "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+            "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+            "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+            "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
+          ],
+          3
+        ]
+      },
+      "fieldMeta": {
+        "validators": { "severity": "HIGH" },
+        "validatorsAndThreshold": {
+          "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
+        }
+      },
+      "derivedName": "StaticMerkleRootMultisigIsm"
+    },
+    {
       "name": "Mailbox",
       "address": "0xc005dc82818d67AF737725bD4bf75435d065D239",
       "sourceHashes": [
@@ -326,6 +452,12 @@
           "permission": "interact",
           "to": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
           "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xd27fe5631533a193776A61B600809a73256eF9a7",
+          "description": "verify messages for destination contracts that do not specify a custom ISM.",
           "via": []
         },
         {
@@ -349,12 +481,17 @@
         "defaultHook": "0x571f1435613381208477ac5d6974310d88AC7cB7",
         "defaultIsm": "0xd27fe5631533a193776A61B600809a73256eF9a7",
         "deployedBlock": 18422581,
-        "latestDispatchedId": "0x062637965f3e7e5bacaaf1066a922c84efdd63cd9e3761701a928ad48d5b4a81",
+        "latestDispatchedId": "0xc6ea8083f85126ca60b53a8aee05afa1a1619c46853e0e62a42e2f7fac8d691a",
         "localDomain": 1,
-        "nonce": 53220,
+        "nonce": 53550,
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "requiredHook": "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8",
         "VERSION": 3
+      },
+      "fieldMeta": {
+        "defaultIsm": {
+          "description": "The default ISM contract that is used for all destination contracts that do not override it."
+        }
       },
       "derivedName": "Mailbox"
     },
@@ -452,15 +589,27 @@
       }
     },
     {
-      "name": "StaticAggregationIsm",
+      "name": "StaticAggregationIsm_default",
       "address": "0xd27fe5631533a193776A61B600809a73256eF9a7",
+      "template": "hyperlane/StaticAggregationIsm",
       "sourceHashes": [
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
-      "description": "This specific Interchain Security Model (ISM) contract defines the security model for the nexus bridge, unless overridden by a custom ISM.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the 0x011a0D839e043D74c1073337DBf449ac47b82405,0x26a3D8C5b70abb99828997b94D53d3c193A0F24b ISM contracts successfully verify a message.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "description": "verify messages for destination contracts that do not specify a custom ISM."
+        }
+      ],
       "sinceTimestamp": 1738800239,
       "values": {
         "$immutable": true,
+        "modules": [
+          "0x011a0D839e043D74c1073337DBf449ac47b82405",
+          "0x26a3D8C5b70abb99828997b94D53d3c193A0F24b"
+        ],
         "modulesAndThreshold": [
           [
             "0x011a0D839e043D74c1073337DBf449ac47b82405",
@@ -468,7 +617,8 @@
           ],
           2
         ],
-        "moduleType": 2
+        "moduleType": 2,
+        "threshold": 2
       },
       "fieldMeta": {
         "modulesAndThreshold": {
@@ -611,6 +761,64 @@
         "PACKAGE_VERSION": "5.6.1",
         "wrappedToken": "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88"
       }
+    },
+    {
+      "name": "StaticMessageIdMultisigIsm",
+      "address": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+      "sourceHashes": [
+        "0xcbe0772264e40c53d9f37e0b741f047eedea2a861fac2bf97d68c334b088ccf1"
+      ],
+      "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.",
+      "issuedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "to": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+          "via": []
+        },
+        {
+          "permission": "validateBridge2",
+          "to": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1726245995,
+      "values": {
+        "$immutable": true,
+        "moduleType": 5,
+        "threshold": 3,
+        "validators": [
+          "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+          "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+          "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+          "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
+        ],
+        "validatorsAndThreshold": [
+          [
+            "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+            "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+            "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+            "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
+          ],
+          3
+        ]
+      },
+      "fieldMeta": {
+        "validators": { "severity": "HIGH" },
+        "validatorsAndThreshold": {
+          "description": "Validators and threshold of a random USDC message from Eclipse to Ethereum."
+        }
+      },
+      "derivedName": "StaticMessageIdMultisigIsm"
     }
   ],
   "eoas": [
@@ -618,12 +826,32 @@
     { "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961" },
     { "address": "0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA" },
     { "address": "0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89" },
+    {
+      "address": "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
     { "address": "0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599" },
     { "address": "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad" },
     { "address": "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f" },
     { "address": "0x478be6076f31E9666123B9721D0B6631baD944AF" },
     { "address": "0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5" },
     { "address": "0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb" },
+    {
+      "address": "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
     { "address": "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E" },
     { "address": "0x5dd9a0814022A61777938263308EBB336174f13D" },
     { "address": "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA" },
@@ -638,9 +866,45 @@
     { "address": "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B" },
     { "address": "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39" },
     { "address": "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424" },
+    {
+      "address": "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
+    {
+      "address": "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "validateBridge2",
+          "from": "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+        }
+      ]
+    },
     { "address": "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8" }
   ],
   "abis": {
+    "0x011a0D839e043D74c1073337DBf449ac47b82405": [
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function domains() view returns (uint256[])",
+      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
+      "function initialize(address _owner)",
+      "function module(uint32 origin) view returns (address)",
+      "function moduleType() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function remove(uint32 _domain)",
+      "function renounceOwnership()",
+      "function route(bytes _message) view returns (address)",
+      "function set(uint32 _domain, address _module)",
+      "function transferOwnership(address newOwner)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
     "0x0371AE4960FC4Dd8ef08464080331573D386D6b4": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
@@ -903,8 +1167,18 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": [
+      "function moduleType() view returns (uint8)",
+      "function modulesAndThreshold(bytes) view returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
     "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e": [
       "constructor(address _singleton)"
+    ],
+    "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": [
+      "function moduleType() view returns (uint8)",
+      "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) view returns (bool)"
     ],
     "0xc005dc82818d67AF737725bD4bf75435d065D239": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1029,11 +1303,17 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": [
+      "function moduleType() view returns (uint8)",
+      "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) view returns (bool)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "hyperlane/HypERC20Collateral": "0x332944d78565b908da038de8d8c95d061d9ab73a01adcda6322fca11dcc68abe"
+    "hyperlane/HypERC20Collateral": "0x332944d78565b908da038de8d8c95d061d9ab73a01adcda6322fca11dcc68abe",
+    "hyperlane/StaticAggregationIsm": "0x9c35cfb84439778cbdee15c7611d8be531c050c6403740f69e8492b58c6519c3"
   }
 }

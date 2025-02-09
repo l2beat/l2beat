@@ -1,15 +1,27 @@
-Generated with discovered.json: 0x10a958263aab176be03b0ba8ad15a0ae39282594
+Generated with discovered.json: 0x0f908afa38dbd03c5b54914e65937134ed426eb5
 
-# Diff at Sat, 08 Feb 2025 09:03:22 GMT:
+# Diff at Sun, 09 Feb 2025 14:28:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 21800508
+- current block number: 21808054
 
 ## Description
 
 Initial discovery: Token bridge with lane-specific confiuigurable security and chain-specific default security configs.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0x011a0D839e043D74c1073337DBf449ac47b82405)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0x26a3D8C5b70abb99828997b94D53d3c193A0F24b)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED
@@ -49,8 +61,20 @@ Initial discovery: Token bridge with lane-specific confiuigurable security and c
 
 ```diff
 +   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the 0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896 ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
     contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
 ```
 
 ```diff
@@ -73,8 +97,8 @@ Initial discovery: Token bridge with lane-specific confiuigurable security and c
 
 ```diff
 +   Status: CREATED
-    contract StaticAggregationIsm (0xd27fe5631533a193776A61B600809a73256eF9a7)
-    +++ description: This specific Interchain Security Model (ISM) contract defines the security model for the nexus bridge, unless overridden by a custom ISM.
+    contract StaticAggregationIsm_default (0xd27fe5631533a193776A61B600809a73256eF9a7)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the 0x011a0D839e043D74c1073337DBf449ac47b82405,0x26a3D8C5b70abb99828997b94D53d3c193A0F24b ISM contracts successfully verify a message.
 ```
 
 ```diff
@@ -93,4 +117,10 @@ Initial discovery: Token bridge with lane-specific confiuigurable security and c
 +   Status: CREATED
     contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
     +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
 ```
