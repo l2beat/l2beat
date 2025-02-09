@@ -27,6 +27,7 @@
     "Mailbox": {
       "description": "The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.",
       "ignoreRelatives": ["defaultHook", "requiredHook"],
+      "ignoreMethods": ["latestDispatchedId", "nonce"],
       "fields": {
         "owner": {
           "target": {

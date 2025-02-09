@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21808054,
-  "configHash": "0x95ddaf67bc96f1ceb38d42f7da1684546cb71dce781a0458ddeb81802777b3bf",
+  "configHash": "0x6e2cb9b84b54f79c51c23fd3747fd1375b97746bdcefee32f91abca51dc1cd87",
   "contracts": [
     {
       "name": "DomainRoutingIsm",
@@ -481,9 +481,7 @@
         "defaultHook": "0x571f1435613381208477ac5d6974310d88AC7cB7",
         "defaultIsm": "0xd27fe5631533a193776A61B600809a73256eF9a7",
         "deployedBlock": 18422581,
-        "latestDispatchedId": "0xc6ea8083f85126ca60b53a8aee05afa1a1619c46853e0e62a42e2f7fac8d691a",
         "localDomain": 1,
-        "nonce": 53550,
         "owner": "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6",
         "requiredHook": "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8",
         "VERSION": 3
