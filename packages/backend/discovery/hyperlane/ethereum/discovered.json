@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21808054,
-  "configHash": "0xd64cd20781982bb47a92898cf67dac46cf73dcb8d3e02d3b660cd8dfc1ea4b17",
+  "configHash": "0x95ddaf67bc96f1ceb38d42f7da1684546cb71dce781a0458ddeb81802777b3bf",
   "contracts": [
     {
       "name": "DomainRoutingIsm",
@@ -324,7 +324,7 @@
       "sourceHashes": [
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
-      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.",
       "sinceTimestamp": 1726246067,
       "values": {
         "$immutable": true,

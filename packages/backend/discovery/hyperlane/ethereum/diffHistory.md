@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf1c8feebb7337e31eb4189ab275f87c1fd440283
+Generated with discovered.json: 0x7a97fd496836055bf065e2fa6e7b761d714bf8a5
 
-# Diff at Sun, 09 Feb 2025 14:39:18 GMT:
+# Diff at Sun, 09 Feb 2025 14:55:02 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 21808054
@@ -62,7 +62,7 @@ Initial discovery: Token bridge with lane-specific confiuigurable security and c
 ```diff
 +   Status: CREATED
     contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
-    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message.
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
 ```
 
 ```diff
