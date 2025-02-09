@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xca5e11fffcf8d1923932e89909528a7ee8a0916b
+
+# Diff at Sun, 09 Feb 2025 12:24:55 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21773864
+- current block number: 21808937
+
+## Description
+
+Added Eigen DA detection under OpStackDAHandler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21773864 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0xa2afb9fecefb74fd51385f58f4806e58e5b9c210
 
 # Diff at Tue, 04 Feb 2025 14:56:50 GMT:

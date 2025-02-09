@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x8b01d635f0a09ff2c9a7f8214238f1e6576608cd
+
+# Diff at Sun, 09 Feb 2025 12:21:30 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21637075
+- current block number: 21808921
+
+## Description
+
+Added Eigen DA detection under OpStackDAHandler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637075 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        true
+    }
+```
+
 Generated with discovered.json: 0x5e9ed6ddd01fd4a5e570bc5937d3034289466686
 
 # Diff at Tue, 04 Feb 2025 12:30:44 GMT:
@@ -314,6 +340,7 @@ Generated with discovered.json: 0xcd56bb0152b78215fa65e3b2cc8d5adbe0bd73bc
 ## Description
 
 DA commitment change. As per the OP stack alt-DA spec, the current commitment is for EigenDA:
+
 ```
           EigenDA (da service id byte)
           l

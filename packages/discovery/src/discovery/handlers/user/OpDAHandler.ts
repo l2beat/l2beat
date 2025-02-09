@@ -35,6 +35,11 @@ const OP_STACK_CELESTIA_DA_EXAMPLE_INPUT =
 const BLOB_TX_TYPE = 3
 
 /**
+ * TODO: Add a reference to it
+ */
+const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
+
+/**
  * This is a OP Stack specific handler that is used to check if
  * the OP Stack project is still posting the transaction data on Ethereum.
  */
@@ -93,11 +98,16 @@ export class OpStackDAHandler implements Handler {
     const isSequencerSendingBlobTx =
       hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
+    const isUsingEigenDA =
+      hasTxs &&
+      lastTxs.some((tx) => tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX))
+
     return {
       field: this.field,
       value: {
         isSomeTxsLengthEqualToCelestiaDAExample,
         isSequencerSendingBlobTx,
+        isUsingEigenDA,
       },
     }
   }
