@@ -52,7 +52,7 @@
       }
     },
     "StaticAggregationIsm_default": {
-      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the {{modules}} ISM contracts successfully verify a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the [{{modules}}] ISM contracts successfully verify a message.",
       "fields": {
         "modules": {
           "handler": {
@@ -99,7 +99,7 @@
       }
     },
     "StaticAggregationIsm_eclipse": {
-      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the {{modules}} ISM contracts successfully verify a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the [{{modules}}] ISM contracts successfully verify a message.",
       "fields": {
         "modules": {
           "severity": "HIGH",
