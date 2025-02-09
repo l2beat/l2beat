@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1fb1d95356dc18c74993eda48b0aa4e2e8b804b3
+Generated with discovered.json: 0xc6dc71b07d953b4767222f9cd1134f3ec7f23cae
 
-# Diff at Sat, 08 Feb 2025 16:26:29 GMT:
+# Diff at Sun, 09 Feb 2025 08:48:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 302816612
-- current block number: 303975893
+- current block number: 304208966
 
 ## Description
 
@@ -17,7 +17,7 @@ Increase stake requirement (for orbit validators).
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
       values.currentRequiredStake:
 -        "300000000000000000"
-+        "400000000000000000"
++        "500000000000000000"
     }
 ```
 

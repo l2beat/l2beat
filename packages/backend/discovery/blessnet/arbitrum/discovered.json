@@ -1,7 +1,7 @@
 {
   "name": "blessnet",
   "chain": "arbitrum",
-  "blockNumber": 303975893,
+  "blockNumber": 304208966,
   "configHash": "0x4d2d591e408eae0ff814c4e7fadfe3ae4a370dc915cad55b02d15e4943f1a763",
   "contracts": [
     {
@@ -122,7 +122,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 105783,
+        "batchCount": 106387,
         "batchPosterManager": "0xED64BaA244A1Ba3e91bBA2712004b1732078EC4D",
         "batchPosters": ["0xa0899d20D9665EB0FfE311A395FCd481bF38A5Ff"],
         "bridge": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
@@ -591,8 +591,8 @@
         "nativeToken": "0x000000000000CCA70B6e0997a94681a3114EdDD7",
         "rollup": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
         "sequencerInbox": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
-        "sequencerMessageCount": 105783,
-        "sequencerReportedSubMessageCount": 1638509
+        "sequencerMessageCount": 106387,
+        "sequencerReportedSubMessageCount": 1650158
       }
     },
     {
@@ -731,7 +731,7 @@
         "challengeManager": "0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
         "challenges": [],
         "confirmPeriodBlocks": 45818,
-        "currentRequiredStake": "400000000000000000",
+        "currentRequiredStake": "500000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 43201,
         "inbox": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
