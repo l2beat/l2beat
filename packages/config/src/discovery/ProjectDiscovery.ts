@@ -1302,22 +1302,21 @@ const roleDescriptions: {
   sequence: {
     name: 'Sequencer',
     description:
-      'Sequencer is an actor allowed to commit transactions from the current layer to the host chain.',
+      'Allowed to commit transactions from the current layer to the host chain.',
   },
   propose: {
     name: 'Proposer',
     description:
-      'Proposer is an actor allowed to post new state roots of the current layer to the host chain.',
+      'Allowed to post new state roots of the current layer to the host chain.',
   },
   challenge: {
     name: 'Challenger',
     description:
-      'Challenger is an actor allowed to challenge or delete state roots proposed by a Proposer.',
+      'Allowed to challenge or delete state roots proposed by a Proposer.',
   },
   guard: {
     name: 'Guardian',
-    description:
-      'Guardian is an actor allowed to pause deposits and withdrawals.',
+    description: 'Allowed to pause deposits and withdrawals.',
   },
   validate: {
     // ORBIT specific
@@ -1340,22 +1339,22 @@ const roleDescriptions: {
     // ZK stack specific
     name: 'Validator',
     description:
-      'Actors permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
+      'Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the main Diamond contract.',
   },
   validateBridge: {
     name: 'Validator',
     description:
-      'Actors permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
+      'Permissoned to sign messages (state roots) encoding transfer information or governance actions such as updates to a new validator set, which are decoded onchain with signature checks.',
   },
   validateBridge2: {
     name: 'Validator',
     description:
-      'Actors permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks.',
+      'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks.',
   },
   relay: {
     name: 'Relayer',
     description:
-      'Actors permissioned to relay messages that are then verified onchain.',
+      'Permissioned to relay messages that are then verified onchain.',
   },
   aggregatePolygon: {
     name: 'Trusted Aggregator (Proposer)',
