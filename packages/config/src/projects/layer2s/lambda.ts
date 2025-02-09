@@ -12,6 +12,7 @@ export const lambda: Layer2 = opStackL2({
   discovery,
   additionalPurposes: ['Storage'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  isArchived: true,
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
