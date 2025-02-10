@@ -33,7 +33,7 @@ export function DaThroughputChart() {
 
   return (
     <div>
-      <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
+      <h1 className="mb-4 whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
         Share of total data posted
       </h1>
       {metric === 'percentage' ? (
