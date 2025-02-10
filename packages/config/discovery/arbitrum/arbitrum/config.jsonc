@@ -41,6 +41,12 @@
     "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
     "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock"
   },
+  "types": {
+    "Undecimal4": {
+    "typeCaster": "Undecimal",
+    "arg": { "decimals": 4 }
+  },
+  },
   "overrides": {
     "L2SurplusFee": {
       "fields": {
