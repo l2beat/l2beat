@@ -164,7 +164,10 @@ export async function getDaProjectEntry(
       ),
     })),
     header: {
-      links: getProjectLinks(layer.display.links),
+      links: getProjectLinks(
+        layer.display.links,
+        ...bridges.map((x) => x.display.links),
+      ),
       daLayerGrissiniValues: layerGrissiniValues,
       daBridgeGrissiniValues: bridgeGrissiniValues,
       tvs: layerTvs,
