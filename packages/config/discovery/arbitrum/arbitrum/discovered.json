@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 295612328,
-  "configHash": "0x2a898dfc0f1486f37894b511fcb13e77417bba0efdfd494d62dfb40c93b038ea",
+  "blockNumber": 304594180,
+  "configHash": "0x3abb3dce7cb49b0ed47b6b096b7b9eb6bf74489d734a533a3d92d8ac5ca0aeb0",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -53,7 +53,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 29521,
+        "exitNum": 30171,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -407,6 +407,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -666,7 +667,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2009,
+        "exitNum": 2014,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"
@@ -990,6 +991,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1036,33 +1038,69 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0000000000000000000000000000000000000001" },
     { "address": "0x00000000000000000000000000000000000A4B86" },
-    { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
+    {
+      "name": "bartek.eth-L2BEAT",
+      "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+    },
     { "address": "0x0E5011001cF9c89b0259BC3B050785067495eBf5" },
-    { "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93" },
-    { "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71" },
-    { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
+    {
+      "name": "EmilianoBonassi-Conduit",
+      "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+    },
+    {
+      "name": "AleksanderKryukov-Certora",
+      "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
+    },
+    {
+      "name": "yoav.eth-EF",
+      "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+    },
     { "address": "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF" },
     { "address": "0x5280406912EB8Ec677Df66C326BE48f938DC2e44" },
     { "address": "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710" },
     { "address": "0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC" },
-    { "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B" },
-    { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
+    {
+      "name": "DennisonBertram-Tally",
+      "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    },
+    {
+      "name": "cts-Zellic",
+      "address": "0x5a09A94eE8198D3c474d723337aa58023810022C"
+    },
     { "address": "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF" },
-    { "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1" },
+    {
+      "name": "fred-Arbitrum",
+      "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+    },
     { "address": "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676" },
-    { "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67" },
+    {
+      "name": "JohnMorrow-Gauntlet",
+      "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+    },
     { "address": "0x8688515028955734350067695939423222009623" },
-    { "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F" },
+    {
+      "name": "GriffGreen-Giveth",
+      "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+    },
     { "address": "0x88910996671162953E89DdcE5C8137f9077da217" },
     { "address": "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5" },
-    { "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC" },
-    { "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8" },
+    {
+      "name": "StevenThornton-OpenZeppelin",
+      "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    },
+    {
+      "name": "GoncaloMagalhaes-Immunefi",
+      "address": "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    },
     { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
     { "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1" },
     { "address": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3" },
     { "address": "0xD3B5b60020504bc3489D6949d545893982BA3011" },
     { "address": "0xd92023E9d9911199a6711321D1277285e6d4e2db" },
-    { "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33" },
+    {
+      "name": "gzeon-OffchainLabs",
+      "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+    },
     { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
     { "address": "0xf6B6F07862A02C85628B3A9688beae07fEA9C863" },
     {
