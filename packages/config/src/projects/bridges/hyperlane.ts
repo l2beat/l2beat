@@ -244,7 +244,11 @@ export const hyperlane: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'the required verifiers fail to sign the transfer message.',
+          text: 'the required validators fail to sign the transfer message.',
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the required validators fail to sign the transfer message and are not replaced by honest ones.',
         },
         {
           category: 'Funds can be stolen if',
