@@ -63,6 +63,7 @@
       "ignoreInWatchMode": ["rootBundleProposal"]
     },
     "BondToken": {
+      "ignoreInWatchMode": ["totalSupply"],
       "fields": {
         "proposers": {
           "handler": {

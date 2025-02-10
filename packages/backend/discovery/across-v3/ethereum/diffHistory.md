@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x1cc83477ed69c35ad58862e3ad90ecbe08bbf161
+
+# Diff at Sat, 08 Feb 2025 15:50:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21786466
+- current block number: 21802758
+
+## Description
+
+Upgrade of the ethereum spoke pool: Refactor that mainly switches previous `address` types to `bytes32` and renames / merges some functions.
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xf5ec60450a251965f87d58578708ae6f3718afe7721e152b6983ca8d18ec3362"
++        "0x10d81ccfd26fbcb9926942a46436a7bedd3946646911a43f3f0e13dc7eb81517"
+      values.$implementation:
+-        "0xD576931ab0bDC3dfdc2c041d3C7b9d2ED0c6dd9a"
++        "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a"
+      values.$pastUpgrades.8:
++        ["2025-02-07T14:46:47.000Z","0xbea88935fe99b6faba60ee273a5eb146cd6c2d12decfef8842c5c719a0009376",["0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a"]]
+      values.$upgradeCount:
+-        8
++        9
+      values.EMPTY_RELAYER:
+-        "0x0000000000000000000000000000000000000000"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.UPDATE_V3_DEPOSIT_DETAILS_HASH:
+-        "0x152eb71524aef34d838ab76573c14b1ebfa5e385d9ab29d7cf5398daa2438bd9"
+      values.MAX_EXCLUSIVITY_PERIOD_SECONDS:
++        31536000
+      values.UPDATE_ADDRESS_DEPOSIT_DETAILS_HASH:
++        "0x9c6dfd61d811b9950a4f2b9adf46357b717c816d22c420d0bde8f2360148f7cd"
+      values.UPDATE_BYTES32_DEPOSIT_DETAILS_HASH:
++        "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 1128 +++++++++++++++-----
+ 1 file changed, 856 insertions(+), 272 deletions(-)
+```
+
 Generated with discovered.json: 0xc1e43b3b90793a3739173b71a2c7dce6122f42ca
 
 # Diff at Thu, 06 Feb 2025 09:08:42 GMT:

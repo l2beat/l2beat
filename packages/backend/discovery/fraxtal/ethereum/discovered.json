@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 21543769,
+  "blockNumber": 21802913,
   "configHash": "0xf9a98f777718427b5b120487da45c13ac1b05c4610a72f8dac5c07f3389ea34d",
   "contracts": [
     {
@@ -79,7 +79,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292633606",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634743",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -337,7 +337,7 @@
         "params": {
           "prevBaseFee": 10000000,
           "prevBoughtGas": 491822,
-          "prevBlockNum": 21543714
+          "prevBlockNum": 21802234
         },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -433,7 +433,7 @@
         "owner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "147594314561536506889230"
+        "totalSupply": "135157925288926895591978"
       }
     },
     {
@@ -555,10 +555,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 14545800,
-        "latestOutputIndex": 8080,
-        "nextBlockNumber": 14547600,
-        "nextOutputIndex": 8081,
+        "latestBlockNumber": 16108200,
+        "latestOutputIndex": 8948,
+        "nextBlockNumber": 16110000,
+        "nextOutputIndex": 8949,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -665,7 +665,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 1174,
+        "nonce": 1217,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -794,15 +794,15 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "63072000000000000000",
-        "lastSync": 1735776023,
+        "lastRewardAmount": "62892000000000000000",
+        "lastSync": 1738800311,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1109641800666052587",
-        "rewardsCycleEnd": 1736380800,
+        "pricePerShare": "1113211918889505445",
+        "rewardsCycleEnd": 1739404800,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "110943193933237330174775",
-        "totalSupply": "99981087470429347745296"
+        "totalAssets": "104200370016776283449414",
+        "totalSupply": "93603354625166337676954"
       },
       "derivedName": "sfrxETH"
     },
@@ -856,14 +856,14 @@
           "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
           "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
           "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
-          "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
+          "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "$threshold": 3,
         "domainSeparator": "0x05773792be342e7f8a01c63a9116de35bdf60190cdf42e31c3e1c2e7760b6dca",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6069,
+        "nonce": 6137,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -901,13 +901,13 @@
       "sinceTimestamp": 1665022895,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": "1888503377075897896",
+        "currentWithheldETH": "454434241964665580682",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
         "frxETHToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "numValidators": 199,
+        "numValidators": 198,
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "RATIO_PRECISION": 1000000,
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
@@ -1027,7 +1027,6 @@
       ]
     },
     { "address": "0x000000000000000000000000000000000000dEaD" },
-    { "address": "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935" },
     { "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e" },
     { "address": "0x381e2495e683868F693AA5B1414F712f21d34b40" },
     {

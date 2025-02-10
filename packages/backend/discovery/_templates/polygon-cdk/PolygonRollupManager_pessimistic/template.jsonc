@@ -206,7 +206,6 @@
     },
     "pessimisticProofSenders": {
       "description": "Lists any rollupID that sends a pessimistic proof.",
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "rollupID",
