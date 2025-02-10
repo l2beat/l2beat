@@ -44,7 +44,7 @@ export function SequencingSection({
           </figcaption>
         </figure>
       ) : null}
-      <h3 id={name} className="text-lg font-bold md:text-xl">
+      <h3 id={name} className="mb-2 text-lg font-bold md:text-xl">
         <a href={`#${name}`}>{name}</a>
       </h3>
       <Markdown className={mdClassName}>{content}</Markdown>

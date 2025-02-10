@@ -25,6 +25,10 @@ export function getScalingRiskSummarySection(
       id: 'other-considerations',
       value: project.technology.otherConsiderations,
     },
+    {
+      id: 'sequencing',
+      value: project.technology.sequencing,
+    },
   ]
 
   const risks: (ScalingProjectRisk & { referencedId: string })[] = []
@@ -56,6 +60,8 @@ export function getScalingRiskSummarySection(
   ) ?? []) {
     risks.push({ ...risk, referencedId: 'state-validation' })
   }
+
+  console.log(risks)
 
   return {
     riskGroups: groupRisks(risks),
