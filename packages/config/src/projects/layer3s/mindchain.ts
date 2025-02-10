@@ -10,8 +10,7 @@ export const mindchain: Layer3 = upcomingL3({
   display: {
     name: 'MindChain',
     slug: 'mindchain',
-    description:
-      'MindChain is an FHE restaking Layer for PoS and AI networks.',
+    description: 'MindChain is an FHE restaking Layer for PoS and AI networks.',
     purposes: ['AI'],
     category: 'Optimium',
     stack: 'Arbitrum',
