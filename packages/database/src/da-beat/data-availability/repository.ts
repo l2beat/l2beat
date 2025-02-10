@@ -69,6 +69,39 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByProjectIdsAndTimeRange(
+    projectIds: string[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getLargestPosterByProjectIdsAndTimestamp(
+    projectIds: string[],
+    timestamp: UnixTime,
+  ) {
+    const row = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '=', timestamp.toDate())
+      .orderBy('totalSize', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row && toRecord(row)
+  }
+
   async getByProjectIdAndFrom(
     projectId: string,
     fromInclusive: UnixTime,

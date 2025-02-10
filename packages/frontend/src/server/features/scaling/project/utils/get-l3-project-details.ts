@@ -324,7 +324,7 @@ export async function getL3ProjectDetails({
 
   if (sequencingSection) {
     items.push({
-      type: 'MarkdownSection',
+      type: 'SequencingSection',
       props: {
         id: 'sequencing',
         title: 'Sequencing',
