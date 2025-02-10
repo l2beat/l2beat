@@ -4,13 +4,13 @@ import { Callout } from '~/components/callout'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { CloseIcon } from '~/icons/close'
-import { OtherMigrationContainer } from './other-migration-container'
+import { CountdownSection } from '../countdown-section'
 
 export function WhyAmIHereNotice({
   reasons,
 }: { reasons: ReasonForBeingInOther[] }) {
   return (
-    <OtherMigrationContainer>
+    <CountdownSection>
       <h2 className="mr-auto text-2xl font-bold md:text-3xl">
         Why is the project listed in others?
       </h2>
@@ -39,7 +39,7 @@ export function WhyAmIHereNotice({
         </CustomLink>
         .
       </p>
-    </OtherMigrationContainer>
+    </CountdownSection>
   )
 }
 

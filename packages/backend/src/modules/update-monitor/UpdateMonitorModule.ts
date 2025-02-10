@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import { ConfigReader, DiscoveryLogger } from '@l2beat/discovery'
 import { ChainConverter } from '@l2beat/shared-pure'
 
+import { join } from 'path'
 import { HttpClient } from '@l2beat/shared'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -27,7 +28,7 @@ export function createUpdateMonitorModule(
 
   logger = logger.tag({ feature: 'update_monitor', module: 'update_monitor' })
 
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
 
   const discordClient = config.updateMonitor.discord
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
@@ -47,6 +48,7 @@ export function createUpdateMonitorModule(
   const { chains, cacheEnabled, cacheUri } = config.updateMonitor
   const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
+      configReader.rootPath,
       http,
       peripherals,
       DiscoveryLogger.SILENT,

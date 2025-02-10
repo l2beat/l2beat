@@ -6106,20 +6106,6 @@
       "supply": "zero"
     },
     {
-      "name": "Wrapped TIA",
-      "coingeckoId": "trestle-wrapped-tia",
-      "address": "0x6aD2d2C22Bb58eA94Be18Cff11EF67e8bb97B652",
-      "symbol": "wTIA",
-      "decimals": 18,
-      "deploymentTimestamp": 1709684855,
-      "coingeckoListingTimestamp": 1711324800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/36385/large/trestle.jpeg?1711349480",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "name": "Wrapped TON Coin",
       "coingeckoId": "the-open-network",
       "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1",

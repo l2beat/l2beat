@@ -1,4 +1,4 @@
-import type { DaBridge, Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
@@ -8,11 +8,13 @@ import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-ris
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
 
 type RegularDetailsParams = {
-  daLayer: Project<
+  layer: Project<
     'daLayer' | 'statuses' | 'display',
     'milestones' | 'isUpcoming'
   >
-  daBridge: DaBridge
+  bridge:
+    | Project<'daBridge' | 'display', 'contracts' | 'permissions'>
+    | undefined
   isVerified: boolean
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
@@ -20,40 +22,40 @@ type RegularDetailsParams = {
 }
 
 export function getRegularDaProjectSections({
-  daLayer,
-  daBridge,
+  layer,
+  bridge,
   isVerified,
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const permissionsSection =
-    daBridge.permissions &&
+    bridge?.permissions &&
     getPermissionsSection({
       type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-      id: daLayer.id,
-      isUnderReview: daLayer.statuses.isUnderReview,
-      permissions: daBridge.permissions,
+      id: layer.id,
+      isUnderReview: layer.statuses.isUnderReview,
+      permissions: bridge.permissions,
     })
 
   const contractsSection =
-    daBridge.contracts &&
+    bridge?.contracts &&
     getContractsSection(
       {
         type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
-        id: daBridge.id,
+        id: bridge.id,
         isVerified,
-        slug: daBridge.display.slug,
-        contracts: daBridge.contracts ?? {},
+        slug: bridge.slug,
+        contracts: bridge.contracts ?? {},
         escrows: undefined,
-        isUnderReview: daLayer.statuses.isUnderReview,
+        isUnderReview: layer.statuses.isUnderReview,
       },
       projectsChangeReport,
     )
 
   const riskSummarySection = getDaProjectRiskSummarySection(
-    daLayer,
-    daBridge,
+    layer,
+    bridge,
     isVerified,
   )
 
@@ -64,7 +66,7 @@ export function getRegularDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: daLayer.statuses.isUnderReview,
+      isUnderReview: layer.statuses.isUnderReview,
       isVerified,
       layerGrissiniValues,
       hideTitle: true,
@@ -78,13 +80,13 @@ export function getRegularDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: daLayer.slug,
+        slug: layer.slug,
       },
-      content: daLayer.daLayer.technology.description,
+      content: layer.daLayer.technology.description,
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: daLayer.daLayer.technology.risks?.map(toTechnologyRisk),
-      references: daLayer.daLayer.technology.references,
+      risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
+      references: layer.daLayer.technology.references,
     },
   })
 
@@ -95,8 +97,9 @@ export function getRegularDaProjectSections({
     props: {
       id: 'da-bridge-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: daLayer.statuses.isUnderReview,
+      isUnderReview: layer.statuses.isUnderReview,
       isVerified,
+      isNoBridge: !bridge || !!bridge.daBridge.risks.isNoBridge,
       bridgeGrissiniValues,
       hideTitle: true,
     },
@@ -109,13 +112,15 @@ export function getRegularDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-bridge-technology',
-        slug: `${daLayer.slug}-${daBridge.display.slug}`,
+        slug: `${layer.slug}-${bridge?.slug ?? 'no-bridge'}`,
       },
-      content: daBridge.technology.description,
+      content:
+        bridge?.daBridge.technology.description ??
+        'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: daBridge.technology.risks?.map(toTechnologyRisk),
-      references: daBridge.technology.references,
+      risks: bridge?.daBridge.technology.risks?.map(toTechnologyRisk),
+      references: bridge?.daBridge.technology.references,
     },
   })
 
@@ -124,7 +129,7 @@ export function getRegularDaProjectSections({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
-        permissionedEntities: daBridge.dac?.knownMembers,
+        permissionedEntities: bridge.daBridge.dac?.knownMembers,
         id: 'da-bridge-permissions',
         title: 'Permissions',
       },
@@ -144,12 +149,8 @@ export function getRegularDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  if (
-    !daLayer.isUpcoming &&
-    daLayer.milestones &&
-    daLayer.milestones.length > 0
-  ) {
-    const sortedMilestones = daLayer.milestones.sort(
+  if (!layer.isUpcoming && layer.milestones && layer.milestones.length > 0) {
+    const sortedMilestones = layer.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     )
     items.push({
@@ -180,8 +181,8 @@ export function getRegularDaProjectSections({
     type: 'Group',
     props: {
       id: 'da-layer',
-      title: daLayer.name,
-      description: daLayer.display.description,
+      title: layer.name,
+      description: layer.display.description,
       items: daLayerItems,
     },
   })
@@ -189,11 +190,15 @@ export function getRegularDaProjectSections({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
-      sideNavTitle: !!daBridge.risks.isNoBridge ? 'DA Bridge' : undefined,
+      sideNavTitle: !!bridge?.daBridge.risks.isNoBridge
+        ? 'No DA Bridge'
+        : undefined,
       props: {
         id: 'da-bridge',
-        title: daBridge.display.name,
-        description: daBridge.display.description,
+        title: bridge?.daBridge.name ?? 'No DA Bridge',
+        description:
+          bridge?.display.description ??
+          'The risk profile in this page refers to L2s that do not integrate with a data availability bridge. Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.',
         items: daBridgeItems,
       },
     })
@@ -203,23 +208,23 @@ export function getRegularDaProjectSections({
 }
 
 type EthereumDetailsParams = {
-  daLayer: Project<'daLayer' | 'statuses' | 'display'>
-  daBridge: DaBridge
+  layer: Project<'daLayer' | 'statuses' | 'display'>
+  bridge: Project<'daBridge', 'contracts'>
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
 }
 
 export function getEthereumDaProjectSections({
-  daLayer,
-  daBridge,
+  layer,
+  bridge,
   isVerified,
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
-    daLayer,
-    daBridge,
+    layer,
+    bridge,
     isVerified,
   )
 
@@ -244,11 +249,11 @@ export function getEthereumDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: daLayer.statuses.isUnderReview,
+      isUnderReview: layer.statuses.isUnderReview,
       isVerified,
       layerGrissiniValues,
       bridgeGrissiniValues,
-      description: daLayer.display.description,
+      description: layer.display.description,
       hideTitle: true,
     },
   })
@@ -260,17 +265,17 @@ export function getEthereumDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-layer-technology',
-        slug: daLayer.slug,
+        slug: layer.slug,
       },
-      content: daLayer.daLayer.technology.description.concat(
+      content: layer.daLayer.technology.description.concat(
         '\n\n',
-        daBridge.technology.description,
+        bridge.daBridge.technology.description,
       ),
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: daLayer.daLayer.technology.risks?.map(toTechnologyRisk),
-      references: daLayer.daLayer.technology.references?.concat(
-        ...(daBridge.technology.references ?? []),
+      risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
+      references: layer.daLayer.technology.references?.concat(
+        ...(bridge.daBridge.technology.references ?? []),
       ),
     },
   })
