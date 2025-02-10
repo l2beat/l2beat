@@ -16,8 +16,6 @@ export const ethernity: Layer2 = opStackL2({
   display: {
     name: 'Ethernity',
     slug: 'ethernity',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Ethernity is a Rollup on Ethereum leveraging the OP stack. With a primary focus on the entertainment sector, Ethernity Chain aims to cultivate a vibrant ecosystem of world-class applications where developers and users alike are directly rewarded for their contributions.',
     category: 'Optimistic Rollup',

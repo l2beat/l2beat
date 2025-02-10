@@ -102,7 +102,6 @@ export const memo: BaseProject = {
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
   },
-  daBridges: [],
   milestones: [
     {
       title: 'MEMO Megrez Network launch',

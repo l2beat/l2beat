@@ -54,8 +54,8 @@ export function MultipleBridgeDetails({ project }: Props) {
           <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-header-secondary md:gap-0 md:rounded-t-none">
             {project.bridges.map((bridge, index) => (
               <label
-                key={bridge.id}
-                htmlFor={bridge.id}
+                key={bridge.slug}
+                htmlFor={bridge.slug}
                 className={cn(
                   'flex min-h-[56px] cursor-pointer flex-row gap-4 rounded-lg border-divider bg-surface-secondary px-4 py-2 md:rounded-none md:border-b md:bg-transparent',
                   index === project.bridges.length - 1 && 'md:border-b-0',
@@ -65,9 +65,9 @@ export function MultipleBridgeDetails({ project }: Props) {
                 )}
               >
                 <RadioButton
-                  id={bridge.id}
-                  value={bridge.id}
-                  checked={bridge.id === project.selectedBridge.id}
+                  id={bridge.slug}
+                  value={bridge.slug}
+                  checked={bridge.slug === project.selectedBridge.slug}
                   onChange={() => {
                     router.push(
                       `/data-availability/projects/${project.slug}/${bridge.slug}`,
@@ -131,14 +131,14 @@ export function MultipleBridgeDetails({ project }: Props) {
                   <div>
                     {project.bridges.map((bridge) => (
                       <label
-                        key={bridge.id}
-                        htmlFor={bridge.id}
+                        key={bridge.slug}
+                        htmlFor={bridge.slug}
                         className="flex cursor-pointer flex-row items-center gap-2 border-b border-gray-200 py-3 dark:border-zinc-700"
                       >
                         <RadioButton
-                          id={bridge.id}
-                          value={bridge.id}
-                          checked={bridge.id === project.selectedBridge.id}
+                          id={bridge.slug}
+                          value={bridge.slug}
+                          checked={bridge.slug === project.selectedBridge.slug}
                           onChange={() => {
                             router.push(
                               `/data-availability/projects/${project.slug}/${bridge.slug}`,

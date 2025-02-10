@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 21787152,
+  "blockNumber": 21802929,
   "configHash": "0xece1e516b4d6c8360cf38bcef6633134c0fb72adc9e6773ecb060a535ddcb57e",
   "contracts": [
     {
@@ -194,7 +194,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x5f6af3c6509362c962b28444d07f2836673e0e846494a69ebdb6f521120cd7fa",
+        "getRoot": "0x70367f76d6d3ab9ddc4ec435f9af7c0425c392b704d57b2f99733cf960fdf97e",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -438,7 +438,7 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x4958dbd96c6bab607df5cc746f6a7b586c037c37519071f2db5dd46e0e73b794",
+        "getRollupExitRoot": "0x8e6837d41d91184079187bf2b3f5bfc96755eaace3841ce6128ec199a352979e",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -455,14 +455,15 @@
           [true],
           [true],
           [true],
+          [false],
           [false]
         ],
-        "lastAggregationTimestamp": 1738840391,
+        "lastAggregationTimestamp": 1739031239,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "pessimisticProofSenders": [],
+        "pessimisticProofSenders": [14],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "pessimistic",
-        "rollupCount": 14,
+        "rollupCount": 15,
         "rollupsDataV2": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
@@ -589,6 +590,15 @@
             9,
             1,
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+          ],
+          [
+            "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+            623,
+            "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            12,
+            7,
+            0,
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
           ]
         ],
         "rollupTypeCount": 9,
@@ -666,8 +676,8 @@
             "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           ]
         ],
-        "totalSequencedBatches": 586719,
-        "totalVerifiedBatches": 586142,
+        "totalSequencedBatches": 591719,
+        "totalVerifiedBatches": 591174,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -690,7 +700,6 @@
           "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for statetransition projects becoming active after deployment. Mind that index here is rollupID-1."
         },
         "pessimisticProofSenders": {
-          "severity": "HIGH",
           "description": "Lists any rollupID that sends a pessimistic proof."
         }
       },
@@ -745,8 +754,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 53741,
-        "getRoot": "0xaa4d9053b52df2e73ce4cf41036d8994e7dda50079f46c8f1a5cd66609b99e7a",
+        "depositCount": 54048,
+        "getRoot": "0xbae721eef85de84b961e6ab30e0fab0656314bc717b9b013071fa0ca5786e07e",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       }
     },
@@ -786,7 +795,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1579,7 +1588,7 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x55cd9475b75a49fc5ef1554d9840d971c76937857af03df18f231095c0913652",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x893bd943a845e5be1f62ba8d29ea317de2eb25c6ed6f903ec6cb31636cc4e961",
+    "polygon-cdk/PolygonRollupManager_pessimistic": "0x8df3c096ecc62af8dc3487c1ebe776e068f75928ec5018e9a735429cd189e19b",
     "polygon-cdk/PolygonSharedBridge": "0xc139a824ac34d5f7d89c17a69e0312561f3e108f109527bf554c906fda8af216",
     "polygon-cdk/Timelock": "0x12c313e51e4ceff4837a44c8e1549ff0834ae3661dfad024b895eb1c975f0b46"
   }

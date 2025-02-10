@@ -1,26 +1,26 @@
-Generated with discovered.json: 0x9a0ad072021b45d5ac8dea439f9dc7aa9a0bd740
+Generated with discovered.json: 0x8722173fbd3544e8bbe3e1d40db7e9e65aa42244
 
-# Diff at Mon, 10 Feb 2025 11:23:52 GMT:
+# Diff at Sat, 08 Feb 2025 15:57:57 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21786507
-- current block number: 21786507
+- current block number: 21802836
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Single SC member rotated.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21786507 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isUsingEigenDA:
-+        false
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.12:
+-        "0xE895076cD050F1f042d1040E47b5929bE989E514"
++        "0x92827223f6b397CE9F208eE352bacA710765cACb"
+      values.$members.1:
+-        "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8"
++        "0x652BC529E171847E2fFddCeA13567643C84ccB5f"
     }
 ```
 

@@ -1,26 +1,23 @@
-Generated with discovered.json: 0x25de23a0a18723ea7c9ebf2db4575f967cc20b35
+Generated with discovered.json: 0x6a0a5416c31f1dc9e0b988cbbee2ba12a736a76c
 
-# Diff at Mon, 10 Feb 2025 11:22:59 GMT:
+# Diff at Sat, 08 Feb 2025 16:13:38 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 21543769
-- current block number: 21543769
+- current block number: 21802913
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Fraxtal MS single signer change.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21543769 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
-    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
-      values.opStackDA.isUsingEigenDA:
-+        false
+    contract FraxtalTimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      values.$members.4:
+-        "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
++        "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
     }
 ```
 

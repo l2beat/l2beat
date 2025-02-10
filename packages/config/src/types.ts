@@ -249,38 +249,6 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export interface ProjectPermissions {
-  /** List of roles */
-  roles?: ProjectPermission[]
-  /** List of actors */
-  actors?: ProjectPermission[]
-}
-
-export interface ProjectPermission {
-  /** List of the accounts */
-  accounts: ProjectPermissionedAccount[]
-  /** Name of this group */
-  name: string
-  /** Description of the permissions */
-  description: string
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain: string
-  /** List of source code permalinks and useful materials */
-  references?: ReferenceLink[]
-  /** List of accounts that are participants in this permission, mainly used for MultiSigs */
-  participants?: ProjectPermissionedAccount[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
-}
-
-export interface ProjectPermissionedAccount {
-  name: string
-  url: string
-  address: EthereumAddress
-  isVerified: boolean
-  type: 'EOA' | 'Contract'
-}
-
 export type ScalingProjectStack =
   | 'OP Stack'
   | 'Arbitrum'
@@ -732,145 +700,8 @@ export interface CustomDa {
   challengeMechanism?: DaChallengeMechanism
 }
 
-export interface DaLayer {
-  name?: string
-  description?: string
-  type: string
-  systemCategory: 'public' | 'custom'
-  risks: DaLayerRisks
-  technology: DaTechnology
-  usedWithoutBridgeIn: UsedInProject[]
-
-  /** The period within which full nodes must store and distribute data. @unit seconds */
-  pruningWindow?: number
-  /** The time it takes to finalize the data. @unit seconds */
-  finality?: number
-  consensusAlgorithm?: DaConsensusAlgorithm
-  throughput?: DaLayerThroughput
-  dataAvailabilitySampling?: DataAvailabilitySampling
-  economicSecurity?: DaEconomicSecurity
-  daTracking?: DaLayerTrackingConfig
-}
-
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
-export interface DaLayerRisks {
-  daLayer?: TableReadyValue
-  economicSecurity?: TableReadyValue
-  fraudDetection?: TableReadyValue
-}
-
-export interface DaBridgeRisks {
-  isNoBridge?: boolean
-  /** Replaces risk grissini */
-  callout?: string
-  daBridge?: TableReadyValue
-  committeeSecurity?: TableReadyValue
-  upgradeability?: TableReadyValue
-  relayerFailure?: TableReadyValue
-}
-
-export interface DaLayerDisplay {
-  /** The name of the data availability layer. */
-  name: string
-  /** Slug of the data availability layer. */
-  slug: string
-  /** A short description of the data availability layer. */
-  description: string
-  /** Links related to the data availability layer. */
-  links: ProjectLinks
-}
-
-export interface DaConsensusAlgorithm {
-  /** The name of the consensus algorithm. */
-  name: string
-  /** A description of the consensus algorithm. */
-  description: string
-  /** The time it takes to produce a new block. @unit seconds. */
-  blockTime: number
-  /** Consensus finality time. @unit seconds. */
-  consensusFinality: number
-  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
-  unbondingPeriod: number
-}
-
-export interface DataAvailabilitySampling {
-  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
-  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
-}
-
-export interface DaLayerThroughput {
-  /**
-   * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit KB - kilobytes
-   */
-  size: number
-  /**
-   * Batch frequency for data availability. Together with batchSize it determines max throughput.
-   * @unit seconds
-   */
-  frequency: number
-}
-
-export interface DaTechnology {
-  /** Description of technology used by the data availability layer. [MARKDOWN] */
-  description: string
-  /** List of risks associated with the technology */
-  risks?: ScalingProjectRisk[] // scaling risks on purpose
-
-  /** List of references put underneath the technology section */
-  references?: ReferenceLink[]
-}
-
-export interface DaBridge {
-  id: ProjectId
-  /** Date of creation of the file (not the project) */
-  addedAt: UnixTime
-  display: DaBridgeDisplay
-  isUnderReview?: boolean
-  technology: DaTechnology
-  usedIn: UsedInProject[]
-  risks: DaBridgeRisks
-  dac?: DacInfo
-  /** Data about related permissions - preferably from discovery. */
-  permissions?: Record<string, ProjectPermissions>
-  /** Data about the contracts used in the bridge - preferably from discovery. */
-  contracts?: ProjectContracts
-}
-
-export interface DacInfo {
-  membersCount: number
-  knownMembers?: {
-    external: boolean
-    name: string
-    href: string
-    key?: string
-  }[]
-  requiredMembers: number
-  /** TEMP: Members field will turn into N/A badge if this is true */
-  hideMembers?: boolean
-}
-
-export interface DaBridgeDisplay {
-  name: string
-  slug: string
-  description: string
-}
-
-export interface UsedInProject {
-  id: ProjectId
-  name: string
-  slug: string
-}
-
-export interface DaEconomicSecurity {
-  name: string
-  token: {
-    symbol: string
-    decimals: number
-    coingeckoId: string
-  }
-}
 // General da-layer tracking
 
 export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
@@ -986,7 +817,9 @@ export interface BaseProject {
   finalityConfig?: Layer2FinalityConfig
   proofVerification?: ProofVerification
   daLayer?: DaLayer
-  daBridges?: DaBridge[]
+  daBridge?: DaBridge
+  permissions?: Record<string, ProjectPermissions>
+  contracts?: ProjectContracts
   milestones?: Milestone[]
   // tags
   isBridge?: true
@@ -996,45 +829,6 @@ export interface BaseProject {
   isUpcoming?: true
   isArchived?: true
   hasActivity?: true
-}
-
-export interface ProjectContract {
-  /** Address of the contract */
-  address: EthereumAddress
-  /** Verification status of the contract */
-  isVerified: boolean
-  /** Name of the chain of this address. Optional for backwards compatibility */
-  chain: string
-  /** Solidity name of the contract */
-  name: string
-  /** Description of the contract's role in the system */
-  description?: string
-  /** Details about upgradeability */
-  upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
-  /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
-  /** Other considerations worth mentioning about the upgrade process */
-  upgradeConsiderations?: string
-  /** Pasuable contract */
-  pausable?: {
-    /** Is it paused? **/
-    paused: boolean
-    /** Who can pause/unpause the contract */
-    pausableBy: string[]
-  }
-  /** List of references */
-  references?: ReferenceLink[]
-  /** Indicates whether the generation of contained data was driven by discovery */
-  discoveryDrivenData?: boolean
-}
-
-export interface ProjectContracts {
-  /** List of the contracts on a given chain */
-  addresses: Record<string, ProjectContract[]>
-  /** List of risks associated with the contracts */
-  risks: ScalingProjectRisk[]
 }
 
 export interface ProjectStatuses {
@@ -1113,4 +907,186 @@ export interface ProjectTvlInfo {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
+}
+
+export interface DaLayer {
+  name?: string
+  description?: string
+  type: string
+  systemCategory: 'public' | 'custom'
+  risks: DaLayerRisks
+  technology: DaTechnology
+  usedWithoutBridgeIn: UsedInProject[]
+
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow?: number
+  consensusAlgorithm?: DaConsensusAlgorithm
+  throughput?: DaLayerThroughput
+  /** The time it takes to finalize the data. @unit seconds */
+  finality?: number
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  economicSecurity?: DaEconomicSecurity
+  daTracking?: DaLayerTrackingConfig
+}
+
+export interface DaBridge {
+  name: string
+  daLayer: ProjectId
+  technology: DaTechnology
+  risks: DaBridgeRisks
+  usedIn: UsedInProject[]
+  dac?: DacInfo
+}
+
+export interface DaTechnology {
+  /** Description of technology used by the data availability layer. [MARKDOWN] */
+  description: string
+  risks?: ScalingProjectRisk[] // scaling risks on purpose
+  references?: ReferenceLink[]
+}
+
+export interface DaConsensusAlgorithm {
+  /** The name of the consensus algorithm. */
+  name: string
+  /** A description of the consensus algorithm. */
+  description: string
+  /** The time it takes to produce a new block. @unit seconds. */
+  blockTime: number
+  /** Consensus finality time. @unit seconds. */
+  consensusFinality: number
+  /** Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period. @unit seconds. */
+  unbondingPeriod: number
+}
+
+export interface DaLayerThroughput {
+  /**
+   * Batch size for data availability. Together with batchFrequency it determines max throughput.
+   * @unit KB - kilobytes
+   */
+  size: number
+  /**
+   * Batch frequency for data availability. Together with batchSize it determines max throughput.
+   * @unit seconds
+   */
+  frequency: number
+}
+
+export interface DaEconomicSecurity {
+  name: string
+  token: {
+    symbol: string
+    decimals: number
+    coingeckoId: string
+  }
+}
+
+export interface DataAvailabilitySampling {
+  erasureCodingScheme: '1D Reed-Solomon' | '2D Reed-Solomon'
+  erasureCodingProof: 'Validity proofs' | 'Fraud proofs' | 'None'
+}
+
+export interface DacInfo {
+  membersCount: number
+  knownMembers?: {
+    external: boolean
+    name: string
+    href: string
+    key?: string
+  }[]
+  requiredMembers: number
+  /** TEMP: Members field will turn into N/A badge if this is true */
+  hideMembers?: boolean
+}
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+}
+
+export interface DaLayerRisks {
+  daLayer?: TableReadyValue
+  economicSecurity?: TableReadyValue
+  fraudDetection?: TableReadyValue
+}
+
+export interface DaBridgeRisks {
+  isNoBridge?: boolean
+  /** Replaces risk grissini */
+  callout?: string
+  daBridge?: TableReadyValue
+  committeeSecurity?: TableReadyValue
+  upgradeability?: TableReadyValue
+  relayerFailure?: TableReadyValue
+}
+
+export interface ProjectPermissions {
+  /** List of roles */
+  roles?: ProjectPermission[]
+  /** List of actors */
+  actors?: ProjectPermission[]
+}
+
+export interface ProjectPermission {
+  /** List of the accounts */
+  accounts: ProjectPermissionedAccount[]
+  /** Name of this group */
+  name: string
+  /** Description of the permissions */
+  description: string
+  /** Name of the chain of this address. Optional for backwards compatibility */
+  chain: string
+  /** List of source code permalinks and useful materials */
+  references?: ReferenceLink[]
+  /** List of accounts that are participants in this permission, mainly used for MultiSigs */
+  participants?: ProjectPermissionedAccount[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
+}
+
+export interface ProjectPermissionedAccount {
+  name: string
+  url: string
+  address: EthereumAddress
+  isVerified: boolean
+  type: 'EOA' | 'Contract'
+}
+
+export interface ProjectContracts {
+  /** List of the contracts on a given chain */
+  addresses: Record<string, ProjectContract[]>
+  /** List of risks associated with the contracts */
+  risks: ScalingProjectRisk[]
+}
+
+export interface ProjectContract {
+  /** Address of the contract */
+  address: EthereumAddress
+  /** Verification status of the contract */
+  isVerified: boolean
+  /** Name of the chain of this address. Optional for backwards compatibility */
+  chain: string
+  /** Solidity name of the contract */
+  name: string
+  /** Description of the contract's role in the system */
+  description?: string
+  /** Details about upgradeability */
+  upgradeability?: ScalingProjectUpgradeability
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  upgradeDelay?: string
+  /** Which actors from permissions can upgrade */
+  upgradableBy?: string[]
+  /** Other considerations worth mentioning about the upgrade process */
+  upgradeConsiderations?: string
+  /** Pasuable contract */
+  pausable?: {
+    /** Is it paused? **/
+    paused: boolean
+    /** Who can pause/unpause the contract */
+    pausableBy: string[]
+  }
+  /** List of references */
+  references?: ReferenceLink[]
+  /** Indicates whether the generation of contained data was driven by discovery */
+  discoveryDrivenData?: boolean
 }

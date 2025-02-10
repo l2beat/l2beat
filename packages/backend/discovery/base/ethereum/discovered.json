@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21786503,
+  "blockNumber": 21802832,
   "configHash": "0x3855a444095ee0170c66fd3a1dcfc263d23ed595059a777ffc9187a5972aaef7",
   "contracts": [
     {
@@ -372,7 +372,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2359,
+        "gameCount": 2413,
         "gameImpls": [
           "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
           "0xF62c15e2F99d4869A925B8F57076cD85335832A2",
@@ -442,8 +442,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 60000,
-          "prevBlockNum": 21786502
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 21802823
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -934,7 +934,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292995690",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292996904",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1292,7 +1292,7 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-          "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8",
+          "0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
@@ -1303,14 +1303,14 @@
           "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "0xE895076cD050F1f042d1040E47b5929bE989E514"
+          "0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
         "$threshold": 10,
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1568,7 +1568,6 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
-    { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
     { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x26c72586FB396325F58718152FEFA94E93Cf177b" },
@@ -1594,6 +1593,7 @@
     { "address": "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993" },
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
     { "address": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5" },
+    { "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f" },
     { "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50" },
     { "address": "0x73565876170a336Fa02fDe34EeD03E3121f70bA6" },
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
@@ -1602,6 +1602,7 @@
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x8Ca1E12404d16373Aef756179B185F27b2994F3a" },
     { "address": "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F" },
+    { "address": "0x92827223f6b397CE9F208eE352bacA710765cACb" },
     { "address": "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447" },
     { "address": "0x969ffD102fbF304d4e401999333FE9397DaC653D" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
@@ -1616,7 +1617,6 @@
     { "address": "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04" },
     { "address": "0xe32868ec7762650DdE723e945D638A05900974F4" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
-    { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" },
     { "address": "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c" },
     { "address": "0xFf00000000000000000000000000000000008453" }
   ],

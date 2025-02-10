@@ -1,4 +1,4 @@
-import type { Bridge, DaBridge, Layer2, Layer3 } from '../types'
+import type { BaseProject, Bridge, Layer2, Layer3 } from '../types'
 
 // TODO(radomski): Permissions
 export function isVerified(project: Layer2 | Layer3 | Bridge): boolean {
@@ -19,11 +19,8 @@ export function isVerified(project: Layer2 | Layer3 | Bridge): boolean {
   return newVerification
 }
 
-export function isDaBridgeVerified(daBridge: DaBridge): boolean {
-  if ('contracts' in daBridge) {
-    return Object.values(daBridge.contracts?.addresses ?? {})
-      .flat()
-      .every((c) => c.isVerified)
-  }
-  return true
+export function isProjectVerified(project: BaseProject): boolean {
+  return Object.values(project.contracts?.addresses ?? {})
+    .flat()
+    .every((c) => c.isVerified)
 }

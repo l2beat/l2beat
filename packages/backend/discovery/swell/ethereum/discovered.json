@@ -1,7 +1,7 @@
 {
   "name": "swell",
   "chain": "ethereum",
-  "blockNumber": 21786510,
+  "blockNumber": 21802839,
   "configHash": "0x1e51b395c7c3bbdd3c8d9131f8a413713a263abc5d35a3a87e2d90b73b304a91",
   "contracts": [
     {
@@ -421,7 +421,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21786507
+          "prevBlockNum": 21802524
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -565,7 +565,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1690,
+        "gameCount": 1744,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0xa0cFbe3402d6E0a74e96D3C360F74D5ea4Fa6893",
@@ -575,7 +575,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 1690,
+        "permissionedGamesTotal": 1744,
         "version": "1.0.0"
       }
     },
@@ -900,7 +900,7 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
-          "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8",
+          "0x652BC529E171847E2fFddCeA13567643C84ccB5f",
           "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
@@ -911,14 +911,14 @@
           "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
           "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
-          "0xE895076cD050F1f042d1040E47b5929bE989E514"
+          "0x92827223f6b397CE9F208eE352bacA710765cACb"
         ],
         "$threshold": 10,
         "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1123,7 +1123,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624743",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292624862",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1225,7 +1225,6 @@
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x005dE5857e38dFD703a1725c0900E9C6f24cbdE0" },
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
-    { "address": "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8" },
     { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
@@ -1235,10 +1234,12 @@
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
     { "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e" },
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
+    { "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f" },
     { "address": "0x6967D304E9b7E26b5eb3f5A1FD1239DaAD3215E6" },
     { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
+    { "address": "0x92827223f6b397CE9F208eE352bacA710765cACb" },
     { "address": "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa" },
     { "address": "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A" },
     { "address": "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7" },
@@ -1248,7 +1249,6 @@
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
-    { "address": "0xE895076cD050F1f042d1040E47b5929bE989E514" },
     {
       "address": "0xf854cd5B26bfd73d51236c0122798907Ed65B1f2",
       "receivedPermissions": [
