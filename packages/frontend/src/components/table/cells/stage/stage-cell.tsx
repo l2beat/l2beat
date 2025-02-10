@@ -9,7 +9,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { featureFlags } from '~/consts/feature-flags'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
 import { StopwatchIcon } from '~/icons/stopwatch'
 import { cn } from '~/utils/cn'
@@ -43,8 +42,7 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
         )}
         {stageConfig.stage !== 'NotApplicable' &&
           stageConfig.stage !== 'UnderReview' &&
-          stageConfig.downgradePending &&
-          !featureFlags.stageOneRequirementsChanged() && (
+          stageConfig.downgradePending && (
             <StopwatchIcon className="mt-[3px]" />
           )}
       </TooltipTrigger>

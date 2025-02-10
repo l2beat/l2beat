@@ -106,8 +106,7 @@ export default async function Page(props: Props) {
                 )}
               {projectEntry.stageConfig.stage !== 'NotApplicable' &&
                 projectEntry.stageConfig.stage !== 'UnderReview' &&
-                projectEntry.stageConfig.downgradePending &&
-                !featureFlags.stageOneRequirementsChanged() && (
+                projectEntry.stageConfig.downgradePending && (
                   <StageOneRequirementsChangeNotice
                     downgradePending={projectEntry.stageConfig.downgradePending}
                   />
