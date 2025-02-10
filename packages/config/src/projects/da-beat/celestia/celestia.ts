@@ -1,12 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { linkByDA } from '../common/linkByDA'
-import { blobstream } from './blobstream'
-
-const daBridges = [blobstream]
 
 export const celestia: BaseProject = {
   id: ProjectId('celestia'),
@@ -21,23 +17,15 @@ export const celestia: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     isUnderReview: false,
-    isUnverified: !daBridges.every(isDaBridgeVerified),
+    isUnverified: false,
   },
   display: {
     description:
       'Celestia is a modular data availability network that allows L2s to post arbitrary data as blobs.',
     links: {
       websites: ['https://celestia.org/'],
-      documentation: [
-        'https://docs.celestia.org/',
-        'https://docs.celestia.org/developers/blobstream',
-        'https://hackmd.io/@succinctlabs/HJE7XRrup',
-      ],
-      repositories: [
-        'https://github.com/celestiaorg',
-        'https://github.com/succinctlabs/sp1-blobstream',
-        'https://github.com/succinctlabs/blobstreamx',
-      ],
+      documentation: ['https://docs.celestia.org/'],
+      repositories: ['https://github.com/celestiaorg'],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/Celestia',
@@ -170,7 +158,6 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       },
     },
   },
-  daBridges,
   milestones: [
     {
       title: 'Mainnet launch',

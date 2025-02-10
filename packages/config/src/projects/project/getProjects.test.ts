@@ -7,12 +7,22 @@ import { getProjects } from './getProjects'
 describe('getProjects', () => {
   const projects = getProjects()
 
-  describe('every project has a unique id', () => {
+  describe('every project has a unique id and slug', () => {
     const ids = new Set<ProjectId>()
+    const slugs = new Set<string>()
     for (const project of projects) {
-      it(`${project.name} has a unique id of: "${project.id}"`, () => {
+      it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
+        if (project.slug === 'payy' || project.slug === 'near') {
+          // Those two projects are exceptions!
+          // Both should most likely be merged with their duplicates
+          // Right now it only works because refactored projects are resolved
+          // first when querying by slug
+          return
+        }
+        expect(slugs.has(project.slug)).toEqual(false)
+        slugs.add(project.slug)
       })
     }
   })
@@ -23,13 +33,6 @@ describe('getProjects', () => {
         it(project.name, () => {
           expect(project.display?.description.endsWith('.')).toEqual(true)
         })
-      }
-      if (project.daBridges) {
-        for (const bridge of project.daBridges) {
-          it(bridge.display.name, () => {
-            expect(bridge.display.description.endsWith('.')).toEqual(true)
-          })
-        }
       }
     }
   })
@@ -69,12 +72,12 @@ describe('getProjects', () => {
       )
 
       const daLayers = projects.filter((x) => x.daLayer !== undefined)
+      const daBridges = projects.filter((x) => x.daBridge !== undefined)
 
-      const daBeatProjectIds = daLayers.flatMap((project) =>
-        project.daLayer?.usedWithoutBridgeIn
-          .concat(project.daBridges?.flatMap((bridge) => bridge.usedIn) ?? [])
-          .map((usedIn) => usedIn.id),
-      )
+      const daBeatProjectIds = daLayers
+        .flatMap((project) => project.daLayer?.usedWithoutBridgeIn ?? [])
+        .concat(daBridges.flatMap((bridge) => bridge.daBridge?.usedIn ?? []))
+        .map((usedIn) => usedIn.id)
 
       const scalingProjectIds = target.map((project) => project.id)
 

@@ -23,7 +23,7 @@ const ENSHRINED: DaProjectTableValue = {
   sentiment: 'good',
   description:
     'The validating bridge has access to all the data, as it is posted onchain.',
-  projectId: ProjectId('enshrined-bridge'),
+  projectId: ProjectId('ethereum'),
 }
 
 const OPTIMISTIC: DaProjectTableValue = {
