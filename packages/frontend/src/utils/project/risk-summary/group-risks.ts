@@ -12,6 +12,7 @@ export function groupRisks(
     'Funds can be frozen if',
     'Users can be censored if',
     'MEV can be extracted if',
+    'Withdrawals can be delayed if',
   ]
 
   let nextStart = 1
