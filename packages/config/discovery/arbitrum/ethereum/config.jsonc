@@ -40,67 +40,6 @@
       // pre-nitro rollup contract
       "ignoreDiscovery": true
     },
-    "L1Timelock": {
-      "ignoreRelatives": ["l2Timelock"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        },
-        "proposersAC": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "PROPOSER_ROLE"
-          },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "schedule new proposal transactions"
-              }
-            ]
-          }
-        },
-        "executorsAC": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "EXECUTOR_ROLE"
-          },
-          "target": {
-            "permissions": [
-              {
-                "type": "act",
-                "delay": "{{ getMinDelay }}"
-              },
-              {
-                "type": "interact",
-                "description": "execute scheduled transactions after the delay"
-              }
-            ]
-          }
-        },
-        "cancellersAC": {
-          "handler": {
-            "type": "accessControl",
-            "pickRoleMembers": "CANCELLER_ROLE"
-          },
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "can cancel scheduled transactions"
-              }
-            ]
-          }
-        },
-        "scheduledTransactions": {
-          "handler": {
-            "type": "arbitrumScheduledTransactions"
-          }
-        }
-      }
-    },
     "OutboxV1": {
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },
