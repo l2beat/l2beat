@@ -3,6 +3,7 @@ import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export async function getDaThroughput(
   projects: Project<'daLayer' | 'statuses'>[],
@@ -17,6 +18,10 @@ export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
 async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
   const db = getDb()
 
+  const projectsWithDaTracking = await ps.getProjects({
+    select: ['daTrackingConfig'],
+  })
+
   const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
   const values = await db.dataAvailability.getByProjectIdsAndTimeRange(
     projects.map((p) => p.id),
@@ -24,44 +29,72 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
   )
   const grouped = groupBy(values, 'projectId')
 
-  return Object.fromEntries(
-    projects
-      .map((project) => {
-        const lastRecord = grouped[project.id]?.at(-1)
-        if (!lastRecord) {
-          return undefined
-        }
-        assert(
-          project.daLayer.throughput,
-          'Project does not have throughput data',
-        )
+  const data = await Promise.all(
+    projects.map(async (project) => {
+      const lastRecord = grouped[project.id]?.at(-1)
+      if (!lastRecord) {
+        return undefined
+      }
+      assert(
+        project.daLayer.throughput,
+        'Project does not have throughput data configured',
+      )
 
-        const pastDayAvgThroughput = getThroughput(
-          Number(lastRecord.totalSize) / 1000, // Convert to KB
-          86_400,
-        )
-        const maxThroughput = getThroughput(
-          project.daLayer.throughput.size,
-          project.daLayer.throughput.frequency,
-        )
+      const projectsUsingDa = projectsWithDaTracking.filter(
+        (p) => p.daTrackingConfig.type === project.daLayer.daTracking,
+      )
+      const largestPosterRecord =
+        projectsUsingDa.length > 0
+          ? await db.dataAvailability.getLargestPosterByProjectIdsAndTimestamp(
+              projectsUsingDa.map((p) => p.id),
+              lastRecord.timestamp,
+            )
+          : undefined
+      const largestPoster = largestPosterRecord
+        ? {
+            name:
+              projectsWithDaTracking.find(
+                (p) => p.id === largestPosterRecord.projectId,
+              )?.name ?? '',
+            percentage:
+              Math.round(
+                (Number(largestPosterRecord.totalSize) /
+                  Number(lastRecord.totalSize)) *
+                  100 *
+                  100,
+              ) / 100,
+            totalPosted: largestPosterRecord.totalSize,
+          }
+        : undefined
 
-        const pastDayAvgCapacityUtilization =
-          Math.round((pastDayAvgThroughput / maxThroughput) * 100 * 100) / 100
+      const pastDayAvgThroughput = getThroughput(
+        Number(lastRecord.totalSize) / 1000, // Convert to KB
+        86_400,
+      )
+      const maxThroughput = getThroughput(
+        project.daLayer.throughput.size,
+        project.daLayer.throughput.frequency,
+      )
 
-        return [
-          project.id,
-          {
-            totalSize: lastRecord.totalSize,
-            syncedUntil: lastRecord.timestamp,
-            pastDayAvgThroughput,
-            maxThroughput,
-            pastDayAvgCapacityUtilization,
-            totalPosted: lastRecord.totalSize,
-          },
-        ] as const
-      })
-      .filter(notUndefined),
+      const pastDayAvgCapacityUtilization =
+        Math.round((pastDayAvgThroughput / maxThroughput) * 100 * 100) / 100
+
+      return [
+        project.id,
+        {
+          totalSize: lastRecord.totalSize,
+          syncedUntil: lastRecord.timestamp,
+          pastDayAvgThroughput,
+          largestPoster,
+          maxThroughput,
+          pastDayAvgCapacityUtilization,
+          totalPosted: lastRecord.totalSize,
+        },
+      ] as const
+    }),
   )
+
+  return Object.fromEntries(data.filter(notUndefined))
 }
 
 function getMockThroughputData(
@@ -77,6 +110,11 @@ function getMockThroughputData(
             syncedUntil: UnixTime.now().toStartOf('day').add(-1, 'days'),
             pastDayAvgThroughput: 1.5,
             maxThroughput: 4.3,
+            largestPoster: {
+              name: 'Base',
+              percentage: 12,
+              totalPosted: 123123n,
+            },
             pastDayAvgCapacityUtilization: 24,
             totalPosted: 20312412n,
           },

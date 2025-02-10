@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
@@ -26,13 +26,15 @@ export interface DaThroughputEntry extends CommonProjectEntry {
   pastDayAvgThroughput: number | undefined
   maxThroughput: number | undefined
   pastDayAvgCapacityUtilization: number | undefined
-  largestPoster: {
-    name: string
-    percentage: number
-    sum: number
-  }
+  largestPoster:
+    | {
+        name: string
+        percentage: number
+        totalPosted: string
+      }
+    | undefined
   totalPosted: string | undefined
-  finality: number | undefined
+  finality: string | undefined
 }
 
 function getDaThroughputEntry(
@@ -53,15 +55,22 @@ function getDaThroughputEntry(
     maxThroughput: throughputData?.maxThroughput,
     pastDayAvgCapacityUtilization:
       throughputData?.pastDayAvgCapacityUtilization,
-    largestPoster: {
-      name: '',
-      percentage: 0,
-      sum: 0,
-    },
+    largestPoster: throughputData?.largestPoster
+      ? {
+          ...throughputData?.largestPoster,
+          totalPosted: formatBytes(
+            Number(throughputData.largestPoster.totalPosted),
+          ),
+        }
+      : undefined,
     totalPosted: throughputData?.totalPosted
       ? formatBytes(Number(throughputData.totalPosted))
       : undefined,
-    finality: project.daLayer.finality,
+    finality: project.daLayer.finality
+      ? formatSeconds(project.daLayer.finality, {
+          fullUnit: true,
+        })
+      : undefined,
   }
 }
 

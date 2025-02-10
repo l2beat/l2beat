@@ -109,6 +109,39 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
+  describe(DataAvailabilityRepository.prototype
+    .getLargestPosterByProjectIdsAndTimestamp.name, () => {
+    it('should return the largest poster at a given timestamp', async () => {
+      await repository.upsertMany([
+        record('a', START, 100n),
+        record('a', START.add(1, 'days'), 200n),
+        record('b', START, 300n),
+        record('b', START.add(1, 'days'), 400n),
+      ])
+
+      const results = await repository.getLargestPosterByProjectIdsAndTimestamp(
+        ['a', 'b'],
+        START,
+      )
+
+      expect(results).toEqual(record('b', START, 300n))
+    })
+
+    it('should return undefined if no data is available', async () => {
+      await repository.upsertMany([
+        record('a', START, 100n),
+        record('b', START, 300n),
+      ])
+
+      const results = await repository.getLargestPosterByProjectIdsAndTimestamp(
+        ['a', 'b'],
+        START.add(1, 'days'),
+      )
+
+      expect(results).toEqual(undefined)
+    })
+  })
+
   describe(DataAvailabilityRepository.prototype.deleteByProjectFrom
     .name, () => {
     it('should delete all rows after a given timestamp for a project', async () => {
