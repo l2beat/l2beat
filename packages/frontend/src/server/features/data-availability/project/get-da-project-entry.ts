@@ -150,7 +150,7 @@ export async function getDaProjectEntry(
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
-      isNoBridge: !!selected?.daBridge.risks.isNoBridge,
+      isNoBridge: !selected || !!selected.daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
     bridges: bridges.map((bridge) => ({

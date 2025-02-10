@@ -99,6 +99,7 @@ export function getRegularDaProjectSections({
       title: 'Risk analysis',
       isUnderReview: layer.statuses.isUnderReview,
       isVerified,
+      isNoBridge: !bridge || !!bridge.daBridge.risks.isNoBridge,
       bridgeGrissiniValues,
       hideTitle: true,
     },
@@ -113,7 +114,9 @@ export function getRegularDaProjectSections({
         type: 'da-bridge-technology',
         slug: `${layer.slug}-${bridge?.slug ?? 'no-bridge'}`,
       },
-      content: bridge?.daBridge.technology.description ?? '',
+      content:
+        bridge?.daBridge.technology.description ??
+        'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
       risks: bridge?.daBridge.technology.risks?.map(toTechnologyRisk),
@@ -193,7 +196,9 @@ export function getRegularDaProjectSections({
       props: {
         id: 'da-bridge',
         title: bridge?.daBridge.name ?? 'No DA Bridge',
-        description: bridge?.display.description,
+        description:
+          bridge?.display.description ??
+          'The risk profile in this page refers to L2s that do not integrate with a data availability bridge. Projects not integrating with a functional DA bridge rely only on the data availability attestation of the sequencer.',
         items: daBridgeItems,
       },
     })
