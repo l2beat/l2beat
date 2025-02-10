@@ -763,6 +763,9 @@ importers:
       readline-sync:
         specifier: ^1.4.10
         version: 1.4.10
+      rimraf:
+        specifier: ^5.0.0
+        version: 5.0.10
       viem:
         specifier: ^2.18.6
         version: 2.21.36(typescript@5.6.3)(zod@3.23.8)

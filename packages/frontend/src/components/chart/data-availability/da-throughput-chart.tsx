@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import type { ChartConfig } from '~/components/core/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
-import { PrimaryCard } from '~/components/primary-card'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
@@ -27,13 +26,13 @@ const chartConfig = {
 
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
-  const [metric, setMetric] = useState<'percentage' | 'absolute'>('absolute')
+  const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { data } = api.da.chart.useQuery({
     range,
   })
 
   return (
-    <PrimaryCard>
+    <div>
       <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
         Share of total data posted
       </h1>
@@ -61,6 +60,6 @@ export function DaThroughputChart() {
           }))}
         />
       </div>
-    </PrimaryCard>
+    </div>
   )
 }

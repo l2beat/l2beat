@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import path from 'path'
+import path, { join } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { rimraf } from 'rimraf'
 
@@ -30,7 +30,7 @@ export const SingleDiscoveryCommand = command({
     logger.info('Starting')
 
     const chainConfigs = getChainConfigs()
-    const configReader = new ConfigReader()
+    const configReader = new ConfigReader(join(process.cwd(), '../config'))
     const projectConfig = new DiscoveryConfig(
       {
         name: address.toString(),
@@ -44,6 +44,7 @@ export const SingleDiscoveryCommand = command({
     const http = new HttpClient()
 
     const { result, blockNumber } = await discover(
+      configReader.rootPath,
       chainConfigs,
       projectConfig,
       DiscoveryLogger.CLI,

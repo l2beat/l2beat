@@ -102,6 +102,7 @@
             "operateLinea",
             "validateZkStack",
             "validateBridge",
+            "validateBridge2",
             "relay",
             "sequence",
             "guard",

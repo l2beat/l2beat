@@ -815,6 +815,7 @@ export interface BaseProject {
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
+  daTrackingConfig?: ProjectDaTrackingConfig
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge

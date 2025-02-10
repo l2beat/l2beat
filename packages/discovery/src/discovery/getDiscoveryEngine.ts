@@ -12,6 +12,7 @@ import { ProxyDetector } from './proxies/ProxyDetector'
 import { SourceCodeService } from './source/SourceCodeService'
 
 export function getDiscoveryEngine(
+  discoveryPath: string,
   chainConfigs: DiscoveryChainConfig[],
   cache: DiscoveryCache,
   http: HttpClient,
@@ -26,7 +27,7 @@ export function getDiscoveryEngine(
   const proxyDetector = new ProxyDetector()
   const sourceCodeService = new SourceCodeService()
   const handlerExecutor = new HandlerExecutor()
-  const templateService = new TemplateService()
+  const templateService = new TemplateService(discoveryPath)
   const addressAnalyzer = new AddressAnalyzer(
     proxyDetector,
     sourceCodeService,

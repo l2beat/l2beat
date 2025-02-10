@@ -13,6 +13,7 @@ import type { PermissionsSectionProps } from './permissions/permissions-section'
 import type { ExtendedProjectSectionProps } from './project-section'
 import type { RiskAnalysisSectionProps } from './risk-analysis-section'
 import type { RiskSummarySectionProps } from './risk-summary-section'
+import type { SequencingSectionProps } from './sequencing-section'
 import type { StageSectionProps } from './stage-section'
 import type { StateDerivationSectionProps } from './state-derivation-section'
 import type { StateValidationSectionProps } from './state-validation-section'
@@ -116,6 +117,11 @@ interface ProjectDetailsMarkdownSection {
   props: ProjectDetailsProps<MarkdownSectionProps>
 }
 
+interface ProjectDetailsSequencingSection {
+  type: 'SequencingSection'
+  props: ProjectDetailsProps<SequencingSectionProps>
+}
+
 interface ProjectDetailsPermissionsSection {
   type: 'PermissionsSection'
   props: ProjectDetailsProps<PermissionsSectionProps>
@@ -163,6 +169,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
+  | ProjectDetailsSequencingSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
