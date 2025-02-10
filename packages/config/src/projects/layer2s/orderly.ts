@@ -120,10 +120,7 @@ export const orderly: Layer2 = opStackL2({
   ],
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
   isNodeAvailable: false,
   milestones: [
     {

@@ -36,7 +36,6 @@ export const zora: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://rpc.zora.energy',
-  daTracking: 'ethereum',
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1686693839),

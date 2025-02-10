@@ -36,7 +36,6 @@ export const lambda: Layer2 = opStackL2({
   associatedTokens: ['LAMB'],
   rpcUrl: 'https://nrpc.lambda.im',
   genesisTimestamp: new UnixTime(1713345623),
-  daTracking: 'ethereum',
   isNodeAvailable: true,
   milestones: [
     {

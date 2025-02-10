@@ -34,10 +34,7 @@ export const hypr: Layer2 = opStackL2({
     },
   },
   genesisTimestamp: new UnixTime(1705509623),
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

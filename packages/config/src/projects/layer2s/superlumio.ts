@@ -31,7 +31,6 @@ export const superlumio: Layer2 = opStackL2({
   },
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),
-  daTracking: 'ethereum',
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1708984631),

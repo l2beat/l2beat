@@ -30,7 +30,6 @@ export const shape: Layer2 = opStackL2({
       ],
     },
   },
-  daTracking: 'ethereum',
   finality: {
     type: 'OPStack',
     minTimestamp: new UnixTime(1721744473),

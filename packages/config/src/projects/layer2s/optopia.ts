@@ -31,7 +31,6 @@ export const optopia: Layer2 = opStackL2({
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),
-  daTracking: 'ethereum',
   // failing, needs different analyzer?
   // finality: {
   //   type: 'OPStack-blob',

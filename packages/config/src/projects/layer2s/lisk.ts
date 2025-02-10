@@ -62,5 +62,4 @@ export const lisk: Layer2 = opStackL2({
       tokens: ['USDC'],
     }),
   ],
-  daTracking: 'ethereum',
 })

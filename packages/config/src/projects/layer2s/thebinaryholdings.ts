@@ -32,7 +32,6 @@ export const thebinaryholdings: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
-  daTracking: 'ethereum',
   genesisTimestamp: new UnixTime(1719397465),
   finality: {
     type: 'OPStack',

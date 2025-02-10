@@ -57,7 +57,6 @@ export const mint: Layer2 = opStackL2({
     defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: 'ethereum',
   isNodeAvailable: true,
   genesisTimestamp: new UnixTime(1715608931),
   milestones: [

@@ -60,10 +60,7 @@ export const b3: Layer3 = opStackL3({
     adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1722378840),
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
   isNodeAvailable: false,
   milestones: [
     {

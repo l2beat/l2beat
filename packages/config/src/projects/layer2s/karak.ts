@@ -35,10 +35,7 @@ export const karak: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
   isNodeAvailable: true,
   milestones: [
     {

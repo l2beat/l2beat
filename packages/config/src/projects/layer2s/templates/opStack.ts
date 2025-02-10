@@ -162,7 +162,7 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
-  daTracking?: 'ethereum' | { daLayer: 'celestia'; namespace: string }
+  celestiaDaNamespace?: string
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -263,6 +263,10 @@ function opStackCommon(
     templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
   )
 
+  const isEthereumBlobsDa = templateVars.discovery.getContractValue<{
+    isSequencerSendingBlobTx: boolean
+  }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
   const allDiscoveries = [
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
@@ -331,20 +335,20 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: templateVars.daTracking
-        ? templateVars.daTracking === 'ethereum'
+      daTracking: isEthereumBlobsDa
+        ? {
+            type: 'ethereum',
+            daLayer: ProjectId('ethereum'),
+            inbox: sequencerInbox,
+            sequencers: [sequencer],
+          }
+        : templateVars.celestiaDaNamespace
           ? {
-              type: 'ethereum',
-              daLayer: ProjectId('ethereum'),
-              inbox: sequencerInbox,
-              sequencers: [sequencer],
-            }
-          : {
               type: 'celestia',
               daLayer: ProjectId('celestia'),
-              namespace: templateVars.daTracking.namespace,
+              namespace: templateVars.celestiaDaNamespace,
             }
-        : undefined,
+          : undefined,
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),

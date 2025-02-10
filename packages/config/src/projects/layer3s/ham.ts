@@ -43,10 +43,7 @@ export const ham: Layer3 = opStackL3({
     },
   },
   genesisTimestamp: new UnixTime(1716590734),
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
 })

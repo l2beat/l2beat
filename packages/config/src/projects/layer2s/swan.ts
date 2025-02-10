@@ -35,7 +35,6 @@ export const swan: Layer2 = opStackL2({
     },
   },
   genesisTimestamp: new UnixTime(1718640220),
-  daTracking: 'ethereum',
   // failing, needs different analyzer?
   // finality: {
   //   type: 'OPStack-blob',

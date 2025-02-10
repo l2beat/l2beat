@@ -35,6 +35,5 @@ export const race: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://racemainnet.io',
-  daTracking: 'ethereum',
   isNodeAvailable: true,
 })

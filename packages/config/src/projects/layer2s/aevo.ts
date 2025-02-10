@@ -62,10 +62,7 @@ export const aevo: Layer2 = opStackL2({
     defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
-  daTracking: {
-    daLayer: 'celestia',
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [

@@ -46,7 +46,6 @@ export const bob: Layer2 = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],
-  daTracking: 'ethereum',
   genesisTimestamp: new UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',

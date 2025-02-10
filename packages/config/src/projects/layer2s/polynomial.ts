@@ -159,5 +159,4 @@ export const polynomial: Layer2 = opStackL2({
       includeInTotal: false,
     },
   ],
-  daTracking: 'ethereum',
 })

@@ -82,7 +82,6 @@ export const zircuit: Layer2 = opStackL2({
         'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
     }),
   ],
-  daTracking: 'ethereum',
   nonTemplateTrackedTxs: [
     {
       uses: [

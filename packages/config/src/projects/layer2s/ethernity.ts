@@ -40,7 +40,6 @@ export const ethernity: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.ethernitychain.io',
   genesisTimestamp: new UnixTime(1723547737),
-  daTracking: 'ethereum',
   milestones: [
     // {
     //   name: 'Ethernity Mainnet Launch',

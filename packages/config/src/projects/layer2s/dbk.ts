@@ -28,7 +28,6 @@ export const dbk: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.mainnet.dbkchain.io/',
   genesisTimestamp: new UnixTime(1717461337),
-  daTracking: 'ethereum',
   // incompatible
   // finality: {
   //   type: 'OPStack-blob',

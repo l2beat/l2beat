@@ -41,7 +41,6 @@ export const world = opStackL2({
     },
   },
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
-  daTracking: 'ethereum',
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,

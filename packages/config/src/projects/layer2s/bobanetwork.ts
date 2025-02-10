@@ -39,7 +39,6 @@ export const bobanetwork: Layer2 = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
-  daTracking: 'ethereum',
   // finality: {
   //   type: 'OPStack-blob',
   //   minTimestamp: new UnixTime(1713303530),

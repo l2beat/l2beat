@@ -35,7 +35,6 @@ export const mode: Layer2 = opStackL2({
   },
   associatedTokens: ['MODE'],
   rpcUrl: 'https://mainnet.mode.network/',
-  daTracking: 'ethereum',
   genesisTimestamp: new UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,

@@ -72,7 +72,6 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   rpcUrl: 'https://rpc.blast.io/',
-  daTracking: 'ethereum',
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',

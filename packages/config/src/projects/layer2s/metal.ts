@@ -40,7 +40,6 @@ export const metal: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.metall2.com',
   genesisTimestamp: new UnixTime(1711567115),
-  daTracking: 'ethereum',
   // finality: {
   //   type: 'OPStack-blob',
   //   genesisTimestamp: new UnixTime(1711567115),
