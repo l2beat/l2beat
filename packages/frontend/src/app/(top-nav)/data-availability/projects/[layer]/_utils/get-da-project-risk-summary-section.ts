@@ -5,17 +5,17 @@ import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 
 export function getDaProjectRiskSummarySection(
   layer: Project<'daLayer'>,
-  bridge: Project<'daBridge', 'contracts'>,
+  bridge: Project<'daBridge', 'contracts'> | undefined,
   isVerified: boolean,
 ): Omit<DaRiskSummarySectionProps, keyof ProjectSectionProps> {
   const bridgeSections = [
     {
       id: 'da-bridge-contracts',
-      value: bridge.contracts ?? { risks: [] },
+      value: bridge?.contracts ?? { risks: [] },
     },
     {
       id: 'da-bridge-technology',
-      value: bridge.daBridge.technology,
+      value: bridge?.daBridge.technology,
     },
   ]
 
@@ -48,7 +48,7 @@ export function getDaProjectRiskSummarySection(
       risks: groupRisks(layerRisks),
     },
     bridge: {
-      name: bridge.name,
+      name: bridge?.name ?? 'No DA Bridge',
       risks: groupRisks(bridgeRisks),
     },
     isVerified,

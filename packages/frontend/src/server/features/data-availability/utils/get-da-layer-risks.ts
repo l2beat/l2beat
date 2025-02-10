@@ -1,22 +1,4 @@
-import type {
-  DaBridge,
-  DaBridgeRisks,
-  DaLayer,
-  DaLayerRisks,
-  TableReadyValue,
-} from '@l2beat/config'
-
-export function getDaRisks(
-  daLayer: DaLayer,
-  daBridge: DaBridge,
-  totalValueSecured: number,
-  economicSecurity?: number,
-): DaBridgeRisks & DaLayerRisks {
-  return {
-    ...getDaLayerRisks(daLayer, totalValueSecured, economicSecurity),
-    ...daBridge.risks,
-  }
-}
+import type { DaLayer, TableReadyValue } from '@l2beat/config'
 
 export function getDaLayerRisks(
   daLayer: DaLayer,

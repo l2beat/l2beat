@@ -12,7 +12,9 @@ type RegularDetailsParams = {
     'daLayer' | 'statuses' | 'display',
     'milestones' | 'isUpcoming'
   >
-  bridge: Project<'daBridge' | 'display', 'contracts' | 'permissions'>
+  bridge:
+    | Project<'daBridge' | 'display', 'contracts' | 'permissions'>
+    | undefined
   isVerified: boolean
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
@@ -28,7 +30,7 @@ export function getRegularDaProjectSections({
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
   const permissionsSection =
-    bridge.permissions &&
+    bridge?.permissions &&
     getPermissionsSection({
       type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
       id: layer.id,
@@ -37,7 +39,7 @@ export function getRegularDaProjectSections({
     })
 
   const contractsSection =
-    bridge.contracts &&
+    bridge?.contracts &&
     getContractsSection(
       {
         type: 'layer2', // TODO: This is needed for common contracts and doesn't work for da
@@ -109,13 +111,13 @@ export function getRegularDaProjectSections({
       title: 'Technology',
       diagram: {
         type: 'da-bridge-technology',
-        slug: `${layer.slug}-${bridge.slug}`,
+        slug: `${layer.slug}-${bridge?.slug ?? 'no-bridge'}`,
       },
-      content: bridge.daBridge.technology.description,
+      content: bridge?.daBridge.technology.description ?? '',
       mdClassName:
         'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-      risks: bridge.daBridge.technology.risks?.map(toTechnologyRisk),
-      references: bridge.daBridge.technology.references,
+      risks: bridge?.daBridge.technology.risks?.map(toTechnologyRisk),
+      references: bridge?.daBridge.technology.references,
     },
   })
 
@@ -185,13 +187,13 @@ export function getRegularDaProjectSections({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
-      sideNavTitle: !!bridge.daBridge.risks.isNoBridge
-        ? 'DA Bridge'
+      sideNavTitle: !!bridge?.daBridge.risks.isNoBridge
+        ? 'No DA Bridge'
         : undefined,
       props: {
         id: 'da-bridge',
-        title: bridge.name,
-        description: bridge.display.description,
+        title: bridge?.name ?? 'No DA Bridge',
+        description: bridge?.display.description,
         items: daBridgeItems,
       },
     })

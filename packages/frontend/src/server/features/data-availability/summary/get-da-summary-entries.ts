@@ -18,7 +18,7 @@ import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaLayerRisks } from '../utils/get-da-risks'
+import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaUsers } from '../utils/get-da-users'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
