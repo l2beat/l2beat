@@ -14,6 +14,7 @@ import { MilestonesAndIncidentsSection } from './sections/milestones-and-inciden
 import { PermissionsSection } from './sections/permissions/permissions-section'
 import { RiskAnalysisSection } from './sections/risk-analysis-section'
 import { RiskSummarySection } from './sections/risk-summary-section'
+import { SequencingSection } from './sections/sequencing-section'
 import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
@@ -138,6 +139,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'MarkdownSection':
             return (
               <MarkdownSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'SequencingSection':
+            return (
+              <SequencingSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
