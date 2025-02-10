@@ -1349,7 +1349,7 @@ const roleDescriptions: {
   validateBridge2: {
     name: 'Validator',
     description:
-      'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks.',
+      'Permissoned to sign crosschain messages encoding transfer information, which are decoded onchain with signature checks. The validators listed here are the default validators for Ethereum and can be overridden by a custom configuration.',
   },
   relay: {
     name: 'Relayer',
