@@ -16,6 +16,7 @@ import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export function createDiscoveryRunner(
+  discoveryPath: string,
   http: HttpClient,
   peripherals: Peripherals,
   discoveryLogger: DiscoveryLogger,
@@ -36,6 +37,7 @@ export function createDiscoveryRunner(
   }
 
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
+    discoveryPath,
     chainConfigs,
     discoveryCache,
     http,

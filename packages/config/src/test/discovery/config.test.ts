@@ -1,13 +1,15 @@
-import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
+import { join } from 'path'
+import { isDeepStrictEqual } from 'util'
 import { ConfigReader, TemplateService } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { isEqual } from 'lodash'
-import { discoveryNeedsRefresh } from '../../../tools/discoveryNeedsRefresh'
-import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
+import { bridges } from '../../projects/bridges'
+import { layer2s } from '../../projects/layer2s'
+import { layer3s } from '../../projects/layer3s'
+import { onChainProjects } from '../../projects/onChainProjects'
 
 describe('discovery config.jsonc', () => {
-  const configReader = new ConfigReader()
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
   const templateService = new TemplateService()
 
   const chainConfigs = configReader
@@ -68,7 +70,7 @@ describe('discovery config.jsonc', () => {
         const discovery = configReader.readDiscovery(c.name, c.chain)
 
         if (
-          !isEqual(
+          !isDeepStrictEqual(
             discovery.contracts,
             discovery.contracts
               .slice()
@@ -91,15 +93,11 @@ describe('discovery config.jsonc', () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = configReader.readDiscovery(c.name, c.chain)
+        const reason = templateService.discoveryNeedsRefresh(discovery, c)
 
-        const needsDiscoveryReason = discoveryNeedsRefresh(
-          discovery,
-          c,
-          templateService,
-        )
         assert(
-          needsDiscoveryReason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${needsDiscoveryReason}.\n Run "pnpm refresh-discovery"`,
+          reason === undefined,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
         )
       }
     }
@@ -189,13 +187,12 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it('discovered.json hash matches the one stored in diffHistory.md', async () => {
+  it('discovered.json hash matches the one stored in diffHistory.md', () => {
     for (const configs of chainConfigs ?? []) {
       if (configs.length > 0) {
         for (const c of configs) {
-          const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
-          const currentHash = await getDiscoveryHash(c.name, c.chain)
-          const savedHash = getDiffHistoryHash(diffHistoryPath)
+          const currentHash = configReader.readDiscoveryHash(c.name, c.chain)
+          const savedHash = configReader.readDiffHistoryHash(c.name, c.chain)
           assert(
             savedHash !== undefined,
             `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
