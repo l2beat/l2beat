@@ -702,25 +702,23 @@ export interface CustomDa {
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
-// General da-layer tracking
-
-export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
-// Per-project da-layer tracking
-
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
+  daLayer: ProjectId
   inbox: string
   sequencers?: string[]
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
+  daLayer: ProjectId
   namespace: string
   signers?: string[]
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
+  daLayer: ProjectId
   appId: string
 }
 
@@ -818,6 +816,7 @@ export interface BaseProject {
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
+  daTrackingConfig?: ProjectDaTrackingConfig
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   milestones?: Milestone[]
@@ -926,7 +925,6 @@ export interface DaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
-  daTracking?: DaLayerTrackingConfig
 }
 
 export interface DaBridge {

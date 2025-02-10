@@ -86,6 +86,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     milestones: p.milestones,
+    daTrackingConfig: p.config.daTracking,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
