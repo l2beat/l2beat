@@ -7,8 +7,8 @@ import { PrimaryCard } from '~/components/primary-card'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
-import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 import { DaAbsoluteThroughputChart } from './da-absolute-throughput-chart'
+import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 
 const chartConfig = {
   ethereum: {
