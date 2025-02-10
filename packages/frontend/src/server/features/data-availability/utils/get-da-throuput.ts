@@ -31,7 +31,6 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
         if (!lastRecord) {
           return undefined
         }
-
         assert(
           project.daLayer.throughput,
           'Project does not have throughput data',
@@ -57,7 +56,7 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
             pastDayAvgThroughput,
             maxThroughput,
             pastDayAvgCapacityUtilization,
-            totalPosted: Number(lastRecord.totalSize) / 1_000_000,
+            totalPosted: lastRecord.totalSize,
           },
         ] as const
       })
@@ -79,7 +78,7 @@ function getMockThroughputData(
             pastDayAvgThroughput: 1.5,
             maxThroughput: 4.3,
             pastDayAvgCapacityUtilization: 24,
-            totalPosted: 203.14,
+            totalPosted: 20312412n,
           },
         ] as const
       })

@@ -49,9 +49,7 @@ const finality = columnHelper.display({
 const totalPosted = columnHelper.display({
   header: 'past day\ntotal data posted',
   cell: (ctx) =>
-    ctx.row.original.totalPosted && (
-      <div>{ctx.row.original.totalPosted} MB</div>
-    ),
+    ctx.row.original.totalPosted && <div>{ctx.row.original.totalPosted}</div>,
 })
 
 const utilization = columnHelper.display({
