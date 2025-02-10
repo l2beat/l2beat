@@ -295,7 +295,7 @@
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
-          "isUsingEigenDA": true
+          "isUsingEigenDA": false
         },
         "overhead": 2100,
         "owner": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",

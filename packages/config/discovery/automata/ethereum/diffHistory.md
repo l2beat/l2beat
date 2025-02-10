@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x92f36a27d7ecf493661f1db1fe13a42a70e873cf
+Generated with discovered.json: 0xddca3c3f3fc9b1c4fa562d8af1c50356aaca3778
 
-# Diff at Mon, 10 Feb 2025 11:52:26 GMT:
+# Diff at Mon, 10 Feb 2025 18:08:53 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 21715439
@@ -20,7 +20,7 @@ discovery. Values are for block 21715439 (main branch discovery), not current.
     contract SystemConfig (0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00) {
     +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
       values.opStackDA.isUsingEigenDA:
-+        true
++        false
     }
 ```
 

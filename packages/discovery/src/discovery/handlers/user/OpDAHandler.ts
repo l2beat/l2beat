@@ -35,18 +35,15 @@ const OP_STACK_CELESTIA_DA_EXAMPLE_INPUT =
 const BLOB_TX_TYPE = 3
 
 /**
- * Prefix as follows:
- *
- * Version Byte | Commitment Type | Da Layer Byte  | Payload
- *            1                 0               - 	 keccak_commitment
- *            1                 0               0 	 eigenda_commitment
- *
- * So to differentiate between keccak and eigenda commitment, we need to check the the length as well.
- * Keccak256 has fixed size, eigen da commitment has variable size.
+ * https://specs.optimism.io/experimental/alt-da.html#input-commitment-submission
+ * These versioning prefixes are super weird.
  */
 const PREFIX_SIZE = 6 // '0x' + 2 bytes
 const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
+// to exclude keccak256 due to prefix overlap
 const EIGEN_DA_COMMITMENT_MINIMUM_LENGTH = 64 + PREFIX_SIZE // 256 bits for keccak256
+// arbitrary limit to exclude for example syndicate - yet another overlapping prefix
+const EIGEN_DA_COMMITMENT_MAXIMUM_LENGTH = 2000 + PREFIX_SIZE
 
 /**
  * This is a OP Stack specific handler that is used to check if
@@ -112,7 +109,8 @@ export class OpStackDAHandler implements Handler {
       lastTxs.some(
         (tx) =>
           tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX) &&
-          tx.input.length > EIGEN_DA_COMMITMENT_MINIMUM_LENGTH,
+          tx.input.length > EIGEN_DA_COMMITMENT_MINIMUM_LENGTH &&
+          tx.input.length <= EIGEN_DA_COMMITMENT_MAXIMUM_LENGTH,
       )
 
     return {

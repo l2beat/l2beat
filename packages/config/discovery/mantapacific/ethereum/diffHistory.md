@@ -1,6 +1,6 @@
 Generated with discovered.json: 0xca5f8a97078410791bb4690bee4fd38aea854ee0
 
-# Diff at Mon, 10 Feb 2025 11:52:57 GMT:
+# Diff at Mon, 10 Feb 2025 18:09:29 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 20927642
