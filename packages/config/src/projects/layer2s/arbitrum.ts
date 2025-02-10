@@ -44,19 +44,19 @@ const upgradeExecutorUpgradeability = {
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
-const l2Upgradability = {
-  // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: [
-    'L2SecurityCouncilEmergency',
-    'L2SecurityCouncilPropose',
-    'L1Timelock',
-  ],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
-  upgradeConsiderations:
-    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
-}
+// const l2Upgradability = {
+//   // same as on L1, but messages from L1 must be sent to L2
+//   upgradableBy: [
+//     'L2SecurityCouncilEmergency',
+//     'L2SecurityCouncilPropose',
+//     'L1Timelock',
+//   ],
+//   upgradeDelay: `${formatSeconds(
+//     totalDelay,
+//   )} or 0 if overridden by the Security Council`,
+//   upgradeConsiderations:
+//     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+// }
 
 const l2CoreQuorumPercent =
   (l2Discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
@@ -435,6 +435,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   //     }),
   //   ],
   // },
+  additionalDiscoveries: {['arbitrum']: l2Discovery},
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),

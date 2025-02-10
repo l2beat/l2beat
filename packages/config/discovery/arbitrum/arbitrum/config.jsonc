@@ -43,9 +43,9 @@
   },
   "types": {
     "Undecimal4": {
-    "typeCaster": "Undecimal",
-    "arg": { "decimals": 4 }
-  },
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 4 }
+    }
   },
   "overrides": {
     "L2SurplusFee": {

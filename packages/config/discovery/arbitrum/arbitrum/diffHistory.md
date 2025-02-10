@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8ecbd7b51aba7ecb3a9f8e85b33389f639f82570
+Generated with discovered.json: 0x6b09f70f99d05e9baae702e2cf875f879f1120cb
 
-# Diff at Mon, 10 Feb 2025 11:48:08 GMT:
+# Diff at Mon, 10 Feb 2025 22:53:01 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
-- current block number: 304594180
+- current block number: 304743931
 
 ## Description
 
@@ -17,18 +17,195 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 295612328 (main branch discovery), not current.
 
 ```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      template:
++        "orbitstack/layer2/L2ERC20Gateway"
+      description:
++        "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2."
+    }
+```
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      template:
++        "orbitstack/layer2/ConstitutionHash"
+      description:
++        "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor."
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2BaseFee"
+      displayName:
++        "L2BaseFee"
+      description:
++        "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients."
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      template:
++        "orbitstack/layer2/L2Timelock"
+      description:
++        "Delays constitutional AIPs from the CoreGovernor by 8d."
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      template:
++        "orbitstack/layer2/L2DAIGateway"
+      description:
++        "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2."
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      template:
++        "orbitstack/layer2/L2GatewayRouter"
+      description:
++        "Router managing token <–> gateway mapping on L2."
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      template:
++        "orbitstack/layer2/L2WethGateway"
+      description:
++        "Counterpart to the Bridge on L1. Mints and burns WETH on L2."
+    }
+```
+
+```diff
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      template:
++        "orbitstack/layer2/L2LPTGateway"
+      description:
++        "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2."
+    }
+```
+
+```diff
     contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
     +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      template:
++        "orbitstack/layer2/CoreGovernor"
+      displayName:
++        "CoreGovernor"
       description:
 +        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      template:
++        "orbitstack/layer2/L2ArbitrumToken"
+      description:
++        "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%."
+    }
+```
+
+```diff
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2BaseFee"
+      description:
++        "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients."
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      template:
++        "orbitstack/layer2/L2Timelock"
+      displayName:
++        "L2Timelock"
+      description:
++        "Delays constitutional AIPs from the CoreGovernor by 8d."
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      template:
++        "orbitstack/layer2/L2ARBGateway"
+      description:
++        "ARB sent from L2 to L1 is escrowed in this contract and minted on L1."
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      template:
++        "orbitstack/layer2/SecurityCouncilManager"
+      description:
++        "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync."
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      errors:
++        {"@template":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/SecurityCouncil"
     }
 ```
 
 ```diff
     contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
     +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      template:
++        "orbitstack/layer2/CoreGovernor"
       description:
 +        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
+      errors:
++        {"@template":"Processing error occurred."}
     }
 ```
 

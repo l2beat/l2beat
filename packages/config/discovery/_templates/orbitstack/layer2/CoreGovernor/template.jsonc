@@ -1,0 +1,5 @@
+{
+    "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+    "displayName": "CoreGovernor",
+    "description": "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
+} 

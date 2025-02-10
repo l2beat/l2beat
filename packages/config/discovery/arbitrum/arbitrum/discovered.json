@@ -1,17 +1,19 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 304594180,
-  "configHash": "0x3abb3dce7cb49b0ed47b6b096b7b9eb6bf74489d734a533a3d92d8ac5ca0aeb0",
+  "blockNumber": 304743931,
+  "configHash": "0xb690f0c2b0894460664bd4bfbc259a6c326cdbf9c5d64e2611c3663d62e278f1",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
       "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
+      "template": "orbitstack/layer2/L2ERC20Gateway",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x7ab56232b17ce06beb4a64963bb9e8d0c7fdef3c45ab8f1ae306699d7b80c637"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -53,7 +55,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 30171,
+        "exitNum": 30178,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -61,9 +63,11 @@
     {
       "name": "ConstitutionHash",
       "address": "0x1D62fFeB72e4c360CcBbacf7c965153b00260417",
+      "template": "orbitstack/layer2/ConstitutionHash",
       "sourceHashes": [
         "0xbef9d19875be92a7955c003ae08cc03e029249d8fb5b882ad8ed916d36d87490"
       ],
+      "description": "Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.",
       "sinceTimestamp": 1678968508,
       "values": {
         "$immutable": true,
@@ -75,9 +79,12 @@
     {
       "name": "L2SurplusFee",
       "address": "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d",
+      "template": "orbitstack/layer2/L2BaseFee",
       "sourceHashes": [
         "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
       ],
+      "displayName": "L2BaseFee",
+      "description": "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678989500,
       "values": {
         "$immutable": true,
@@ -93,6 +100,7 @@
           }
         ]
       },
+      "errors": { "@template": "Processing error occurred." },
       "fieldMeta": {
         "recipientsData": {
           "description": "Lists recipients and weights using events, while the latest represents the current state."
@@ -103,11 +111,13 @@
     {
       "name": "L2Timelock",
       "address": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
+      "template": "orbitstack/layer2/L2Timelock",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -163,6 +173,7 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "ArbitrumTimelock"
     },
     {
@@ -244,9 +255,11 @@
     {
       "name": "L2DAIGateway",
       "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+      "template": "orbitstack/layer2/L2DAIGateway",
       "sourceHashes": [
         "0x88d1226b13a00325eaaf0822116a64fc4a6a5dc3b56c15fc942a24a6be815715"
       ],
+      "description": "Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.",
       "sinceTimestamp": 1632133487,
       "values": {
         "$immutable": true,
@@ -262,11 +275,13 @@
     {
       "name": "L2GatewayRouter",
       "address": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+      "template": "orbitstack/layer2/L2GatewayRouter",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x6b2f9c454049196975edab9674208890663911ceebf0cf2c64d3c26a32aa300c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Router managing token <–> gateway mapping on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -308,11 +323,13 @@
     {
       "name": "L2WethGateway",
       "address": "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+      "template": "orbitstack/layer2/L2WethGateway",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0xadf7f548448c8cfc2273cb5feeb31bcdd088e2d60e9be8756da94535ef5667d7"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -365,9 +382,11 @@
     {
       "name": "L2LPTGateway",
       "address": "0x6D2457a4ad276000A615295f7A80F79E48CcD318",
+      "template": "orbitstack/layer2/L2LPTGateway",
       "sourceHashes": [
         "0xed35d20c6e0ab17ec40fb3266b83c36153ce768a59b7b850e22dad1c84eb93b0"
       ],
+      "description": "Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.",
       "sinceTimestamp": 1644595982,
       "values": {
         "$immutable": true,
@@ -402,11 +421,13 @@
     {
       "name": "TreasuryGovernor",
       "address": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+      "template": "orbitstack/layer2/CoreGovernor",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "CoreGovernor",
       "description": "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
       "issuedPermissions": [
         {
@@ -447,16 +468,19 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "L2ArbitrumGovernor"
     },
     {
       "name": "L2ArbitrumToken",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      "template": "orbitstack/layer2/L2ArbitrumToken",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x637d7a1e879804c928473dab6d06d80f9fd85ea5d889c3d5fac43411f6e59346"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -549,9 +573,11 @@
     {
       "name": "L2BaseFee",
       "address": "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
+      "template": "orbitstack/layer2/L2BaseFee",
       "sourceHashes": [
         "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
       ],
+      "description": "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678989486,
       "values": {
         "$immutable": true,
@@ -567,6 +593,7 @@
           }
         ]
       },
+      "errors": { "@template": "Processing error occurred." },
       "fieldMeta": {
         "recipientsData": {
           "description": "Lists recipients and weights using events, while the latest represents the current state."
@@ -577,11 +604,14 @@
     {
       "name": "TreasuryTimelock",
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+      "template": "orbitstack/layer2/L2Timelock",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x34c1cd41f1d2a210cfb4daa6921fc003239f0565c9c678999dcca010df526f55"
       ],
       "proxyType": "EIP1967 proxy",
+      "displayName": "L2Timelock",
+      "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -633,16 +663,19 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "ArbitrumTimelock"
     },
     {
       "name": "L2ARBGateway",
       "address": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+      "template": "orbitstack/layer2/L2ARBGateway",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xc6750fc78a712b7df53681fe94fecdda2f06e26d6bc08a7742dbbc68c48c040b"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -753,11 +786,13 @@
     {
       "name": "SecurityCouncilManager",
       "address": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
+      "template": "orbitstack/layer2/SecurityCouncilManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0xad301a24e9bb35dd5c200ced58fcd66b9b9b8bdeb182b6d4243fe3339c632072"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -881,6 +916,7 @@
         "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "ProxyAdmin"
     },
     {
@@ -930,6 +966,7 @@
         "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "ProxyAdmin"
     },
     {
@@ -948,7 +985,7 @@
     {
       "name": "GnosisSafe",
       "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-      "template": "GnosisSafe",
+      "template": "orbitstack/SecurityCouncil",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
@@ -986,6 +1023,7 @@
     {
       "name": "CoreGovernor",
       "address": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+      "template": "orbitstack/layer2/CoreGovernor",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
@@ -1031,6 +1069,7 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
+      "errors": { "@template": "Processing error occurred." },
       "derivedName": "L2ArbitrumGovernor"
     }
   ],
@@ -1960,6 +1999,19 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "orbitstack/layer2/ConstitutionHash": "0x10d0d32bb0fbfec7ee3f1dc2cf6ac3363249ad1e28d49f3421fa3aeed22cb1e9",
+    "orbitstack/layer2/CoreGovernor": "0xb51958484a8d1970e7d22281935c584b30de221e0f8d44095b5746842a0f8474",
+    "orbitstack/layer2/L2ARBGateway": "0xbbd960418e3eef310d402d8e7210e494de4801b92e1d63bd1bf9eb14ca11ee64",
+    "orbitstack/layer2/L2ArbitrumToken": "0x72c436413098d3c2beb1e99bb3f934f1f3524217074a3a0a423d8ea9e26eea9c",
+    "orbitstack/layer2/L2BaseFee": "0xb2ec9da1eeafb642f4e6a8b6be052ed1ce6077809055660f776301978c30af37",
+    "orbitstack/layer2/L2DAIGateway": "0xaf70be3734d2a28cf15629afe3b5a9e7cef7d7dc0a9ac3eab454262c76edffbd",
+    "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
+    "orbitstack/layer2/L2GatewayRouter": "0xe31e210b07d69a9c9c77df542a1dd576e68ba1acaeba95190fffd873ec49e5a4",
+    "orbitstack/layer2/L2LPTGateway": "0xcd05cc35de62b5ea17c32dec53c91757eba9da69f8d23c09fdac9e8b77330a84",
+    "orbitstack/layer2/L2Timelock": "0xb3a4627b3ec1faf334c6bd678dd45bf750ceee574fd600832c112ef3dc95612b",
+    "orbitstack/layer2/L2WethGateway": "0x9a27ec629e3452bdde8ad1d24ef1bedf887dd54c748463f6eda137b1093f68fb",
+    "orbitstack/layer2/SecurityCouncilManager": "0x2081e3adecb8b82becc887c8daab0873979ffc195d1e511207f4382d048a742c",
+    "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
 }
