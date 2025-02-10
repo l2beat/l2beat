@@ -40,6 +40,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -162,6 +163,7 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -322,6 +324,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      daTracking: templateVars.daTracking,
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),

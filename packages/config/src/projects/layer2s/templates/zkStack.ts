@@ -31,6 +31,7 @@ import type {
   Layer2TxConfig,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
   ProjectTechnologyChoice,
@@ -101,6 +102,7 @@ export interface ZkStackConfigCommon {
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export type Upgradeability = {
@@ -283,6 +285,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
+      daTracking: templateVars.daTracking,
       trackedTxs:
         daProvider !== undefined
           ? undefined

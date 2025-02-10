@@ -38,6 +38,7 @@ import type {
   Layer3,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissions,
@@ -160,6 +161,7 @@ interface OrbitStackConfigCommon {
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  daTracking?: ProjectDaTrackingConfig
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -872,6 +874,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: templateVars.daTracking,
     },
   }
 }
