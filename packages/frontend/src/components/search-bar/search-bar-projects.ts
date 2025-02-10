@@ -74,7 +74,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
         results.push({
           ...common,
           id: `${layer.id}-${p.id}`,
-          name: `${layer.name} with ${p.name}`,
+          name: `${layer.name} with ${p.daBridge.name}`,
           href: `/data-availability/projects/${layer.slug}/${p.slug}`,
           category: 'da',
           tags: [layer.slug, p.slug],

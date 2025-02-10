@@ -246,7 +246,7 @@ function getEthereumEntry(
     tvs: getTvs(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
     bridges: [
       {
-        name: bridge.name,
+        name: bridge.daBridge.name,
         slug: bridge.slug,
         href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
         statuses: {},
