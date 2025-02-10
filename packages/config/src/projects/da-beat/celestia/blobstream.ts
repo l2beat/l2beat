@@ -1,15 +1,15 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
-import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
-import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
-import { linkByDA } from '../common/linkByDA'
 import { isProjectVerified } from '../../../verification/isVerified'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../layer2s/templates/generateDiscoveryDrivenSections'
+import { DaCommitteeSecurityRisk } from '../common/DaCommitteeSecurityRisk'
+import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
+import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
+import { linkByDA } from '../common/linkByDA'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
 const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
@@ -42,6 +42,7 @@ export const blobstream: BaseProject = {
     },
   },
   daBridge: {
+    name: 'Blobstream',
     daLayer: ProjectId('celestia'),
     usedIn: linkByDA({
       layer: ProjectId('celestia'),

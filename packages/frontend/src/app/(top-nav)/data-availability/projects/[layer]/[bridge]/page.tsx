@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
@@ -14,7 +15,6 @@ import { ps } from '~/server/projects'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
-import { ProjectId } from '@l2beat/shared-pure'
 
 interface Props {
   params: Promise<{

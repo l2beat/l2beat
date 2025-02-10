@@ -13,12 +13,12 @@ import {
 import { type RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
+import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaUsers } from '../utils/get-da-users'
 
 export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
@@ -88,7 +88,7 @@ function getDaSummaryEntry(
 ): DaSummaryEntry {
   const daBridges = bridges.map(
     (b): DaBridgeSummaryEntry => ({
-      name: b.name,
+      name: b.daBridge.name,
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {

@@ -192,7 +192,7 @@ export function getRegularDaProjectSections({
         : undefined,
       props: {
         id: 'da-bridge',
-        title: bridge?.name ?? 'No DA Bridge',
+        title: bridge?.daBridge.name ?? 'No DA Bridge',
         description: bridge?.display.description,
         items: daBridgeItems,
       },

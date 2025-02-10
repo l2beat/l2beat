@@ -142,6 +142,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
     daTracking: 'ethereum',
   },
   daBridge: {
+    name: 'Enshrined Bridge',
     daLayer: ProjectId('ethereum'),
     technology: {
       description: `

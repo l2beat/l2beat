@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
+import { isProjectVerified } from '../../../verification/isVerified'
 import { DaCommitteeSecurityRisk } from '../common'
 import { DaRelayerFailureRisk } from '../common/DaRelayerFailureRisk'
 import { DaUpgradeabilityRisk } from '../common/DaUpgradeabilityRisk'
 import { linkByDA } from '../common/linkByDA'
-import { isProjectVerified } from '../../../verification/isVerified'
 
 const discovery = new ProjectDiscovery('vector')
 
@@ -30,6 +30,7 @@ export const vector: BaseProject = {
     },
   },
   daBridge: {
+    name: 'Vector',
     daLayer: ProjectId('avail'),
     technology: {
       description: ` 

@@ -3,11 +3,11 @@ import { layer2s, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
-import { getDaUsers } from '../utils/get-da-users'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
+import { getDaUsers } from '../utils/get-da-users'
 
 export async function getDaRiskEntries() {
   const [layers, bridges] = await Promise.all([
@@ -52,9 +52,12 @@ function getDaRiskEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
+  console.log(layer.id)
+  console.log(bridges.map((x) => x.id))
+
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
-      name: b.name,
+      name: b.daBridge.name,
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {

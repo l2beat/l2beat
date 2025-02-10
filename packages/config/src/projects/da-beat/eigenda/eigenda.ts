@@ -1,5 +1,7 @@
-import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
+import { isProjectVerified } from '../../../verification/isVerified'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -8,8 +10,6 @@ import {
   DaUpgradeabilityRisk,
 } from '../common'
 import { linkByDA } from '../common/linkByDA'
-import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { isProjectVerified } from '../../../verification/isVerified'
 
 const discovery = new ProjectDiscovery('eigenda')
 
@@ -168,6 +168,7 @@ export const eigenda: BaseProject = {
     },
   },
   daBridge: {
+    name: 'Service Manager',
     daLayer: ProjectId('eigenda'),
     technology: {
       description: `

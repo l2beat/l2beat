@@ -1,4 +1,5 @@
-import { layer2s, layer3s, Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
+import { layer2s, layer3s } from '@l2beat/config'
 
 export function getDaUsers(
   layers: Project<'daLayer'>[],

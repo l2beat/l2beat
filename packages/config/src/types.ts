@@ -930,6 +930,7 @@ export interface DaLayer {
 }
 
 export interface DaBridge {
+  name: string
   daLayer: ProjectId
   technology: DaTechnology
   risks: DaBridgeRisks

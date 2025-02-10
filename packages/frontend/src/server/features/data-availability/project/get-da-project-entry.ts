@@ -18,11 +18,11 @@ import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
+import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import {
   getDaProjectsTvs,
   pickTvsForProjects,
 } from '../utils/get-da-projects-tvs'
-import { getDaLayerRisks } from '../utils/get-da-layer-risks'
 import { getDaProjectEconomicSecurity } from './utils/get-da-project-economic-security'
 
 interface CommonDaProjectPageEntry {
@@ -151,14 +151,14 @@ export async function getDaProjectEntry(
     isUpcoming: layer.isUpcoming ?? false,
     selectedBridge: {
       id: selected?.id ?? 'unknown',
-      name: selected?.name ?? 'No DA Bridge',
+      name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
       isNoBridge: !!selected?.daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
     bridges: bridges.map((bridge) => ({
       id: bridge.id,
-      name: bridge.name,
+      name: bridge.daBridge.name,
       slug: bridge.slug,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
@@ -179,7 +179,7 @@ export async function getDaProjectEntry(
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
-      title: bridge.name,
+      title: bridge.daBridge.name,
       href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     })),
   }
@@ -249,9 +249,9 @@ export async function getEthereumDaProjectEntry(
       durationStorage: layer.daLayer.pruningWindow ?? 0,
       throughput: layer.daLayer.throughput,
       usedIn: usedInByTvsDesc,
-      bridgeName: bridge.name,
+      bridgeName: bridge.daBridge.name,
       callout: {
-        title: bridge.name,
+        title: bridge.daBridge.name,
         description: bridge.daBridge.risks.callout ?? '',
       },
     },
