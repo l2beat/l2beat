@@ -44,8 +44,7 @@ export const ham: Layer3 = opStackL3({
   },
   genesisTimestamp: new UnixTime(1716590734),
   daTracking: {
-    type: 'celestia',
-    daLayer: ProjectId('celestia'),
+    daLayer: 'celestia',
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SpeLVvrm6k=',
   },
   isNodeAvailable: true,

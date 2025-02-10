@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -36,12 +36,7 @@ export const zora: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://rpc.zora.energy',
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf',
-    sequencers: ['0x625726c858dBF78c0125436C943Bf4b4bE9d9033'],
-  },
+  daTracking: 'ethereum',
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1686693839),

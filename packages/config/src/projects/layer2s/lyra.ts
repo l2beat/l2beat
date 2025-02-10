@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 
@@ -42,8 +42,7 @@ export const lyra: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
   daTracking: {
-    type: 'celestia',
-    daLayer: ProjectId('celestia'),
+    daLayer: 'celestia',
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
   },
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),

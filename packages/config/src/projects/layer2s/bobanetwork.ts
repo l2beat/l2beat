@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -39,12 +39,7 @@ export const bobanetwork: Layer2 = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0xfFF0000000000000000000000000000000000288',
-    sequencers: ['0xe1B64045351B0B6e9821F19b39f81bc4711D2230'],
-  },
+  daTracking: 'ethereum',
   // finality: {
   //   type: 'OPStack-blob',
   //   minTimestamp: new UnixTime(1713303530),

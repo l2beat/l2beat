@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -40,12 +40,7 @@ export const metal: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.metall2.com',
   genesisTimestamp: new UnixTime(1711567115),
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
+  daTracking: 'ethereum',
   // finality: {
   //   type: 'OPStack-blob',
   //   genesisTimestamp: new UnixTime(1711567115),

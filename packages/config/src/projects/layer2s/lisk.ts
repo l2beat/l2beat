@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -62,10 +62,5 @@ export const lisk: Layer2 = opStackL2({
       tokens: ['USDC'],
     }),
   ],
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0xFf00000000000000000000000000000000001135',
-    sequencers: ['0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24'],
-  },
+  daTracking: 'ethereum',
 })

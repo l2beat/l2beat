@@ -40,7 +40,6 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
-  ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -163,7 +162,7 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
-  daTracking?: ProjectDaTrackingConfig
+  daTracking?: 'ethereum' | { daLayer: 'celestia'; namespace: string }
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -256,6 +255,14 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
+
+  const sequencer = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+
   const allDiscoveries = [
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
@@ -324,7 +331,20 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: templateVars.daTracking,
+      daTracking: templateVars.daTracking
+        ? templateVars.daTracking === 'ethereum'
+          ? {
+              type: 'ethereum',
+              daLayer: ProjectId('ethereum'),
+              inbox: sequencerInbox,
+              sequencers: [sequencer],
+            }
+          : {
+              type: 'celestia',
+              daLayer: ProjectId('celestia'),
+              namespace: templateVars.daTracking.namespace,
+            }
+        : undefined,
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),

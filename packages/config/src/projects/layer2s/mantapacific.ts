@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -46,8 +46,7 @@ export const mantapacific: Layer2 = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   daTracking: {
-    type: 'celestia',
-    daLayer: ProjectId('celestia'),
+    daLayer: 'celestia',
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
   },
   associatedTokens: ['MANTA'],

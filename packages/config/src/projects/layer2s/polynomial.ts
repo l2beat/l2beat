@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -159,10 +159,5 @@ export const polynomial: Layer2 = opStackL2({
       includeInTotal: false,
     },
   ],
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
+  daTracking: 'ethereum',
 })

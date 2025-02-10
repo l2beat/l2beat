@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -32,12 +32,7 @@ export const thebinaryholdings: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://rpc.zero.thebinaryholdings.com',
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
-    sequencers: ['0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7'],
-  },
+  daTracking: 'ethereum',
   genesisTimestamp: new UnixTime(1719397465),
   finality: {
     type: 'OPStack',

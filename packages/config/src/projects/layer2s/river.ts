@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -31,12 +31,7 @@ export const river: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.rpc.river.build',
   genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
+  daTracking: 'ethereum',
   milestones: [
     {
       title: 'River Protocol is now Towns Protocol',

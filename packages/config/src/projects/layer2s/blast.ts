@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -72,12 +72,7 @@ export const blast: Layer2 = opStackL2({
     ],
   },
   rpcUrl: 'https://rpc.blast.io/',
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0xFf00000000000000000000000000000000081457',
-    sequencers: ['0x415c8893D514F9BC5211d36eEDA4183226b84AA7'],
-  },
+  daTracking: 'ethereum',
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',

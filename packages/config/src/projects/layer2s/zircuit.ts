@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ProjectTechnologyChoice } from '../../types'
@@ -87,12 +82,7 @@ export const zircuit: Layer2 = opStackL2({
         'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
     }),
   ],
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0xFF00000000000000000000000000000000048900',
-    sequencers: ['0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145'],
-  },
+  daTracking: 'ethereum',
   nonTemplateTrackedTxs: [
     {
       uses: [
