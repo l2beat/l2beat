@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -41,6 +41,12 @@ export const world = opStackL2({
     },
   },
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0xff00000000000000000000000000000000000480',
+    sequencers: ['0xdBBE3D8c2d2b22A2611c5A94A9a12C2fCD49Eb29'],
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,

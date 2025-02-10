@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -61,6 +61,11 @@ export const aevo: Layer2 = opStackL2({
     startBlock: 1,
     defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
+  },
+  daTracking: {
+    type: 'celestia',
+    daLayer: ProjectId('celestia'),
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
   },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,

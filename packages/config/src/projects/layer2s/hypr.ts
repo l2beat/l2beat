@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -34,6 +34,11 @@ export const hypr: Layer2 = opStackL2({
     },
   },
   genesisTimestamp: new UnixTime(1705509623),
+  daTracking: {
+    type: 'celestia',
+    daLayer: ProjectId('celestia'),
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
+  },
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

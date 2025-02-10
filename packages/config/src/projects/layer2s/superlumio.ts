@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -31,6 +31,12 @@ export const superlumio: Layer2 = opStackL2({
   },
   rpcUrl: 'https://mainnet.lumio.io',
   genesisTimestamp: new UnixTime(1708984633),
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
+  },
   finality: {
     type: 'OPStack',
     genesisTimestamp: new UnixTime(1708984631),

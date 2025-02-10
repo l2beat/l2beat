@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -35,5 +35,11 @@ export const race: Layer2 = opStackL2({
     },
   },
   rpcUrl: 'https://racemainnet.io',
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
+  },
   isNodeAvailable: true,
 })

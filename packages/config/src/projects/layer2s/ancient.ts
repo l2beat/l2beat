@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -49,6 +49,11 @@ export const ancient: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.ancient8.gg/',
   genesisTimestamp: new UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
+  daTracking: {
+    type: 'celestia',
+    daLayer: ProjectId('celestia'),
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
+  },
   milestones: [
     {
       title: 'Ancient8 Network Launch',

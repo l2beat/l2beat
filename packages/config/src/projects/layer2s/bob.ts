@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
@@ -46,6 +46,12 @@ export const bob: Layer2 = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x3A75346f81302aAc0333FB5DCDD407e12A6CfA83',
+    sequencers: ['0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11'],
+  },
   genesisTimestamp: new UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
   isNodeAvailable: 'UnderReview',

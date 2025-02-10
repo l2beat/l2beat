@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -29,6 +29,12 @@ export const shape: Layer2 = opStackL2({
         'https://warpcast.com/shape-l2',
       ],
     },
+  },
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
   },
   finality: {
     type: 'OPStack',

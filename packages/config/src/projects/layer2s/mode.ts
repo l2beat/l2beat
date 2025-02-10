@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -35,6 +35,12 @@ export const mode: Layer2 = opStackL2({
   },
   associatedTokens: ['MODE'],
   rpcUrl: 'https://mainnet.mode.network/',
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67',
+    sequencers: ['0x99199a22125034c808ff20f377d91187E8050F2E'],
+  },
   genesisTimestamp: new UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,

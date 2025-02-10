@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -56,6 +56,12 @@ export const mint: Layer2 = opStackL2({
     startBlock: 1,
     defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
+  },
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
   },
   isNodeAvailable: true,
   genesisTimestamp: new UnixTime(1715608931),

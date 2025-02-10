@@ -207,6 +207,12 @@ export const base: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xFf00000000000000000000000000000000008453',
+      sequencers: ['0x5050f69a9786f081509234f1a7f4684b5e5b76c9'],
+    },
     finality: {
       type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),

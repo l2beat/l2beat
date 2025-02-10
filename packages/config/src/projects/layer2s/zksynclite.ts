@@ -69,7 +69,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments', 'Exchange', 'NFT'],
     stack: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -104,6 +103,12 @@ export const zksynclite: Layer2 = {
       type: 'zksync',
       defaultUrl: 'https://api.zksync.io/api/v0.2',
       defaultCallsPerMinute: 3_000,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x0000000000000000000000000000000000000000',
+      sequencers: [],
     },
     trackedTxs: [
       {

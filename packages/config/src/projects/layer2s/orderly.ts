@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -120,6 +120,11 @@ export const orderly: Layer2 = opStackL2({
   ],
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
+  daTracking: {
+    type: 'celestia',
+    daLayer: ProjectId('celestia'),
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
+  },
   isNodeAvailable: false,
   milestones: [
     {

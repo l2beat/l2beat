@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -19,7 +19,8 @@ export const karak: Layer2 = opStackL2({
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {
-    name: 'K2',
+    name:
+    ,
     slug: 'k2',
     description: 'K2 is a general-purpose Optimium.',
     links: {
@@ -35,6 +36,11 @@ export const karak: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
+  daTracking: {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+    },
   isNodeAvailable: true,
   milestones: [
     {

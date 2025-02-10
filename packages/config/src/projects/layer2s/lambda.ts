@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -36,6 +36,12 @@ export const lambda: Layer2 = opStackL2({
   associatedTokens: ['LAMB'],
   rpcUrl: 'https://nrpc.lambda.im',
   genesisTimestamp: new UnixTime(1713345623),
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
+  },
   isNodeAvailable: true,
   milestones: [
     {

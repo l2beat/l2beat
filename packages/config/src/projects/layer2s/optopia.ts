@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -31,6 +31,12 @@ export const optopia: Layer2 = opStackL2({
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
+  },
   // failing, needs different analyzer?
   // finality: {
   //   type: 'OPStack-blob',

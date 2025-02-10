@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -40,6 +40,12 @@ export const ethernity: Layer2 = opStackL2({
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet.ethernitychain.io',
   genesisTimestamp: new UnixTime(1723547737),
+  daTracking: {
+    type: 'ethereum',
+    daLayer: ProjectId('ethereum'),
+    inbox: '0x0000000000000000000000000000000000000000',
+    sequencers: [],
+  },
   milestones: [
     // {
     //   name: 'Ethernity Mainnet Launch',
