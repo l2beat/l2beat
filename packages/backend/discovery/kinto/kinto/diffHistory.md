@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x738f727bc32927d8a352c81220441848b3a3eaf5
+
+# Diff at Mon, 10 Feb 2025 11:26:18 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@ef01ea79812e0d524af00be3fae1170cef6fd662 block: 725499
+- current block number: 725499
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 725499 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
++        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
+    }
+```
+
 Generated with discovered.json: 0xf270c35d33d74b2b86de2691d762798419508bf0
 
 # Diff at Thu, 06 Feb 2025 08:52:34 GMT:

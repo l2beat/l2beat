@@ -830,7 +830,10 @@
         }
       ]
     },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     {
       "address": "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De",
       "receivedPermissions": [
