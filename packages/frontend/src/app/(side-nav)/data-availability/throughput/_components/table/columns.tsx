@@ -68,6 +68,7 @@ const largestPoster = columnHelper.display({
   header: 'past day avg\nlargest poster',
   cell: (ctx) => (
     <TableValueCell
+      emptyMode="no-data"
       value={
         ctx.row.original.largestPoster
           ? {
