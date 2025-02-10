@@ -7,11 +7,13 @@ import type {
 import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 
 export interface ProjectCountdownsWithContext {
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ScalingProjectCategory
-    reasons: ReasonForBeingInOther[]
-  }
+  otherMigration:
+    | {
+        expiresAt: number
+        pretendingToBe: ScalingProjectCategory
+        reasons: ReasonForBeingInOther[]
+      }
+    | undefined
 }
 
 export function getCountdowns(

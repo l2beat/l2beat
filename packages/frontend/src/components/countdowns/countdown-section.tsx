@@ -1,4 +1,4 @@
-export function OtherMigrationContainer({
+export function CountdownSection({
   children,
 }: {
   children: React.ReactNode
