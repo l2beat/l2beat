@@ -40,8 +40,8 @@ const BLOB_TX_TYPE = 3
  *
  * aevo: 		  0x01 01 00  	(EIGEN)
  * soma: 		  0x01 00 00 		(EIGEN)
- * donutz: 		0x01 01 00		(EIGEN)
- * automata: 	0x01 00 a5 		(challanges)
+ * donatuz: 	0x01 01 00		(EIGEN)
+ * automata: 	0x01 00 a5 		(challenges)
  * syndicate: 0x01 00 9c		(keccak256)
  */
 const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
@@ -113,13 +113,6 @@ export class OpStackDAHandler implements Handler {
 
         const prefixMatch = tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX)
         const thirdByteMatch = thirdByte === EIGEN_DA_COMMITMENT_THIRD_BYTE
-
-        console.dir({
-          prefixMatch,
-          thirdByteMatch,
-          thirdByte,
-          input: tx.input,
-        })
 
         return prefixMatch && thirdByteMatch
       })
