@@ -84,6 +84,7 @@ export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
           axisLine={false}
           unit="%"
           mirror
+          tickCount={3}
           tick={{
             dy: -10,
           }}

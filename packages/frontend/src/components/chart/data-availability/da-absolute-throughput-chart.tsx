@@ -73,6 +73,7 @@ export function DaAbsoluteThroughputChart({ data, chartConfig }: Props) {
           tickLine={false}
           axisLine={false}
           mirror
+          tickCount={3}
           tick={{
             dy: -10,
           }}
