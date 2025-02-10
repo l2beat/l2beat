@@ -5,11 +5,12 @@ import {
   getChainConfig,
 } from '@l2beat/discovery'
 
-import { EthereumAddress } from '@l2beat/shared-pure'
+import path from 'path'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { command, option, optional, positional, run, string } from 'cmd-ts'
-import { isEmpty } from 'lodash'
-import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
+import { command, option, optional, positional, string } from 'cmd-ts'
+import { readConfig } from '../config/readConfig'
+import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
@@ -36,10 +37,13 @@ const args = {
   }),
 }
 
-const configReader = new ConfigReader()
+const config = readConfig()
+assert(config.discoveryPath !== undefined)
+const configReader = new ConfigReader(path.dirname(config.discoveryPath))
 
-const cmd = command({
+export const Discover = command({
   name: 'discover',
+  description: 'User interface to discover projects located in discovery',
   args,
   handler: async (args) => {
     const projectsOnChain: Record<string, string[]> = resolveProjectsOnChain(
@@ -65,7 +69,7 @@ const cmd = command({
 })
 
 function logProjectsToDiscover(projectsOnChain: Record<string, string[]>) {
-  if (isEmpty(projectsOnChain)) {
+  if (Object.keys(projectsOnChain).length === 0) {
     console.log(chalk.greenBright('Nothing to discover'))
     return
   }
@@ -135,5 +139,3 @@ function addressPredicate(
     discovery.eoas.find((c) => c.address === needleAddress) !== undefined
   return hasContract || hasEOA
 }
-
-run(cmd, process.argv.slice(2))

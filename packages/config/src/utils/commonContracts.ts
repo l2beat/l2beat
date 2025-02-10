@@ -65,7 +65,7 @@ function findCommonContracts(
   >[],
   hostChain: string,
 ) {
-  const configReader = new ConfigReader('../backend')
+  const configReader = new ConfigReader('../config')
   const allConfigs = configReader.readAllConfigsForChain(hostChain)
   const configs = allConfigs.filter((c) =>
     projects.map((p) => p.id.toString()).includes(c.name),

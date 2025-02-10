@@ -3,7 +3,8 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 
-import { assert, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
+import { assert, Hash160, stripAnsiEscapeCodes } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import type { ZodError } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
@@ -16,6 +17,8 @@ import {
   GlobalTypes,
   RawDiscoveryConfig,
 } from './RawDiscoveryConfig'
+
+const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 export class ConfigReader {
   public templateService: TemplateService
@@ -81,6 +84,13 @@ export class ConfigReader {
     const meta = JSON.parse(contents) as unknown as DiscoveryOutput
     assert(meta.chain === chain, 'Chain mismatch in discovered.json')
     return meta
+  }
+
+  readDiscoveryHash(projectName: string, chain: string): Hash160 {
+    const curDiscovery = this.readDiscovery(projectName, chain)
+    const hasher = createHash('sha1')
+    hasher.update(JSON.stringify(curDiscovery))
+    return Hash160(`0x${hasher.digest('hex')}`)
   }
 
   readAllChains(): string[] {
@@ -172,6 +182,29 @@ export class ConfigReader {
     }
 
     return projects
+  }
+
+  readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {
+    assert(
+      fileExistsCaseSensitive(path.join(this.rootPath, 'discovery', name)),
+      'Project not found, check if case matches',
+    )
+    assert(
+      fileExistsCaseSensitive(
+        path.join(this.rootPath, 'discovery', name, chain),
+      ),
+      'Chain not found in project, check if case matches',
+    )
+
+    const content = readFileSync(
+      path.join(this.rootPath, 'discovery', name, chain, 'diffHistory.md'),
+      'utf-8',
+    )
+    const hashLine = content.split('\n')[0]
+    if (hashLine !== undefined && hashLine.startsWith(HASH_LINE_PREFIX)) {
+      const hashString = hashLine.slice(HASH_LINE_PREFIX.length)
+      return Hash160(hashString)
+    }
   }
 
   private readCommonAddressNames(): CommonAddressNames {

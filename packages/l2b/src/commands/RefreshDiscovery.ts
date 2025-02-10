@@ -1,15 +1,17 @@
+import path from 'path'
 import {
   ConfigReader,
   type DiscoveryConfig,
   TemplateService,
   getChainConfig,
 } from '@l2beat/discovery'
-import { boolean, command, flag, option, optional, run, string } from 'cmd-ts'
+import { assert } from '@l2beat/shared-pure'
+import { boolean, command, flag, option, optional, string } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
-import { discoveryNeedsRefresh } from '../src/tools/discoveryNeedsRefresh'
-import { discoverAndUpdateDiffHistory } from './discoveryWrapper'
+import { readConfig } from '../config/readConfig'
+import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
-const cmd = command({
+export const RefreshDiscovery = command({
   name: 'refresh-discovery',
   args: {
     all: flag({
@@ -45,8 +47,10 @@ const cmd = command({
     }),
   },
   handler: async (args) => {
-    const configReader = new ConfigReader()
-    const templateService = new TemplateService()
+    const config = readConfig()
+    assert(config.discoveryPath !== undefined)
+    const configReader = new ConfigReader(path.dirname(config.discoveryPath))
+    const templateService = new TemplateService(configReader.rootPath)
 
     const chainConfigs = await Promise.all(
       configReader
@@ -67,7 +71,7 @@ const cmd = command({
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const needsRefreshReason = args.all
         ? '--all flag was provided'
-        : discoveryNeedsRefresh(discovery, config, templateService)
+        : templateService.discoveryNeedsRefresh(discovery, config)
       if (needsRefreshReason !== undefined) {
         toRefresh.push({
           config,
@@ -104,5 +108,3 @@ const cmd = command({
     }
   },
 })
-
-run(cmd, process.argv.slice(2))

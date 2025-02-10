@@ -10,41 +10,27 @@ const B = { address: EthereumAddress.random() }
 const C = { address: EthereumAddress.random() }
 
 describe(findUnknownContracts.name, () => {
-  it('finds contracts not present in discovered.json', async () => {
+  it('finds contracts not present in discovered.json', () => {
     const configReader = mockObject<ConfigReader>({
-      readDiscovery: mockFn().resolvesTo({
+      readDiscovery: mockFn().returns({
         contracts: [A, B],
       }),
     })
 
     const contracts = [A, B, C] as ContractParameters[]
-
-    const result = await findUnknownContracts(
-      '',
-      contracts,
-      configReader,
-      'ethereum',
-    )
-
+    const result = findUnknownContracts('', contracts, configReader, 'ethereum')
     expect(result).toEqual([C.address])
   })
 
-  it('works for empty arrays', async () => {
+  it('works for empty arrays', () => {
     const configReader = mockObject<ConfigReader>({
-      readDiscovery: mockFn().resolvesTo({
+      readDiscovery: mockFn().returns({
         contracts: [],
       }),
     })
 
     const contracts: ContractParameters[] = []
-
-    const result = await findUnknownContracts(
-      '',
-      contracts,
-      configReader,
-      'ethereum',
-    )
-
+    const result = findUnknownContracts('', contracts, configReader, 'ethereum')
     expect(result).toEqual([])
   })
 })

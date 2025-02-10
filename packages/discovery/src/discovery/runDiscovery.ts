@@ -39,6 +39,7 @@ export async function runDiscovery(
 
   const logger = DiscoveryLogger.CLI
   const { result, blockNumber, providerStats } = await discover(
+    configReader.rootPath,
     chainConfigs,
     projectConfig,
     logger,
@@ -70,6 +71,7 @@ export async function runDiscovery(
 }
 
 export async function dryRunDiscovery(
+  discoveryPath: string,
   http: HttpClient,
   configReader: ConfigReader,
   config: DiscoveryModuleConfig,
@@ -87,6 +89,7 @@ export async function dryRunDiscovery(
 
   const [discovered, discoveredYesterday] = await Promise.all([
     justDiscover(
+      discoveryPath,
       chainConfigs,
       projectConfig,
       blockNumber,
@@ -94,6 +97,7 @@ export async function dryRunDiscovery(
       config.overwriteCache,
     ),
     justDiscover(
+      discoveryPath,
       chainConfigs,
       projectConfig,
       blockNumberYesterday,
@@ -115,6 +119,7 @@ export async function dryRunDiscovery(
 }
 
 async function justDiscover(
+  discoveryPath: string,
   chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   blockNumber: number,
@@ -122,6 +127,7 @@ async function justDiscover(
   overwriteCache: boolean,
 ): Promise<DiscoveryOutput> {
   const { result } = await discover(
+    discoveryPath,
     chainConfigs,
     config,
     DiscoveryLogger.CLI,
@@ -133,6 +139,7 @@ async function justDiscover(
 }
 
 export async function discover(
+  discoveryPath: string,
   chainConfigs: DiscoveryChainConfig[],
   config: DiscoveryConfig,
   logger: DiscoveryLogger,
@@ -151,6 +158,7 @@ export async function discover(
     : sqliteCache
 
   const { allProviders, discoveryEngine } = getDiscoveryEngine(
+    discoveryPath,
     chainConfigs,
     cache,
     http,
