@@ -7,6 +7,7 @@ import { Callout } from '~/components/callout'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-tooltip-content'
 import { WarningBar } from '~/components/warning-bar'
+import { featureFlags } from '~/consts/feature-flags'
 import { InfoIcon } from '~/icons/info'
 import { MissingIcon } from '~/icons/missing'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
@@ -20,6 +21,13 @@ export interface StageTooltipProps {
 
 export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
   if (stageConfig.stage === 'NotApplicable') return null
+  const missing =
+    stageConfig.stage !== 'UnderReview'
+      ? stageConfig.missing?.principle &&
+        featureFlags.stageOneRequirementsChanged()
+        ? [stageConfig.missing.principle]
+        : stageConfig.missing?.requirements
+      : undefined
 
   return (
     <div className="flex flex-col py-1">
@@ -90,7 +98,7 @@ export function StageTooltip({ stageConfig, isAppchain }: StageTooltipProps) {
                 </span>
               </span>
               <ul className="list-none space-y-2">
-                {stageConfig.missing.requirements.map((requirement, i) => (
+                {missing?.map((requirement, i) => (
                   <li className="flex gap-1.5" key={i}>
                     <MissingIcon className="relative top-0.5 inline-block shrink-0" />
                     {requirement}

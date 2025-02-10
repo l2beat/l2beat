@@ -7,6 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/core/accordion'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { StageOneRequirementsChangeStageSectionNotice } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-notice'
 import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
@@ -131,13 +136,27 @@ export function StageSection({
       )}
       <Accordion type="multiple">
         {stageConfig.summary.map((stage) => {
-          const satisfied = stage.requirements.filter(
+          const requirementsForLabel =
+            stage.principle && featureFlags.stageOneRequirementsChanged()
+              ? [stage.principle]
+              : stage.requirements
+          const satisifedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )
-          const missing = stage.requirements.filter(
+          const missingForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === false,
           )
-          const underReview = stage.requirements.filter(
+          const underReviewForLabel = requirementsForLabel.filter(
+            (r) => r.satisfied === 'UnderReview',
+          )
+
+          const satisfiedRequirements = stage.requirements.filter(
+            (r) => r.satisfied === true,
+          )
+          const missingRequirements = stage.requirements.filter(
+            (r) => r.satisfied === false,
+          )
+          const underReviewRequirements = stage.requirements.filter(
             (r) => r.satisfied === 'UnderReview',
           )
 
@@ -146,16 +165,18 @@ export function StageSection({
               <AccordionTrigger className="px-6 py-4 text-lg font-normal">
                 <div className="flex select-none items-center justify-start gap-3 max-md:text-base">
                   <StageBadge stage={stage.stage} isAppchain={false} />
-                  {missing.length === 0 ? (
+                  {missingForLabel.length === 0 ? (
                     <div className="flex flex-col gap-3 md:flex-row">
                       <div className="flex items-center gap-2 font-bold">
                         <SatisfiedIcon className="size-4 shrink-0 fill-positive" />
-                        <span>{reqTextSatisfied(satisfied.length)}</span>
+                        <span>
+                          {reqTextSatisfied(satisifedForLabel.length)}
+                        </span>
                       </div>
-                      {underReview.length > 0 && (
+                      {underReviewForLabel.length > 0 && (
                         <div className="flex items-center gap-2">
                           <UnderReviewIcon className="size-4 shrink-0" />
-                          <span>{underReview.length} under review</span>
+                          <span>{underReviewForLabel.length} under review</span>
                         </div>
                       )}
                     </div>
@@ -166,7 +187,7 @@ export function StageSection({
                       ) : (
                         <MissingIcon className="size-4 shrink-0 fill-negative" />
                       )}
-                      <span>{reqTextMissing(missing.length)}</span>
+                      <span>{reqTextMissing(missingForLabel.length)}</span>
                     </div>
                   )}
                 </div>
@@ -174,11 +195,23 @@ export function StageSection({
               <AccordionContent className="mx-6 space-y-1 text-lg md:space-y-2">
                 {stage.principle && (
                   <div className="rounded-lg border border-brand p-2">
-                    <p className="ml-6 text-[13px] uppercase">
-                      {stageConfig.downgradePending
-                        ? 'Upcoming principle'
-                        : 'Principle'}
-                    </p>
+                    <div className="flex items-center gap-1">
+                      <span className="ml-6 text-[13px] uppercase">
+                        {featureFlags.stageOneRequirementsChanged()
+                          ? 'Principle'
+                          : 'Upcoming principle'}
+                      </span>
+                      <Tooltip>
+                        <TooltipTrigger className="-mt-0.5">
+                          <InfoIcon className="size-3" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          A Principle is the main requirement you need to
+                          fulfill in order to receive this stage. The guidelines
+                          below serve to help the project meet this goal.
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                     <div className="flex">
                       {stage.principle.satisfied === 'UnderReview' ? (
                         <UnderReviewIcon className="mt-0.5 size-4 shrink-0" />
@@ -194,11 +227,12 @@ export function StageSection({
                   </div>
                 )}
 
-                {featureFlags.stageOneRequirementsChanged() && (
-                  <p className="ml-8 text-[13px] uppercase">Guidelines</p>
-                )}
+                {featureFlags.stageOneRequirementsChanged() &&
+                  stage.principle && (
+                    <p className="ml-8 text-[13px] uppercase">Guidelines</p>
+                  )}
                 <ul className="space-y-1 px-2 md:space-y-2">
-                  {satisfied.map((req, i) => (
+                  {satisfiedRequirements.map((req, i) => (
                     <li key={i} className="flex">
                       <SatisfiedIcon className="relative top-0.5 size-4 shrink-0 fill-positive" />
                       <Markdown
@@ -209,7 +243,7 @@ export function StageSection({
                       </Markdown>
                     </li>
                   ))}
-                  {underReview.map((req, i) => (
+                  {underReviewRequirements.map((req, i) => (
                     <li key={i} className="flex">
                       <UnderReviewIcon className="relative top-0.5 size-4 shrink-0" />
                       <Markdown
@@ -220,7 +254,7 @@ export function StageSection({
                       </Markdown>
                     </li>
                   ))}
-                  {missing.map((req, i) => (
+                  {missingRequirements.map((req, i) => (
                     <li key={i} className="flex">
                       {stage.stage === 'Stage 0' ? (
                         <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
