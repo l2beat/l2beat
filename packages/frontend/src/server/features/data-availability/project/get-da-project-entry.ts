@@ -41,14 +41,12 @@ interface CommonDaProjectPageEntry {
 
 export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   selectedBridge: {
-    id: string
     name: string
     slug: string
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
   }
   bridges: {
-    id: string
     name: string
     slug: string
     isNoBridge: boolean
@@ -150,14 +148,12 @@ export async function getDaProjectEntry(
     isUnderReview: layer.statuses.isUnderReview,
     isUpcoming: layer.isUpcoming ?? false,
     selectedBridge: {
-      id: selected?.id ?? 'unknown',
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
       isNoBridge: !!selected?.daBridge.risks.isNoBridge,
       grissiniValues: bridgeGrissiniValues,
     },
     bridges: bridges.map((bridge) => ({
-      id: bridge.id,
       name: bridge.daBridge.name,
       slug: bridge.slug,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
@@ -186,7 +182,6 @@ export async function getDaProjectEntry(
 
   if (layer.daLayer.usedWithoutBridgeIn.length > 0) {
     result.bridges.unshift({
-      id: 'no-bridge',
       slug: 'no-bridge',
       isNoBridge: true,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
