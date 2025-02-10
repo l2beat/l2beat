@@ -61,8 +61,6 @@ export function getScalingRiskSummarySection(
     risks.push({ ...risk, referencedId: 'state-validation' })
   }
 
-  console.log(risks)
-
   return {
     riskGroups: groupRisks(risks),
     warning: project.display.warning,
