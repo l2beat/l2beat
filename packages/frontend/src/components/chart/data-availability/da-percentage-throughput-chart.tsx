@@ -12,10 +12,10 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
-import { ChartLoader } from '../core/chart-loader'
 
 interface DataPoint {
   timestamp: number
@@ -26,72 +26,68 @@ interface DataPoint {
 
 interface Props {
   data: DataPoint[] | undefined
+  isLoading: boolean
   chartConfig: ChartConfig
 }
-export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
-  const chartData = data?.map((item) => {
-    const total = item.ethereum + item.celestia + item.avail
-    const ethereumPercent = (item.ethereum / total) * 100
-    const celestiaPercent = (item.celestia / total) * 100
-    const availPercent = Math.min(
-      (item.avail / total) * 100,
-      100 - ethereumPercent - celestiaPercent,
-    )
+export function DaPercentageThroughputChart({
+  data,
+  isLoading,
+  chartConfig,
+}: Props) {
+  const chartData =
+    data?.map((item) => {
+      const total = item.ethereum + item.celestia + item.avail
+      const ethereumPercent = (item.ethereum / total) * 100
+      const celestiaPercent = (item.celestia / total) * 100
+      const availPercent = Math.min(
+        (item.avail / total) * 100,
+        100 - ethereumPercent - celestiaPercent,
+      )
 
-    return {
-      timestamp: item.timestamp,
-      ethereum: ethereumPercent,
-      celestia: celestiaPercent,
-      avail: availPercent,
-    }
-  })
+      return {
+        timestamp: item.timestamp,
+        ethereum: ethereumPercent,
+        celestia: celestiaPercent,
+        avail: availPercent,
+      }
+    })
 
   return (
-    <ChartContainer config={chartConfig} className="mb-2">
-      {chartData ? (
-        <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <ChartTooltip content={<CustomTooltip />} />
-          <ChartLegend content={<ChartLegendContent />} />
-          <Bar
-            dataKey="ethereum"
-            stackId="a"
-            fill="var(--color-ethereum)"
-            isAnimationActive={false}
-          />
-          <Bar
-            dataKey="celestia"
-            stackId="a"
-            fill="var(--color-celestia)"
-            isAnimationActive={false}
-          />
-          <Bar
-            dataKey="avail"
-            stackId="a"
-            fill="var(--color-avail)"
-            isAnimationActive={false}
-          />
-          <CartesianGrid vertical={false} horizontal={true} />
-          <XAxis
-            dataKey="timestamp"
-            tickLine={false}
-            axisLine={false}
-            tickFormatter={(value: number) => formatTimestamp(value)}
-            minTickGap={32}
-          />
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            unit="%"
-            mirror
-            tickCount={3}
-            tick={{
-              dy: -10,
-            }}
-          />
-        </BarChart>
-      ) : (
-        <ChartLoader />
-      )}
+    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+      <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <ChartTooltip content={<CustomTooltip />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Bar
+          dataKey="ethereum"
+          stackId="a"
+          fill="var(--color-ethereum)"
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="celestia"
+          stackId="a"
+          fill="var(--color-celestia)"
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="avail"
+          stackId="a"
+          fill="var(--color-avail)"
+          isAnimationActive={false}
+        />
+        <CartesianGrid vertical={false} horizontal={true} />
+        <XAxis {...getXAxisProps(chartData)} />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          unit="%"
+          mirror
+          tickCount={3}
+          tick={{
+            dy: -10,
+          }}
+        />
+      </BarChart>
     </ChartContainer>
   )
 }

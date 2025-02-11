@@ -15,7 +15,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
-import { ChartLoader } from '../core/chart-loader'
+import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 
 interface DataPoint {
   timestamp: number
@@ -26,60 +26,55 @@ interface DataPoint {
 
 interface Props {
   data: DataPoint[] | undefined
+  isLoading: boolean
   chartConfig: ChartConfig
 }
-export function DaAbsoluteThroughputChart({ data, chartConfig }: Props) {
+export function DaAbsoluteThroughputChart({
+  data,
+  isLoading,
+  chartConfig,
+}: Props) {
   return (
-    <ChartContainer config={chartConfig} className="mb-2">
-      {data ? (
-        <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
-          <ChartTooltip content={<CustomTooltip />} />
-          <ChartLegend content={<ChartLegendContent />} />
-          <Line
-            dataKey="ethereum"
-            type="natural"
-            isAnimationActive={false}
-            stroke="var(--color-ethereum)"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            dataKey="celestia"
-            type="natural"
-            isAnimationActive={false}
-            stroke="var(--color-celestia)"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            dataKey="avail"
-            type="natural"
-            isAnimationActive={false}
-            stroke="var(--color-avail)"
-            strokeWidth={2}
-            dot={false}
-          />
-          <CartesianGrid vertical={false} horizontal={true} />
-          <XAxis
-            dataKey="timestamp"
-            tickLine={false}
-            axisLine={false}
-            minTickGap={32}
-            tickFormatter={(value: number) => formatTimestamp(value)}
-          />
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            mirror
-            tickCount={3}
-            tick={{
-              dy: -10,
-            }}
-          />
-        </LineChart>
-      ) : (
-        <ChartLoader />
-      )}
+    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+      <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
+        <ChartTooltip content={<CustomTooltip />} />
+        <ChartLegend content={<ChartLegendContent />} />
+        <Line
+          dataKey="ethereum"
+          type="natural"
+          isAnimationActive={false}
+          stroke="var(--color-ethereum)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="celestia"
+          type="natural"
+          isAnimationActive={false}
+          stroke="var(--color-celestia)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <Line
+          dataKey="avail"
+          type="natural"
+          isAnimationActive={false}
+          stroke="var(--color-avail)"
+          strokeWidth={2}
+          dot={false}
+        />
+        <CartesianGrid vertical={false} horizontal={true} />
+        <XAxis {...getXAxisProps(data)} />
+        <YAxis
+          tickLine={false}
+          axisLine={false}
+          mirror
+          tickCount={3}
+          tick={{
+            dy: -10,
+          }}
+        />
+      </LineChart>
     </ChartContainer>
   )
 }

@@ -27,7 +27,7 @@ const chartConfig = {
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
-  const { data } = api.da.chart.useQuery({
+  const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
 
@@ -37,9 +37,17 @@ export function DaThroughputChart() {
         Share of total data posted
       </h1>
       {metric === 'percentage' ? (
-        <DaPercentageThroughputChart data={data} chartConfig={chartConfig} />
+        <DaPercentageThroughputChart
+          data={data}
+          chartConfig={chartConfig}
+          isLoading={isLoading}
+        />
       ) : (
-        <DaAbsoluteThroughputChart data={data} chartConfig={chartConfig} />
+        <DaAbsoluteThroughputChart
+          data={data}
+          chartConfig={chartConfig}
+          isLoading={isLoading}
+        />
       )}
       <div className="flex justify-between">
         <RadioGroup

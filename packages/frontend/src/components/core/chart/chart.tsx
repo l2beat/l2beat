@@ -6,6 +6,7 @@ import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
 import { cn } from '~/utils/cn'
+import { ChartLoader } from './chart-loader'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -44,8 +45,9 @@ const ChartContainer = React.forwardRef<
     children: React.ComponentProps<
       typeof RechartsPrimitive.ResponsiveContainer
     >['children']
+    isLoading?: boolean
   }
->(({ id, className, children, config, ...props }, ref) => {
+>(({ id, className, children, config, isLoading, ...props }, ref) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
 
@@ -79,7 +81,7 @@ const ChartContainer = React.forwardRef<
       >
         <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer>
-          {children}
+          {isLoading ? <ChartLoader /> : children}
         </RechartsPrimitive.ResponsiveContainer>
         <Logo
           animated={false}
