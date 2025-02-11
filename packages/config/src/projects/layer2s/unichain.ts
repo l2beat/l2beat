@@ -66,4 +66,13 @@ export const unichain: Layer2 = opStackL2({
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
   isNodeAvailable: true,
+  chainConfig: {
+    name: 'unichain',
+    chainId: 130,
+    explorerUrl: 'https://uniscan.org',
+    explorerApi: {
+      url: 'https://api.uniscan.org/api',
+      type: 'etherscan',
+    },
+  },
 })
