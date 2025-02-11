@@ -161,7 +161,10 @@ interface OrbitStackConfigCommon {
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -908,7 +911,13 @@ function getDaTracking(
           daLayer: ProjectId('celestia'),
           namespace: templateVars.celestiaDaNamespace,
         }
-      : undefined
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {

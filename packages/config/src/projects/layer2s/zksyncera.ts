@@ -1,9 +1,4 @@
-import {
-  assert,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -150,15 +145,6 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
   ],
   rpcUrl: 'https://mainnet.era.zksync.io',
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E',
-    sequencers: [
-      '0x0d3250c3d5facb74ac15834096397a3ef790ec99',
-      '0x3527439923a63f8c13cf72b8fe80a77f6e572092',
-    ],
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

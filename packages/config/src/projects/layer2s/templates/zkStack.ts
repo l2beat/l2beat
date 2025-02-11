@@ -102,7 +102,10 @@ export interface ZkStackConfigCommon {
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  daTracking?: ProjectDaTrackingConfig
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export type Upgradeability = {
@@ -285,7 +288,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
-      daTracking: templateVars.daTracking,
+      daTracking: getDaTracking(templateVars),
       trackedTxs:
         daProvider !== undefined
           ? undefined
@@ -574,4 +577,37 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+}
+
+function getDaTracking(
+  templateVars: ZkStackConfigCommon,
+): ProjectDaTrackingConfig | undefined {
+  const validatorTimelock =
+    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+
+  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsVTL',
+  )
+
+  return templateVars.usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: validatorTimelock,
+        sequencers: validatorsVTL,
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }

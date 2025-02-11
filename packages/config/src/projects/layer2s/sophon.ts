@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -107,11 +107,7 @@ export const sophon: Layer2 = zkStackL2({
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
-  daTracking: {
-    type: 'avail',
-    daLayer: ProjectId('avail'),
-    appId: '17',
-  },
+  availDaAppId: '17',
   milestones: [
     {
       title: 'Mainnet public launch',

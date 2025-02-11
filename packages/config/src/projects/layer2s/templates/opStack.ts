@@ -163,7 +163,10 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -393,7 +396,13 @@ function getDaTracking(
           daLayer: ProjectId('celestia'),
           namespace: templateVars.celestiaDaNamespace,
         }
-      : undefined
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
