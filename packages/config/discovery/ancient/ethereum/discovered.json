@@ -1,7 +1,7 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 21773864,
+  "blockNumber": 21808937,
   "configHash": "0x6118c78d073d3d89fb3f4f810acd02afcd506704ccc1606c8a08501c5ab2eecc",
   "contracts": [
     {
@@ -34,7 +34,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620464",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620468",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -95,7 +95,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": true,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingEigenDA": false
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
@@ -355,7 +356,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 796584,
-          "prevBlockNum": 21764234
+          "prevBlockNum": 21795162
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
@@ -454,10 +455,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 16322400,
-        "latestOutputIndex": 9067,
-        "nextBlockNumber": 16324200,
-        "nextOutputIndex": 9068,
+        "latestBlockNumber": 16536600,
+        "latestOutputIndex": 9186,
+        "nextBlockNumber": 16538400,
+        "nextOutputIndex": 9187,
         "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,

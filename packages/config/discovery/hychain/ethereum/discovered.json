@@ -731,7 +731,10 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A" },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     { "address": "0x42875471D43d54B538B333F041E75a9a45Bf3Aa0" },
     {
       "address": "0x88781Fb85EA68bd5B8bE4C1C0c1ED94f4fd35647",

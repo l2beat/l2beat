@@ -303,7 +303,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingEigenDA": true
         },
         "overhead": 188,
         "owner": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",

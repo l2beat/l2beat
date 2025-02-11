@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4dcaca955a29f835bfb97ea15820e1a98c878408
+
+# Diff at Mon, 10 Feb 2025 19:04:08 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21141582
+- current block number: 21141582
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141582 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x29c5b3b4018d04d7c04196e65aa48d5f06fee52b
 
 # Diff at Mon, 20 Jan 2025 11:09:39 GMT:

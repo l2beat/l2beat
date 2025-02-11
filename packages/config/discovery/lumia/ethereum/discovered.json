@@ -72,8 +72,11 @@
     {
       "name": "Validium",
       "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
-      "unverified": true,
       "template": "polygon-cdk/PolygonZkEVM",
+      "sourceHashes": [
+        "0xa25e4c87882527d75fa2198c374939dd0c3b3fd509be89ee51c9b206bc62bdc4",
+        "0x7c56bc9e6cae8422520d318420d3b180551e366e0e265bc846875479cfabdef7"
+      ],
       "proxyType": "EIP1967 proxy",
       "displayName": "PolygonZkEVM",
       "description": "The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.",
@@ -373,6 +376,16 @@
       "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
+    ],
+    "0x92726F7dE49300DBdb60930066bc1d0803c0740B": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf2ec35f7ae251fd47e4a29c66e4877a0ad6ae0f9
+
+# Diff at Mon, 10 Feb 2025 19:03:40 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21802830
+- current block number: 21802830
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802830 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x1caddacaea60091808f088f39b79c67c06b3ce07
 
 # Diff at Sat, 08 Feb 2025 15:56:50 GMT:
