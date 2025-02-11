@@ -1,5 +1,6 @@
 'use client'
 
+import { assert } from '@l2beat/shared-pure'
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
@@ -11,6 +12,7 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -19,12 +21,6 @@ interface DataPoint {
   ethereum: number
   celestia: number
   avail: number
-}
-
-interface TooltipPayload {
-  value: number
-  name: string
-  fill: string
 }
 
 interface Props {
@@ -75,7 +71,6 @@ export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
         <XAxis
           dataKey="timestamp"
           tickLine={false}
-          tickMargin={10}
           axisLine={false}
           tickFormatter={(value: number) => formatTimestamp(value)}
         />
@@ -101,26 +96,36 @@ function CustomTooltip({
 }: TooltipProps<number, string>) {
   const { config } = useChart()
   if (!active || !payload) return null
+
   return (
     <div className={tooltipContentVariants()}>
-      <div className="text-secondary">{label}</div>
-      <div className="grid gap-1.5">
-        {(payload as TooltipPayload[]).map((entry, index) => (
-          <div key={index} className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1.5">
-              <div
-                className="size-2.5 shrink-0 rounded-[2px]"
-                style={{ backgroundColor: entry.fill }}
-              />
-              <span className="text-secondary">
-                {config[entry.name]?.label}
+      <div className="text-secondary">
+        {formatTimestamp(+label, { mode: 'datetime' })}
+      </div>
+      <HorizontalSeparator className="my-1" />
+      <div className="grid">
+        {payload.map((entry, index) => {
+          const configEntry = entry.name ? config[entry.name] : undefined
+          assert(configEntry, 'Config entry not found')
+
+          return (
+            <div
+              key={index}
+              className="flex items-center justify-between gap-x-6"
+            >
+              <div className="flex items-center gap-1">
+                <div
+                  className="size-3 shrink-0 rounded"
+                  style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-secondary">{configEntry.label}</span>
+              </div>
+              <span className="font-medium tabular-nums text-primary">
+                {entry.value?.toFixed(1)}%
               </span>
             </div>
-            <span className="font-mono font-medium tabular-nums text-primary">
-              {entry.value.toFixed(1)}%
-            </span>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

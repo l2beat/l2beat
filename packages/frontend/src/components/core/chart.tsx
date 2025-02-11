@@ -54,14 +54,16 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          'h-[156px] w-full md:h-[196px] xl:h-[226px]',
+          'h-[192px] w-full md:h-[232px] xl:h-[262px]',
           "flex aspect-video justify-center text-xs  [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           //  Tooltip cursor line
           '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
+          // Tooltip
+          '[&_.recharts-tooltip-wrapper]:!duration-100',
           // Cartesian grid line
           "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
           // Cartesian X axis tick text
-          '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary',
+          '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
           // Cartesian Y axis tick text
           '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
           // Polar grid
@@ -143,8 +145,8 @@ const ChartLegendContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'flex items-center justify-center gap-4',
-          verticalAlign === 'top' ? 'pb-3' : 'pt-3',
+          'flex items-center justify-center gap-2',
+          verticalAlign === 'top' && 'pb-3',
           className,
         )}
       >
@@ -158,14 +160,14 @@ const ChartLegendContent = React.forwardRef<
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               key={item.value}
               className={cn(
-                'flex items-center gap-1.5 [&>svg]:size-3 [&>svg]:text-secondary',
+                'flex items-center gap-[3px] [&>svg]:size-3 [&>svg]:text-secondary',
               )}
             >
               {itemConfig?.icon && !hideIcon ? (
                 <itemConfig.icon />
               ) : (
                 <div
-                  className="size-2.5 shrink-0 rounded-[2px]"
+                  className="size-2.5 shrink-0 rounded-sm"
                   style={{
                     backgroundColor: item.color,
                   }}
