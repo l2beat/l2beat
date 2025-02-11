@@ -61,7 +61,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: number | undefined
     durationStorage: number | undefined
-    throughput: DaLayerThroughput | undefined
+    throughput: Pick<DaLayerThroughput, 'size' | 'frequency'> | undefined
     usedIn: UsedInProject[]
   }
   sections: ProjectDetailsSection[]
@@ -73,7 +73,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: number | undefined
     durationStorage: number
-    throughput: DaLayerThroughput | undefined
+    throughput: Pick<DaLayerThroughput, 'size' | 'frequency'> | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -177,7 +177,10 @@ export async function getDaProjectEntry(
       tvs: layerTvs,
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
-      throughput: latestThroughput,
+      throughput: latestThroughput && {
+        frequency: latestThroughput.frequency,
+        size: latestThroughput.size,
+      },
       usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
@@ -253,7 +256,10 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
-      throughput: latestThroughput,
+      throughput: latestThroughput && {
+        frequency: latestThroughput.frequency,
+        size: latestThroughput.size,
+      },
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,
       callout: {
