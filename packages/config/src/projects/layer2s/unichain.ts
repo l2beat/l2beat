@@ -24,7 +24,7 @@ export const unichain: Layer2 = opStackL2({
       websites: ['https://unichain.org/'],
       apps: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
-      explorers: ['https://explorer.unichain.org'],
+      explorers: ['https://uniscan.xyz/'],
       socialMedia: [
         'https://x.com/unichain',
         'https://discord.com/invite/uniswap',
