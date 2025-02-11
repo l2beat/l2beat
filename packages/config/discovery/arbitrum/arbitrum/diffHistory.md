@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x81b9219ebb402af31e962fbf26ca9521de42857f
+Generated with discovered.json: 0xf55a233f49f84e78fcbe608600246f1f9d7a87ab
 
-# Diff at Tue, 11 Feb 2025 10:28:21 GMT:
+# Diff at Tue, 11 Feb 2025 16:29:14 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
-- current block number: 304743931
+- current block number: 305003923
 
 ## Description
 
@@ -19,6 +19,11 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
     +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
       template:
 +        "orbitstack/layer2/L2ERC20Gateway"
       description:
@@ -49,17 +54,57 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
     +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.6:
++        {"permission":"upgrade","to":"0xdb216562328215E010F819B5aBe947bad4ca961e","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"propose transactions.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","description":"cancel queued transactions.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC","description":"propose transactions.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","description":"propose transactions.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
       issuedPermissions.0.to:
 -        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
-+        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
       issuedPermissions.0.via.1:
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
-      issuedPermissions.0.via.0:
--        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      issuedPermissions.0.description:
++        "update the minimum delay of the timelock."
+      values.Canceller:
++        ["0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"]
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor:
++        ["0x0000000000000000000000000000000000000000"]
+      values.getMinDelayFormatted:
++        "8d"
+      values.Proposer:
++        ["0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9","0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941","0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"]
+      values.timelockAdminAC:
++        ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
       template:
 +        "orbitstack/layer2/L2Timelock"
       description:
 +        "Delays constitutional AIPs from the CoreGovernor by 8d."
+      fieldMeta:
++        {"Executor":{"severity":"HIGH","description":"Executing proposals is only open to all addresses if this resolves to the 0x0 address"}}
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/layer2/L2SecurityCouncilEmergency"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x09e9222E96E7B4AE2a407B98d48e330053351EEe","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}]
     }
 ```
 
@@ -76,6 +121,11 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
     +++ description: Router managing token <–> gateway mapping on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
       template:
 +        "orbitstack/layer2/L2GatewayRouter"
       description:
@@ -86,6 +136,11 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
     +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}]}
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
       template:
 +        "orbitstack/layer2/L2WethGateway"
       description:
@@ -106,12 +161,8 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
     +++ description: None
-      values.upExecLocationExists:
-+        [false,true,false,false,false]
-      values.upExecLocations:
-+        [["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]]
-      errors:
-+        {"upExecLocationExists":"Processing error occurred.","upExecLocations":"Processing error occurred."}
+      template:
++        "orbitstack/layer2/UpgradeExecRouteBuilder"
     }
 ```
 
@@ -152,10 +203,21 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
     +++ description: None
-      values.computeKey:
-+        ["6735717200588769335166845617735977178463737945293803410669396209533398237617","34694062334603313418388567497421370625776518027150757117033357030239675522375","62388368570310567130838887774003962230763937589219706886983247324823957645571","42894336526843887200462598236961532974609683894402976946822762667256487875463","58046142322290813072285250991091902049782553802707429467218598317210602377879"]
-      errors:
-+        {"computeKey":"Processing error occurred."}
+      template:
++        "orbitstack/layer2/SecurityCouncilMemberSyncAction"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      template:
+-        "GnosisSafe"
++        "orbitstack/layer2/L2SecurityCouncilPropose"
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
     }
 ```
 
@@ -215,6 +277,19 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       directlyReceivedPermissions.3:
 -        {"permission":"act","from":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      directlyReceivedPermissions.2:
+-        {"permission":"act","from":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}
+      directlyReceivedPermissions.1.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      directlyReceivedPermissions.1.description:
++        "update the minimum delay of the timelock."
+      directlyReceivedPermissions.0.from:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
     }
 ```
 
@@ -232,6 +307,10 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 +        "orbitstack/layer2/SecurityCouncilManager"
       description:
 +        "This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync."
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
     }
 ```
 
@@ -275,13 +354,11 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 +        "orbitstack/layer2/CoreGovernor"
       description:
 +        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
+      receivedPermissions:
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"cancel queued transactions."},{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
     }
-```
-
-```diff
-+   Status: CREATED
-    contract KeyValueStore (0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B)
-    +++ description: None
 ```
 
 Generated with discovered.json: 0xeba979cb10654403eba767f0a42cdb0b4828e203

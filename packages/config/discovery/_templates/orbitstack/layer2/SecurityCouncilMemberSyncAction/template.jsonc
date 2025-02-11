@@ -1,0 +1,6 @@
+{
+    "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+    "displayName": "SecurityCouncilMemberSyncAction",
+    "ignoreMethods": ["computeKey"],
+    "ignoreRelatives": ["store"]
+}
