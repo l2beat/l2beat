@@ -54,7 +54,7 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          'h-[192px] w-full md:h-[232px] xl:h-[262px]',
+          'h-[192px] min-h-[192px] w-full md:h-[232px] md:min-h-[232px] xl:h-[262px] xl:min-h-[262px]',
           "flex aspect-video justify-center text-xs  [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           //  Tooltip cursor line
           '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
