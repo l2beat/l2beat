@@ -33,16 +33,8 @@ import {
 
 const discovery = new ProjectDiscovery('kroma')
 
-const scPA = discovery.getContractValue<string>('SC_ProxyAdmin', 'owner')
-const shPA = discovery.getContractValue<string>('SH_ProxyAdmin', 'owner')
-const spETHPA = discovery.getContractValue<string>('spETH_ProxyAdmin', 'owner')
-assert(
-  scPA === shPA && shPA === spETHPA,
-  'Spectrum EOA Admin permission changed, please update the .ts file.',
-)
-
 const timelockDefaultDelay = discovery.getContractValue<number>(
-  'Timelock',
+  'TimeLock',
   'getMinDelay',
 )
 
@@ -72,7 +64,7 @@ export const kroma: Layer2 = {
     name: 'Kroma',
     slug: 'kroma',
     description:
-      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
+      'Kroma aims to develop a universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll and a zkVM based proven with SP1.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
@@ -212,7 +204,7 @@ export const kroma: Layer2 = {
       ...RISK_VIEW.STATE_FP_INT_ZK,
       description:
         RISK_VIEW.STATE_FP_INT_ZK.description +
-        " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced.",
+        " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault (for the zkEVM prover path), meaning that DA is not always enforced.",
       sentiment: 'bad',
       secondLine: formatChallengePeriod(finalizationPeriod),
     },
@@ -253,25 +245,27 @@ export const kroma: Layer2 = {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
       description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. The zkEVM used is based on Scroll.\
-        Once the single block of disagreement is found, the challenger is required to present a ZK proof of the fraud. If the proof is validated, the incorrect\
-        state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
-        the malicious attester and challenger collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenges\
-        resulting in a lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
+        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. Once the single block of disagreement\
+        is found, the challenger is required to present a ZK proof of the fraud. This can be either a proof verified in a zkEVM verifier base on Scroll, or in a\
+        zkVM verifier built by Succinct SP1. If the proof is validated, the incorrect state output is deleted. The Security Council can always override the\
+        result of the challenge, it can also delete any L2 state root at any time. If the malicious attester and challenger collude and are willing to spend\
+        bonds, they can perform a delay attack by engaging in continuous challenges resulting in a lack of finalization of the L2 state root on L1. The protocol\
+        can also fail under certain conditions.',
       references: [
         {
           title:
-            'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
-        },
-        {
-          title: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
+            'Colosseum.sol#L300 - Etherscan source code, createChallenge() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L374',
         },
         {
           title:
-            'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
+            'Colosseum.sol#L378 - Etherscan source code, bisect() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L452',
+        },
+        {
+          title:
+            'Colosseum.sol#L434 - Etherscan source code, proveFaultWithZkEvm() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L505',
         },
         {
           title:
@@ -303,8 +297,8 @@ export const kroma: Layer2 = {
         },
         {
           title:
-            'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
-          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+            'KromaPortal.sol - Etherscan source code, depositTransaction() function',
+          url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L455',
         },
       ],
     },
@@ -326,8 +320,8 @@ export const kroma: Layer2 = {
         },
         {
           title:
-            'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
-          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+            'KromaPortal.sol - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L455',
         },
       ],
     },
@@ -337,13 +331,13 @@ export const kroma: Layer2 = {
         references: [
           {
             title:
-              'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
-            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
+              'KromaPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L253',
           },
           {
             title:
-              'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
-            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
+              'KromaPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L350',
           },
         ],
       },

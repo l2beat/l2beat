@@ -7,7 +7,7 @@
     "0x827962404D7104202C5aaa6b929115C8211d9596",
     "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
     "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
-    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
   ],
   "names": {
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
@@ -65,38 +65,6 @@
         }
       }
     },
-    "spETH": {
-      "ignoreInWatchMode": ["totalSupply"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "SpectrumHub": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      },
-      "ignoreRelatives": ["getHubStakeAssetLists", "getHubUnstakeAssetLists"]
-    },
-    "SpectrumCore": {
-      "ignoreInWatchMode": ["getGlobalSnap"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      },
-      "ignoreMethods": ["evalSpectrum", "getSpectrumFromETH"],
-      "ignoreRelatives": ["getCoreSupportAssetLists", "getGlobalSnap"]
-    },
     "L2OutputOracle": {
       "description": "The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every {{SUBMISSION_INTERVAL}} blocks (2s block time).",
       "ignoreMethods": [
@@ -125,7 +93,7 @@
       }
     },
     "KromaPortal": {
-      "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The ",
+      "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"],
       "fields": {

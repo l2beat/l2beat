@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 21822026,
-  "configHash": "0xae26ae2d6fc31b35073fe94e490f9b411ecd36ee14794fae5c06705b50f7abb1",
+  "blockNumber": 21823489,
+  "configHash": "0x0ad47aaaf8506067b599fefa29ffbd5c89c78c73781b78b8026e129a7ac1aedb",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -92,12 +92,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 22689000,
-        "latestOutputIndex": 12605,
-        "nextBlockNumber": 22690800,
-        "nextFinalizeOutputIndex": 12437,
-        "nextOutputIndex": 12606,
-        "nextOutputMinL2Timestamp": 1739261989,
+        "latestBlockNumber": 22698000,
+        "latestOutputIndex": 12610,
+        "nextBlockNumber": 22699800,
+        "nextFinalizeOutputIndex": 12443,
+        "nextOutputIndex": 12611,
+        "nextOutputMinL2Timestamp": 1739279989,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -291,7 +291,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 11,
-        "activatedValidatorTotalWeight": "28911402066875639265917742",
+        "activatedValidatorTotalWeight": "28913944403401171057184724",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -322,7 +322,7 @@
         "0x380ba7ac243cd77b18b24f82aba2b0b2b32ae18c02f8ae15db16810fb9f205ca"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The ",
+      "description": "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -1111,7 +1111,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 21822026,
+        "clock": 21823489,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1507,7 +1507,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 21822026,
+        "clock": 21823489,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
