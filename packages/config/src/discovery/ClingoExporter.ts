@@ -44,11 +44,14 @@ export class ClingoExporter {
       const name = !allNames.has(contract.name)
         ? contract.name
         : contract.name + '_' + contract.address.substring(0, 6)
-      result[contract.address] = decapitalizeFirstLetter(name)
+      result[contract.address] = normalizeClingoName(name)
       allNames.add(result[contract.address])
     }
     for (const eoa of this.eoas) {
-      result[eoa.address] = eoa.name ?? 'eoa_' + eoa.address.substring(0, 6)
+      result[eoa.address] =
+        eoa.name !== undefined
+          ? normalizeClingoName(eoa.name)
+          : 'eoa_' + eoa.address.substring(0, 6)
     }
     return result
   }
@@ -123,6 +126,9 @@ export class ClingoExporter {
   }
 }
 
-function decapitalizeFirstLetter(s: string) {
-  return s.charAt(0).toLowerCase() + s.slice(1)
+function normalizeClingoName(s: string) {
+  return (s.charAt(0).toLowerCase() + s.slice(1)).replaceAll(
+    /[^a-zA-Z0-9]/g,
+    '_',
+  )
 }
