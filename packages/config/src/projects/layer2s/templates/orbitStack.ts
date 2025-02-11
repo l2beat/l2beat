@@ -883,7 +883,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 }
 
 function getDaTracking(
-  templateVars: OrbitStackConfigL3,
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
 ): ProjectDaTrackingConfig | undefined {
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -1175,6 +1175,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
     },
