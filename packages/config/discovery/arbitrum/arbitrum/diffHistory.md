@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6b09f70f99d05e9baae702e2cf875f879f1120cb
+Generated with discovered.json: 0x4724822fce623b44415c8efd8ee3938da8e33813
 
-# Diff at Mon, 10 Feb 2025 22:53:01 GMT:
+# Diff at Tue, 11 Feb 2025 08:24:50 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
@@ -38,27 +38,28 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 
 ```diff
     contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
-    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
       template:
-+        "orbitstack/layer2/L2BaseFee"
-      displayName:
-+        "L2BaseFee"
++        "orbitstack/layer2/L2SurplusFee"
       description:
-+        "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients."
-      errors:
-+        {"@template":"Processing error occurred."}
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
     }
 ```
 
 ```diff
     contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
     +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
 +        "orbitstack/layer2/L2Timelock"
       description:
 +        "Delays constitutional AIPs from the CoreGovernor by 8d."
-      errors:
-+        {"@template":"Processing error occurred."}
     }
 ```
 
@@ -105,20 +106,30 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
     +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
-+        "orbitstack/layer2/CoreGovernor"
-      displayName:
-+        "CoreGovernor"
++        "orbitstack/layer2/TreasuryGovernor"
       description:
 +        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
-      errors:
-+        {"@template":"Processing error occurred."}
     }
 ```
 
 ```diff
     contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
     +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
 +        "orbitstack/layer2/L2ArbitrumToken"
       description:
@@ -133,28 +144,36 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 +        "orbitstack/layer2/L2BaseFee"
       description:
 +        "This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients."
-      errors:
-+        {"@template":"Processing error occurred."}
     }
 ```
 
 ```diff
     contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
-    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
-+        "orbitstack/layer2/L2Timelock"
-      displayName:
-+        "L2Timelock"
++        "orbitstack/layer2/TreasuryTimelock"
       description:
-+        "Delays constitutional AIPs from the CoreGovernor by 8d."
-      errors:
-+        {"@template":"Processing error occurred."}
++        "Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts."
     }
 ```
 
 ```diff
     contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
     +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
 +        "orbitstack/layer2/L2ARBGateway"
       description:
@@ -163,8 +182,30 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```
 
 ```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      directlyReceivedPermissions.3:
+-        {"permission":"act","from":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+    }
+```
+
+```diff
     contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
     +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
 +        "orbitstack/layer2/SecurityCouncilManager"
       description:
@@ -173,18 +214,19 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
-    +++ description: None
-      errors:
-+        {"@template":"Processing error occurred."}
-    }
-```
-
-```diff
     contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
-    +++ description: None
-      errors:
-+        {"@template":"Processing error occurred."}
+    +++ description: The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.
+      template:
+-        "global/ProxyAdmin"
++        "orbitstack/layer2/L2ProxyAdmin"
+      displayName:
+-        "ProxyAdmin"
+      directlyReceivedPermissions:
+-        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
+      description:
++        "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract."
+      receivedPermissions:
++        [{"permission":"upgrade","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"},{"permission":"upgrade","from":"0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"},{"permission":"upgrade","from":"0x912CE59144191C1204E64559FE8253a0e49E6548"},{"permission":"upgrade","from":"0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"},{"permission":"upgrade","from":"0xCaD7828a19b363A2B44717AFB1786B5196974D8E"},{"permission":"upgrade","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"},{"permission":"upgrade","from":"0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"},{"permission":"upgrade","from":"0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"}]
     }
 ```
 
@@ -200,12 +242,17 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```diff
     contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
     +++ description: Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      issuedPermissions.0.to:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
+      issuedPermissions.0.via.1:
+-        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       template:
 +        "orbitstack/layer2/CoreGovernor"
       description:
 +        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
-      errors:
-+        {"@template":"Processing error occurred."}
     }
 ```
 
