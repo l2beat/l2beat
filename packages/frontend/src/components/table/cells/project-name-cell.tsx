@@ -108,14 +108,14 @@ function NameWithProjectInfoTooltip({
   project,
   withInfoTooltip,
 }: NameWithProjectInfoTooltipProps) {
-  if (!withInfoTooltip) {
+  if (!withInfoTooltip || (!project.description && !project.badgesMeta)) {
     return project.shortName ?? project.name
   }
 
   return (
     <Tooltip>
       <TooltipTrigger>{project.shortName ?? project.name}</TooltipTrigger>
-      <TooltipContent className="flex max-w-[325px] flex-col gap-2 px-[14px]">
+      <TooltipContent className="flex max-w-[324px] flex-col gap-2 px-[14px]">
         <span className="text-lg font-bold">
           What is {project.shortName ?? project.name}?
         </span>
