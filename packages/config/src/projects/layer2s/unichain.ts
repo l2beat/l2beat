@@ -6,11 +6,13 @@ import { getStage } from './common/stages/getStage'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
+const l2discovery = new ProjectDiscovery('unichain', 'unichain')
 const genesisTimestamp = new UnixTime(1728932992)
 
 export const unichain: Layer2 = opStackL2({
   addedAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
   discovery,
+  additionalDiscoveries: { ['unichain']: l2discovery },
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',
