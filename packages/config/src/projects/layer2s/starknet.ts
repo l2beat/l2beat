@@ -1083,7 +1083,11 @@ export const starknet: Layer2 = {
   },
   upgradesAndGovernance: `
   The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
+
+
   The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
+
+
   The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
   `,
   permissions: {
