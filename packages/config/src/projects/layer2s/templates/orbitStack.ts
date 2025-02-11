@@ -161,7 +161,7 @@ interface OrbitStackConfigCommon {
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  daTracking?: ProjectDaTrackingConfig
+  celestiaDaNamespace?: string
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -874,9 +874,41 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
-      daTracking: templateVars.daTracking,
+      daTracking: getDaTracking(templateVars),
     },
   }
+}
+
+function getDaTracking(
+  templateVars: OrbitStackConfigL3,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
+  const batchPosters = templateVars.discovery.getContractValue<string[]>(
+    'SequencerInbox',
+    'batchPosters',
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : undefined
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {

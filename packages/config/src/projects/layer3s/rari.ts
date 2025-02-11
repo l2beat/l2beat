@@ -58,11 +58,7 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
-  daTracking: {
-    type: 'celestia',
-    daLayer: ProjectId('celestia'),
-    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

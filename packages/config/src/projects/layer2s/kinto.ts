@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
@@ -68,12 +68,6 @@ export const kinto: Layer2 = orbitStackL2({
     defaultCallsPerMinute: 600,
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
-  },
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a',
-    sequencers: ['0xe27f3f6db6824def1738b2aACe2672aC59046a39'],
   },
   stage: getStage(
     {

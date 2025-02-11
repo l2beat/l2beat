@@ -371,11 +371,13 @@ function getDaTracking(
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'sequencerInbox',
   )
-  const sequencer = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  const sequencer = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'batcherHash',
   )
 
   return usesBlobs
