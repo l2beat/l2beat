@@ -7,6 +7,7 @@ import { aviveworld } from './aviveworld'
 import { b3 } from './b3'
 import { bitlazer } from './bitlazer'
 import { blessnet } from './blessnet'
+import { blockfit } from './blockfit'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
@@ -63,6 +64,7 @@ export const layer3s: Layer3[] = [
   aviveworld,
   bitlazer,
   blessnet,
+  blockfit,
   bugbuster,
   b3,
   cheese,
