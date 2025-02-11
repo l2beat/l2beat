@@ -244,6 +244,9 @@ function opStackCommon(
   if (fraudProofType !== 'None') {
     architectureImage.push('opfp')
   }
+  if (fraudProofType === 'Permissionless') {
+    architectureImage.push('permissionless')
+  }
 
   const nativeContractRisks: ScalingProjectRisk[] = [
     partOfSuperchain

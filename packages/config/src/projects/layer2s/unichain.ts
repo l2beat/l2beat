@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
+import { getStage } from './common/stages/getStage'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
@@ -30,6 +31,27 @@ export const unichain: Layer2 = opStackL2({
       ],
     },
   },
+  stage: getStage({
+    stage0: {
+      callsItselfRollup: true,
+      stateRootsPostedToL1: true,
+      dataAvailabilityOnL1: true,
+      rollupNodeSourceAvailable: 'UnderReview',
+    },
+    stage1: {
+      principle: false,
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: true,
+      usersHave7DaysToExit: true,
+      usersCanExitWithoutCooperation: true,
+      securityCouncilProperlySetUp: true,
+    },
+    stage2: {
+      proofSystemOverriddenOnlyInCaseOfABug: false,
+      fraudProofSystemIsPermissionless: true,
+      delayWith30DExitWindow: false,
+    },
+  }),
   rpcUrl: 'https://mainnet.unichain.org',
   finality: {
     type: 'OPStack',
