@@ -16,7 +16,7 @@
   },
   "overrides": {
     "Bridger": {
-      "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
+      "description": "Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default.",
       "ignoreRelatives": [
         "DAI",
         "ETH",
