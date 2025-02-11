@@ -10,7 +10,7 @@ import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export async function getScalingUpcomingEntries() {
   const projects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo'],
+    select: ['statuses', 'scalingInfo', 'display'],
     where: ['isScaling', 'isUpcoming'],
   })
 
@@ -29,7 +29,7 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
 }
 
 function getScalingUpcomingEntry(
-  project: Project<'scalingInfo' | 'statuses'>,
+  project: Project<'scalingInfo' | 'statuses' | 'display'>,
 ): ScalingUpcomingEntry {
   return {
     ...getCommonScalingEntry({ project, changes: undefined }),
