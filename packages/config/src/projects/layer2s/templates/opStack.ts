@@ -263,10 +263,6 @@ function opStackCommon(
     templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
   )
 
-  const isEthereumBlobsDa = templateVars.discovery.getContractValue<{
-    isSequencerSendingBlobTx: boolean
-  }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
-
   const allDiscoveries = [
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
@@ -335,7 +331,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: isEthereumBlobsDa
+      daTracking: usesBlobs
         ? {
             type: 'ethereum',
             daLayer: ProjectId('ethereum'),
