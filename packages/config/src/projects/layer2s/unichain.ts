@@ -1,28 +1,45 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { DERIVATION } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { upcomingL2 } from './templates/upcoming'
+import { opStackL2 } from './templates/opStack'
 
-export const unichain: Layer2 = upcomingL2({
-  id: 'unichain',
-  capability: 'universal',
+const discovery = new ProjectDiscovery('unichain')
+const genesisTimestamp = new UnixTime(1728932992)
+
+export const unichain: Layer2 = opStackL2({
   addedAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
+  discovery,
+  additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',
     slug: 'unichain',
+    stateValidationImage: 'opfp',
     description:
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
-    purposes: ['Universal', 'Exchange'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
       apps: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
-      explorers: ['https://unichain-sepolia.blockscout.com/'],
+      explorers: ['https://explorer.unichain.org'],
       socialMedia: [
         'https://x.com/unichain',
         'https://discord.com/invite/uniswap',
       ],
     },
   },
+  rpcUrl: 'https://mainnet.unichain.org',
+  finality: {
+    type: 'OPStack',
+    minTimestamp: genesisTimestamp,
+    genesisTimestamp: genesisTimestamp,
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+    stateUpdate: 'disabled',
+  },
+  genesisTimestamp,
+  stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
+  isNodeAvailable: 'UnderReview',
 })
