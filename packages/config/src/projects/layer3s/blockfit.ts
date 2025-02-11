@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
+import { Badge } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const blockfit: Layer3 = underReviewL3({
@@ -7,6 +8,11 @@ export const blockfit: Layer3 = underReviewL3({
   capability: 'universal',
   addedAt: new UnixTime(1739285196), // 2025-02-11T14:46:36Z
   hostChain: ProjectId('nova'),
+  badges: [
+    Badge.Stack.Orbit,
+    Badge.VM.EVM,
+    Badge.RaaS.Zeeve
+  ],
   display: {
     name: 'BlockFit',
     slug: 'blockfit',
