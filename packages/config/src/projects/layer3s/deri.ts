@@ -35,10 +35,4 @@ export const deri = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   discoveryDrivenData: true,
   usesBlobs: true,
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
 })

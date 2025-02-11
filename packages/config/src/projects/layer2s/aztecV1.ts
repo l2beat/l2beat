@@ -82,12 +82,6 @@ export const aztecV1: Layer2 = {
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x0000000000000000000000000000000000000000',
-      sequencers: [],
-    },
     trackedTxs: [
       {
         uses: [

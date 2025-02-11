@@ -119,7 +119,6 @@ export const blast: Layer2 = opStackL2({
         'Escrow for ETH that is invested into a yield-bearing contracts such as stETH.',
     }),
   ],
-
   isNodeAvailable: true,
   associatedTokens: ['BLAST'],
   nodeSourceLink: 'https://github.com/blast-io/blast',

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
@@ -41,12 +41,6 @@ export const zeronetwork: Layer2 = zkStackL2({
     },
   },
   rpcUrl: 'https://rpc.zerion.io/v1/zero',
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
   chainConfig: {
     name: 'zeronetwork',
     chainId: 543210,

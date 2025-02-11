@@ -104,12 +104,6 @@ export const zksynclite: Layer2 = {
       defaultUrl: 'https://api.zksync.io/api/v0.2',
       defaultCallsPerMinute: 3_000,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x0000000000000000000000000000000000000000',
-      sequencers: [],
-    },
     trackedTxs: [
       {
         uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

@@ -61,12 +61,6 @@ export const fuelv1: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x0000000000000000000000000000000000000000',
-      sequencers: [],
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,

@@ -65,12 +65,6 @@ export const bugbuster: Layer3 = {
         description: 'DApp Contract storing bounties funds.',
       }),
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x0000000000000000000000000000000000000000',
-      sequencers: [],
-    },
   },
   stage: getStage(
     {

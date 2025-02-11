@@ -81,12 +81,6 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x0000000000000000000000000000000000000000',
-      sequencers: [],
-    },
     trackedTxs: [
       {
         uses: [

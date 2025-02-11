@@ -1,9 +1,4 @@
-import {
-  ChainId,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   ESCROW,
   NEW_CRYPTOGRAPHY,
@@ -161,12 +156,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
   ],
-  daTracking: {
-    type: 'ethereum',
-    daLayer: ProjectId('ethereum'),
-    inbox: '0x0000000000000000000000000000000000000000',
-    sequencers: [],
-  },
   nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
