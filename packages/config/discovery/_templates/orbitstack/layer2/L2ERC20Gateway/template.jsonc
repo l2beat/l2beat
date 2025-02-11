@@ -3,6 +3,6 @@
     "displayName": "L2ERC20Gateway",
     "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
     "ignoreRelatives": ["counterpartGateway"],
-    "ignoreInWatchMode": ["exitNum"]
+    "ignoreInWatchMode": ["exitNum"],
   }
   

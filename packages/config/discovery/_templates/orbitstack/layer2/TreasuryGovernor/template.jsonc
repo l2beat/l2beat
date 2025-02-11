@@ -1,5 +1,13 @@
 {
     "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
     "displayName": "TreasuryGovernor", 
-    "description": "Governance contract used for creating non-constitutional AIPs, or \"treasury proposals\", e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+    "description": "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.",
+    "ignoreMethods": [
+      "getPastCirculatingSupply",
+      "proposalDeadline",
+      "proposalEta",
+      "proposalSnapshot",
+      "proposalVotes",
+      "quorum"
+    ]
 } 

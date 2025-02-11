@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4724822fce623b44415c8efd8ee3938da8e33813
+Generated with discovered.json: 0x81b9219ebb402af31e962fbf26ca9521de42857f
 
-# Diff at Tue, 11 Feb 2025 08:24:50 GMT:
+# Diff at Tue, 11 Feb 2025 10:28:21 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
@@ -104,6 +104,18 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 ```
 
 ```diff
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
+    +++ description: None
+      values.upExecLocationExists:
++        [false,true,false,false,false]
+      values.upExecLocations:
++        [["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"],["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]]
+      errors:
++        {"upExecLocationExists":"Processing error occurred.","upExecLocations":"Processing error occurred."}
+    }
+```
+
+```diff
     contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
     +++ description: Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
       issuedPermissions.0.to:
@@ -134,6 +146,16 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 +        "orbitstack/layer2/L2ArbitrumToken"
       description:
 +        "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%."
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
+    +++ description: None
+      values.computeKey:
++        ["6735717200588769335166845617735977178463737945293803410669396209533398237617","34694062334603313418388567497421370625776518027150757117033357030239675522375","62388368570310567130838887774003962230763937589219706886983247324823957645571","42894336526843887200462598236961532974609683894402976946822762667256487875463","58046142322290813072285250991091902049782553802707429467218598317210602377879"]
+      errors:
++        {"computeKey":"Processing error occurred."}
     }
 ```
 
@@ -254,6 +276,12 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
       description:
 +        "Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
     }
+```
+
+```diff
++   Status: CREATED
+    contract KeyValueStore (0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0xeba979cb10654403eba767f0a42cdb0b4828e203

@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 304743931,
-  "configHash": "0xb690f0c2b0894460664bd4bfbc259a6c326cdbf9c5d64e2611c3663d62e278f1",
+  "configHash": "0xfba5fa9f2394b1424243477f482918e386fa464f84c927423d84267471749e53",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -408,7 +408,34 @@
         "DEFAULT_VALUE": 0,
         "l1TimelockAddr": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
         "l1TimelockMinDelay": 259200,
-        "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+        "RETRYABLE_TICKET_MAGIC": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+        "upExecLocationExists": [false, true, false, false, false],
+        "upExecLocations": [
+          [
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000",
+            "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
+          ],
+          [
+            "0x0000000000000000000000000000000000000000",
+            "0x0000000000000000000000000000000000000000"
+          ]
+        ]
+      },
+      "errors": {
+        "upExecLocationExists": "Processing error occurred.",
+        "upExecLocations": "Processing error occurred."
       },
       "derivedName": "UpgradeExecRouteBuilder"
     },
@@ -513,9 +540,17 @@
       "values": {
         "$immutable": true,
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
+        "computeKey": [
+          "6735717200588769335166845617735977178463737945293803410669396209533398237617",
+          "34694062334603313418388567497421370625776518027150757117033357030239675522375",
+          "62388368570310567130838887774003962230763937589219706886983247324823957645571",
+          "42894336526843887200462598236961532974609683894402976946822762667256487875463",
+          "58046142322290813072285250991091902049782553802707429467218598317210602377879"
+        ],
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
       },
+      "errors": { "computeKey": "Processing error occurred." },
       "derivedName": "SecurityCouncilMemberSyncAction"
     },
     {
@@ -752,6 +787,24 @@
         ]
       },
       "derivedName": "UpgradeExecutor"
+    },
+    {
+      "name": "KeyValueStore",
+      "address": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B",
+      "sourceHashes": [
+        "0x56713b5534c12ed120f7815d30e2b2dc41289446324aec923a867cfd300f1be5"
+      ],
+      "sinceTimestamp": 1692138725,
+      "values": {
+        "$immutable": true,
+        "get": [0, 0, 0, 0, 0],
+        "store": [0, 0, 0, 0, 0]
+      },
+      "errors": {
+        "get": "Processing error occurred.",
+        "store": "Processing error occurred."
+      },
+      "derivedName": "KeyValueStore"
     },
     {
       "name": "SecurityCouncilManager",
@@ -1047,6 +1100,7 @@
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
     },
+    { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
     {
       "name": "AleksanderKryukov-Certora",
       "address": "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
@@ -1766,6 +1820,14 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": [
+      "event ValueSet(address indexed sender, uint256 indexed key, uint256 value)",
+      "function computeKey(address owner, uint256 key) pure returns (uint256)",
+      "function get(uint256 key) view returns (uint256)",
+      "function get(address owner, uint256 key) view returns (uint256)",
+      "function set(uint256 key, uint256 value)",
+      "function store(uint256) view returns (uint256)"
+    ],
     "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1897,21 +1959,21 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/layer2/ConstitutionHash": "0x10d0d32bb0fbfec7ee3f1dc2cf6ac3363249ad1e28d49f3421fa3aeed22cb1e9",
-    "orbitstack/layer2/CoreGovernor": "0xb51958484a8d1970e7d22281935c584b30de221e0f8d44095b5746842a0f8474",
-    "orbitstack/layer2/L2ARBGateway": "0xbbd960418e3eef310d402d8e7210e494de4801b92e1d63bd1bf9eb14ca11ee64",
-    "orbitstack/layer2/L2ArbitrumToken": "0x72c436413098d3c2beb1e99bb3f934f1f3524217074a3a0a423d8ea9e26eea9c",
-    "orbitstack/layer2/L2BaseFee": "0xb2ec9da1eeafb642f4e6a8b6be052ed1ce6077809055660f776301978c30af37",
-    "orbitstack/layer2/L2DAIGateway": "0xaf70be3734d2a28cf15629afe3b5a9e7cef7d7dc0a9ac3eab454262c76edffbd",
+    "orbitstack/layer2/CoreGovernor": "0x2d128333038afbc5927bd3361421caff37fc47906edbdf247edaec6354718b9d",
+    "orbitstack/layer2/L2ARBGateway": "0x684643f9d4327e7295f9dfc2874632cf62727339c0cb58341bbc977f9131b8d9",
+    "orbitstack/layer2/L2ArbitrumToken": "0xc264952f41e505ebf81bb8fe30481a2d75ce9fb0767bba3203bc5e8cdc7df531",
+    "orbitstack/layer2/L2BaseFee": "0x9102f326d76e14dfd0e8eff2770740a6a433a97ca2e05b1b7c3b3ab4ba19e4e5",
+    "orbitstack/layer2/L2DAIGateway": "0xf62d88fdb3ffda1159ae16afa7762cd5f909c5e837b03b7433453712fde4cca0",
     "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
-    "orbitstack/layer2/L2GatewayRouter": "0xe31e210b07d69a9c9c77df542a1dd576e68ba1acaeba95190fffd873ec49e5a4",
-    "orbitstack/layer2/L2LPTGateway": "0xcd05cc35de62b5ea17c32dec53c91757eba9da69f8d23c09fdac9e8b77330a84",
+    "orbitstack/layer2/L2GatewayRouter": "0xde7841cda710dd016b3815e3e941932d9ac3e1cbb99e687910642079e927d33f",
+    "orbitstack/layer2/L2LPTGateway": "0xc9b82afd527a2ed80b91726ff814c4fd219bb13ec246cabbc0a1838710b31acb",
     "orbitstack/layer2/L2ProxyAdmin": "0x74efd53ce25e5ba49dc47e87493897384bb28e708119c970fc73bda333ee00a5",
-    "orbitstack/layer2/L2SurplusFee": "0x7bdedbf22a100cc9b7cc5d1a41d75d51311b4c10aa14700819988634f0b98c01",
-    "orbitstack/layer2/L2Timelock": "0xb3a4627b3ec1faf334c6bd678dd45bf750ceee574fd600832c112ef3dc95612b",
-    "orbitstack/layer2/L2WethGateway": "0x9a27ec629e3452bdde8ad1d24ef1bedf887dd54c748463f6eda137b1093f68fb",
-    "orbitstack/layer2/SecurityCouncilManager": "0x2081e3adecb8b82becc887c8daab0873979ffc195d1e511207f4382d048a742c",
-    "orbitstack/layer2/TreasuryGovernor": "0x3fe6d510ec3299fc4e3d358f49ffef8d970670caf136ad25ec15567f4ae35017",
-    "orbitstack/layer2/TreasuryTimelock": "0x3950ac42d163f8ebdb4cd5979a6b52f24d34a821f0734a8662b2236a1a1b435e",
+    "orbitstack/layer2/L2SurplusFee": "0xba09d5be62f993a7a5305a66264bcb65fab108c178c65b3bb5fb57d74af6937e",
+    "orbitstack/layer2/L2Timelock": "0xd8fd1e30cae52f81e1efc42d0305dedc07b02c8230883e9376ef03a98eacfb6d",
+    "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
+    "orbitstack/layer2/SecurityCouncilManager": "0xa2e0cd4d0db62e3235208675260da9911677a5376113d380d6b16165e6307741",
+    "orbitstack/layer2/TreasuryGovernor": "0x9b3b2ab4083dfa21cc4e13feec97f4696a836ca07158fe31e3857072d4daa0e6",
+    "orbitstack/layer2/TreasuryTimelock": "0x2b75426d614346b6a5ec0f3c70e1d4e10c8859b735d187be2ff6c9841bf396ef",
     "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
