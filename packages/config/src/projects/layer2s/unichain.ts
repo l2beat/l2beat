@@ -33,27 +33,33 @@ export const unichain: Layer2 = opStackL2({
       ],
     },
   },
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: true,
-      usersHave7DaysToExit: true,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: true,
+    {
+      rollupNodeLink:
+        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: false,
-      fraudProofSystemIsPermissionless: true,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   rpcUrl: 'https://mainnet.unichain.org',
   finality: {
     type: 'OPStack',
