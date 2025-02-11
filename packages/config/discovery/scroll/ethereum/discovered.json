@@ -1820,7 +1820,10 @@
     { "address": "0x498C0c17e26EEEC63375A4A20Ba8A91Aa357CbcD" },
     { "address": "0x5300000000000000000000000000000000000004" },
     { "address": "0x568993632c34604098e35a184C52aD390c70f754" },
-    { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
+    {
+      "name": "cts-Zellic",
+      "address": "0x5a09A94eE8198D3c474d723337aa58023810022C"
+    },
     { "address": "0x6626593C237f530D15aE9980A95ef938Ac15c35c" },
     { "address": "0x68bA95fb5108CFFd9608e8d9d54320acC531Ebe3" },
     { "address": "0x6F166508d423169A3C7cb3e7856Ba4bf9Fb2cCed" },

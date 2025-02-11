@@ -4695,6 +4695,28 @@
   ],
   "zksync2": [
     {
+      "symbol": "USDN",
+      "category": "stablecoin",
+      "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDM",
+      "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is minted by admins
+    },
+    {
       "symbol": "FIUSD",
       "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
       "source": "native",

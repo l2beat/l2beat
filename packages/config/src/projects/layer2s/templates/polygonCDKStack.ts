@@ -154,8 +154,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
-          ? 'polygon-zkevm-validium'
-          : 'polygon-zkevm-rollup',
+          ? 'polygon-cdk-validium'
+          : 'polygon-cdk-rollup',
       stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
