@@ -139,6 +139,10 @@ export async function getDaProjectEntry(
     bridgeGrissiniValues,
   })
 
+  const latestThroughput = layer.daLayer.throughput
+    ?.sort((a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber())
+    .at(-1)
+
   const result: DaProjectPageEntry = {
     name: layer.name,
     slug: layer.slug,
@@ -173,7 +177,7 @@ export async function getDaProjectEntry(
       tvs: layerTvs,
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
-      throughput: layer.daLayer.throughput,
+      throughput: latestThroughput,
       usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
@@ -232,6 +236,10 @@ export async function getEthereumDaProjectEntry(
     (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
   )
 
+  const latestThroughput = layer.daLayer.throughput
+    ?.sort((a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber())
+    .at(-1)
+
   return {
     name: layer.name,
     slug: layer.slug,
@@ -245,7 +253,7 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
-      throughput: layer.daLayer.throughput,
+      throughput: latestThroughput,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,
       callout: {

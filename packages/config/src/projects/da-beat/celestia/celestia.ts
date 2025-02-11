@@ -140,10 +140,13 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       erasureCodingProof: 'Fraud proofs',
     },
     pruningWindow: 86400 * 30, // 30 days in seconds
-    throughput: {
-      size: 8000, // 8 MB
-      frequency: 6, // 6 seconds
-    },
+    throughput: [
+      {
+        size: 8000, // 8 MB
+        frequency: 6, // 6 seconds
+        sinceTimestamp: new UnixTime(1738022400), // 2025-01-28T00:00:00Z
+      },
+    ],
     finality: 6, // seconds
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,

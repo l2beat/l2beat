@@ -35,8 +35,15 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
       if (!lastRecord) {
         return undefined
       }
+
+      const latestThroughput = project.daLayer.throughput
+        ?.sort(
+          (a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber(),
+        )
+        .at(-1)
+
       assert(
-        project.daLayer.throughput,
+        latestThroughput,
         'Project does not have throughput data configured',
       )
 
@@ -72,8 +79,8 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
         86_400,
       )
       const maxThroughput = getThroughput(
-        project.daLayer.throughput.size,
-        project.daLayer.throughput.frequency,
+        latestThroughput.size,
+        latestThroughput.frequency,
       )
 
       const pastDayAvgCapacityUtilization =
