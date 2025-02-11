@@ -26,4 +26,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   mantle: 'https://explorer.mantle.xyz',
   scroll: 'https://scrollscan.com',
   blast: 'https://blastscan.io',
+  unichain: 'https://uniscan.org',
 }
