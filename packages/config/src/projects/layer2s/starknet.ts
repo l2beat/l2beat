@@ -443,15 +443,6 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-      sequencers: [
-        '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
-        '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-      ],
-    },
     finality: {
       lag: 0,
       type: 'Starknet',
@@ -1083,11 +1074,11 @@ export const starknet: Layer2 = {
   },
   upgradesAndGovernance: `
   The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
-
-
+  
+  
   The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
-
-
+  
+  
   The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
   `,
   permissions: {
