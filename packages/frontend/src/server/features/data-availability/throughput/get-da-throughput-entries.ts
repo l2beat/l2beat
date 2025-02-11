@@ -6,9 +6,9 @@ import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const projects = await ps.getProjects({
-    select: ['daLayer', 'statuses'],
+    select: ['daLayer', 'statuses', 'daTrackingConfig'],
   })
-  const projectsWithDaTracking = projects.filter((p) => p.daLayer.daTracking)
+  const projectsWithDaTracking = projects.filter((p) => p.daTrackingConfig)
 
   if (projectsWithDaTracking.length === 0) {
     return []

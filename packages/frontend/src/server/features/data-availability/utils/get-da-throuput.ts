@@ -41,7 +41,7 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
       )
 
       const projectsUsingDa = projectsWithDaTracking.filter(
-        (p) => p.daTrackingConfig.type === project.daLayer.daTracking,
+        (p) => project.daLayer.name === p.daTrackingConfig.daLayer,
       )
       const largestPosterRecord =
         projectsUsingDa.length > 0
