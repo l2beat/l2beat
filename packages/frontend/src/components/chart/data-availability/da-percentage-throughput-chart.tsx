@@ -4,18 +4,18 @@ import { assert } from '@l2beat/shared-pure'
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart'
+import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-  ChartLoader,
   ChartTooltip,
   useChart,
-} from '~/components/core/chart'
+} from '~/components/core/chart/chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { ChartLoader } from '../core/chart-loader'
 
 interface DataPoint {
   timestamp: number
@@ -47,7 +47,7 @@ export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
   })
 
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="mb-2">
       {chartData ? (
         <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartTooltip content={<CustomTooltip />} />

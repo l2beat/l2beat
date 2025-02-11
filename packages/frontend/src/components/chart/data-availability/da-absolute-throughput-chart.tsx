@@ -4,18 +4,18 @@ import { assert } from '@l2beat/shared-pure'
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart'
+import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
-  ChartLoader,
   ChartTooltip,
   useChart,
-} from '~/components/core/chart'
+} from '~/components/core/chart/chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { ChartLoader } from '../core/chart-loader'
 
 interface DataPoint {
   timestamp: number
@@ -30,7 +30,7 @@ interface Props {
 }
 export function DaAbsoluteThroughputChart({ data, chartConfig }: Props) {
   return (
-    <ChartContainer config={chartConfig}>
+    <ChartContainer config={chartConfig} className="mb-2">
       {data ? (
         <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
           <ChartTooltip content={<CustomTooltip />} />
@@ -64,6 +64,7 @@ export function DaAbsoluteThroughputChart({ data, chartConfig }: Props) {
             dataKey="timestamp"
             tickLine={false}
             axisLine={false}
+            minTickGap={32}
             tickFormatter={(value: number) => formatTimestamp(value)}
           />
           <YAxis

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { ChartConfig } from '~/components/core/chart'
+import type { ChartConfig } from '~/components/core/chart/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
