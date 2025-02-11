@@ -9,6 +9,7 @@ import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLoader,
   ChartTooltip,
   useChart,
 } from '~/components/core/chart'
@@ -30,50 +31,54 @@ interface Props {
 export function DaAbsoluteThroughputChart({ data, chartConfig }: Props) {
   return (
     <ChartContainer config={chartConfig}>
-      <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <Line
-          dataKey="ethereum"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-ethereum)"
-          strokeWidth={2}
-          dot={false}
-        />
-        <Line
-          dataKey="celestia"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-celestia)"
-          strokeWidth={2}
-          dot={false}
-        />
-        <Line
-          dataKey="avail"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-avail)"
-          strokeWidth={2}
-          dot={false}
-        />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis
-          dataKey="timestamp"
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value: number) => formatTimestamp(value)}
-        />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={3}
-          tick={{
-            dy: -10,
-          }}
-        />
-      </LineChart>
+      {data ? (
+        <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
+          <ChartTooltip content={<CustomTooltip />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Line
+            dataKey="ethereum"
+            type="natural"
+            isAnimationActive={false}
+            stroke="var(--color-ethereum)"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            dataKey="celestia"
+            type="natural"
+            isAnimationActive={false}
+            stroke="var(--color-celestia)"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            dataKey="avail"
+            type="natural"
+            isAnimationActive={false}
+            stroke="var(--color-avail)"
+            strokeWidth={2}
+            dot={false}
+          />
+          <CartesianGrid vertical={false} horizontal={true} />
+          <XAxis
+            dataKey="timestamp"
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(value: number) => formatTimestamp(value)}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            mirror
+            tickCount={3}
+            tick={{
+              dy: -10,
+            }}
+          />
+        </LineChart>
+      ) : (
+        <ChartLoader />
+      )}
     </ChartContainer>
   )
 }
