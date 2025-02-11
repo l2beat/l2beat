@@ -35,6 +35,7 @@ export const rari: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   nonTemplateContracts: {
     [discovery.chain]: [
       discovery.getContractDetails('L1GatewayRouter', {
