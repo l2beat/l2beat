@@ -126,7 +126,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
       {
         size: 750, // 0.75 MB
         frequency: 12, // 12 seconds
-        sinceTimestamp: new UnixTime(1710332100),
+        sinceTimestamp: UnixTime.fromDate(new Date('2024-03-13')),
       },
     ],
     finality: 720, // seconds

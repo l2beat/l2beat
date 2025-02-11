@@ -144,7 +144,7 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       {
         size: 8000, // 8 MB
         frequency: 6, // 6 seconds
-        sinceTimestamp: new UnixTime(1738022400), // 2025-01-28T00:00:00Z
+        sinceTimestamp: UnixTime.fromDate(new Date('2025-01-28')),
       },
     ],
     finality: 6, // seconds

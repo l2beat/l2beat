@@ -149,7 +149,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       {
         size: 16000, // 16 MB , 4MB per 4 shard
         frequency: 1, // 16 MB/s
-        sinceTimestamp: new UnixTime(1587513600),
+        sinceTimestamp: UnixTime.fromDate(new Date('2020-04-22')),
       },
     ],
     risks: {
