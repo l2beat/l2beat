@@ -63,5 +63,5 @@ export const unichain: Layer2 = opStackL2({
   },
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
 })
