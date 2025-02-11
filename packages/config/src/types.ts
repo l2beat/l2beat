@@ -976,13 +976,10 @@ export interface DaLayerThroughput {
    */
   frequency: number
   /**
-   * Inclusive timestamp of when this throughput was introduced
+   * Inclusive timestamp of when this throughput was introduced.
+   * If more than one throughput is provided, it will be used as the end time of previous one
    */
   sinceTimestamp: UnixTime
-  /**
-   * Exclusive timestamp of when this throughput was removed
-   */
-  untilTimestamp?: UnixTime
 }
 
 export interface DaEconomicSecurity {

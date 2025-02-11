@@ -150,13 +150,11 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
         size: 2000,
         frequency: 6,
         sinceTimestamp: UnixTime.fromDate(new Date('2024-12-12')),
-        untilTimestamp: UnixTime.fromDate(new Date('2025-01-28')),
       },
       {
         size: 2000,
         frequency: 12,
         sinceTimestamp: UnixTime.fromDate(new Date('2023-10-31')),
-        untilTimestamp: UnixTime.fromDate(new Date('2024-12-12')),
       },
     ],
     finality: 6, // seconds
