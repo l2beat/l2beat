@@ -44,3 +44,4 @@ export {
   isDiscoveryDriven,
 } from './utils/discoveryDriven'
 export { isVerified } from './verification/isVerified'
+export { ClingoExporter } from './discovery/ClingoExporter'
