@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x4b6c30a0320163bc8ddaa6d2528d2d9f5f699a48
+Generated with discovered.json: 0x1896848e01943c3b9b3f99a6d9bf1ece0e7da501
 
-# Diff at Tue, 11 Feb 2025 12:01:31 GMT:
+# Diff at Tue, 11 Feb 2025 13:47:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c8d4b665fa9d8eb3cb43188a8a384f6458338412 block: 21141582
-- current block number: 21822026
+- comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 21141582
+- current block number: 21823614
 
 ## Description
 
-Kroma moves to optional SP1 for zk proofs (The old zkEVM verifier can still be used).
+Kroma proofs upgrade:
 
 ## Watched changes
 
@@ -33,7 +33,7 @@ Kroma moves to optional SP1 for zk proofs (The old zkEVM verifier can still be u
 
 ```diff
     contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
-    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The 
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
       sourceHashes.1:
 -        "0x110b957ac30147c969242967fdb5705351484239bca1c7060fe8b522d8d9cc44"
 +        "0x380ba7ac243cd77b18b24f82aba2b0b2b32ae18c02f8ae15db16810fb9f205ca"
@@ -223,7 +223,7 @@ Kroma moves to optional SP1 for zk proofs (The old zkEVM verifier can still be u
 ```diff
 +   Status: CREATED
     contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 
 ```diff
@@ -354,7 +354,7 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 
 ```diff
     contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
-    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The 
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
       issuedPermissions.0.permission:
@@ -364,7 +364,15 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 -        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
 +        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
       description:
-+        "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The "
++        "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B) {
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+      description:
++        "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal."
     }
 ```
 
@@ -469,8 +477,11 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
-    +++ description: None
+    contract ZkVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+      name:
+-        "ZKVerifier"
++        "ZkVerifier"
       issuedPermissions.0.to:
 -        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
 +        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
@@ -480,6 +491,8 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 +        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
       issuedPermissions.0.via.0:
 +        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      description:
++        "ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block."
     }
 ```
 
@@ -681,6 +694,32 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 +        "30m"
       description:
 +        "Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone."
+    }
+```
+
+Generated with discovered.json: 0x4dcaca955a29f835bfb97ea15820e1a98c878408
+
+# Diff at Mon, 10 Feb 2025 19:04:08 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21141582
+- current block number: 21141582
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21141582 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      values.opStackDA.isUsingEigenDA:
++        false
     }
 ```
 

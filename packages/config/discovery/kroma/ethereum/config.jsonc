@@ -24,7 +24,8 @@
     "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2",
     "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge",
     "0xe57E217d8ed498992452791622711B866403E950": "KromaRewardVaultMultisig",
-    "0x339208824010425cBE73201ceD4372308ACD610B": "ZKMerkleTrie"
+    "0x339208824010425cBE73201ceD4372308ACD610B": "ZKMerkleTrie",
+    "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7": "ZkVerifier"
   },
   "overrides": {
     "KromaRewardVaultMultisig": {
@@ -33,7 +34,7 @@
     "ZkVerifier": {
       "description": "ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block."
     },
-    "ZkMerkleTrie": {
+    "ZKMerkleTrie": {
       "description": "Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal."
     },
     "Poseidon2": {

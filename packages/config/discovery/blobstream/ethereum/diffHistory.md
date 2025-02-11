@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xd0c9beecc8c43ca164927f42e5d3cac6b95a9b6f
+
+# Diff at Tue, 11 Feb 2025 13:48:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 21686332
+- current block number: 21686332
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21686332 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      description:
+-        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
++        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      issuedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
 Generated with discovered.json: 0x099ec9c5187e14fc6fad9484fabeee1b07479471
 
 # Diff at Tue, 04 Feb 2025 12:30:50 GMT:
