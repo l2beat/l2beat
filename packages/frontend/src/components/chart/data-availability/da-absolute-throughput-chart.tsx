@@ -84,13 +84,11 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   const { config } = useChart()
-  if (!active || !payload) return null
+  if (!active || !payload || typeof label !== 'number') return null
 
   return (
     <div className={tooltipContentVariants()}>
-      <div className="text-secondary">
-        {formatTimestamp(+label, { mode: 'datetime' })}
-      </div>
+      <div className="text-secondary">{formatTimestamp(label)}</div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
         {payload.map((entry, index) => {
