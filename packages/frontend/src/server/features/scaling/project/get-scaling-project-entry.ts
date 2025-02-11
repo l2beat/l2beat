@@ -1,5 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import { badgesCompareFn, isVerified, layer2s } from '@l2beat/config'
+import { badges, badgesCompareFn, isVerified, layer2s } from '@l2beat/config'
 import { compact } from 'lodash'
 import { env } from '~/env'
 import { getProjectLinks } from '~/utils/project/get-project-links'
@@ -147,9 +147,12 @@ async function getHeader(project: ScalingProject) {
           },
         }
       : undefined,
-    badges:
+    badgesMeta:
       project.badges && project.badges.length !== 0
-        ? project.badges?.sort(badgesCompareFn)
+        ? project.badges?.sort(badgesCompareFn).map((id) => ({
+            ...badges[id],
+            id,
+          }))
         : undefined,
   }
 }
