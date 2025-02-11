@@ -5,17 +5,32 @@ import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
-  const projects = await ps.getProjects({
-    select: ['daLayer', 'statuses', 'daTrackingConfig'],
+  const projectsWithDaTracking = await ps.getProjects({
+    select: ['daTrackingConfig'],
   })
-  const projectsWithDaTracking = projects.filter((p) => p.daTrackingConfig)
 
-  if (projectsWithDaTracking.length === 0) {
+  const uniqueDaLayersInProjects = new Set(
+    projectsWithDaTracking.map((l) => l.daTrackingConfig.daLayer),
+  )
+
+  const daLayers = await ps.getProjects({
+    select: ['daLayer', 'statuses'],
+  })
+
+  const daLayersWithDaTracking = daLayers.filter((p) =>
+    uniqueDaLayersInProjects.has(p.id),
+  )
+
+  if (daLayersWithDaTracking.length === 0) {
     return []
   }
-  const latestData = await getDaThroughput(projectsWithDaTracking)
 
-  const entries = projectsWithDaTracking.map((project) =>
+  const latestData = await getDaThroughput(
+    daLayersWithDaTracking,
+    projectsWithDaTracking,
+  )
+
+  const entries = daLayersWithDaTracking.map((project) =>
     getDaThroughputEntry(project, latestData[project.id]),
   )
   return entries

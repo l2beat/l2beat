@@ -3,24 +3,23 @@ import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 
 export async function getDaThroughput(
   projects: Project<'daLayer' | 'statuses'>[],
+  projectsWithDaTracking: Project<'daTrackingConfig'>[],
 ) {
   if (env.MOCK) {
     return getMockThroughputData(projects)
   }
-  return getThroughputData(projects)
+  return getThroughputData(projects, projectsWithDaTracking)
 }
 
 export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
-async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
+async function getThroughputData(
+  projects: Project<'daLayer' | 'statuses'>[],
+  projectsWithDaTracking: Project<'daTrackingConfig'>[],
+) {
   const db = getDb()
-
-  const projectsWithDaTracking = await ps.getProjects({
-    select: ['daTrackingConfig'],
-  })
 
   const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
   const values = await db.dataAvailability.getByProjectIdsAndTimeRange(
