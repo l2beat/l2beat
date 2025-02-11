@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+
 import { ClingoExporter } from '../src/discovery/ClingoExporter'
 
 const clingoExporter = new ClingoExporter('optimism', 'ethereum')

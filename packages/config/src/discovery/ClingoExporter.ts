@@ -1,3 +1,4 @@
+import { writeFileSync } from 'fs'
 import path, { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import type {
@@ -7,7 +8,6 @@ import type {
   ReceivedPermission,
 } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { writeFileSync } from 'fs'
 
 export type Permission = ReceivedPermission & { to: EthereumAddress }
 
@@ -54,7 +54,7 @@ export class ClingoExporter {
   }
 
   generateClingo(): string {
-    const result = ['#include "../../common.lp".', '']
+    const result = ['#include "../../../clingo/common.lp".', '']
     const directPermissionsPerContract: Record<EthereumAddress, Permission[]> =
       {}
     for (const contract of this.contracts) {
@@ -119,6 +119,7 @@ export class ClingoExporter {
       'relations.lp',
     )
     writeFileSync(filePath, this.generateClingo())
+    console.log(`Saved clingo file to ${filePath}`)
   }
 }
 
