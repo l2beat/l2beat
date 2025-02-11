@@ -1,6 +1,8 @@
-import { join } from 'path'
+import path, { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
+import { assert } from '@l2beat/shared-pure'
 import express from 'express'
+import { readConfig } from '../../config/readConfig'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
@@ -12,8 +14,9 @@ export function runDiscoveryUi() {
   const port = 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
-  const DISCOVERY_ROOT = join(__dirname, '../../../../backend')
-  const configReader = new ConfigReader(DISCOVERY_ROOT)
+  const config = readConfig()
+  assert(config.discoveryPath !== undefined)
+  const configReader = new ConfigReader(path.dirname(config.discoveryPath))
 
   app.use(express.json())
 

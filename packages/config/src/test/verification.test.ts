@@ -1,3 +1,4 @@
+import { join } from 'path'
 import { ConfigReader } from '@l2beat/discovery'
 import type {
   ContractParameters,
@@ -8,82 +9,47 @@ import { uniq, uniqBy } from 'lodash'
 import { bridges } from '../projects/bridges'
 import { layer2s } from '../projects/layer2s'
 import { layer3s } from '../projects/layer3s'
-import { daLayers } from '../projects/refactored'
+import { refactored } from '../projects/refactored'
 import type {
+  BaseProject,
   Bridge,
-  DaBridge,
   Layer2,
   Layer3,
   ProjectContract,
 } from '../types'
-import { getChainNames, getChainNamesForDA } from '../utils/chains'
+import { getChainNames } from '../utils/chains'
 
 describe('verification status', () => {
-  describe('L2BEAT', () => {
-    const projects = [...layer2s, ...bridges, ...layer3s]
+  const projects = [...layer2s, ...bridges, ...layer3s, ...refactored]
 
-    for (const project of projects) {
-      for (const chain of getChainNames(project)) {
-        const projectId = project.id.toString()
-        it(`${projectId}:${chain}`, () => {
-          const unverified = getUniqueContractsForProject(project, chain)
+  for (const project of projects) {
+    for (const chain of getChainNames(project)) {
+      const projectId = project.id.toString()
+      it(`${projectId}:${chain}`, () => {
+        const unverified = getUniqueContractsForProject(project, chain)
 
-          if (unverified.length <= 0) {
-            return
-          }
-
-          const discoveries = getDiscoveries(projectId, chain)
-          assert(
-            discoveries.length > 0,
-            `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
-          )
-
-          const notFound = containsAllAddresses(unverified, discoveries)
-          assert(
-            notFound.length === 0,
-            `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
-          )
-        })
-      }
-    }
-  })
-
-  describe('DABEAT', () => {
-    for (const project of daLayers) {
-      const chains = getChainNamesForDA(project)
-      for (const bridge of project.daBridges ?? []) {
-        const bridgeId = bridge.id
-        if (!bridgeId) {
-          continue
+        if (unverified.length <= 0) {
+          return
         }
-        for (const chain of chains) {
-          it(`${bridge.id} on ${chain}`, () => {
-            const unverified = getUniqueAddressesForDaBridge(bridge, chain)
 
-            if (unverified.length <= 0) {
-              return
-            }
+        const discoveries = getDiscoveries(projectId, chain)
+        assert(
+          discoveries.length > 0,
+          `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
+        )
 
-            const discoveries = getDiscoveries(bridgeId, chain)
-            assert(
-              discoveries.length > 0,
-              `Failed to read discovery for ${bridgeId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
-            )
-
-            const notFound = containsAllAddresses(unverified, discoveries)
-            assert(
-              notFound.length === 0,
-              `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
-            )
-          })
-        }
-      }
+        const notFound = containsAllAddresses(unverified, discoveries)
+        assert(
+          notFound.length === 0,
+          `Failed to find the following addresses in project discoveries: ${notFound.join(', ')}`,
+        )
+      })
     }
-  })
+  }
 })
 
 function getDiscoveries(project: string, chain: string): DiscoveryOutput[] {
-  const configReader = new ConfigReader('../backend')
+  const configReader = new ConfigReader(join(process.cwd(), '../config'))
 
   let discovery = undefined
   try {
@@ -137,7 +103,7 @@ function getImplementations(contract: ContractParameters): EthereumAddress[] {
   return [EthereumAddress(implementations.toString())]
 }
 
-type Project = Layer2 | Layer3 | Bridge
+type Project = Layer2 | Layer3 | Bridge | BaseProject
 
 function withoutDuplicates<T>(arr: T[]): T[] {
   return uniqBy(arr, JSON.stringify)
@@ -146,20 +112,6 @@ function withoutDuplicates<T>(arr: T[]): T[] {
 interface AddressOnChain {
   chain: string
   address: EthereumAddress
-}
-
-function getUniqueAddressesForDaBridge(
-  bridge: DaBridge,
-  chain: string,
-): EthereumAddress[] {
-  const addresses = withoutDuplicates(
-    getDaBridgeContractsForChain(bridge, chain).map((c) => c.address),
-  )
-  const permissions = withoutDuplicates(
-    getDaBridgePermissionsForChain(bridge, chain).map((p) => p.address),
-  )
-
-  return [...addresses, ...permissions]
 }
 
 function getUniqueContractsForProject(
@@ -203,45 +155,19 @@ function getProjectContractsForChain(
   const contracts = (project.contracts?.addresses[chain] ?? []).filter(
     (contract) => contract.chain === chain,
   )
-  const escrows = project.config.escrows
-    .flatMap((escrow) => {
-      if (!escrow.contract) {
-        return []
-      }
-      return { address: escrow.address, ...escrow.contract }
-    })
-    .filter((escrowContract) => escrowContract.chain === chain)
-
-  return [...contracts, ...escrows]
-}
-
-function getDaBridgeContractsForChain(
-  bridge: DaBridge,
-  chain: string,
-): AddressOnChain[] {
-  const contracts = Object.values(bridge.contracts?.addresses ?? {}).flat()
-  const addresses = getUniqueContractsFromList(contracts)
-  return addresses.filter((a) => a.chain === chain)
-}
-
-function getDaBridgePermissionsForChain(
-  bridge: DaBridge,
-  chain: string,
-): AddressOnChain[] {
-  if (!bridge.permissions) {
-    return []
+  let escrows: ProjectContract[] = []
+  if ('config' in project) {
+    escrows = project.config.escrows
+      .flatMap((escrow) => {
+        if (!escrow.contract) {
+          return []
+        }
+        return { address: escrow.address, ...escrow.contract }
+      })
+      .filter((escrowContract) => escrowContract.chain === chain)
   }
 
-  const perChain = bridge.permissions?.[chain] ?? {}
-  const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
-  return all.flatMap((p) =>
-    p.accounts.flatMap((a) => {
-      return {
-        chain: p.chain.toString(),
-        address: a.address,
-      }
-    }),
-  )
+  return [...contracts, ...escrows]
 }
 
 function getPermissionedAddressesForChain(project: Project, chain: string) {

@@ -28,6 +28,7 @@ import { inevm } from './inevm'
 import { l3x } from './l3x'
 import { lumiterra } from './lumiterra'
 import { meliora } from './meliora'
+import { mindchain } from './mindchain'
 import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
@@ -94,6 +95,7 @@ export const layer3s: Layer3[] = [
   stack,
   syndicateframe,
   meliora,
+  mindchain,
   molten,
   muster,
   mvchain,

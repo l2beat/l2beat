@@ -57,6 +57,7 @@ export type PermissionType =
   | 'act'
   | 'validateZkStack'
   | 'validateBridge'
+  | 'validateBridge2'
   | 'relay'
   | 'aggregatePolygon'
 

@@ -1,21 +1,18 @@
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { compact } from 'lodash'
-import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { ps } from '~/server/projects'
 import { getTechnologySectionProps } from './get-technology-section-props'
 import { makeTechnologyChoice } from './make-technology-section'
 
 export async function getScalingTechnologySection(project: Layer2 | Layer3) {
-  // TODO: This is absurd. All i need here is a link. This could've been precomputed in config!
-  const projects = await ps.getProjects({
-    select: ['daLayer', 'daBridges'],
-  })
+  const layerId = project.dataAvailability?.layer.projectId
+  const bridgeId = project.dataAvailability?.bridge.projectId
 
-  const relatedDaProjects = projects.filter((project) =>
-    getDaBridges(project).some((bridge) =>
-      bridge.usedIn.some((usedIn) => usedIn.id === project.id),
-    ),
-  )
+  // TODO: having those slugs in config would be easier
+  const [layer, bridge] = await Promise.all([
+    layerId && ps.getProject({ id: layerId }),
+    bridgeId && ps.getProject({ id: bridgeId }),
+  ])
 
   const items = compact([
     project.technology.stateCorrectness &&
@@ -33,17 +30,16 @@ export async function getScalingTechnologySection(project: Layer2 | Layer3) {
         'data-availability',
         project.technology.dataAvailability,
         {
-          relatedProjectBanner:
-            relatedDaProjects.length < 2 && relatedDaProjects[0]
-              ? {
-                  text: 'Learn more about the DA layer here:',
-                  project: {
-                    name: relatedDaProjects[0].name,
-                    slug: `${relatedDaProjects[0].slug}/${getDaBridges(relatedDaProjects[0])[0]?.display.slug}`,
-                    type: 'data-availability',
-                  },
-                }
-              : undefined,
+          relatedProjectBanner: layer
+            ? {
+                text: 'Learn more about the DA layer here:',
+                project: {
+                  name: layer.name,
+                  slug: `${layer.slug}/${bridge?.slug ?? 'no-bridge'}`,
+                  type: 'data-availability',
+                },
+              }
+            : undefined,
         },
       ),
   ])
