@@ -34,23 +34,22 @@ export function DaPercentageThroughputChart({
   isLoading,
   chartConfig,
 }: Props) {
-  const chartData =
-    data?.map((item) => {
-      const total = item.ethereum + item.celestia + item.avail
-      const ethereumPercent = (item.ethereum / total) * 100
-      const celestiaPercent = (item.celestia / total) * 100
-      const availPercent = Math.min(
-        (item.avail / total) * 100,
-        100 - ethereumPercent - celestiaPercent,
-      )
+  const chartData = data?.map((item) => {
+    const total = item.ethereum + item.celestia + item.avail
+    const ethereumPercent = (item.ethereum / total) * 100
+    const celestiaPercent = (item.celestia / total) * 100
+    const availPercent = Math.min(
+      (item.avail / total) * 100,
+      100 - ethereumPercent - celestiaPercent,
+    )
 
-      return {
-        timestamp: item.timestamp,
-        ethereum: ethereumPercent,
-        celestia: celestiaPercent,
-        avail: availPercent,
-      }
-    })
+    return {
+      timestamp: item.timestamp,
+      ethereum: ethereumPercent,
+      celestia: celestiaPercent,
+      avail: availPercent,
+    }
+  })
 
   return (
     <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>

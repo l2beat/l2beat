@@ -12,10 +12,10 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 
 interface DataPoint {
   timestamp: number
