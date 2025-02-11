@@ -8,7 +8,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId } from './projects/badges'
+import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -886,7 +886,10 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
+  badgesMeta: ProjectBadgeMeta[] | undefined
 }
+
+export type ProjectBadgeMeta = BadgeInfo & { id: BadgeId }
 
 export type ScalingProjectStage =
   | 'Not applicable'

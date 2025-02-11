@@ -9,6 +9,7 @@ import type {
   ProjectLivenessInfo,
 } from '../../types'
 import { isVerified } from '../../verification/isVerified'
+import { badges } from '../badges'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
@@ -69,6 +70,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
+      badgesMeta: p.badges?.map((id) => ({ ...badges[id], id })),
     },
     scalingStage: p.stage,
     scalingRisks: {

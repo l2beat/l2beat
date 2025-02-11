@@ -7,6 +7,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/other-migration-tooltip'
 import { Markdown } from '~/components/markdown/markdown'
+import { ProjectBadge } from '~/components/projects/project-badge'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { featureFlags } from '~/consts/feature-flags'
 import { ShieldIcon } from '~/icons/shield'
@@ -20,15 +21,23 @@ import { PrimaryValueCell } from './primary-value-cell'
 export interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
   className?: string
+  withInfoTooltip?: boolean
 }
 
-export function ProjectNameCell({ project, className }: ProjectCellProps) {
+export function ProjectNameCell({
+  project,
+  className,
+  withInfoTooltip,
+}: ProjectCellProps) {
   const { checked } = useRecategorisationPreviewContext()
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
         <PrimaryValueCell className="font-bold !leading-none">
-          {project.shortName ?? project.name}
+          <NameWithProjectInfoTooltip
+            withInfoTooltip={withInfoTooltip}
+            project={project}
+          />
         </PrimaryValueCell>
         {project.statuses?.verificationWarning === true && (
           <Tooltip>
@@ -87,5 +96,38 @@ export function ProjectNameCell({ project, className }: ProjectCellProps) {
         </span>
       )}
     </div>
+  )
+}
+
+interface NameWithProjectInfoTooltipProps {
+  withInfoTooltip?: boolean
+  project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
+}
+
+function NameWithProjectInfoTooltip({
+  project,
+  withInfoTooltip,
+}: NameWithProjectInfoTooltipProps) {
+  if (!withInfoTooltip) {
+    return project.shortName ?? project.name
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger>{project.shortName ?? project.name}</TooltipTrigger>
+      <TooltipContent>
+        <div className="flex flex-col gap-2">
+          <span className="text-lg font-bold">
+            What is {project.shortName ?? project.name}?
+          </span>
+          <p className="text-[13px]">{project.description}</p>
+          <div className="flex flex-row gap-1 max-md:px-4 lg:flex-wrap">
+            {project.badgesMeta?.map((badge, key) => (
+              <ProjectBadge key={key} badge={badge} />
+            ))}
+          </div>
+        </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }
