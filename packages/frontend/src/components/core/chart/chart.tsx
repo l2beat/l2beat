@@ -3,6 +3,7 @@
 
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
+import { Logo } from '~/components/logo'
 
 import { cn } from '~/utils/cn'
 
@@ -80,6 +81,10 @@ const ChartContainer = React.forwardRef<
         <RechartsPrimitive.ResponsiveContainer>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
+        <Logo
+          animated={false}
+          className="absolute bottom-10 right-3 h-8 w-20 opacity-50"
+        />
       </div>
     </ChartContext.Provider>
   )
