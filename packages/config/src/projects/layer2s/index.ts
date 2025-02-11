@@ -143,6 +143,7 @@ import { reya } from './reya'
 import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { river } from './river'
+import { r0ar } from './r0ar'
 import { rss3 } from './rss3'
 import { rufus } from './rufus'
 import { scroll } from './scroll'
@@ -343,6 +344,7 @@ export const layer2s: Layer2[] = [
   rhinofi,
   rise,
   river,
+  r0ar,
   rss3,
   rufus,
   scroll,
