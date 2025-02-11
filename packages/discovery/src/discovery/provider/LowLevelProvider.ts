@@ -267,25 +267,43 @@ export async function rpcWithRetries<T>(
 }
 
 function isServerError(e: unknown): boolean {
-  const parsed = ethersError.safeParse(e)
-  return (
-    parsed.success &&
-    ((parsed.data.error.status ?? 200) >= 400 ||
-      (parsed.data.error.code === 'SERVER_ERROR' &&
-        !parsed.data.error.error.message.includes('out of gas') &&
-        parsed.data.error.error.message !== 'execution reverted' &&
-        parsed.data.error.error.message !== 'gas uint64 overflow' &&
-        parsed.data.error.error.message !== 'invalid opcode: INVALID'))
-  )
+  const parsed = topLevelEthersError.safeParse(e)
+  if (parsed.success) {
+    const topError = parsed.data
+    let isServerError = false
+    if (topError.error !== undefined && 'code' in topError.error) {
+      isServerError ||= topError.error.status >= 400
+      isServerError ||= topError.error.code === 'TIMEOUT'
+      isServerError ||=
+        topError.error.code === 'SERVER_ERROR' &&
+        !(topError.error?.error?.message ?? '').includes('out of gas') &&
+        topError.error?.error?.message !== 'execution reverted' &&
+        topError.error?.error?.message !== 'gas uint64 overflow' &&
+        topError.error?.error?.message !== 'invalid opcode: INVALID'
+    } else {
+      isServerError ||= topError.status >= 400
+      isServerError ||= topError.code === 'SERVER_ERROR'
+      isServerError ||= topError.code === 'TIMEOUT'
+    }
+
+    return isServerError
+  }
+
+  return false
 }
 
-const ethersError = z.object({
-  error: z.object({
-    code: z.string(),
-    status: z.number().optional(),
-    error: z.object({
-      code: z.number(),
-      message: z.string(),
-    }),
-  }),
+const ethersRPCError = z.object({
+  message: z.string().optional(),
+})
+
+const ethersLoggerError = z.object({
+  code: z.string(),
+  status: z.number().default(200),
+  error: ethersRPCError.optional(),
+})
+
+const topLevelEthersError = z.object({
+  code: z.string(),
+  status: z.number().default(200),
+  error: z.union([ethersLoggerError, ethersRPCError]).optional(),
 })

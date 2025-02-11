@@ -1,8 +1,8 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 21808054,
-  "configHash": "0x6e2cb9b84b54f79c51c23fd3747fd1375b97746bdcefee32f91abca51dc1cd87",
+  "blockNumber": 21816462,
+  "configHash": "0x1d324c91483cb59bcfb9406181a5ab4e4aac4b225a8356474c90dd89de5600a2",
   "contracts": [
     {
       "name": "DomainRoutingIsm",
@@ -408,7 +408,7 @@
       "sourceHashes": [
         "0x4da033269a6a7f9325fe80af4d4890a8181a0c28e33a596acae5bf6f4e736681"
       ],
-      "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.",
+      "description": "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.",
       "sinceTimestamp": 1726246031,
       "values": {
         "$immutable": true,

@@ -7450,6 +7450,20 @@
       }
     },
     {
+      "name": "Mountain Protocol USD",
+      "coingeckoId": "mountain-protocol-usdm",
+      "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
+      "symbol": "USDM",
+      "decimals": 18,
+      "deploymentTimestamp": 1728957714,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
+      "chainId": 324,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Staked Frax Ether",
       "coingeckoId": "staked-frax-ether",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
@@ -7498,6 +7512,28 @@
       "chainId": 324,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "USN Token",
+      "coingeckoId": "noon-usn",
+      "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "symbol": "USDN",
+      "decimals": 18,
+      "deploymentTimestamp": 1737617698,
+      "coingeckoListingTimestamp": 1737763200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53948/large/image_%289%29.png?1737788246",
+      "chainId": 324,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped BTC",
