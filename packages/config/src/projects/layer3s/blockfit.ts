@@ -8,11 +8,7 @@ export const blockfit: Layer3 = underReviewL3({
   capability: 'universal',
   addedAt: new UnixTime(1739285196), // 2025-02-11T14:46:36Z
   hostChain: ProjectId('nova'),
-  badges: [
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
-    Badge.RaaS.Zeeve
-  ],
+  badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.RaaS.Zeeve],
   display: {
     name: 'BlockFit',
     slug: 'blockfit',
