@@ -7,16 +7,11 @@ export const r0ar: Layer2 = underReviewL2({
   id: 'r0ar',
   capability: 'universal',
   addedAt: new UnixTime(1739282637), // 2025-02-11T14:03:57Z
-  badges: [
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
-    Badge.RaaS.Zeeve
-  ],
+  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.RaaS.Zeeve],
   display: {
     name: 'R0ar',
     slug: 'r0ar',
-    description:
-      'R0ar is an Optimistic Rollup utilizing the OP Stack.',
+    description: 'R0ar is an Optimistic Rollup utilizing the OP Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
@@ -25,10 +20,7 @@ export const r0ar: Layer2 = underReviewL2({
       apps: ['https://r0arbridge.io/'],
       documentation: [],
       explorers: ['https://r0arscan.io/'],
-      socialMedia: [
-        'https://x.com/th3r0ar',
-        'https://t.me/r0ar_community'
-      ],
+      socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],
     },
   },
   transactionApi: {
@@ -40,7 +32,7 @@ export const r0ar: Layer2 = underReviewL2({
   },
   escrows: [
     {
-      address: EthereumAddress('0x2c6af306f8d0cd6d9e76d43b2dc9a4e60a7f446e'), 
+      address: EthereumAddress('0x2c6af306f8d0cd6d9e76d43b2dc9a4e60a7f446e'),
       sinceTimestamp: new UnixTime(1726179731),
       tokens: ['ETH'],
       chain: 'ethereum',
