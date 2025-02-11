@@ -9,6 +9,7 @@ import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  ChartLoader,
   ChartTooltip,
   useChart,
 } from '~/components/core/chart'
@@ -36,6 +37,7 @@ export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
       (item.avail / total) * 100,
       100 - ethereumPercent - celestiaPercent,
     )
+
     return {
       timestamp: item.timestamp,
       ethereum: ethereumPercent,
@@ -46,45 +48,50 @@ export function DaPercentageThroughputChart({ data, chartConfig }: Props) {
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <Bar
-          dataKey="ethereum"
-          stackId="a"
-          fill="var(--color-ethereum)"
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="celestia"
-          stackId="a"
-          fill="var(--color-celestia)"
-          isAnimationActive={false}
-        />
-        <Bar
-          dataKey="avail"
-          stackId="a"
-          fill="var(--color-avail)"
-          isAnimationActive={false}
-        />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis
-          dataKey="timestamp"
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value: number) => formatTimestamp(value)}
-        />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          unit="%"
-          mirror
-          tickCount={3}
-          tick={{
-            dy: -10,
-          }}
-        />
-      </BarChart>
+      {chartData ? (
+        <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+          <ChartTooltip content={<CustomTooltip />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Bar
+            dataKey="ethereum"
+            stackId="a"
+            fill="var(--color-ethereum)"
+            isAnimationActive={false}
+          />
+          <Bar
+            dataKey="celestia"
+            stackId="a"
+            fill="var(--color-celestia)"
+            isAnimationActive={false}
+          />
+          <Bar
+            dataKey="avail"
+            stackId="a"
+            fill="var(--color-avail)"
+            isAnimationActive={false}
+          />
+          <CartesianGrid vertical={false} horizontal={true} />
+          <XAxis
+            dataKey="timestamp"
+            tickLine={false}
+            axisLine={false}
+            tickFormatter={(value: number) => formatTimestamp(value)}
+            minTickGap={32}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            unit="%"
+            mirror
+            tickCount={3}
+            tick={{
+              dy: -10,
+            }}
+          />
+        </BarChart>
+      ) : (
+        <ChartLoader />
+      )}
     </ChartContainer>
   )
 }
