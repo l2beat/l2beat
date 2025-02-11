@@ -212,9 +212,9 @@ export const hyperlane: Bridge = {
       
       
       To initiate a token transfer via the Nexus bridge, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.
-      The function call eventually dispatches a message through origin chains Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the Mailbox contract events and index each dispatched message. 
-      ISM validators sign off on messages by producing attestations (called checkpoints) from the Mailbox, which commit to the Merkle root of all dispatched message IDs. 
-      On the destination chain, Relayers will then call the process() function on the receiving Mailbox, which verifies the relayed message with the ISM module, which is either the default Multisig ISM ('StaticAggregationIsm') or an ISM configured by the destination contract owner.
+      The function call eventually dispatches a message through origin chains Mailbox, emitting a Dispatch event. Off-chain agents, such as ISM validators and Relayers, monitor the origin's Mailbox contract and index each dispatched message. 
+      Multisig ISM validators sign off on messages by regularly producing attestations (called checkpoints), which commit to the Merkle root of all dispatched message IDs from a Mailbox at a given origin. 
+      On the destination chain, Relayers will then call the process() function on the receiving Mailbox, which verifies the relayed message with the ISM module, which is either the default Multisig ISM or an ISM configured by the destination contract owner.
       The Mailbox's process() function will conclude the token transfer by calling handle() at the destination token router contract, which will contain the logic for asset delivery to the user. 
       Depending on the application, this can be releasing tokens from an escrow, minting new tokens or other transactions.`,
       references: [
@@ -248,7 +248,7 @@ export const hyperlane: Bridge = {
         },
         {
           category: 'Funds can be lost if',
-          text: 'the required validators fail to sign the transfer message and are not replaced by honest ones.',
+          text: 'the required validators fail to sign the transfer message and are not actively replaced by honest ones by the admin.',
         },
         {
           category: 'Funds can be stolen if',
