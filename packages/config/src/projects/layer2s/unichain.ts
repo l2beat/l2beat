@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -69,10 +69,18 @@ export const unichain: Layer2 = opStackL2({
   chainConfig: {
     name: 'unichain',
     chainId: 130,
-    explorerUrl: 'https://uniscan.org',
+    explorerUrl: 'https://uniscan.xyz/',
     explorerApi: {
-      url: 'https://api.uniscan.org/api',
+      url: 'https://api.uniscan.xyz/api',
       type: 'etherscan',
     },
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1,
+        version: '3',
+      },
+    ],
   },
 })
