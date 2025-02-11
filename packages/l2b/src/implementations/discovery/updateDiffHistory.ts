@@ -19,9 +19,9 @@ import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
 import path from 'path'
+import chalk from 'chalk'
 import { readConfig } from '../../config/readConfig'
 import { updateDiffHistoryHash } from './hashing'
-import chalk from 'chalk'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
