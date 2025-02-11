@@ -19,7 +19,7 @@
     "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363": "ValidatorManager",
     "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3": "AssetManager",
     "0xb3c415c2Aad428D5570208e1772cb68e7D06a537": "UpgradeGovernor",
-    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilToken",
+    "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c": "SecurityCouncilTokenOwners",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
     "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2",
     "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge",
@@ -53,7 +53,8 @@
       }
     },
     "KromaRewardVaultMultisig": {
-      "description": "Escrows a pool of KRO used as validator rewards by the AssetManager."
+      "description": "Escrows a pool of KRO used as validator rewards by the AssetManager.",
+      "ignoreRelatives": ["KGH"]
     },
     "ZkVerifier": {
       "description": "ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block."
@@ -259,7 +260,7 @@
         }
       ]
     },
-    "SecurityCouncilToken": {
+    "SecurityCouncilTokenOwners": {
       "description": "A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently {{totalSupply}} members.",
       "ignoreMethods": ["getPastTotalSupply", "tokenByIndex"],
       "ignoreInWatchMode": ["clock", "ownerOf"],

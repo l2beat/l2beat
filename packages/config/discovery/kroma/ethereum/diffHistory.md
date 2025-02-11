@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x29616ea5e914662650549be071b274b92c4a61db
+Generated with discovered.json: 0xaf6013149843f966bd6a18eaa4796e1d54b48f8a
 
-# Diff at Tue, 11 Feb 2025 14:13:39 GMT:
+# Diff at Tue, 11 Feb 2025 14:59:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 21141582
@@ -8,7 +8,8 @@ Generated with discovered.json: 0x29616ea5e914662650549be071b274b92c4a61db
 
 ## Description
 
-Made succinct gateway description more generic (to be used not only for blobstream).
+[Kroma proof system upgrade](https://blog.kroma.network/kromas-transition-to-zkvm-fault-proof-b8c8d2dc39c6):
+Kroma moves to optional SP1 for zk proofs of the last step in a fault proof (The old zkEVM verifier can still be used).
 
 ## Watched changes
 
@@ -139,7 +140,7 @@ Made succinct gateway description more generic (to be used not only for blobstre
 ```
 
 ```diff
-    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
     +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
       receivedPermissions.22:
 +        {"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}
@@ -609,8 +610,11 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
     +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      name:
+-        "SecurityCouncilToken"
++        "SecurityCouncilTokenOwners"
       issuedPermissions.10:
 +        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
       issuedPermissions.9:

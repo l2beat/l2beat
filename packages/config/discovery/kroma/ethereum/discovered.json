@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21823614,
-  "configHash": "0x19e8bb4f4d3495bb120a1e26b806bcd94df2b21833dc1d963837dc97e14419b5",
+  "configHash": "0xebdc9e440e2f4c8d5ba1f6c0c429afcbc6838a47dc13f4c8ef09203a4fb23337",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -1185,7 +1185,7 @@
       }
     },
     {
-      "name": "SecurityCouncilToken",
+      "name": "SecurityCouncilTokenOwners",
       "address": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
