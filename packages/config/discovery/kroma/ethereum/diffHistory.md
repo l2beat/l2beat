@@ -1,14 +1,264 @@
-Generated with discovered.json: 0x4dcaca955a29f835bfb97ea15820e1a98c878408
+Generated with discovered.json: 0x4b6c30a0320163bc8ddaa6d2528d2d9f5f699a48
 
-# Diff at Mon, 10 Feb 2025 19:04:08 GMT:
+# Diff at Tue, 11 Feb 2025 12:01:31 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21141582
-- current block number: 21141582
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c8d4b665fa9d8eb3cb43188a8a384f6458338412 block: 21141582
+- current block number: 21822026
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Kroma moves to optional SP1 for zk proofs (The old zkEVM verifier can still be used).
+
+## Watched changes
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      sourceHashes.1:
+-        "0x3b00390af29aee88ea29fcb7a7d70395cae6d537dfc25f3a71768f5c6280479a"
++        "0x9352046e1debd70d6603f184b60930075d5445af5ed02e1e4b299010ec5d7348"
+      values.$implementation:
+-        "0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"
++        "0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
+      values.$pastUpgrades.1:
++        ["2025-02-10T04:48:23.000Z","0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",["0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.MPT_FIRST_OUTPUT_INDEX:
++        12603
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The 
+      sourceHashes.1:
+-        "0x110b957ac30147c969242967fdb5705351484239bca1c7060fe8b522d8d9cc44"
++        "0x380ba7ac243cd77b18b24f82aba2b0b2b32ae18c02f8ae15db16810fb9f205ca"
+      values.$implementation:
+-        "0x381F53695230BAF83a39D1a08304D233A35730Fa"
++        "0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
+      values.$pastUpgrades.1:
++        ["2025-02-10T04:48:23.000Z","0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",["0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "1.0.0"
++        "2.0.0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      directlyReceivedPermissions.15:
++        {"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103"}
+      directlyReceivedPermissions.14.from:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      directlyReceivedPermissions.13.from:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      directlyReceivedPermissions.12.from:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      directlyReceivedPermissions.11.from:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "0x827962404D7104202C5aaa6b929115C8211d9596"
+      directlyReceivedPermissions.11.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.10.from:
+-        "0x827962404D7104202C5aaa6b929115C8211d9596"
++        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      directlyReceivedPermissions.10.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.9.from:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      directlyReceivedPermissions.8.from:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      directlyReceivedPermissions.7.from:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      directlyReceivedPermissions.6.from:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      directlyReceivedPermissions.5.from:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      directlyReceivedPermissions.4.from:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      directlyReceivedPermissions.3.from:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      directlyReceivedPermissions.2.from:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.1.from:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      directlyReceivedPermissions.0.from:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "0x005DDC466C804c79adB079c120347dDE48132105"
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+      sourceHashes.1:
+-        "0x00a929674c752e3543c7d0b26d1965574c3f956dd892502eb782e8087e12af45"
++        "0x6f653563abba409e3c26569deb686f8f22823bd92ef3d658b4bc77ba630236c7"
+      values.$implementation:
+-        "0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"
++        "0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
+      values.$pastUpgrades.4:
++        ["2025-02-10T04:48:23.000Z","0x78625237350cb2047aa1ec6392d2402dabf1a5d44d54e0142ae27d19546c8c74",["0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.DUMMY_HASH:
+-        "0xedf1ae3da135c124658e215a9bf53477facb442a1dcd5a92388332cb6193237f"
+      values.MAX_TXS:
+-        100
+      values.version:
+-        "1.1.0"
++        "2.0.0"
+      values.ZK_MERKLE_TRIE:
+-        "0x339208824010425cBE73201ceD4372308ACD610B"
+      values.ZK_VERIFIER:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      values.ZK_PROOF_VERIFIER:
++        "0x005DDC466C804c79adB079c120347dDE48132105"
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}
+      receivedPermissions.21.from:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      receivedPermissions.20.from:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.19.from:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.18.from:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "0x827962404D7104202C5aaa6b929115C8211d9596"
+      receivedPermissions.18.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.17.from:
+-        "0x827962404D7104202C5aaa6b929115C8211d9596"
++        "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+      receivedPermissions.17.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.17.via.2:
+-        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      receivedPermissions.17.via.1.address:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.17.via.0.address:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.16.from:
+-        "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
++        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.16.via.2:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      receivedPermissions.16.via.1.address:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.16.via.0.address:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.15.from:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      receivedPermissions.14.from:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.13.from:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      receivedPermissions.12.from:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      receivedPermissions.11.from:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.10.from:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.9.from:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      receivedPermissions.8.from:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.7.from:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      receivedPermissions.6.from:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "0x005DDC466C804c79adB079c120347dDE48132105"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKProofVerifier (0x005DDC466C804c79adB079c120347dDE48132105)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../Colosseum/Colosseum.sol                        | 1160 +++-------------
+ .../KromaPortal/KromaPortal.sol                    | 1439 ++++++++++++++------
+ ...-0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63.sol | 1432 +++++++++++++++++++
+ ...-0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16.sol | 1432 +++++++++++++++++++
+ .../kroma/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++++
+ .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      |  953 +++++++++++++
+ .../GnosisSafeProxy.p.sol                          |   35 +
+ .../ValidatorManager/ValidatorManager.sol          |   90 +-
+ .../ethereum/.flat/ZKProofVerifier/Proxy.p.sol     |  211 +++
+ .../.flat/ZKProofVerifier/ZKProofVerifier.sol      | 1284 +++++++++++++++++
+ 10 files changed, 6857 insertions(+), 1410 deletions(-)
+```
 
 ## Config/verification related changes
 
@@ -17,10 +267,420 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21141582 (main branch discovery), not current.
 
 ```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      description:
++        "The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time)."
+    }
+```
+
+```diff
+    contract TimeLock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      name:
+-        "Timelock"
++        "TimeLock"
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","description":"propose transactions.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","description":"manage all access control roles.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","description":"manage all access control roles.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","description":"execute transactions that are ready.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.0.description:
++        "cancel queued transactions."
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"}]
+      values.Canceller:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.Executor:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.getMinDelayFormatted:
++        "0s"
+      values.Proposer:
++        ["0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      values.timelockAdminAC:
++        ["0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","0xb3c415c2Aad428D5570208e1772cb68e7D06a537"]
+      template:
++        "global/Timelock"
+      displayName:
++        "L1Timelock"
+      description:
++        "A timelock with access control. The current minimum delay is 0s."
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"manage all access control roles."},{"permission":"interact","from":"0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."},{"permission":"upgrade","from":"0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"}]
+    }
+```
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      description:
+-        "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the permission to submit the output root. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets."
++        "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets."
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      values.RoundDurationFormatted:
++        "30m"
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The 
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      description:
++        "This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The "
+    }
+```
+
+```diff
     contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.1:
++        {"permission":"sequence","to":"0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.0.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      template:
++        "opstack/SystemConfig"
+      description:
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      name:
+-        "SecurityCouncil"
++        "KromaSecurityCouncil"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      description:
++        "Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken."
+      receivedPermissions:
++        [{"permission":"guard","from":"0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"},{"permission":"interact","from":"0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a","description":"dismiss ongoing challenges and override state roots (`forceDeleteOutput()`)."},{"permission":"interact","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103","description":"become a validator without posting a bond."}]
+      references:
++        [{"text":"Security Council members - Announcing Kroma Security Council","href":"https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4"}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      template:
++        "opstack/L1CrossDomainMessenger"
+      description:
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      template:
++        "opstack/L1ERC721Bridge"
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
     +++ description: None
-      values.opStackDA.isUsingEigenDA:
-+        false
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"},{"permission":"upgrade","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"permission":"upgrade","from":"0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"},{"permission":"upgrade","from":"0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"},{"permission":"upgrade","from":"0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"},{"permission":"upgrade","from":"0x3de211088dF516da72efe68D386b561BEE256Ec4"},{"permission":"upgrade","from":"0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"},{"permission":"upgrade","from":"0x46d07221dfC313afe1BF104F4bB1f185301D65B9"},{"permission":"upgrade","from":"0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"},{"permission":"upgrade","from":"0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"},{"permission":"upgrade","from":"0x827962404D7104202C5aaa6b929115C8211d9596"},{"permission":"upgrade","from":"0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"},{"permission":"upgrade","from":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"permission":"upgrade","from":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"},{"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103"}]
+      template:
++        "global/ProxyAdmin"
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"},{"permission":"upgrade","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"permission":"upgrade","from":"0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"},{"permission":"upgrade","from":"0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"},{"permission":"upgrade","from":"0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"},{"permission":"upgrade","from":"0x3de211088dF516da72efe68D386b561BEE256Ec4"},{"permission":"upgrade","from":"0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"},{"permission":"upgrade","from":"0x46d07221dfC313afe1BF104F4bB1f185301D65B9"},{"permission":"upgrade","from":"0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"},{"permission":"upgrade","from":"0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"},{"permission":"upgrade","from":"0x827962404D7104202C5aaa6b929115C8211d9596","description":"upgrading the bridge implementation can give access to all funds escrowed therein."},{"permission":"upgrade","from":"0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"},{"permission":"upgrade","from":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"permission":"upgrade","from":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"},{"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103"}]
+    }
+```
+
+```diff
+    contract ZKVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      issuedPermissions.0.description:
++        "dismiss ongoing challenges and override state roots (`forceDeleteOutput()`)."
+      fieldMeta.challengedRoots.severity:
+-        "MEDIUM"
++        "HIGH"
+      description:
++        "Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced."
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SpectrumHub (0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5)
+    +++ description: None
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      issuedPermissions.0.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      template:
++        "opstack/L1StandardBridge"
+      description:
++        "The main entry point to deposit ERC20 tokens from host chain to this chain."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SpectrumCore (0x88b6bBb148748C18B377A57c9d4E6c714AF28078)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SH_ProxyAdmin (0x9841bC06C8284095824e9397AC818aD1114C444C)
+    +++ description: None
+```
+
+```diff
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3) {
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      issuedPermissions.0.via.2:
++        {"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}
+      issuedPermissions.0.via.1:
++        {"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"}
+      issuedPermissions.0.via.0:
++        {"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}
+      description:
++        "A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards."
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"cancel queued transactions."},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"execute transactions that are ready."},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"manage all access control roles."},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"propose transactions."}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SC_ProxyAdmin (0xd26F4195B147b988E7497779f7DED22ba130204d)
+    +++ description: None
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      issuedPermissions.10:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.9:
++        {"permission":"interact","to":"0xECe4AAf6A41aa81A164363Ec6C420510617Fc998","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.8:
++        {"permission":"interact","to":"0x8ECF028Cd647379E580DaA6701A11154750fcd3c","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.7:
++        {"permission":"interact","to":"0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.6:
++        {"permission":"interact","to":"0x66FA82F4AEA284d1d208437F179dFE13d8118f3A","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.5:
++        {"permission":"interact","to":"0x5ddcf494A8b6EeE4904934E829109cCF584EAF80","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.4:
++        {"permission":"interact","to":"0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.3:
++        {"permission":"interact","to":"0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.2:
++        {"permission":"interact","to":"0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x27EFE61C5266e461995141f57b4D13F13c83f786","description":"one of the signers of the KromaSecurityCouncil.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0x16876e5c608cec36968517A9Eb345269D308D94a"
+      issuedPermissions.0.description:
++        "one of the signers of the KromaSecurityCouncil."
+      description:
++        "A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members."
+      receivedPermissions:
++        [{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"cancel queued transactions.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"execute transactions that are ready.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"manage all access control roles.","via":[{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"manage all access control roles.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"interact","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","description":"propose transactions.","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"interact","from":"0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","via":[{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x31F648572b67e60Ec6eb8E197E1848CC5F5558de","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x3de211088dF516da72efe68D386b561BEE256Ec4","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x46d07221dfC313afe1BF104F4bB1f185301D65B9","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e","via":[{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0x827962404D7104202C5aaa6b929115C8211d9596","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]},{"permission":"upgrade","from":"0xFdFF462845953D90719A78Fd12a2d103541d2103","via":[{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"}]
+    }
+```
+
+```diff
+    contract KromaRewardVaultMultisig (0xe57E217d8ed498992452791622711B866403E950) {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      description:
++        "Escrows a pool of KRO used as validator rewards by the AssetManager."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract spETH (0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474)
+    +++ description: None
+```
+
+```diff
+    contract Poseidon2 (0xFd234971881a7c72965175fA8E438c97B2Dcd273) {
+    +++ description: Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.
+      description:
++        "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library."
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+      issuedPermissions.1:
++        {"permission":"upgrade","to":"0xe4D08346609055c091D3DEECdAAd3Bf83119B08c","via":[{"address":"0xb3c415c2Aad428D5570208e1772cb68e7D06a537"},{"address":"0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"},{"address":"0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"}]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.0.to:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      issuedPermissions.0.description:
++        "become a validator without posting a bond."
+      values.RoundDurationFormatted:
++        "30m"
+      description:
++        "Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone."
     }
 ```
 
