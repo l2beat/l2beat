@@ -34,7 +34,7 @@ export function getDaThroughputChart(
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
-  const now = UnixTime.now()
+  const now = UnixTime.now().toStartOf('day')
   const days = range === 'max' ? 365 : parseInt(range)
   const from = now.add(-days, 'days')
 
