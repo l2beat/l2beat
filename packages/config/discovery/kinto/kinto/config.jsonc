@@ -328,7 +328,7 @@
           }
         },
         "getSystemContracts": {
-          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts.",
+          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA.",
           "severity": "HIGH"
         }
       }
