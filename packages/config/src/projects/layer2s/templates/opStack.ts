@@ -40,6 +40,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -255,14 +256,6 @@ function opStackCommon(
       : CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
 
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-  )
-
-  const sequencer = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
-  )
-
   const allDiscoveries = [
     templateVars.discovery,
     ...Object.values(templateVars.additionalDiscoveries ?? {}),
@@ -331,20 +324,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
-      daTracking: usesBlobs
-        ? {
-            type: 'ethereum',
-            daLayer: ProjectId('ethereum'),
-            inbox: sequencerInbox,
-            sequencers: [sequencer],
-          }
-        : templateVars.celestiaDaNamespace
-          ? {
-              type: 'celestia',
-              daLayer: ProjectId('celestia'),
-              namespace: templateVars.celestiaDaNamespace,
-            }
-          : undefined,
+      daTracking: getDaTracking(templateVars),
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -380,6 +360,38 @@ function opStackCommon(
     stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
     dataAvailability: decideDA(daProvider, nativeDA),
   }
+}
+
+function getDaTracking(
+  templateVars: OpStackConfigCommon,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
+  const sequencer = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: sequencerInbox,
+        sequencers: [sequencer],
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
