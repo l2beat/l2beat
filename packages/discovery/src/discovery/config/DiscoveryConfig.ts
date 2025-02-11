@@ -2,7 +2,7 @@ import { hashJson } from '@l2beat/shared'
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
 
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { merge } from 'lodash'
+import { join, merge } from 'lodash'
 import { ConfigReader } from './ConfigReader'
 import { type ContractConfig, createContractConfig } from './ContractConfig'
 import {
@@ -30,7 +30,9 @@ export class DiscoveryConfig {
     private readonly config: RawDiscoveryConfig,
     globalAddressToNameConfig: CommonAddressNames = {},
     private readonly globalTypes: Record<string, DiscoveryCustomType> = {},
-    configReader: ConfigReader = new ConfigReader(),
+    configReader: ConfigReader = new ConfigReader(
+      join(process.cwd(), '../config'),
+    ),
   ) {
     this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
       (projectName) => {

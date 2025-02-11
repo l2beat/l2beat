@@ -84,6 +84,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     livenessInfo: getLivenessInfo(p),
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
+    daTrackingConfig: p.config.daTracking,
     proofVerification: p.stateValidation?.proofVerification,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
