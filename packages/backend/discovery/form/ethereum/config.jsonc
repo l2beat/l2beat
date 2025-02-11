@@ -1,0 +1,27 @@
+{
+  "$schema": "../../config.schema.json",
+  "name": "form",
+  "chain": "ethereum",
+  "initialAddresses": [
+    "0x4ccAAF69F41c5810cA875183648B577CaCf1F67E",
+    "0x4E259Ee5F4136408908160dD32295A5031Fa426F",
+    "0xF333158DCCad1dF6C3F0a3aEe8BC31fA94d9eD5c",
+    "0xdc20aA63D3DE59574E065957190D8f24e0F7B8Ba",
+    "0x15c249E46A2F924C2dB3A1560CF86729bAD1f07B"
+  ],
+  "names": {
+    "0x4ccAAF69F41c5810cA875183648B577CaCf1F67E": "L2OutputOracle",
+    "0x4E259Ee5F4136408908160dD32295A5031Fa426F": "OptimismPortal",
+    "0xF333158DCCad1dF6C3F0a3aEe8BC31fA94d9eD5c": "L1CrossDomainMessenger",
+    "0xdc20aA63D3DE59574E065957190D8f24e0F7B8Ba": "L1StandardBridge",
+    "0x15c249E46A2F924C2dB3A1560CF86729bAD1f07B": "AddressManager"
+  },
+  "overrides": {
+    "0xc12aB8C858Ee31d04DdCB85c367e66bca7a9Bf36": {
+      "ignoreDiscovery": true
+    },
+    "0x5231425de68Ca825dE1c343BCA81B281AF507ad8": {
+      "ignoreDiscovery": true
+    }
+  }
+}

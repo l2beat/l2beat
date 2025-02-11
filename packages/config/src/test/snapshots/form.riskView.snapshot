@@ -2,28 +2,30 @@
 
 {
   dataAvailability: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "All transaction data is posted to Ethereum L1."
+    sentiment: "good"
+    value: "On Chain"
   }
   exitWindow: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Users have 7 days to exit if they detect an invalid state root."
+    sentiment: "warning"
+    value: "7 days"
   }
   proposerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Users can force exit through L1 if state roots are not being published."
+    sentiment: "warning"
+    value: "Force exit"
   }
   sequencerFailure: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "In case of sequencer failure, users can force transactions via L1."
+    secondLine: "12h delay"
+    sentiment: "good"
+    value: "Self sequence"
   }
   stateValidation: {
-    description: "No information available."
-    sentiment: "neutral"
-    value: ""
+    description: "Fraud proofs are under development. Users need to trust block proposer to submit valid state roots."
+    secondLine: "7d challenge period"
+    sentiment: "warning"
+    value: "Optimistic"
   }
 }
