@@ -1,6 +1,6 @@
 Generated with discovered.json: 0xd0c9beecc8c43ca164927f42e5d3cac6b95a9b6f
 
-# Diff at Tue, 11 Feb 2025 13:48:18 GMT:
+# Diff at Tue, 11 Feb 2025 14:13:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 21686332
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd0c9beecc8c43ca164927f42e5d3cac6b95a9b6f
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Made succinct gateway description more generic (to be used not only for blobstream).
 
 ## Config/verification related changes
 

@@ -25,9 +25,33 @@
     "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge",
     "0xe57E217d8ed498992452791622711B866403E950": "KromaRewardVaultMultisig",
     "0x339208824010425cBE73201ceD4372308ACD610B": "ZKMerkleTrie",
-    "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7": "ZkVerifier"
+    "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7": "ZkVerifier",
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
   },
   "overrides": {
+    "SP1VerifierGateway": {
+      "fields": {
+        "verifier": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
+          "handler": {
+            "type": "call",
+            "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+            "args": [
+              // first 4 bytes of the blobstream proof are used as identifier
+              "0x0000dead" // identifier for kroma is unknown
+            ]
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "interact",
+                "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+              }
+            ]
+          }
+        }
+      }
+    },
     "KromaRewardVaultMultisig": {
       "description": "Escrows a pool of KRO used as validator rewards by the AssetManager."
     },

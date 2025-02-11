@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1896848e01943c3b9b3f99a6d9bf1ece0e7da501
+Generated with discovered.json: 0x29616ea5e914662650549be071b274b92c4a61db
 
-# Diff at Tue, 11 Feb 2025 13:47:52 GMT:
+# Diff at Tue, 11 Feb 2025 14:13:39 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 21141582
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1896848e01943c3b9b3f99a6d9bf1ece0e7da501
 
 ## Description
 
-Kroma proofs upgrade:
+Made succinct gateway description more generic (to be used not only for blobstream).
 
 ## Watched changes
 
@@ -238,26 +238,19 @@ Kroma proofs upgrade:
     +++ description: None
 ```
 
-```diff
-+   Status: CREATED
-    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
 .../Colosseum/Colosseum.sol                        | 1160 +++-------------
  .../KromaPortal/KromaPortal.sol                    | 1439 ++++++++++++++------
- ...-0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63.sol | 1432 +++++++++++++++++++
- ...-0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16.sol | 1432 +++++++++++++++++++
+ .../kroma/ethereum/.flat/SP1Verifier.sol           | 1432 +++++++++++++++++++
  .../kroma/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++++
  .../SuccinctGatewaySP1Multisig/GnosisSafe.sol      |  953 +++++++++++++
  .../GnosisSafeProxy.p.sol                          |   35 +
  .../ValidatorManager/ValidatorManager.sol          |   90 +-
  .../ethereum/.flat/ZKProofVerifier/Proxy.p.sol     |  211 +++
  .../.flat/ZKProofVerifier/ZKProofVerifier.sol      | 1284 +++++++++++++++++
- 10 files changed, 6857 insertions(+), 1410 deletions(-)
+ 9 files changed, 5425 insertions(+), 1410 deletions(-)
 ```
 
 ## Config/verification related changes

@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21823614,
-  "configHash": "0x670dc3f09ad7bb0ce94033aa4689388c70ed69c8958868491f4ae068bf72555f",
+  "configHash": "0x19e8bb4f4d3495bb120a1e26b806bcd94df2b21833dc1d963837dc97e14419b5",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -482,12 +482,6 @@
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "via": []
-        },
-        {
-          "permission": "interact",
-          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
-          "via": []
         }
       ],
       "sinceTimestamp": 1720099223,
@@ -499,7 +493,7 @@
         "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
         "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
+        "verifier": ["0x0000000000000000000000000000000000000000", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -520,7 +514,8 @@
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         }
-      }
+      },
+      "derivedName": "SP1VerifierGateway"
     },
     {
       "name": "KromaSecurityCouncil",
@@ -1190,26 +1185,6 @@
       }
     },
     {
-      "name": "SP1Verifier",
-      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ],
-      "sinceTimestamp": 1735949699,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      }
-    },
-    {
       "name": "SecurityCouncilToken",
       "address": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
       "sourceHashes": [
@@ -1680,7 +1655,16 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ]
+    },
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848" },
     {
@@ -2507,15 +2491,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xE36776FFA20a9206dcD742C981402a3f3d81938d": [
       "constructor(address _l2OutputOracle, address _portal, address _securityCouncil, address _trustedValidator, uint256 _requiredBondAmount, uint256 _maxUnbond, uint256 _roundDuration, uint256 _terminateOutputIndex)",
