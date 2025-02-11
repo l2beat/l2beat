@@ -817,7 +817,6 @@ export interface BaseProject {
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
-  daTrackingConfig?: ProjectDaTrackingConfig
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
   milestones?: Milestone[]
