@@ -1,4 +1,4 @@
-import { fastAutoLayout } from '../../controls/FastLayoutButton'
+import { stackAutoLayout } from '../../controls/StackLayoutButton'
 import type { Node, State } from '../State'
 import {
   BOTTOM_PADDING,
@@ -39,7 +39,7 @@ export function loadNodes(
   const allNodes = existing.concat(added)
   return layout(
     { ...state, nodes: allNodes, projectId },
-    fastAutoLayout(allNodes),
+    stackAutoLayout(allNodes),
   )
 }
 

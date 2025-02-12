@@ -1,9 +1,5 @@
 import type { BackendProject } from '@l2beat/backend-shared'
-import type {
-  DaLayerTrackingConfig,
-  OnchainVerifier,
-  ProjectDaTrackingConfig,
-} from '@l2beat/config'
+import type { OnchainVerifier, ProjectDaTrackingConfig } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type {
   AmountConfigEntry,
@@ -213,7 +209,6 @@ export interface DataAvailabilityTrackingConfig {
     readonly minHeight: number
     readonly batchSize: number
   }
-  readonly layers: DaLayerTrackingConfig[]
   readonly projects: {
     id: ProjectId
     config: ProjectDaTrackingConfig

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -12,7 +12,7 @@ export const blessnet: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
-  hostChain: ProjectId('arbitrum'),
+  isArchived: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

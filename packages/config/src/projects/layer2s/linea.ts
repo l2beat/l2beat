@@ -38,13 +38,16 @@ const timelockDelay = discovery.getContractValue<number>(
 const timelockDelayString = formatSeconds(timelockDelay)
 
 const upgradesTimelock = {
-  upgradableBy: ['LineaAdminMultisig'],
-  upgradeDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+  upgradableBy: [
+    {
+      name: 'LineaAdminMultisig',
+      delay: timelockDelay === 0 ? 'no' : timelockDelayString,
+    },
+  ],
 }
 
 const upgrades = {
-  upgradableBy: ['LineaAdminMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LineaAdminMultisig', delay: 'no' }],
 }
 
 const zodiacRoles = discovery.getContractValue<{
@@ -162,6 +165,17 @@ export const linea: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xd19d4b5d358258f05d7b411e21a1460d11b0876f',
+      sequencers: [
+        '0xa9268341831efa4937537bc3e9eb36dbece83c7e',
+        '0x9228624c3185fcbcf24c1c9db76d8bef5f5dad64',
+        '0x46d2F319fd42165D4318F099E143dEA8124E9E3e',
+        '0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754',
+      ],
     },
     trackedTxs: [
       {

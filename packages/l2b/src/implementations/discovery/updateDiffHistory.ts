@@ -15,10 +15,11 @@ import {
   getChainConfig,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert } from '@l2beat/shared-pure'
+import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
 import path from 'path'
+import chalk from 'chalk'
 import { readConfig } from '../../config/readConfig'
 import { updateDiffHistoryHash } from './hashing'
 
@@ -97,6 +98,7 @@ export async function updateDiffHistory(
   if (diffHistoryExists) {
     const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
     previousDescription = findDescription(
+      diffHistoryPath,
       diskDiffHistory,
       historyFileFromMainBranch,
     )
@@ -367,6 +369,7 @@ discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main bran
 }
 
 function findDescription(
+  diskDiffHistoryPath: string,
   diskDiffHistory: string,
   masterDiffHistory: string,
 ): string | undefined {
@@ -379,10 +382,31 @@ function findDescription(
     const lastCommitted = masterDiffLines[latestSectionIndex]
     const diskLines = diskDiffHistory.split('\n')
     const lastCommittedIndex = diskLines.findIndex((l) => l === lastCommitted)
-    assert(
-      lastCommittedIndex >= 0,
-      'Unexpected difference between master and disk file',
-    )
+    if (lastCommittedIndex === -1) {
+      const errorMessage = formatAsciiBorder([
+        'A mismatch has been detected between your local diffHistory.md and the main branch version.',
+        '',
+        'WHAT HAPPENED?',
+        '• Your local diffHistory.md file is outdated or conflicts with the latest version on main.',
+        '• This typically occurs when working with an old branch or after merge/rebase conflicts.',
+        '',
+        'HOW TO FIX IT:',
+        '1. Back up any unsaved changes (this action will overwrite your current file).',
+        '2. Run this command to synchronize with the main branch:',
+        `    [${chalk.green(`git checkout origin/main ${diskDiffHistoryPath}`)}]`,
+        '',
+        chalk.redBright('CRUCIAL WARNING:'),
+        chalk.redBright('• This action will ') +
+          chalk.bold.redBright('PERMANENTLY REMOVE') +
+          chalk.redBright(' any uncommitted changes in diffHistory.md.'),
+        chalk.redBright(
+          "• Make sure you've saved or stashed important work before proceeding.",
+        ),
+      ])
+
+      console.log(errorMessage)
+      throw new Error()
+    }
     lines = diskLines.slice(0, lastCommittedIndex)
   } else {
     lines = diskDiffHistory.split('\n')

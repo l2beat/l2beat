@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 725499,
+  "blockNumber": 735231,
   "configHash": "0x82f4cbb32da89ebc4dcd175c90c761d249038574b83d93dc924b9079289e9340",
   "contracts": [
     {
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1738827742,
+        "clock": 1739359884,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1738827742,
+        "clock": 1739359884,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1738827742,
+        "clock": 1739359884,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "31051581962687950475",
+        "getDeposit": "30909812368638700475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -352,7 +352,7 @@
       "name": "KintoWallet",
       "address": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c",
       "sourceHashes": [
-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d",
+        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4",
         "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
       ],
       "proxyType": "Beacon proxy",
@@ -808,7 +808,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4421,
+        "getNonce": 4437,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -889,7 +889,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 13168,
+        "globalMessageCount": 14166,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -899,11 +899,17 @@
       "derivedName": "Socket"
     },
     {
-      "name": "",
+      "name": "SignatureVerifier",
       "address": "0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d",
-      "unverified": true,
+      "sourceHashes": [
+        "0x92dc8defa29353a843ae6cb6d7508811be7c65f617fe92ef87739ccdbc3fa95b"
+      ],
       "sinceTimestamp": 1715810595,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      }
     },
     {
       "name": "KintoAppRegistry",
@@ -1133,11 +1139,20 @@
       "derivedName": "KintoAppRegistry"
     },
     {
-      "name": "",
+      "name": "TransmitManager",
       "address": "0x6332e56A423480A211E301Cb85be12814e9238Bb",
-      "unverified": true,
+      "sourceHashes": [
+        "0x20fd759cdae5666df50f4b5723ba03796b69ef7b2b3ec33712cb158d77b97133"
+      ],
       "sinceTimestamp": 1715810618,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "chainSlug": 7887,
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "signatureVerifier__": "0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d",
+        "socket__": "0x3e9727470C66B1e77034590926CDe0242B5A3dCc"
+      }
     },
     {
       "name": "Treasury",
@@ -1434,7 +1449,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 70409
+        "totalWallets": 71281
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1452,11 +1467,17 @@
       }
     },
     {
-      "name": "",
+      "name": "Hasher",
       "address": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
-      "unverified": true,
+      "sourceHashes": [
+        "0x621783ceb3c37cf9cd41112e917d760d40dbfa18e43c59f5c925fe9f7037f9be"
+      ],
       "sinceTimestamp": 1715810600,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -1690,16 +1711,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "473759422117530801649336",
-        "getUnclaimedLimit": "188933295442971166326377",
+        "getTotalLimit": "485582577142163948635092",
+        "getUnclaimedLimit": "188923120928896834954595",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xc9758d3341e42e3f2a616f9a01e1363885961230e4e992bc578169afafe63b65",
+        "root": "0x1d5121c740cad7b1908e26ba1c55e65e4cbc4bb791c15add89b31dc3fac5c114",
         "startTime": 1718690400,
-        "totalClaimed": "284826126674559635322959",
+        "totalClaimed": "296659456213267113680497",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1891,7 +1912,7 @@
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
         ],
-        "lastMonitoredAt": 1738824669,
+        "lastMonitoredAt": 1739359751,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1905,7 +1926,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 70749,
+        "totalSupply": 71627,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
@@ -2242,82 +2263,10 @@
       "function walletTs(address) view returns (uint256)"
     ],
     "0x25EA8c663BA8cCd79284B8c4001e7A245071885c": [
-      "constructor(address __entryPoint, address _kintoID, address _kintoApp, address _factory)",
-      "error AppNotSponsored(address app, address addr)",
-      "error AppNotWhitelisted(address app, address addr)",
-      "error DuplicateSigner()",
-      "error EmptySigners()",
-      "error InvalidApp()",
-      "error InvalidDevMode(uint256 newDevMode)",
-      "error InvalidInsurancePayment(address token)",
-      "error InvalidInsurancePolicy(uint256 newPolicy)",
-      "error InvalidPolicy(uint8 newPolicy, uint256 newSigners)",
-      "error InvalidRecoverer()",
-      "error InvalidSignatureLength()",
-      "error InvalidSigner()",
-      "error KYCRequired()",
-      "error LengthMismatch()",
-      "error MaxSignersExceeded(uint256 newSigners)",
-      "error OnlyFactory()",
-      "error OnlySelf()",
-      "error OwnerKYCMustBeBurned()",
-      "error RecoveryNotStarted()",
-      "error RecoveryTimeNotElapsed()",
-      "event AppKeyCreated(address indexed appKey, address indexed signer)",
-      "event Initialized(uint8 version)",
-      "event InsurancePolicyChanged(uint256 indexed newPolicy, uint256 indexed oldPolicy)",
-      "event KintoWalletInitialized(address indexed entryPoint, address indexed owner)",
-      "event RecovererChanged(address indexed newRecoverer, address indexed recoverer)",
-      "event SignersChanged(address[] newSigners, address[] oldSigners)",
-      "event WalletPolicyChanged(uint256 newPolicy, uint256 oldPolicy)",
-      "function ALL_SIGNERS() view returns (uint8)",
-      "function MAX_SIGNERS() view returns (uint8)",
-      "function MINUS_ONE_SIGNER() view returns (uint8)",
-      "function RECOVERY_PRICE() view returns (uint256)",
-      "function RECOVERY_TIME() view returns (uint256)",
-      "function SINGLE_SIGNER() view returns (uint8)",
-      "function TWO_SIGNERS() view returns (uint8)",
-      "function WALLET_TARGET_LIMIT() view returns (uint256)",
-      "function appRegistry() view returns (address)",
-      "function appSigner(address) view returns (address)",
-      "function appWhitelist(address) view returns (bool)",
-      "function cancelRecovery()",
-      "function changeRecoverer(address newRecoverer)",
-      "function completeRecovery(address[] newSigners)",
-      "function entryPoint() view returns (address)",
-      "function execute(address dest, uint256 value, bytes func)",
-      "function executeBatch(address[] dest, uint256[] values, bytes[] func)",
-      "function factory() view returns (address)",
-      "function funderWhitelist(address) view returns (bool)",
-      "function getAccessPoint() view returns (address)",
-      "function getInsurancePrice(uint256 newPolicy, address paymentToken) pure returns (uint256)",
-      "function getNonce() view returns (uint256)",
-      "function getOwners() view returns (address[])",
-      "function getOwnersCount() view returns (uint256)",
-      "function inRecovery() view returns (uint256)",
-      "function initialize(address anOwner, address _recoverer)",
-      "function insurancePolicy() view returns (uint256)",
-      "function insuranceTimestamp() view returns (uint256)",
-      "function isAppApproved(address app) view returns (bool)",
-      "function isFunderWhitelisted(address funder) view returns (bool)",
-      "function kintoID() view returns (address)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) pure returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) pure returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) pure returns (bytes4)",
-      "function owners(uint256) view returns (address)",
-      "function recoverer() view returns (address)",
-      "function resetSigners(address[] newSigners, uint8 newPolicy)",
-      "function setAppKey(address app, address signer)",
-      "function setFunderWhitelist(address[] newWhitelist, bool[] flags)",
-      "function setInsurancePolicy(uint256 newPolicy, address paymentToken)",
-      "function setSignerPolicy(uint8 newPolicy)",
-      "function signerPolicy() view returns (uint8)",
-      "function startRecovery()",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function tokensReceived(address, address, address, uint256, bytes, bytes) pure",
-      "function validateUserOp(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature) userOp, bytes32 userOpHash, uint256 missingAccountFunds) returns (uint256 validationData)",
-      "function whitelistApp(address[] apps, bool[] flags)",
-      "function whitelistAppAndSetKey(address app, address signer)"
+      "constructor(address beacon, bytes data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
       "error DelegateAndRevert(bool success, bytes ret)",
@@ -2603,11 +2552,72 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletFactory() view returns (address)"
     ],
+    "0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d": [
+      "constructor(address owner_)",
+      "error InvalidSigLength()",
+      "error InvalidTokenAddress()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "function claimOwner()",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function recoverSigner(bytes32 digest_, bytes signature_) pure returns (address signer)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function revokeRole(bytes32 role_, address revokee_)"
+    ],
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x6332e56A423480A211E301Cb85be12814e9238Bb": [
+      "constructor(address owner_, uint32 chainSlug_, address socket_, address signatureVerifier_)",
+      "error InvalidNonce()",
+      "error InvalidTokenAddress()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyExecutionManager()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error UnequalArrayLengths()",
+      "error ZeroAddress()",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "event SignatureVerifierSet(address signatureVerifier)",
+      "event TransmissionFeesSet(uint256 dstChainSlug, uint256 transmissionFees)",
+      "function chainSlug() view returns (uint32)",
+      "function checkTransmitter(uint32 siblingSlug_, bytes32 digest_, bytes signature_) view returns (address, bool)",
+      "function claimOwner()",
+      "function grantBatchRole(bytes32[] roleNames_, uint32[] slugs_, address[] grantees_)",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function grantRoleWithSlug(bytes32 roleName_, uint32 chainSlug_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function hasRoleWithSlug(bytes32 roleName_, uint32 chainSlug_, address address_) view returns (bool)",
+      "function nextNonce(address) view returns (uint256)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function receiveFees(uint32) payable",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function revokeBatchRole(bytes32[] roleNames_, uint32[] slugs_, address[] grantees_)",
+      "function revokeRole(bytes32 role_, address revokee_)",
+      "function revokeRoleWithSlug(bytes32 roleName_, uint32 chainSlug_, address grantee_)",
+      "function setSignatureVerifier(address signatureVerifier_)",
+      "function setTransmissionFees(uint256 nonce_, uint32 dstChainSlug_, uint128 transmissionFees_, bytes signature_)",
+      "function signatureVerifier__() view returns (address)",
+      "function socket__() view returns (address)",
+      "function withdrawFees(address withdrawTo_)"
     ],
     "0x658c50C317A4E18e62Db4efa1F37edFd315b91Fd": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
@@ -2700,6 +2710,27 @@
       "function inflate(bytes compressed) view returns (tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature)[] ops, address beneficiary)",
       "function inflatorToID(address) view returns (uint32)",
       "function registerInflator(uint32 inflatorId, address inflator)"
+    ],
+    "0x9652Dd5e1388CA80712470122F27be0d1c33B48b": [
+      "constructor(address owner_)",
+      "error InvalidTokenAddress()",
+      "error NoPermit(bytes32 role)",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event RoleGranted(bytes32 indexed role, address indexed grantee)",
+      "event RoleRevoked(bytes32 indexed role, address indexed revokee)",
+      "function claimOwner()",
+      "function grantRole(bytes32 role_, address grantee_)",
+      "function hasRole(bytes32 role_, address address_) view returns (bool)",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function packMessage(uint32 srcChainSlug_, address srcPlug_, uint32 dstChainSlug_, address dstPlug_, tuple(bytes32 msgId, uint256 executionFee, uint256 minMsgGasLimit, bytes32 executionParams, bytes payload) messageDetails_) pure returns (bytes32)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function revokeRole(bytes32 role_, address revokee_)"
     ],
     "0x9eC0253E4174a14C0536261888416451A407Bf79": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

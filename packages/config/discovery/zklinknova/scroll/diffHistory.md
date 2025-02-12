@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x8786dffe2fa027521a2e83538f7ba327bf5a900d
+
+# Diff at Wed, 12 Feb 2025 08:42:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 8983528
+- current block number: 8983528
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 8983528 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      name:
+-        "AdminMultisig"
++        "ScrollOwner"
+    }
+```
+
 Generated with discovered.json: 0x6de6a625642aebed492fb5de84c61fb2b1aec169
 
 # Diff at Mon, 20 Jan 2025 11:10:49 GMT:

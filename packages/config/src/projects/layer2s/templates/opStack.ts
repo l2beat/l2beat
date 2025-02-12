@@ -40,10 +40,12 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCapability,
@@ -122,8 +124,7 @@ interface OpStackConfigCommon {
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
@@ -162,6 +163,10 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -173,7 +178,6 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ScalingProjectRiskView
-  hostChain: ProjectId
 }
 
 function opStackCommon(
@@ -228,8 +232,7 @@ function opStackCommon(
     templateVars.l1StandardBridgeEscrow ??
     templateVars.discovery.getContract('L1StandardBridge').address
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const fraudProofType = getFraudProofType(templateVars)
@@ -243,6 +246,9 @@ function opStackCommon(
   }
   if (fraudProofType !== 'None') {
     architectureImage.push('opfp')
+  }
+  if (fraudProofType === 'Permissionless') {
+    architectureImage.push('permissionless')
   }
 
   const nativeContractRisks: ScalingProjectRisk[] = [
@@ -322,6 +328,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      daTracking: getDaTracking(templateVars),
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -359,6 +366,46 @@ function opStackCommon(
   }
 }
 
+function getDaTracking(
+  templateVars: OpStackConfigCommon,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+  const sequencerInbox = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'sequencerInbox',
+  )
+  const sequencer = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'batcherHash',
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: sequencerInbox,
+        sequencers: [sequencer],
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
+}
+
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
   const common = opStackCommon('layer2', templateVars, ethereum.explorerUrl)
   return {
@@ -382,11 +429,9 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
 
 export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   const layer2s = require('..').layer2s as Layer2[]
-  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
-  assert(
-    baseChain,
-    `Could not find base chain ${templateVars.hostChain} in layer2s`,
-  )
+  const hostChain = templateVars.discovery.chain
+  const baseChain = layer2s.find((l2) => l2.id === hostChain)
+  assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
   const common = opStackCommon(
     'layer3',
@@ -423,7 +468,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
   return {
     type: 'layer3',
     ...common,
-    hostChain: templateVars.hostChain,
+    hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: templateVars.stackedRiskView ?? stackedRisk,
   }
@@ -1182,7 +1227,8 @@ function getTrackedTxs(
         ]
       )
     }
-    case 'Permissioned': {
+    case 'Permissioned':
+    case 'Permissionless': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1216,8 +1262,6 @@ function getTrackedTxs(
         },
       ]
     }
-    case 'Permissionless':
-      return undefined
   }
 }
 

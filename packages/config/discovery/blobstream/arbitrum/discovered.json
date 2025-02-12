@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 298391608,
-  "configHash": "0x68279bf1311d1a3f165d0f00ffa8c1f2e2d3eb8effe9e15157c26b83483a6a05",
+  "configHash": "0x5cade48368c3cf9c74a7a374454c04a1c287224ca612b824adfa68889ba638ae",
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -320,11 +320,12 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "",
+      "name": "SP1Verifier",
       "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
       "unverified": true,
       "sinceTimestamp": 1729727170,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "SuccinctGatewayMultisig",

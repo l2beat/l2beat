@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 21184911,
-  "configHash": "0x7c506a1eabbab73ca42ccd6096a866c9aca67062c90b0931c2c938ce109ecc2e",
+  "configHash": "0xa5ca41380985f233def00828bdd3be74812224662e7aa0f17d2b1aa2970a87fe",
   "contracts": [
     {
       "name": "AddressManager",
@@ -476,7 +476,7 @@
       }
     },
     {
-      "name": "",
+      "name": "OptimismMintableERC20Factory",
       "address": "0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
@@ -499,7 +499,8 @@
           ]
         ],
         "$upgradeCount": 1
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "L2OutputOracle",
