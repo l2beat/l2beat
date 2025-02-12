@@ -10,8 +10,8 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
-import type { PolygonProps, TooltipProps } from 'recharts'
-import { Area, ComposedChart, Polygon, Scatter } from 'recharts'
+import type { TooltipProps } from 'recharts'
+import { Area, ComposedChart } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -21,7 +21,12 @@ import {
   useMilestone,
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/common'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  tooltipContentVariants,
+} from '~/components/core/tooltip/tooltip'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
@@ -54,48 +59,6 @@ const chartConfig = {
     color: 'hsl(var(--chart-canonical))',
   },
 } satisfies ChartConfig
-
-const Diamond = (
-  props: PolygonProps & {
-    payload?: { timestamp: number; milestone: Milestone | undefined }
-  },
-) => {
-  const { setMilestone } = useMilestone()
-  const size = 12
-  const halfSize = size / 2
-
-  const cx = (typeof props.cx === 'string' ? parseInt(props.cx) : props.cx) ?? 0
-  const cy = (typeof props.cy === 'string' ? parseInt(props.cy) : props.cy) ?? 0
-
-  if (props.payload?.milestone === undefined) {
-    return null
-  }
-
-  // Calculate the points of the diamond
-  const points = [
-    { x: cx, y: cy - halfSize }, // Top point
-    { x: cx + halfSize, y: cy }, // Right point
-    { x: cx, y: cy + halfSize }, // Bottom point
-    { x: cx - halfSize, y: cy }, // Left point
-  ]
-
-  return (
-    <Polygon
-      points={points}
-      stroke="#5BFF4D"
-      strokeWidth="2"
-      fill="#007408"
-      fillOpacity={1}
-      onMouseOver={() => {
-        setMilestone(props.payload?.milestone)
-      }}
-      onMouseLeave={() => {
-        setMilestone(undefined)
-      }}
-      {...props}
-    />
-  )
-}
 
 export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const { checked } = useRecategorisationPreviewContext()
@@ -168,53 +131,85 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         range={timeRange}
         timeRange={chartRange}
       />
-      <ChartContainer config={chartConfig} isLoading={isLoading}>
-        <ComposedChart data={chartData} margin={{ top: 20 }}>
-          <ChartLegend content={<ChartLegendContent />} />
-          <ChartTooltip content={<CustomTooltip />} />
-          <Area
-            dataKey="native"
-            type="natural"
-            fill="var(--color-native)"
-            fillOpacity={1}
-            stroke="var(--color-native)"
-            stackId="a"
-            isAnimationActive={false}
-            activeDot={false}
-          />
-          <Area
-            dataKey="external"
-            type="natural"
-            fill="var(--color-external)"
-            fillOpacity={1}
-            stroke="var(--color-external)"
-            stackId="a"
-            isAnimationActive={false}
-            activeDot={false}
-          />
-          <Area
-            dataKey="canonical"
-            type="natural"
-            fill="var(--color-canonical)"
-            fillOpacity={1}
-            stroke="var(--color-canonical)"
-            stackId="a"
-            isAnimationActive={false}
-            activeDot={{ stroke: 'hsl(var(--primary))' }}
-          />
-          <Scatter
-            dataKey="milestone.value"
-            shape={<Diamond />}
-            isAnimationActive={false}
-          />
-          {getCommonChartComponents({
-            chartData,
-            yAxis: {
-              tickFormatter: (value: number) => formatYAxisLabel(value),
-            },
-          })}
-        </ComposedChart>
-      </ChartContainer>
+      <div className="relative size-full">
+        <ChartContainer config={chartConfig} isLoading={isLoading}>
+          <ComposedChart data={chartData} margin={{ top: 20 }}>
+            <ChartLegend content={<ChartLegendContent />} />
+            <ChartTooltip content={<CustomTooltip />} />
+            <Area
+              dataKey="native"
+              type="natural"
+              fill="var(--color-native)"
+              fillOpacity={1}
+              stroke="var(--color-native)"
+              stackId="a"
+              isAnimationActive={false}
+              activeDot={false}
+            />
+            <Area
+              dataKey="external"
+              type="natural"
+              fill="var(--color-external)"
+              fillOpacity={1}
+              stroke="var(--color-external)"
+              stackId="a"
+              isAnimationActive={false}
+              activeDot={false}
+            />
+            <Area
+              dataKey="canonical"
+              type="natural"
+              fill="var(--color-canonical)"
+              fillOpacity={1}
+              stroke="var(--color-canonical)"
+              stackId="a"
+              isAnimationActive={false}
+              activeDot={{ stroke: 'hsl(var(--primary))' }}
+            />
+
+            {getCommonChartComponents({
+              chartData,
+              yAxis: {
+                tickFormatter: (value: number) => formatYAxisLabel(value),
+              },
+            })}
+          </ComposedChart>
+        </ChartContainer>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              role="img"
+              aria-label="Milestone icon"
+              className="absolute bottom-[36px] right-36 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400"
+            >
+              <rect
+                x="9.89941"
+                y="1.41421"
+                width="12"
+                height="12"
+                rx="1"
+                transform="rotate(45 9.89941 1.41421)"
+                stroke-width="2"
+              ></rect>
+            </svg>
+          </TooltipTrigger>
+          <TooltipContent side="bottom">
+            <ChartMilestoneHover
+              milestone={{
+                title: 'First ZK Rollup (DEX)',
+                date: '2019-12-04T00:00:00Z',
+                url: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
+                description:
+                  'Loopring is live, bringing the first DEX protocol on ZK Rollup technology.',
+                type: 'general',
+              }}
+            />
+          </TooltipContent>
+        </Tooltip>
+      </div>
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
           <Checkbox

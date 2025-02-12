@@ -4,6 +4,7 @@ import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import { ChartContainer, ChartTooltip } from '~/components/core/chart/chart'
+import { ChartMilestone } from '~/components/core/chart/chart-milestone'
 import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   SignatureGradientFillDef,
@@ -80,30 +81,44 @@ export function BridgesTvsChart() {
         range={timeRange}
         timeRange={chartRange}
       />
-      <ChartContainer config={chartConfig} isLoading={isLoading}>
-        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
-          <defs>
-            <SignatureGradientFillDef id={'signature-gradient-fill'} />
-            <SignatureGradientStrokeDef id={'signature-gradient-stroke'} />
-          </defs>
-          <ChartTooltip content={<CustomTooltip />} />
-          <Area
-            dataKey={unit}
-            type="natural"
-            fill="url(#signature-gradient-fill)"
-            fillOpacity={1}
-            stroke="url(#signature-gradient-stroke)"
-            strokeWidth={2}
-            isAnimationActive={false}
-          />
-          {getCommonChartComponents({
-            chartData,
-            yAxis: {
-              tickFormatter: (value: number) => formatCurrency(value, unit),
-            },
-          })}
-        </AreaChart>
-      </ChartContainer>
+      <div className="relative size-full">
+        <ChartContainer config={chartConfig} isLoading={isLoading}>
+          <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
+            <defs>
+              <SignatureGradientFillDef id={'signature-gradient-fill'} />
+              <SignatureGradientStrokeDef id={'signature-gradient-stroke'} />
+            </defs>
+            <ChartTooltip content={<CustomTooltip />} />
+            <Area
+              dataKey={unit}
+              type="natural"
+              fill="url(#signature-gradient-fill)"
+              fillOpacity={1}
+              stroke="url(#signature-gradient-stroke)"
+              strokeWidth={2}
+              isAnimationActive={false}
+              activeDot={{ fill: 'white', stroke: 'hsl(var(--primary))' }}
+            />
+            {getCommonChartComponents({
+              chartData,
+              yAxis: {
+                tickFormatter: (value: number) => formatCurrency(value, unit),
+              },
+            })}
+          </AreaChart>
+        </ChartContainer>
+        <ChartMilestone
+          left={300}
+          milestone={{
+            type: 'general',
+            title: 'First ZK Rollup (DEX)',
+            date: '2019-12-04T00:00:00Z',
+            url: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
+            description:
+              'Loopring is live, bringing the first DEX protocol on ZK Rollup technology.',
+          }}
+        />
+      </div>
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />
         <TvsChartTimeRangeControls

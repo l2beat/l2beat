@@ -1,13 +1,19 @@
 import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
 import { getXAxisProps } from './get-x-axis-props'
 
+export interface CommonChartComponentsProps<
+  T extends {
+    timestamp: number
+  },
+> {
+  chartData: T[] | undefined
+  yAxis?: YAxisProps
+}
+
 export function getCommonChartComponents<T extends { timestamp: number }>({
   chartData,
   yAxis,
-}: {
-  chartData: T[] | undefined
-  yAxis?: YAxisProps
-}) {
+}: CommonChartComponentsProps<T>) {
   return [
     <CartesianGrid key={'cartesian-grid'} vertical={false} />,
     <YAxis
