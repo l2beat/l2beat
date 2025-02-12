@@ -161,7 +161,7 @@ export const satellite: Bridge = {
             'AxelarGasService',
             'Allows users to pay for native gas at the destination with tokens or ETH. It also manages refunds.',
           ),
-          upgradableBy: [{ name: 'AxelarGasService Admin', delay: 'none' }],
+          upgradableBy: [{ name: 'AxelarGasService Admin', delay: 'no' }],
         },
       ],
     },

@@ -17,7 +17,7 @@ const size = discovery.getContractValue<number>(
 const validatorsString = `${threshold} / ${size}`
 
 const upgrades = {
-  upgradableBy: [{ name: 'OmniBridgeGovernance', delay: 'No delay' }],
+  upgradableBy: [{ name: 'OmniBridgeGovernance', delay: 'no' }],
 }
 
 const paused =

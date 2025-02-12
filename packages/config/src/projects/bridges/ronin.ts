@@ -151,7 +151,7 @@ export const ronin: Bridge = {
             `Bridge V3 contract handling deposits and withdrawals.`,
           ),
           upgradableBy: [
-            { name: 'MainchainBridgeManager Governors', delay: 'No delay' },
+            { name: 'MainchainBridgeManager Governors', delay: 'no' },
           ],
           pausable,
         },
