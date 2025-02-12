@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcdcbef6a6b2427a1bbe1ed268b11f7d2608e1885
+Generated with discovered.json: 0xe79fb70c09e73ecb34500fa976d610ea8ae1ab44
 
-# Diff at Wed, 12 Feb 2025 14:10:46 GMT:
+# Diff at Wed, 12 Feb 2025 14:11:18 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21665575
@@ -14,7 +14,7 @@ OptimismPortal upgrade: Add function to 'freeze' specific withdrawals, which pre
 
 ```diff
     contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
-    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
       sourceHashes.1:
 -        "0x59c5fe4b963d6487e129935b3a6f9f6340305c191ed4ed9d5623fe4dcd4b473c"
 +        "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
@@ -54,7 +54,7 @@ OptimismPortal upgrade: Add function to 'freeze' specific withdrawals, which pre
       template:
 +        "opstack/OptimismPortal_soon"
       description:
-+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH."
       fieldMeta:
 +        {"MIN_BRIDGE_VALUE":{"description":"Minimum deposit value."},"frozenWithdrawals":{"description":"Lists any rollupID that sends a pessimistic proof."}}
       usedTypes:

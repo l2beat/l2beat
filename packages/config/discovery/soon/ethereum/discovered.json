@@ -182,7 +182,7 @@
         "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -991,7 +991,7 @@
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1StandardBridge_soon": "0x938c95c414d3b4ebb043b858ccba485a4bdb3e4d4737e75462a3192c4d2a6970",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
-    "opstack/OptimismPortal_soon": "0x093fbcf0e5457d56b11465212415a8377daa3ed31b0868e3cb0226c2ac545cb5",
+    "opstack/OptimismPortal_soon": "0x0d6c35db574fc84404ecb4fa06dde4ea56399c1eccc4a5dd7ca98f30d32853b8",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"
   }
 }
