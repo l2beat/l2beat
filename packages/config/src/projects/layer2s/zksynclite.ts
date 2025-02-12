@@ -69,7 +69,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments', 'Exchange', 'NFT'],
     stack: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],

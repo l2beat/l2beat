@@ -40,6 +40,7 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
+  ProjectDaTrackingConfig,
   ProjectDataAvailability,
   ProjectEscrow,
   ProjectLivenessInfo,
@@ -162,6 +163,10 @@ interface OpStackConfigCommon {
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ScalingProjectCategory
   }
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -325,6 +330,7 @@ function opStackCommon(
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      daTracking: getDaTracking(templateVars),
     },
     technology: getTechnology(templateVars, explorerUrl),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
@@ -360,6 +366,46 @@ function opStackCommon(
     stage: templateVars.stage ?? computedStage(templateVars, postsToEthereum),
     dataAvailability: decideDA(daProvider, nativeDA),
   }
+}
+
+function getDaTracking(
+  templateVars: OpStackConfigCommon,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValue<{
+      isSequencerSendingBlobTx: boolean
+    }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
+
+  const sequencerInbox = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'sequencerInbox',
+  )
+  const sequencer = templateVars.discovery.getContractValue<string>(
+    'SystemConfig',
+    'batcherHash',
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: sequencerInbox,
+        sequencers: [sequencer],
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {

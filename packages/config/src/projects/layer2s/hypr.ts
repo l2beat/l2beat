@@ -34,6 +34,7 @@ export const hypr: Layer2 = opStackL2({
     },
   },
   genesisTimestamp: new UnixTime(1705509623),
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

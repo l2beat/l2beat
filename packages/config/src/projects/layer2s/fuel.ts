@@ -95,6 +95,12 @@ export const fuel: Layer2 = {
         chain: 'ethereum',
       },
     ],
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
+      sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+    },
     trackedTxs: [
       {
         uses: [

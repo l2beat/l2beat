@@ -32,7 +32,7 @@ export class EthereumDaIndexer extends ManagedChildIndexer {
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
 
-    this.daService = new DaService({ ethereum: [], celestia: [], avail: [] })
+    this.daService = new DaService([])
   }
 
   override async update(from: number, to: number): Promise<number> {

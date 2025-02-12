@@ -443,6 +443,15 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+      sequencers: [
+        '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
+        '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+      ],
+    },
     finality: {
       lag: 0,
       type: 'Starknet',
