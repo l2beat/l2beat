@@ -120,10 +120,13 @@ App-specific data can be reconstructed by app clients, which request and assembl
       consensusFinality: 60, //seconds
       unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
     },
-    throughput: {
-      size: 2000, // 2 MB
-      frequency: 20, // 20 seconds
-    },
+    throughput: [
+      {
+        size: 2000, // 2 MB
+        frequency: 20, // 20 seconds
+        sinceTimestamp: 1721692800, // 2024-07-23
+      },
+    ],
     finality: 60, // seconds
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',

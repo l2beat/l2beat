@@ -39,8 +39,7 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['LoopringMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LoopringMultisig', delay: 'no' }],
 }
 
 const upgradeDelay = 0
@@ -118,6 +117,12 @@ export const loopring: Layer2 = {
       type: 'loopring',
       defaultUrl: 'https://api3.loopring.io/api/v3',
       defaultCallsPerMinute: 240,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11',
+      sequencers: [],
     },
     trackedTxs: [
       {

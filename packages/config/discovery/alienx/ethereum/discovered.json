@@ -852,7 +852,10 @@
         }
       ]
     },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     { "address": "0x4c024d26c6Fe9577BA715700D0A944621239D66C" },
     { "address": "0x6ec8357b0fd80508ba50bBBDF0f09f60b5D5e469" },
     { "address": "0x740Eb3db7f1BF918acFa4840D47f06e8C81C666e" },

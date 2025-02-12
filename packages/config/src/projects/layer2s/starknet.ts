@@ -312,8 +312,16 @@ export const starknet: Layer2 = {
         tokens: ['ETH'],
         description:
           'StarkGate bridge for ETH.' + ' ' + escrowETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate ETH owner', 'BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate ETH owner',
+            delay: formatSeconds(escrowETHDelaySeconds),
+          },
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0437465dfb5B79726e35F08559B0cBea55bb585C'),
@@ -331,14 +339,18 @@ export const starknet: Layer2 = {
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowWBTCDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowWBTCDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_USDC_ADDRESS),
         sinceTimestamp: new UnixTime(1657137639),
         tokens: ['USDC'],
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [{ name: 'BridgeMultisig', delay: 'no' }],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -348,8 +360,12 @@ export const starknet: Layer2 = {
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowUSDTDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowUSDTDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_WSTETH_ADDRESS),
@@ -359,9 +375,13 @@ export const starknet: Layer2 = {
           'StarkGate bridge for wstETH.' +
           ' ' +
           escrowWSTETHMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowWSTETHDelaySeconds),
+          },
+        ],
         ...ESCROW.CANONICAL_EXTERNAL,
-        upgradeDelay: formatSeconds(escrowWSTETHDelaySeconds),
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_RETH_ADDRESS),
@@ -369,32 +389,48 @@ export const starknet: Layer2 = {
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
-        upgradableBy: ['BridgeMultisig'],
-        upgradeDelay: formatSeconds(escrowRETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowRETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_UNI_ADDRESS),
         tokens: ['UNI'],
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
-        upgradableBy: ['StarkGate UNI owner'],
-        upgradeDelay: formatSeconds(escrowUNIDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate UNI owner',
+            delay: formatSeconds(escrowUNIDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FRAX_ADDRESS),
         tokens: ['FRAX'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
-        upgradableBy: ['StarkGate FRAX owner'],
-        upgradeDelay: formatSeconds(escrowFRAXDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate FRAX owner',
+            delay: formatSeconds(escrowFRAXDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FXS_ADDRESS),
         tokens: ['FXS'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
-        upgradableBy: ['StarkGate FXS owner'],
-        upgradeDelay: formatSeconds(escrowFXSDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate FXS owner',
+            delay: formatSeconds(escrowFXSDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_SFRXETH_ADDRESS),
@@ -403,16 +439,24 @@ export const starknet: Layer2 = {
           'StarkGate bridge for sfrxETH.' +
           ' ' +
           escrowSFRXETHMaxTotalBalanceString,
-        upgradableBy: ['StarkGate sfrxETH owner'],
-        upgradeDelay: formatSeconds(escrowSFRXETHDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate sfrxETH owner',
+            delay: formatSeconds(escrowSFRXETHDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_LUSD_ADDRESS),
         tokens: ['LUSD'],
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
-        upgradableBy: ['StarkGate LUSD owner'],
-        upgradeDelay: formatSeconds(escrowLUSDDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'StarkGate LUSD owner',
+            delay: formatSeconds(escrowLUSDDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_LORDS_ADDRESS),
@@ -424,8 +468,12 @@ export const starknet: Layer2 = {
         tokens: ['STRK'],
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
-        upgradableBy: ['BridgeMultisig'],
+        upgradableBy: [
+          {
+            name: 'BridgeMultisig',
+            delay: formatSeconds(escrowSTRKDelaySeconds),
+          },
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_MULTIBRIDGE_ADDRESS),
@@ -434,14 +482,27 @@ export const starknet: Layer2 = {
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).' +
           ' ' +
           escrowEKUBOMaxTotalBalanceString,
-        upgradeDelay: formatSeconds(escrowMultibridgeDelaySeconds),
-        upgradableBy: ['StarkGate MultiBridge Admin'],
+        upgradableBy: [
+          {
+            name: 'StarkGate MultiBridge Admin',
+            delay: formatSeconds(escrowMultibridgeDelaySeconds),
+          },
+        ],
       }),
     ],
     transactionApi: {
       type: 'starknet',
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+      sequencers: [
+        '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
+        '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+      ],
     },
     finality: {
       lag: 0,
@@ -1046,10 +1107,20 @@ export const starknet: Layer2 = {
         discovery.getContractDetails('Starknet', {
           description:
             'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
-          upgradeDelay: starknetDelaySeconds
-            ? formatSeconds(starknetDelaySeconds)
-            : 'No delay',
-          upgradableBy: ['StarknetAdminMultisig', 'StarknetSecurityCouncil'],
+          upgradableBy: [
+            {
+              name: 'StarknetAdminMultisig',
+              delay: starknetDelaySeconds
+                ? formatSeconds(starknetDelaySeconds)
+                : 'No delay',
+            },
+            {
+              name: 'StarknetSecurityCouncil',
+              delay: starknetDelaySeconds
+                ? formatSeconds(starknetDelaySeconds)
+                : 'No delay',
+            },
+          ],
         }),
         ...getSHARPVerifierContracts(discovery, verifierAddress),
         discovery.getContractDetails(
@@ -1059,14 +1130,22 @@ export const starknet: Layer2 = {
         discovery.getContractDetails('StarkgateManager', {
           description:
             'This contract allows the permissionless creation and configuration of StarkGate token escrows. Tokens can also be blacklisted for creation, and already actively bridged tokens can be deactivated from depositing by a designated TokenAdmin.',
-          upgradableBy: ['StarkgateBridgeMultisig'],
-          upgradeDelay: formatSeconds(starkgateManagerDelaySeconds),
+          upgradableBy: [
+            {
+              name: 'StarkgateBridgeMultisig',
+              delay: formatSeconds(starkgateManagerDelaySeconds),
+            },
+          ],
         }),
         discovery.getContractDetails('StarkgateRegistry', {
           description:
             'A central registry contract to map token addresses to their StarkGate bridge contract.',
-          upgradableBy: ['StarkgateBridgeMultisig'],
-          upgradeDelay: formatSeconds(starkgateRegistryDelaySeconds),
+          upgradableBy: [
+            {
+              name: 'StarkgateBridgeMultisig',
+              delay: formatSeconds(starkgateRegistryDelaySeconds),
+            },
+          ],
         }),
       ],
     },

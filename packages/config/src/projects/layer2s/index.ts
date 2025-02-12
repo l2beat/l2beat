@@ -134,6 +134,7 @@ import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
+import { r0ar } from './r0ar'
 import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
@@ -343,6 +344,7 @@ export const layer2s: Layer2[] = [
   rhinofi,
   rise,
   river,
+  r0ar,
   rss3,
   rufus,
   scroll,

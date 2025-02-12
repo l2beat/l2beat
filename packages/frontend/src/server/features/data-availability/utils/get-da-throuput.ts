@@ -3,24 +3,23 @@ import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 
 export async function getDaThroughput(
   projects: Project<'daLayer' | 'statuses'>[],
+  projectsWithDaTracking: Project<'daTrackingConfig'>[],
 ) {
   if (env.MOCK) {
     return getMockThroughputData(projects)
   }
-  return getThroughputData(projects)
+  return getThroughputData(projects, projectsWithDaTracking)
 }
 
 export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
-async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
+async function getThroughputData(
+  projects: Project<'daLayer' | 'statuses'>[],
+  projectsWithDaTracking: Project<'daTrackingConfig'>[],
+) {
   const db = getDb()
-
-  const projectsWithDaTracking = await ps.getProjects({
-    select: ['daTrackingConfig'],
-  })
 
   const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
   const values = await db.dataAvailability.getByProjectIdsAndTimeRange(
@@ -35,13 +34,18 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
       if (!lastRecord) {
         return undefined
       }
+
+      const latestThroughput = project.daLayer.throughput
+        ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
+        .at(-1)
+
       assert(
-        project.daLayer.throughput,
+        latestThroughput,
         'Project does not have throughput data configured',
       )
 
       const projectsUsingDa = projectsWithDaTracking.filter(
-        (p) => p.daTrackingConfig.type === project.daLayer.daTracking,
+        (p) => project.daLayer.name === p.daTrackingConfig.daLayer,
       )
       const largestPosterRecord =
         projectsUsingDa.length > 0
@@ -72,8 +76,8 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
         86_400,
       )
       const maxThroughput = getThroughput(
-        project.daLayer.throughput.size,
-        project.daLayer.throughput.frequency,
+        latestThroughput.size,
+        latestThroughput.frequency,
       )
 
       const pastDayAvgCapacityUtilization =

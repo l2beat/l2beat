@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -11,7 +11,6 @@ const discovery = new ProjectDiscovery('muster', 'arbitrum')
 export const muster: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1718609683), // 2024-06-17T07:34:43Z
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.AltLayer],
-  hostChain: ProjectId('arbitrum'),
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

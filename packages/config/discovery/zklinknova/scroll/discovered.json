@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "scroll",
   "blockNumber": 8983528,
-  "configHash": "0x610c6523823c08f71fc925c35dcce03c6b5a6ca47bf1eacd1bc58eab55c20cd6",
+  "configHash": "0xc46c06b702083c688849eee1159db9bdd1711422cd5a94c8ede012cb29b5754d",
   "contracts": [
     {
       "name": "zkLink",
@@ -158,7 +158,7 @@
       "derivedName": "ScrollL2Gateway"
     },
     {
-      "name": "AdminMultisig",
+      "name": "ScrollOwner",
       "address": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
       "template": "GnosisSafe",
       "sourceHashes": [

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,7 +11,6 @@ const discovery = new ProjectDiscovery('degen', 'base')
 
 export const degen: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
-  hostChain: ProjectId('base'),
   discovery,
   additionalBadges: [
     Badge.DA.DAC,

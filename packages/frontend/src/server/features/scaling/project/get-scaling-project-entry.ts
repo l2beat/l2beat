@@ -116,6 +116,7 @@ async function getHeader(project: ScalingProject) {
   return {
     description: project.display.description,
     warning: project.display.headerWarning,
+    redWarning: project.display.redWarning,
     category: isProjectOther(project) ? 'Other' : project.display.category,
     purposes: project.display.purposes,
     activity: activityProjectStats,
