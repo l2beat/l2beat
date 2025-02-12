@@ -69,12 +69,11 @@
         "pickRoleMembers": "EXECUTOR_ROLE"
       },
       "severity": "HIGH"
+    },
+    "scheduledTransactions": {
+      "handler": {
+        "type": "arbitrumScheduledTransactions"
+      }
     }
-    // TODO
-    // "scheduledTransactions": {
-    //   "handler": {
-    //     "type": "arbitrumScheduledTransactions"
-    //   }
-    // }
   }
 }
