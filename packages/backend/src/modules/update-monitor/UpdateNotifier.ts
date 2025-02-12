@@ -17,6 +17,7 @@ import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
@@ -41,6 +42,7 @@ export class UpdateNotifier {
     private readonly discordClient: DiscordClient | undefined,
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
+    private readonly updateMessagesService: UpdateMessagesService,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -108,7 +110,7 @@ export class UpdateNotifier {
     )
     await this.notify(filteredMessage, 'PUBLIC')
 
-    await this.db.updateMessage.upsert({
+    await this.updateMessagesService.storeAndPrune({
       projectName: name,
       chain: this.chainConverter.toName(chainId),
       blockNumber,
