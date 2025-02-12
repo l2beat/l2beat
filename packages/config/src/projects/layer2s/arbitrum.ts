@@ -444,6 +444,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,
+      excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
       ...upgradeExecutorUpgradeability,
@@ -509,6 +510,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,

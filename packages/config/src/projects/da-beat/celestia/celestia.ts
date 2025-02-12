@@ -1,12 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { linkByDA } from '../common/linkByDA'
-import { blobstream } from './blobstream'
-
-const daBridges = [blobstream]
 
 export const celestia: BaseProject = {
   id: ProjectId('celestia'),
@@ -21,23 +17,15 @@ export const celestia: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     isUnderReview: false,
-    isUnverified: !daBridges.every(isDaBridgeVerified),
+    isUnverified: false,
   },
   display: {
     description:
       'Celestia is a modular data availability network that allows L2s to post arbitrary data as blobs.',
     links: {
       websites: ['https://celestia.org/'],
-      documentation: [
-        'https://docs.celestia.org/',
-        'https://docs.celestia.org/developers/blobstream',
-        'https://hackmd.io/@succinctlabs/HJE7XRrup',
-      ],
-      repositories: [
-        'https://github.com/celestiaorg',
-        'https://github.com/succinctlabs/sp1-blobstream',
-        'https://github.com/succinctlabs/blobstreamx',
-      ],
+      documentation: ['https://docs.celestia.org/'],
+      repositories: ['https://github.com/celestiaorg'],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/Celestia',
@@ -57,7 +45,7 @@ export const celestia: BaseProject = {
 
 ## Consensus
 Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
-Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
+Celestia achieves finality at each block, with an average time between blocks of 6 seconds.
 ## Blobs
 In Celestia, blobs are user-submitted data that do not modify the blockchain state.  
 Each blob has two components, one is a binary object of raw data bytes, and the other is the namespace of the specific application for which the blob data is intended for.\n
@@ -152,10 +140,24 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       erasureCodingProof: 'Fraud proofs',
     },
     pruningWindow: 86400 * 30, // 30 days in seconds
-    throughput: {
-      size: 8000, // 8 MB
-      frequency: 6, // 6 seconds
-    },
+    throughput: [
+      {
+        size: 8000, // 8 MB
+        frequency: 6, // 6 seconds
+        sinceTimestamp: 1738022400, // 2025-01-28,
+      },
+      {
+        size: 2000,
+        frequency: 6,
+        sinceTimestamp: 1733961600, // 2024-12-12
+      },
+      {
+        size: 2000,
+        frequency: 12,
+        sinceTimestamp: 1698710400, // 2023-10-31
+      },
+    ],
+    finality: 6, // seconds
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
@@ -169,7 +171,6 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
       },
     },
   },
-  daBridges,
   milestones: [
     {
       title: 'Mainnet launch',

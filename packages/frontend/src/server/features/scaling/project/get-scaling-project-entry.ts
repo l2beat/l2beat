@@ -28,7 +28,6 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const changes = projectsChangeReport.getChanges(project.id)
-
   const common = {
     type: project.type,
     capability: project.capability,
@@ -117,6 +116,7 @@ async function getHeader(project: ScalingProject) {
   return {
     description: project.display.description,
     warning: project.display.headerWarning,
+    redWarning: project.display.redWarning,
     category: isProjectOther(project) ? 'Other' : project.display.category,
     purposes: project.display.purposes,
     activity: activityProjectStats,

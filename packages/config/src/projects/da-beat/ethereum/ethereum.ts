@@ -1,10 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
-import { EthereumDaLayerRisks } from '../common'
-import { enshrinedBridge } from './enshrinedBridge'
-
-const daBridges = [enshrinedBridge]
+import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../common'
+import { linkByDA } from '../common/linkByDA'
 
 export const ethereum: BaseProject = {
   id: ProjectId('ethereum'),
@@ -19,7 +16,7 @@ export const ethereum: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     isUnderReview: false,
-    isUnverified: !daBridges.every(isDaBridgeVerified),
+    isUnverified: false,
   },
   display: {
     // name: 'Ethereum (EIP-4844)',
@@ -125,10 +122,14 @@ This method allows ZK rollups to prove that the data used in their validity proo
       consensusFinality: 768, // seconds, two epochs of 32 slots each
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
-    throughput: {
-      size: 750, // 0.75 MB
-      frequency: 12, // 12 seconds
-    },
+    throughput: [
+      {
+        size: 750, // 0.75 MB
+        frequency: 12, // 12 seconds
+        sinceTimestamp: 1710288000, // 2024-03-13
+      },
+    ],
+    finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {
       daLayer: EthereumDaLayerRisks.SelfVerify,
@@ -141,7 +142,31 @@ This method allows ZK rollups to prove that the data used in their validity proo
         coingeckoId: 'ethereum',
       },
     },
-    daTracking: 'ethereum',
   },
-  daBridges,
+  daBridge: {
+    name: 'Enshrined Bridge',
+    daLayer: ProjectId('ethereum'),
+    technology: {
+      description: `
+     ## Enshrined Bridge
+    The DA bridge on Ethereum is enshrined, meaning that blob data is directly accessible on the consensus layer, with data availability guaranteed by the network's inherent consensus rules. 
+    If a block contains unavailable data, full nodes will reject it, causing the chain to fork away from that block. This ensures data availability without requiring additional trust assumptions. 
+    In contrast, external DA providers must rely on data availability attestations from the external validator set, introducing an extra layer of trust on the majority of validators.
+    `,
+    },
+    usedIn: linkByDA({
+      layer: ProjectId('ethereum'),
+      bridge: ProjectId('ethereum'),
+    }),
+    risks: {
+      daBridge: EthereumDaBridgeRisks.Enshrined,
+      callout: `Unlike non-enshrined DA bridges, it does not place any honesty
+          assumption on an external committee that provides data availability
+          attestations to the DA bridge. From the rollup perspective,
+          Ethereum's canonical chain cannot contain unavailable data
+          commitments as full nodes self-verify the data availability of each
+          block, discarding blocks with unavailable data. The rollup state
+          validating bridge has access to all the data, as it is posted on chain.`,
+    },
+  },
 }

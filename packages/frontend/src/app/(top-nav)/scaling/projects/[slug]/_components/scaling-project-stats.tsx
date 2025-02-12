@@ -7,13 +7,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import type { ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/number-format/format-number'
-import { StageStat } from './stage-stat'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
@@ -23,10 +23,7 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isAppchain = project.capability === 'appchain'
-  const hasNotice =
-    project.stageConfig.stage !== 'UnderReview' &&
-    project.stageConfig.stage !== 'NotApplicable' &&
-    !!project.stageConfig.additionalConsiderations
+
   return (
     <div
       className={cn(
@@ -70,11 +67,12 @@ export function ScalingProjectStats({ project, className }: Props) {
         <ProjectStat
           title="Stage"
           value={
-            <StageStat
-              stageConfig={project.stageConfig}
-              isAppchain={isAppchain}
-              hasNotice={hasNotice}
-            />
+            <a href="#stage">
+              <StageCell
+                stageConfig={project.stageConfig}
+                isAppchain={isAppchain}
+              />
+            </a>
           }
         />
       ) : null}

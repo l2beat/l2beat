@@ -193,6 +193,12 @@ export const ink: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97',
+      sequencers: ['0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac'],
+    },
     finality: {
       type: 'OPStack',
       minTimestamp: new UnixTime(1733502012),
@@ -432,6 +438,7 @@ export const ink: Layer2 = {
       rollupNodeSourceAvailable: 'UnderReview',
     },
     stage1: {
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: true,
       usersHave7DaysToExit: true,

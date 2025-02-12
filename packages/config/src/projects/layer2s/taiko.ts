@@ -191,6 +191,12 @@ export const taiko: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+      sequencers: [],
+    },
     trackedTxs: [
       {
         uses: [
@@ -314,6 +320,7 @@ export const taiko: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,

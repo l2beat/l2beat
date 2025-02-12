@@ -194,6 +194,7 @@
   "plumenetwork.png": "914c85d35e50e37e5a69d5caa2241d7f",
   "galxegravity.png": "cc4f776021dc0ad568a627e1fa944e75",
   "celestia.png": "cf522e18736c3803805745fdfc033519",
+  "blobstream.png": "cf522e18736c3803805745fdfc033519",
   "arcology.png": "607689032e4ea74c48b17ce57598c14a",
   "alienx.png": "ded937cb70c7bd99041e69672fb714c2",
   "blobstreamx.png": "0db7341e908fbcc03a65cc07d6b2ace9",
@@ -258,6 +259,7 @@
   "SP1Blobstream.png": "0d30e9b8757ea586823637ad7a5d6205",
   "arithmic.png": "7d3f971cfd268076be50267755f24717",
   "avail.png": "71d3ef1a2b8d71ddd97c49d49f11ddc2",
+  "vector.png": "71d3ef1a2b8d71ddd97c49d49f11ddc2",
   "SP1Vector.png": "af0592ee3395c8cc13044d8da267f605",
   "memo.png": "9f4d80e3a496c7f30863d7d5823e6e61",
   "polynomial.png": "162e18a83237f92aceedf4db811c4af8",
@@ -324,5 +326,10 @@
   "towns.png": "5351e760f43428458ff35275d6bfd0d1",
   "datalake.png": "b178aa3a52f90021780d28362ebdbbd9",
   "forta.png": "5333487c1f87bdce8413c576514d60d0",
-  "conwai.png": "69f10e40f768573bc82a95443baccbe0"
+  "spheron.png": "3527dbef8eb8c0940fa1ca0f5adfe970",
+  "mindchain.png": "d6db444c38d51df20b304e5dbcd16630",
+  "conwai.png": "69f10e40f768573bc82a95443baccbe0",
+  "hyperlane.png": "e115059282e7a5b7ac132cd774022644",
+  "r0ar.png": "1f374165fe8139715fd85f3a2214f497",
+  "blockfit.png": "06b6d2f3278788ba610fa4cd738ed99f"
 }

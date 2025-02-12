@@ -25,15 +25,21 @@ const addSequencerBatchV1 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder)'
 const addSequencerBatchV2 =
   'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount)'
+const addSequencerBatchEspresso =
+  'addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes calldata data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)'
 
 const abi = new utils.Interface([
   'event SequencerBatchDelivered(uint256 indexed batchSequenceNumber, bytes32 indexed beforeAcc, bytes32 indexed afterAcc, bytes32 delayedAcc, uint256 afterDelayedMessagesRead, tuple(uint64, uint64, uint64, uint64) timeBounds, uint8 dataLocation)',
   `function ${addSequencerBatchV1}`,
   `function ${addSequencerBatchV2}`,
+  `function ${addSequencerBatchEspresso}`,
 ])
 
 const addSequencerBatchV1SigHash = abi.getSighash(addSequencerBatchV1)
 const addSequencerBatchV2SigHash = abi.getSighash(addSequencerBatchV2)
+const addSequencerBatchEspressoSigHash = abi.getSighash(
+  addSequencerBatchEspresso,
+)
 
 export class ArbitrumSequencerVersionHandler implements Handler {
   readonly dependencies: string[] = []
@@ -136,6 +142,8 @@ export class ArbitrumSequencerVersionHandler implements Handler {
       return abi.decodeFunctionData(addSequencerBatchV1, calldata)
     } else if (calldata.startsWith(addSequencerBatchV2SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV2, calldata)
+    } else if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
     } else {
       throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }
@@ -160,18 +168,14 @@ export class ArbitrumSequencerVersionHandler implements Handler {
             0,
             currentBlockNumber - blockStep * multiplier,
           )
-          return await rpcWithRetries(
-            async () => {
-              return await eventProvider.getLogs({
-                address: address.toString(),
-                topics: [abi.getEventTopic('SequencerBatchDelivered')],
-                fromBlock,
-                toBlock: currentBlockNumber,
-              })
-            },
-            () =>
-              `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
-          )
+          return await rpcWithRetries(async () => {
+            return await eventProvider.getLogs({
+              address: address.toString(),
+              topics: [abi.getEventTopic('SequencerBatchDelivered')],
+              fromBlock,
+              toBlock: currentBlockNumber,
+            })
+          }, `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`)
         },
       )
 

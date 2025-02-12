@@ -217,11 +217,6 @@ export const layerzerov2oft: Bridge = {
         description: 'OFT adapter escrow for TRESTLE on Ethereum.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2'),
-        tokens: ['wTIA'],
-        description: 'OFT adapter escrow for Trestle Wrapped TIA on Ethereum.',
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0x6182995916d79DeDb60db1570776F9994fCdCA0a'),
         tokens: ['PARAM'],
         description: 'OFT adapter escrow for PARAM on Ethereum.',

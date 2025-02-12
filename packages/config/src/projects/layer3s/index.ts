@@ -7,6 +7,7 @@ import { aviveworld } from './aviveworld'
 import { b3 } from './b3'
 import { bitlazer } from './bitlazer'
 import { blessnet } from './blessnet'
+import { blockfit } from './blockfit'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
@@ -29,6 +30,7 @@ import { inevm } from './inevm'
 import { l3x } from './l3x'
 import { lumiterra } from './lumiterra'
 import { meliora } from './meliora'
+import { mindchain } from './mindchain'
 import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
@@ -43,6 +45,7 @@ import { popboss } from './popboss'
 import { rari } from './rari'
 import { sanko } from './sanko'
 import { songprotocol } from './songprotocol'
+import { spheron } from './spheron'
 import { stack } from './stack'
 import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
@@ -62,6 +65,7 @@ export const layer3s: Layer3[] = [
   aviveworld,
   bitlazer,
   blessnet,
+  blockfit,
   bugbuster,
   b3,
   cheese,
@@ -95,6 +99,7 @@ export const layer3s: Layer3[] = [
   stack,
   syndicateframe,
   meliora,
+  mindchain,
   molten,
   muster,
   mvchain,
@@ -105,6 +110,7 @@ export const layer3s: Layer3[] = [
   oursong,
   playblock,
   songprotocol,
+  spheron,
   superposition,
   syndr,
   winr,

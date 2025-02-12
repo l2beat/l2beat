@@ -238,6 +238,12 @@ export const optimism: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xFF00000000000000000000000000000000000010',
+      sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
+    },
     finality: {
       type: 'OPStack',
       // timestamp of the first blob tx
@@ -520,6 +526,7 @@ export const optimism: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,

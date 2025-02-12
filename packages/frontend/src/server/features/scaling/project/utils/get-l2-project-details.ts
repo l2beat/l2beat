@@ -298,7 +298,7 @@ export async function getL2ProjectDetails({
 
   if (sequencingSection) {
     items.push({
-      type: 'MarkdownSection',
+      type: 'SequencingSection',
       props: {
         id: 'sequencing',
         title: 'Sequencing',

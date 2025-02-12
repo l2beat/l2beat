@@ -1,13 +1,5 @@
 import { z } from 'zod'
 
-export const PolkadotErrorResponse = z.object({
-  error: z.object({
-    code: z.number(),
-    message: z.string(),
-    data: z.string(),
-  }),
-})
-
 export const PolkadotGetBlockHashResponse = z.object({
   result: z.string(),
 })
@@ -45,5 +37,13 @@ const PolkadotBlock = z.object({
 export const PolkadotGetBlockResponse = z.object({
   result: z.object({
     block: PolkadotBlock,
+  }),
+})
+
+export const PolkadotErrorResponse = z.object({
+  error: z.object({
+    code: z.number(),
+    message: z.string(),
+    data: z.string(),
   }),
 })

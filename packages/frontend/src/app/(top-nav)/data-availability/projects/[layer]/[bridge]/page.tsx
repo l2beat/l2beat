@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
@@ -10,7 +11,6 @@ import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
-import { getDaBridges } from '~/server/features/data-availability/utils/get-da-bridges'
 import { ps } from '~/server/projects'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
@@ -26,41 +26,49 @@ interface Props {
 export async function generateStaticParams() {
   if (env.VERCEL_ENV !== 'production') return []
 
-  const projects = await ps.getProjects({
-    select: ['daLayer', 'daBridges'],
+  const [layers, bridges] = await Promise.all([
+    ps.getProjects({ select: ['daLayer'] }),
+    ps.getProjects({ select: ['daBridge'] }),
+  ])
+
+  return layers.flatMap((layer) => {
+    const pairs: { layer: string; bridge: string }[] = []
+    if (layer.daLayer.usedWithoutBridgeIn.length > 0) {
+      pairs.push({ layer: layer.slug, bridge: 'no-bridge' })
+    }
+    const daBridges = bridges.filter((x) => x.daBridge.daLayer === layer.id)
+    for (const bridge of daBridges) {
+      pairs.push({ layer: layer.slug, bridge: bridge.slug })
+    }
+    return pairs
   })
-  return projects.flatMap((project) =>
-    getDaBridges(project).map((bridge) => ({
-      layer: project.slug,
-      bridge: bridge.display.slug,
-    })),
-  )
 }
 
 export async function generateMetadata(props: Props) {
   const params = await props.params
-  const project = await ps.getProject({
-    slug: params.layer,
-    select: ['daLayer', 'daBridges', 'display'],
-  })
 
-  if (!project || !params.bridge) {
-    notFound()
-  }
-  const bridge = getDaBridges(project).find(
-    (bridge) => bridge.display?.slug === params.bridge,
-  )
-  if (!bridge) {
+  const [layer, bridge] = await Promise.all([
+    ps.getProject({ slug: params.layer, select: ['display'] }),
+    params.bridge !== 'no-bridge'
+      ? ps.getProject({ slug: params.bridge, select: ['daBridge'] })
+      : undefined,
+  ])
+
+  if (
+    !layer ||
+    (params.bridge !== 'no-bridge' &&
+      (!bridge || bridge.daBridge.daLayer !== layer.id))
+  ) {
     notFound()
   }
   return getProjectMetadata({
     project: {
-      name: project.name,
-      description: project.display.description,
+      name: layer.name,
+      description: layer.display.description,
     },
     metadata: {
       openGraph: {
-        url: `/data-availability/projects/${project.slug}/${bridge.display?.slug}`,
+        url: `/data-availability/projects/${layer.slug}/${bridge?.slug ?? 'no-bridge'}`,
       },
     },
   })
@@ -117,30 +125,36 @@ export default async function Page(props: Props) {
 }
 
 async function getPageData(params: { layer: string; bridge: string }) {
-  const project = await ps.getProject({
+  const layer = await ps.getProject({
     slug: params.layer,
-    select: ['daLayer', 'display', 'daBridges', 'statuses'],
+    select: ['daLayer', 'display', 'statuses'],
     optional: ['isUpcoming', 'milestones'],
   })
-  if (!project) {
-    return
-  }
-  const daBridge = getDaBridges(project).find(
-    (b) => b.display.slug === params.bridge,
-  )
-  if (!daBridge) {
-    return
-  }
-  if (params.layer === 'ethereum') {
-    const entry = await getEthereumDaProjectEntry(project, daBridge)
 
+  if (!layer) {
+    notFound()
+  }
+  if (layer.id === ProjectId.ETHEREUM) {
+    const bridge = await ps.getProject({
+      slug: params.bridge,
+      select: ['daBridge', 'display'],
+      optional: ['contracts'],
+    })
+    if (!bridge || bridge.id !== layer.id) {
+      notFound()
+    }
+
+    const entry = await getEthereumDaProjectEntry(layer, bridge)
     return {
       entry,
       summaryComponent: <EthereumDaProjectSummary project={entry} />,
     }
   }
 
-  const entry = await getDaProjectEntry(project, daBridge)
+  const entry = await getDaProjectEntry(layer, params.bridge)
+  if (!entry) {
+    notFound()
+  }
 
   return {
     entry,

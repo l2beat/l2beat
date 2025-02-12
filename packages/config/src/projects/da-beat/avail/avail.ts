@@ -1,12 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
-import { isDaBridgeVerified } from '../../../verification/isVerified'
 import { DaEconomicSecurityRisk } from '../common/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../common/DaFraudDetectionRisk'
 import { linkByDA } from '../common/linkByDA'
-import { vector } from './vector'
-
-const daBridges = [vector]
 
 export const avail: BaseProject = {
   id: ProjectId('avail'),
@@ -21,21 +17,15 @@ export const avail: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     isUnderReview: false,
-    isUnverified: !daBridges.every(isDaBridgeVerified),
+    isUnverified: false,
   },
   display: {
     description:
       'Avail is a public blockchain and data availability network combining erasure coding, KZG polynomial commitments, and data availability sampling.',
     links: {
       websites: ['https://www.availproject.org/'],
-      documentation: [
-        'https://docs.availproject.org/',
-        'https://docs.succinct.xyz/',
-      ],
-      repositories: [
-        'https://github.com/availproject/',
-        'https://github.com/succinctlabs/sp1-vector',
-      ],
+      documentation: ['https://docs.availproject.org/'],
+      repositories: ['https://github.com/availproject/'],
       apps: ['https://bridge.availproject.org/'],
       explorers: [
         'https://explorer.avail.so/#/explorer',
@@ -130,10 +120,14 @@ App-specific data can be reconstructed by app clients, which request and assembl
       consensusFinality: 60, //seconds
       unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
     },
-    throughput: {
-      size: 2000, // 2 MB
-      frequency: 20, // 20 seconds
-    },
+    throughput: [
+      {
+        size: 2000, // 2 MB
+        frequency: 20, // 20 seconds
+        sinceTimestamp: 1721692800, // 2024-07-23
+      },
+    ],
+    finality: 60, // seconds
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Validity proofs',
@@ -152,7 +146,6 @@ App-specific data can be reconstructed by app clients, which request and assembl
       },
     },
   },
-  daBridges,
   milestones: [
     {
       title: 'Mainnet launch',

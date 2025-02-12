@@ -145,7 +145,6 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
   ],
   rpcUrl: 'https://mainnet.era.zksync.io',
-
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],

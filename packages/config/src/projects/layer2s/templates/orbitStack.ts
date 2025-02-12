@@ -38,6 +38,7 @@ import type {
   Layer3,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissions,
@@ -160,6 +161,10 @@ interface OrbitStackConfigCommon {
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -364,6 +369,17 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
+
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
+
   const currentRequiredStake = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'currentRequiredStake',
@@ -570,7 +586,12 @@ function orbitStackCommon(
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
-      [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
+      [
+        Badge.Stack.Orbit,
+        Badge.VM.EVM,
+        daBadge,
+        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoSequencing] : []),
+      ],
       templateVars.additionalBadges ?? [],
     ),
     customDa: templateVars.customDa,
@@ -722,13 +743,25 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream'
-      : postsToExternalDA
-        ? 'orbit-optimium'
-        : 'orbit-rollup'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
 
   return {
     type: 'layer3',
@@ -769,6 +802,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,
@@ -843,8 +877,47 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
     },
   }
+}
+
+function getDaTracking(
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
+  const batchPosters = templateVars.discovery.getContractValue<string[]>(
+    'SequencerInbox',
+    'batchPosters',
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
@@ -903,13 +976,25 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
+  const isUsingEspressoSequencer =
+    templateVars.discovery.getContractValueOrUndefined<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== undefined &&
+    templateVars.discovery.getContractValue<string>(
+      'SequencerInbox',
+      'espressoTEEVerifier',
+    ) !== EthereumAddress.ZERO
+
   const architectureImage = existFastConfirmer
     ? 'orbit-optimium-fastconfirm'
-    : isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream'
-      : postsToExternalDA
-        ? 'orbit-optimium'
-        : 'orbit-rollup'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -968,6 +1053,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
                   templateVars.isNodeAvailable ?? 'UnderReview',
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: false,
                 usersHave7DaysToExit: false,
@@ -1089,6 +1175,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
     },

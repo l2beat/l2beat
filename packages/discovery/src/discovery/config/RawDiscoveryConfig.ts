@@ -26,6 +26,7 @@ export const RolePermissionEntries = [
   'fastconfirm',
   'validateZkStack',
   'validateBridge',
+  'validateBridge2',
   'relay',
   'aggregatePolygon',
 ] as const
