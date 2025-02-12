@@ -979,7 +979,7 @@ export interface DaLayerThroughput {
    * Inclusive timestamp of when this throughput was introduced.
    * If more than one throughput is provided, it will be used as the end time of previous one
    */
-  sinceTimestamp: UnixTime
+  sinceTimestamp: number
 }
 
 export interface DaEconomicSecurity {

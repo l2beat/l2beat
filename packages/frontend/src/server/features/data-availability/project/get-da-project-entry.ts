@@ -61,7 +61,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: number | undefined
     durationStorage: number | undefined
-    throughput: Pick<DaLayerThroughput, 'size' | 'frequency'> | undefined
+    throughput: DaLayerThroughput | undefined
     usedIn: UsedInProject[]
   }
   sections: ProjectDetailsSection[]
@@ -73,7 +73,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: number | undefined
     durationStorage: number
-    throughput: Pick<DaLayerThroughput, 'size' | 'frequency'> | undefined
+    throughput: DaLayerThroughput | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -140,7 +140,7 @@ export async function getDaProjectEntry(
   })
 
   const latestThroughput = layer.daLayer.throughput
-    ?.sort((a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber())
+    ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .at(-1)
 
   const result: DaProjectPageEntry = {
@@ -177,10 +177,7 @@ export async function getDaProjectEntry(
       tvs: layerTvs,
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
-      throughput: latestThroughput && {
-        frequency: latestThroughput.frequency,
-        size: latestThroughput.size,
-      },
+      throughput: latestThroughput,
       usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
@@ -240,7 +237,7 @@ export async function getEthereumDaProjectEntry(
   )
 
   const latestThroughput = layer.daLayer.throughput
-    ?.sort((a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber())
+    ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .at(-1)
 
   return {
@@ -256,10 +253,7 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
-      throughput: latestThroughput && {
-        frequency: latestThroughput.frequency,
-        size: latestThroughput.size,
-      },
+      throughput: latestThroughput,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,
       callout: {
