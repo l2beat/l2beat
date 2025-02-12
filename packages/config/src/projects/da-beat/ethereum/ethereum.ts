@@ -122,10 +122,13 @@ This method allows ZK rollups to prove that the data used in their validity proo
       consensusFinality: 768, // seconds, two epochs of 32 slots each
       unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
     },
-    throughput: {
-      size: 750, // 0.75 MB
-      frequency: 12, // 12 seconds
-    },
+    throughput: [
+      {
+        size: 750, // 0.75 MB
+        frequency: 12, // 12 seconds
+        sinceTimestamp: 1710288000, // 2024-03-13
+      },
+    ],
     finality: 720, // seconds
     pruningWindow: 86400 * 18, // 18 days in seconds
     risks: {

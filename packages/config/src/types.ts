@@ -922,7 +922,7 @@ export interface DaLayer {
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
   consensusAlgorithm?: DaConsensusAlgorithm
-  throughput?: DaLayerThroughput
+  throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
@@ -966,10 +966,20 @@ export interface DaLayerThroughput {
    */
   size: number
   /**
+   * Desired size of blob data per block. Should be less than or equal to size.
+   * @unit KB - kilobytes
+   */
+  target?: number
+  /**
    * Batch frequency for data availability. Together with batchSize it determines max throughput.
    * @unit seconds
    */
   frequency: number
+  /**
+   * Inclusive timestamp of when this throughput was introduced.
+   * If more than one throughput is provided, it will be used as the end time of previous one
+   */
+  sinceTimestamp: number
 }
 
 export interface DaEconomicSecurity {
