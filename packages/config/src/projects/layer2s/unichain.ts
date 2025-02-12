@@ -65,7 +65,7 @@ export const unichain: Layer2 = opStackL2({
     type: 'OPStack',
     minTimestamp: genesisTimestamp,
     genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
+    l2BlockTimeSeconds: 1,
     lag: 0,
     stateUpdate: 'disabled',
   },
