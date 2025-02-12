@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { DiscoveryDiff } from '@l2beat/discovery'
+import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
   assert,
   type ChainConverter,
@@ -110,11 +110,13 @@ export class UpdateNotifier {
     )
     await this.notify(filteredMessage, 'PUBLIC')
 
+    const filteredWebMessage = discoveryDiffToMarkdown(filteredDiff)
+
     await this.updateMessagesService.storeAndPrune({
       projectName: name,
       chain: this.chainConverter.toName(chainId),
       blockNumber,
-      message: filteredMessage,
+      message: filteredWebMessage,
       timestamp,
     })
 

@@ -14,6 +14,7 @@ import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
   type DailyReminderChainEntry,
   UpdateNotifier,
@@ -34,10 +35,6 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
-      const updateMessageRepository = mockObject<Database['updateMessage']>({
-        upsert: async () => {},
-      })
-
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
         findLatestId: async () => undefined,
@@ -46,14 +43,18 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
           updateNotifier: updateNotifierRepository,
-          updateMessage: updateMessageRepository,
         }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -122,8 +123,8 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
-      const updateMessageRepository = mockObject<Database['updateMessage']>({
-        upsert: async () => {},
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -137,11 +138,11 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
           updateNotifier: updateNotifierRepository,
-          updateMessage: updateMessageRepository,
         }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -222,8 +223,8 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
-      const updateMessageRepository = mockObject<Database['updateMessage']>({
-        upsert: async () => {},
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
@@ -237,11 +238,11 @@ describe(UpdateNotifier.name, () => {
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({
           updateNotifier: updateNotifierRepository,
-          updateMessage: updateMessageRepository,
         }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -316,6 +317,10 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
         findLatestId: async () => 0,
@@ -330,6 +335,7 @@ describe(UpdateNotifier.name, () => {
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -385,6 +391,10 @@ describe(UpdateNotifier.name, () => {
         insert: async () => 0,
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
@@ -394,6 +404,7 @@ describe(UpdateNotifier.name, () => {
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {
@@ -470,6 +481,10 @@ describe(UpdateNotifier.name, () => {
         },
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
       })
@@ -485,6 +500,7 @@ describe(UpdateNotifier.name, () => {
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {
@@ -525,11 +541,15 @@ describe(UpdateNotifier.name, () => {
         insert: async () => 0,
         findLatestId: async () => undefined,
       })
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {}
