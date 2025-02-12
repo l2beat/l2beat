@@ -1,6 +1,6 @@
 {
-    "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-    "displayName": "L2GatewayRouter",
-    "description": "Router managing token <–> gateway mapping on L2.",
-    "ignoreRelatives": ["counterpartGateway"]
-} 
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "L2GatewayRouter",
+  "description": "Router managing token <–> gateway mapping on L2.",
+  "ignoreRelatives": ["counterpartGateway"]
+}

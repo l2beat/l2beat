@@ -1,12 +1,12 @@
 {
-    "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-    "displayName": "TreasuryTimelock",
-    "description": "Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.",
-    "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TreasuryTimelock",
+  "description": "Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
       }
+    }
+  }
 }

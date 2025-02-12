@@ -434,7 +434,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   //     }),
   //   ],
   // },
-  additionalDiscoveries: {['arbitrum']: l2Discovery},
+  additionalDiscoveries: { ['arbitrum']: l2Discovery },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
