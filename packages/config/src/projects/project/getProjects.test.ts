@@ -1,9 +1,9 @@
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { checkRisk } from '../../test/helpers'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { getProjects } from './getProjects'
-import { checkRisk } from '../../test/helpers'
 
 describe('getProjects', () => {
   const projects = getProjects()
@@ -137,5 +137,4 @@ describe('getProjects', () => {
       })
     }
   })
-
 })
