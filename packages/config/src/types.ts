@@ -1068,10 +1068,10 @@ export interface ProjectContracts {
 }
 
 export interface ProjectUpgradeableActor {
-    /** Actor from permissions that can upgrade */
-    name: string
-    /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-    delay: string
+  /** Actor from permissions that can upgrade */
+  name: string
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  delay: string
 }
 
 export interface ProjectContract {
