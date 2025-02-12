@@ -1,7 +1,7 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
 import type { ChartConfig } from '~/components/core/chart/chart'
@@ -12,7 +12,7 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/common'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -74,18 +74,12 @@ export function DaPercentageThroughputChart({
           fill="var(--color-avail)"
           isAnimationActive={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(chartData)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          unit="%"
-          mirror
-          tickCount={3}
-          tick={{
-            dy: -10,
-          }}
-        />
+        {getCommonChartComponents({
+          chartData,
+          yAxisProps: {
+            unit: '%',
+          },
+        })}
       </BarChart>
     </ChartContainer>
   )

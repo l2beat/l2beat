@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
-import { ChartConfig, ChartContainer, ChartTooltip } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { Area, AreaChart } from 'recharts'
+import type { ChartConfig } from '~/components/core/chart/chart'
+import { ChartContainer, ChartTooltip } from '~/components/core/chart/chart'
+import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   SignatureGradientFillDef,
   SignatureGradientStrokeDef,
@@ -80,7 +81,7 @@ export function BridgesTvsChart() {
         timeRange={chartRange}
       />
       <ChartContainer config={chartConfig} isLoading={isLoading}>
-        <AreaChart data={chartData} margin={{ top: 20 }}>
+        <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
           <defs>
             <SignatureGradientFillDef id={'signature-gradient-fill'} />
             <SignatureGradientStrokeDef id={'signature-gradient-stroke'} />
@@ -95,16 +96,12 @@ export function BridgesTvsChart() {
             strokeWidth={2}
             isAnimationActive={false}
           />
-          <CartesianGrid vertical={false} />
-          <XAxis {...getXAxisProps(chartData)} />
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            mirror
-            tickCount={3}
-            dy={-10}
-            tickFormatter={(value: number) => formatCurrency(value, unit)}
-          />
+          {getCommonChartComponents({
+            chartData,
+            yAxisProps: {
+              tickFormatter: (value: number) => formatCurrency(value, unit),
+            },
+          })}
         </AreaChart>
       </ChartContainer>
       <ChartControlsWrapper>

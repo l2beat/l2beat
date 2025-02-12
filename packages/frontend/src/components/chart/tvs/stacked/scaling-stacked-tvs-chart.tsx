@@ -11,15 +11,7 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
 import type { PolygonProps, TooltipProps } from 'recharts'
-import {
-  Area,
-  CartesianGrid,
-  ComposedChart,
-  Polygon,
-  Scatter,
-  XAxis,
-  YAxis,
-} from 'recharts'
+import { Area, ComposedChart, Polygon, Scatter } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -28,7 +20,7 @@ import {
   ChartTooltip,
   useMilestone,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/common'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
@@ -215,16 +207,12 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
             shape={<Diamond />}
             isAnimationActive={false}
           />
-          <CartesianGrid vertical={false} />
-          <XAxis {...getXAxisProps(chartData)} />
-          <YAxis
-            tickFormatter={(value: number) => formatYAxisLabel(value)}
-            tickCount={3}
-            mirror
-            dy={-10}
-            axisLine={false}
-            tickLine={false}
-          />
+          {getCommonChartComponents({
+            chartData,
+            yAxisProps: {
+              tickFormatter: (value: number) => formatYAxisLabel(value),
+            },
+          })}
         </ComposedChart>
       </ChartContainer>
       <ChartControlsWrapper>
