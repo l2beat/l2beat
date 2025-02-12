@@ -3,12 +3,12 @@ import { useStore } from '../store/store'
 import type { NodeLocations } from '../store/utils/storage'
 import { ControlButton } from './ControlButton'
 
-export function FastLayoutButton() {
+export function StackLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const layout = useStore((state) => state.layout)
   return (
-    <ControlButton onClick={() => layout(fastAutoLayout(nodes))}>
-      Fast layout
+    <ControlButton onClick={() => layout(stackAutoLayout(nodes))}>
+      Stack layout
     </ControlButton>
   )
 }
@@ -33,7 +33,7 @@ interface LayoutNode {
   force: number
 }
 
-export function fastAutoLayout(baseNodes: readonly Node[]) {
+export function stackAutoLayout(baseNodes: readonly Node[]) {
   const nodes = toLayoutNodes(baseNodes)
   const clusters = clusterNodes(nodes)
 
