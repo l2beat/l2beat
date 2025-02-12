@@ -7,7 +7,7 @@ import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
 const l2discovery = new ProjectDiscovery('unichain', 'unichain')
-const genesisTimestamp = new UnixTime(1728932992)
+const genesisTimestamp = new UnixTime(1730748359)
 
 export const unichain: Layer2 = opStackL2({
   addedAt: new UnixTime(1728932992), // 2024-10-14T19:09:00Z
@@ -65,7 +65,7 @@ export const unichain: Layer2 = opStackL2({
     type: 'OPStack',
     minTimestamp: genesisTimestamp,
     genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
+    l2BlockTimeSeconds: 1,
     lag: 0,
     stateUpdate: 'disabled',
   },

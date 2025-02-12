@@ -52,6 +52,8 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       description: p.display.description,
       links: p.display.links,
     },
+    contracts: p.contracts,
+    permissions: p.permissions,
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -84,9 +86,9 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     livenessInfo: getLivenessInfo(p),
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
-    daTrackingConfig: p.config.daTracking,
     proofVerification: p.stateValidation?.proofVerification,
     milestones: p.milestones,
+    daTrackingConfig: p.config.daTracking,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -156,6 +158,8 @@ function bridgeToProject(p: Bridge): BaseProject {
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
     },
+    contracts: p.contracts,
+    permissions: p.permissions,
     bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],

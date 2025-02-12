@@ -37,23 +37,20 @@ const l2TimelockDelay = l2Discovery.getContractValue<number>(
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
+  upgradableBy: [
+    { name: 'SecurityCouncil', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+  ],
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
   upgradableBy: [
-    'L2SecurityCouncilEmergency',
-    'L2SecurityCouncilPropose',
-    'L1Timelock',
+    { name: 'L2SecurityCouncilEmergency', delay: formatSeconds(totalDelay) },
+    { name: 'L2SecurityCouncilPropose', delay: formatSeconds(totalDelay) },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
   ],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }

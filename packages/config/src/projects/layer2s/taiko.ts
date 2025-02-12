@@ -22,8 +22,7 @@ import { getStage } from './common/stages/getStage'
 const discovery = new ProjectDiscovery('taiko')
 
 const upgradesTaikoMultisig = {
-  upgradableBy: ['TaikoAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'TaikoAdmin', delay: 'no' }],
 }
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
@@ -190,6 +189,12 @@ export const taiko: Layer2 = {
       defaultUrl: 'https://rpc.mainnet.taiko.xyz',
       defaultCallsPerMinute: 500,
       startBlock: 1,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+      sequencers: [],
     },
     trackedTxs: [
       {

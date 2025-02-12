@@ -34,6 +34,7 @@ import type {
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
+  ProjectUpgradeableActor,
   ReferenceLink,
   ScalingProjectUpgradeability,
   SharedEscrow,
@@ -118,7 +119,6 @@ export class ProjectDiscovery {
     excludedTokens,
     premintedTokens,
     upgradableBy,
-    upgradeDelay,
     isUpcoming,
     includeInTotal,
     source,
@@ -137,8 +137,7 @@ export class ProjectDiscovery {
     tokens: string[] | '*'
     excludedTokens?: string[]
     premintedTokens?: string[]
-    upgradableBy?: string[]
-    upgradeDelay?: string
+    upgradableBy?: ProjectUpgradeableActor[]
     isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ProjectEscrow['source']
@@ -158,7 +157,6 @@ export class ProjectDiscovery {
       name,
       description,
       upgradableBy,
-      upgradeDelay,
     }
 
     const contract = this.getContractDetails(address.toString(), options)
@@ -267,8 +265,7 @@ export class ProjectDiscovery {
           overrides?.[d.name] ?? d.name,
         ),
         ...(adminOf[d.name] && {
-          upgradableBy: [adminOf[d.name]],
-          upgradeDelay: 'No delay',
+          upgradableBy: [{ name: adminOf[d.name], delay: 'no' }],
         }),
       }),
     )
@@ -985,6 +982,7 @@ export class ProjectDiscovery {
             value.permission,
             value.description ?? '',
             value.condition ?? '',
+            value.delay?.toString() ?? '',
           ].join('►'),
       ),
     ).map(([key, entries]) => {
@@ -1232,14 +1230,17 @@ export class ProjectDiscovery {
         )
 
         const upgraders = Object.keys(upgradersWithDelay)
-        const minDelay = Math.min(...Object.values(upgradersWithDelay))
         const upgradableBy =
           upgraders.length === 0
             ? {}
             : {
-                upgradableBy: upgraders,
-                upgradeDelay:
-                  minDelay === 0 ? 'No delay' : formatSeconds(minDelay),
+                upgradableBy: upgraders.map((actor) => ({
+                  name: actor,
+                  delay:
+                    upgradersWithDelay[actor] === 0
+                      ? 'no'
+                      : formatSeconds(upgradersWithDelay[actor]),
+                })),
               }
 
         return this.getContractDetails(contract.address.toString(), {
