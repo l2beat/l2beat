@@ -70,7 +70,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badgesMeta: p.badges?.map((id) => ({ ...badges[id], id })),
+      badges: p.badges?.map((id) => ({ ...badges[id], id })),
     },
     scalingStage: p.stage,
     scalingRisks: {

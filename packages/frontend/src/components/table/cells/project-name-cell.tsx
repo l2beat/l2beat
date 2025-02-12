@@ -115,7 +115,7 @@ function NameWithProjectInfoTooltip({
   if (
     !withInfoTooltip ||
     isMobile ||
-    (!project.description && !project.badgesMeta)
+    (!project.description && !project.badges)
   ) {
     return projectName
   }
@@ -127,7 +127,7 @@ function NameWithProjectInfoTooltip({
         <span className="text-lg font-bold">What is {projectName}?</span>
         <p className="text-wrap text-[13px]">{project.description}</p>
         <div className="grid w-full grid-cols-5">
-          {project.badgesMeta?.map((badge, key) => (
+          {project.badges?.map((badge, key) => (
             <div key={key} className="h-16 place-items-center">
               <ProjectBadge badge={badge} hideTooltip className="lg:h-16" />
             </div>

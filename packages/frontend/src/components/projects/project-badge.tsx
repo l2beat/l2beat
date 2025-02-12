@@ -1,4 +1,4 @@
-import type { ProjectBadgeMeta } from '@l2beat/config'
+import type { ScalingProjectBadge } from '@l2beat/config'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import {
@@ -11,7 +11,7 @@ export function ProjectBadge({
   hideTooltip,
   className,
 }: {
-  badge: ProjectBadgeMeta
+  badge: ScalingProjectBadge
   hideTooltip?: boolean
   className?: ClassNameValue
 }) {

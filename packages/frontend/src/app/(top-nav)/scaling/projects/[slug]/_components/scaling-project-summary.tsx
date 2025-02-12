@@ -42,10 +42,10 @@ export function ScalingProjectSummary({ project }: Props) {
                 />
               )}
             </div>
-            {project.header.description || project.header.badgesMeta ? (
+            {project.header.description || project.header.badges ? (
               <div className="mt-6 flex flex-col gap-4 md:hidden">
-                {project.header.badgesMeta && (
-                  <BadgesSection badges={project.header.badgesMeta} />
+                {project.header.badges && (
+                  <BadgesSection badges={project.header.badges} />
                 )}
                 {project.header.description && (
                   <AboutSection description={project.header.description} />
@@ -79,8 +79,8 @@ export function ScalingProjectSummary({ project }: Props) {
         </div>
         <div className="max-md:hidden">
           <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
-            {project.header.badgesMeta && (
-              <BadgesSection badges={project.header.badgesMeta} />
+            {project.header.badges && (
+              <BadgesSection badges={project.header.badges} />
             )}
             {project.header.description && (
               <AboutSection description={project.header.description} />

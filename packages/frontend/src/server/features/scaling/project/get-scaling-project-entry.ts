@@ -147,7 +147,7 @@ async function getHeader(project: ScalingProject) {
           },
         }
       : undefined,
-    badgesMeta:
+    badges:
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn).map((id) => ({
             ...badges[id],

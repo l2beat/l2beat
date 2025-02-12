@@ -80,7 +80,7 @@ export function getCommonScalingEntry({
       raas: project.scalingInfo.raas ?? 'No RaaS',
     },
     description: project.display?.description,
-    badgesMeta: project.scalingInfo.badgesMeta,
+    badges: project.scalingInfo.badges,
   }
 }
 

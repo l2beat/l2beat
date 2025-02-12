@@ -886,10 +886,10 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
-  badgesMeta: ProjectBadgeMeta[] | undefined
+  badges: ScalingProjectBadge[] | undefined
 }
 
-export type ProjectBadgeMeta = BadgeInfo & { id: BadgeId }
+export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
 
 export type ScalingProjectStage =
   | 'Not applicable'
