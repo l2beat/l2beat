@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
@@ -20,17 +20,14 @@ import {
   ChartTooltip,
   useMilestone,
 } from '~/components/core/chart/chart'
+import { ChartMilestone } from '~/components/core/chart/chart-milestone'
 import { getCommonChartComponents } from '~/components/core/chart/common'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  tooltipContentVariants,
-} from '~/components/core/tooltip/tooltip'
+import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { ChartMilestoneHover } from '../../core/chart-milestone-hover'
@@ -61,6 +58,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
+  const ref = useRef(null)
   const { checked } = useRecategorisationPreviewContext()
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
@@ -98,19 +96,12 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
         const divider = unit === 'usd' ? 100 : ethPrice
-        const milestone = mappedMilestones[timestamp]
         return {
           timestamp,
           native: native / divider,
           canonical: canonical / divider,
           external: external / divider,
-          milestone: milestone
-            ? {
-                value:
-                  native / divider + canonical / divider + external / divider,
-                ...milestone,
-              }
-            : undefined,
+          milestone: mappedMilestones[timestamp],
         }
       }),
     [data, mappedMilestones, unit],
@@ -133,7 +124,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       />
       <div className="relative size-full">
         <ChartContainer config={chartConfig} isLoading={isLoading}>
-          <ComposedChart data={chartData} margin={{ top: 20 }}>
+          <ComposedChart data={chartData} margin={{ top: 20 }} ref={ref}>
             <ChartLegend content={<ChartLegendContent />} />
             <ChartTooltip content={<CustomTooltip />} />
             <Area
@@ -175,40 +166,18 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
             })}
           </ComposedChart>
         </ChartContainer>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              role="img"
-              aria-label="Milestone icon"
-              className="absolute bottom-[36px] right-36 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400"
-            >
-              <rect
-                x="9.89941"
-                y="1.41421"
-                width="12"
-                height="12"
-                rx="1"
-                transform="rotate(45 9.89941 1.41421)"
-                stroke-width="2"
-              ></rect>
-            </svg>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">
-            <ChartMilestoneHover
-              milestone={{
-                title: 'First ZK Rollup (DEX)',
-                date: '2019-12-04T00:00:00Z',
-                url: 'https://medium.loopring.io/loopring-deployed-protocol-3-0-on-ethereum-a33103c9e5bf',
-                description:
-                  'Loopring is live, bringing the first DEX protocol on ZK Rollup technology.',
-                type: 'general',
-              }}
+        {chartData?.map((data, index) => {
+          if (!data.milestone || !ref.current) return null
+          const x = index / (chartData.length - 1)
+          const current = ref.current as { props: { width: number } }
+          return (
+            <ChartMilestone
+              key={data.milestone.date}
+              milestone={data.milestone}
+              left={x * (current.props.width - 10)}
             />
-          </TooltipContent>
-        </Tooltip>
+          )
+        })}
       </div>
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
@@ -247,6 +216,11 @@ function CustomTooltip({
 
   return (
     <div className={cn(tooltipContentVariants(), 'flex flex-col gap-1')}>
+      <div className="flex w-full items-center justify-between gap-2">
+        <span>
+          {formatTimestamp(label, { mode: 'datetime', longMonthName: true })}
+        </span>
+      </div>
       {payload.map((entry) => {
         if (entry.value === undefined || entry.name === 'milestone.value')
           return null

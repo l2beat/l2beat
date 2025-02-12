@@ -30,7 +30,7 @@ export function ChartMilestone({
       viewBox="0 0 20 20"
       role="img"
       aria-label="Milestone icon"
-      className="absolute bottom-5 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400"
+      className="absolute bottom-9 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400"
       style={{ left }}
     >
       <rect
@@ -86,9 +86,9 @@ export function ChartMilestone({
   }
 
   return (
-    <Tooltip>
+    <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>{icon}</TooltipTrigger>
-      <TooltipContent side="bottom">
+      <TooltipContent side="top">
         <ChartMilestoneHover milestone={milestone} />
       </TooltipContent>
     </Tooltip>
