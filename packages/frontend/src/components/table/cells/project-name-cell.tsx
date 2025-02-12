@@ -10,6 +10,7 @@ import { Markdown } from '~/components/markdown/markdown'
 import { ProjectBadge } from '~/components/projects/project-badge'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { featureFlags } from '~/consts/feature-flags'
+import { useIsMobile } from '~/hooks/use-breakpoint'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
@@ -108,19 +109,24 @@ function NameWithProjectInfoTooltip({
   project,
   withInfoTooltip,
 }: NameWithProjectInfoTooltipProps) {
-  if (!withInfoTooltip || (!project.description && !project.badgesMeta)) {
-    return project.shortName ?? project.name
+  const isMobile = useIsMobile()
+  const projectName = project.shortName ?? project.name
+
+  if (
+    !withInfoTooltip ||
+    isMobile ||
+    (!project.description && !project.badgesMeta)
+  ) {
+    return projectName
   }
 
   return (
     <Tooltip>
-      <TooltipTrigger>{project.shortName ?? project.name}</TooltipTrigger>
-      <TooltipContent className="flex max-w-[284px] flex-col gap-2 px-[14px] sm:max-w-[348px]">
-        <span className="text-lg font-bold">
-          What is {project.shortName ?? project.name}?
-        </span>
+      <TooltipTrigger>{projectName}</TooltipTrigger>
+      <TooltipContent className="flex max-w-[348px] flex-col gap-2 px-[14px]">
+        <span className="text-lg font-bold">What is {projectName}?</span>
         <p className="text-wrap text-[13px]">{project.description}</p>
-        <div className="grid w-full grid-cols-4 sm:grid-cols-5">
+        <div className="grid w-full grid-cols-5">
           {project.badgesMeta?.map((badge, key) => (
             <div key={key} className="h-16 place-items-center">
               <ProjectBadge badge={badge} hideTooltip className="lg:h-16" />
