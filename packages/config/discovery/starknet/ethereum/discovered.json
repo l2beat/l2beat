@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21786555,
+  "blockNumber": 21829283,
   "configHash": "0x9d306adba0d16ce54eaf9a8b94002beb407338174cdff04ed346e5ae99550fa3",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -88,7 +88,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 23,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -156,9 +156,15 @@
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
+          },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
@@ -222,9 +228,15 @@
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
           "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
           "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
-          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": ["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]
+          },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
@@ -545,6 +557,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5",
           "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
           "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
@@ -555,8 +568,8 @@
         "domainSeparator": "0xfbf46e0cae4a0b01c142fd1c393d4058f5af0efa75d9b1a23dee605fdb7aaf81",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 16,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1002,7 +1015,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1667682,
+        "l1ToL2MessageNonce": 1667880,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1023,9 +1036,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1421835230621713786234360794523044513889444062697675559992395172702148356366",
-        "stateBlockNumber": 1128757,
-        "stateRoot": "374740858343762518734718185428009918484993027939408645066809078498208600945",
+        "stateBlockHash": "1050268614656564716620813462954963353407845709627146661007196397566597702493",
+        "stateBlockNumber": 1144012,
+        "stateRoot": "1730044722935930349606872623563630972257615128041069665782579237623395359308",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1092,9 +1105,14 @@
             "2024-10-13T15:59:11.000Z",
             "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
             ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ],
+          [
+            "2025-02-09T12:58:23.000Z",
+            "0xccb802ed2caee6856e9141983a642a0d4881cd64a209436d3fdeb4776c841175",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1112,7 +1130,10 @@
             "adminRole": "GOVERNANCE_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_ADMIN": { "adminRole": "SECURITY_ADMIN", "members": [] },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
           "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
@@ -1776,11 +1797,13 @@
     { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
     { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
+    { "address": "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5" },
     { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
     { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
     { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
+    { "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b" },
     { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
     { "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90" }
   ],

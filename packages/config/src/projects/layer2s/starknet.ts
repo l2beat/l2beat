@@ -1119,6 +1119,14 @@ export const starknet: Layer2 = {
           'Can upgrade implementation of the LUSD escrow, potentially gaining access to all funds stored in the bridge. ' +
             delayDescriptionFromSeconds(escrowLUSDDelaySeconds),
         ),
+        discovery.getPermissionDetails(
+          'StarkGate token blacklister EOA',
+          discovery.getAccessControlRolePermission(
+            'StarkgateManager',
+            'TOKEN_ADMIN',
+          ),
+          'Can remove and blacklist tokens from the Starkgate bridge.',
+        ),
       ],
     },
   },
