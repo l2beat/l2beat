@@ -2,6 +2,7 @@ name: Smoke Test (MQ)
 
 on:
   merge_group:
+  pull_request:
 
 jobs:
   config-smoke-test:
@@ -23,7 +24,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
