@@ -37,9 +37,7 @@ async function getThroughputData(projects: Project<'daLayer' | 'statuses'>[]) {
       }
 
       const latestThroughput = project.daLayer.throughput
-        ?.sort(
-          (a, b) => a.sinceTimestamp.toNumber() - b.sinceTimestamp.toNumber(),
-        )
+        ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
         .at(-1)
 
       assert(
