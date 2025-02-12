@@ -16,6 +16,21 @@
           { "type": "interact", "description": "freeze specific withdrawals." }
         ]
       }
+    },
+    "frozenWithdrawals": {
+      "description": "Lists any rollupID that sends a pessimistic proof.",
+      "handler": {
+        "type": "event",
+        "select": "withdrawalHash",
+        "add": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", true]
+        },
+        "remove": {
+          "event": "WithdrawalFrozenStateUpdated",
+          "where": ["=", "#frozen", false]
+        }
+      }
     }
   }
 }
