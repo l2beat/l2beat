@@ -1231,7 +1231,8 @@ function getTrackedTxs(
         ]
       )
     }
-    case 'Permissioned': {
+    case 'Permissioned':
+    case 'Permissionless': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1265,8 +1266,6 @@ function getTrackedTxs(
         },
       ]
     }
-    case 'Permissionless':
-      return undefined
   }
 }
 
