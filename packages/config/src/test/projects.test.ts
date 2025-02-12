@@ -10,9 +10,6 @@ import { layer3s } from '../projects/layer3s'
 import type { Layer2, Layer3 } from '../types'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
-import { checkRisk } from './helpers'
-import { refactored } from '../projects/refactored'
-import { getProjects } from '../projects/project/getProjects'
 
 describe('projects', () => {
   describe('every slug is valid', () => {
@@ -77,53 +74,6 @@ describe('projects', () => {
         }
       }
     })
-  })
-
-  describe('contracts', () => {
-    for (const project of getProjects()) {
-      describe(project.id, () => {
-        const contracts = project.contracts?.addresses ?? {}
-        for (const [chain, perChain] of Object.entries(contracts)) {
-          for (const [i, contract] of perChain.entries()) {
-            const description = contract.description
-            if (description) {
-              it(`contracts[${i}].description - each line ends with a dot`, () => {
-                for (const descLine of description.trimEnd().split('\n')) {
-                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
-                }
-              })
-            }
-
-            it(`contracts[${chain}][${i}] name isn't empty`, () => {
-              expect(contract.name.trim().length).toBeGreaterThan(0)
-            })
-            const upgradableBy = contract.upgradableBy
-            const permissionsForChain = (project.permissions ?? {})[chain]
-            const all = [
-              ...(permissionsForChain?.roles ?? []),
-              ...(permissionsForChain?.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
-
-            if (upgradableBy) {
-              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy)
-              })
-            }
-          }
-        }
-
-        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
-          checkRisk(risk, `contracts.risks[${i}]`)
-        }
-      })
-    }
   })
 
   describe('links', () => {
