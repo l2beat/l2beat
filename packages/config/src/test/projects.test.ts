@@ -11,6 +11,8 @@ import type { Layer2, Layer3 } from '../types'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
 import { checkRisk } from './helpers'
+import { refactored } from '../projects/refactored'
+import { getProjects } from '../projects/project/getProjects'
 
 describe('projects', () => {
   describe('every slug is valid', () => {
@@ -78,8 +80,8 @@ describe('projects', () => {
   })
 
   describe('contracts', () => {
-    for (const project of [...layer2s, ...bridges]) {
-      describe(project.display.name, () => {
+    for (const project of getProjects()) {
+      describe(project.id, () => {
         const contracts = project.contracts?.addresses ?? {}
         for (const [chain, perChain] of Object.entries(contracts)) {
           for (const [i, contract] of perChain.entries()) {
@@ -92,6 +94,9 @@ describe('projects', () => {
               })
             }
 
+            it(`contracts[${chain}][${i}] name isn't empty`, () => {
+              expect(contract.name.trim().length).toBeGreaterThan(0)
+            })
             const upgradableBy = contract.upgradableBy
             const permissionsForChain = (project.permissions ?? {})[chain]
             const all = [
