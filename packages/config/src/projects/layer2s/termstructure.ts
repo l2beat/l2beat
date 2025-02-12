@@ -20,8 +20,7 @@ const expirationPeriod = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['TermStructureMultisig'],
-  upgradeDelay: 'None',
+  upgradableBy: [{ name: 'TermStructureMultisig', delay: 'no' }],
 }
 
 const treasuryWeight =

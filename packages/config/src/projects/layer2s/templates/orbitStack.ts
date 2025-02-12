@@ -43,6 +43,7 @@ import type {
   ProjectPermission,
   ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
@@ -127,8 +128,7 @@ interface OrbitStackConfigCommon {
   nonTemplateEscrows?: ProjectEscrow[]
   overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
@@ -643,8 +643,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -953,8 +952,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const category =

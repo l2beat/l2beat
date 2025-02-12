@@ -45,6 +45,7 @@ import type {
   ProjectEscrow,
   ProjectLivenessInfo,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProject,
   ScalingProjectCapability,
@@ -123,8 +124,7 @@ interface OpStackConfigCommon {
   discovery: ProjectDiscovery
   additionalDiscoveries?: { [chain: string]: ProjectDiscovery }
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
@@ -233,8 +233,7 @@ function opStackCommon(
     templateVars.l1StandardBridgeEscrow ??
     templateVars.discovery.getContract('L1StandardBridge').address
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const fraudProofType = getFraudProofType(templateVars)

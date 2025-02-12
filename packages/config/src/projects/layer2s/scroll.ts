@@ -47,8 +47,7 @@ const timelockEmergencyDelay = discovery.getContractValue<number>(
 )
 
 const upgradesSC = {
-  upgradableBy: ['SecurityCouncil'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'SecurityCouncil', delay: 'no' }],
 }
 
 const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(

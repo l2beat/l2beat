@@ -86,13 +86,15 @@ const upgradeDelay = Math.min(delay1, delay2)
 const finalizationPeriod = 0
 
 const timelockUpgrades1 = {
-  upgradableBy: ['Degate HomeDAO2 Multisig'],
-  upgradeDelay: formatSeconds(delay1),
+  upgradableBy: [
+    { name: 'Degate HomeDAO2 Multisig', delay: formatSeconds(delay1) },
+  ],
 }
 
 const timelockUpgrades2 = {
-  upgradableBy: ['Degate HomeDAO2 Multisig'],
-  upgradeDelay: formatSeconds(delay2),
+  upgradableBy: [
+    { name: 'Degate HomeDAO2 Multisig', delay: formatSeconds(delay2) },
+  ],
 }
 
 export const degate3: Layer2 = {

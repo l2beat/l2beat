@@ -60,8 +60,9 @@ const timelockDefaultDelay = discovery.getContractValue<number>(
 )
 
 const upgradesProxy = {
-  upgradableBy: ['SecurityCouncil'],
-  upgradeDelay: `${formatSeconds(timelockDefaultDelay)} delay`,
+  upgradableBy: [
+    { name: 'SecurityCouncil', delay: formatSeconds(timelockDefaultDelay) },
+  ],
 }
 
 const SCNumConfirmationsRequired = discovery.getContractValue<number>(
