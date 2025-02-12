@@ -1,3 +1,110 @@
+Generated with discovered.json: 0x7cdb8800571814de5792e5d252abf79ecab5da22
+
+# Diff at Wed, 12 Feb 2025 10:30:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21665575
+- current block number: 21829713
+
+## Description
+
+OptimismPortal upgrade: Add function to 'freeze' specific withdrawals, which prevents finalization and withdrawal.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
+      sourceHashes.1:
+-        "0x59c5fe4b963d6487e129935b3a6f9f6340305c191ed4ed9d5623fe4dcd4b473c"
++        "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      issuedPermissions.1:
++        {"permission":"interact","to":"0x7fFB604c57FAFbAeaE6587DF035a0DB032301593","description":"freeze specific withdrawals.","via":[]}
+      issuedPermissions.0.permission:
+-        "upgrade"
++        "guard"
+      issuedPermissions.0.to:
+-        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
++        "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
+      issuedPermissions.0.via.0:
+-        {"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}
+      values.$implementation:
+-        "0x84Afee7709273060212BA3223F250a1E3EaEa317"
++        "0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"
+      values.$pastUpgrades.1:
++        ["2025-02-12T03:13:59.000Z","0x171143120577a3f09614a4054f56a007ccc92e1ab16a0dedb844b9559872a51b",["0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.balance:
+-        "251419500001000000000"
+      values.isOutputFinalized:
+-        [true,true,true,true,true]
++++ description: Minimum deposit value.
+      values.MIN_BRIDGE_VALUE:
+-        1000000000000000
++        "0.001"
+      errors:
+-        {"isOutputFinalized":"Processing error occurred."}
+      template:
++        "opstack/OptimismPortal_soon"
+      description:
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH."
+      fieldMeta:
++        {"MIN_BRIDGE_VALUE":{"description":"Minimum deposit value."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/OptimismPortal.sol              | 31 +++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21665575 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: None
+      template:
+-        "opstack/OptimismPortal_soon"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits. Has a MIN_BRIDGE_VALUE set to 0.001 ETH."
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      issuedPermissions.0.permission:
+-        "guard"
++        "upgrade"
+      issuedPermissions.0.to:
+-        "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
+      issuedPermissions.0.via.0:
++        {"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}
+      values.MIN_BRIDGE_VALUE:
+-        "0.001"
++        1000000000000000
+      values.balance:
++        "251419500001000000000"
+      values.isOutputFinalized:
++        [true,true,true,true,true]
+      fieldMeta:
+-        {"MIN_BRIDGE_VALUE":{"description":"Minimum deposit value."}}
+      usedTypes:
+-        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      errors:
++        {"isOutputFinalized":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0xbbb501a0b90f5bcb1f5acc7cbdb00e4dc85f8a26
 
 # Diff at Mon, 10 Feb 2025 19:04:48 GMT:
