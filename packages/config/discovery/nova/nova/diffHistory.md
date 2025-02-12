@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x7f05a40f5b4820273cdd386a5d21a16c01f8728e
 
-# Diff at Wed, 12 Feb 2025 15:18:21 GMT:
+# Diff at Wed, 12 Feb 2025 18:44:36 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 81620827
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7f05a40f5b4820273cdd386a5d21a16c01f8728e
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Part of making Arbitrum discovery driven. Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 

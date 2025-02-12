@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcb7e2122e878d63ed6d0c4e89d14bbfe73464654
+Generated with discovered.json: 0x92e29eb81912f9fc733c67f2f9d0c95c38b76e9b
 
-# Diff at Wed, 12 Feb 2025 17:03:17 GMT:
+# Diff at Wed, 12 Feb 2025 18:43:35 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcb7e2122e878d63ed6d0c4e89d14bbfe73464654
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Make Arbitrum discovery driven.
 
 ## Config/verification related changes
 
@@ -363,6 +363,8 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
       template:
 -        "GnosisSafe"
 +        "orbitstack/SecurityCouncil"
+      references:
++        [{"text":"Security Council members - Arbitrum Foundation Docs","href":"https://docs.arbitrum.foundation/security-council-members"}]
     }
 ```
 

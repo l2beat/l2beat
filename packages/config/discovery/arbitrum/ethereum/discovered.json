@@ -1308,13 +1308,13 @@
     {
       "name": "Bridge",
       "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-      "template": "orbitstack/Bridge",
+      "template": "orbitstack/ArbitrumBridge",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "description": "Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -4132,7 +4132,13 @@
         "nonce": 3,
         "VERSION": "1.3.0"
       },
-      "derivedName": "GnosisSafe"
+      "derivedName": "GnosisSafe",
+      "references": [
+        {
+          "text": "Security Council members - Arbitrum Foundation Docs",
+          "href": "https://docs.arbitrum.foundation/security-council-members"
+        }
+      ]
     },
     {
       "name": "ValidatorWallet",
@@ -5631,7 +5637,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
+    "orbitstack/ArbitrumBridge": "0x381a650186099635e9fa0b93529504a3684c383109e7a9e0468a1bc0834be121",
     "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
     "orbitstack/CustomGateway2": "0x82c9dcbcb05bdfc2f7a68270a36e55ee0931d1562ce01f401462499ce21480a6",
     "orbitstack/ERC20Gateway2": "0x51f7ca34b3172296f281efdb918a273bf1287f7bcbefae9b784b83805f4cc596",
@@ -5646,7 +5652,7 @@
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
     "orbitstack/RollupProxy": "0x349d6acd385f789c3568a84b26aecf2e64b154bf52b5874bbc9e979ef5f72230",
-    "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
+    "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
     "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
     "orbitstack/Timelock": "0x6995d1593d881b36fd5d7ee91d1b5eaa3e88438ac90bc3f2280bd04257143076",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
