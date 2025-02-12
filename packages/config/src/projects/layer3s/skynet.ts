@@ -18,7 +18,7 @@ export const skynet: Layer3 = underReviewL3({
     category: 'Optimium',
     stack: 'Arbitrum',
     links: {
-      websites: ['https://www.skynet.io/'],
+      websites: ['https://skynet.io/'],
       explorers: ['https://explorer.skynet.io/'],
       documentation: [],
       repositories: [],
