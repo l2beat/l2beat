@@ -278,6 +278,11 @@
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
+          "permission": "interact",
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
           "permission": "upgrade",
           "from": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
           "via": [
@@ -822,15 +827,24 @@
     {
       "name": "L2UpgradeExecutor",
       "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-      "template": "orbitstack/UpgradeExecutor",
+      "template": "orbitstack/layer2/L2UpgradeExecutor",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
         "0x17d2fa21e1bf7dff5e335a08bb2b6b996e34c00b1175c3711875720dde509401"
       ],
       "proxyType": "EIP1967 proxy",
-      "displayName": "UpgradeExecutor",
-      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
+      "description": "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
       "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
+          "permission": "interact",
+          "to": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
         {
           "permission": "upgrade",
           "to": "0xdb216562328215E010F819B5aBe947bad4ca961e",
@@ -846,6 +860,10 @@
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "update the minimum delay of the timelock."
+        },
+        {
+          "permission": "interact",
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         }
       ],
       "sinceTimestamp": 1678968508,
@@ -878,6 +896,7 @@
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+        "adminAC": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
@@ -1285,6 +1304,11 @@
           "permission": "interact",
           "from": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
           "description": "update the minimum delay of the timelock.",
+          "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
+        },
+        {
+          "permission": "interact",
+          "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
           "via": [{ "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827" }]
         },
         {
@@ -2089,13 +2113,13 @@
     "orbitstack/layer2/L2SecurityCouncilPropose": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/layer2/L2SurplusFee": "0xba09d5be62f993a7a5305a66264bcb65fab108c178c65b3bb5fb57d74af6937e",
     "orbitstack/layer2/L2Timelock": "0x6b0a85dd2ef03e82843ea4523251c17f0e6dfd927e9664e402f2f20cfba7b2b8",
+    "orbitstack/layer2/L2UpgradeExecutor": "0xfe447585bcbbaa0922416f4b3c4ce97c9fbcfb03e0a254b21298bf5596ff6ad5",
     "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
     "orbitstack/layer2/SecurityCouncilManager": "0xa2e0cd4d0db62e3235208675260da9911677a5376113d380d6b16165e6307741",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x87f48c910125408d32a064fe571c5758b3457cb77605e220cf25336de7bb22ee",
     "orbitstack/layer2/TreasuryGovernor": "0x4170b604f2d20c4a0ec807932623e3752e43482c8027706b9b46b9e4430a0f45",
     "orbitstack/layer2/TreasuryTimelock": "0x2b75426d614346b6a5ec0f3c70e1d4e10c8859b735d187be2ff6c9841bf396ef",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac",
-    "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
+    "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7"
   }
 }

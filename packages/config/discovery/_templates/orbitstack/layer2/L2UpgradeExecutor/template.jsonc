@@ -7,15 +7,15 @@
       "handler": {
         "type": "accessControl"
       }
-    }
-  },
-  "executors": {
-    "handler": {
-      "type": "accessControl",
-      "pickRoleMembers": "EXECUTOR_ROLE"
     },
-    "target": {
-      "permissions": [{ "type": "act" }]
+    "executors": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "EXECUTOR_ROLE"
+      },
+      "target": {
+        "permissions": [{ "type": "act" }]
+      }
     }
   }
 }
