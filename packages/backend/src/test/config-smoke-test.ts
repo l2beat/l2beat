@@ -6,8 +6,8 @@ import { getConfig } from '../config'
  * sure we have all the necessary configuration in place.
  */
 describe('Configuration Smoke Test', () => {
-  it('should load configuration without throwing', () => {
+  it('should load configuration without throwing', async () => {
     // no expect on purpose - getConfig will throw with a meaningful error message
-    getConfig()
+    await getConfig()
   })
 })
