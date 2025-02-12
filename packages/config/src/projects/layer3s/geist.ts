@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,7 +11,6 @@ const discovery = new ProjectDiscovery('geist', 'base')
 
 export const geist: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
-  hostChain: ProjectId('base'),
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [
     Badge.DA.DAC,
