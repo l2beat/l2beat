@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa583c99df86f007a92c1e720d862d26e9fe86636
+
+# Diff at Wed, 12 Feb 2025 10:01:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21822773
+- current block number: 21829675
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21822773 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xc407398d063f942feBbcC6F80a156b47F3f1BDA6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x385f219f293c07c3cfae8b5971cfdb58e5cae6c3
 
 # Diff at Tue, 11 Feb 2025 10:58:49 GMT:
