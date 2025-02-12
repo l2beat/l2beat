@@ -18,7 +18,7 @@
       }
     },
     "frozenWithdrawals": {
-      "description": "Lists any rollupID that sends a pessimistic proof.",
+      "description": "Lists all frozen withdrawals.",
       "handler": {
         "type": "event",
         "select": "withdrawalHash",
