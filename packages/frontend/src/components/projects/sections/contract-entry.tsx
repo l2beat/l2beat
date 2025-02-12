@@ -1,4 +1,4 @@
-import type { ReferenceLink } from '@l2beat/config'
+import type { ProjectUpgradeableActor, ReferenceLink } from '@l2beat/config'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -26,7 +26,7 @@ export interface TechnologyContract {
   admins: TechnologyContractAddress[]
   chain: string
   description?: string
-  upgradeableBy?: string[]
+  upgradeableBy?: ProjectUpgradeableActor[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
   participants?: Participant[]
@@ -112,9 +112,13 @@ export function ContractEntry({
             <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
-                {contract.upgradeableBy.map((name) => (
-                  <a key={name} className={linkVariants()} href={`#${name}`}>
-                    {name}
+                {contract.upgradeableBy.map((entry) => (
+                  <a
+                    key={entry.name}
+                    className={linkVariants()}
+                    href={`#${entry.name}`}
+                  >
+                    {`${entry.name} with ${entry.delay} delay`}
                   </a>
                 ))}
               </div>
