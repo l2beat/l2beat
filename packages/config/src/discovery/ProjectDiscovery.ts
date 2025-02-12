@@ -985,6 +985,7 @@ export class ProjectDiscovery {
             value.permission,
             value.description ?? '',
             value.condition ?? '',
+            value.delay?.toString() ?? '',
           ].join('►'),
       ),
     ).map(([key, entries]) => {
