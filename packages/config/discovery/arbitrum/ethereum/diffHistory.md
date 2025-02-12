@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5c1806ed552f8090a00eb4fef8290093e564d302
+Generated with discovered.json: 0xc9e86432fc9b172201350042ca56e6be4be51722
 
-# Diff at Wed, 12 Feb 2025 15:31:58 GMT:
+# Diff at Wed, 12 Feb 2025 17:03:17 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 21802817
@@ -322,6 +322,9 @@ discovery. Values are for block 21802817 (main branch discovery), not current.
 ```diff
     contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
     +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      template:
+-        "orbitstack/ERC20Gateway"
++        "orbitstack/ERC20Gateway2"
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]}
       issuedPermissions.0.to:
@@ -337,12 +340,17 @@ discovery. Values are for block 21802817 (main branch discovery), not current.
 +        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
       issuedPermissions.0.via.0.delay:
 +        259200
+      values.whitelist:
+-        "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
     }
 ```
 
 ```diff
     contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
     +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      template:
+-        "orbitstack/CustomGateway"
++        "orbitstack/CustomGateway2"
       issuedPermissions.1:
 +        {"permission":"upgrade","to":"0xF06E95eF589D9c38af242a8AAee8375f14023F85","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}]}
       issuedPermissions.0.to:
@@ -358,7 +366,25 @@ discovery. Values are for block 21802817 (main branch discovery), not current.
 +        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
       issuedPermissions.0.via.0.delay:
 +        259200
+      values.whitelist:
+-        "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
     }
+```
+
+```diff
+    contract L1DaiGateway (0xD3B5b60020504bc3489D6949d545893982BA3011) {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      template:
++        "orbitstack/L1DaiGateway"
+      description:
++        "Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Whitelist (0xD485e5c28AA4985b23f6DF13dA03caa766dcd459)
+    +++ description: None
 ```
 
 ```diff

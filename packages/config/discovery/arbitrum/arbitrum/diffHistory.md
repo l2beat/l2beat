@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5f227ebe89ab5eced4a24f485774f6b5f2c106b6
+Generated with discovered.json: 0xcb7e2122e878d63ed6d0c4e89d14bbfe73464654
 
-# Diff at Wed, 12 Feb 2025 15:43:53 GMT:
+# Diff at Wed, 12 Feb 2025 17:03:17 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
@@ -104,7 +104,7 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        "GnosisSafe"
 +        "orbitstack/layer2/L2SecurityCouncilEmergency"
       receivedPermissions:
-+        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"interact","from":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x09e9222E96E7B4AE2a407B98d48e330053351EEe","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}]
++        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"update the minimum delay of the timelock.","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x09e9222E96E7B4AE2a407B98d48e330053351EEe","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x5288c571Fd7aD117beA99bF60FE0846C4E84F933","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]},{"permission":"upgrade","from":"0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B","via":[{"address":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"},{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}]
     }
 ```
 
@@ -216,9 +216,11 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 
 ```diff
     contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
-    +++ description: None
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
       template:
 +        "orbitstack/layer2/SecurityCouncilMemberSyncAction"
+      description:
++        "Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2."
     }
 ```
 
@@ -247,7 +249,7 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 
 ```diff
     contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
-    +++ description: Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
       issuedPermissions.0.to:
 -        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
 +        "0xdb216562328215E010F819B5aBe947bad4ca961e"
@@ -255,10 +257,12 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
       issuedPermissions.0.via.0:
 -        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
+      values.getMinDelayFormatted:
++        259200
       template:
 +        "orbitstack/layer2/TreasuryTimelock"
       description:
-+        "Delays treasury proposals from the TreasuryGovernor by 3d. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts."
++        "Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts."
     }
 ```
 
@@ -290,26 +294,17 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
       description:
 -        "Central contract defining the access control permissions for upgrading the system contract implementations."
 +        "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2)."
-      issuedPermissions.2:
-+        {"permission":"upgrade","to":"0xdb216562328215E010F819B5aBe947bad4ca961e","via":[]}
-      issuedPermissions.1:
-+        {"permission":"interact","to":"0xf7951D92B0C345144506576eC13Ecf5103aC905a","via":[{"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}]}
-      issuedPermissions.0.permission:
--        "upgrade"
-+        "interact"
       issuedPermissions.0.to:
 -        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
-+        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "0xdb216562328215E010F819B5aBe947bad4ca961e"
       issuedPermissions.0.via.1:
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
+      issuedPermissions.0.via.0:
+-        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
       directlyReceivedPermissions.3:
 -        {"permission":"act","from":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
-      directlyReceivedPermissions.2.permission:
--        "act"
-+        "interact"
-      directlyReceivedPermissions.2.from:
--        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
-+        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      directlyReceivedPermissions.2:
+-        {"permission":"act","from":"0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"}
       directlyReceivedPermissions.1.permission:
 -        "act"
 +        "interact"
@@ -321,8 +316,6 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
       directlyReceivedPermissions.0.from:
 -        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
 +        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
-      values.adminAC:
-+        ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
     }
 ```
 

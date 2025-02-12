@@ -1734,7 +1734,7 @@
     {
       "name": "L1ERC20Gateway",
       "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-      "template": "orbitstack/ERC20Gateway",
+      "template": "orbitstack/ERC20Gateway2",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x019cdda76fc455f2628f7f7f87fae92c1264e1d2e32cd2d47e6494780c790c61"
@@ -1810,8 +1810,7 @@
         "counterpartGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "l2BeaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
-        "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
-        "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
+        "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
       "derivedName": "L1ERC20Gateway"
     },
@@ -1961,7 +1960,7 @@
     {
       "name": "L1CustomGateway",
       "address": "0xcEe284F754E854890e311e3280b767F80797180d",
-      "template": "orbitstack/CustomGateway",
+      "template": "orbitstack/CustomGateway2",
       "sourceHashes": [
         "0x26f6b72513d780b4c7f3855e9b8c63f3ea90b9d15ce1cf38534887619daaa18b",
         "0x60484a2ada75640a2144b3ecaae3bb7b51973a2494281beebf898308ffc35e90"
@@ -2041,8 +2040,7 @@
         "counterpartGateway": "0x096760F208390250649E3e8763348E783AEF5562",
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-        "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
-        "whitelist": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459"
+        "router": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
       },
       "derivedName": "L1CustomGateway"
     },
@@ -2099,9 +2097,11 @@
     {
       "name": "L1DaiGateway",
       "address": "0xD3B5b60020504bc3489D6949d545893982BA3011",
+      "template": "orbitstack/L1DaiGateway",
       "sourceHashes": [
         "0x2bfb3c9871d8a7db172d350d7b4678c49eb33a98483f71cb89d3d059a7322efb"
       ],
+      "description": "Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.",
       "sinceTimestamp": 1632133584,
       "values": {
         "$immutable": true,
@@ -2115,18 +2115,6 @@
         "l2Dai": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
       },
       "derivedName": "L1DaiGateway"
-    },
-    {
-      "name": "Whitelist",
-      "address": "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459",
-      "sourceHashes": [
-        "0x4016fd19b875c72082c2e4f25e6487143f8a6832ffa5cb3281aa08beb598d44e"
-      ],
-      "sinceTimestamp": 1622243344,
-      "values": {
-        "$immutable": true,
-        "owner": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
-      }
     },
     {
       "name": "ChallengeManager",
@@ -5543,16 +5531,6 @@
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
     ],
-    "0xD485e5c28AA4985b23f6DF13dA03caa766dcd459": [
-      "constructor()",
-      "event OwnerUpdated(address newOwner)",
-      "event WhitelistUpgraded(address newWhitelist, address[] targets)",
-      "function isAllowed(address) view returns (bool)",
-      "function owner() view returns (address)",
-      "function setOwner(address newOwner)",
-      "function setWhitelist(address[] user, bool[] val)",
-      "function triggerConsumers(address newWhitelist, address[] targets)"
-    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -5655,10 +5633,11 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
     "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
-    "orbitstack/CustomGateway": "0x07d5a2445b8573be667a0001dad30fcb296a41acbeb368dac5bceb4fed45661c",
-    "orbitstack/ERC20Gateway": "0xe0a16d610d226558ac7f6fe1e8a4f752f31aa0939f378c8e4c1d10c6197832ec",
+    "orbitstack/CustomGateway2": "0x82c9dcbcb05bdfc2f7a68270a36e55ee0931d1562ce01f401462499ce21480a6",
+    "orbitstack/ERC20Gateway2": "0x51f7ca34b3172296f281efdb918a273bf1287f7bcbefae9b784b83805f4cc596",
     "orbitstack/GatewayRouter": "0x716365f0496eb5c6804067a5971d09346a726a1e4a8aa9930d6fd7d3e4410163",
     "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/L1DaiGateway": "0x612ae80fb013f7ecf7638ed677b108e2fb6d8905cfe629d1ece8c4ee81d11264",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
     "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
     "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",

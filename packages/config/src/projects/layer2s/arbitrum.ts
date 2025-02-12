@@ -45,17 +45,16 @@ const upgradeExecutorUpgradeability = {
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
 
-const l2Upgradability = {
-  // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: [
-    { name: 'L2SecurityCouncilEmergency', delay: formatSeconds(totalDelay) },
-    { name: 'L2SecurityCouncilPropose', delay: formatSeconds(totalDelay) },
-    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
-  ],
-  upgradeConsiderations:
-    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
-}
-
+// const l2Upgradability = {
+//   // same as on L1, but messages from L1 must be sent to L2
+//   upgradableBy: [
+//     { name: 'L2SecurityCouncilEmergency', delay: formatSeconds(totalDelay) },
+//     { name: 'L2SecurityCouncilPropose', delay: formatSeconds(totalDelay) },
+//     { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+//   ],
+//   upgradeConsiderations:
+//     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+// }
 
 const l2CoreQuorumPercent =
   (l2Discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
@@ -259,181 +258,6 @@ export const arbitrum: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  // nonTemplatePermissions: generateDiscoveryDrivenPermissions([discovery,l2Discovery]),
-  // {
-  // [discovery.chain]:
-  // {
-  //   actors: [
-  //     discovery.getMultisigPermission(
-  //       'SecurityCouncil',
-  //       'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-  //       [
-  //         {
-  //           title: 'Security Council members - Arbitrum Foundation Docs',
-  //           url: 'https://docs.arbitrum.foundation/security-council-members',
-  //         },
-  //       ],
-  //     ),
-  //     discovery.contractAsPermissioned(
-  //       discovery.getContract('L1Timelock'),
-  //       'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-  //     ),
-  //     discovery.getMultisigPermission(
-  //       'BatchPosterManagerMultisig',
-  //       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-  //     ),
-  //   ],
-  // },
-  // [l2Discovery.chain]:
-  // {
-  //   actors: [
-  //     l2Discovery.getMultisigPermission(
-  //       'L2SecurityCouncilEmergency',
-  //       'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-  //     ),
-  //     l2Discovery.getMultisigPermission(
-  //       'L2SecurityCouncilPropose',
-  //       'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
-  //     ),
-  //     l2Discovery.eoaAsPermissioned(
-  //       l2Discovery.getEOA('L1Timelock'),
-  //       'Alias of the L1Timelock contract on L1.',
-  //     ),
-  //   ],
-  // },
-  // },
-  // nonTemplateContracts: {
-  //   [discovery.chain]: [
-  //     discovery.getContractDetails('RollupProxy', {
-  //       description:
-  //         'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('Bridge', {
-  //       description:
-  //         'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('SequencerInbox', {
-  //       description:
-  //         'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('Inbox', {
-  //       description:
-  //         'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractFromValue('RollupProxy', 'outbox', {
-  //       description:
-  //         "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('UpgradeExecutor', {
-  //       description:
-  //         "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('L1Timelock', {
-  //       description:
-  //         'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('L1GatewayRouter', {
-  //       description: 'Router managing token <--> gateway mapping.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //     discovery.getContractDetails('ChallengeManager', {
-  //       description:
-  //         'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
-  //       ...upgradeExecutorUpgradeability,
-  //     }),
-  //   ],
-  //   [l2Discovery.chain]: [
-  //     l2Discovery.getContractDetails('CoreGovernor', {
-  //       description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent}% quorum for proposals.`,
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2Timelock', {
-  //       description: `Delays constitutional AIPs from the CoreGovernor by ${formatSeconds(
-  //         l2TimelockDelay,
-  //       )}.`,
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('TreasuryGovernor', {
-  //       description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent}% quorum for proposals.`,
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('TreasuryTimelock', {
-  //       description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
-  //         treasuryTimelockDelay,
-  //       )}. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.`,
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2UpgradeExecutor', {
-  //       description:
-  //         "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('SecurityCouncilManager', {
-  //       description:
-  //         'This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('ConstitutionHash', {
-  //       description:
-  //         'Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.',
-  //     }),
-  //     l2Discovery.getContractDetails('L2ProxyAdmin', {
-  //       description:
-  //         "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.",
-  //     }),
-  //     l2Discovery.getContractDetails('L2GatewaysProxyAdmin', {
-  //       description:
-  //         "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 bridging gateway contracts through this contract.",
-  //     }),
-  //     l2Discovery.getContractDetails('L2BaseFee', {
-  //       description:
-  //         'This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.',
-  //     }),
-  //     l2Discovery.getContractDetails('L2SurplusFee', {
-  //       description:
-  //         'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
-  //     }),
-  //     l2Discovery.getContractDetails('L2ArbitrumToken', {
-  //       description:
-  //         'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2GatewayRouter', {
-  //       description: 'Router managing token <--> gateway mapping on L2.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2ERC20Gateway', {
-  //       description:
-  //         'Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2WethGateway', {
-  //       description:
-  //         'Counterpart to the Bridge on L1. Mints and burns WETH on L2.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2ARBGateway', {
-  //       description:
-  //         'ARB sent from L2 to L1 is escrowed in this contract and minted on L1.',
-  //       ...l2Upgradability,
-  //     }),
-  //     l2Discovery.getContractDetails('L2DAIGateway', {
-  //       description:
-  //         'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.',
-  //     }),
-  //     l2Discovery.getContractDetails('L2LPTGateway', {
-  //       description:
-  //         'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.',
-  //     }),
-  //   ],
-  // },
   additionalDiscoveries: { ['arbitrum']: l2Discovery },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
