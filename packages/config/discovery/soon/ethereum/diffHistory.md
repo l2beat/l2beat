@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe79fb70c09e73ecb34500fa976d610ea8ae1ab44
+Generated with discovered.json: 0x837b4c2b62ae3be2642843bd31ea31e85d9e4935
 
-# Diff at Wed, 12 Feb 2025 14:11:18 GMT:
+# Diff at Wed, 12 Feb 2025 15:49:29 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21665575
+- comparing to: main@99b931e3c906ad8727878e6db62973bf6f794d21 block: 21665575
 - current block number: 21829713
 
 ## Description
@@ -46,7 +46,7 @@ OptimismPortal upgrade: Add function to 'freeze' specific withdrawals, which pre
       values.MIN_BRIDGE_VALUE:
 -        1000000000000000
 +        "0.001"
-+++ description: Lists any rollupID that sends a pessimistic proof.
++++ description: Lists all frozen withdrawals.
       values.frozenWithdrawals:
 +        ["0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba","0x77c7fcaac9f6db1aaa8dabe8e1cd1b1c6969c556ad076c5d1f05b22f8d95cb2b"]
       errors:
@@ -56,7 +56,7 @@ OptimismPortal upgrade: Add function to 'freeze' specific withdrawals, which pre
       description:
 +        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH."
       fieldMeta:
-+        {"MIN_BRIDGE_VALUE":{"description":"Minimum deposit value."},"frozenWithdrawals":{"description":"Lists any rollupID that sends a pessimistic proof."}}
++        {"MIN_BRIDGE_VALUE":{"description":"Minimum deposit value."},"frozenWithdrawals":{"description":"Lists all frozen withdrawals."}}
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
     }
