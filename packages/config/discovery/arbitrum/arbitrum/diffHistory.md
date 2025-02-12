@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf55a233f49f84e78fcbe608600246f1f9d7a87ab
+Generated with discovered.json: 0xb7f62ed44ca4538be243c73427875da195b073be
 
-# Diff at Tue, 11 Feb 2025 16:29:14 GMT:
+# Diff at Wed, 12 Feb 2025 08:51:42 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 295612328
@@ -176,10 +176,17 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
       issuedPermissions.0.via.0:
 -        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that is required to pass a proposal.
+      values.l2TreasuryQuorumPercent:
++        "3"
       template:
 +        "orbitstack/layer2/TreasuryGovernor"
       description:
 +        "Governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals."
+      fieldMeta:
++        {"l2TreasuryQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
     }
 ```
 
@@ -193,10 +200,17 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
       issuedPermissions.0.via.0:
 -        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that can be minted by the owner once per year.
+      values.mintCapPerYer:
++        "2"
       template:
 +        "orbitstack/layer2/L2ArbitrumToken"
       description:
 +        "The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%."
+      fieldMeta:
++        {"mintCapPerYer":{"description":"The percentage of the total supply that can be minted by the owner once per year."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
     }
 ```
 
@@ -350,6 +364,9 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 -        {"address":"0xdb216562328215E010F819B5aBe947bad4ca961e"}
       issuedPermissions.0.via.0:
 -        {"address":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"}
++++ description: The percentage of the total supply that is required to pass a proposal.
+      values.l2CoreQuorumPercent:
++        "5"
       template:
 +        "orbitstack/layer2/CoreGovernor"
       description:
@@ -358,6 +375,10 @@ discovery. Values are for block 295612328 (main branch discovery), not current.
 +        [{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"cancel queued transactions."},{"permission":"interact","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","description":"propose transactions."}]
       directlyReceivedPermissions:
 +        [{"permission":"act","from":"0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0","delay":691200}]
+      fieldMeta:
++        {"l2CoreQuorumPercent":{"description":"The percentage of the total supply that is required to pass a proposal."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":2}}]
     }
 ```
 

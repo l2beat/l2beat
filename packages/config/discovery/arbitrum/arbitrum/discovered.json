@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 305003923,
-  "configHash": "0xfba5fa9f2394b1424243477f482918e386fa464f84c927423d84267471749e53",
+  "configHash": "0xed316a53cda9b24ec2ec61d93059e3e9bbd3c8bf41b12958871950f2fb400a1c",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -553,6 +553,7 @@
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "l2TreasuryQuorumPercent": "3",
         "lateQuorumVoteExtension": 14400,
         "name": "L2ArbitrumGovernor",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
@@ -566,7 +567,13 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
-      "derivedName": "L2ArbitrumGovernor"
+      "fieldMeta": {
+        "l2TreasuryQuorumPercent": {
+          "description": "The percentage of the total supply that is required to pass a proposal."
+        }
+      },
+      "derivedName": "L2ArbitrumGovernor",
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
       "name": "L2ArbitrumToken",
@@ -603,13 +610,20 @@
         "MIN_MINT_INTERVAL": 31536000,
         "MINT_CAP_DENOMINATOR": 10000,
         "MINT_CAP_NUMERATOR": 200,
+        "mintCapPerYer": "2",
         "name": "Arbitrum",
         "nextMint": 1710504508,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
         "symbol": "ARB",
         "totalSupply": "9999998977630224104158908096"
       },
-      "derivedName": "L2ArbitrumToken"
+      "fieldMeta": {
+        "mintCapPerYer": {
+          "description": "The percentage of the total supply that can be minted by the owner once per year."
+        }
+      },
+      "derivedName": "L2ArbitrumToken",
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     },
     {
       "name": "SecurityCouncilMemberSyncAction",
@@ -1171,6 +1185,7 @@
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
+        "l2CoreQuorumPercent": "5",
         "lateQuorumVoteExtension": 14400,
         "name": "L2ArbitrumGovernor",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
@@ -1184,7 +1199,13 @@
         "votingDelay": 21600,
         "votingPeriod": 100800
       },
-      "derivedName": "L2ArbitrumGovernor"
+      "fieldMeta": {
+        "l2CoreQuorumPercent": {
+          "description": "The percentage of the total supply that is required to pass a proposal."
+        }
+      },
+      "derivedName": "L2ArbitrumGovernor",
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 2 } }]
     }
   ],
   "eoas": [
@@ -2055,9 +2076,9 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "orbitstack/layer2/ConstitutionHash": "0x10d0d32bb0fbfec7ee3f1dc2cf6ac3363249ad1e28d49f3421fa3aeed22cb1e9",
-    "orbitstack/layer2/CoreGovernor": "0x2d128333038afbc5927bd3361421caff37fc47906edbdf247edaec6354718b9d",
+    "orbitstack/layer2/CoreGovernor": "0x4a4d94f8ca063b9c0b64d4d7852d12f942319ff0522943e598e8db4fd645874c",
     "orbitstack/layer2/L2ARBGateway": "0x684643f9d4327e7295f9dfc2874632cf62727339c0cb58341bbc977f9131b8d9",
-    "orbitstack/layer2/L2ArbitrumToken": "0xc264952f41e505ebf81bb8fe30481a2d75ce9fb0767bba3203bc5e8cdc7df531",
+    "orbitstack/layer2/L2ArbitrumToken": "0xce8b9ed107289e7841621ee7fbe1a902511314f181cfd1f19ae0430c2ce0bc0d",
     "orbitstack/layer2/L2BaseFee": "0x9102f326d76e14dfd0e8eff2770740a6a433a97ca2e05b1b7c3b3ab4ba19e4e5",
     "orbitstack/layer2/L2DAIGateway": "0xf62d88fdb3ffda1159ae16afa7762cd5f909c5e837b03b7433453712fde4cca0",
     "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
@@ -2071,7 +2092,7 @@
     "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
     "orbitstack/layer2/SecurityCouncilManager": "0xa2e0cd4d0db62e3235208675260da9911677a5376113d380d6b16165e6307741",
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x87f48c910125408d32a064fe571c5758b3457cb77605e220cf25336de7bb22ee",
-    "orbitstack/layer2/TreasuryGovernor": "0x9b3b2ab4083dfa21cc4e13feec97f4696a836ca07158fe31e3857072d4daa0e6",
+    "orbitstack/layer2/TreasuryGovernor": "0x4170b604f2d20c4a0ec807932623e3752e43482c8027706b9b46b9e4430a0f45",
     "orbitstack/layer2/TreasuryTimelock": "0x2b75426d614346b6a5ec0f3c70e1d4e10c8859b735d187be2ff6c9841bf396ef",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac",
     "orbitstack/SecurityCouncil": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
