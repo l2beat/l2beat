@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,7 +11,6 @@ const discovery = new ProjectDiscovery('b3', 'base')
 
 export const b3: Layer3 = opStackL3({
   addedAt: new UnixTime(1722376845),
-  hostChain: ProjectId('base'),
   additionalBadges: [
     Badge.DA.Celestia,
     Badge.RaaS.Caldera,
