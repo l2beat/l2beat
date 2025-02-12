@@ -1,9 +1,9 @@
 import { ClearButton } from './ClearButton'
+import { ClusterLayoutButton } from './ClusterLayoutButton'
 import { ColorButton } from './ColorButton'
-import { StackLayoutButton } from './StackLayoutButton'
 import { HideButton } from './HideButton'
 import { ShowButton } from './ShowButton'
-import { ClusterLayoutButton } from './ClusterLayoutButton'
+import { StackLayoutButton } from './StackLayoutButton'
 
 interface ControlsProps {
   panelMode: boolean
