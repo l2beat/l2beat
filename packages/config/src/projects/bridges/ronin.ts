@@ -150,8 +150,9 @@ export const ronin: Bridge = {
             'MainchainGateway',
             `Bridge V3 contract handling deposits and withdrawals.`,
           ),
-          upgradableBy: ['MainchainBridgeManager Governors'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [
+            { name: 'MainchainBridgeManager Governors', delay: 'No delay' },
+          ],
           pausable,
         },
         discovery.getContractDetails(

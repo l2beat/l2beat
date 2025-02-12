@@ -45,19 +45,19 @@ const dac = discovery.getContractValue<{
 const { membersCount, requiredSignatures } = dac
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by Security Council`,
+  upgradableBy: [
+    { name: 'SecurityCouncil', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+  ],
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: ['L2SecurityCouncilEmergency', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
+  upgradableBy: [
+    { name: 'L2SecurityCouncilEmergency', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+  ],
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }

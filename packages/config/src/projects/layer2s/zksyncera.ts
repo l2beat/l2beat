@@ -123,8 +123,7 @@ export const zksyncera: Layer2 = zkStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
-      upgradableBy: ['Lido (Lido Agent)'],
-      upgradeDelay: 'No delay',
+      upgradableBy: [{ name: 'Lido (Lido Agent)', delay: 'no' }],
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
