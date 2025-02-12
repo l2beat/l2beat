@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x549951db14e09d893c29ee6fb9ddd73fd15e9634
+
+# Diff at Wed, 12 Feb 2025 10:00:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21802836
+- current block number: 21829671
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.7:
+-        "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
++        "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90"
+      values.$members.5:
+-        "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
++        "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c"
+    }
+```
+
 Generated with discovered.json: 0xcb44a454fbff2336266629c0ebc16493b2eac91e
 
 # Diff at Mon, 10 Feb 2025 19:04:22 GMT:

@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x37b67b83806fca58df9b08c3cdaeedb5aa92e6c2
+
+# Diff at Wed, 12 Feb 2025 11:32:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 725499
+- current block number: 735231
+
+## Description
+
+Socket related contracts verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 725499 (main branch discovery), not current.
+
+```diff
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
++        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d) {
+    +++ description: None
+      name:
+-        ""
++        "SignatureVerifier"
+      unverified:
+-        true
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      sourceHashes:
++        ["0x92dc8defa29353a843ae6cb6d7508811be7c65f617fe92ef87739ccdbc3fa95b"]
+    }
+```
+
+```diff
+    contract TransmitManager (0x6332e56A423480A211E301Cb85be12814e9238Bb) {
+    +++ description: None
+      name:
+-        ""
++        "TransmitManager"
+      unverified:
+-        true
+      values.chainSlug:
++        7887
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      values.signatureVerifier__:
++        "0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d"
+      values.socket__:
++        "0x3e9727470C66B1e77034590926CDe0242B5A3dCc"
+      sourceHashes:
++        ["0x20fd759cdae5666df50f4b5723ba03796b69ef7b2b3ec33712cb158d77b97133"]
+    }
+```
+
+```diff
+    contract Hasher (0x9652Dd5e1388CA80712470122F27be0d1c33B48b) {
+    +++ description: None
+      name:
+-        ""
++        "Hasher"
+      unverified:
+-        true
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+      sourceHashes:
++        ["0x621783ceb3c37cf9cd41112e917d760d40dbfa18e43c59f5c925fe9f7037f9be"]
+    }
+```
+
 Generated with discovered.json: 0x738f727bc32927d8a352c81220441848b3a3eaf5
 
 # Diff at Mon, 10 Feb 2025 19:05:29 GMT:
