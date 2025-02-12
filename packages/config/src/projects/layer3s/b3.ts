@@ -49,7 +49,7 @@ export const b3: Layer3 = opStackL3({
     explorerUrl: 'https://explorer.b3.fun/',
     explorerApi: {
       url: 'https://explorer.b3.fun/api/v2/',
-      type: 'etherscan',
+      type: 'blockscout',
     },
   },
   transactionApi: {
