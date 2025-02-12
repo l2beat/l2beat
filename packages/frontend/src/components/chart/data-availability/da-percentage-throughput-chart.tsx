@@ -76,7 +76,7 @@ export function DaPercentageThroughputChart({
         />
         {getCommonChartComponents({
           chartData,
-          yAxisProps: {
+          yAxis: {
             unit: '%',
           },
         })}

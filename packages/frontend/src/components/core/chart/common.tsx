@@ -3,10 +3,10 @@ import { getXAxisProps } from './get-x-axis-props'
 
 export function getCommonChartComponents<T extends { timestamp: number }>({
   chartData,
-  yAxisProps,
+  yAxis,
 }: {
   chartData: T[] | undefined
-  yAxisProps?: YAxisProps
+  yAxis?: YAxisProps
 }) {
   return [
     <CartesianGrid key={'cartesian-grid'} vertical={false} />,
@@ -17,7 +17,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       mirror
       tickCount={3}
       dy={-10}
-      {...yAxisProps}
+      {...yAxis}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(chartData)} />,
   ]

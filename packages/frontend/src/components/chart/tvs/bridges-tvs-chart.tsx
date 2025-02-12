@@ -98,7 +98,7 @@ export function BridgesTvsChart() {
           />
           {getCommonChartComponents({
             chartData,
-            yAxisProps: {
+            yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
           })}

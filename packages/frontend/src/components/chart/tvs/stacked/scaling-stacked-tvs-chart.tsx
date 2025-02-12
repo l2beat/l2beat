@@ -209,7 +209,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
           />
           {getCommonChartComponents({
             chartData,
-            yAxisProps: {
+            yAxis: {
               tickFormatter: (value: number) => formatYAxisLabel(value),
             },
           })}
