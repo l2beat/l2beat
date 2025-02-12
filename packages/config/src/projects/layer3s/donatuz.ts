@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -11,7 +11,6 @@ export const donatuz: Layer3 = opStackL3({
   addedAt: new UnixTime(1726497628), // 2024-09-16T14:40:28Z
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
-  hostChain: ProjectId('base'),
   additionalBadges: [
     Badge.L3ParentChain.Base,
     Badge.DA.EigenDA,
