@@ -52,6 +52,7 @@ export class UpdateNotifier {
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
+    timestamp: UnixTime,
   ) {
     const nonce = await this.getInternalMessageNonce()
     await this.db.updateNotifier.insert({
@@ -106,6 +107,15 @@ export class UpdateNotifier {
       dependents,
     )
     await this.notify(filteredMessage, 'PUBLIC')
+
+    await this.db.updateMessage.upsert({
+      projectName: name,
+      chain: this.chainConverter.toName(chainId),
+      blockNumber,
+      message: filteredMessage,
+      timestamp,
+    })
+
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
       amount: countDiff(filteredDiff),
