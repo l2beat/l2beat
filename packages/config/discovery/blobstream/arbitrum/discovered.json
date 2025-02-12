@@ -1,0 +1,725 @@
+{
+  "name": "blobstream",
+  "chain": "arbitrum",
+  "blockNumber": 298391608,
+  "configHash": "0x5cade48368c3cf9c74a7a374454c04a1c287224ca612b824adfa68889ba638ae",
+  "contracts": [
+    {
+      "name": "SuccinctFeeVault",
+      "address": "0x296666e937b270193B960a7cEC526B351F353166",
+      "sourceHashes": [
+        "0x503f175ab3807eb7f958512d3dc2501bb2ab62286bcd8cd1f85d7d24b2ce90cc"
+      ],
+      "sinceTimestamp": 1706573758,
+      "values": {
+        "$immutable": true,
+        "owner": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3"
+      }
+    },
+    {
+      "name": "SuccinctGatewaySP1",
+      "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "template": "succinct/SP1SuccinctGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1719523665,
+      "values": {
+        "$immutable": true,
+        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
+        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
+        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
+        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
+        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
+      },
+      "fieldMeta": {
+        "oldVerifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
+        },
+        "oldVerifier2": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
+        },
+        "oldVerifier3": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."
+        },
+        "oldVerifier4": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
+        },
+        "verifier": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+        }
+      },
+      "derivedName": "SP1VerifierGateway"
+    },
+    {
+      "name": "HeaderRangeVerifier",
+      "address": "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3",
+      "sourceHashes": [
+        "0x205b995df6bf32d996abb3bf617459c0102ba36f15f7ec1b12994eba3346f12f"
+      ],
+      "sinceTimestamp": 1711139839,
+      "values": {
+        "$immutable": true,
+        "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
+        "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
+      },
+      "derivedName": "FunctionVerifier"
+    },
+    {
+      "name": "SuccinctGateway",
+      "address": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+      "template": "succinct/SuccinctGateway",
+      "sourceHashes": [
+        "0xa148b7dcb3095dbb66f26d1428d50a59e1cd1384c80b0efe88efead152e6ebe2"
+      ],
+      "description": "Users could interact with this contract to request proofs onchain, emitting a RequestCall event for off-chain provers to consume. Now deprecated, SP1 is used instead.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH.",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1709852148,
+      "values": {
+        "$immutable": true,
+        "feeVault": "0x296666e937b270193B960a7cEC526B351F353166",
+        "headerRangeProvers": [
+          "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+        ],
+        "headerRangeVerifier": "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3",
+        "headerRangeVerifierOwner": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+        "isCallback": false,
+        "nextHeaderProvers": [
+          "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
+          "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+        ],
+        "nextHeaderVerifier": "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C",
+        "nextHeaderVerifierOwner": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+        "nonce": 0,
+        "owner": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+        "verifiedFunctionId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "verifiedInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "verifiedOutput": "0x"
+      },
+      "fieldMeta": {
+        "headerRangeProvers": {
+          "severity": "LOW",
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX.",
+          "type": "PERMISSION"
+        },
+        "nextHeaderProvers": {
+          "severity": "LOW",
+          "description": "List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX.",
+          "type": "PERMISSION"
+        }
+      },
+      "derivedName": "SuccinctGateway"
+    },
+    {
+      "name": "BlobstreamMultisig",
+      "address": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers."
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1710506484,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+          "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+          "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+          "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+          "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
+          "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x135047a4f7370f1dbbb2d75c227cb284db5615784b95b7cf4ac4c9201a7d9a12",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 14,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "Blobstream",
+      "address": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+      "template": "succinct/SP1Blobstream",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x13872c9ceb24afa3e0819f2d13957fab016c612859cc40f542ee250f53e03dac"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.",
+      "issuedPermissions": [
+        {
+          "permission": "interact",
+          "to": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "sinceTimestamp": 1710651080,
+      "values": {
+        "$admin": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
+        "$implementation": "0x46EbfC399d3913BB9b99E73675722417F9c5d416",
+        "$pastUpgrades": [
+          [
+            "2024-03-17T04:51:20.000Z",
+            "0x58059198a17ae1d8dd73b4d0f0ce7169f4e55d901a8fea59b4ef12d005a41f0a",
+            ["0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"]
+          ],
+          [
+            "2024-03-18T01:19:36.000Z",
+            "0xf45e346ddbedef1ea3f828954c979adcb205b4b1c0ca72e49e7e2ef5b1c43192",
+            ["0xfb19439fBa9f16aA720be6bE0e53465a9733C964"]
+          ],
+          [
+            "2024-08-26T18:53:22.000Z",
+            "0x746e21628ccec4d5b4da96595f852a6398defcc360cb9f13aa2d84ebe4e7403f",
+            ["0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"]
+          ],
+          [
+            "2024-12-02T19:09:05.000Z",
+            "0x07dbff15e24a8c124a927a2881cb4d471ace180488a56a56b43b47d1da68a130",
+            ["0x46EbfC399d3913BB9b99E73675722417F9c5d416"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          },
+          "TIMELOCK_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          },
+          "GUARDIAN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"]
+          }
+        },
+        "blobstreamProgramVkey": "0x00b6c8c78a73630fae80e45b2888a00d9ab0cc05a77cd7c027446a6ae2289928",
+        "checkRelayer": true,
+        "DATA_COMMITMENT_MAX": 10000,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "frozen": false,
+        "gateway_deprecated": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+        "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
+        "guardians": ["0x738a9b55304f9fcF776B3BA285e50c0f9eF77997"],
+        "headerRangeFunctionId_deprecated": "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0",
+        "isRelayer1Approved": false,
+        "isRelayer2Approved": true,
+        "isRelayer3Approved": true,
+        "latestBlock": 3675600,
+        "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
+        "relayers": [
+          "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
+          "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
+        ],
+        "state_proofNonce": 7375,
+        "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
+        "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+        "VERSION": "1.1.0"
+      },
+      "derivedName": "SP1Blobstream"
+    },
+    {
+      "name": "SuccinctGatewaySP1Multisig",
+      "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1724204782,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x185e357963cf69402f9a4921a2354b8685eb211841dd51a3bffb313a342335ab",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "unverified": true,
+      "sinceTimestamp": 1729727170,
+      "values": { "$immutable": true },
+      "derivedName": ""
+    },
+    {
+      "name": "SuccinctGatewayMultisig",
+      "address": "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
+          "description": "can renounce and transfer ownership, add and remove default prover, set fee vault, and recover stuck ETH."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1678822125,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
+          "0x19abbcEC005D4D83692f7A180125bF0FBd24253D"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x182edbe7a6b6683ed8d5743e0fee90645a500048b7f76a33d77d898fdd360e2c",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
+    },
+    {
+      "name": "",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "unverified": true,
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949706,
+      "values": { "$immutable": true }
+    },
+    {
+      "name": "NextHeaderVerifier",
+      "address": "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C",
+      "sourceHashes": [
+        "0xa56a53a05b7201f86a6987201b5a99cb4f9e7fba1060ecf8290515990b6f6b5e"
+      ],
+      "sinceTimestamp": 1711139928,
+      "values": {
+        "$immutable": true,
+        "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
+        "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
+      },
+      "derivedName": "FunctionVerifier"
+    }
+  ],
+  "eoas": [
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9" },
+    { "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf" },
+    { "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D" },
+    {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    { "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d" },
+    { "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0" },
+    { "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d" },
+    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
+    { "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899" },
+    { "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15" },
+    { "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885" },
+    {
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+        }
+      ]
+    },
+    { "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65" },
+    { "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126" }
+  ],
+  "abis": {
+    "0x296666e937b270193B960a7cEC526B351F353166": [
+      "error FailedToSendNative(uint256 amount)",
+      "error InsufficentAllowance(address token, uint256 amount)",
+      "error InsufficientBalance(address token, uint256 amount)",
+      "error InvalidAccount(address account)",
+      "error InvalidToken(address token)",
+      "error OnlyDeductor(address sender)",
+      "event Collected(address indexed to, address indexed token, uint256 amount)",
+      "event Deducted(address indexed account, address indexed token, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Received(address indexed account, address indexed token, uint256 amount)",
+      "function addDeductor(address _deductor)",
+      "function allowedDeductors(address) view returns (bool)",
+      "function balances(address, address) view returns (uint256)",
+      "function collect(address _to, address _token, uint256 _amount)",
+      "function collectNative(address _to, uint256 _amount)",
+      "function deduct(address _account, address _token, uint256 _amount)",
+      "function deductNative(address _account, uint256 _amount)",
+      "function deposit(address _account, address _token, uint256 _amount)",
+      "function depositNative(address _account) payable",
+      "function initialize(address _owner)",
+      "function owner() view returns (address)",
+      "function removeDeductor(address _deductor)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
+      "error ContractFrozen()",
+      "error OnlyGuardian(address sender)",
+      "error OnlyTimelock(address sender)",
+      "error RelayerNotApproved()",
+      "error TargetBlockNotInRange()",
+      "error TrustedHeaderMismatch()",
+      "error TrustedHeaderNotFound()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DataCommitmentStored(uint256 proofNonce, uint64 indexed startBlock, uint64 indexed endBlock, bytes32 indexed dataCommitment)",
+      "event HeadUpdate(uint64 blockNumber, bytes32 headerHash)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Upgraded(address indexed implementation)",
+      "event ValidatorBitmapEquivocation(uint64 trustedBlock, uint64 targetBlock, uint256 validatorBitmap)",
+      "function DATA_COMMITMENT_MAX() view returns (uint64)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GUARDIAN_ROLE() view returns (bytes32)",
+      "function TIMELOCK_ROLE() view returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function approvedRelayers(address) view returns (bool)",
+      "function blobstreamProgramVkey() view returns (bytes32)",
+      "function blockHeightToHeaderHash(uint64) view returns (bytes32)",
+      "function checkRelayer() view returns (bool)",
+      "function commitHeaderRange(bytes proof, bytes publicValues)",
+      "function frozen() view returns (bool)",
+      "function gateway_deprecated() view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function headerRangeFunctionId_deprecated() view returns (bytes32)",
+      "function initialize(tuple(address guardian, uint64 height, bytes32 header, bytes32 blobstreamProgramVkey, address verifier) _params)",
+      "function latestBlock() view returns (uint64)",
+      "function nextHeaderFunctionId_depcrecated() view returns (bytes32)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setCheckRelayer(bool _checkRelayer)",
+      "function setRelayerApproval(address _relayer, bool _approved)",
+      "function state_dataCommitments(uint256) view returns (bytes32)",
+      "function state_proofNonce() view returns (uint256)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateFreeze(bool _freeze)",
+      "function updateGenesisState(uint32 _height, bytes32 _header)",
+      "function updateProgramVkey(bytes32 _programVkey)",
+      "function updateVerifier(address _verifier)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifier() view returns (address)",
+      "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
+    ],
+    "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3": [
+      "function CIRCUIT_DIGEST() view returns (bytes32)",
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
+      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": [
+      "error CallFailed(address callbackAddress, bytes callbackData)",
+      "error CallbackFailed(bytes4 callbackSelector, bytes output, bytes context)",
+      "error EmptyBytecode()",
+      "error FailedDeploy()",
+      "error FunctionAlreadyRegistered(bytes32 functionId)",
+      "error InvalidCall(bytes32 functionId, bytes input)",
+      "error InvalidProof(address verifier, bytes32 inputHash, bytes32 outputHash, bytes proof)",
+      "error InvalidRequest(uint32 nonce, bytes32 expectedRequestHash, bytes32 requestHash)",
+      "error NotFunctionOwner(address owner, address actualOwner)",
+      "error OnlyProver(bytes32 functionId, address sender)",
+      "error RecoverFailed()",
+      "error ReentrantFulfill()",
+      "error VerifierAlreadyUpdated(bytes32 functionId)",
+      "error VerifierCannotBeZero()",
+      "event Call(bytes32 indexed functionId, bytes32 inputHash, bytes32 outputHash)",
+      "event Deployed(bytes32 indexed bytecodeHash, bytes32 indexed salt, address indexed deployedAddress)",
+      "event FunctionRegistered(bytes32 indexed functionId, address verifier, bytes32 salt, address owner)",
+      "event FunctionVerifierUpdated(bytes32 indexed functionId, address verifier)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProverUpdated(bytes32 indexed functionId, address indexed prover, bool added)",
+      "event RequestCall(bytes32 indexed functionId, bytes input, address entryAddress, bytes entryCalldata, uint32 entryGasLimit, address sender, uint256 feeAmount)",
+      "event RequestCallback(uint32 indexed nonce, bytes32 indexed functionId, bytes input, bytes context, address callbackAddress, bytes4 callbackSelector, uint32 callbackGasLimit, uint256 feeAmount)",
+      "event RequestFulfilled(uint32 indexed nonce, bytes32 indexed functionId, bytes32 inputHash, bytes32 outputHash)",
+      "event SetFeeVault(address indexed oldFeeVault, address indexed newFeeVault)",
+      "event WhitelistStatusUpdated(bytes32 indexed functionId, uint8 status)",
+      "function addCustomProver(bytes32 _functionId, address _prover)",
+      "function addDefaultProver(address _prover)",
+      "function allowedProvers(bytes32, address) view returns (bool)",
+      "function deployAndRegisterFunction(address _owner, bytes _bytecode, bytes32 _salt) returns (bytes32 functionId, address verifier)",
+      "function deployAndUpdateFunction(bytes _bytecode, bytes32 _salt) returns (bytes32 functionId, address verifier)",
+      "function feeVault() view returns (address)",
+      "function fulfillCall(bytes32 _functionId, bytes _input, bytes _output, bytes _proof, address _callbackAddress, bytes _callbackData)",
+      "function fulfillCallback(uint32 _nonce, bytes32 _functionId, bytes32 _inputHash, address _callbackAddress, bytes4 _callbackSelector, uint32 _callbackGasLimit, bytes _context, bytes _output, bytes _proof)",
+      "function getFunctionId(address _owner, bytes32 _salt) pure returns (bytes32 functionId)",
+      "function initialize(address _owner, address _feeVault, address _defaultProver)",
+      "function isCallback() view returns (bool)",
+      "function nonce() view returns (uint32)",
+      "function owner() view returns (address)",
+      "function recover(address _to, uint256 _amount)",
+      "function registerFunction(address _owner, address _verifier, bytes32 _salt) returns (bytes32 functionId)",
+      "function removeCustomProver(bytes32 _functionId, address _prover)",
+      "function removeDefaultProver(address _prover)",
+      "function renounceOwnership()",
+      "function requestCall(bytes32 _functionId, bytes _input, address _entryAddress, bytes _entryCalldata, uint32 _entryGasLimit) payable",
+      "function requestCallback(bytes32 _functionId, bytes _input, bytes _context, bytes4 _callbackSelector, uint32 _callbackGasLimit) payable returns (bytes32)",
+      "function requests(uint32) view returns (bytes32)",
+      "function setFeeVault(address _feeVault)",
+      "function setWhitelistStatus(bytes32 _functionId, uint8 _status)",
+      "function transferOwnership(address newOwner)",
+      "function updateFunction(address _verifier, bytes32 _salt) returns (bytes32 functionId)",
+      "function verifiedCall(bytes32 _functionId, bytes _input) view returns (bytes)",
+      "function verifiedFunctionId() view returns (bytes32)",
+      "function verifiedInputHash() view returns (bytes32)",
+      "function verifiedOutput() view returns (bytes)",
+      "function verifierOwners(bytes32) view returns (address)",
+      "function verifiers(bytes32) view returns (address)",
+      "function whitelistStatus(bytes32) view returns (uint8)"
+    ],
+    "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": [
+      "constructor(address _singleton)"
+    ],
+    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+      "constructor(address _singleton)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": [
+      "constructor(address _singleton)"
+    ],
+    "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C": [
+      "function CIRCUIT_DIGEST() view returns (bytes32)",
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
+      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
+    "succinct/SP1SuccinctGateway": "0xddf7c5c632f3cb0a4055a574c75ebf95a7599c66d18d65a94e314628b9681708",
+    "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
+  }
+}

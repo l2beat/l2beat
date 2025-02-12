@@ -66,6 +66,11 @@ export const eclipse: Layer2 = {
         tokens: ['ETH'],
       },
     ],
+    daTracking: {
+      type: 'celestia',
+      daLayer: ProjectId('celestia'),
+      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
+    },
   },
   dataAvailability: {
     layer: DA_LAYERS.CELESTIA,

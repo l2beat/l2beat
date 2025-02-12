@@ -45,6 +45,7 @@ export const mantapacific: Layer2 = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
   associatedTokens: ['MANTA'],
   chainConfig: {
     name: 'mantapacific',

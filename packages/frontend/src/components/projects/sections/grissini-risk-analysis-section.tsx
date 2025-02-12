@@ -1,3 +1,4 @@
+import { InlinedNoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { SingleGrissiniDetails } from '~/components/rosette/grissini/single-grissini-details'
 import type { RosetteValue } from '~/components/rosette/types'
 import { cn } from '~/utils/cn'
@@ -7,6 +8,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface GrissiniRiskAnalysisSectionProps extends ProjectSectionProps {
   isVerified: boolean | undefined
+  isNoBridge?: boolean
   layerGrissiniValues?: RosetteValue[]
   bridgeGrissiniValues?: RosetteValue[]
   description?: string
@@ -20,6 +22,7 @@ export function GrissiniRiskAnalysisSection({
   description,
   hideRisks = false,
   hideTitle,
+  isNoBridge = false,
   ...sectionProps
 }: GrissiniRiskAnalysisSectionProps) {
   const isUnderReview =
@@ -51,6 +54,7 @@ export function GrissiniRiskAnalysisSection({
           hideTitle={hideTitle}
         />
       )}
+      {isNoBridge && <InlinedNoBridgeGrissiniDetailsPlaceholder />}
     </ProjectSection>
   )
 }

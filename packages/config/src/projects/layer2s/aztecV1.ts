@@ -164,6 +164,7 @@ export const aztecV1: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
@@ -173,10 +174,12 @@ export const aztecV1: Layer2 = {
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: [
-          true,
-          'Users can exit through the escape hatch mechanism and the rollup contract is immutable.',
-        ],
+        delayWith30DExitWindow: {
+          satisfied: true,
+          message:
+            'Users can exit through the escape hatch mechanism and the rollup contract is immutable.',
+          mode: 'replace',
+        },
       },
     },
     {

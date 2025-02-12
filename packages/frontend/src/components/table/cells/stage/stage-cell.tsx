@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { StopwatchIcon } from '~/icons/stopwatch'
 import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 
@@ -39,6 +40,11 @@ export function StageCell({ stageConfig, isAppchain }: StageCellProps) {
             )}
           />
         )}
+        {stageConfig.stage !== 'NotApplicable' &&
+          stageConfig.stage !== 'UnderReview' &&
+          stageConfig.downgradePending && (
+            <StopwatchIcon className="mt-[3px]" />
+          )}
       </TooltipTrigger>
       <TooltipContent className="max-w-[360px]">
         <StageTooltip stageConfig={stageConfig} isAppchain={isAppchain} />

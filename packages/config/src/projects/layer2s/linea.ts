@@ -12,20 +12,19 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import type { ProjectPermissionedAccount } from '../../types'
-import type { Layer2 } from '../../types'
+import type { Layer2, ProjectPermissionedAccount } from '../../types'
 import { Badge } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
@@ -163,6 +162,17 @@ export const linea: Layer2 = {
       type: 'rpc',
       defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
+    },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xd19d4b5d358258f05d7b411e21a1460d11b0876f',
+      sequencers: [
+        '0xa9268341831efa4937537bc3e9eb36dbece83c7e',
+        '0x9228624c3185fcbcf24c1c9db76d8bef5f5dad64',
+        '0x46d2F319fd42165D4318F099E143dEA8124E9E3e',
+        '0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754',
+      ],
     },
     trackedTxs: [
       {
@@ -417,14 +427,16 @@ export const linea: Layer2 = {
       rollupNodeSourceAvailable: false,
     },
     stage1: {
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: [
-        false,
-        'Security Council members are not publicly known.',
-      ],
+      securityCouncilProperlySetUp: {
+        satisfied: false,
+        message: 'Security Council members are not publicly known.',
+        mode: 'replace',
+      },
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,

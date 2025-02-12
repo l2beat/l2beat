@@ -1,10 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { PolkadotRpcClient } from '../../clients/rpc-polkadot/PolkadotRpcClient'
-import type { DaBlob, DaProvider } from './DaProvider'
-
-export type AvailBlob = DaBlob & {
-  appId: number
-}
+import type { AvailBlob, DaBlob, DaProvider } from './DaProvider'
 
 const TIMESTAMP_SHIFT = 4300
 const DATA_EXTRINSIC_SHIFT = 236
@@ -61,9 +57,10 @@ export class AvailDaProvider implements DaProvider {
         (targetExtrinsics[index].length - DATA_EXTRINSIC_SHIFT) / 2
 
       blobs.push({
+        type: 'avail',
         blockTimestamp: timestamp,
         size: BigInt(sizeInBytes),
-        appId: appIndex[index].appId,
+        appId: appIndex[index].appId.toString(),
       })
     }
 

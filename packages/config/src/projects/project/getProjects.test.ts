@@ -1,5 +1,6 @@
-import type { ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { checkRisk } from '../../test/helpers'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { getProjects } from './getProjects'
@@ -7,12 +8,22 @@ import { getProjects } from './getProjects'
 describe('getProjects', () => {
   const projects = getProjects()
 
-  describe('every project has a unique id', () => {
+  describe('every project has a unique id and slug', () => {
     const ids = new Set<ProjectId>()
+    const slugs = new Set<string>()
     for (const project of projects) {
-      it(`${project.name} has a unique id of: "${project.id}"`, () => {
+      it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
+        if (project.slug === 'payy' || project.slug === 'near') {
+          // Those two projects are exceptions!
+          // Both should most likely be merged with their duplicates
+          // Right now it only works because refactored projects are resolved
+          // first when querying by slug
+          return
+        }
+        expect(slugs.has(project.slug)).toEqual(false)
+        slugs.add(project.slug)
       })
     }
   })
@@ -23,13 +34,6 @@ describe('getProjects', () => {
         it(project.name, () => {
           expect(project.display?.description.endsWith('.')).toEqual(true)
         })
-      }
-      if (project.daBridges) {
-        for (const bridge of project.daBridges) {
-          it(bridge.display.name, () => {
-            expect(bridge.display.description.endsWith('.')).toEqual(true)
-          })
-        }
       }
     }
   })
@@ -69,12 +73,12 @@ describe('getProjects', () => {
       )
 
       const daLayers = projects.filter((x) => x.daLayer !== undefined)
+      const daBridges = projects.filter((x) => x.daBridge !== undefined)
 
-      const daBeatProjectIds = daLayers.flatMap((project) =>
-        project.daLayer?.usedWithoutBridgeIn
-          .concat(project.daBridges?.flatMap((bridge) => bridge.usedIn) ?? [])
-          .map((usedIn) => usedIn.id),
-      )
+      const daBeatProjectIds = daLayers
+        .flatMap((project) => project.daLayer?.usedWithoutBridgeIn ?? [])
+        .concat(daBridges.flatMap((bridge) => bridge.daBridge?.usedIn ?? []))
+        .map((usedIn) => usedIn.id)
 
       const scalingProjectIds = target.map((project) => project.id)
 
@@ -85,5 +89,52 @@ describe('getProjects', () => {
       // Array comparison to have a better error message with actual names
       expect(projectsWithoutDaBeatEntry).toEqual([])
     })
+  })
+
+  describe('contracts', () => {
+    for (const project of getProjects()) {
+      describe(project.id, () => {
+        const contracts = project.contracts?.addresses ?? {}
+        for (const [chain, perChain] of Object.entries(contracts)) {
+          for (const [i, contract] of perChain.entries()) {
+            const description = contract.description
+            if (description) {
+              it(`contracts[${i}].description - each line ends with a dot`, () => {
+                for (const descLine of description.trimEnd().split('\n')) {
+                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
+                }
+              })
+            }
+
+            it(`contracts[${chain}][${i}] name isn't empty`, () => {
+              expect(contract.name.trim().length).toBeGreaterThan(0)
+            })
+            const upgradableBy = contract.upgradableBy
+            const permissionsForChain = (project.permissions ?? {})[chain]
+            const all = [
+              ...(permissionsForChain?.roles ?? []),
+              ...(permissionsForChain?.actors ?? []),
+            ]
+            const actors = all.map((x) => {
+              if (x.name === 'EOA') {
+                assert(x.accounts[0].type === 'EOA')
+                return x.accounts[0].address
+              }
+              return x.name
+            })
+
+            if (upgradableBy) {
+              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
+                expect(actors).toInclude(...upgradableBy)
+              })
+            }
+          }
+        }
+
+        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
+          checkRisk(risk, `contracts.risks[${i}]`)
+        }
+      })
+    }
   })
 })

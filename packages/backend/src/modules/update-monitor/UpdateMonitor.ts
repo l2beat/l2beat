@@ -296,7 +296,7 @@ export class UpdateMonitor {
         chain,
         this.configReader,
       )
-      const unknownContracts = await findUnknownContracts(
+      const unknownContracts = findUnknownContracts(
         discovery.name,
         discovery.contracts,
         this.configReader,

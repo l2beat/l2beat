@@ -1,9 +1,6 @@
 import type { Env } from '@l2beat/backend-tools'
-import { type ProjectService, layer2s, layer3s } from '@l2beat/config'
-import type {
-  DaLayerTrackingConfig,
-  ProjectDaTrackingConfig,
-} from '@l2beat/config'
+import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
+
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
@@ -23,43 +20,25 @@ export async function getDaTrackingConfig(
       minHeight: env.integer('DA_ETHEREUM_MIN_HEIGHT', 19426618), // blobs
       batchSize: env.integer('DA_ETHEREUM_BATCH_SIZE', 2500),
     },
-    layers: (await getDaTrackingLayers(ps)).filter((layer) =>
-      flags.isEnabled('da', layer),
-    ),
-    projects: getProjectsWithDaTracking().filter((project) =>
+    projects: (await getDaTrackingProjects(ps)).filter((project) =>
       flags.isEnabled('da', project.id.toString()),
     ),
   }
 }
 
-async function getDaTrackingLayers(
-  ps: ProjectService,
-): Promise<DaLayerTrackingConfig[]> {
+async function getDaTrackingProjects(ps: ProjectService): Promise<
+  {
+    id: ProjectId
+    config: ProjectDaTrackingConfig
+  }[]
+> {
   const projects = await ps.getProjects({
-    select: ['daLayer'],
+    select: ['daTrackingConfig'],
     whereNot: ['isUpcoming'],
   })
-  return [
-    ...new Set(projects.flatMap((project) => project.daLayer.daTracking ?? [])),
-  ]
-}
 
-function getProjectsWithDaTracking(): {
-  id: ProjectId
-  config: ProjectDaTrackingConfig
-}[] {
-  const projects = [...layer2s, ...layer3s].filter(
-    (project) => !project.isArchived,
-  )
-
-  return projects.flatMap((project) =>
-    project.config.daTracking
-      ? [
-          {
-            id: project.id,
-            config: project.config.daTracking,
-          },
-        ]
-      : [],
-  )
+  return projects.map((project) => ({
+    id: project.id,
+    config: project.daTrackingConfig,
+  }))
 }

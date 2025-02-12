@@ -115,6 +115,12 @@ export const paradex: Layer2 = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+      sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
+    },
     trackedTxs: [
       {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
@@ -263,6 +269,7 @@ export const paradex: Layer2 = {
       rollupNodeSourceAvailable: false,
     },
     stage1: {
+      principle: false,
       stateVerificationOnL1: true,
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,

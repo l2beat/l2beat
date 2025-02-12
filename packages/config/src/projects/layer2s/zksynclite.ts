@@ -69,7 +69,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments', 'Exchange', 'NFT'],
     stack: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -197,6 +196,7 @@ export const zksynclite: Layer2 = {
         rollupNodeSourceAvailable: true,
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,

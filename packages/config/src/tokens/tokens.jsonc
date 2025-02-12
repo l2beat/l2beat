@@ -411,10 +411,6 @@
       "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
     },
     {
-      "symbol": "wTIA",
-      "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
-    },
-    {
       "symbol": "sUSDz",
       "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
       "coingeckoId": "anzen-staked-usdz",
@@ -2153,6 +2149,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "USDT",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "XBG",
       "address": "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4",
       "source": "external",
@@ -2444,13 +2455,6 @@
       "symbol": "wstETH",
       "category": "ether",
       "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "symbol": "USDT",
-      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
-      "category": "stablecoin",
       "source": "canonical",
       "supply": "zero"
     },
@@ -4690,6 +4694,28 @@
     }
   ],
   "zksync2": [
+    {
+      "symbol": "USDN",
+      "category": "stablecoin",
+      "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDM",
+      "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is minted by admins
+    },
     {
       "symbol": "FIUSD",
       "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",

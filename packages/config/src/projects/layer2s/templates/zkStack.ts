@@ -31,6 +31,7 @@ import type {
   Layer2TxConfig,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
   ProjectTechnologyChoice,
@@ -101,6 +102,10 @@ export interface ZkStackConfigCommon {
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export type Upgradeability = {
@@ -283,6 +288,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs:
         daProvider !== undefined
           ? undefined
@@ -330,6 +336,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
                 rollupNodeSourceAvailable: true,
               },
               stage1: {
+                principle: false,
                 stateVerificationOnL1: true,
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
@@ -570,4 +577,37 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+}
+
+function getDaTracking(
+  templateVars: ZkStackConfigCommon,
+): ProjectDaTrackingConfig | undefined {
+  const validatorTimelock =
+    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+
+  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsVTL',
+  )
+
+  return templateVars.usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: validatorTimelock,
+        sequencers: validatorsVTL,
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }

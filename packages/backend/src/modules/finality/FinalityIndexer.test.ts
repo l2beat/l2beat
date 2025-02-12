@@ -139,6 +139,25 @@ describe(FinalityIndexer.name, () => {
         averageStateUpdate: 0,
       })
     })
+
+    it('throws an error if data is negative', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const from = start.toNumber()
+      const to = start.add(1, 'days').toNumber()
+      const finalityIndexer = getMockFinalityIndexer({})
+      finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
+      finalityIndexer.getFinalityData = mockFn().resolvesToOnce({
+        projectId: ProjectId('project'),
+        timestamp: start.add(1, 'days'),
+        averageTimeToInclusion: -1,
+        minimumTimeToInclusion: -2,
+        maximumTimeToInclusion: 4,
+      })
+
+      expect(
+        async () => await finalityIndexer.update(from + 1, to),
+      ).toBeRejectedWith(`Finality data cannot be negative: project`)
+    })
   })
 
   describe(FinalityIndexer.prototype.isConfigurationSynced.name, () => {

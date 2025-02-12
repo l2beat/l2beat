@@ -104,7 +104,7 @@ export class MulticallClient {
         // NOTE(radomski): If we batch a call that will execute an INVALID
         // opcode we have no way of knowing which call failed. Just execute
         // them individually.
-        if (parsed.data.error.error.message === 'out of gas') {
+        if (parsed.data.error.error.message.includes('out of gas')) {
           return await this.executeIndividual(requests, blockNumber)
         }
       }

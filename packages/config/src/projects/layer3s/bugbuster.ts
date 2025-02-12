@@ -75,6 +75,7 @@ export const bugbuster: Layer3 = {
         rollupNodeSourceAvailable: 'UnderReview',
       },
       stage1: {
+        principle: false,
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,

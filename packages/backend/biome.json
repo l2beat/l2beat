@@ -1,18 +1,6 @@
 {
   "extends": ["../../biome.json"],
-  "files": {
-    "maxSize": 10485760,
-    "ignore": [
-      "cache/",
-      "discovery/**/.code",
-      "discovery/**/.code@*",
-      "discovery/**/.flat*",
-      "discovery/**/mermaid",
-      "discovery/**/.mermaid",
-      "discovery/**/.flat",
-      "discovery/**/script-ts"
-    ]
-  },
+  "files": { "maxSize": 10485760 },
   "linter": {
     "rules": {
       "nursery": {

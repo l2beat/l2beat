@@ -1,3 +1,4 @@
+import { join } from 'path'
 import {
   bridgeToBackendProject,
   layer2ToBackendProject,
@@ -161,7 +162,7 @@ export async function makeConfig(
         ? env.boolean('UPDATE_MONITOR_RUN_ON_START', true)
         : undefined,
       discord: getDiscordConfig(env, isLocal),
-      chains: new ConfigReader()
+      chains: new ConfigReader(join(process.cwd(), '../config'))
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),

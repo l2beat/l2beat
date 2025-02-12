@@ -1,0 +1,2883 @@
+{
+  "name": "starknet",
+  "chain": "ethereum",
+  "blockNumber": 21786555,
+  "configHash": "0x9d306adba0d16ce54eaf9a8b94002beb407338174cdff04ed346e5ae99550fa3",
+  "sharedModules": ["shared-sharp-verifier"],
+  "contracts": [
+    {
+      "name": "StarkgateBridgeMultisig",
+      "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1692867743,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x07112ea70e3b813e71d47e25500e17035517d3b51bd3c8d3500ccf54424e8f00",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 23,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "LORDSBridge",
+      "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "sourceHashes": [
+        "0x2f705f817a66ebdf99961fe9f40d30fe99be28e3a316d15a490048e7cb149b67"
+      ],
+      "sinceTimestamp": 1687524587,
+      "values": {
+        "$immutable": true,
+        "l1Token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+        "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
+        "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      },
+      "derivedName": "LordsL1Bridge"
+    },
+    {
+      "name": "DAIBridge",
+      "address": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+      "sourceHashes": [
+        "0xe3c0ee54209bc4a4d457bc5e251aff40a83fc784e37b8b90fd9158c6b0f29e5c"
+      ],
+      "sinceTimestamp": 1652101038,
+      "values": { "$immutable": true },
+      "derivedName": "L1Escrow"
+    },
+    {
+      "name": "StarkgateManager",
+      "address": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0x542e548d4e5b9c6da6613f9a5618cfe1f3f2aedf1449c2f52fa6c565eb90e51d"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1707308579,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x64608BDF1867110f622391196989bF4cE37BBb33",
+        "$pastUpgrades": [
+          [
+            "2024-02-07T17:04:11.000Z",
+            "0xfdb16d2b1cb55969801447ea8bc0cb00c4825ed75dcb1266a0d94c03699e7a28",
+            ["0x64608BDF1867110f622391196989bF4cE37BBb33"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getEnableWindowDuration": 1209600,
+        "getRegistry": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarkgateManager_2.0_1",
+        "implementation": "0x64608BDF1867110f622391196989bF4cE37BBb33",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarkgateManager"
+    },
+    {
+      "name": "StarkgateRegistry",
+      "address": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0xe185bff4846e41d1ea1bffd2a1905568a7206a93b2923a300f9b61990293218b"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1707322595,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
+        "$pastUpgrades": [
+          [
+            "2024-02-07T17:05:11.000Z",
+            "0x54e1021653aaca692f4ead2a85e5bd32648919d01953e88693a833d45c583fab",
+            ["0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarkgateRegistry_2.0_1",
+        "implementation": "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarkgateRegistry"
+    },
+    {
+      "name": "StarknetSecurityCouncil",
+      "address": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1738599599,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+          "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+          "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
+          "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
+          "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
+          "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
+          "0x81C1B22c67731D3f0Bac506102Fe998361565874",
+          "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
+          "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
+          "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+        ],
+        "$threshold": 9,
+        "domainSeparator": "0x57c92b54a26f77d6d8a90326482dd0afa6ca56b256379816d5018bb22e629ac4",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "9 of 12 (75%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
+    },
+    {
+      "name": "WBTCBridge",
+      "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
+      "sourceHashes": [
+        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1657137600,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2022-07-06T20:20:06.000Z",
+            "0xeedccfe88453ea74a342ca57926a88b6033057eb15b43291332f0fa19c197eee",
+            ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+          ],
+          [
+            "2022-07-12T12:56:17.000Z",
+            "0xc450cc918a45c46057f13a072c41a646e78f52af5e36f82b7061b478e44b7fb3",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2022-11-20T14:07:11.000Z",
+            "0x5bc722c79d5a4303b76638f6fc75d26c5dbfba39202c2a7ced89b96d3ead97e7",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2023-03-28T15:06:47.000Z",
+            "0xb638d945b6a6feba94d6219f1618a6e279720e105d4476db19063abd4164117f",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T10:13:23.000Z",
+            "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-12T09:54:59.000Z",
+            "0x426174e7e63465569d28b3ca3e807e69859f9a2650702487260b9a45646d5f32",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "FXSBridge",
+      "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+      "sourceHashes": [
+        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1692689267,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-08-23T12:22:47.000Z",
+            "0x8a85416efb74a9a7b95f6596bbcf947bdea2e1664c1401fee191dbc35ed63b9e",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-11T10:08:59.000Z",
+            "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "TheLordsToken",
+      "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+      "sourceHashes": [
+        "0xd22c33bc5166fe7e453c9664a212eef8bc1ea65785e04e7fa2e5981f6a782970"
+      ],
+      "sinceTimestamp": 1639089737,
+      "values": {
+        "$immutable": true,
+        "cap": "500000000000000000000000000",
+        "decimals": 18,
+        "name": "Lords",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "symbol": "LORDS",
+        "totalSupply": "500000000000000000000000000",
+        "totalSupplyAt": []
+      }
+    },
+    {
+      "name": "StarkgateETHSecurityAgentMultisig",
+      "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1727171111,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x030ceEE5D4CBc304287234720B11E00f47695755",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfb9e6f08849613661213b07b88f684c3e7df02a1757b854698a5ef7b4d584893",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "StarknetAdminMultisig",
+      "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1672587635,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+          "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xfbf46e0cae4a0b01c142fd1c393d4058f5af0efa75d9b1a23dee605fdb7aaf81",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 16,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "StarknetOpsMultisig",
+      "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1672587815,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+          "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
+          "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+          "0x59232aC80E6d403b6381393e52f4665ECA328558",
+          "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xb6cf2054f0384f47744cb3c2cbc3f6a9881e00205c03bf14afc7a6a862a8b9c6",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
+        "nonce": 27,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "L1DaiGateway",
+      "address": "0x9F96fE0633eE838D0298E8b8980E6716bE81388d",
+      "sourceHashes": [
+        "0xea3ba1600e1949cef23ec7d1ebcf724de2bb6be9602c2339dd29582e6c00c9f5"
+      ],
+      "sinceTimestamp": 1666446647,
+      "values": {
+        "$immutable": true,
+        "ceiling": "5000000000000000000000000",
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "escrow": "0x0437465dfb5B79726e35F08559B0cBea55bb585C",
+        "isOpen": 0,
+        "l2Dai": "385291772725090318157700937045086145273563247402457518748197066808155336371",
+        "l2DaiBridge": "3326542335218638260710262166293903627998802370811525948909206799059756478048",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "starkNet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      },
+      "derivedName": "L1DAIBridge"
+    },
+    {
+      "name": "ETHBridge",
+      "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+      "sourceHashes": [
+        "0x2c95972415c771f5ef6d71449bae168597b6c35245fbe8769425e5c9c753e918",
+        "0x7e4d647efdbbd67f7c4af48b29a4ece562fe1383101cd94625402008a572ba87"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1647857148,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
+        "$pastUpgrades": [
+          [
+            "2022-03-21T10:19:20.000Z",
+            "0x4c7952f4056367ec557d94b41d0784b7eb247d1f9de7378bdff7a5218c85314d",
+            ["0x0205172F25e791975edB4dEF203f3789B01f43bb"]
+          ],
+          [
+            "2022-04-10T13:08:21.000Z",
+            "0x9b76ede78b75c332ea2ae855b62a2363c197ee521522ab1a14aa5517f2610dd5",
+            ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
+          ],
+          [
+            "2022-11-20T14:07:11.000Z",
+            "0xa31315fda290a9ee1abf459ba81a8c5986c5c9da58cda4c20a144ab16e3a9ba1",
+            ["0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"]
+          ],
+          [
+            "2023-03-28T15:08:23.000Z",
+            "0x826f7e63249e192040d6b9301a68a0c7fc1130d06339ab0c758ff14799f9adfb",
+            ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
+          ],
+          [
+            "2024-02-08T10:13:23.000Z",
+            "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964",
+            ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"]
+          ],
+          [
+            "2024-02-12T11:55:59.000Z",
+            "0x1f56cc90fd40bcc00a27f94c989e93cb414a884e2fe971323426f40d58c71306",
+            ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"]
+          ]
+        ],
+        "$upgradeCount": 7,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
+        },
+        "bridgedToken": "0x0000000000000000000000000000000000455448",
+        "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetEthBridge_2.0_4",
+        "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
+        "manager": "0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetEthBridge"
+    },
+    {
+      "name": "USDTBridge",
+      "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
+      "sourceHashes": [
+        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1657137615,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2022-07-06T20:27:48.000Z",
+            "0x3e25166c11d40ded7d1ae272a9e4eb416b2d35a8f4919ca0a07c55f0065de787",
+            ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+          ],
+          [
+            "2022-07-12T12:57:34.000Z",
+            "0x55d370d26d45d7aee7f06e7f741d5f0d37154889faa1fa4e393370cae31a0f0f",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2022-11-20T14:07:11.000Z",
+            "0x33fdbe5a0d1ba784eb5e2f0f34b42d57c5c2b6b0bd3562746c7ee0447f7767aa",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2023-03-28T15:07:47.000Z",
+            "0xac209ae933b3ae24348f926df5f8978093617c711baaceefa21b90c08c82a0af",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T10:13:23.000Z",
+            "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-12T10:13:35.000Z",
+            "0xe594bd2581f3da0e554ad8664aecc1441280850cc7827a9e42d172bbf54cac5d",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "wstETHBridge",
+      "address": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
+      "sourceHashes": [
+        "0x53dd98b4b8b7867686e1dba07dd739c1bdb6b4a5e11d04efbbe743cb975dbc8c",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1685452751,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-05-30T13:31:11.000Z",
+            "0xb4de1aa42c3ade894dd66e06e6125549e8004d2d6857cf456ef5bde3f583ea7c",
+            ["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"]
+          ],
+          [
+            "2024-02-08T18:13:35.000Z",
+            "0x4eb13c68776e5aa840ab59c3c4ff369372fd461bab760eee12d1ae7ccf7baa6e",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": [
+              "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+              "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            ]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "Starknet",
+      "address": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "sourceHashes": [
+        "0xce548bceca83c22eb3686987781754a8d9527dde81c86ae4a13d5a9ba5395d62",
+        "0x2738adbe41339934ae57e5c96fb9d7e42a43ba2b112878bc9227cc1c81de8ee6"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "via": []
+        }
+      ],
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ],
+      "sinceTimestamp": 1636978914,
+      "values": {
+        "$admin": [
+          "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+        ],
+        "$immutable": false,
+        "$implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+        "$pastUpgrades": [
+          [
+            "2021-11-15T12:26:20.000Z",
+            "0xccde4b2c417c0361ca34b8896ff8ee8a471aeab423613db8175463d903d4c2fe",
+            ["0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"]
+          ],
+          [
+            "2022-01-26T10:45:21.000Z",
+            "0xf928abd9eb81afac14d1e8f76a52de80f9c38cbe0e72d2f1ec922caf7bf1cad0",
+            ["0x944960b90381d76368aecE61F269bD99FFfd627e"]
+          ],
+          [
+            "2022-03-21T09:06:14.000Z",
+            "0x4e551f471810ea806502b1e24f9ef6793f0a0b68f24c3cdec44df444921d7689",
+            ["0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"]
+          ],
+          [
+            "2022-06-15T09:20:58.000Z",
+            "0x65e31a14e45c3f909c1f90e67b3bb9a54e256d28cb8a27432f73268a19ebab84",
+            ["0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"]
+          ],
+          [
+            "2022-09-11T06:59:08.000Z",
+            "0x6f7ff0be4f155165290702052683f0a87b5e660812949c6e10eac6602c6aa5e7",
+            ["0xE267213B0749Bb94c575F6170812c887330d9cE3"]
+          ],
+          [
+            "2023-03-29T10:21:47.000Z",
+            "0x861257880dfe325f603d4371a10888daa8fb0a16c205bb43647e8c5547298e36",
+            ["0x739A654271c565839F0408546706bBea2F1FfE42"]
+          ],
+          [
+            "2023-05-24T05:31:23.000Z",
+            "0x640cb38b6ffa91068da7cc15730268402661ec3f62f084b2a58522f600d89277",
+            ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"]
+          ],
+          [
+            "2024-03-12T14:15:23.000Z",
+            "0xb9cd560bbc6f0478eeb5bed042a06d988ef6ebfd1cc9bfb509b4d8202b517ecc",
+            ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"]
+          ],
+          [
+            "2024-08-28T14:32:59.000Z",
+            "0x4186d705e39a8e7cb19069c9426e4b211fad28f97cb7f641e4bd240971318e8d",
+            ["0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"]
+          ]
+        ],
+        "$upgradeCount": 9,
+        "aggregatorProgramHash": "15787695375210609250491147414005894154890873413229882671403677761527504080",
+        "configHash": "2590421891839256512113614983194993186457498815986333310670788206383913888162",
+        "getMaxL1MsgFee": "1000000000000000000",
+        "getUpgradeActivationDelay": 0,
+        "governedFinalized": 0,
+        "governors": [
+          "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
+          "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+        ],
+        "identify": "StarkWare_Starknet_2024_9",
+        "implementation": "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC",
+        "isFinalized": false,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "l1ToL2MessageNonce": 1667682,
+        "messageCancellationDelay": 432100,
+        "operators": [
+          "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
+          "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+        ],
+        "programHash": "2397984267054479079853548842566103781972463965746662494980785692480538410509",
+        "programHashHistory": [
+          "1921772108187713503530008849184725638117898887391063185252422808224349294626",
+          "3258367057337572248818716706664617507069572185152472699066582725377748079373",
+          "407700941260678649793204927710478760533239334662847444187959202896452163393",
+          "1865367024509426979036104162713508294334262484507712987283009063059134893433",
+          "54878256403880350656938046611252303365750679698042371543935159963667935317",
+          "2479841346739966073527450029179698923866252973805981504232089731754042431018",
+          "109586309220455887239200613090920758778188956576212125550190099009305121410",
+          "3383082961563516565935611087683915026448707331436034043529592588079494402084",
+          "853638403225561750106379562222782223909906501242604214771127703946595519856"
+        ],
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "stateBlockHash": "1421835230621713786234360794523044513889444062697675559992395172702148356366",
+        "stateBlockNumber": 1128757,
+        "stateRoot": "374740858343762518734718185428009918484993027939408645066809078498208600945",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
+        "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      },
+      "fieldMeta": {
+        "isFinalized": {
+          "severity": "HIGH",
+          "description": "Finalizes most of the configuration of the Starknet contract, which cannot be changed afterwards (only thorugh an upgrade)."
+        },
+        "programHash": {
+          "severity": "HIGH",
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "type": "CODE_CHANGE"
+        }
+      },
+      "derivedName": "Starknet"
+    },
+    {
+      "name": "STRKBridge",
+      "address": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1704905879,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2024-01-10T17:21:23.000Z",
+            "0x4ea20358347292f048a26277477a9f145add434e50e3f64c85f494469768c876",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-01-14T13:34:23.000Z",
+            "0x42056631084f574f2ed5f49bef3d1aabab22008266ac97afea3e5f42649bd7c3",
+            ["0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"]
+          ],
+          [
+            "2024-01-14T16:30:23.000Z",
+            "0xe8154cce45dafa5cfcb95d134f3da8a13c80c6546da07ca92c88d5c54286cdc3",
+            ["0x7f2a18900A978D4390a3640e34739BB697777A71"]
+          ],
+          [
+            "2024-02-12T15:17:11.000Z",
+            "0x7c5561efa149f2be36fac917f47b0b107218b43de1eac56ceb97d008257bd850",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 6,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_ADMIN": { "adminRole": "SECURITY_ADMIN", "members": [] },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "rETHBridge",
+      "address": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
+      "sourceHashes": [
+        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1685880791,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-06-04T12:42:11.000Z",
+            "0x90d66157a3812393338739b0ee7a84d0d310b72a8282946e5874824c60d30c51",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T22:37:35.000Z",
+            "0x5420188e3cc869219076d140de7359aa4b930c51263c00728bb81e3a68c1ba8c",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 4,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "sfrxETHBridge",
+      "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+      "sourceHashes": [
+        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1692689279,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-08-23T12:22:47.000Z",
+            "0x368efd40dcf16ad376c8f38adf1e68361874e2b5b2de52d7088cd7de6b38f02a",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-11T10:08:59.000Z",
+            "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "FRAXBridge",
+      "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+      "sourceHashes": [
+        "0x25ddd183db6d49cd35a4294bab199e312eed0aab84414abff63a55010799f854",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1692689255,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-08-23T12:22:47.000Z",
+            "0x591030492947a546e11122e42c12975237d800d3d509d284b9c8aaf541dbdc79",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-11T10:08:59.000Z",
+            "0x083f442a6f6154d565fca76e15e4b7ff09a9ca6fc8efec588139a52896e67d4c",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "LUSDBridge",
+      "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+      "sourceHashes": [
+        "0xfd5ac94c5a362e7426efd613abbaca3b838cf7f6089b44d9c0d4f675ca4467b3",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1688046071,
+      "values": {
+        "$admin": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-06-29T13:54:59.000Z",
+            "0xa67fa2a98e3b92d67fe9ea402dd53955fc2d74f6af3ee0183e20afad68ac5621",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T22:57:59.000Z",
+            "0x1157d4bd2b7d00a0f9833ef0832822bc331d5f904c0c3f9f14fa7942678fbf58",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:56:47.000Z",
+            "0x4a1c60505d4d6d22f51b164696b7eadba1955278a577c7e712b2cd0347bee330",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "MultiBridge",
+      "address": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+      "sourceHashes": [
+        "0xdb5ce51bea459e0dd74612d6fe08407bb4f57d4f524e3ef397b8ef53beeceb0c",
+        "0xd3e96d9fb623969bd9cc3e5fed6779ce42c5de753b49fc73da783863d4043a2f"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1707322643,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A",
+        "$pastUpgrades": [
+          [
+            "2024-02-07T17:06:11.000Z",
+            "0x52b4a75a83546e4e463a919cf778cb9a4882d536c4bf7b80a62098698c741fd8",
+            ["0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetTokenBridge_2.0_4",
+        "implementation": "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance_EKUBO": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetTokenBridge"
+    },
+    {
+      "name": "USDCBridge",
+      "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+      "sourceHashes": [
+        "0x81a134f478bcc2b72c5f77df62e5b52cd55cefd6329f8e306ac6d28f31d467c2",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1657137639,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2022-07-06T20:27:48.000Z",
+            "0x7fee1d4145372b9f1a39594bc71c9074f5982c5c546135c1aba6810c5c33cd15",
+            ["0xaec1fB35875a3816a5d09D61F086FeB6c252e096"]
+          ],
+          [
+            "2022-07-12T12:57:34.000Z",
+            "0x8c5f529b4aea40150673a24be2daf67b98dfea900848e2e4bfe863b29397cb16",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2022-11-20T14:07:11.000Z",
+            "0x100be562b99e029f2419718dfa5e722c6d27cd99e9e5fbbd61dbda223d8872c2",
+            ["0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"]
+          ],
+          [
+            "2023-03-28T15:07:47.000Z",
+            "0x1c54434b6dab2c13187d16161d7da8b6286b4f71d3ff3ab580ffcc90ac387d31",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T10:13:23.000Z",
+            "0x64910ea21a212ae671687842ec3c4fcd187e935ddf2d6cc90f41b6d99b592964",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-12T10:15:59.000Z",
+            "0x147393fe2175d3bd2a267730c8066afd475199c52a1895b5524100c3b2ca2c07",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-04-21T14:18:35.000Z",
+            "0xd25ca910a4b7d0bab41828bce014a70f75642449f7c0426a3849ad46a6e60364",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:59:11.000Z",
+            "0xcd8680d72a4b8e347cd5036a1f2ac89b3e106f7c82d705d3cfc35bb6e849d026",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 8,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getUpgradeActivationDelay": 259200,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 259200,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "StarknetOperatorMultisig",
+      "address": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1738599755,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0",
+          "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0",
+          "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+          "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
+          "0x7383DDEd70cCCFd99835612C4148fA986e9DE560",
+          "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C",
+          "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+          "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90",
+          "0x81C1B22c67731D3f0Bac506102Fe998361565874",
+          "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7",
+          "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2",
+          "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xe85d553f958271e75f38effa1ab215f496d978b6ecb4e90080d0beaf23037529",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 12 (25%)",
+        "nonce": 3,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "Safe"
+    },
+    {
+      "name": "UNIBridge",
+      "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+      "sourceHashes": [
+        "0x28ffce7fadb62d041968d5ce5d5fe471d2bedf36c28e342957a33d63a00b872c",
+        "0x8f135fc371babc0f7b9fd3b63668e1c35eed87f3dedd2416ebe0e7a118c4fd0a"
+      ],
+      "proxyType": "StarkWare proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+          "via": []
+        }
+      ],
+      "sinceTimestamp": 1698061847,
+      "values": {
+        "$admin": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
+        "$immutable": false,
+        "$implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "$pastUpgrades": [
+          [
+            "2023-10-23T11:52:23.000Z",
+            "0x9e8cd16d463bff3aaa9aca2f741819ccdba2148450f935446facdb498a424a1e",
+            ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"]
+          ],
+          [
+            "2024-02-08T22:52:47.000Z",
+            "0x2513dff6fab1fe6b7f95d9e436c18c8dd79965a3c7217f79c69787b2f42abc4a",
+            ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"]
+          ],
+          [
+            "2024-10-13T15:57:11.000Z",
+            "0x80c2489d99e1aa4593e1749d905120a22bc688a8c62343edce82130c4566de72",
+            ["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]
+          ]
+        ],
+        "$upgradeCount": 3,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+        },
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_5",
+        "implementation": "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85",
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_VERSION": "5.0.0",
+        "StarkWareProxy_upgradeDelay": 0,
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    }
+  ],
+  "eoas": [
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0000000000000000000000000000000000455448" },
+    { "address": "0x030ceEE5D4CBc304287234720B11E00f47695755" },
+    { "address": "0x033b8521F357F813Cc87B08c0668f1b59FAE45e2" },
+    { "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac" },
+    { "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD" },
+    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
+    { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
+    { "address": "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b" },
+    {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+        }
+      ]
+    },
+    { "address": "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C" },
+    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
+    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
+    { "address": "0x68c6AfB39D2c6e22555175dDaE02d20e37d218f0" },
+    { "address": "0x7383DDEd70cCCFd99835612C4148fA986e9DE560" },
+    { "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E" },
+    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
+    { "address": "0x81C1B22c67731D3f0Bac506102Fe998361565874" },
+    { "address": "0xc196985a8bAfcEcF9C29Cfb24E2fb81f80De53E7" },
+    { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
+    { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
+    { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
+    { "address": "0xe810b82A815AC9d46FDA4D6FBfA8521864f04645" },
+    { "address": "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0" },
+    { "address": "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90" }
+  ],
+  "abis": {
+    "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [
+      "constructor(address _singleton)"
+    ],
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": [
+      "constructor(address _starknet, address _l1Token, uint256 _l2Bridge)",
+      "event LogDeposit(address indexed l1Sender, uint256 amount, uint256 l2Recipient)",
+      "event LogWithdrawal(address indexed l1Recipient, uint256 amount)",
+      "function deposit(uint256 amount, uint256 l2Recipient, uint256 fee) payable",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (uint256)",
+      "function starknet() view returns (address)",
+      "function withdraw(uint256 amount, address l1Recipient)"
+    ],
+    "0x0437465dfb5B79726e35F08559B0cBea55bb585C": [
+      "constructor()",
+      "event Approve(address indexed token, address indexed spender, uint256 value)",
+      "event Deny(address indexed usr)",
+      "event Rely(address indexed usr)",
+      "function approve(address token, address spender, uint256 value)",
+      "function deny(address usr)",
+      "function rely(address usr)",
+      "function wards(address) view returns (uint256)"
+    ],
+    "0x0c5aE94f8939182F2D06097025324D1E537d5B60": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x1268cc171c54F2000402DfF20E93E60DF4c96812": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": [
+      "constructor(address _singleton)"
+    ],
+    "0x283751A21eafBFcD52297820D27C1f1963D9b5b4": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC": [
+      "event AggregatorProgramHashChanged(address indexed changedBy, uint256 oldAggregatorProgramHash, uint256 newAggregatorProgramHash)",
+      "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
+      "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event Finalized()",
+      "event LogMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
+      "event LogMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce, uint256 fee)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogOperatorAdded(address operator)",
+      "event LogOperatorRemoved(address operator)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogStateTransitionFact(bytes32 stateTransitionFact)",
+      "event LogStateUpdate(uint256 globalRoot, int256 blockNumber, uint256 blockHash)",
+      "event MessageToL2Canceled(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event MessageToL2CancellationStarted(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
+      "event ProgramHashChanged(address indexed changedBy, uint256 oldProgramHash, uint256 newProgramHash)",
+      "function aggregatorProgramHash() view returns (uint256)",
+      "function cancelL1ToL2Message(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function configHash() view returns (uint256)",
+      "function consumeMessageFromL2(uint256 fromAddress, uint256[] payload) returns (bytes32)",
+      "function finalize()",
+      "function getMaxL1MsgFee() pure returns (uint256)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isFinalized() view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isOperator(address user) view returns (bool)",
+      "function l1ToL2MessageCancellations(bytes32 msgHash) view returns (uint256)",
+      "function l1ToL2MessageNonce() view returns (uint256)",
+      "function l1ToL2Messages(bytes32 msgHash) view returns (uint256)",
+      "function l2ToL1Messages(bytes32 msgHash) view returns (uint256)",
+      "function messageCancellationDelay() view returns (uint256)",
+      "function programHash() view returns (uint256)",
+      "function registerOperator(address newOperator)",
+      "function sendMessageToL2(uint256 toAddress, uint256 selector, uint256[] payload) payable returns (bytes32, uint256)",
+      "function setAggregatorProgramHash(uint256 newAggregatorProgramHash)",
+      "function setConfigHash(uint256 newConfigHash)",
+      "function setMessageCancellationDelay(uint256 delayInSeconds)",
+      "function setProgramHash(uint256 newProgramHash)",
+      "function starknetAcceptGovernance()",
+      "function starknetCancelNomination()",
+      "function starknetIsGovernor(address user) view returns (bool)",
+      "function starknetNominateNewGovernor(address newGovernor)",
+      "function starknetRemoveGovernor(address governorForRemoval)",
+      "function startL1ToL2MessageCancellation(uint256 toAddress, uint256 selector, uint256[] payload, uint256 nonce) returns (bytes32)",
+      "function stateBlockHash() view returns (uint256)",
+      "function stateBlockNumber() view returns (int256)",
+      "function stateRoot() view returns (uint256)",
+      "function unregisterOperator(address removedOperator)",
+      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
+      "function updateStateKzgDA(uint256[] programOutput, bytes[] kzgProofs)"
+    ],
+    "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address token) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function maxDeposit() pure returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
+    ],
+    "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7": [
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenEnlisted(address indexed token, address indexed bridge)",
+      "event TokenSelfRemoved(address indexed token, address indexed bridge)",
+      "event TokenStatusBlocked(address indexed token)",
+      "function blockToken(address token)",
+      "function enlistToken(address token, address bridge)",
+      "function getBridge(address token) view returns (address)",
+      "function getWithdrawalBridges(address token) view returns (address[] bridges)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function selfRemove(address token)"
+    ],
+    "0x64608BDF1867110f622391196989bF4cE37BBb33": [
+      "event ExistingBridgeAdded(address indexed token, address indexed bridge)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TokenBlocked(address indexed token, address indexed sender)",
+      "event TokenDeactivated(address indexed token, address indexed sender)",
+      "event TokenEnrolled(address indexed token, address indexed sender)",
+      "function addExistingBridge(address token, address bridge_)",
+      "function blockToken(address token)",
+      "function deactivateToken(address token)",
+      "function enrollTokenBridge(address token) payable",
+      "function getRegistry() view returns (address)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)"
+    ],
+    "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0": [
+      "constructor(uint256 _cap)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Snapshot(uint256 id)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function balanceOfAt(address account, uint256 snapshotId) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function snapshot()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
+    ],
+    "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function assignLegacyProxyGovernor(address account)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function maxDeposit() pure returns (uint256)",
+      "function maxTotalBalance() view returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeLegacyProxyGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(uint256 amount, address recipient)",
+      "function withdraw(uint256 amount)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
+    ],
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": [
+      "constructor(address _singleton)"
+    ],
+    "0x83C0A700114101D1283D1405E2c8f21D3F03e988": [
+      "constructor(address _singleton)"
+    ],
+    "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": [
+      "constructor(address _singleton)"
+    ],
+    "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function assignLegacyProxyGovernor(address account)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function maxDeposit() pure returns (uint256)",
+      "function maxTotalBalance() view returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeLegacyProxyGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(uint256 amount, address recipient)",
+      "function withdraw(uint256 amount)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
+    ],
+    "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": [
+      "constructor(address _starkNet, address _dai, uint256 _l2Dai, address _escrow, uint256 _l2DaiBridge)",
+      "event Closed()",
+      "event Deny(address indexed usr)",
+      "event LogCancelDeposit(uint256 indexed l2Recipient, address l1Recipient, uint256 amount, uint256 nonce)",
+      "event LogCeiling(uint256 ceiling)",
+      "event LogDeposit(address indexed l1Sender, uint256 amount, uint256 l2Recipient)",
+      "event LogForceWithdrawal(address indexed l1Recipient, uint256 amount, uint256 indexed l2Sender)",
+      "event LogMaxDeposit(uint256 maxDeposit)",
+      "event LogStartDepositCancellation(uint256 indexed l2Receipient, uint256 amount, uint256 nonce)",
+      "event LogWithdrawal(address indexed l1Recipient, uint256 amount)",
+      "event Rely(address indexed usr)",
+      "function cancelDeposit(uint256 amount, uint256 l2Recipient, address l1Recipient, uint256 nonce)",
+      "function ceiling() view returns (uint256)",
+      "function close()",
+      "function dai() view returns (address)",
+      "function deny(address usr)",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function escrow() view returns (address)",
+      "function forceWithdrawal(uint256 amount, uint256 l2Sender) payable",
+      "function isOpen() view returns (uint256)",
+      "function l2Dai() view returns (uint256)",
+      "function l2DaiBridge() view returns (uint256)",
+      "function maxDeposit() view returns (uint256)",
+      "function rely(address usr)",
+      "function setCeiling(uint256 _ceiling)",
+      "function setMaxDeposit(uint256 _maxDeposit)",
+      "function starkNet() view returns (address)",
+      "function startDepositCancellation(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function wards(address) view returns (uint256)",
+      "function withdraw(uint256 amount, address l1Recipient)"
+    ],
+    "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address testGovernor) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address testGovernor) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": [
+      "constructor(address _singleton)"
+    ],
+    "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"
+  }
+}
