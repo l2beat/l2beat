@@ -1,4 +1,3 @@
-import { expect } from 'earl'
 import { getConfig } from '../config'
 
 /**
@@ -9,6 +8,6 @@ import { getConfig } from '../config'
 describe('Configuration Smoke Test', () => {
   it('should load configuration without throwing', async () => {
     // no expect on purpose - getConfig will throw with a meaningful error message
-    await expect(getConfig).not.toBeRejected()
+    await getConfig()
   })
 })
