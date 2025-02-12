@@ -115,19 +115,16 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{project.shortName ?? project.name}</TooltipTrigger>
-      <TooltipContent className="flex max-w-[324px] flex-col gap-2 px-[14px]">
+      <TooltipContent className="flex max-w-[284px] flex-col gap-2 px-[14px] sm:max-w-[348px]">
         <span className="text-lg font-bold">
           What is {project.shortName ?? project.name}?
         </span>
         <p className="text-wrap text-[13px]">{project.description}</p>
-        <div className="flex w-full flex-row flex-wrap">
+        <div className="grid w-full grid-cols-4 sm:grid-cols-5">
           {project.badgesMeta?.map((badge, key) => (
-            <ProjectBadge
-              key={key}
-              badge={badge}
-              hideTooltip
-              className="lg:h-16"
-            />
+            <div key={key} className="h-16 place-items-center">
+              <ProjectBadge badge={badge} hideTooltip className="lg:h-16" />
+            </div>
           ))}
         </div>
       </TooltipContent>
