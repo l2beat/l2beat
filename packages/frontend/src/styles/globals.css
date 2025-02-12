@@ -35,6 +35,14 @@
     --chart-ethereum: 223 69% 50.6%;
     --chart-da-celestia: 284 100% 78%;
     --chart-da-avail: 151 90% 48%;
+
+    --chart-native: 320deg 100% 63.7%;
+    --chart-external: 45deg 100% 51.4%;
+    --chart-canonical: 266deg 57.7% 52.7%;
+
+    --chart-signature-gradient-fill: 302 100% 68.6%;
+    --chart-signature-gradient-stroke-1: 266 57.7% 52.7%;
+    --chart-signature-gradient-stroke-2: 321 84.3% 60%;
   }
 
   .dark {
@@ -64,6 +72,14 @@
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
+
+    --chart-native: 320deg 100% 63.7%;
+    --chart-external: 45deg 100% 51.4%;
+    --chart-canonical: 266deg 57.7% 52.7%;
+
+    --chart-signature-gradient-fill: 313 40.1% 38.6%;
+    --chart-signature-gradient-stroke-1: 284 87.1% 75.7%;
+    --chart-signature-gradient-stroke-2: 321 84.3% 60%;
   }
 }
 
