@@ -248,9 +248,8 @@ export const kroma: Layer2 = {
         'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. Once the single block of disagreement\
         is found, the challenger is required to present a ZK proof of the fraud. This can be either a proof verified in a zkEVM verifier base on Scroll, or in a\
         zkVM verifier built by Succinct SP1. If the proof is validated, the incorrect state output is deleted. The Security Council can always override the\
-        result of the challenge, it can also delete any L2 state root at any time. If the malicious attester and challenger collude and are willing to spend\
-        bonds, they can perform a delay attack by engaging in continuous challenges resulting in a lack of finalization of the L2 state root on L1. The protocol\
-        can also fail under certain conditions.',
+        result of the challenge, it can also delete any L2 state root at any time. The protocol\
+        can fail under certain conditions.',
       references: [
         {
           title:
@@ -274,10 +273,6 @@ export const kroma: Layer2 = {
         },
       ],
       risks: [
-        {
-          category: 'Withdrawals can be delayed if',
-          text: 'the fraud proof system is under a delay attack.',
-        },
         {
           category: 'Funds can be lost if',
           text: 'the cryptography is broken or implemented incorrectly.',
