@@ -11,6 +11,7 @@ import { blockfit } from './blockfit'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
+import { conwai } from './conwai'
 import { datalake } from './datalake'
 import { degen } from './degen'
 import { deri } from './deri'
@@ -71,6 +72,7 @@ export const layer3s: Layer3[] = [
   b3,
   cheese,
   clique,
+  conwai,
   datalake,
   degen,
   deri,
