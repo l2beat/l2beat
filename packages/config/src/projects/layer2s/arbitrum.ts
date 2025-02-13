@@ -375,7 +375,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   stateValidation: {
     isUnderReview: true,
-    description: '',
+    description: '.',
     categories: [],
   },
   milestones: [
