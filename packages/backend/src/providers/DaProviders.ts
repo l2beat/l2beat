@@ -26,13 +26,13 @@ export class DaProviders {
     for (const client of celestiaLikeClients) {
       this.daProviders.set(
         client.daLayer,
-        new CelestiaDaProvider(client.client, 'ethereum'),
+        new CelestiaDaProvider(client.client, 'celestia'),
       )
     }
     for (const client of availLikeClients) {
       this.daProviders.set(
         client.daLayer,
-        new AvailDaProvider(client.client, 'ethereum'),
+        new AvailDaProvider(client.client, 'avail'),
       )
     }
   }
