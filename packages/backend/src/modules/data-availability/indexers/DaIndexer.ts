@@ -1,6 +1,6 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { ProjectDaTrackingConfig } from '@l2beat/config'
-import type { DaProvider } from '@l2beat/shared'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -47,27 +47,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       configurations: configurations.length,
     })
 
-    const blobs = await this.$.daProvider.getBlobs(from, to)
+    const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
 
-    const from2 = new UnixTime(
-      Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
-    )
+    const previousRecords = await this.getPreviousRecords(blobs, configurations)
 
-    const to2 = new UnixTime(
-      Math.max(...blobs.map((b) => b.blockTimestamp.toNumber())),
-    )
-
-    const previous = await this.$.db.dataAvailability.getForDaLayerInTimeRange(
-      this.$.daLayer,
-      from2,
-      to2,
-    )
-
-    const projects = new Set(configurations.map((c) => c.properties.project))
-
-    const filtered = previous.filter((p) => projects.has(p.projectId))
-
-    const records = this.$.daService.generateRecords(blobs, filtered)
+    const records = this.$.daService.generateRecords(blobs, previousRecords)
 
     return async () => {
       await this.$.db.dataAvailability.upsertMany(records)
@@ -82,16 +66,42 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
     }
   }
 
-  override async removeData(_: RemovalConfiguration[]) {
-    return await Promise.resolve()
+  private async getPreviousRecords(
+    blobs: DaBlob[],
+    configurations: Configuration<DaTrackingConfig>[],
+  ) {
+    const from = new UnixTime(
+      Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
+    ).toStartOf('day')
 
+    const to = new UnixTime(
+      Math.max(...blobs.map((b) => b.blockTimestamp.toNumber())),
+    ).toEndOf('day')
+
+    const recordsForDaLayerInRange =
+      await this.$.db.dataAvailability.getForDaLayerInTimeRange(
+        this.$.daLayer,
+        from,
+        to,
+      )
+
+    const projects = new Set(configurations.map((c) => c.properties.project))
+    projects.add(this.$.daLayer)
+
+    const onlyRecordsForConfigurations = recordsForDaLayerInRange.filter((p) =>
+      projects.has(p.projectId),
+    )
+
+    return onlyRecordsForConfigurations
+  }
+
+  override async removeData(_: RemovalConfiguration[]) {
     // for (const configuration of configurations) {
     //   const deletedRecords = await this.$.db.price.deleteByConfigInTimeRange(
     //     configuration.id,
     //     new UnixTime(configuration.from),
     //     new UnixTime(configuration.to),
     //   )
-
     //   if (deletedRecords > 0) {
     //     this.logger.info('Deleted records', {
     //       from: configuration.from,

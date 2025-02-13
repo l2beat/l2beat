@@ -40,6 +40,8 @@ export function initDataAvailabilityModule(
   const daIndexers: DaIndexer[] = []
 
   const daLayers = new Set([ProjectId('ethereum')])
+  const ethStart = 19426618
+  const batchSize = 2500
   // const daLayers = new Set(config.da.projects.map((p) => p.config.daLayer))
 
   for (const daLayer of daLayers.values()) {
@@ -64,7 +66,7 @@ export function initDataAvailabilityModule(
     const indexer = new DaIndexer({
       configurations: configurations.map((c) => ({
         id: c.configurationId,
-        minHeight: 0,
+        minHeight: ethStart,
         maxHeight: null,
         properties: {
           project: c.projectId,
@@ -75,7 +77,7 @@ export function initDataAvailabilityModule(
       daService,
       logger,
       daLayer,
-      batchSize: 100,
+      batchSize,
       parents: [targetIndexer],
       indexerService,
       db: database,
