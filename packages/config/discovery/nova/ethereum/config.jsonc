@@ -35,14 +35,7 @@
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
     "L1Timelock": {
-      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
+      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
     },
     // Arbitrum One Bridge
     "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
