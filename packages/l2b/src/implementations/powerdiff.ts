@@ -90,12 +90,12 @@ function diffPaths(
     let diff
     if (filePaths.left === filePaths.right) {
       diff = readFileSync(filePaths.left).toString()
-      if (filePaths.left.startsWith(config.path1)) {
-        status = 'added'
-        diff = chalk.greenBright(diff)
-      } else {
+      if (filePaths.left.startsWith(addTrailingSlash(config.path1))) {
         status = 'removed'
         diff = chalk.redBright(diff)
+      } else {
+        status = 'added'
+        diff = chalk.greenBright(diff)
       }
     } else {
       diff = compareUsingDifftastic(
@@ -368,6 +368,10 @@ const HTML_START = `
   `
 
 const HTML_END = '<br><br></body></html>'
+
+function addTrailingSlash(path: string): string {
+  return path.endsWith('/') ? path : `${path}/`
+}
 
 export function powerdiff(
   path1: string,

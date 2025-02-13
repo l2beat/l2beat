@@ -147,8 +147,8 @@ const PowerdiffDiscovery = command({
     const leftPath = path.join(projectPath, flatAt[0])
     const rightPath = path.join(projectPath, '.flat')
     powerdiff(
-      rightPath,
       leftPath,
+      rightPath,
       difftasticPath,
       mode,
       displayMode,
