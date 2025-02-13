@@ -11,7 +11,7 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 
 export class DaService {
   readonly mappedConfig: {
@@ -91,7 +91,8 @@ export class DaService {
     blob: DaBlob,
   ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
     const daLayerRecord: DataAvailabilityRecord = {
-      projectId: ProjectId(blob.type),
+      projectId: blob.daLayer,
+      daLayer: blob.daLayer,
       timestamp: blob.blockTimestamp.toStartOf('day'),
       totalSize: blob.size,
     }
@@ -119,6 +120,7 @@ export class DaService {
     const projectRecord = projectId
       ? {
           projectId,
+          daLayer: blob.daLayer,
           timestamp: blob.blockTimestamp.toStartOf('day'),
           totalSize: blob.size,
         }

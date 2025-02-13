@@ -4,13 +4,8 @@ import type { DataAvailability } from '../../kysely/generated/types'
 
 export interface DataAvailabilityRecord {
   projectId: string
+  daLayer: string
   timestamp: UnixTime
-  totalSize: bigint
-}
-
-export interface DataAvailabilityRow {
-  projectId: string
-  timestamp: Date
   totalSize: bigint
 }
 
@@ -19,6 +14,7 @@ export function toRecord(
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
+    daLayer: row.daLayer,
     timestamp: UnixTime.fromDate(row.timestamp),
     totalSize: BigInt(row.totalSize),
   }
@@ -29,6 +25,7 @@ export function toRow(
 ): Insertable<DataAvailability> {
   return {
     projectId: record.projectId,
+    daLayer: record.daLayer,
     timestamp: record.timestamp.toDate(),
     totalSize: record.totalSize.toString(),
   }
