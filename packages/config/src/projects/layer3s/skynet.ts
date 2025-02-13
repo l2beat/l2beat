@@ -25,7 +25,10 @@ export const skynet: Layer3 = underReviewL3({
       apps: [
         'https://bridge.skynet.io/?destinationChain=Skynet%20Mainnet&sourceChain=arbitrum-one',
       ],
-      socialMedia: ['https://x.com/Skynet_for_AI', 'https://discord.com/invite/aHGxa3w5P9'],
+      socialMedia: [
+        'https://x.com/Skynet_for_AI',
+        'https://discord.com/invite/aHGxa3w5P9',
+      ],
     },
   },
   transactionApi: {
