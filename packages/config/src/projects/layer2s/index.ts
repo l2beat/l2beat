@@ -51,6 +51,7 @@ import { fhenix } from './fhenix'
 import { fluence } from './fluence'
 import { fluent } from './fluent'
 import { form } from './form'
+import { formnetwork } from './formnetwork'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -254,6 +255,7 @@ export const layer2s: Layer2[] = [
   fluence,
   fluent,
   form,
+  formnetwork,
   frame,
   fraxtal,
   fuel,
