@@ -27,6 +27,7 @@ import { huddle01 } from './huddle01'
 import { hyperliquid } from './hyperliquid'
 import { inevm } from './inevm'
 import { l3x } from './l3x'
+import { layeredge } from './layeredge'
 import { lumiterra } from './lumiterra'
 import { meliora } from './meliora'
 import { mindchain } from './mindchain'
@@ -104,6 +105,7 @@ export const layer3s: Layer3[] = [
   mxc,
   unite,
   l3x,
+  layeredge,
   lumiterra,
   oursong,
   playblock,
