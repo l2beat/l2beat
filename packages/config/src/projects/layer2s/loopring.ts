@@ -39,8 +39,7 @@ const forcedWithdrawalFee = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['LoopringMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LoopringMultisig', delay: 'no' }],
 }
 
 const upgradeDelay = 0

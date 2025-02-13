@@ -43,6 +43,7 @@ import type {
   ProjectPermission,
   ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
@@ -127,8 +128,7 @@ interface OrbitStackConfigCommon {
   nonTemplateEscrows?: ProjectEscrow[]
   overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
@@ -172,7 +172,6 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
     category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
-  hostChain: ProjectId
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -601,12 +600,10 @@ function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const layer2s = require('..').layer2s as Layer2[]
+  const hostChain = templateVars.discovery.chain
 
-  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
-  assert(
-    baseChain,
-    `Could not find base chain ${templateVars.hostChain} in layer2s`,
-  )
+  const baseChain = layer2s.find((l2) => l2.id === hostChain)
+  assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
@@ -643,8 +640,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -770,7 +766,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
-    hostChain: templateVars.hostChain,
+    hostChain: ProjectId(hostChain),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -953,8 +949,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const category =

@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 21736831,
+  "blockNumber": 21829857,
   "configHash": "0x62942373b69e84d5fe177472b0c4a990c35774c44f660bd0cba14cf4fb465b90",
   "contracts": [
     {
@@ -158,11 +158,21 @@
       "derivedName": "EndpointV2"
     },
     {
-      "name": "",
+      "name": "BlockedMessageLib",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-      "unverified": true,
+      "sourceHashes": [
+        "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
+      ],
       "sinceTimestamp": 1706307671,
-      "values": { "$immutable": true }
+      "values": {
+        "$immutable": true,
+        "messageLibType": 2,
+        "version": {
+          "major": "18446744073709551615",
+          "minor": 255,
+          "endpointVersion": 2
+        }
+      }
     },
     {
       "name": "DineroOFTLockbox",
@@ -794,7 +804,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 221,
+        "nonce": 229,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1248,6 +1258,13 @@
       "function transferOwnership(address newOwner)",
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
+    ],
+    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
+      "error LZ_NotImplemented()",
+      "function isSupportedEid(uint32) pure returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
     "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",

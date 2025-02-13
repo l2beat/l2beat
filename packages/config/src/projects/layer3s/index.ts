@@ -44,6 +44,7 @@ import { popapex } from './popapex'
 import { popboss } from './popboss'
 import { rari } from './rari'
 import { sanko } from './sanko'
+import { skynet } from './skynet'
 import { songprotocol } from './songprotocol'
 import { spheron } from './spheron'
 import { stack } from './stack'
@@ -96,6 +97,7 @@ export const layer3s: Layer3[] = [
   pmon,
   sanko,
   stack,
+  skynet,
   syndicateframe,
   meliora,
   mindchain,

@@ -10,8 +10,7 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('ancient')
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
 }
 
 export const ancient: Layer2 = opStackL2({

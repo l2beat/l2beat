@@ -1,4 +1,4 @@
-import { type Project, type WarningWithSentiment } from '@l2beat/config'
+import type { Project, WarningWithSentiment } from '@l2beat/config'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { groupByTabs } from '~/utils/group-by-tabs'
@@ -17,7 +17,7 @@ export async function getScalingCostsEntries() {
   const [projectsChangeReport, projects, costs] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'costsInfo'],
+      select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -42,7 +42,7 @@ export interface ScalingCostsEntry extends CommonScalingEntry {
 }
 
 function getScalingCostEntry(
-  project: Project<'statuses' | 'scalingInfo' | 'costsInfo'>,
+  project: Project<'statuses' | 'scalingInfo' | 'costsInfo' | 'display'>,
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
 ): ScalingCostsEntry {

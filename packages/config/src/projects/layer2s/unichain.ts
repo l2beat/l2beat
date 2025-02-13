@@ -89,4 +89,12 @@ export const unichain: Layer2 = opStackL2({
       },
     ],
   },
+  milestones: [
+    {
+      title: 'Unichain Mainnet Launch',
+      url: 'https://x.com/unichain/status/1889313993296064770',
+      date: '2025-02-12T00:00:00Z',
+      type: 'general',
+    },
+  ],
 })

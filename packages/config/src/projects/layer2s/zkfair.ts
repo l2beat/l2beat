@@ -80,8 +80,7 @@ const exitWindowRisk = {
 } as const
 
 const timelockUpgrades = {
-  upgradableBy: ['ZKFairAdmin'],
-  upgradeDelay: exitWindowRisk.value,
+  upgradableBy: [{ name: 'ZKFairAdmin', delay: exitWindowRisk.value }],
   upgradeConsiderations: exitWindowRisk.description,
 }
 

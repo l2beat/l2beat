@@ -35,6 +35,7 @@ import type {
   ProjectEscrow,
   ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectPurpose,
@@ -109,8 +110,7 @@ export interface ZkStackConfigCommon {
 }
 
 export type Upgradeability = {
-  upgradeDelay?: string
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
@@ -219,10 +219,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
   const upgrades: Upgradeability = {
-    upgradableBy: ['ProtocolUpgradeHandler'],
-    upgradeDelay: `${formatSeconds(
-      upgradeDelayWithScApprovalS,
-    )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+    upgradableBy: [
+      {
+        name: 'ProtocolUpgradeHandler',
+        delay: `${formatSeconds(
+          upgradeDelayWithScApprovalS,
+        )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+      },
+    ],
   }
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]

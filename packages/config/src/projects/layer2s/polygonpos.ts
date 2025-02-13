@@ -15,8 +15,7 @@ import { Badge } from '../badges'
 const discovery = new ProjectDiscovery('polygon-pos')
 
 const upgrades = {
-  upgradableBy: ['PolygonMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'PolygonMultisig', delay: 'no' }],
 }
 
 const delayString = formatSeconds(

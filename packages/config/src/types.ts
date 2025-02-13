@@ -8,7 +8,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId } from './projects/badges'
+import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -884,7 +884,10 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
+  badges: ScalingProjectBadge[] | undefined
 }
+
+export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
 
 export type ScalingProjectStage =
   | 'Not applicable'
@@ -1067,6 +1070,13 @@ export interface ProjectContracts {
   risks: ScalingProjectRisk[]
 }
 
+export interface ProjectUpgradeableActor {
+  /** Actor from permissions that can upgrade */
+  name: string
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  delay: string
+}
+
 export interface ProjectContract {
   /** Address of the contract */
   address: EthereumAddress
@@ -1080,10 +1090,8 @@ export interface ProjectContract {
   description?: string
   /** Details about upgradeability */
   upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
   /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
   /** Other considerations worth mentioning about the upgrade process */
   upgradeConsiderations?: string
   /** Pasuable contract */

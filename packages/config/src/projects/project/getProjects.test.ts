@@ -125,7 +125,7 @@ describe('getProjects', () => {
 
             if (upgradableBy) {
               it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy)
+                expect(actors).toInclude(...upgradableBy.map((a) => a.name))
               })
             }
           }

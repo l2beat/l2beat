@@ -20,7 +20,7 @@ export async function getScalingArchivedEntries() {
     getProjectsChangeReport(),
     get7dTokenBreakdown({ type: 'layer2' }),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingRisks'],
+      select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
       where: ['isScaling', 'isArchived'],
     }),
   ])
@@ -46,7 +46,7 @@ export interface ScalingArchivedEntry extends CommonScalingEntry {
 }
 
 function getScalingArchivedEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
   changes: ProjectChanges,
   latestTvs: LatestTvs['projects'][string] | undefined,
 ): ScalingArchivedEntry {
