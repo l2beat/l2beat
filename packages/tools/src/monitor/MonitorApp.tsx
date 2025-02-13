@@ -13,14 +13,11 @@ export function MonitorApp() {
     staleTime: 1000 * 60, // 1 minute
   })
 
-  console.log(result.data, result.isLoading, result.isError, result.error)
-
   if (result.isPending || result.isLoading) {
     return <LoadingState />
   }
 
   if (result.isError) {
-    console.error(result.error)
     return <ErrorState />
   }
 
