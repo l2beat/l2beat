@@ -18,8 +18,8 @@ export class CelestiaRpcClient extends ClientCore {
   }
 
   async getLatestBlockNumber(): Promise<number> {
-    const blockTimestamp = await this.getBlockTimestamp()
-    return blockTimestamp.toNumber()
+    const block = await this.getBlockResult()
+    return Number(block.height)
   }
 
   async getBlockWithTransactions(
@@ -77,12 +77,12 @@ export class CelestiaRpcClient extends ClientCore {
 
   async query(method: string, params: Record<string, string>) {
     const url = `${this.$.url}${method}`
-    const searchParams = new URLSearchParams(params).toString()
+    const query =
+      Object.keys(params).length > 0 ? `?${new URLSearchParams(params)}` : ''
 
-    return await this.fetch(`${url}?${searchParams}`, {
+    return await this.fetch(`${url}${query}`, {
       method: 'GET',
       redirect: 'follow',
-      timeout: 5_000, // Most RPCs respond in ~2s during regular conditions
     })
   }
 
