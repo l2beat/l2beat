@@ -14,6 +14,7 @@ import { env } from '~/env'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
+import { AnomaliesSection } from './_components/anomalies/anomalies-section'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
 const scalingProjects = [...layer2s, ...layer3s]
@@ -91,6 +92,7 @@ export default async function Page(props: Props) {
               />
             </div>
             <div className="w-full">
+              <AnomaliesSection projectId={project.id} />
               {projectEntry.countdowns.otherMigration &&
                 !featureFlags.othersMigrated() && (
                   <OtherMigrationNotice
