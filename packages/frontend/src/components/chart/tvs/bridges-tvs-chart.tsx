@@ -4,7 +4,7 @@ import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import { ChartContainer, ChartTooltip } from '~/components/core/chart/chart'
-import { ChartMilestone } from '~/components/core/chart/chart-milestone'
+import { ChartMilestone } from '~/components/core/chart/chart-milestones'
 import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   SignatureGradientFillDef,

@@ -8,6 +8,7 @@ import { Logo } from '~/components/logo'
 import type { Milestone } from '@l2beat/config'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
+import { ChartMilestones } from './chart-milestones'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -39,91 +40,69 @@ export function useChart() {
   return context
 }
 
-type MilestoneContextProps = {
-  milestone: Milestone | undefined
-  setMilestone: (milestone: Milestone | undefined) => void
-}
-
-const MilestoneContext = React.createContext<MilestoneContextProps | null>(null)
-
-function MilestoneContextProvider({ children }: { children: React.ReactNode }) {
-  const [milestone, setMilestone] = React.useState<Milestone | undefined>(
-    undefined,
-  )
-  console.log(milestone)
-
-  return (
-    <MilestoneContext.Provider value={{ milestone, setMilestone }}>
-      {children}
-    </MilestoneContext.Provider>
-  )
-}
-
-export function useMilestone() {
-  const context = React.useContext(MilestoneContext)
-
-  if (!context) {
-    throw new Error('useMilestone must be used within a <ChartContainer />')
-  }
-
-  return context
-}
-
-const ChartContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    config: ChartConfig
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >['children']
-    isLoading?: boolean
-  }
->(({ id, className, children, config, isLoading, ...props }, ref) => {
+const ChartContainer = ({
+  id,
+  className,
+  children,
+  config,
+  isLoading,
+  dataWithMilestones,
+  ...props
+}: React.ComponentProps<'div'> & {
+  config: ChartConfig
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >['children']
+  dataWithMilestones?: { milestone: Milestone | undefined }[]
+  isLoading?: boolean
+}) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
+  const ref = React.useRef<HTMLDivElement>(null)
 
   return (
     <ChartContext.Provider value={{ config }}>
-      <MilestoneContextProvider>
-        <div
-          data-chart={chartId}
-          ref={ref}
-          className={cn(
-            'relative h-[192px] min-h-[192px] w-full md:h-[232px] md:min-h-[232px] xl:h-[262px] xl:min-h-[262px]',
-            "flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-            //  Tooltip cursor line
-            '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
-            // Tooltip
-            '[&_.recharts-tooltip-wrapper]:!transition-none',
-            // Cartesian grid line
-            "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
-            // Cartesian X axis tick text
-            '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
-            // Cartesian Y axis tick text
-            '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
-            // Polar grid
-            "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
-            // No clue what it does
-            // "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-border"
-            // Handle when there are radial bars
-            // "[&_.recharts-radial-bar-background-sector]:fill-muted",
-            className,
-          )}
-          {...props}
-        >
-          <ChartStyle id={chartId} config={config} />
-          <RechartsPrimitive.ResponsiveContainer>
-            {isLoading ? <ChartLoader /> : children}
-          </RechartsPrimitive.ResponsiveContainer>
-          <Logo
-            animated={false}
-            className="absolute bottom-10 right-3 h-8 w-20 opacity-50"
-          />
-        </div>
-      </MilestoneContextProvider>
+      <div
+        data-chart={chartId}
+        ref={ref}
+        className={cn(
+          'relative h-[192px] min-h-[192px] w-full md:h-[232px] md:min-h-[232px] xl:h-[262px] xl:min-h-[262px]',
+          "flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          //  Tooltip cursor line
+          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
+          // Tooltip
+          '[&_.recharts-tooltip-wrapper]:!transition-none',
+          // Cartesian grid line
+          "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
+          // Cartesian X axis tick text
+          '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
+          // Cartesian Y axis tick text
+          '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
+          // Polar grid
+          "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
+          // No clue what it does
+          // "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-border"
+          // Handle when there are radial bars
+          // "[&_.recharts-radial-bar-background-sector]:fill-muted",
+          className,
+        )}
+        {...props}
+      >
+        <ChartStyle id={chartId} config={config} />
+        <RechartsPrimitive.ResponsiveContainer>
+          {isLoading ? <ChartLoader /> : children}
+        </RechartsPrimitive.ResponsiveContainer>
+        <Logo
+          animated={false}
+          className="absolute bottom-10 right-3 h-8 w-20 opacity-50"
+        />
+        {!isLoading && dataWithMilestones && (
+          <ChartMilestones chartData={dataWithMilestones} ref={ref} />
+        )}
+      </div>
     </ChartContext.Provider>
   )
-})
+}
 ChartContainer.displayName = 'Chart'
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {

@@ -1,7 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
@@ -11,16 +11,14 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  useMilestone,
 } from '~/components/core/chart/chart'
-import { ChartMilestone } from '~/components/core/chart/chart-milestone'
 import { getCommonChartComponents } from '~/components/core/chart/common'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
@@ -30,7 +28,6 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
-import { ChartMilestoneHover } from '../../core/chart-milestone-hover'
 import { mapMilestones } from '../../core/utils/map-milestones'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
@@ -58,7 +55,6 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
-  const ref = useRef(null)
   const { checked } = useRecategorisationPreviewContext()
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
@@ -123,8 +119,12 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         timeRange={chartRange}
       />
       <div className="relative size-full">
-        <ChartContainer config={chartConfig} isLoading={isLoading}>
-          <ComposedChart data={chartData} margin={{ top: 20 }} ref={ref}>
+        <ChartContainer
+          config={chartConfig}
+          isLoading={isLoading}
+          dataWithMilestones={chartData}
+        >
+          <AreaChart data={chartData} margin={{ top: 20 }}>
             <ChartLegend content={<ChartLegendContent />} />
             <ChartTooltip content={<CustomTooltip />} />
             <Area
@@ -157,27 +157,14 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
               isAnimationActive={false}
               activeDot={{ stroke: 'hsl(var(--primary))' }}
             />
-
             {getCommonChartComponents({
               chartData,
               yAxis: {
                 tickFormatter: (value: number) => formatYAxisLabel(value),
               },
             })}
-          </ComposedChart>
+          </AreaChart>
         </ChartContainer>
-        {chartData?.map((data, index) => {
-          if (!data.milestone || !ref.current) return null
-          const x = index / (chartData.length - 1)
-          const current = ref.current as { props: { width: number } }
-          return (
-            <ChartMilestone
-              key={data.milestone.date}
-              milestone={data.milestone}
-              left={x * (current.props.width - 10)}
-            />
-          )
-        })}
       </div>
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
@@ -203,15 +190,6 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { milestone } = useMilestone()
-
-  if (milestone) {
-    return (
-      <div className={tooltipContentVariants()}>
-        <ChartMilestoneHover milestone={milestone} />
-      </div>
-    )
-  }
   if (!active || !payload || typeof label !== 'number') return null
 
   return (

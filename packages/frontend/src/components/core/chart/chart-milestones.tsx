@@ -1,8 +1,10 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { useEffect, useState } from 'react'
 import { ChartMilestoneHover } from '~/components/chart/core/chart-milestone-hover'
 import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { formatDate } from '~/utils/dates'
 import { DialogTitle } from '../dialog'
 import {
@@ -13,6 +15,46 @@ import {
   DrawerTrigger,
 } from '../drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
+
+export function ChartMilestones<
+  T extends { milestone: Milestone | undefined },
+>({
+  chartData,
+  ref,
+}: {
+  chartData: T[] | undefined
+  ref: React.RefObject<HTMLDivElement | null>
+}) {
+  const [width, setWidth] = useState<number>()
+
+  useEffect(() => {
+    if (!ref.current) return
+    setWidth(ref.current.getBoundingClientRect().width)
+  }, [ref])
+
+  useEventListener('resize', () => {
+    if (!ref.current) return
+    setWidth(ref.current.getBoundingClientRect().width)
+  })
+
+  if (!chartData || width === undefined) return null
+
+  return (
+    <div data-role="milestones">
+      {chartData?.map((data, index) => {
+        if (!data.milestone) return null
+        const x = index / (chartData.length - 1)
+        return (
+          <ChartMilestone
+            key={data.milestone.date}
+            milestone={data.milestone}
+            left={x * (width - 10)}
+          />
+        )
+      })}
+    </div>
+  )
+}
 
 export function ChartMilestone({
   milestone,
