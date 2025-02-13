@@ -99,6 +99,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
+    warning: undefined,
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
