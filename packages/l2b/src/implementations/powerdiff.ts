@@ -91,11 +91,11 @@ function diffPaths(
     if (filePaths.left === filePaths.right) {
       diff = readFileSync(filePaths.left).toString()
       if (filePaths.left.startsWith(config.path1)) {
-        status = 'removed'
-        diff = chalk.redBright(diff)
-      } else {
         status = 'added'
         diff = chalk.greenBright(diff)
+      } else {
+        status = 'removed'
+        diff = chalk.redBright(diff)
       }
     } else {
       diff = compareUsingDifftastic(
