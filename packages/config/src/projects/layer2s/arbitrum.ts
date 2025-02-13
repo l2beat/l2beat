@@ -326,6 +326,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       validatorAfkTime,
       l1TimelockDelay,
     ),
+    stateValidation: RISK_VIEW.STATE_FP_INT,
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -338,7 +339,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
@@ -347,7 +348,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
+        fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: false,
       },
     },
