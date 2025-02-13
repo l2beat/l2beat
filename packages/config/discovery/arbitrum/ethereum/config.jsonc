@@ -40,21 +40,6 @@
       // pre-nitro rollup contract
       "ignoreDiscovery": true
     },
-    "L1Timelock": {
-      "ignoreRelatives": ["l2Timelock"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        },
-        "scheduledTransactions": {
-          "handler": {
-            "type": "arbitrumScheduledTransactions"
-          }
-        }
-      }
-    },
     "OutboxV1": {
       "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
     },

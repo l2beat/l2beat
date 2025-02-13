@@ -24,10 +24,18 @@ export const publicSystemsColumns = [
     columns: [
       columnHelper.display({
         header: 'PAST DAY AVG',
-        cell: (ctx) =>
-          ctx.row.original.pastDayAvgThroughput && (
-            <div>{ctx.row.original.pastDayAvgThroughput} MB/s</div>
-          ),
+        cell: (ctx) => (
+          <TableValueCell
+            emptyMode="no-data"
+            value={
+              ctx.row.original.pastDayAvgThroughput
+                ? {
+                    value: `${ctx.row.original.pastDayAvgThroughput} MB/s`,
+                  }
+                : undefined
+            }
+          />
+        ),
       }),
       columnHelper.display({
         header: 'MAX',
@@ -64,7 +72,7 @@ export const publicSystemsColumns = [
     },
   }),
   columnHelper.display({
-    header: 'past day avg\nlargest poster',
+    header: 'past day\nlargest poster (L2)',
     cell: (ctx) => (
       <TableValueCell
         emptyMode="no-data"
