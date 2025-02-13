@@ -10,7 +10,7 @@ export interface DataAvailabilityRecord {
 }
 
 export function toRecord(
-  row: Omit<Selectable<DataAvailability>, 'daLayer'>,
+  row: Selectable<DataAvailability>,
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
