@@ -7,7 +7,12 @@ export const g7: Layer3 = underReviewL3({
   id: 'g7',
   capability: 'universal',
   addedAt: new UnixTime(1738899615),
-  badges: [Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  badges: [
+    Badge.Stack.Orbit,
+    Badge.VM.EVM,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Conduit,
+  ],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Game7',
