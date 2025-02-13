@@ -9,6 +9,70 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
   const START = UnixTime.now()
 
+  describe(DataAvailabilityRepository.prototype.getForDaLayerInTimeRange
+    .name, () => {
+    it('returns records for a DA layer within time range', async () => {
+      await repository.upsertMany([
+        record('a', START, 100n, 'ethereum'),
+        record('b', START.add(1, 'days'), 200n, 'ethereum'),
+        record('c', START.add(2, 'days'), 300n, 'ethereum'),
+        record('d', START.add(1, 'days'), 400n, 'celestia'),
+      ])
+
+      const results = await repository.getForDaLayerInTimeRange(
+        'ethereum',
+        START,
+        START.add(2, 'days'),
+      )
+
+      expect(results).toEqualUnsorted([
+        record('a', START, 100n, 'ethereum'),
+        record('b', START.add(1, 'days'), 200n, 'ethereum'),
+        record('c', START.add(2, 'days'), 300n, 'ethereum'),
+      ])
+    })
+
+    it('returns empty array when no records exist for DA layer', async () => {
+      await repository.upsertMany([
+        record('a', START, 100n, 'ethereum'),
+        record('b', START.add(1, 'days'), 200n, 'ethereum'),
+      ])
+
+      const results = await repository.getForDaLayerInTimeRange(
+        'celestia',
+        START,
+        START.add(1, 'days'),
+      )
+
+      expect(results).toEqual([])
+    })
+
+    it('returns empty array when no records exist in time range', async () => {
+      await repository.upsertMany([
+        record('a', START, 100n, 'ethereum'),
+        record('b', START.add(1, 'days'), 200n, 'ethereum'),
+      ])
+
+      const results = await repository.getForDaLayerInTimeRange(
+        'ethereum',
+        START.add(2, 'days'),
+        START.add(3, 'days'),
+      )
+
+      expect(results).toEqual([])
+    })
+
+    it('handles empty database', async () => {
+      const results = await repository.getForDaLayerInTimeRange(
+        'ethereum',
+        START,
+        START.add(1, 'days'),
+      )
+
+      expect(results).toEqual([])
+    })
+  })
+
   describe(DataAvailabilityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([

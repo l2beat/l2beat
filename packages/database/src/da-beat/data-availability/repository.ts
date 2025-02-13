@@ -12,13 +12,23 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  // TODO
   async getForDaLayerInTimeRange(
-    _daLayer: string,
-    _from: UnixTime,
-    _to: UnixTime,
+    daLayer: string,
+    from: UnixTime,
+    to: UnixTime,
   ): Promise<DataAvailabilityRecord[]> {
-    return await Promise.resolve([])
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where((eb) =>
+        eb.and([
+          eb('daLayer', '=', daLayer),
+          eb('timestamp', '>=', from.toDate()),
+          eb('timestamp', '<=', to.toDate()),
+        ]),
+      )
+      .execute()
+    return rows.map(toRecord)
   }
 
   async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
