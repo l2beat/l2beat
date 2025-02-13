@@ -9,15 +9,8 @@ export interface DataAvailabilityRecord {
   totalSize: bigint
 }
 
-export interface DataAvailabilityRow {
-  projectId: string
-  daLayer: string
-  timestamp: Date
-  totalSize: bigint
-}
-
 export function toRecord(
-  row: Selectable<DataAvailability>,
+  row: Omit<Selectable<DataAvailability>, 'daLayer'>,
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
