@@ -1,16 +1,13 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Badge } from '../badges'
+import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const g7: Layer3 = upcomingL3({
+export const g7: Layer3 = underReviewL3({
   id: 'g7',
   capability: 'universal',
   addedAt: new UnixTime(1738899615),
-  badges: [
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Game7',
@@ -24,7 +21,7 @@ export const g7: Layer3 = upcomingL3({
       websites: ['https://game7.io/'],
       documentation: ['https://docs.game7.io/'],
       apps: ['https://build.game7.io/bridge'],
-      explorers: ['https://testnet.game7.io/'],
+      explorers: ['https://mainnet.game7.io'],
       repositories: ['https://github.com/G7DAO'],
       socialMedia: [
         'https://discord.gg/g7dao',
@@ -34,4 +31,20 @@ export const g7: Layer3 = upcomingL3({
       ],
     },
   },
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    defaultUrl: 'https://mainnet-rpc.game7.io',
+    defaultCallsPerMinute: 1500,
+    adjustCount: { type: 'SubtractOne' },
+  },
+  escrows: [
+    {
+      address: EthereumAddress('0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e'),
+      sinceTimestamp: new UnixTime(1728556666),
+      tokens: ['G7'],
+      includeInTotal: false,
+      chain: 'arbitrum',
+    },
+  ],
 })
