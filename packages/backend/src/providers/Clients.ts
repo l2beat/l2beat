@@ -161,8 +161,6 @@ export function initClients(config: Config, logger: Logger): Clients {
         baseUrl: config.da.ethereum.blobscanUrl,
         retryStrategy: 'UNRELIABLE',
         sourceName: 'ethereum-blobscan',
-        /* Blobscan API has longer response times */
-        timeout: 30_000,
         logger,
         http,
       })
