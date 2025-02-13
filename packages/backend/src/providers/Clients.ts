@@ -175,6 +175,7 @@ export function initClients(config: Config, logger: Logger): Clients {
         logger,
         http,
       })
+      blockClients.push(celestia)
     }
 
     if (config.da.avail) {
@@ -186,6 +187,7 @@ export function initClients(config: Config, logger: Logger): Clients {
         logger,
         http,
       })
+      blockClients.push(avail)
     }
   }
 
