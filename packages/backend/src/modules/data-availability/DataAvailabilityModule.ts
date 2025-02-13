@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
@@ -30,7 +29,6 @@ export function initDataAvailabilityModule(
     module: 'data-availability',
   })
 
-  // TODO add for celestia and avail
   const blockProviders = providers.block
   const daProviders = providers.getDaProviders()
   const daService = new DaService(config.da.projects)
@@ -39,34 +37,32 @@ export function initDataAvailabilityModule(
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
 
-  const daLayers = new Set([ProjectId('ethereum')])
-  const ethStart = 19426618
-  const batchSize = 2500
   // const daLayers = new Set(config.da.projects.map((p) => p.config.daLayer))
 
-  for (const daLayer of daLayers.values()) {
-    const blockTimestampProvider =
-      blockProviders.getBlockTimestampProvider(daLayer)
+  for (const daLayer of config.da.layers) {
+    const blockTimestampProvider = blockProviders.getBlockTimestampProvider(
+      daLayer.name,
+    )
 
     const targetIndexer = new BlockTargetIndexer(
       logger,
       clock,
       blockTimestampProvider,
-      daLayer,
+      daLayer.name,
     )
 
     targetIndexers.push(targetIndexer)
 
     const configurations = config.da.projects.filter(
-      (p) => p.config.daLayer === daLayer,
+      (p) => p.config.daLayer === daLayer.name,
     )
 
-    const daProvider = daProviders.getProvider(daLayer)
+    const daProvider = daProviders.getProvider(daLayer.name)
 
     const indexer = new DaIndexer({
       configurations: configurations.map((c) => ({
         id: c.configurationId,
-        minHeight: ethStart,
+        minHeight: daLayer.startingBlockNumber,
         maxHeight: null,
         properties: {
           project: c.projectId,
@@ -76,8 +72,8 @@ export function initDataAvailabilityModule(
       daProvider,
       daService,
       logger,
-      daLayer,
-      batchSize,
+      daLayer: daLayer.name,
+      batchSize: daLayer.batchSize,
       parents: [targetIndexer],
       indexerService,
       db: database,

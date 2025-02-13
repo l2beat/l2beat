@@ -13,26 +13,27 @@ export class DaProviders {
   daProviders: Map<string, DaProvider> = new Map()
 
   constructor(
-    blobscanClient?: BlobScanClient,
-    celestiaClient?: CelestiaRpcClient,
-    availClient?: PolkadotRpcClient,
+    ethereumLikeClients: { daLayer: string; client: BlobScanClient }[],
+    celestiaLikeClients: { daLayer: string; client: CelestiaRpcClient }[],
+    availLikeClients: { daLayer: string; client: PolkadotRpcClient }[],
   ) {
-    if (blobscanClient) {
+    for (const client of ethereumLikeClients) {
       this.daProviders.set(
-        'ethereum',
-        new EthereumDaProvider(blobscanClient, 'ethereum'),
+        client.daLayer,
+        new EthereumDaProvider(client.client, 'ethereum'),
       )
     }
-
-    if (celestiaClient) {
+    for (const client of celestiaLikeClients) {
       this.daProviders.set(
-        'celestia',
-        new CelestiaDaProvider(celestiaClient, 'celestia'),
+        client.daLayer,
+        new CelestiaDaProvider(client.client, 'ethereum'),
       )
     }
-
-    if (availClient) {
-      this.daProviders.set('avail', new AvailDaProvider(availClient, 'avail'))
+    for (const client of availLikeClients) {
+      this.daProviders.set(
+        client.daLayer,
+        new AvailDaProvider(client.client, 'ethereum'),
+      )
     }
   }
 

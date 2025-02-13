@@ -70,6 +70,8 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
     blobs: DaBlob[],
     configurations: Configuration<DaTrackingConfig>[],
   ) {
+    if (blobs.length === 0) return []
+
     const from = new UnixTime(
       Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
     ).toStartOf('day')

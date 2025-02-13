@@ -199,28 +199,14 @@ export interface DaBeatConfig {
 }
 
 export interface DataAvailabilityTrackingConfig {
-  readonly ethereum:
-    | {
-        readonly blobscanUrl: string
-        readonly callsPerMinute: number
-        /** We want to start tracking ethereum DA after Blobs EIP */
-        readonly firstBlockWithBlobsOnEthereum: number
-      }
-    | false
-
-  readonly celestia:
-    | {
-        readonly url: string
-        readonly callsPerMinute: number
-      }
-    | false
-
-  readonly avail:
-    | {
-        readonly url: string
-        readonly callsPerMinute: number
-      }
-    | false
+  readonly layers: {
+    type: 'ethereum' | 'celestia' | 'avail'
+    name: string
+    url: string
+    callsPerMinute: number
+    batchSize: number
+    startingBlockNumber: number
+  }[]
 
   readonly projects: {
     /** Hash computed automatically based on fields */

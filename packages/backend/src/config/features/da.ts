@@ -9,36 +9,48 @@ export async function getDaTrackingConfig(
   ps: ProjectService,
   env: Env,
 ): Promise<DataAvailabilityTrackingConfig> {
+  // TODO: automate it
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
-  const celesiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
+  const celestiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
   const availEnabled = !!env.optionalString('AVAIL_BLOBS_API_URL')
 
+  const layers = []
+
+  if (ethereumEnabled) {
+    layers.push({
+      type: 'ethereum' as const,
+      name: 'ethereum',
+      url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
+      callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
+      batchSize: 2500,
+      startingBlockNumber: 19426618,
+    })
+  }
+
+  if (celestiaEnabled) {
+    layers.push({
+      type: 'celestia' as const,
+      name: 'celestia',
+      url: env.string('CELESTIA_BLOBS_API_URL'),
+      callsPerMinute: env.integer('CELESTIA_BLOBS_API_CALLS_PER_MINUTE', 2000),
+      batchSize: 30,
+      startingBlockNumber: 1,
+    })
+  }
+
+  if (availEnabled) {
+    layers.push({
+      type: 'avail' as const,
+      name: 'avail',
+      url: env.string('AVAIL_BLOBS_API_URL'),
+      callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 2000),
+      batchSize: 30,
+      startingBlockNumber: 1,
+    })
+  }
+
   return {
-    ethereum: ethereumEnabled
-      ? {
-          blobscanUrl: env.string('ETHEREUM_BLOBSCAN_API_URL'),
-          callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
-          firstBlockWithBlobsOnEthereum: 19426618,
-        }
-      : false,
-
-    celestia: celesiaEnabled
-      ? {
-          url: env.string('CELESTIA_BLOBS_API_URL'),
-          callsPerMinute: env.integer(
-            'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
-            60,
-          ),
-        }
-      : false,
-
-    avail: availEnabled
-      ? {
-          url: env.string('AVAIL_BLOBS_API_URL'),
-          callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 60),
-        }
-      : false,
-
+    layers,
     projects: await getDaTrackingProjects(ps),
   }
 }
