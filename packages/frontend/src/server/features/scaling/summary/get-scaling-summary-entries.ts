@@ -28,7 +28,7 @@ import { compareStageAndTvs } from '../utils/compare-stage-and-tvs'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo', 'scalingRisks'],
+    select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
     optional: ['tvlInfo', 'scalingDa', 'scalingStage'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
@@ -91,7 +91,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
 
 function getScalingSummaryEntry(
   project: Project<
-    'statuses' | 'scalingInfo' | 'scalingRisks',
+    'statuses' | 'scalingInfo' | 'scalingRisks' | 'display',
     'tvlInfo' | 'scalingDa' | 'scalingStage'
   >,
   changes: ProjectChanges,

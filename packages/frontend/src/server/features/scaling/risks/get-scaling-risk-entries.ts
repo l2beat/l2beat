@@ -13,7 +13,7 @@ export async function getScalingRiskEntries() {
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingRisks'],
+      select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -38,7 +38,7 @@ export interface ScalingRiskEntry extends CommonScalingEntry {
 }
 
 function getScalingRiskEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingRiskEntry {
