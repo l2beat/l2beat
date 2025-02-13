@@ -4,15 +4,17 @@ import type { DataAvailability } from '../../kysely/generated/types'
 
 export interface DataAvailabilityRecord {
   projectId: string
+  daLayer: string
   timestamp: UnixTime
   totalSize: bigint
 }
 
 export function toRecord(
-  row: Omit<Selectable<DataAvailability>, 'daLayer'>,
+  row: Selectable<DataAvailability>,
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
+    daLayer: row.daLayer,
     timestamp: UnixTime.fromDate(row.timestamp),
     totalSize: BigInt(row.totalSize),
   }
@@ -23,10 +25,7 @@ export function toRow(
 ): Insertable<DataAvailability> {
   return {
     projectId: record.projectId,
-    // Temporary solution until next PR is merged
-    // Indexer writing to this table is disabled
-    // DataAvailability table has been cleaned as well
-    daLayer: 'UNKNOWN',
+    daLayer: record.daLayer,
     timestamp: record.timestamp.toDate(),
     totalSize: record.totalSize.toString(),
   }

@@ -6,7 +6,10 @@ const TIMESTAMP_SHIFT = 4300
 const DATA_EXTRINSIC_SHIFT = 236
 
 export class AvailDaProvider implements DaProvider {
-  constructor(private readonly rpcClient: PolkadotRpcClient) {}
+  constructor(
+    private readonly rpcClient: PolkadotRpcClient,
+    private readonly daLayer: string,
+  ) {}
 
   async getBlobs(from: number, to: number): Promise<DaBlob[]> {
     const blobs: DaBlob[] = []
@@ -58,6 +61,7 @@ export class AvailDaProvider implements DaProvider {
 
       blobs.push({
         type: 'avail',
+        daLayer: this.daLayer,
         blockTimestamp: timestamp,
         size: BigInt(sizeInBytes),
         appId: appIndex[index].appId.toString(),

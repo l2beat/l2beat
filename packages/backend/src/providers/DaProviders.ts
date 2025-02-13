@@ -9,7 +9,7 @@ export class DaProviders {
   daProviders: Map<string, DaProvider> = new Map()
 
   constructor(readonly client: BlobScanClient) {
-    this.daProviders.set('ethereum', new EthereumDaProvider(client))
+    this.daProviders.set('ethereum', new EthereumDaProvider(client, 'ethereum'))
   }
 
   getDaProvider(chain: string) {
