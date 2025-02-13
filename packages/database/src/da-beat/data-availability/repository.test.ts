@@ -222,9 +222,11 @@ function record(
   projectId: string,
   timestamp: UnixTime,
   totalSize: bigint,
+  daLayer = 'ethereum',
 ): DataAvailabilityRecord {
   return {
-    projectId: projectId,
+    projectId,
+    daLayer,
     timestamp,
     totalSize,
   }

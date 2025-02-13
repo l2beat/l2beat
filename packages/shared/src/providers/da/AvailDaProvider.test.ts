@@ -13,19 +13,21 @@ describe(AvailDaProvider.name, () => {
           .resolvesToOnce(mockBlockResponse([])),
       })
 
-      const provider = new AvailDaProvider(mockRpc)
+      const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
       expect(result).toEqual([
         {
           type: 'avail',
+          daLayer: 'avail',
           appId: '1',
           blockTimestamp: new UnixTime(1720092420),
           size: 64n,
         } as AvailBlob,
         {
           type: 'avail',
+          daLayer: 'avail',
           appId: '2',
           blockTimestamp: new UnixTime(1720092420),
           size: 77n,
@@ -38,7 +40,7 @@ describe(AvailDaProvider.name, () => {
         getBlock: mockFn().resolvesTo(mockBlockResponse([1, 2], [])),
       })
 
-      const provider = new AvailDaProvider(mockRpc)
+      const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
@@ -50,7 +52,7 @@ describe(AvailDaProvider.name, () => {
         getBlock: mockFn().resolvesTo(mockBlockResponse([])),
       })
 
-      const provider = new AvailDaProvider(mockRpc)
+      const provider = new AvailDaProvider(mockRpc, 'avail')
 
       const result = await provider.getBlobs(1, 2)
 
@@ -61,7 +63,7 @@ describe(AvailDaProvider.name, () => {
         getBlock: mockFn().resolvesTo(mockBlockResponse([1])),
       })
 
-      const provider = new AvailDaProvider(mockRpc)
+      const provider = new AvailDaProvider(mockRpc, 'avail')
       expect(async () => await provider.getBlobs(1, 2)).toBeRejectedWith(
         'Mismatch between target extrinsics and app lookup index',
       )
