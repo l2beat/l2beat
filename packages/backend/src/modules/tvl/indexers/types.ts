@@ -15,6 +15,7 @@ import type {
   ProjectId,
   TotalSupplyEntry,
 } from '@l2beat/shared-pure'
+import type { SyncOptimizer } from '../../../tools/SyncOptimizer'
 import type { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
 import type { AggLayerService } from '../services/AggLayerService'
@@ -24,7 +25,6 @@ import type { CirculatingSupplyService } from '../services/CirculatingSupplyServ
 import type { ElasticChainService } from '../services/ElasticChainService'
 import type { PriceService } from '../services/PriceService'
 import type { ValueService } from '../services/ValueService'
-import type { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface BlockTimestampIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

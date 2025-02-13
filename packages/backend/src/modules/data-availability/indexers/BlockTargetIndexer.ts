@@ -17,12 +17,12 @@ export class BlockTargetIndexer extends RootIndexer {
     logger: Logger,
     private readonly clock: Clock,
     private readonly blockTimestampProvider: BlockTimestampProvider,
-    projectId: ProjectId,
+    readonly daLayer: ProjectId,
   ) {
     super(
       logger.tag({
-        tag: projectId,
-        project: projectId,
+        tag: daLayer,
+        project: daLayer,
       }),
       {
         tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),

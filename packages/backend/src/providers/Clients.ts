@@ -4,10 +4,12 @@ import {
   BlobScanClient,
   type BlockClient,
   BlockIndexerClient,
+  CelestiaRpcClient,
   CoingeckoClient,
   FuelClient,
   HttpClient,
   LoopringClient,
+  PolkadotRpcClient,
   RpcClient,
   StarkexClient,
   StarknetClient,
@@ -25,6 +27,8 @@ export interface Clients {
   coingecko: CoingeckoClient
   blob: BlobClient | undefined
   blobscan: BlobScanClient | undefined
+  celestia: CelestiaRpcClient | undefined
+  avail: PolkadotRpcClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
 }
@@ -38,6 +42,8 @@ export function initClients(config: Config, logger: Logger): Clients {
   let ethereumClient: RpcClient | undefined
   let blobClient: BlobClient | undefined
   let blobscanClient: BlobScanClient | undefined
+  let celestia: CelestiaRpcClient | undefined
+  let avail: PolkadotRpcClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -149,15 +155,38 @@ export function initClients(config: Config, logger: Logger): Clients {
   }
 
   if (config.da) {
-    blobscanClient = new BlobScanClient({
-      callsPerMinute: config.da.blobscan.callsPerMinute,
-      baseUrl: config.da.blobscan.baseUrl,
-      timeout: config.da.blobscan.timeout,
-      retryStrategy: 'UNRELIABLE',
-      sourceName: 'blobscan',
-      logger,
-      http,
-    })
+    if (config.da.ethereum) {
+      blobscanClient = new BlobScanClient({
+        callsPerMinute: config.da.ethereum.callsPerMinute,
+        baseUrl: config.da.ethereum.blobscanUrl,
+        retryStrategy: 'UNRELIABLE',
+        sourceName: 'ethereum-blobscan',
+        logger,
+        http,
+      })
+    }
+
+    if (config.da.celestia) {
+      celestia = new CelestiaRpcClient({
+        callsPerMinute: config.da.celestia.callsPerMinute,
+        url: config.da.celestia.url,
+        retryStrategy: 'RELIABLE',
+        sourceName: 'celestia-blobs',
+        logger,
+        http,
+      })
+    }
+
+    if (config.da.avail) {
+      avail = new PolkadotRpcClient({
+        callsPerMinute: config.da.avail.callsPerMinute,
+        url: config.da.avail.url,
+        retryStrategy: 'RELIABLE',
+        sourceName: 'avail-blobs',
+        logger,
+        http,
+      })
+    }
   }
 
   const coingeckoClient = new CoingeckoClient({
@@ -203,6 +232,8 @@ export function initClients(config: Config, logger: Logger): Clients {
     coingecko: coingeckoClient,
     blob: blobClient,
     blobscan: blobscanClient,
+    celestia,
+    avail,
     getStarknetClient,
     getRpcClient,
   }

@@ -10,16 +10,36 @@ export async function getDaTrackingConfig(
   flags: FeatureFlags,
   env: Env,
 ): Promise<DataAvailabilityTrackingConfig> {
+  const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
+  const celesiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
+  const availEnabled = !!env.optionalString('AVAIL_BLOBS_API_URL')
+
   return {
-    blobscan: {
-      baseUrl: env.string('BLOBSCAN_API_URL', 'https://api.blobscan.com/'),
-      callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 300),
-      timeout: env.integer('BLOBSCAN_TIMEOUT', 30_000),
-    },
-    ethereum: {
-      minHeight: env.integer('DA_ETHEREUM_MIN_HEIGHT', 19426618), // blobs
-      batchSize: env.integer('DA_ETHEREUM_BATCH_SIZE', 2500),
-    },
+    ethereum: ethereumEnabled
+      ? {
+          blobscanUrl: env.string('ETHEREUM_BLOBSCAN_API_URL'),
+          callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
+          firstBlockWithBlobsOnEthereum: 19426618,
+        }
+      : false,
+
+    celestia: celesiaEnabled
+      ? {
+          url: env.string('CELESTIA_BLOBS_API_URL'),
+          callsPerMinute: env.integer(
+            'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
+            60,
+          ),
+        }
+      : false,
+
+    avail: availEnabled
+      ? {
+          url: env.string('AVAIL_BLOBS_API_URL'),
+          callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 60),
+        }
+      : false,
+
     projects: (await getDaTrackingProjects(ps)).filter((project) =>
       flags.isEnabled('da', project.id.toString()),
     ),
