@@ -40,6 +40,7 @@ export class UpdateMessageRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('UpdateMessage')
       .select(selectUpdateMessage)
+      .orderBy('timestamp', 'desc')
       .execute()
 
     return rows.map(toRecord)
