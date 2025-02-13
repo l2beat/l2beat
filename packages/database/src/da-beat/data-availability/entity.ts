@@ -8,14 +8,8 @@ export interface DataAvailabilityRecord {
   totalSize: bigint
 }
 
-export interface DataAvailabilityRow {
-  projectId: string
-  timestamp: Date
-  totalSize: bigint
-}
-
 export function toRecord(
-  row: Selectable<DataAvailability>,
+  row: Omit<Selectable<DataAvailability>, 'daLayer'>,
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
@@ -29,6 +23,10 @@ export function toRow(
 ): Insertable<DataAvailability> {
   return {
     projectId: record.projectId,
+    // Temporary solution until next PR is merged
+    // Indexer writing to this table is disabled
+    // DataAvailability table has been cleaned as well
+    daLayer: 'UNKNOWN',
     timestamp: record.timestamp.toDate(),
     totalSize: record.totalSize.toString(),
   }
