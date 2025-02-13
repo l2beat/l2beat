@@ -1,5 +1,9 @@
 import type { BackendProject } from '@l2beat/backend-shared'
-import type { OnchainVerifier, ProjectDaTrackingConfig } from '@l2beat/config'
+import type {
+  ChainConfig,
+  OnchainVerifier,
+  ProjectDaTrackingConfig,
+} from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type {
   AmountConfigEntry,
@@ -176,6 +180,7 @@ export interface UpdateMonitorConfig {
 
 export interface VerifiersConfig {
   readonly verifiers: OnchainVerifier[]
+  readonly chains: ChainConfig[]
 }
 
 export interface DiscordConfig {
