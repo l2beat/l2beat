@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x05d59101790c6bc4d07b88f4a179106d1bc46dab
+
+# Diff at Wed, 12 Feb 2025 08:41:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786555
+- current block number: 21829283
+
+## Description
+
+Grant some bridge roles to the StarkgateBridgeMultisig, who already had all admin roles (does not change permissions).
+Grant an EOA the permission to remove and blacklist tokens from the Starkgate bridge.
+
+## Watched changes
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.TOKEN_ADMIN.members.0:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.TOKEN_ADMIN.members.0:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      values.$members.5:
++        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.$members.4:
+-        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
++        "0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.3:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      values.$members.2:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      values.$members.1:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+      values.$members.0:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.$pastUpgrades.6:
++        ["2025-02-09T12:58:23.000Z","0xccb802ed2caee6856e9141983a642a0d4881cd64a209436d3fdeb4776c841175",["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.accessControl.SECURITY_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
 Generated with discovered.json: 0xf1e5fed307b8635c5552bff67a9b591c1abb4c1d
 
 # Diff at Thu, 06 Feb 2025 09:33:05 GMT:

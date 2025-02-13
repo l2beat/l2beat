@@ -29,8 +29,7 @@ const forcedWithdrawalDelay = HARDCODED.ZKSPACE.PRIORITY_EXPIRATION_PERIOD
 const finalizationPeriod = 0
 
 const upgradeability = {
-  upgradableBy: ['zkSpace Admin'],
-  upgradeDelayString,
+  upgradableBy: [{ name: 'zkSpace Admin', delay: upgradeDelayString }],
 }
 
 export const zkspace: Layer2 = {

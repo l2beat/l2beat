@@ -34,53 +34,43 @@ const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 const lineaDiscovery = new ProjectDiscovery('zklinknova', 'linea')
 
 const optimismUpgradability = {
-  upgradableBy: ['OptimismOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'OptimismOwner', delay: 'no' }],
 }
 
 const arbitrumUpgradability = {
-  upgradableBy: ['ArbitrumOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ArbitrumOwner', delay: 'no' }],
 }
 
 const baseUpgradability = {
-  upgradableBy: ['BaseOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'BaseOwner', delay: 'no' }],
 }
 
 const mantapacificUpgradability = {
-  upgradableBy: ['MantaOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'MantaOwner', delay: 'no' }],
 }
 
 const mantleUpgradability = {
-  upgradableBy: ['MantleOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'MantleOwner', delay: 'no' }],
 }
 
 const scrollUpgradability = {
-  upgradableBy: ['ScrollOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ScrollOwner', delay: 'no' }],
 }
 
 const blastUpgradability = {
-  upgradableBy: ['BlastOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'BlastOwner', delay: 'no' }],
 }
 
 const zksync2Upgradability = {
-  upgradableBy: ['EraOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'EraOwner', delay: 'no' }],
 }
 
 const ethereumUpgradability = {
-  upgradableBy: ['EthereumOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'EthereumOwner', delay: 'no' }],
 }
 
 const lineaUpgradability = {
-  upgradableBy: ['LineaOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LineaOwner', delay: 'no' }],
 }
 
 const executionDelaySeconds = lineaDiscovery.getContractValue<number>(

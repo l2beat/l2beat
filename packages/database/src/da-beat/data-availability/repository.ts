@@ -12,6 +12,15 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  // TODO
+  async getForDaLayerInTimeRange(
+    _daLayer: string,
+    _from: UnixTime,
+    _to: UnixTime,
+  ): Promise<DataAvailabilityRecord[]> {
+    return await Promise.resolve([])
+  }
+
   async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
     if (records.length === 0) return 0
 

@@ -7,11 +7,13 @@
     {
       "name": "L2GatewayRouter",
       "address": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+      "template": "orbitstack/layer2/L2GatewayRouter",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x6b2f9c454049196975edab9674208890663911ceebf0cf2c64d3c26a32aa300c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Router managing token <–> gateway mapping on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -95,9 +97,11 @@
     {
       "name": "L2SurplusFee",
       "address": "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De",
+      "template": "orbitstack/layer2/L2SurplusFee",
       "sourceHashes": [
         "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
       ],
+      "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678990053,
       "values": {
         "$immutable": true,
@@ -146,11 +150,13 @@
     {
       "name": "L2WethGateway",
       "address": "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+      "template": "orbitstack/layer2/L2WethGateway",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xadf7f548448c8cfc2273cb5feeb31bcdd088e2d60e9be8756da94535ef5667d7"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Counterpart to the Bridge on L1. Mints and burns WETH on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -272,9 +278,12 @@
     {
       "name": "L2BaseFee",
       "address": "0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f",
+      "template": "orbitstack/layer2/L2SurplusFee",
       "sourceHashes": [
         "0xef8d56213b60d676b88afce25cb17bb89c7c3fc10c4ec06f77fe4820529e409b"
       ],
+      "displayName": "L2SurplusFee",
+      "description": "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.",
       "sinceTimestamp": 1678990053,
       "values": {
         "$immutable": true,
@@ -444,11 +453,13 @@
     {
       "name": "L2ERC20Gateway",
       "address": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+      "template": "orbitstack/layer2/L2ERC20Gateway",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0x7ab56232b17ce06beb4a64963bb9e8d0c7fdef3c45ab8f1ae306699d7b80c637"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1117,6 +1128,10 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
+    "orbitstack/layer2/L2GatewayRouter": "0xde7841cda710dd016b3815e3e941932d9ac3e1cbb99e687910642079e927d33f",
+    "orbitstack/layer2/L2SurplusFee": "0xba09d5be62f993a7a5305a66264bcb65fab108c178c65b3bb5fb57d74af6937e",
+    "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
 }

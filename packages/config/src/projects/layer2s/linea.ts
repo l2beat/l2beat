@@ -38,13 +38,16 @@ const timelockDelay = discovery.getContractValue<number>(
 const timelockDelayString = formatSeconds(timelockDelay)
 
 const upgradesTimelock = {
-  upgradableBy: ['LineaAdminMultisig'],
-  upgradeDelay: timelockDelay === 0 ? 'No delay' : timelockDelayString,
+  upgradableBy: [
+    {
+      name: 'LineaAdminMultisig',
+      delay: timelockDelay === 0 ? 'no' : timelockDelayString,
+    },
+  ],
 }
 
 const upgrades = {
-  upgradableBy: ['LineaAdminMultisig'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LineaAdminMultisig', delay: 'no' }],
 }
 
 const zodiacRoles = discovery.getContractValue<{

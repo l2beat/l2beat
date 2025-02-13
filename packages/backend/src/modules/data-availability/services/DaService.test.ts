@@ -67,6 +67,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME,
@@ -75,6 +76,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME,
@@ -83,6 +85,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-2
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-2-inbox',
           sequencer: 'any',
           blockTimestamp: TIME,
@@ -91,6 +94,7 @@ describe(DaService.name, () => {
         // blob not matching any project
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'any',
           sequencer: 'any',
           size: BigInt(400),
@@ -106,16 +110,19 @@ describe(DaService.name, () => {
       expect(result).toEqual([
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 1000n,
         },
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-ethereum-2',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
@@ -129,6 +136,7 @@ describe(DaService.name, () => {
         // blob matching avail project-avail-1
         {
           type: 'avail',
+          daLayer: 'avail',
           appId: 'avail-1',
           blockTimestamp: TIME,
           size: BigInt(100),
@@ -136,6 +144,7 @@ describe(DaService.name, () => {
         // blob not matching any project
         {
           type: 'avail',
+          daLayer: 'avail',
           appId: 'any',
           size: BigInt(200),
           blockTimestamp: TIME,
@@ -150,11 +159,13 @@ describe(DaService.name, () => {
       expect(result).toEqual([
         {
           projectId: 'avail',
+          daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-avail-1',
+          daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
           totalSize: 100n,
         },
@@ -168,6 +179,7 @@ describe(DaService.name, () => {
         // blob matching avail project-avail-1
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'celestia-1',
           blockTimestamp: TIME,
           size: BigInt(100),
@@ -175,6 +187,7 @@ describe(DaService.name, () => {
         // blob not matching any project
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'any',
           size: BigInt(200),
           blockTimestamp: TIME,
@@ -189,11 +202,13 @@ describe(DaService.name, () => {
       expect(result).toEqual([
         {
           projectId: 'celestia',
+          daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
           projectId: 'project-celestia-1',
+          daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
           totalSize: 100n,
         },
@@ -207,6 +222,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1 on current day
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME,
@@ -215,6 +231,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1 on current day
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME,
@@ -223,6 +240,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1 on previous day
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME.add(-1, 'days'),
@@ -231,6 +249,7 @@ describe(DaService.name, () => {
         // blob matching project-ethereum-1 on next day
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
           blockTimestamp: TIME.add(1, 'days'),
@@ -242,24 +261,28 @@ describe(DaService.name, () => {
         // ethereum record for previous day
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
           totalSize: 10000n,
         },
         // project record for previous day
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
           totalSize: 1000n,
         },
         // ethereum record for current day
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 10000n,
         },
         // project record for current day
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 1000n,
         },
@@ -271,36 +294,42 @@ describe(DaService.name, () => {
       expect(result).toEqual([
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
           totalSize: 10300n, // 10 000 + 300
         },
 
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
           totalSize: 1300n, // 1 000 + 300
         },
 
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 10300n, // 10 000 + 100 + 200
         },
 
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 1300n, // 1 000 + 100 + 200
         },
 
         {
           projectId: 'ethereum',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
           totalSize: 400n,
         },
 
         {
           projectId: 'project-ethereum-1',
+          daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
           totalSize: 400n,
         },

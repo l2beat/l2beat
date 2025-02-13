@@ -109,8 +109,12 @@ export const paradex: Layer2 = {
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
-        upgradableBy: ['USDC Escrow owner'],
-        upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'USDC Escrow owner',
+            delay: formatSeconds(escrowUSDCDelaySeconds),
+          },
+        ],
         description:
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
@@ -304,10 +308,14 @@ export const paradex: Layer2 = {
         discovery.getContractDetails('Paradex', {
           description:
             'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-          upgradeDelay: upgradeDelaySeconds
-            ? formatSeconds(upgradeDelaySeconds)
-            : 'No delay',
-          upgradableBy: ['Paradex owner'],
+          upgradableBy: [
+            {
+              name: 'Paradex owner',
+              delay: upgradeDelaySeconds
+                ? formatSeconds(upgradeDelaySeconds)
+                : 'no',
+            },
+          ],
         }),
         ...getSHARPVerifierContracts(discovery, verifierAddress),
       ],

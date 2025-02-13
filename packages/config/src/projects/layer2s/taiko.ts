@@ -22,8 +22,7 @@ import { getStage } from './common/stages/getStage'
 const discovery = new ProjectDiscovery('taiko')
 
 const upgradesTaikoMultisig = {
-  upgradableBy: ['TaikoAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'TaikoAdmin', delay: 'no' }],
 }
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
