@@ -31,7 +31,7 @@ export class DaService {
 
   constructor(
     config: {
-      id: ProjectId
+      projectId: ProjectId
       config: ProjectDaTrackingConfig
     }[],
   ) {
@@ -39,19 +39,19 @@ export class DaService {
       ethereum: config
         .filter((entry) => entry.config.type === 'ethereum')
         .map((entry) => ({
-          id: entry.id,
+          id: entry.projectId,
           config: entry.config as EthereumDaTrackingConfig,
         })),
       celestia: config
         .filter((entry) => entry.config.type === 'celestia')
         .map((entry) => ({
-          id: entry.id,
+          id: entry.projectId,
           config: entry.config as CelestiaDaTrackingConfig,
         })),
       avail: config
         .filter((entry) => entry.config.type === 'avail')
         .map((entry) => ({
-          id: entry.id,
+          id: entry.projectId,
           config: entry.config as AvailDaTrackingConfig,
         })),
     }

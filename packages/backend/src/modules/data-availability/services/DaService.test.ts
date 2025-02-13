@@ -11,7 +11,7 @@ import { DaService } from './DaService'
 
 const MOCK_ETHEREUM_CONFIGS = [
   {
-    id: ProjectId('project-ethereum-1'),
+    projectId: ProjectId('project-ethereum-1'),
     config: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -20,7 +20,7 @@ const MOCK_ETHEREUM_CONFIGS = [
     } as EthereumDaTrackingConfig,
   },
   {
-    id: ProjectId('project-ethereum-2'),
+    projectId: ProjectId('project-ethereum-2'),
     config: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -32,7 +32,7 @@ const MOCK_ETHEREUM_CONFIGS = [
 
 const MOCK_CELESTIA_CONFIGS = [
   {
-    id: ProjectId('project-celestia-1'),
+    projectId: ProjectId('project-celestia-1'),
     config: {
       type: 'celestia',
       daLayer: ProjectId('celestia'),
@@ -43,7 +43,7 @@ const MOCK_CELESTIA_CONFIGS = [
 
 const MOCK_AVAIL_CONFIGS = [
   {
-    id: ProjectId('project-avail-1'),
+    projectId: ProjectId('project-avail-1'),
     config: {
       type: 'avail',
       daLayer: ProjectId('avail'),

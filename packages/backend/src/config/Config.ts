@@ -223,7 +223,9 @@ export interface DataAvailabilityTrackingConfig {
     | false
 
   readonly projects: {
-    id: ProjectId
+    /** Hash computed automatically based on fields */
+    configurationId: string
+    projectId: ProjectId
     config: ProjectDaTrackingConfig
   }[]
 }

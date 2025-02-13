@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
@@ -38,7 +39,8 @@ export function initDataAvailabilityModule(
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
 
-  const daLayers = new Set(config.da.projects.map((p) => p.config.daLayer))
+  const daLayers = new Set([ProjectId('ethereum')])
+  // const daLayers = new Set(config.da.projects.map((p) => p.config.daLayer))
 
   for (const daLayer of daLayers.values()) {
     const blockTimestampProvider =
@@ -61,10 +63,13 @@ export function initDataAvailabilityModule(
 
     const indexer = new DaIndexer({
       configurations: configurations.map((c) => ({
-        ...c,
+        id: c.configurationId,
         minHeight: 0,
         maxHeight: null,
-        properties: c.config,
+        properties: {
+          project: c.projectId,
+          ...c.config,
+        },
       })),
       daProvider,
       daService,

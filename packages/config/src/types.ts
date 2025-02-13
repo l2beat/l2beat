@@ -713,7 +713,6 @@ export interface CelestiaDaTrackingConfig {
   type: 'celestia'
   daLayer: ProjectId
   namespace: string
-  signers?: string[]
 }
 
 export interface AvailDaTrackingConfig {

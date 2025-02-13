@@ -1,6 +1,7 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { ProjectDaTrackingConfig } from '@l2beat/config'
 import type { DaProvider } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -10,8 +11,10 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { DaService } from '../../data-availability/services/DaService'
 
+type DaTrackingConfig = ProjectDaTrackingConfig & { project: string }
+
 export interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<ProjectDaTrackingConfig>, 'name'> {
+  extends Omit<ManagedMultiIndexerOptions<DaTrackingConfig>, 'name'> {
   daService: DaService
   daProvider: DaProvider
   /** Used only for tagging a logger */
@@ -20,7 +23,7 @@ export interface Dependencies
   batchSize: number
 }
 
-export class DaIndexer extends ManagedMultiIndexer<ProjectDaTrackingConfig> {
+export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
   constructor(private readonly $: Dependencies) {
     super({
       ...$,
@@ -33,7 +36,7 @@ export class DaIndexer extends ManagedMultiIndexer<ProjectDaTrackingConfig> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<ProjectDaTrackingConfig>[],
+    configurations: Configuration<DaTrackingConfig>[],
   ) {
     const adjustedTo =
       from + this.$.batchSize < to ? from + this.$.batchSize : to
@@ -46,9 +49,25 @@ export class DaIndexer extends ManagedMultiIndexer<ProjectDaTrackingConfig> {
 
     const blobs = await this.$.daProvider.getBlobs(from, to)
 
-    // TODO get previous records
+    const from2 = new UnixTime(
+      Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
+    )
 
-    const records = this.$.daService.generateRecords(blobs, [])
+    const to2 = new UnixTime(
+      Math.max(...blobs.map((b) => b.blockTimestamp.toNumber())),
+    )
+
+    const previous = await this.$.db.dataAvailability.getForDaLayerInTimeRange(
+      this.$.daLayer,
+      from2,
+      to2,
+    )
+
+    const projects = new Set(configurations.map((c) => c.properties.project))
+
+    const filtered = previous.filter((p) => projects.has(p.projectId))
+
+    const records = this.$.daService.generateRecords(blobs, filtered)
 
     return async () => {
       await this.$.db.dataAvailability.upsertMany(records)

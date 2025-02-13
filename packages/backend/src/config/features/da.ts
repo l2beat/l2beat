@@ -1,13 +1,12 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
-import type { ProjectId } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
-import type { FeatureFlags } from '../FeatureFlags'
 
 export async function getDaTrackingConfig(
   ps: ProjectService,
-  flags: FeatureFlags,
   env: Env,
 ): Promise<DataAvailabilityTrackingConfig> {
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
@@ -40,25 +39,47 @@ export async function getDaTrackingConfig(
         }
       : false,
 
-    projects: (await getDaTrackingProjects(ps)).filter((project) =>
-      flags.isEnabled('da', project.id.toString()),
-    ),
+    projects: await getDaTrackingProjects(ps),
   }
 }
 
-async function getDaTrackingProjects(ps: ProjectService): Promise<
-  {
-    id: ProjectId
-    config: ProjectDaTrackingConfig
-  }[]
-> {
+async function getDaTrackingProjects(ps: ProjectService) {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
     whereNot: ['isUpcoming'],
   })
 
   return projects.map((project) => ({
-    id: project.id,
+    configurationId: createDaTrackingId(project.daTrackingConfig),
+    projectId: project.id,
     config: project.daTrackingConfig,
   }))
+}
+
+function createDaTrackingId(config: ProjectDaTrackingConfig): string {
+  const input = []
+
+  input.push(config.type)
+  input.push(config.daLayer)
+
+  switch (config.type) {
+    case 'ethereum':
+      input.push(config.inbox)
+      if (config.sequencers) {
+        input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
+      }
+      break
+    case 'celestia':
+      input.push(config.namespace)
+      break
+    case 'avail':
+      input.push(config.appId)
+      break
+
+    default:
+      assertUnreachable(config)
+  }
+
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
+  return hash.slice(0, 12)
 }

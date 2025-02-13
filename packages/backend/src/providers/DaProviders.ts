@@ -18,15 +18,21 @@ export class DaProviders {
     availClient?: PolkadotRpcClient,
   ) {
     if (blobscanClient) {
-      this.daProviders.set('ethereum', new EthereumDaProvider(blobscanClient))
+      this.daProviders.set(
+        'ethereum',
+        new EthereumDaProvider(blobscanClient, 'ethereum'),
+      )
     }
 
     if (celestiaClient) {
-      this.daProviders.set('celestia', new CelestiaDaProvider(celestiaClient))
+      this.daProviders.set(
+        'celestia',
+        new CelestiaDaProvider(celestiaClient, 'celestia'),
+      )
     }
 
     if (availClient) {
-      this.daProviders.set('avail', new AvailDaProvider(availClient))
+      this.daProviders.set('avail', new AvailDaProvider(availClient, 'avail'))
     }
   }
 
