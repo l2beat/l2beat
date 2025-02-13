@@ -1321,9 +1321,9 @@ const roleDescriptions: {
   },
   validate: {
     // ORBIT specific
-    name: 'Validator/Proposer',
+    name: 'Validator',
     description:
-      'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
+      'Orbit stack specific Proposer and Challenger role. Can propose new state roots (called nodes) and challenge state roots on the host chain.',
   },
   operateLinea: {
     // LINEA specific
