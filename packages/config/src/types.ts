@@ -652,6 +652,7 @@ export interface Bridge {
   isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
+  chainConfig?: ChainConfig
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
@@ -823,6 +824,7 @@ export interface BaseProject {
   daBridge?: DaBridge
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
+  chainConfig?: ChainConfig
   milestones?: Milestone[]
   // tags
   isBridge?: true
