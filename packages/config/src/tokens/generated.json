@@ -9986,6 +9986,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Game7",
+      "coingeckoId": "game7",
+      "address": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
+      "symbol": "G7",
+      "decimals": 18,
+      "deploymentTimestamp": 1728490851,
+      "coingeckoListingTimestamp": 1739404800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37207/large/game7token-800x800.png?1738143341",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Gho Token",
       "coingeckoId": "gho",
       "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",

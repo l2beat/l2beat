@@ -75,6 +75,7 @@ model BlockTimestamp {
 
 model DataAvailability {
   projectId String   @db.VarChar(255)
+  daLayer   String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
   totalSize BigInt
 

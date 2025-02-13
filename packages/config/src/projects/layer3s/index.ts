@@ -11,6 +11,7 @@ import { blockfit } from './blockfit'
 import { bugbuster } from './bugbuster'
 import { cheese } from './cheese'
 import { clique } from './clique'
+import { conwai } from './conwai'
 import { datalake } from './datalake'
 import { degen } from './degen'
 import { deri } from './deri'
@@ -19,6 +20,7 @@ import { donatuz } from './donatuz'
 import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
 import { forta } from './forta'
+import { g7 } from './g7'
 import { geist } from './geist'
 import { ham } from './ham'
 import { henez } from './henez'
@@ -70,6 +72,7 @@ export const layer3s: Layer3[] = [
   b3,
   cheese,
   clique,
+  conwai,
   datalake,
   degen,
   deri,
@@ -78,6 +81,7 @@ export const layer3s: Layer3[] = [
   educhain,
   fiefdom,
   forta,
+  g7,
   geist,
   inevm,
   ham,
