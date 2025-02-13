@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Badge } from '../badges'
+import { underReviewL3 } from '../layer2s/templates/underReview'
 
-export const conwai: Layer3 = upcomingL3({
+export const conwai: Layer3 = underReviewL3({
   id: 'conwai',
   capability: 'universal',
   addedAt: new UnixTime(1739364151),
@@ -18,7 +18,7 @@ export const conwai: Layer3 = upcomingL3({
     name: 'ConWai',
     slug: 'conwai',
     description:
-      'Conwai is an AI Supralayer that covering the full artificial intelligence lifecycle.',
+      'Conwai is an Optimium using the Orbit stack. It is focused on supporting AI-driven applications.',
     purposes: ['AI'],
     category: 'Optimium',
     stack: 'Arbitrum',
@@ -34,4 +34,11 @@ export const conwai: Layer3 = upcomingL3({
       ],
     },
   },
-})
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    defaultUrl: 'https://conwai.calderachain.xyz/http',
+    defaultCallsPerMinute: 1500,
+    adjustCount: { type: 'SubtractOne' },
+  },
+}) //no escrow cause token is not on CG
