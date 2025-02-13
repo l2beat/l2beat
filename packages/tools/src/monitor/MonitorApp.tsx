@@ -23,6 +23,14 @@ export function MonitorApp() {
 
   const entries = result.data
 
+  if (entries.length === 0) {
+    return (
+      <div className="flex flex-col gap-2 p-4">
+        <p>Whoopsie, no changes detected.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-2 p-4">
       {entries.map((entry) => {
