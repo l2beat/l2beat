@@ -27,7 +27,7 @@ export function PermissionsSection({
     <ProjectSection {...sectionProps}>
       {permissionedEntities && permissionedEntities.length > 0 && (
         <h3 className="mt-4 font-bold">
-          The committee has the following members:
+          The DA committee has the following members:
         </h3>
       )}
       {permissionedEntities?.map((entity, i) => (

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x0d5d7f1a32a70a733d8d9b3111967e0e4c5207e9
+
+# Diff at Fri, 14 Feb 2025 10:37:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21802905
+- current block number: 21844142
+
+## Description
+
+sFrax bridge paused.
+
+## Watched changes
+
+```diff
+    contract sFRAX Ferry Bridge (Fraxtal) (0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x0c7f5ba04b1527cefb5e1be849aa2b7cd9ccf79d
 
 # Diff at Sat, 08 Feb 2025 16:13:06 GMT:
