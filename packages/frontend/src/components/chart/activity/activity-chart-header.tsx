@@ -7,12 +7,12 @@ import type { ActivityChartStats } from '~/server/features/scaling/activity/get-
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import { cn } from '~/utils/cn'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/tooltip'
-import { ChartTimeRange } from '../core/chart-time-range'
 
 interface Props {
   stats: ActivityChartStats | undefined

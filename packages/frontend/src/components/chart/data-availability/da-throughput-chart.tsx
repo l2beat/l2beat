@@ -5,9 +5,9 @@ import type { ChartConfig } from '~/components/core/chart/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
-import { ChartTimeRange } from '../core/chart-time-range'
-import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
-import { getChartRange } from '../core/utils/get-chart-range-from-columns'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
+import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-controls'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { DaAbsoluteThroughputChart } from './da-absolute-throughput-chart'
 import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 
@@ -32,10 +32,7 @@ export function DaThroughputChart() {
   const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
-  const chartRange = useMemo(
-    () => getChartRange(data?.map((d) => [d.timestamp])),
-    [data],
-  )
+  const chartRange = useMemo(() => getChartRange(data), [data])
 
   return (
     <div>
