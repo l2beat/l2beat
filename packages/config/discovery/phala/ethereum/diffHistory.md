@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xac664e154d29487307b51000e82427aabca697db
+Generated with discovered.json: 0x37f149776ddb33fd322cc1d4505433966f005a4d
 
-# Diff at Fri, 14 Feb 2025 11:20:08 GMT:
+# Diff at Fri, 14 Feb 2025 14:11:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21637082
-- current block number: 21844312
+- current block number: 21845212
 
 ## Description
 
@@ -15,7 +15,7 @@ vKey and verifier upgrade.
 ```diff
 -   Status: DELETED
     contract SP1VerifierGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 
 ```diff
@@ -48,7 +48,7 @@ vKey and verifier upgrade.
 ```diff
 +   Status: CREATED
     contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 
 ```diff
@@ -79,10 +79,16 @@ discovery. Values are for block 21637082 (main branch discovery), not current.
 
 ```diff
     contract SP1VerifierGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
-    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
       name:
 -        "SuccinctGateway"
 +        "SP1VerifierGateway"
+      description:
+-        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
++        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
+      issuedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
       values.opSuccinctVerifier:
 -        ["0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",false]
     }
@@ -92,6 +98,15 @@ discovery. Values are for block 21637082 (main branch discovery), not current.
 -   Status: DELETED
     contract SP1Verifier (0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D)
     +++ description: None
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
++        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
 ```
 
 Generated with discovered.json: 0xf76688119ca801a5b0d9c0f04894d7301faea09b
