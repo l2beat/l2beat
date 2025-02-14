@@ -26,7 +26,7 @@ export const ungaii: Layer3 = upcomingL3({
       explorers: ['https://ungaii-chain-testnet.explorer.caldera.xyz/'],
       socialMedia: [
         'https://x.com/UngaiiChain',
-        'https://discord.gg/maAnU2xDqg',
+        'https://discord.com/invite/maAnU2xDqg',
       ],
     },
   },
