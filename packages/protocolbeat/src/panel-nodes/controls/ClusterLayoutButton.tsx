@@ -24,7 +24,7 @@ interface SimulationNode extends SimulationNodeDatum {
   node: Node
 }
 
-export function SlowLayoutButton() {
+export function ClusterLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const layout = useStore((state) => state.layout)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
@@ -55,10 +55,10 @@ export function SlowLayoutButton() {
       )
       .force('charge', forceManyBody())
       .force('center', forceCenter(0, 0))
-      .on('tick', ticked)
       .on('end', ended)
+      .tick(300) // NOTE(radomski): Manually step the simulation by 300 steps, otherwise by default only a single step is done per animation frame
 
-    function ticked() {
+    function ended() {
       const nodeLocations: NodeLocations = {}
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
@@ -67,9 +67,6 @@ export function SlowLayoutButton() {
         }
       })
       layout(nodeLocations)
-    }
-
-    function ended() {
       simulation.stop()
       setUpdatingLayout(false)
     }
@@ -84,7 +81,7 @@ export function SlowLayoutButton() {
       disabled={updatingLayout}
       onClick={() => setUpdatingLayout(true)}
     >
-      {updatingLayout ? 'Wait...' : 'Slow layout'}
+      {updatingLayout ? 'Wait...' : 'Cluster layout'}
     </ControlButton>
   )
 }

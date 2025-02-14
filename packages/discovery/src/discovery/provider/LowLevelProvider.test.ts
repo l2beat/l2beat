@@ -116,6 +116,38 @@ describe(LowLevelProvider.name, () => {
     })
   }
 
+  it(`does not retry on log size exceeded`, async () => {
+    const topErrorMessage =
+      'processing response error (body="{"jsonrpc":"2.0","id":45,"error":{"code":-32602,"message":"Log response size exceeded. You can make eth_getLogs r'
+
+    const error = makeEthersError(topErrorMessage, {
+      reason: 'processing response error',
+      code: 'SERVER_ERROR',
+      error: makeEthersError('Log response size exceeded', {
+        code: -32602,
+        data: undefined,
+      }),
+      requestBody: '{}',
+      requestMethod: 'POST',
+      url: 'https://',
+    })
+    const bytes = Bytes.randomOfLength(20)
+    const ethersProvider = mockObject<providers.JsonRpcProvider>({
+      call: mockFn().throwsOnce(error),
+    })
+    const provider = new LowLevelProvider(
+      ethersProvider,
+      ethersProvider,
+      ETHERSCAN_PROVIDER,
+    )
+
+    await expect(async () => {
+      const result = provider.call(EthereumAddress.random(), bytes, 10)
+      await time.runAllAsync()
+      await result
+    }).toBeRejectedWith(topErrorMessage)
+  })
+
   const errors = [
     makeEthersError('timeout', {
       code: TIMEOUT,

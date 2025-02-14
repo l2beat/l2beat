@@ -35,7 +35,10 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
 )
-const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
+  'L2Timelock',
+  'getMinDelay',
+)
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const dac = discovery.getContractValue<{
@@ -45,19 +48,19 @@ const dac = discovery.getContractValue<{
 const { membersCount, requiredSignatures } = dac
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by Security Council`,
+  upgradableBy: [
+    { name: 'SecurityCouncil', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+  ],
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: ['L2SecurityCouncilEmergency', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
+  upgradableBy: [
+    { name: 'L2SecurityCouncilEmergency', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+  ],
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
@@ -115,6 +118,7 @@ export const nova: Layer2 = orbitStackL2({
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
+    warning: undefined,
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     links: {
@@ -174,6 +178,21 @@ export const nova: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
+  nonTemplateRiskView: {
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+      l2TimelockDelay,
+      selfSequencingDelay,
+      challengeWindowSeconds,
+      validatorAfkTime,
+      l1TimelockDelay,
+    ),
+    stateValidation: RISK_VIEW.STATE_FP_INT,
+  },
+  stateValidation: {
+    isUnderReview: true,
+    description: '.',
+    categories: [],
+  },
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [
@@ -341,15 +360,6 @@ export const nova: Layer2 = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
   ],
-  nonTemplateRiskView: {
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
-      l2TimelockDelay,
-      selfSequencingDelay,
-      challengeWindowSeconds,
-      validatorAfkTime,
-      l1TimelockDelay,
-    ),
-  },
   nonTemplateTechnology: {
     otherConsiderations: [
       ...WASMVM_OTHER_CONSIDERATIONS,
@@ -361,6 +371,12 @@ export const nova: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Bold, permissionless proof system, deployed',
+      url: 'https://x.com/arbitrum/status/1889710151332245837',
+      date: '2025-02-15T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'ArbOS 32 Emergency upgrade',
       url: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',

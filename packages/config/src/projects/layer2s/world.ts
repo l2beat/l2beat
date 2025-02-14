@@ -40,6 +40,7 @@ export const world = opStackL2({
       ],
     },
   },
+  associatedTokens: ['WLD'],
   rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
   finality: {
     type: 'OPStack',

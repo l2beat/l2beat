@@ -1,4 +1,74 @@
-Generated with discovered.json: 0x244b167dc840852c57ee2a7ea371664a6dacc4b5
+Generated with discovered.json: 0x7f05a40f5b4820273cdd386a5d21a16c01f8728e
+
+# Diff at Wed, 12 Feb 2025 18:44:36 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 81620827
+- current block number: 81620827
+
+## Description
+
+Part of making Arbitrum discovery driven. Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      template:
++        "orbitstack/layer2/L2GatewayRouter"
+      description:
++        "Router managing token <–> gateway mapping on L2."
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2SurplusFee"
+      description:
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      template:
++        "orbitstack/layer2/L2WethGateway"
+      description:
++        "Counterpart to the Bridge on L1. Mints and burns WETH on L2."
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      template:
++        "orbitstack/layer2/L2SurplusFee"
+      displayName:
++        "L2SurplusFee"
+      description:
++        "This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients."
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      template:
++        "orbitstack/layer2/L2ERC20Gateway"
+      description:
++        "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2."
+    }
+```
+
+Generated with discovered.json: 0x3485fdf7381f47091b425007a73c299d22546102
 
 # Diff at Mon, 20 Jan 2025 11:10:46 GMT:
 

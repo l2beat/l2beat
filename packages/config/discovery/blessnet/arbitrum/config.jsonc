@@ -9,5 +9,15 @@
   ],
   "names": {
     "0x571D6CA61B979A967E055696c822CF8C928d3556": "BlessnetFastconfirmerMultisig"
+  },
+  "overrides": {
+    "0xF9327276c0E0d255543C095AC6D243B555e645D9": {
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated",
+        "currentRequiredStake" // spammy
+      ]
+    }
   }
 }

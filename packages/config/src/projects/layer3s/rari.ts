@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -16,7 +16,6 @@ export const rari: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['NFT'],
   discovery,
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'RARI Chain',
@@ -35,6 +34,7 @@ export const rari: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   nonTemplateContracts: {
     [discovery.chain]: [
       discovery.getContractDetails('L1GatewayRouter', {

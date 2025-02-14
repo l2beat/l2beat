@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x38dfcd3546423defe77f46269b9cbd052c7c8ea4
+Generated with discovered.json: 0x3ea0c741e72e31ba1ff94af21ec3f8113b4dea90
 
-# Diff at Tue, 11 Feb 2025 14:13:41 GMT:
+# Diff at Wed, 12 Feb 2025 09:05:07 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@5604bedbb0dabec83d300e0abeb3d8685929c5d3 block: 298391608
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 298391608
 - current block number: 298391608
 
 ## Description
 
-Made succinct gateway description more generic (to be used not only for blobstream).
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,23 +17,11 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 298391608 (main branch discovery), not current.
 
 ```diff
-    contract SuccinctGatewaySP1 (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
-    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
-      description:
--        "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract."
-+        "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract."
-      issuedPermissions.0.description:
--        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
-+        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
-    }
-```
-
-```diff
-    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) {
     +++ description: None
-      receivedPermissions.0.description:
--        "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
-+        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+      name:
+-        ""
++        "SP1Verifier"
     }
 ```
 

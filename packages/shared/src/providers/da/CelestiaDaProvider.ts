@@ -3,7 +3,10 @@ import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcCl
 import type { CelestiaBlob, DaProvider } from './DaProvider'
 
 export class CelestiaDaProvider implements DaProvider {
-  constructor(private readonly rpcClient: CelestiaRpcClient) {}
+  constructor(
+    private readonly rpcClient: CelestiaRpcClient,
+    private readonly daLayer: string,
+  ) {}
 
   async getBlobs(from: number, to: number): Promise<CelestiaBlob[]> {
     const blobs: CelestiaBlob[] = []
@@ -43,6 +46,7 @@ export class CelestiaDaProvider implements DaProvider {
 
       return namespaces.map((namespace, i) => ({
         type: 'celestia',
+        daLayer: this.daLayer,
         namespace,
         blockTimestamp,
         size: BigInt(sizes[i]),

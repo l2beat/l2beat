@@ -260,4 +260,14 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.kinto.xyz/api',
     },
   },
+  {
+    name: 'unichain',
+    chainId: 130,
+    shortName: 'unichain',
+    multicall: getMulticall3Config(8000000),
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api.uniscan.xyz/api',
+    },
+  },
 ] as const satisfies ChainConfig[]

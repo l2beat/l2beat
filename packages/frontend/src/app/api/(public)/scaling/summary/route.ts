@@ -33,5 +33,5 @@ const getCachedData = cache(
     }
   },
   ['scaling-summary-route'],
-  { tags: ['activity'], revalidate: UnixTime.DAY },
+  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )

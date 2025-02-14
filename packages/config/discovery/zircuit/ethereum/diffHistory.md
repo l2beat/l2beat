@@ -1,3 +1,100 @@
+Generated with discovered.json: 0x1942b6a42e84dca7cef5f5674f967180f7661768
+
+# Diff at Wed, 12 Feb 2025 11:31:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21773698
+- current block number: 21829908
+
+## Description
+
+System contracts upgrade:
+
+OptimismPortal, L1StandardBridge: transferThrottle removed.
+
+L2OutputOracle: `getL2OutputRootWithFinalization()` added which independently from the OptiPortal returns the finalization status of state roots.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      template:
+-        "opstack/OptimismPortal_zircuit"
++        "opstack/OptimismPortal"
+      sourceHashes.1:
+-        "0x9388575e8cf83880125e7770a596c83a0ad9c191b71f1990544987cbd0dbd4c0"
++        "0xb7c0fa59b37014e507a0e86791007823e5a5548fe3523b6fcf3fb383c0e8c24e"
+      description:
+-        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version of the OptimismPortal has inbuilt flow controls that can throttle eth deposits and withdrawals automatically based on volume over time."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+      values.$implementation:
+-        "0xde8B916B972cE3c27C21157Fc2b107c413062b9d"
++        "0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20"
+      values.$pastUpgrades.3:
++        ["2025-02-12T09:23:47.000Z","0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",["0xb6714d9808909b9383B09aD7Ea4Bc7E59b3B0E20"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.ethThrottleDeposits:
+-        {"maxAmountPerPeriod":0,"periodLength":0,"maxAmountTotal":0}
+      values.ethThrottleWithdrawals:
+-        {"maxAmountPerPeriod":0,"periodLength":3600,"maxAmountTotal":0}
+      values.getEthThrottleDepositsCredits:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.getEthThrottleWithdrawalsCredits:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.version:
+-        "1.8.0"
++        "2.0.2"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x3a72e01a50e4baf0c333aa3ad2413675a95c2fc68a18d8a95b3a65179e98ccbc"
++        "0x751d149755c8de663c6b1eb488f5d145ad3e9aa81561545e375a6cb8adbd0f6c"
+      values.$implementation:
+-        "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28"
++        "0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b"
+      values.$pastUpgrades.4:
++        ["2025-02-12T09:23:47.000Z","0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",["0xf829F2B0d741712198Aa3F0Be88b68Ec2aB5024b"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.ethThrottleDeposits:
+-        {"maxAmountPerPeriod":0,"periodLength":2592000,"maxAmountTotal":0}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x2f020370d4312debb7d9c97dbf80a48a0a0ee81d261d6d239d6b01d0dd076c81"
++        "0x3190c62a59b62169498d1f61c08c5c722c70cc0a6aaa37b185fd3f8014941b96"
+      values.$implementation:
+-        "0xaaF7FCc7252eb739E0001D8727800deAE04A84f1"
++        "0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B"
+      values.$pastUpgrades.1:
++        ["2025-02-12T09:23:47.000Z","0x19e7944c32b28126488482597f707797b60c4c3201abacdba5b9ea00b31cfbb4",["0x98DFF0828C8f870c31E209f35dF7ed22d194Ea9B"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1StandardBridge/L1StandardBridge.sol          | 254 +----------------
+ .../L2OutputOracle/L2OutputOracle.sol              |  17 +-
+ .../OptimismPortal/OptimismPortal.sol              | 305 ++++-----------------
+ 3 files changed, 75 insertions(+), 501 deletions(-)
+```
+
 Generated with discovered.json: 0xa003963723669f119d203a3b20c3a145fe8ba7eb
 
 # Diff at Mon, 10 Feb 2025 19:05:05 GMT:

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2a6e1c38ff538c9f7ce7b5470e40f5081b9bce98
+
+# Diff at Wed, 12 Feb 2025 08:36:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21184911
+- current block number: 21184911
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c) {
+    +++ description: None
+      name:
+-        ""
++        "OptimismMintableERC20Factory"
+    }
+```
+
 Generated with discovered.json: 0xfca6d1de1ba4bca427b20e84d4893299e5e2eaae
 
 # Diff at Mon, 10 Feb 2025 19:04:23 GMT:

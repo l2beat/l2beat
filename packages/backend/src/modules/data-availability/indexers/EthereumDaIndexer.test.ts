@@ -42,22 +42,26 @@ describe(EthereumDaIndexer.name, () => {
         getBlobs: mockFn().resolvesTo([
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             size: 100n,
             blockTimestamp: START,
           },
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             size: 200n,
             blockTimestamp: START.add(1, 'hours'),
           },
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             size: 300n,
             blockTimestamp: START.add(2, 'hours'),
           },
           // Next day
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             size: 10000n,
             blockTimestamp: START.add(1, 'days'),
           },
@@ -67,7 +71,9 @@ describe(EthereumDaIndexer.name, () => {
       // aggregated data from previous bucket
       const pastBucketRecords: DataAvailabilityRecord[] = [
         {
+          configurationId: 'TEMP',
           projectId: selector,
+          daLayer: 'ethereum',
           timestamp: START.toStartOf('day'),
           totalSize: 1000n,
         },
@@ -95,12 +101,16 @@ describe(EthereumDaIndexer.name, () => {
       expect(daProvider.getBlobs).toHaveBeenCalledWith(0, 50)
       expect(repository.upsertMany).toHaveBeenCalledWith([
         {
+          configurationId: 'TEMP',
           projectId: selector,
+          daLayer: 'ethereum',
           timestamp: START.toStartOf('day'),
           totalSize: 1600n, // 1000 + 100 + 200 + 300
         },
         {
+          configurationId: 'TEMP',
           projectId: selector,
+          daLayer: 'ethereum',
           timestamp: START.add(1, 'days').toStartOf('day'),
           totalSize: 10000n,
         },

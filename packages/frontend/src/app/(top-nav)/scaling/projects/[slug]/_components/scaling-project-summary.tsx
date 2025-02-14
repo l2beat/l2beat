@@ -41,6 +41,13 @@ export function ScalingProjectSummary({ project }: Props) {
                   className="w-full items-center justify-center p-2.5 text-xs md:text-base"
                 />
               )}
+              {project.header.redWarning && (
+                <WarningBar
+                  text={project.header.redWarning}
+                  color="red"
+                  className="w-full items-center justify-center p-2.5 text-xs md:text-base"
+                />
+              )}
             </div>
             {project.header.description || project.header.badges ? (
               <div className="mt-6 flex flex-col gap-4 md:hidden">

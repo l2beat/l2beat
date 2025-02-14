@@ -32,7 +32,7 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
 }: {
-  project: Project<'scalingInfo' | 'statuses'>
+  project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
@@ -79,6 +79,8 @@ export function getCommonScalingEntry({
       daLayer: project.scalingInfo.daLayer,
       raas: project.scalingInfo.raas ?? 'No RaaS',
     },
+    description: project.display?.description,
+    badges: project.scalingInfo.badges,
   }
 }
 

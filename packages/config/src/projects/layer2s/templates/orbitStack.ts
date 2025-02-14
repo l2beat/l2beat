@@ -38,10 +38,12 @@ import type {
   Layer3,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
   ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
@@ -126,8 +128,7 @@ interface OrbitStackConfigCommon {
   nonTemplateEscrows?: ProjectEscrow[]
   overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
@@ -160,6 +161,10 @@ interface OrbitStackConfigCommon {
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDaNamespace?: string
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDaAppId?: string
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -167,7 +172,6 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
     category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
-  hostChain: ProjectId
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -596,12 +600,10 @@ function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const layer2s = require('..').layer2s as Layer2[]
+  const hostChain = templateVars.discovery.chain
 
-  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
-  assert(
-    baseChain,
-    `Could not find base chain ${templateVars.hostChain} in layer2s`,
-  )
+  const baseChain = layer2s.find((l2) => l2.id === hostChain)
+  assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
@@ -638,8 +640,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -765,7 +766,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
-    hostChain: templateVars.hostChain,
+    hostChain: ProjectId(hostChain),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -872,8 +873,47 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
     },
   }
+}
+
+function getDaTracking(
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+): ProjectDaTrackingConfig | undefined {
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
+  const batchPosters = templateVars.discovery.getContractValue<string[]>(
+    'SequencerInbox',
+    'batchPosters',
+  )
+
+  return usesBlobs
+    ? {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        inbox: templateVars.sequencerInbox.address,
+        sequencers: batchPosters,
+      }
+    : templateVars.celestiaDaNamespace
+      ? {
+          type: 'celestia',
+          daLayer: ProjectId('celestia'),
+          namespace: templateVars.celestiaDaNamespace,
+        }
+      : templateVars.availDaAppId
+        ? {
+            type: 'avail',
+            daLayer: ProjectId('avail'),
+            appId: templateVars.availDaAppId,
+          }
+        : undefined
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
@@ -909,8 +949,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const category =
@@ -1131,6 +1170,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
     },

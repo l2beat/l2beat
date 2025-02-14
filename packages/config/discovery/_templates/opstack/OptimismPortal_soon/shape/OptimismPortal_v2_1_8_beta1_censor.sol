@@ -2790,6 +2790,9 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
     ///         It is not safe to trust `ERC20.balanceOf` as it may lie.
     uint256 internal _balance;
 
+    /// @notice A list of withdrawal hashes which have been frozen.
+    mapping(bytes32 => bool) public frozenWithdrawals;
+
     /// @notice Emitted when a transaction is deposited from L1 to L2.
     ///         The parameters of this event are read by the rollup node and used to derive deposit
     ///         transactions on L2.
@@ -2809,6 +2812,11 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
     /// @param withdrawalHash Hash of the withdrawal transaction.
     /// @param success        Whether the withdrawal transaction was successful.
     event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success);
+
+    /// @notice Emitted when a withdrawal transaction frozen state is updated.
+    /// @param withdrawalHash Hash of the withdrawal transaction.
+    /// @param frozen        Whether the withdrawal transaction was frozen.
+    event WithdrawalFrozenStateUpdated(bytes32 indexed withdrawalHash, bool frozen);
 
     /// @notice Reverts when paused.
     modifier whenNotPaused() {
@@ -3048,6 +3056,9 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
         // Check that this withdrawal has not already been finalized, this is replay protection.
         require(finalizedWithdrawals[withdrawalHash] == false, "OptimismPortal: withdrawal has already been finalized");
 
+        // Check that this withdrawal has not been frozen.
+        require(frozenWithdrawals[withdrawalHash] == false, "OptimismPortal: withdrawal has already been frozen");
+
         // Mark the withdrawal as finalized so it can't be replayed.
         finalizedWithdrawals[withdrawalHash] = true;
 
@@ -3115,6 +3126,16 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
         }
     }
 
+    /// @notice Update frozen state for withdrawal transaction.
+    /// @param withdrawalHash Withdrawal transaction to update for.
+    /// @param isFrozen new state to update
+    function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen) external {
+        require(msg.sender == guardian(), "OptimismPortal: only guardian can freeze");
+        require(frozenWithdrawals[withdrawalHash] != isFrozen, "OptimismPortal: wrong frozen state");
+        frozenWithdrawals[withdrawalHash] = isFrozen;
+        emit WithdrawalFrozenStateUpdated(withdrawalHash, isFrozen);
+    }
+
     /// @notice Entrypoint to depositing an ERC20 token as a custom gas token.
     ///         This function depends on a well formed ERC20 token. There are only
     ///         so many checks that can be done on chain for this so it is assumed
@@ -3140,8 +3161,8 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
         bytes memory _data
     )
         public
+        whenNotPaused
         payable
-        metered(_gasLimit)
     {
         (address token,) = gasPayingToken();
         if (token != Constants.ETHER && msg.value != 0) revert NoValue();
@@ -3183,9 +3204,11 @@ contract OptimismPortal is Initializable, ResourceMetering, ISemver {
             revert ValueHaveDust();
         }
 
-        // Just to be safe, make sure that people specify address(0) as the target when doing
-        // contract creations.
-        if (_isCreation && _to != bytes32(0)) revert BadTarget();
+        // currently deploy contract on L2 by L1 deposit transaction is not allow
+        if (_isCreation) revert NotAllow();
+
+        // Prevents funds lock
+        if (_to == bytes32(0)) revert BadTarget();
 
         // Prevent depositing transactions that have too small of a gas limit. Users should pay
         // more for more resource usage.

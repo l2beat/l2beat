@@ -260,7 +260,6 @@ function makeTechnologyContract(
     implementationChanged,
     highSeverityFieldChanged,
     upgradeableBy: item.upgradableBy,
-    upgradeDelay: item.upgradeDelay,
     upgradeConsiderations: item.upgradeConsiderations,
   }
 }

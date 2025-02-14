@@ -144,11 +144,11 @@ const PowerdiffDiscovery = command({
       'Missing .flat or .flat@<number>, rerun discovery.',
     )
 
-    const rightPath = path.join(projectPath, '.flat')
     const leftPath = path.join(projectPath, flatAt[0])
+    const rightPath = path.join(projectPath, '.flat')
     powerdiff(
-      rightPath,
       leftPath,
+      rightPath,
       difftasticPath,
       mode,
       displayMode,
