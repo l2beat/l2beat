@@ -49,43 +49,11 @@ export class DataAvailabilityRepository extends BaseRepository {
     return records.length
   }
 
-  async deleteByProjectFrom(
-    project: string,
-    fromInclusive: UnixTime,
-  ): Promise<number> {
-    const result = await this.db
-      .deleteFrom('DataAvailability')
-      .where((eb) =>
-        eb.and([
-          eb('projectId', '=', project.toString()),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-        ]),
-      )
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
   async deleteAll(): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async getByProjectAndTimeRange(
-    projectId: string,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<DataAvailabilityRecord[]> {
-    const [from, to] = timeRange
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
   }
 
   async getByProjectIdsAndTimeRange(
@@ -119,19 +87,5 @@ export class DataAvailabilityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row && toRecord(row)
-  }
-
-  async getByProjectIdAndFrom(
-    projectId: string,
-    fromInclusive: UnixTime,
-  ): Promise<DataAvailabilityRecord[]> {
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
   }
 }
