@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 21844960,
+  "blockNumber": 21844977,
   "configHash": "0xf48680ec42ff18d7d0cb1c201f6c6b88ca390394dbaf9e83e88f5da873afbf6c",
   "contracts": [
     {
@@ -209,16 +209,16 @@
             "lastSynecdAt": 1739535443
           },
           {
-            "numBlocks": 861550,
+            "numBlocks": 861557,
             "lastVerifiedBlockId": 860714,
             "provingPaused": false,
-            "lastProposedIn": 21844959,
+            "lastProposedIn": 21844976,
             "lastUnpausedAt": 1716571955
           }
         ],
         "impl": "0x2784423f7c61Bc7B75dB6CdA26959946f437588D",
         "inNonReentrant": false,
-        "lastProposedIn": 21844959,
+        "lastProposedIn": 21844976,
         "lastUnpausedAt": 1716571955,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
@@ -244,10 +244,10 @@
             "lastSynecdAt": 1739535443
           },
           "slotB": {
-            "numBlocks": 861550,
+            "numBlocks": 861557,
             "lastVerifiedBlockId": 860714,
             "provingPaused": false,
-            "lastProposedIn": 21844959,
+            "lastProposedIn": 21844976,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -319,7 +319,7 @@
         ],
         "$upgradeCount": 5,
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1739539247,
+        "clock": 1739539451,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
