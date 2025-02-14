@@ -1,0 +1,31 @@
+// formnetwork riskView didn't change 1
+
+{
+  dataAvailability: {
+    description: "All transaction data is posted to Ethereum L1."
+    sentiment: "good"
+    value: "On Chain"
+  }
+  exitWindow: {
+    description: "Users have 7 days to exit if they detect an invalid state root."
+    sentiment: "warning"
+    value: "7 days"
+  }
+  proposerFailure: {
+    description: "Users can force exit through L1 if state roots are not being published."
+    sentiment: "warning"
+    value: "Force exit"
+  }
+  sequencerFailure: {
+    description: "In case of sequencer failure, users can force transactions via L1."
+    secondLine: "12h delay"
+    sentiment: "good"
+    value: "Self sequence"
+  }
+  stateValidation: {
+    description: "Fraud proofs are under development. Users need to trust block proposer to submit valid state roots."
+    secondLine: "7d challenge period"
+    sentiment: "warning"
+    value: "Optimistic"
+  }
+}
