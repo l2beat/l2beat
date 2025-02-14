@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8dd652554c1b5412bcbb93372d58b373c8d4064d
+Generated with discovered.json: 0x304f0093447be1d14a376c83e044d8afb4cb5018
 
-# Diff at Fri, 14 Feb 2025 14:05:20 GMT:
+# Diff at Fri, 14 Feb 2025 14:19:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21141582
@@ -581,6 +581,12 @@ discovery. Values are for block 21141582 (main branch discovery), not current.
 ```diff
 -   Status: DELETED
     contract spETH_ProxyAdmin (0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xacA91C74748090f861E25D142B6fCB265c6171c8)
     +++ description: None
 ```
 

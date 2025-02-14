@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21844312,
+  "blockNumber": 21845212,
   "configHash": "0x4439bec25117875094944dfd82567793264d0beb675c27704afd44909d8c7b78",
   "contracts": [
     {
@@ -557,7 +557,7 @@
         {
           "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
         }
       ],
       "ignoreInWatchMode": ["nonce"],

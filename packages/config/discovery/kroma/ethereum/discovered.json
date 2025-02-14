@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0xebdc9e440e2f4c8d5ba1f6c0c429afcbc6838a47dc13f4c8ef09203a4fb23337",
+  "configHash": "0xb953f14205152b48d5e7a496fedf1fa111919495ffc3c9d1aa141bbbd45bd33f",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -1019,32 +1019,6 @@
       "derivedName": "AssetManager"
     },
     {
-      "name": "",
-      "address": "0xacA91C74748090f861E25D142B6fCB265c6171c8",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1726035323,
-      "values": {
-        "$admin": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
-        "$implementation": "0x3549aB4534b05f8a0226De1c7F991626066C0a1a",
-        "$pastUpgrades": [
-          [
-            "2024-09-11T06:15:23.000Z",
-            "0x28f3992b9205b28edfa49508bd2626dfc5d25c3dad98acc104d5746da827815d",
-            ["0x3549aB4534b05f8a0226De1c7F991626066C0a1a"]
-          ]
-        ],
-        "$upgradeCount": 1
-      }
-    },
-    {
       "name": "UpgradeGovernor",
       "address": "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
       "sourceHashes": [
@@ -1756,15 +1730,6 @@
           "permission": "interact",
           "from": "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c",
           "description": "one of the signers of the KromaSecurityCouncil."
-        }
-      ]
-    },
-    {
-      "address": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0xacA91C74748090f861E25D142B6fCB265c6171c8"
         }
       ]
     },

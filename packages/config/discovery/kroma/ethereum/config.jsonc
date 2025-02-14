@@ -71,7 +71,7 @@
     },
     "AssetManager": {
       "description": "Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.",
-      "ignoreRelatives": ["ASSET_TOKEN"]
+      "ignoreRelatives": ["ASSET_TOKEN", "KGH"]
     },
     "ValidatorManager": {
       "description": "Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within {{RoundDurationFormatted}}, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.",
