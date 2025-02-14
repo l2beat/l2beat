@@ -1,7 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { ProjectDaTrackingConfig } from '@l2beat/config'
+import type {
+  AvailDaTrackingConfig,
+  CelestiaDaTrackingConfig,
+  EthereumDaTrackingConfig,
+  ProjectDaTrackingConfig,
+} from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
@@ -32,7 +37,6 @@ export function initDataAvailabilityModule(
 
   const blockProviders = providers.block
   const daProviders = providers.getDaProviders()
-  const daService = new DaService(config.da.projects)
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
@@ -54,20 +58,56 @@ export function initDataAvailabilityModule(
 
     targetIndexers.push(targetIndexer)
 
-    const configurations = config.da.projects.filter(
-      (p) => p.config.daLayer === daLayer.name,
-    )
+    const daProvider = daProviders.getProvider(daLayer.name)
+
+    const projectConfigurations = config.da.projects
+      .filter((c) => c.config.daLayer === daLayer.name)
+      .map((c) => ({
+        ...c,
+        type: c.config.type as '' | 'celestia' | 'avail',
+      })) as (
+      | {
+          configurationId: string
+          type: 'ethereum'
+          projectId: ProjectId
+          config: EthereumDaTrackingConfig | { type: 'baseLayer' }
+        }
+      | {
+          configurationId: string
+          type: 'celestia'
+          projectId: ProjectId
+          config: CelestiaDaTrackingConfig | { type: 'baseLayer' }
+        }
+      | {
+          configurationId: string
+          type: 'avail'
+          projectId: ProjectId
+          config: AvailDaTrackingConfig | { type: 'baseLayer' }
+        }
+    )[]
 
     const base = {
       configurationId: 'TODO',
+      type: daLayer.type as 'ethereum' | 'celestia' | 'avail',
       projectId: ProjectId(daLayer.name),
       config: { type: 'baseLayer' as const },
     }
 
-    const daProvider = daProviders.getProvider(daLayer.name)
+    const configurations = [...projectConfigurations, base]
+
+    let daService: DaService | undefined
+
+    if (daLayer.type === 'ethereum') {
+      if (!isEthereumConfigurations(configurations)) {
+        throw new Error('Expected all configurations to be ethereum type')
+      }
+      daService = new DaService(configurations)
+    }
+
+    assert(daService)
 
     const indexer = new DaIndexer({
-      configurations: [...configurations, base].map((c) => ({
+      configurations: configurations.map((c) => ({
         id: c.configurationId,
         minHeight: daLayer.startingBlockNumber,
         maxHeight: null,
@@ -118,4 +158,34 @@ export function initDataAvailabilityModule(
       logger.info('DA indexers started')
     },
   }
+}
+
+function isEthereumConfigurations(
+  configurations: (
+    | {
+        configurationId: string
+        type: 'ethereum'
+        projectId: ProjectId
+        config: EthereumDaTrackingConfig | { type: 'baseLayer' }
+      }
+    | {
+        configurationId: string
+        type: 'celestia'
+        projectId: ProjectId
+        config: CelestiaDaTrackingConfig | { type: 'baseLayer' }
+      }
+    | {
+        configurationId: string
+        type: 'avail'
+        projectId: ProjectId
+        config: AvailDaTrackingConfig | { type: 'baseLayer' }
+      }
+  )[],
+): configurations is {
+  configurationId: string
+  type: 'ethereum'
+  projectId: ProjectId
+  config: EthereumDaTrackingConfig | { type: 'baseLayer' }
+}[] {
+  return configurations.every((c) => c.type === 'ethereum')
 }

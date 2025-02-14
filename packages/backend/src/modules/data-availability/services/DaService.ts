@@ -2,7 +2,6 @@ import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
-  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type {
@@ -11,54 +10,32 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 
 export class DaService {
-  readonly mappedConfig: {
-    ethereum: {
-      id: ProjectId
-      config: EthereumDaTrackingConfig
-    }[]
-    celestia: {
-      id: ProjectId
-      config: CelestiaDaTrackingConfig
-    }[]
-    avail: {
-      id: ProjectId
-      config: AvailDaTrackingConfig
-    }[]
-  }
-
   constructor(
-    config: {
-      projectId: ProjectId
-      config: ProjectDaTrackingConfig
-    }[],
-  ) {
-    this.mappedConfig = {
-      ethereum: config
-        .filter((entry) => entry.config.type === 'ethereum')
-        .map((entry) => ({
-          id: entry.projectId,
-          config: entry.config as EthereumDaTrackingConfig,
-        })),
-      celestia: config
-        .filter((entry) => entry.config.type === 'celestia')
-        .map((entry) => ({
-          id: entry.projectId,
-          config: entry.config as CelestiaDaTrackingConfig,
-        })),
-      avail: config
-        .filter((entry) => entry.config.type === 'avail')
-        .map((entry) => ({
-          id: entry.projectId,
-          config: entry.config as AvailDaTrackingConfig,
-        })),
-    }
-  }
+    private configurations:
+      | {
+          configurationId: string
+          type: 'ethereum'
+          projectId: ProjectId
+          config: EthereumDaTrackingConfig | { type: 'baseLayer' }
+        }[]
+      | {
+          configurationId: string
+          type: 'celestia'
+          projectId: ProjectId
+          config: CelestiaDaTrackingConfig | { type: 'baseLayer' }
+        }[]
+      | {
+          configurationId: string
+          type: 'avail'
+          projectId: ProjectId
+          config: AvailDaTrackingConfig | { type: 'baseLayer' }
+        }[],
+  ) {}
 
   generateRecords(
-    configurations: Configuration<DaTrackingConfig>[],
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
   ): DataAvailabilityRecord[] {
@@ -78,63 +55,91 @@ export class DaService {
     }
 
     for (const blob of blobs) {
-      const [daLayerRecord, projectRecord] = this.createRecordsFromBlob(
-        configurations,
-        blobs,
-      )
-      // DA layer record is always created
-      addOrMerge(daLayerRecord)
-      // project record is created only if we could match to one of the tracked projects
-      if (projectRecord) addOrMerge(projectRecord)
+      const records = this.createRecordsFromBlob(blob)
+      records.forEach((r) => addOrMerge(r))
     }
 
     return updatedRecords
   }
 
-  private createRecordsFromBlob(
-    configurations: Configuration<DaTrackingConfig>[],
+  private createRecordsFromBlob(blob: DaBlob): DataAvailabilityRecord[] {
+    const records: DataAvailabilityRecord[] = []
 
-    blob: DaBlob,
-  ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
-    const daLayerRecord: DataAvailabilityRecord = {
-      configurationId: 'TEMP', // temporary solution until next PR
-      projectId: blob.daLayer,
-      daLayer: blob.daLayer,
-      timestamp: blob.blockTimestamp.toStartOf('day'),
-      totalSize: blob.size,
-    }
-
-    let projectId = undefined
-
-    switch (blob.type) {
-      case 'ethereum':
-        projectId = this.mappedConfig.ethereum.find((entry) =>
-          matchEthereumProject(blob, entry.config),
-        )?.id
-        break
-      case 'celestia':
-        projectId = this.mappedConfig.celestia.find((entry) =>
-          matchCelestiaProject(blob, entry.config),
-        )?.id
-        break
-      case 'avail':
-        projectId = this.mappedConfig.avail.find((entry) =>
-          matchAvailProject(blob, entry.config),
-        )?.id
-        break
-    }
-
-    const projectRecord = projectId
-      ? {
-          configurationId: 'TEMP', // temporary solution until next PR
-          projectId,
-          daLayer: blob.daLayer,
-          timestamp: blob.blockTimestamp.toStartOf('day'),
-          totalSize: blob.size,
+    for (const c of this.configurations) {
+      switch (c.type) {
+        case 'ethereum': {
+          assert(blob.type === 'ethereum')
+          if (c.config.type === 'baseLayer') {
+            records.push({
+              configurationId: c.configurationId,
+              projectId: c.projectId,
+              daLayer: blob.daLayer,
+              timestamp: blob.blockTimestamp.toStartOf('day'),
+              totalSize: blob.size,
+            })
+          } else {
+            if (matchEthereumProject(blob, c.config)) {
+              records.push({
+                configurationId: c.configurationId,
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
         }
-      : undefined
+        case 'celestia': {
+          assert(blob.type === 'celestia')
+          if (c.config.type === 'baseLayer') {
+            records.push({
+              configurationId: c.configurationId,
+              projectId: c.projectId,
+              daLayer: blob.daLayer,
+              timestamp: blob.blockTimestamp.toStartOf('day'),
+              totalSize: blob.size,
+            })
+          } else {
+            if (matchCelestiaProject(blob, c.config)) {
+              records.push({
+                configurationId: c.configurationId,
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+        case 'avail': {
+          assert(blob.type === 'avail')
+          if (c.config.type === 'baseLayer') {
+            records.push({
+              configurationId: c.configurationId,
+              projectId: c.projectId,
+              daLayer: blob.daLayer,
+              timestamp: blob.blockTimestamp.toStartOf('day'),
+              totalSize: blob.size,
+            })
+          } else {
+            if (matchAvailProject(blob, c.config)) {
+              records.push({
+                configurationId: c.configurationId,
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+      }
+    }
 
-    return [daLayerRecord, projectRecord]
+    return records
   }
 }
 

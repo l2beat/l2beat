@@ -11,7 +11,15 @@ import { DaService } from './DaService'
 
 const MOCK_ETHEREUM_CONFIGS = [
   {
+    configurationId: 'TEMP',
+    projectId: ProjectId('ethereum'),
+    type: 'ethereum' as const,
+    config: { type: 'baseLayer' },
+  },
+  {
+    configurationId: '0x1',
     projectId: ProjectId('project-ethereum-1'),
+    type: 'ethereum' as const,
     config: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -20,7 +28,9 @@ const MOCK_ETHEREUM_CONFIGS = [
     } as EthereumDaTrackingConfig,
   },
   {
+    configurationId: '0x2',
     projectId: ProjectId('project-ethereum-2'),
+    type: 'ethereum' as const,
     config: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
@@ -32,7 +42,15 @@ const MOCK_ETHEREUM_CONFIGS = [
 
 const MOCK_CELESTIA_CONFIGS = [
   {
+    configurationId: 'TEMP',
+    projectId: ProjectId('celestia'),
+    type: 'celestia' as const,
+    config: { type: 'baseLayer' },
+  },
+  {
+    configurationId: '0x3',
     projectId: ProjectId('project-celestia-1'),
+    type: 'celestia' as const,
     config: {
       type: 'celestia',
       daLayer: ProjectId('celestia'),
@@ -43,19 +61,21 @@ const MOCK_CELESTIA_CONFIGS = [
 
 const MOCK_AVAIL_CONFIGS = [
   {
+    configurationId: 'TEMP',
+    projectId: ProjectId('avail'),
+    type: 'avail' as const,
+    config: { type: 'baseLayer' },
+  },
+  {
+    configurationId: '0x4',
     projectId: ProjectId('project-avail-1'),
+    type: 'avail' as const,
     config: {
       type: 'avail',
       daLayer: ProjectId('avail'),
       appId: 'avail-1',
     } as AvailDaTrackingConfig,
   },
-]
-
-const MOCK_PROJECT_CONFIGS = [
-  ...MOCK_ETHEREUM_CONFIGS,
-  ...MOCK_CELESTIA_CONFIGS,
-  ...MOCK_AVAIL_CONFIGS,
 ]
 
 describe(DaService.name, () => {
@@ -104,7 +124,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_PROJECT_CONFIGS)
+      const service = new DaService(MOCK_ETHEREUM_CONFIGS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -116,63 +136,18 @@ describe(DaService.name, () => {
           totalSize: 1000n,
         },
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: 'TEMP',
+          configurationId: '0x2',
           projectId: 'project-ethereum-2',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
-        },
-      ])
-    })
-
-    it('should match avail blobs', async () => {
-      const TIME = UnixTime.now()
-
-      const mockBlobs = [
-        // blob matching avail project-avail-1
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'avail-1',
-          blockTimestamp: TIME,
-          size: BigInt(100),
-        } as AvailBlob,
-        // blob not matching any project
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'any',
-          size: BigInt(200),
-          blockTimestamp: TIME,
-        } as AvailBlob,
-      ]
-
-      const mockRecords: DataAvailabilityRecord[] = []
-
-      const service = new DaService(MOCK_PROJECT_CONFIGS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
-
-      expect(result).toEqual([
-        {
-          configurationId: 'TEMP',
-          projectId: 'avail',
-          daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
-          totalSize: 300n,
-        },
-        {
-          configurationId: 'TEMP',
-          projectId: 'project-avail-1',
-          daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
-          totalSize: 100n,
         },
       ])
     })
@@ -201,7 +176,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_PROJECT_CONFIGS)
+      const service = new DaService(MOCK_CELESTIA_CONFIGS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -213,9 +188,54 @@ describe(DaService.name, () => {
           totalSize: 300n,
         },
         {
-          configurationId: 'TEMP',
+          configurationId: '0x3',
           projectId: 'project-celestia-1',
           daLayer: 'celestia',
+          timestamp: TIME.toStartOf('day'),
+          totalSize: 100n,
+        },
+      ])
+    })
+
+    it('should match avail blobs', async () => {
+      const TIME = UnixTime.now()
+
+      const mockBlobs = [
+        // blob matching avail project-avail-1
+        {
+          type: 'avail',
+          daLayer: 'avail',
+          appId: 'avail-1',
+          blockTimestamp: TIME,
+          size: BigInt(100),
+        } as AvailBlob,
+        // blob not matching any project
+        {
+          type: 'avail',
+          daLayer: 'avail',
+          appId: 'any',
+          size: BigInt(200),
+          blockTimestamp: TIME,
+        } as AvailBlob,
+      ]
+
+      const mockRecords: DataAvailabilityRecord[] = []
+
+      const service = new DaService(MOCK_AVAIL_CONFIGS)
+      const result = service.generateRecords(mockBlobs, mockRecords)
+
+      expect(result).toEqual([
+        {
+          configurationId: 'TEMP',
+          projectId: 'avail',
+          daLayer: 'avail',
+          timestamp: TIME.toStartOf('day'),
+          totalSize: 300n,
+        },
+        {
+          configurationId: '0x4',
+          projectId: 'project-avail-1',
+          daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
           totalSize: 100n,
         },
@@ -275,7 +295,7 @@ describe(DaService.name, () => {
         },
         // project record for previous day
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -291,7 +311,7 @@ describe(DaService.name, () => {
         },
         // project record for current day
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -299,7 +319,7 @@ describe(DaService.name, () => {
         },
       ]
 
-      const service = new DaService(MOCK_PROJECT_CONFIGS)
+      const service = new DaService(MOCK_ETHEREUM_CONFIGS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -312,7 +332,7 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -328,7 +348,7 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -344,7 +364,7 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
+          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
