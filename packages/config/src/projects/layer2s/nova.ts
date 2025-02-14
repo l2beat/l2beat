@@ -35,7 +35,10 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
 )
-const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
+const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
+  'L2Timelock',
+  'getMinDelay',
+)
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const dac = discovery.getContractValue<{
@@ -115,6 +118,7 @@ export const nova: Layer2 = orbitStackL2({
   display: {
     name: 'Arbitrum Nova',
     slug: 'nova',
+    warning: undefined,
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     links: {
@@ -174,6 +178,21 @@ export const nova: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
+  nonTemplateRiskView: {
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+      l2TimelockDelay,
+      selfSequencingDelay,
+      challengeWindowSeconds,
+      validatorAfkTime,
+      l1TimelockDelay,
+    ),
+    stateValidation: RISK_VIEW.STATE_FP_INT,
+  },
+  stateValidation: {
+    isUnderReview: true,
+    description: '.',
+    categories: [],
+  },
   nonTemplatePermissions: {
     [discovery.chain]: {
       actors: [
@@ -341,15 +360,6 @@ export const nova: Layer2 = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
   ],
-  nonTemplateRiskView: {
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
-      l2TimelockDelay,
-      selfSequencingDelay,
-      challengeWindowSeconds,
-      validatorAfkTime,
-      l1TimelockDelay,
-    ),
-  },
   nonTemplateTechnology: {
     otherConsiderations: [
       ...WASMVM_OTHER_CONSIDERATIONS,
@@ -361,6 +371,12 @@ export const nova: Layer2 = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Bold, permissionless proof system, deployed',
+      url: 'https://x.com/arbitrum/status/1889710151332245837',
+      date: '2025-02-15T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'ArbOS 32 Emergency upgrade',
       url: 'https://github.com/OffchainLabs/nitro/releases/tag/v3.2.0',
