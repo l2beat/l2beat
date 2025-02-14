@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo } from 'react'
 
 import type { TooltipProps } from 'recharts'
@@ -28,7 +28,7 @@ export interface StackedTvsChartDataPoint {
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   unit: ChartUnit
   isLoading: boolean
   className?: string

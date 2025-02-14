@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo } from 'react'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
 import type { CostsMetric } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
@@ -20,14 +20,13 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
 interface Props {
   tab: Exclude<CostsProjectsFilter['type'], 'all' | 'projects'>
   entries: ScalingCostsEntry[]
-  milestones: Milestone[]
+  milestones: Milestones
 }
 
 export function ScalingCostsChart({ tab, milestones, entries }: Props) {
@@ -64,10 +63,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     filter,
     previewRecategorisation: checked,
   })
-
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
 
   const chartData = useMemo(() => {
     return data?.map(
@@ -122,7 +117,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         data={chartData}
         unit={unit}
         isLoading={isLoading}
-        milestones={mappedMilestones}
+        milestones={milestones}
         resolution={resolution}
         className="mb-2 mt-4"
       />

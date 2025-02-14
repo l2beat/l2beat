@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import type {
@@ -10,7 +10,6 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { TokenCombobox } from '../../token-combobox'
 import type { ChartUnit } from '../types'
 import { ProjectTokenChart } from './project-token-chart'
@@ -21,7 +20,7 @@ import { TvsChartUnitControls } from './tvs-chart-unit-controls'
 
 interface Props {
   projectId: string
-  milestones: Milestone[]
+  milestones: Milestones
   tokens: ProjectTokens | undefined
   isBridge: boolean
 }
@@ -36,10 +35,6 @@ export function ProjectTvsChart({
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
-  const mappedMilestones = useMemo(
-    () => mapMilestones(milestones),
-    [milestones],
-  )
 
   if (tokens && token) {
     return (
@@ -62,7 +57,7 @@ export function ProjectTvsChart({
     <DefaultChart
       isBridge={isBridge}
       projectId={projectId}
-      milestones={mappedMilestones}
+      milestones={milestones}
       timeRange={timeRange}
       setTimeRange={setTimeRange}
       tokens={tokens}
@@ -77,7 +72,7 @@ export function ProjectTvsChart({
 interface DefaultChartProps {
   projectId: string
   isBridge: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens | undefined

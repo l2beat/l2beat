@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, Milestones } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -49,7 +49,7 @@ interface Props {
   data: ActivityChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   showMainnet: boolean
   scale: ChartScale
   metric: ActivityMetric

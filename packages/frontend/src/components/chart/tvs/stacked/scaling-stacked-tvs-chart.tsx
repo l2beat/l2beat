@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, Milestones } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
@@ -15,13 +15,12 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
 import { getChartRange } from '../../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../../core/chart/utils/map-milestones'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
 import { StackedTvsChart } from './stacked-tvs-chart'
 interface Props {
-  milestones: Milestone[]
+  milestones: Milestones
   entries: ScalingTvsEntry[]
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
@@ -55,11 +54,6 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     previewRecategorisation: checked,
   })
 
-  const mappedMilestones = useMemo(
-    () => mapMilestones(milestones),
-    [milestones],
-  )
-
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
@@ -69,10 +63,10 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
           native: native / divider,
           canonical: canonical / divider,
           external: external / divider,
-          milestone: mappedMilestones[timestamp],
+          milestone: milestones[timestamp],
         }
       }),
-    [data, mappedMilestones, unit],
+    [data, milestones, unit],
   )
 
   const chartRange = getChartRange(chartData)
@@ -89,7 +83,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       />
       <StackedTvsChart
         data={chartData}
-        milestones={mappedMilestones}
+        milestones={milestones}
         unit={unit}
         isLoading={isLoading}
       />

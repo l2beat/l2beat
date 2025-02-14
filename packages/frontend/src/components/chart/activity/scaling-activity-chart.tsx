@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, Milestones } from '@l2beat/config'
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
@@ -20,7 +20,6 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
 import type { ChartScale } from '../types'
 import type { ActivityChartType } from './activity-chart'
@@ -28,7 +27,7 @@ import { ActivityChart } from './activity-chart'
 import { ActivityChartHeader } from './activity-chart-header'
 
 interface Props {
-  milestones: Milestone[]
+  milestones: Milestones
   entries: ScalingActivityEntry[]
   hideScalingFactor?: boolean
   type: ActivityChartType
@@ -73,17 +72,13 @@ export function ScalingActivityChart({
     previewRecategorisation: checked,
   })
 
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
   const chartData = useMemo(
     () =>
       data?.data.map(
         ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
           const projectMetric = metric === 'tps' ? projectsTx : projectsUops
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          const milestone = mappedMilestones[timestamp]
+          const milestone = milestones[timestamp]
           return {
             timestamp,
             projects: projectMetric / UnixTime.DAY,
@@ -92,7 +87,7 @@ export function ScalingActivityChart({
           }
         },
       ),
-    [data?.data, mappedMilestones, metric],
+    [data?.data, milestones, metric],
   )
   const chartRange = getChartRange(chartData)
 
@@ -107,7 +102,7 @@ export function ScalingActivityChart({
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
-        milestones={mappedMilestones}
+        milestones={milestones}
         showMainnet={showMainnet}
         scale={scale}
         metric={metric}

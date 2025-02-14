@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, Milestones } from '@l2beat/config'
 import { useEffect, useMemo, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'
@@ -23,7 +23,7 @@ import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
 type Props = TabbedScalingEntries<ScalingCostsEntry> & {
-  milestones: Milestone[]
+  milestones: Milestones
 }
 
 export function ScalingCostsTabs(props: Props) {

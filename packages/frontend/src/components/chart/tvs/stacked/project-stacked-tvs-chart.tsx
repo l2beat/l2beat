@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { TokenCombobox } from '~/components/token-combobox'
@@ -19,7 +19,7 @@ import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
 import { StackedTvsChart } from './stacked-tvs-chart'
 
 interface Props {
-  milestones: Milestone[]
+  milestones: Milestones
   projectId: string
   tokens: ProjectTokens | undefined
   isBridge: boolean
@@ -72,7 +72,7 @@ export function ProjectStackedTvsChart({
 interface DefaultChartProps {
   projectId: string
   isBridge: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens | undefined

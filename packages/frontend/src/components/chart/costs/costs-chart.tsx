@@ -1,4 +1,4 @@
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
@@ -49,7 +49,7 @@ interface Props {
   data: CostsChartDataPoint[] | undefined
   unit: CostsUnit
   isLoading: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   resolution: CostsResolution
   className?: string
 }

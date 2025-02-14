@@ -122,4 +122,6 @@ function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
   }
   return result
 }
+
+export type Milestones = Record<number, Milestone>
 export const HOMEPAGE_MILESTONES = mapMilestones(HOMEPAGE_MILESTONES_LIST)

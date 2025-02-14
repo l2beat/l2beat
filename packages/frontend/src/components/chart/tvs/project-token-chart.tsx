@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { capitalize } from 'lodash'
 import { useMemo } from 'react'
@@ -41,7 +41,7 @@ import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 interface Props {
   projectId: string
   isBridge: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestones
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens

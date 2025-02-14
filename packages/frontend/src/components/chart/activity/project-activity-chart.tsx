@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone, ScalingProjectCategory } from '@l2beat/config'
+import type { Milestones, ScalingProjectCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
@@ -14,14 +14,13 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './activity-chart'
 import { getChartType } from './utils/get-chart-type'
 
 interface Props {
-  milestones: Milestone[]
+  milestones: Milestones
   projectId: string
   category?: ScalingProjectCategory
   projectName?: string
@@ -48,17 +47,13 @@ export function ProjectActivityChart({
 
   const type = getChartType(category)
 
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
   const chartData = useMemo(
     () =>
       chart?.data.map(
         ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
           const projectMetric = metric === 'tps' ? projectsTx : projectsUops
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          const milestone = mappedMilestones[timestamp]
+          const milestone = milestones[timestamp]
           return {
             timestamp,
             projects: projectMetric / UnixTime.DAY,
@@ -67,7 +62,7 @@ export function ProjectActivityChart({
           }
         },
       ),
-    [chart?.data, mappedMilestones, metric],
+    [chart?.data, milestones, metric],
   )
 
   const chartRange = getChartRange(chartData)

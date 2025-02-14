@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -28,7 +28,7 @@ interface Props {
   data: TvsChartDataPoint[] | undefined
   unit: ChartUnit
   isLoading: boolean
-  milestones: Record<number, Milestone> | undefined
+  milestones: Milestones | undefined
 }
 
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {

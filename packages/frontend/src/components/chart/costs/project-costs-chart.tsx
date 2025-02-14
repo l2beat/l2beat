@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
@@ -13,12 +13,11 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
 interface Props {
-  milestones: Milestone[]
+  milestones: Milestones
   projectId: string
 }
 
@@ -29,10 +28,6 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     range,
     filter: { type: 'projects', projectIds: [projectId] },
   })
-
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
 
   const chartData = useMemo(() => {
     return data?.map(
@@ -93,7 +88,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         data={chartData}
         unit={unit}
         isLoading={isLoading}
-        milestones={mappedMilestones}
+        milestones={milestones}
         resolution={rangeToResolution(range)}
         className="mb-2 mt-4"
       />
