@@ -6869,6 +6869,20 @@
       "supply": "zero"
     },
     {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1730847151,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 130,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Ether",
       "coingeckoId": "ethereum",
       "symbol": "ETH",
