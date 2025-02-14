@@ -72,7 +72,7 @@ export function ChartMilestone({
       viewBox="0 0 20 20"
       role="img"
       aria-label="Milestone icon"
-      className="absolute bottom-9 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400"
+      className="absolute bottom-5 cursor-pointer fill-green-700 stroke-green-500 hover:stroke-green-400 group-has-[.recharts-legend-wrapper]:bottom-9"
       style={{ left }}
     >
       <rect
