@@ -132,8 +132,8 @@ const getCached7dTokenBreakdown = cache(
   },
   ['getCached7dTokenBreakdown'],
   {
-    tags: ['tvs'],
-    revalidate: UnixTime.DAY,
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

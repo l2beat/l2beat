@@ -1,4 +1,5 @@
 import type { ValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
@@ -87,7 +88,8 @@ export const getCachedRecategorisedTvsChartData = cache(
   },
   ['recategorised-tvs-chart-data'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
