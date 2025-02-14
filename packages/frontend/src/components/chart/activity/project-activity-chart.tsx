@@ -1,7 +1,8 @@
 'use client'
 
 import type { Milestone, ScalingProjectCategory } from '@l2beat/config'
-import { useState } from 'react'
+import { UnixTime } from '@l2beat/shared-pure'
+import { useMemo, useState } from 'react'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
@@ -11,15 +12,13 @@ import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { Checkbox } from '../../core/checkbox'
-import { Chart } from '../core/chart'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ChartLegend } from '../core/chart-legend'
-import { ChartProvider } from '../core/chart-provider'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
+import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartScale } from '../types'
-import { ActivityChartHover } from './activity-chart-hover'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { getChartType, typeToIndicator } from './utils/get-chart-type'
+import { ActivityChart } from './activity-chart'
+import { getChartType } from './utils/get-chart-type'
 
 interface Props {
   milestones: Milestone[]
@@ -49,88 +48,82 @@ export function ProjectActivityChart({
 
   const type = getChartType(category)
 
-  const { columns, valuesStyle, chartRange, formatYAxisLabel } =
-    useActivityChartRenderParams({
-      milestones,
-      chart,
-      showMainnet,
-      metric,
-      type,
-    })
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones)
+  }, [milestones])
+
+  const chartData = useMemo(
+    () =>
+      chart?.data.map(
+        ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+          const projectMetric = metric === 'tps' ? projectsTx : projectsUops
+          const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
+          const milestone = mappedMilestones[timestamp]
+          return {
+            timestamp,
+            projects: projectMetric / UnixTime.DAY,
+            ethereum: ethereumMetric / UnixTime.DAY,
+            milestone,
+          }
+        },
+      ),
+    [chart?.data, mappedMilestones, metric],
+  )
+
+  const chartRange = newGetChartRange(chartData)
 
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      useLogScale={scale === 'log'}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <ActivityChartHover
-          {...data}
-          showEthereum={showMainnet}
-          singleProject
-          syncedUntil={chart?.syncedUntil}
-          metric={metric}
-          type={getChartType(category)}
-          projectName={projectName}
+    <section className="flex flex-col">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <ActivityTimeRangeControls
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+          projectSection
         />
-      )}
-    >
-      <section className="flex flex-col">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
-          <ActivityTimeRangeControls
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-            projectSection
+      </ChartControlsWrapper>
+      <ActivityChart
+        data={chartData}
+        milestones={milestones}
+        showMainnet={showMainnet}
+        scale={scale}
+        metric={metric}
+        isLoading={isLoading}
+        syncedUntil={chart?.syncedUntil}
+        className="mb-2 mt-4"
+        type={type}
+        projectName={projectName}
+      />
+
+      <div className="flex justify-between gap-4">
+        <div className="flex gap-1">
+          <ActivityMetricControls
+            value={metric}
+            onValueChange={setMetric}
+            projectChart
           />
-        </ChartControlsWrapper>
-        <Chart className="mt-4" />
-        <ChartLegend
-          className="my-2"
-          elements={[
-            {
-              name: projectName ?? 'Project',
-              color: typeToIndicator(type),
-            },
-            {
-              name: 'Ethereum',
-              color: 'bg-indicator-ethereum',
-            },
-          ]}
-        />
-        <div className="flex justify-between gap-4">
-          <div className="flex gap-1">
-            <ActivityMetricControls
-              value={metric}
-              onValueChange={setMetric}
-              projectChart
-            />
-            <Checkbox
-              name="showMainnetActivity"
-              checked={showMainnet}
-              onCheckedChange={(state) => setShowMainnet(!!state)}
-            >
-              <div className="flex flex-row items-center gap-2">
-                <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-                <span className="max-lg:hidden">{`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}</span>
-                <span className="lg:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
-              </div>
-            </Checkbox>
-          </div>
-          <RadioGroup
-            name="activityChartScale"
-            value={scale}
-            onValueChange={(value) => setScale(value as ChartScale)}
+          <Checkbox
+            name="showMainnetActivity"
+            checked={showMainnet}
+            onCheckedChange={(state) => setShowMainnet(!!state)}
           >
-            <RadioGroupItem value="log">LOG</RadioGroupItem>
-            <RadioGroupItem value="lin">LIN</RadioGroupItem>
-          </RadioGroup>
+            <div className="flex flex-row items-center gap-2">
+              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
+              <span className="max-lg:hidden">{`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}</span>
+              <span className="lg:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
+            </div>
+          </Checkbox>
         </div>
-        {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
-      </section>
-    </ChartProvider>
+        <RadioGroup
+          name="activityChartScale"
+          value={scale}
+          onValueChange={(value) => setScale(value as ChartScale)}
+        >
+          <RadioGroupItem value="log">LOG</RadioGroupItem>
+          <RadioGroupItem value="lin">LIN</RadioGroupItem>
+        </RadioGroup>
+      </div>
+      {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
+    </section>
   )
 }

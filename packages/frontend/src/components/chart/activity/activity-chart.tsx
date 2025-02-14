@@ -36,7 +36,8 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import type { ChartScale } from '../types'
-import type { ActivityChartType } from './use-activity-chart-render-params'
+
+export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 interface ActivityChartDataPoint {
   timestamp: number
@@ -53,6 +54,7 @@ interface Props {
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
+  projectName?: string
   className?: string
 }
 
@@ -65,12 +67,15 @@ export function ActivityChart({
   scale,
   type,
   metric,
+  projectName,
   className,
 }: Props) {
   const chartConfig = {
     projects: {
       label:
-        type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type,
+        (projectName ?? type === 'ValidiumsAndOptimiums')
+          ? 'Validiums and Optimiums'
+          : type,
       color:
         type === 'ValidiumsAndOptimiums'
           ? 'hsl(var(--indicator-validiums-optimiums))'

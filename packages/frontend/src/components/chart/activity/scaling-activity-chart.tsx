@@ -23,9 +23,9 @@ import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartScale } from '../types'
+import type { ActivityChartType } from './activity-chart'
 import { ActivityChart } from './activity-chart'
 import { ActivityChartHeader } from './activity-chart-header'
-import type { ActivityChartType } from './use-activity-chart-render-params'
 
 interface Props {
   milestones: Milestone[]
