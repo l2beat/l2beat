@@ -81,7 +81,6 @@ model DataAvailability {
   totalSize       BigInt
 
   @@id([timestamp, configurationId])
-  @@index([timestamp, daLayer])
 }
 
 model DiscoveryCache {

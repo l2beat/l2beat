@@ -9,9 +9,3 @@
 ALTER TABLE "DataAvailability" DROP CONSTRAINT "DataAvailability_pkey",
 ADD COLUMN     "configurationId" CHAR(12) NOT NULL,
 ADD CONSTRAINT "DataAvailability_pkey" PRIMARY KEY ("timestamp", "configurationId");
-
--- CreateIndex
-CREATE INDEX "DataAvailability_daLayer_projectId_idx" ON "DataAvailability"("daLayer", "projectId");
-
--- CreateIndex
-CREATE INDEX "DataAvailability_projectId_idx" ON "DataAvailability"("projectId");
