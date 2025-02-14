@@ -6,7 +6,6 @@ import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
-import { Discovery2Clingo } from './Discovery2Clingo'
 import { Events } from './Events'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FindL2 } from './FindL2'
@@ -35,7 +34,6 @@ export function getSubcommands() {
     DeploymentTimestamp,
     DetectProxy,
     Discover,
-    Discovery2Clingo,
     Events,
     FetchFlatSources,
     Flatten,
