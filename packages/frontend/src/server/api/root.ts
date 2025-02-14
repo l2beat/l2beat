@@ -1,6 +1,7 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
 import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
+import { daRouter } from './routers/da'
 import { tvsRouter } from './routers/tvs'
 
 /**
@@ -12,6 +13,7 @@ export const appRouter = router({
   activity: activityRouter,
   costs: costsRouter,
   tvs: tvsRouter,
+  da: daRouter,
 })
 
 // export type definition of API
