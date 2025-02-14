@@ -36,6 +36,10 @@ export const publicSystemsColumns = [
             }
           />
         ),
+        meta: {
+          tooltip:
+            'The total size of the data posted over the past day, divided by the number of seconds in a day.',
+        },
       }),
       columnHelper.display({
         header: 'MAX',
@@ -50,6 +54,9 @@ export const publicSystemsColumns = [
             }
           />
         ),
+        meta: {
+          tooltip: 'The maximum amount of data that can be posted per second.',
+        },
       }),
     ],
   }),
@@ -69,6 +76,8 @@ export const publicSystemsColumns = [
     meta: {
       headClassName: 'pl-2',
       cellClassName: 'pl-2',
+      tooltip:
+        "The percentage of utilization, calculated based on the past day's average throughput relative to the maximum.",
     },
   }),
   columnHelper.display({
@@ -86,17 +95,29 @@ export const publicSystemsColumns = [
         }
       />
     ),
+    meta: {
+      tooltip:
+        'The project that has posted the largest amount of data over the past day.',
+    },
   }),
   columnHelper.display({
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
       <TableValueCell value={{ value: ctx.row.original.totalPosted ?? '' }} />
     ),
+    meta: {
+      tooltip:
+        'The total amount of data posted to the layer over the past day.',
+    },
   }),
   columnHelper.display({
     header: 'Finality',
     cell: (ctx) => (
       <TableValueCell value={{ value: ctx.row.original.finality ?? '' }} />
     ),
+    meta: {
+      tooltip:
+        'The time required for a data batch to achieve consensus finality, reducing the risk of reorgs or rollbacks. Faster finality means users can trust that data is available sooner, minimizing the wait time before proceeding with subsequent operations.',
+    },
   }),
 ]
