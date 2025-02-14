@@ -20,19 +20,19 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/common'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
+import { newGetChartRange } from '../../core/utils/get-chart-range-from-columns'
 import { mapMilestones } from '../../core/utils/map-milestones'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
-import { useStackedTvsChartRenderParams } from './use-stacked-tvs-chart-render-params'
 interface Props {
   milestones: Milestone[]
   entries: ScalingTvsEntry[]
@@ -103,20 +103,18 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     [data, mappedMilestones, unit],
   )
 
-  const { chartRange, change, formatYAxisLabel, total } =
-    useStackedTvsChartRenderParams({
-      milestones,
-      unit,
-      data,
-    })
+  const chartRange = newGetChartRange(chartData)
+  const meta = getMeta(chartData)
+
   return (
     <section className="flex flex-col gap-2">
       <TvsChartHeader
         unit={unit}
-        value={total?.[unit]}
-        change={change}
+        value={meta?.total}
+        change={meta?.change}
         range={timeRange}
         timeRange={chartRange}
+        isLoading={isLoading}
       />
       <div className="relative size-full">
         <ChartContainer
@@ -160,7 +158,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
             {getCommonChartComponents({
               chartData,
               yAxis: {
-                tickFormatter: (value: number) => formatYAxisLabel(value),
+                tickFormatter: (value: number) => formatCurrency(value, unit),
               },
             })}
           </AreaChart>
@@ -191,28 +189,84 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
-
+  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
-    <div className={cn(tooltipContentVariants(), 'flex flex-col gap-1')}>
-      <div className="flex w-full items-center justify-between gap-2">
-        <span>
-          {formatTimestamp(label, { mode: 'datetime', longMonthName: true })}
-        </span>
+    <div className={tooltipContentVariants()}>
+      <div className="flex w-36 flex-col gap-1 xs:!w-52">
+        <div>
+          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        </div>
+        <div className="flex w-full items-center justify-between gap-2 text-xs text-secondary">
+          <span className="[@media(min-width:600px)]:hidden">Total</span>
+          <span className="hidden [@media(min-width:600px)]:inline">
+            Total value secured
+          </span>
+          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
+        </div>
+        <HorizontalSeparator />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            return (
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-x-1"
+              >
+                <span className="flex items-center gap-1">
+                  <div
+                    role="img"
+                    aria-label="Square icon"
+                    className="size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </span>
+                <span className="whitespace-nowrap font-medium">
+                  {formatCurrency(entry.value, 'usd')}
+                </span>
+              </div>
+            )
+          })}
+        </div>
       </div>
-      {payload.map((entry) => {
-        if (entry.value === undefined) return null
-        const config = chartConfig[entry.name as keyof typeof chartConfig]
-        return (
-          <div key={entry.name}>
-            <div className="flex w-full items-center justify-between gap-2">
-              <span>{config.label}</span>
-              <span className="font-medium">
-                {formatCurrency(entry.value, 'usd')}
-              </span>
-            </div>
-          </div>
-        )
-      })}
     </div>
   )
+}
+
+function getMeta(
+  data:
+    | {
+        timestamp: number
+        native: number
+        canonical: number
+        external: number
+        milestone: Milestone | undefined
+      }[]
+    | undefined,
+) {
+  const oldestDataPoint = data?.at(0)
+  const newestDataPoint = data?.at(-1)
+  if (!oldestDataPoint || !newestDataPoint) {
+    return undefined
+  }
+
+  const total =
+    newestDataPoint.native +
+    newestDataPoint.canonical +
+    newestDataPoint.external
+  const oldestTotal =
+    oldestDataPoint.native +
+    oldestDataPoint.canonical +
+    oldestDataPoint.external
+  const change = total / oldestTotal - 1
+
+  return {
+    total,
+    change,
+  }
 }
