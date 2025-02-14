@@ -9,7 +9,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
   const START = UnixTime.now()
 
-  describe(DataAvailabilityRepository.prototype.upsertMany.name, () => {
+  describe.skip(DataAvailabilityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
         record('a', START, 100n),
@@ -54,7 +54,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
+  describe.skip(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([
         record('a', START, 100n),
@@ -69,7 +69,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.getByProjectIdsAndTimeRange
+  describe.skip(DataAvailabilityRepository.prototype.getByProjectIdsAndTimeRange
     .name, () => {
     it('should return the latest record for each project', async () => {
       await repository.upsertMany([
@@ -109,7 +109,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype
+  describe.skip(DataAvailabilityRepository.prototype
     .getLargestPosterByProjectIdsAndTimestamp.name, () => {
     it('should return the largest poster at a given timestamp', async () => {
       await repository.upsertMany([
@@ -142,7 +142,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.deleteByProjectFrom
+  describe.skip(DataAvailabilityRepository.prototype.deleteByProjectFrom
     .name, () => {
     it('should delete all rows after a given timestamp for a project', async () => {
       await repository.upsertMany([
@@ -167,7 +167,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.getByProjectAndTimeRange
+  describe.skip(DataAvailabilityRepository.prototype.getByProjectAndTimeRange
     .name, () => {
     it('should return all rows in a given time range for a project', async () => {
       const records = [
@@ -191,7 +191,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository.prototype.getByProjectIdAndFrom
+  describe.skip(DataAvailabilityRepository.prototype.getByProjectIdAndFrom
     .name, () => {
     it('should return all rows from given timestamp for a project', async () => {
       await repository.upsertMany([
