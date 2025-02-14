@@ -1,14 +1,14 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "RollupProxy",
-  "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
+  "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).",
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": [
     "firstUnresolvedNode",
     "latestConfirmed",
     "latestNodeCreated"
   ],
-  "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox"],
+  "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox", "stakeToken"],
   "fields": {
     "owner": {
       "target": {
@@ -18,6 +18,20 @@
             "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
           }
         ]
+      }
+    },
+    "validators": {
+      "target": {
+        "permissions": [
+          {
+            "type": "validate",
+            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          }
+        ]
+      },
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "validator"
       }
     },
     "minimumAssertionPeriod": {
