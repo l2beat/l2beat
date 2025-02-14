@@ -17,11 +17,11 @@ const chartConfig = {
     color: 'hsl(var(--chart-ethereum))',
   },
   celestia: {
-    label: 'Celestia',
+    label: 'Celestia (fake)',
     color: 'hsl(var(--chart-da-celestia))',
   },
   avail: {
-    label: 'Avail',
+    label: 'Avail (fake)',
     color: 'hsl(var(--chart-da-avail))',
   },
 } satisfies ChartConfig
@@ -45,7 +45,7 @@ export function DaThroughputChart() {
             ? 'Share of total data posted'
             : 'Total data posted'}
         </h1>
-        <ChartTimeRange range={chartRange} />
+        <ChartTimeRange range={chartRange} isLoading={isLoading} />
       </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart
