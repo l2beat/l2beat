@@ -1,4 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -8,7 +9,6 @@ import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import type { CostsTimeRange } from './utils/range'
 import { getFullySyncedCostsRange } from './utils/range'
-import { UnixTime } from '@l2beat/shared-pure'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>

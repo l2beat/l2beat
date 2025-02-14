@@ -1,4 +1,5 @@
 import type { ValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Dictionary } from 'lodash'
 import { uniq } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
@@ -15,7 +16,6 @@ import {
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
 import { sumValuesPerSource } from './utils/sum-values-per-source'
-import { UnixTime } from '@l2beat/shared-pure'
 
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
