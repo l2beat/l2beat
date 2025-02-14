@@ -1,5 +1,5 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -116,6 +116,7 @@ export const getCachedCostsChartData = cache(
   ['costs-chart-data'],
   {
     tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

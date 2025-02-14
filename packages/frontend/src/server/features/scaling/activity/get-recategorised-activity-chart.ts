@@ -145,6 +145,7 @@ export const getCachedRecategorisedActivityChartData = cache(
   ['recategorised-activity-chart-data'],
   {
     tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

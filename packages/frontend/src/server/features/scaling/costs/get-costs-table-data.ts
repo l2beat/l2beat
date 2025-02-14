@@ -8,6 +8,7 @@ import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import type { CostsTimeRange } from './utils/range'
 import { getFullySyncedCostsRange } from './utils/range'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function getCostsTable(
   ...parameters: Parameters<typeof getCachedCostsTableData>
@@ -46,6 +47,7 @@ export const getCachedCostsTableData = cache(
   ['costs-table-data'],
   {
     tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

@@ -15,6 +15,7 @@ import {
 } from './utils/project-filter-utils'
 import { TvsChartRange, getRangeConfig } from './utils/range'
 import { sumValuesPerSource } from './utils/sum-values-per-source'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
@@ -88,6 +89,7 @@ export const getCachedRecategorisedTvsChartData = cache(
   ['recategorised-tvs-chart-data'],
   {
     tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
