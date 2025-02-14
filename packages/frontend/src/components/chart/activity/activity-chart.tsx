@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone, Milestones } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'

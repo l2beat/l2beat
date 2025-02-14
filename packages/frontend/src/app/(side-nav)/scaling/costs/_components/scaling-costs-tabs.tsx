@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone, Milestones } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useEffect, useMemo, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingCostsChart } from '~/components/chart/costs/scaling-costs-chart'

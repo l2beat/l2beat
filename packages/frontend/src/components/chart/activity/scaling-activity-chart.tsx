@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone, Milestones } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
