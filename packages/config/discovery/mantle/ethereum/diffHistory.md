@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x40fd0aceb1b11ae0548b3afd418d36b0ee0edb01
+
+# Diff at Fri, 14 Feb 2025 10:58:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21680644
+- current block number: 21844254
+
+## Description
+
+MS signer changes.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.6:
+-        "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A"
++        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+      values.$members.4:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+      values.$members.3:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+      values.$members.2:
+-        "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC"
++        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x7735cDcc85E63A7684C29652DbE8B845e0b4635A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0xe4d8cddd84a7321c4a3efc6354505347078a6f1b
 
 # Diff at Mon, 10 Feb 2025 19:04:14 GMT:
