@@ -1,6 +1,6 @@
 'use client'
 
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, Milestones } from '@l2beat/config'
 import { useState } from 'react'
 import { Button } from '~/components/core/button'
 import {
@@ -19,7 +19,7 @@ import type { ProjectSectionProps } from './types'
 
 export interface MilestonesAndIncidentsSectionProps
   extends ProjectSectionProps {
-  milestones: Milestone[]
+  milestones: Milestones
 }
 
 export function MilestonesAndIncidentsSection({
@@ -28,11 +28,12 @@ export function MilestonesAndIncidentsSection({
 }: MilestonesAndIncidentsSectionProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const milestonesWithNext = withNext(milestones)
+  const milestonesList = Object.values(milestones)
+  const milestonesWithNext = withNext(milestonesList)
 
   return (
     <ProjectSection {...sectionProps}>
-      {milestones.length < 3 ? (
+      {milestonesList.length < 3 ? (
         <MilestonesBase milestones={milestonesWithNext} />
       ) : (
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>

@@ -1,5 +1,5 @@
 'use client'
-import type { Milestone } from '@l2beat/config'
+import type { Milestones } from '@l2beat/config'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingStackedTvsChart } from '~/components/chart/tvs/stacked/scaling-stacked-tvs-chart'
@@ -27,7 +27,7 @@ import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingTvsTable } from './table/scaling-tvs-table'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
-  milestones: Milestone[]
+  milestones: Milestones
 }
 
 export function ScalingTvsTabs(props: Props) {

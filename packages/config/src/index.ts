@@ -17,7 +17,12 @@
  */
 
 export { chains } from './chains'
-export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
+export {
+  CONTRACTS,
+  HOMEPAGE_MILESTONES,
+  type Milestones,
+  PROJECT_COUNTDOWNS,
+} from './common'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
 export {
   badges,

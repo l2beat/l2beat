@@ -5,8 +5,10 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
+import type { Milestone } from '@l2beat/config'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
+import { ChartMilestones } from './chart-milestones'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -16,10 +18,9 @@ export type ChartConfig = Record<
   {
     label?: React.ReactNode
     icon?: React.ComponentType
-  } & (
-    | { color?: string; theme?: never }
-    | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  )
+    color?: string
+    legendLabel?: string
+  }
 >
 
 type ChartContextProps = {
@@ -38,18 +39,25 @@ export function useChart() {
   return context
 }
 
-const ChartContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    config: ChartConfig
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >['children']
-    isLoading?: boolean
-  }
->(({ id, className, children, config, isLoading, ...props }, ref) => {
+const ChartContainer = ({
+  id,
+  className,
+  children,
+  config,
+  isLoading,
+  dataWithMilestones,
+  ...props
+}: React.ComponentProps<'div'> & {
+  config: ChartConfig
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >['children']
+  dataWithMilestones?: { milestone: Milestone | undefined }[]
+  isLoading?: boolean
+}) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
+  const ref = React.useRef<HTMLDivElement>(null)
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -62,7 +70,7 @@ const ChartContainer = React.forwardRef<
           //  Tooltip cursor line
           '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
           // Tooltip
-          '[&_.recharts-tooltip-wrapper]:!transition-none',
+          '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
           // Cartesian grid line
           "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
           // Cartesian X axis tick text
@@ -89,15 +97,18 @@ const ChartContainer = React.forwardRef<
             className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
           />
         )}
+        {!isLoading && dataWithMilestones && (
+          <ChartMilestones chartData={dataWithMilestones} ref={ref} />
+        )}
       </div>
     </ChartContext.Provider>
   )
-})
+}
 ChartContainer.displayName = 'Chart'
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color,
+    ([, config]) => config.color,
   )
 
   if (!colorConfig.length) {
@@ -109,13 +120,11 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
       dangerouslySetInnerHTML={{
         __html: Object.entries(THEMES)
           .map(
-            ([theme, prefix]) => `
+            ([_, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
+    const color = itemConfig.color
     return color ? `  --color-${key}: ${color};` : null
   })
   .join('\n')}
@@ -163,7 +172,6 @@ const ChartLegendContent = React.forwardRef<
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
           return (
             <div
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -178,12 +186,12 @@ const ChartLegendContent = React.forwardRef<
                 <div
                   className="size-2.5 shrink-0 rounded-sm"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: itemConfig?.color ?? item.color,
                   }}
                 />
               )}
               <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
-                {itemConfig?.label}
+                {itemConfig?.legendLabel ?? itemConfig?.label}
               </span>
             </div>
           )
