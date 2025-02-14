@@ -11,7 +11,8 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { DaService } from '../../data-availability/services/DaService'
 
-type DaTrackingConfig = ProjectDaTrackingConfig & { project: string }
+type WithBaseLayer = ProjectDaTrackingConfig | { type: 'baseLayer' }
+type DaTrackingConfig = WithBaseLayer & { project: string }
 
 export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<DaTrackingConfig>, 'name'> {
@@ -51,7 +52,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
 
     const previousRecords = await this.getPreviousRecords(blobs, configurations)
 
-    const records = this.$.daService.generateRecords(blobs, previousRecords)
+    const records = this.$.daService.generateRecords(
+      configurations,
+      blobs,
+      previousRecords,
+    )
 
     return async () => {
       await this.$.db.dataAvailability.upsertMany(records)

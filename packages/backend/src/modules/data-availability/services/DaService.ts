@@ -58,6 +58,7 @@ export class DaService {
   }
 
   generateRecords(
+    configurations: Configuration<DaTrackingConfig>[],
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
   ): DataAvailabilityRecord[] {
@@ -67,7 +68,7 @@ export class DaService {
       const existing = updatedRecords.find(
         (r) =>
           r.timestamp.toNumber() === record.timestamp.toNumber() &&
-          r.projectId === record.projectId,
+          r.configurationId === record.configurationId,
       )
       if (existing) {
         existing.totalSize += record.totalSize
@@ -77,7 +78,10 @@ export class DaService {
     }
 
     for (const blob of blobs) {
-      const [daLayerRecord, projectRecord] = this.createRecordFromBlob(blob)
+      const [daLayerRecord, projectRecord] = this.createRecordsFromBlob(
+        configurations,
+        blobs,
+      )
       // DA layer record is always created
       addOrMerge(daLayerRecord)
       // project record is created only if we could match to one of the tracked projects
@@ -87,7 +91,9 @@ export class DaService {
     return updatedRecords
   }
 
-  private createRecordFromBlob(
+  private createRecordsFromBlob(
+    configurations: Configuration<DaTrackingConfig>[],
+
     blob: DaBlob,
   ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
     const daLayerRecord: DataAvailabilityRecord = {

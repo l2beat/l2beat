@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
+import { ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
@@ -57,10 +58,16 @@ export function initDataAvailabilityModule(
       (p) => p.config.daLayer === daLayer.name,
     )
 
+    const base = {
+      configurationId: 'TODO',
+      projectId: ProjectId(daLayer.name),
+      config: { type: 'baseLayer' as const },
+    }
+
     const daProvider = daProviders.getProvider(daLayer.name)
 
     const indexer = new DaIndexer({
-      configurations: configurations.map((c) => ({
+      configurations: [...configurations, base].map((c) => ({
         id: c.configurationId,
         minHeight: daLayer.startingBlockNumber,
         maxHeight: null,
@@ -77,8 +84,9 @@ export function initDataAvailabilityModule(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      serializeConfiguration: (value: ProjectDaTrackingConfig) =>
-        JSON.stringify(value),
+      serializeConfiguration: (
+        value: ProjectDaTrackingConfig | { type: 'baseLayer' },
+      ) => JSON.stringify(value),
     })
     daIndexers.push(indexer)
   }
