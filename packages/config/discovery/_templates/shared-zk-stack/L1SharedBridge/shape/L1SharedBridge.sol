@@ -1491,7 +1491,7 @@ contract L1SharedBridge is IL1SharedBridge, ReentrancyGuard, Ownable2StepUpgrade
     }
 
     /// @dev This sets the first post upgrade batch for era, used to check old withdrawals
-    /// @param _eraLegacyBridgeLastDepositBatch The the ZKsync Era batch number that processes the last deposit tx initiated by the legacy bridge
+    /// @param _eraLegacyBridgeLastDepositBatch the ZKsync Era batch number that processes the last deposit tx initiated by the legacy bridge
     /// @param _eraLegacyBridgeLastDepositTxNumber The tx number in the _eraLegacyBridgeLastDepositBatch of the last deposit tx initiated by the legacy bridge
     function setEraLegacyBridgeLastDepositTime(
         uint256 _eraLegacyBridgeLastDepositBatch,
