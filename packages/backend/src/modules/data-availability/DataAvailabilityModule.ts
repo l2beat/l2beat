@@ -87,6 +87,8 @@ export function initDataAvailabilityModule(
       serializeConfiguration: (
         value: ProjectDaTrackingConfig | { type: 'baseLayer' },
       ) => JSON.stringify(value),
+      // TODO: enable after PR with change to UIF gets merged
+      // configurationsTrimmingDisabled: true,
     })
     daIndexers.push(indexer)
   }
