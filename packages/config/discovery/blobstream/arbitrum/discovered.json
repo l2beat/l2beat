@@ -1,8 +1,8 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 298391608,
-  "configHash": "0x5cade48368c3cf9c74a7a374454c04a1c287224ca612b824adfa68889ba638ae",
+  "blockNumber": 305996466,
+  "configHash": "0x6389f425d68bc69128be9b027ace85c43d9f3022b5f23232342d784bcf120335",
   "contracts": [
     {
       "name": "SuccinctFeeVault",
@@ -270,13 +270,13 @@
         "isRelayer1Approved": false,
         "isRelayer2Approved": true,
         "isRelayer3Approved": true,
-        "latestBlock": 3675600,
+        "latestBlock": 4022820,
         "nextHeaderFunctionId_depcrecated": "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef",
         "relayers": [
           "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d",
           "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
         ],
-        "state_proofNonce": 7375,
+        "state_proofNonce": 8024,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "1.1.0"
