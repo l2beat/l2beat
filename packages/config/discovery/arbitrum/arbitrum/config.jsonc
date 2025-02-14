@@ -39,7 +39,7 @@
     "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
     "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
     "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
-    "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock"
+    "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias"
   },
   "overrides": {}
 }

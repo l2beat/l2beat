@@ -19,7 +19,8 @@
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
     "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
-    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock"
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumBridge"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -35,18 +36,34 @@
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
     "L1Timelock": {
-      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"],
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
+      "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
     },
     // Arbitrum One Bridge
-    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
-      "ignoreDiscovery": true
+    "ArbitrumBridge": {
+      "ignoreMethods": [
+        "acceptFundsFromOldBridge",
+        "activeOutbox",
+        "allowedDelayedInboxList",
+        "allowedDelayedInboxes",
+        "allowedOutboxList",
+        "allowedOutboxes",
+        "delayedInboxAccs",
+        "delayedMessageCount",
+        "enqueueDelayedMessage",
+        "enqueueSequencerMessage",
+        "executeCall",
+        "initialize",
+        "rollup",
+        "sequencerInbox",
+        "sequencerInboxAccs",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount",
+        "setDelayedInbox",
+        "setOutbox",
+        "setSequencerInbox",
+        "setSequencerReportedSubMessageCount",
+        "submitBatchSpendingReport"
+      ]
     },
     "L1DaiGateway": {
       "ignoreRelatives": [
