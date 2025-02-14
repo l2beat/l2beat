@@ -149,10 +149,10 @@ function CustomTooltip({
     <div
       className={cn(
         tooltipContentVariants(),
-        'flex w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60',
+        'flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60',
       )}
     >
-      <div>{formatTimestamp(label)}</div>
+      <div>{formatTimestamp(label, { longMonthName: true })}</div>
       <div className="flex w-full items-center justify-between gap-2">
         <span className="text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:hidden">
           Total

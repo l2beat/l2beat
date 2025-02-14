@@ -35,22 +35,25 @@
     --chart-ethereum: 223 69% 50.6%;
     --chart-da-celestia: 284 100% 78%;
     --chart-da-avail: 151 90% 48%;
+    --chart-native: 320 100% 63.7%;
+    --chart-external: 45 100% 51.4%;
+    --chart-canonical: 266 57.7% 52.7%;
 
-    --chart-native: 320deg 100% 63.7%;
-    --chart-external: 45deg 100% 51.4%;
-    --chart-canonical: 266deg 57.7% 52.7%;
+    --chart-ethereum-fill-gradient: 217 77.8% 49.4%;
+    --chart-ethereum-stroke-gradient-1: hsl(212deg 100% 66.3%);
+    --chart-ethereum-stroke-gradient-2: hsl(223deg 69% 50.6%);
 
     --chart-rollups-fill-gradient: 302 100% 68.6%;
     --chart-rollups-stroke-gradient-1: 266 57.7% 52.7%;
     --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
 
-    --chart-validiums-optimiums-fill-gradient: 190deg 73.6% 55.5%;
-    --chart-validiums-optimiums-stroke-gradient-1: 180deg 50.2% 42.5%;
-    --chart-validiums-optimiums-stroke-gradient-2: 191deg 70.8% 37.6%;
+    --chart-validiums-optimiums-fill-gradient: 190 73.6% 55.5%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 191 70.8% 37.6%;
 
-    --chart-others-fill-gradient: 53.8deg 70.9% 56.9%;
-    --chart-others-stroke-gradient-1: 44.9deg 100% 33.5%;
-    --chart-others-stroke-gradient-2: 43deg 60% 45.1%;
+    --chart-others-fill-gradient: 53.8 70.9% 56.9%;
+    --chart-others-stroke-gradient-1: 44.9 100% 33.5%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 
   .dark {
@@ -81,21 +84,25 @@
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
 
-    --chart-native: 320deg 100% 63.7%;
-    --chart-external: 45deg 100% 51.4%;
-    --chart-canonical: 266deg 57.7% 52.7%;
+    --chart-native: 320 100% 63.7%;
+    --chart-external: 45 100% 51.4%;
+    --chart-canonical: 266 57.7% 52.7%;
+
+    --chart-ethereum-fill-gradient: hsl(214deg 72.4% 28.4%);
+    --chart-ethereum-stroke-gradient-1: hsl(212deg 100% 66.3%);
+    --chart-ethereum-stroke-gradient-2: hsl(217deg 77.8% 49.4%);
 
     --chart-rollups-fill-gradient: 313 40.1% 38.6%;
     --chart-rollups-stroke-gradient-1: 284 87.1% 75.7%;
     --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
 
-    --chart-validiums-optimiums-fill-gradient: 193deg 55.1% 36.7%;
-    --chart-validiums-optimiums-stroke-gradient-1: 180deg 50.2% 42.5%;
-    --chart-validiums-optimiums-stroke-gradient-2: 190deg 73.6% 55.5%;
+    --chart-validiums-optimiums-fill-gradient: 193 55.1% 36.7%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 190 73.6% 55.5%;
 
-    --chart-others-fill-gradient: 50.1deg 59% 40.2%;
-    --chart-others-stroke-gradient-1: 45.1deg 100% 52%;
-    --chart-others-stroke-gradient-2: 43deg 60% 45.1%;
+    --chart-others-fill-gradient: 50.1 59% 40.2%;
+    --chart-others-stroke-gradient-1: 45.1 100% 52%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 }
 

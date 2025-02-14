@@ -1,7 +1,37 @@
 'use client'
 
+import { UnixTime } from '@l2beat/shared-pure'
 import Link from 'next/link'
+import { useMemo } from 'react'
+import type { TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
+import type { ChartConfig } from '~/components/core/chart/chart'
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+} from '~/components/core/chart/chart'
+import { getCommonChartComponents } from '~/components/core/chart/common'
+import {
+  EthereumFillGradientDef,
+  EthereumStrokeGradientDef,
+} from '~/components/core/chart/defs/ethereum-gradient-def'
+import {
+  OthersFillGradientDef,
+  OthersStrokeGradientDef,
+} from '~/components/core/chart/defs/others-gradient-def'
+import {
+  RollupsFillGradientDef,
+  RollupsStrokeGradientDef,
+} from '~/components/core/chart/defs/rollups-gradient-def'
+import {
+  ValidiumsAndOptimiumsFillGradientDef,
+  ValidiumsAndOptimiumsStrokeGradientDef,
+} from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
+import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { ChevronIcon } from '~/icons/chevron'
@@ -9,16 +39,33 @@ import type { ActivityChartStats } from '~/server/features/scaling/activity/get-
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
+import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
-import { Chart } from '../core/chart'
-import { ChartLegend } from '../core/chart-legend'
-import { ChartProvider } from '../core/chart-provider'
-import { RecategorisedActivityChartHover } from './recategorised-activity-chart-hover'
-import { useRecategorisedActivityChartRenderParams } from './use-recategorised-activity-chart-render-params'
+import { formatInteger } from '~/utils/number-format/format-integer'
 
 interface Props {
   timeRange: ActivityTimeRange
 }
+
+const chartConfig = {
+  rollups: {
+    label: 'Rollups',
+    color: 'hsl(var(--indicator-rollups))',
+  },
+  validiumsAndOptimiums: {
+    label: 'Validiums & Optimiums',
+    color: 'hsl(var(--indicator-validiums-optimiums))',
+  },
+  others: {
+    label: 'Others',
+    color: 'hsl(var(--indicator-others))',
+  },
+  ethereum: {
+    label: 'Ethereum',
+    color: 'hsl(var(--indicator-ethereum))',
+  },
+} satisfies ChartConfig
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { checked } = useRecategorisationPreviewContext()
@@ -32,48 +79,165 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     previewRecategorisation: checked,
   })
 
-  const { columns, valuesStyle, formatYAxisLabel } =
-    useRecategorisedActivityChartRenderParams({
-      chart: data,
-      milestones: [],
-    })
+  const chartData = useMemo(() => {
+    return data?.data.map(
+      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
+        return {
+          timestamp,
+          rollups: countPerSecond(rollups),
+          validiumsAndOptimiums: countPerSecond(validiumsAndOptimiums),
+          others: countPerSecond(others),
+          ethereum: countPerSecond(ethereum),
+        }
+      },
+    )
+  }, [data])
 
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <RecategorisedActivityChartHover {...data} />
-      )}
-    >
-      <section className="flex flex-col gap-4">
-        <Header stats={stats} />
-        <Chart disableMilestones />
-        <ChartLegend
-          elements={[
-            {
-              name: 'Rollups',
-              color: 'bg-indicator-rollups',
+    <section className="flex flex-col gap-4">
+      <Header stats={stats} />
+      <ChartContainer config={chartConfig} isLoading={isLoading}>
+        <AreaChart data={chartData} margin={{ top: 20 }}>
+          <defs>
+            <RollupsFillGradientDef id="rollups-fill" />
+            <RollupsStrokeGradientDef id="rollups-stroke" />
+            <ValidiumsAndOptimiumsFillGradientDef id="validiums-and-optimiums-fill" />
+            <ValidiumsAndOptimiumsStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <OthersFillGradientDef id="others-fill" />
+            <OthersStrokeGradientDef id="others-stroke" />
+            <EthereumFillGradientDef id="ethereum-fill" />
+            <EthereumStrokeGradientDef id="ethereum-stroke" />
+          </defs>
+          <ChartLegend content={<ChartLegendContent />} />
+          <ChartTooltip
+            content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
+          />
+          <Area
+            dataKey="rollups"
+            stroke="url(#rollups-stroke)"
+            fill="url(#rollups-fill)"
+            fillOpacity={1}
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          <Area
+            dataKey="validiumsAndOptimiums"
+            stroke="url(#validiums-and-optimiums-stroke)"
+            fill="url(#validiums-and-optimiums-fill)"
+            fillOpacity={1}
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          <Area
+            dataKey="others"
+            stroke="url(#others-stroke)"
+            fill="url(#others-fill)"
+            fillOpacity={1}
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          <Area
+            dataKey="ethereum "
+            stroke="url(#ethereum-stroke)"
+            fill="url(#ethereum-fill)"
+            fillOpacity={1}
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          {getCommonChartComponents({
+            chartData,
+            yAxis: {
+              unit: ' UOPS',
+              tick: {
+                width: 100,
+              },
             },
-            {
-              name: 'Validiums & Optimiums',
-              color: 'bg-indicator-validiums-optimiums',
-            },
-            {
-              name: 'Others',
-              color: 'bg-indicator-others',
-            },
-            {
-              name: 'Ethereum',
-              color: 'bg-indicator-ethereum',
-            },
-          ]}
-        />
-      </section>
-    </ChartProvider>
+          })}
+        </AreaChart>
+      </ChartContainer>
+    </section>
+  )
+}
+
+function CustomTooltip({
+  active,
+  payload,
+  label: timestamp,
+  syncedUntil,
+}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+  if (!active || !payload || typeof timestamp !== 'number') return null
+
+  return (
+    <div className={cn(tooltipContentVariants(), '!w-40 sm:!w-60')}>
+      <div className="mb-1.5 whitespace-nowrap">
+        {formatTimestamp(timestamp, {
+          longMonthName: true,
+        })}
+      </div>
+      <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex items-center gap-1">
+          <span className="text-sm text-secondary">Average UOPS</span>
+        </div>
+      </div>
+      <HorizontalSeparator />
+      {payload.map((entry) => {
+        if (entry.value === undefined) return null
+        const config = chartConfig[entry.name as keyof typeof chartConfig]
+        return (
+          <div
+            key={entry.name}
+            className="flex w-full items-start justify-between gap-2"
+          >
+            <div className="flex items-start gap-1">
+              <div
+                className="relative mt-0.5 inline-block size-3 rounded sm:mt-1"
+                style={{
+                  backgroundColor: config.color,
+                }}
+              />
+              <span className="w-20 sm:w-fit">{config.label}</span>
+            </div>
+            <span className="whitespace-nowrap font-bold tabular-nums">
+              {syncedUntil && syncedUntil < timestamp
+                ? 'Not synced'
+                : formatActivityCount(entry.value)}
+            </span>
+          </div>
+        )
+      })}
+
+      <div className="mt-2 flex w-full items-center justify-between gap-2">
+        <div className="flex items-center gap-1">
+          <span className="text-sm text-secondary">Operations count</span>
+        </div>
+      </div>
+      <HorizontalSeparator />
+      {payload.map((entry) => {
+        if (entry.value === undefined) return null
+        const config = chartConfig[entry.name as keyof typeof chartConfig]
+        return (
+          <div
+            key={entry.name}
+            className="flex w-full items-start justify-between gap-2"
+          >
+            <div className="flex items-start gap-1">
+              <div
+                className="relative mt-0.5 inline-block size-3 rounded sm:mt-1"
+                style={{
+                  backgroundColor: config.color,
+                }}
+              />
+              <span className="w-20 sm:w-fit">{config.label}</span>
+            </div>
+            <span className="whitespace-nowrap font-bold tabular-nums">
+              {syncedUntil && syncedUntil < timestamp
+                ? 'Not synced'
+                : formatInteger(entry.value * UnixTime.DAY)}
+            </span>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
