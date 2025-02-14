@@ -97,7 +97,7 @@ export const publicSystemsColumns = [
     ),
     meta: {
       tooltip:
-        'The project that has posted the largest amount of data over the past day. Displays "Other" if the project is not among the L2s listed on L2BEAT.',
+        'The project that has posted the largest amount of data over the past day.',
     },
   }),
   columnHelper.display({
