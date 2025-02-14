@@ -1,15 +1,14 @@
 import { Skeleton } from '~/components/core/skeleton'
 import { formatRange } from '~/utils/dates'
-import { useChartLoading } from './chart-loading-context'
 
 interface Props {
   range: [number, number] | undefined
+  // TODO: Do we need isLoading?
   isLoading?: boolean
 }
 
 export function ChartTimeRange({ range, isLoading }: Props) {
-  const loading = useChartLoading()
-  if (loading || isLoading) {
+  if (isLoading) {
     return <Skeleton className="h-5 w-44 lg:h-6 lg:w-52" />
   }
 
@@ -20,9 +19,8 @@ export function ChartTimeRange({ range, isLoading }: Props) {
   )
 }
 
-export function ProjectChartTimeRange({ range }: Props) {
-  const loading = useChartLoading()
-  if (loading) {
+export function ProjectChartTimeRange({ range, isLoading }: Props) {
+  if (isLoading) {
     return <Skeleton className="h-8 w-44 lg:w-52" />
   }
 

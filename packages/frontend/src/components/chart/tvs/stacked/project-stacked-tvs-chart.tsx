@@ -10,9 +10,9 @@ import type {
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../../core/chart-time-range'
-import { newGetChartRange } from '../../core/utils/get-chart-range-from-columns'
+import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../../../core/chart/chart-time-range'
+import { getChartRange } from '../../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../project-token-chart'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
@@ -113,7 +113,7 @@ function DefaultChart({
       }),
     [data, unit],
   )
-  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
     <section className="flex flex-col">

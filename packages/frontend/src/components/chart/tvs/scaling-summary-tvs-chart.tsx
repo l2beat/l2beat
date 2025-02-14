@@ -11,7 +11,6 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/chart'
-import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   OthersFillGradientDef,
   OthersStrokeGradientDef,
@@ -24,6 +23,7 @@ import {
   ValidiumsAndOptimiumsFillGradientDef,
   ValidiumsAndOptimiumsStrokeGradientDef,
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'

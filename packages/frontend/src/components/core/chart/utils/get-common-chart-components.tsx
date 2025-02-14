@@ -1,5 +1,5 @@
 import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
-import { getXAxisProps } from './utils/get-x-axis-props'
+import { getXAxisProps } from './get-x-axis-props'
 
 export interface CommonChartComponentsProps<
   T extends {

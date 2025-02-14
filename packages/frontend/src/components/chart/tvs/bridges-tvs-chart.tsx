@@ -5,11 +5,11 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ChartTimeRange } from '../core/chart-time-range'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
 import type { TvsChartDataPoint } from './tvs-chart'
 import { TvsChart } from './tvs-chart'
@@ -39,7 +39,7 @@ export function BridgesTvsChart() {
       }
     },
   )
-  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
   const stats = getStats(chartData)
 
   return (

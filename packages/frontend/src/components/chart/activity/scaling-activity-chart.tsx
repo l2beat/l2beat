@@ -18,10 +18,10 @@ import type { ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartScale } from '../types'
 import type { ActivityChartType } from './activity-chart'
 import { ActivityChart } from './activity-chart'
@@ -94,7 +94,7 @@ export function ScalingActivityChart({
       ),
     [data?.data, mappedMilestones, metric],
   )
-  const chartRange = newGetChartRange(chartData)
+  const chartRange = getChartRange(chartData)
 
   return (
     <section className="flex flex-col">

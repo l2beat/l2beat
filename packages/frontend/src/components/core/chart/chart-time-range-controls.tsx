@@ -8,8 +8,8 @@ import {
 import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
-import { RadioGroup, RadioGroupItem } from '../../core/radio-group'
-import { Skeleton } from '../../core/skeleton'
+import { RadioGroup, RadioGroupItem } from '../radio-group'
+import { Skeleton } from '../skeleton'
 
 interface Props<T extends string> {
   name: string

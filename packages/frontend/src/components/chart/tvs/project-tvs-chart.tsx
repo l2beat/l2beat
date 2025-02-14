@@ -1,17 +1,17 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import type {
   ProjectToken,
   ProjectTokens,
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
+import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { TokenCombobox } from '../../token-combobox'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartUnit } from '../types'
 import { ProjectTokenChart } from './project-token-chart'
 import type { TvsChartDataPoint } from './tvs-chart'
@@ -114,7 +114,7 @@ function DefaultChart({
       }
     },
   )
-  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
     <section className="flex flex-col gap-4">

@@ -11,11 +11,11 @@ import { NotSyncedBanner } from '~/components/not-synced/not-synced-banner'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './activity-chart'
 import { getChartType } from './utils/get-chart-type'
@@ -70,7 +70,7 @@ export function ProjectActivityChart({
     [chart?.data, mappedMilestones, metric],
   )
 
-  const chartRange = newGetChartRange(chartData)
+  const chartRange = getChartRange(chartData)
 
   return (
     <section className="flex flex-col">

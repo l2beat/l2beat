@@ -9,11 +9,11 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
-import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   RollupsFillGradientDef,
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'

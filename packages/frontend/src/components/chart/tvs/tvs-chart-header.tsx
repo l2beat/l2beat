@@ -1,9 +1,9 @@
 import { INFINITY } from '~/consts/characters'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
-import { ChartTimeRange } from '../core/chart-time-range'
 import { tvsRangeToReadable } from './tvs-range-to-readable'
 
 interface Props {

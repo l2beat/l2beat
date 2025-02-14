@@ -13,11 +13,11 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
-import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
   RollupsFillGradientDef,
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -32,9 +32,9 @@ import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 
@@ -91,7 +91,7 @@ export function ProjectTokenChart({
     }))
   }, [data, unit])
 
-  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   const milestonesData = useMemo(() => {
     return chartData?.map(({ timestamp }) => ({

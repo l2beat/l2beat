@@ -13,9 +13,9 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
-import { newGetChartRange } from '../../core/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/utils/map-milestones'
+import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
+import { getChartRange } from '../../../core/chart/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../../../core/chart/utils/map-milestones'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
@@ -75,7 +75,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     [data, mappedMilestones, unit],
   )
 
-  const chartRange = newGetChartRange(chartData)
+  const chartRange = getChartRange(chartData)
   const stats = getStats(chartData)
 
   return (

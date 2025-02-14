@@ -9,7 +9,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/chart'
-import { getCommonChartComponents } from '~/components/core/chart/common'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'

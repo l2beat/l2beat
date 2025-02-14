@@ -17,11 +17,10 @@ import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { useChartLoading } from '../core/chart-loading-context'
-import { ChartTimeRange } from '../core/chart-time-range'
-import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../core/utils/map-milestones'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
@@ -114,7 +113,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     )
   }, [data, unit])
 
-  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
     <section className="flex flex-col">
@@ -129,7 +128,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
       />
       <ChartControlsWrapper>
         <div className="flex flex-wrap gap-1">
-          <UnitControls unit={unit} setUnit={setUnit} />
+          <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
           <CostsMetricControls value={metric} onValueChange={onMetricChange} />
         </div>
         <CostsChartTimeRangeControls
@@ -160,15 +159,15 @@ function Header({
 function UnitControls({
   unit,
   setUnit,
+  isLoading,
 }: {
   unit: CostsUnit
   setUnit: (value: CostsUnit) => void
+  isLoading: boolean
 }) {
-  const loading = useChartLoading()
-
   return (
     <div className="flex items-center justify-between gap-2">
-      {loading ? (
+      {isLoading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
         <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
