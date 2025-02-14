@@ -65,6 +65,11 @@ export function DaAbsoluteThroughputChart({
         />
         {getCommonChartComponents({
           chartData: data,
+          yAxis: {
+            tick: {
+              width: 100,
+            },
+          },
         })}
       </LineChart>
     </ChartContainer>
@@ -101,7 +106,7 @@ function CustomTooltip({
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {entry.value?.toFixed(1)}
+                {formatBytes(entry.value ?? 0)}
               </span>
             </div>
           )
@@ -109,4 +114,18 @@ function CustomTooltip({
       </div>
     </div>
   )
+}
+
+function formatBytes(bytes: number) {
+  if (bytes < 1024) {
+    return `${bytes} B`
+  }
+  if (bytes < 1024 * 1024) {
+    return `${(bytes / 1024).toFixed(2)} KB`
+  }
+  if (bytes < 1024 * 1024 * 1024) {
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`
+  }
+
+  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`
 }

@@ -66,7 +66,7 @@ const ChartContainer = ({
         data-chart={chartId}
         ref={ref}
         className={cn(
-          'relative h-[192px] min-h-[192px] w-full md:h-[232px] md:min-h-[232px] xl:h-[262px] xl:min-h-[262px]',
+          'group relative h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
           "flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           //  Tooltip cursor line
           '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
@@ -92,10 +92,12 @@ const ChartContainer = ({
         <RechartsPrimitive.ResponsiveContainer>
           {isLoading ? <ChartLoader /> : children}
         </RechartsPrimitive.ResponsiveContainer>
-        <Logo
-          animated={false}
-          className="absolute bottom-10 right-3 h-8 w-20 opacity-50"
-        />
+        {!isLoading && (
+          <Logo
+            animated={false}
+            className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
+          />
+        )}
         {!isLoading && dataWithMilestones && (
           <ChartMilestones chartData={dataWithMilestones} ref={ref} />
         )}

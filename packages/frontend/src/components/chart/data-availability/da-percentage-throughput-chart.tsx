@@ -36,12 +36,14 @@ export function DaPercentageThroughputChart({
 }: Props) {
   const chartData = data?.map((item) => {
     const total = item.ethereum + item.celestia + item.avail
-    const ethereumPercent = (item.ethereum / total) * 100
-    const celestiaPercent = (item.celestia / total) * 100
-    const availPercent = Math.min(
-      (item.avail / total) * 100,
-      100 - ethereumPercent - celestiaPercent,
-    )
+    // -0.1 is just a quick hack around the fact that the sum of the percentages is not 100%
+    const ethereumPercent = (item.ethereum / total) * 100 - 0.1
+    const celestiaPercent = (item.celestia / total) * 100 - 0.1
+    const availPercent =
+      Math.min(
+        (item.avail / total) * 100,
+        100 - ethereumPercent - celestiaPercent,
+      ) - 0.1
 
     return {
       timestamp: item.timestamp,
@@ -62,6 +64,7 @@ export function DaPercentageThroughputChart({
           fill="var(--color-ethereum)"
           isAnimationActive={false}
         />
+
         <Bar
           dataKey="celestia"
           stackId="a"
