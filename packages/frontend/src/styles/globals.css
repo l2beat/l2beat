@@ -40,8 +40,8 @@
     --chart-canonical: 266 57.7% 52.7%;
 
     --chart-ethereum-fill-gradient: 217 77.8% 49.4%;
-    --chart-ethereum-stroke-gradient-1: hsl(212deg 100% 66.3%);
-    --chart-ethereum-stroke-gradient-2: hsl(223deg 69% 50.6%);
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 223deg 69% 50.6%;
 
     --chart-rollups-fill-gradient: 302 100% 68.6%;
     --chart-rollups-stroke-gradient-1: 266 57.7% 52.7%;
@@ -88,9 +88,9 @@
     --chart-external: 45 100% 51.4%;
     --chart-canonical: 266 57.7% 52.7%;
 
-    --chart-ethereum-fill-gradient: hsl(214deg 72.4% 28.4%);
-    --chart-ethereum-stroke-gradient-1: hsl(212deg 100% 66.3%);
-    --chart-ethereum-stroke-gradient-2: hsl(217deg 77.8% 49.4%);
+    --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 217deg 77.8% 49.4%;
 
     --chart-rollups-fill-gradient: 313 40.1% 38.6%;
     --chart-rollups-stroke-gradient-1: 284 87.1% 75.7%;

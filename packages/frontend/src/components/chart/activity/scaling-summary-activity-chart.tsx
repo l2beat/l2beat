@@ -136,7 +136,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             isAnimationActive={false}
           />
           <Area
-            dataKey="ethereum "
+            dataKey="ethereum"
             stroke="url(#ethereum-stroke)"
             fill="url(#ethereum-fill)"
             fillOpacity={1}
