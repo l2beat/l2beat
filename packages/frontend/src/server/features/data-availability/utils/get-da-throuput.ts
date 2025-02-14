@@ -111,7 +111,10 @@ function getMockThroughputData(
           project.id,
           {
             totalSize: 101312n,
-            syncedUntil: UnixTime.now().toStartOf('day').add(-1, 'days'),
+            syncedUntil:
+              project.id === 'avail'
+                ? UnixTime.now().toStartOf('day').add(-2, 'days')
+                : UnixTime.now().toStartOf('day').add(-1, 'days'),
             pastDayAvgThroughput: 1.5,
             maxThroughput: 4.3,
             largestPoster: {
