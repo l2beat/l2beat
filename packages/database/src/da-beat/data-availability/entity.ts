@@ -10,7 +10,7 @@ export interface DataAvailabilityRecord {
 }
 
 export function toRecord(
-  row: Selectable<DataAvailability>,
+  row: Selectable<Omit<DataAvailability, 'configurationId'>>,
 ): DataAvailabilityRecord {
   return {
     projectId: row.projectId,
@@ -24,6 +24,10 @@ export function toRow(
   record: DataAvailabilityRecord,
 ): Insertable<DataAvailability> {
   return {
+    // Temporary solution until next PR is merged
+    // Indexer writing to this table is disable
+    // Table has no records
+    configurationId: 'TEMP',
     projectId: record.projectId,
     daLayer: record.daLayer,
     timestamp: record.timestamp.toDate(),
