@@ -127,13 +127,13 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          it(`${c.name} on ${c.chain}`, () => {
-            for (const key of Object.keys(c.raw.overrides ?? {})) {
+          for (const key of Object.keys(c.raw.overrides ?? {})) {
+            it(`${c.name} on ${c.chain} with the override ${key}`, () => {
               if (!EthereumAddress.check(key)) {
                 expect(() => c.for(key)).not.toThrow()
               }
-            }
-          })
+            })
+          }
         }
       }
     })
