@@ -143,19 +143,17 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
-
+  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60">
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
-        <div className="flex w-full items-center justify-between gap-2">
-          <span className="text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:hidden">
-            Total
-          </span>
-          <span className="hidden text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:inline">
+        <div className="flex w-full items-center justify-between gap-2 text-xs text-secondary">
+          <span className="[@media(min-width:600px)]:hidden">Total</span>
+          <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
-          {'$20.00B'}
+          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
         </div>
         <HorizontalSeparator />
         <div>

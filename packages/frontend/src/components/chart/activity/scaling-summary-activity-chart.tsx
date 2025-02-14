@@ -168,7 +168,7 @@ function CustomTooltip({
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex w-40 flex-col gap-1 sm:w-60">
-        <div className="mb-1.5 whitespace-nowrap">
+        <div className="mb-1 whitespace-nowrap">
           {formatTimestamp(timestamp, {
             longMonthName: true,
           })}
@@ -178,69 +178,73 @@ function CustomTooltip({
             <span className="text-sm text-secondary">Average UOPS</span>
           </div>
         </div>
-        <HorizontalSeparator className="my-1" />
-        {payload.map((entry) => {
-          if (entry.value === undefined) return null
-          const config = chartConfig[entry.name as keyof typeof chartConfig]
-          return (
-            <div
-              key={entry.name}
-              className="flex w-full items-center justify-between gap-2"
-            >
-              <div className="flex items-center gap-1">
-                <div
-                  className="relative inline-block size-3 rounded"
-                  style={{
-                    backgroundColor: config.color,
-                  }}
-                />
-                <span className="w-20 leading-none sm:w-fit">
-                  {config.label}
+        <HorizontalSeparator className="mb-1" />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            return (
+              <div
+                key={entry.name}
+                className="flex w-full items-center justify-between gap-2"
+              >
+                <div className="flex items-center gap-1">
+                  <div
+                    className="relative inline-block size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </div>
+                <span className="whitespace-nowrap font-bold tabular-nums">
+                  {syncedUntil && syncedUntil < timestamp
+                    ? 'Not synced'
+                    : formatActivityCount(entry.value)}
                 </span>
               </div>
-              <span className="whitespace-nowrap font-bold tabular-nums">
-                {syncedUntil && syncedUntil < timestamp
-                  ? 'Not synced'
-                  : formatActivityCount(entry.value)}
-              </span>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
 
         <div className="mt-2 flex w-full items-center justify-between gap-2">
           <div className="flex items-center gap-1">
             <span className="text-sm text-secondary">Operations count</span>
           </div>
         </div>
-        <HorizontalSeparator className="my-1" />
-        {payload.map((entry) => {
-          if (entry.value === undefined) return null
-          const config = chartConfig[entry.name as keyof typeof chartConfig]
-          console.log(entry.name, config)
-          return (
-            <div
-              key={entry.name}
-              className="flex w-full items-start justify-between gap-2"
-            >
-              <div className="flex items-center gap-1">
-                <div
-                  className="relative inline-block size-3 rounded"
-                  style={{
-                    backgroundColor: config.color,
-                  }}
-                />
-                <span className="w-20 leading-none sm:w-fit">
-                  {config.label}
+        <HorizontalSeparator className="mb-1" />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            console.log(entry.name, config)
+            return (
+              <div
+                key={entry.name}
+                className="flex w-full items-start justify-between gap-2"
+              >
+                <div className="flex items-center gap-1">
+                  <div
+                    className="relative inline-block size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </div>
+                <span className="whitespace-nowrap font-bold tabular-nums">
+                  {syncedUntil && syncedUntil < timestamp
+                    ? 'Not synced'
+                    : formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>
-              <span className="whitespace-nowrap font-bold tabular-nums">
-                {syncedUntil && syncedUntil < timestamp
-                  ? 'Not synced'
-                  : formatInteger(entry.value * UnixTime.DAY)}
-              </span>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     </div>
   )
