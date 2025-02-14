@@ -1375,6 +1375,10 @@
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
     },
     {
+      "symbol": "PEPU",
+      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+    },
+    {
       "symbol": "PERP",
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
@@ -5903,6 +5907,15 @@
           }
         ]
       }
+    }
+  ],
+  "unichain": [
+    {
+      "symbol": "USDC",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

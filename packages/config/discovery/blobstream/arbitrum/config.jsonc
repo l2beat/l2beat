@@ -8,7 +8,6 @@
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway", // deprecated, SP1 now used
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": "SuccinctGatewayMultisig",
     "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SuccinctGatewaySP1",
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
     "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": "BlobstreamMultisig",
     "0x4d0C32ddA9De7CD89e198cFe5E01470A49b8acD3": "HeaderRangeVerifier",
     "0xfEA1EFaE3cDe8C524168726a7fc46BF2134bb72C": "NextHeaderVerifier",

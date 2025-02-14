@@ -3,7 +3,7 @@ import type { FieldDiff } from '@l2beat/discovery'
 import { diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -170,7 +170,7 @@ const getCachedProjectsChangeReport = cache(
     return result
   },
   [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { tags: ['update-monitor'] },
+  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
