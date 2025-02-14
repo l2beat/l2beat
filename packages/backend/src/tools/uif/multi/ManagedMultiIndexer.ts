@@ -44,6 +44,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       saved,
       this.options.configurations,
       this.options.serializeConfiguration,
+      this.options.configurationsTrimmingDisabled,
     )
     await this.updateSavedConfigurations(state.diff)
     this.ranges = toRanges(state.configurations)
@@ -83,16 +84,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       }
 
       if (diff.toTrimDataAfterUpdate.length > 0) {
-        if (this.options.configurationsTrimmingDisabled) {
-          this.logger.warn(
-            `Configuration trimming disabled. Resolve manually`,
-            {
-              configurations: JSON.stringify(diff.toTrimDataAfterUpdate),
-            },
-          )
-        } else {
-          await this.removeData(diff.toTrimDataAfterUpdate)
-        }
+        await this.removeData(diff.toTrimDataAfterUpdate)
       }
 
       if (diff.toWipeDataAfterUpdate.length > 0) {

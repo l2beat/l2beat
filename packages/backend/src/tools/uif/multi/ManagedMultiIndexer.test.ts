@@ -141,36 +141,6 @@ describe(ManagedMultiIndexer.name, () => {
 
       expect(db.transaction).toHaveBeenCalledTimes(1)
     })
-
-    it('skips configuration trimming', async () => {
-      const indexerService = mockObject<IndexerService>({
-        upsertConfigurations: async () => {},
-        deleteConfigurations: async () => {},
-      })
-
-      const indexer = new TestIndexer({
-        ...common,
-        indexerService,
-        configurationsTrimmingDisabled: true,
-      })
-
-      await indexer.updateSavedConfigurations({
-        toAdd: [],
-        toUpdate: [saved('b', 100, 1000, 1000, 'props')],
-        toTrimDataAfterUpdate: [removal('b', 50, 99), removal('b', 1001, 1500)],
-        toWipeDataAfterUpdate: [],
-        toDelete: [],
-        toWipeDataAfterDelete: [],
-      })
-
-      expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
-        INDEXER_ID,
-        [saved('b', 100, 1000, 1000, 'props')],
-        SERIALIZE,
-      )
-
-      expect(indexer.removeData).not.toHaveBeenCalled()
-    })
   })
 
   describe(ManagedMultiIndexer.prototype.update.name, () => {

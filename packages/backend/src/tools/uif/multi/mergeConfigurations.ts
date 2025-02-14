@@ -24,6 +24,7 @@ export function mergeConfigurations<T>(
   saved: SavedConfiguration<string>[],
   actual: Configuration<T>[],
   serializeConfiguration: (value: T) => string,
+  configurationsTrimmingDisabled?: boolean,
 ): MergeResult<T> {
   const maps = getConfigurationsAsMaps(saved, actual)
 
@@ -57,28 +58,51 @@ export function mergeConfigurations<T>(
       }
       currentHeight = null
     } else if (c.minHeight > stored.minHeight) {
-      toTrimDataAfterUpdate.push({
-        id: stored.id,
-        from: stored.minHeight,
-        to: c.minHeight - 1,
-      })
-      if (currentHeight !== null && currentHeight < c.minHeight) {
-        currentHeight = null
+      // If trimming disabled we wipe everything
+      if (configurationsTrimmingDisabled) {
+        if (stored.currentHeight) {
+          toWipeDataAfterUpdate.push({
+            id: stored.id,
+            from: stored.minHeight,
+            to: stored.currentHeight,
+          })
+          currentHeight = null
+        }
+      } else {
+        toTrimDataAfterUpdate.push({
+          id: stored.id,
+          from: stored.minHeight,
+          to: c.minHeight - 1,
+        })
+        if (currentHeight !== null && currentHeight < c.minHeight) {
+          currentHeight = null
+        }
       }
     }
 
     if (c.maxHeight !== stored.maxHeight) {
-      if (
-        c.maxHeight !== null &&
-        currentHeight !== null &&
-        c.maxHeight < currentHeight
-      ) {
-        toTrimDataAfterUpdate.push({
-          id: stored.id,
-          from: c.maxHeight + 1,
-          to: currentHeight,
-        })
-        currentHeight = c.maxHeight
+      if (configurationsTrimmingDisabled) {
+        if (stored.currentHeight) {
+          toWipeDataAfterUpdate.push({
+            id: stored.id,
+            from: stored.minHeight,
+            to: stored.currentHeight,
+          })
+          currentHeight = null
+        }
+      } else {
+        if (
+          c.maxHeight !== null &&
+          currentHeight !== null &&
+          c.maxHeight < currentHeight
+        ) {
+          toTrimDataAfterUpdate.push({
+            id: stored.id,
+            from: c.maxHeight + 1,
+            to: currentHeight,
+          })
+          currentHeight = c.maxHeight
+        }
       }
     }
 
