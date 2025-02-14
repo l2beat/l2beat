@@ -55,15 +55,6 @@ const upgradeExecutorUpgradeability = {
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
-// const l2Upgradability = {
-//   // same as on L1, but messages from L1 must be sent to L2
-//   upgradableBy: [
-//     { name: 'L2SecurityCouncilEmergency', delay: 'no' },
-//     { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
-//   ],
-//   upgradeConsiderations:
-//     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
-// }
 
 const treasuryTimelockDelay = discovery_arbitrum.getContractValue<number>(
   'TreasuryTimelock',
