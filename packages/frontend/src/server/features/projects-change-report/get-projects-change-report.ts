@@ -170,7 +170,7 @@ const getCachedProjectsChangeReport = cache(
     return result
   },
   [`projectsChangeReport-${env.VERCEL_GIT_COMMIT_SHA}`],
-  { tags: ['update-monitor'] },
+  { tags: ['hourly-data'] },
 )
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {

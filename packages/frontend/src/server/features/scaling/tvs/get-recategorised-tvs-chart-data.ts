@@ -87,7 +87,7 @@ export const getCachedRecategorisedTvsChartData = cache(
   },
   ['recategorised-tvs-chart-data'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
   },
 )
 

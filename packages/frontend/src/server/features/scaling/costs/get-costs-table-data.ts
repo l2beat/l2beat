@@ -45,7 +45,7 @@ export const getCachedCostsTableData = cache(
   },
   ['costs-table-data'],
   {
-    tags: ['costs'],
+    tags: ['hourly-data'],
   },
 )
 

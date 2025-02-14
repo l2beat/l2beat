@@ -115,7 +115,7 @@ export const getCachedCostsChartData = cache(
   },
   ['costs-chart-data'],
   {
-    tags: ['costs'],
+    tags: ['hourly-data'],
   },
 )
 
