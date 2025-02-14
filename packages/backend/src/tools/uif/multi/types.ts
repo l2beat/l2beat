@@ -44,4 +44,9 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   updateRetryStrategy?: RetryStrategy
   /** Used for saving data in transaction */
   db: Database
+  /** Some indexers calculate aggregated sums
+      which make configurations trimming non-trivial
+      and would require re-fetching the data
+  */
+  configurationsTrimmingDisabled?: boolean
 }

@@ -54,8 +54,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     if (
       diff.toAdd.length === 0 &&
       diff.toUpdate.length === 0 &&
-      diff.toDelete.length === 0 &&
-      diff.toRemoveData.length === 0
+      diff.toDelete.length === 0
     ) {
       return
     }
@@ -83,6 +82,23 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         })
       }
 
+      if (diff.toTrimDataAfterUpdate.length > 0) {
+        if (this.options.configurationsTrimmingDisabled) {
+          this.logger.warn(
+            `Configuration trimming disabled. Resolve manually`,
+            {
+              configurations: JSON.stringify(diff.toTrimDataAfterUpdate),
+            },
+          )
+        } else {
+          await this.removeData(diff.toTrimDataAfterUpdate)
+        }
+      }
+
+      if (diff.toWipeDataAfterUpdate.length > 0) {
+        await this.removeData(diff.toWipeDataAfterUpdate)
+      }
+
       if (diff.toDelete.length > 0) {
         await this.options.indexerService.deleteConfigurations(
           this.indexerId,
@@ -93,8 +109,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         })
       }
 
-      if (diff.toRemoveData.length > 0) {
-        await this.removeData(diff.toRemoveData)
+      if (diff.toWipeDataAfterDelete.length > 0) {
+        await this.removeData(diff.toWipeDataAfterDelete)
       }
     })
   }

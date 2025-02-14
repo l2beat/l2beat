@@ -8,8 +8,10 @@ import type {
 export interface ConfigurationsDiff<T> {
   toAdd: Configuration<T>[]
   toUpdate: SavedConfiguration<T>[]
+  toTrimDataAfterUpdate: RemovalConfiguration[]
+  toWipeDataAfterUpdate: RemovalConfiguration[]
   toDelete: string[]
-  toRemoveData: RemovalConfiguration[]
+  toWipeDataAfterDelete: RemovalConfiguration[]
 }
 
 export interface MergeResult<T> {
@@ -27,8 +29,10 @@ export function mergeConfigurations<T>(
 
   const toAdd: Configuration<T>[] = []
   const toUpdate: SavedConfiguration<T>[] = []
+  const toTrimDataAfterUpdate: RemovalConfiguration[] = []
+  const toWipeDataAfterUpdate: RemovalConfiguration[] = []
   const toDelete: string[] = []
-  const toRemoveData: RemovalConfiguration[] = []
+  const toWipeDataAfterDelete: RemovalConfiguration[] = []
   const configurations: SavedConfiguration<T>[] = []
 
   for (const c of actual) {
@@ -45,7 +49,7 @@ export function mergeConfigurations<T>(
       // We remove everything because we cannot have gaps in downloaded data
       // We will re-download everything from the beginning
       if (stored.currentHeight !== null) {
-        toRemoveData.push({
+        toWipeDataAfterUpdate.push({
           id: stored.id,
           from: stored.minHeight,
           to: stored.currentHeight,
@@ -53,7 +57,7 @@ export function mergeConfigurations<T>(
       }
       currentHeight = null
     } else if (c.minHeight > stored.minHeight) {
-      toRemoveData.push({
+      toTrimDataAfterUpdate.push({
         id: stored.id,
         from: stored.minHeight,
         to: c.minHeight - 1,
@@ -69,7 +73,7 @@ export function mergeConfigurations<T>(
         currentHeight !== null &&
         c.maxHeight < currentHeight
       ) {
-        toRemoveData.push({
+        toTrimDataAfterUpdate.push({
           id: stored.id,
           from: c.maxHeight + 1,
           to: currentHeight,
@@ -95,7 +99,7 @@ export function mergeConfigurations<T>(
       toDelete.push(c.id)
 
       if (c.currentHeight !== null) {
-        toRemoveData.push({
+        toWipeDataAfterDelete.push({
           id: c.id,
           from: c.minHeight,
           to: c.currentHeight,
@@ -105,7 +109,14 @@ export function mergeConfigurations<T>(
   }
 
   return {
-    diff: { toAdd, toUpdate, toDelete, toRemoveData },
+    diff: {
+      toAdd,
+      toUpdate,
+      toTrimDataAfterUpdate,
+      toWipeDataAfterDelete,
+      toDelete,
+      toWipeDataAfterUpdate,
+    },
     configurations: configurations,
     safeHeight: getSafeHeight(configurations),
   }
