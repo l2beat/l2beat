@@ -56,8 +56,19 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             .go(value, allProjects, {
               limit: 15,
               keys: ['name', (e) => e.tags?.join() ?? ''],
-              scoreFn: (match) =>
-                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
+              scoreFn: (match) => {
+                let score =
+                  match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1)
+
+                if (
+                  match.obj.tvs &&
+                  match.obj.name.toLowerCase().startsWith(value.toLowerCase())
+                ) {
+                  score += match.obj.tvs
+                }
+
+                return score
+              },
             })
             .map((match) => match.obj),
     [value, recentlyAdded, allProjects],
