@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 21786859,
-  "configHash": "0x8328341f6ef6f6579c68a372e8f8ed667fcfdef39828d203b9a084c97452e748",
+  "configHash": "0xe574cf5e4bbcc605783f9f6097a2a8e89655209e928c328a3d291ca6db028bf2",
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -72,8 +72,12 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -188,8 +192,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" }
           ]
@@ -307,8 +315,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -383,8 +395,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
           ]
@@ -399,6 +415,10 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+        },
         {
           "permission": "act",
           "from": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
@@ -467,6 +487,25 @@
           "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+        }
+      ],
+      "sinceTimestamp": 1661457944,
+      "values": {
+        "$immutable": true,
+        "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       }
     },
     {
@@ -620,6 +659,269 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "name": "ArbitrumBridge",
+      "address": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+      "template": "orbitstack/ArbitrumBridge",
+      "sourceHashes": [
+        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
+        "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "displayName": "Bridge",
+      "description": "Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" }
+          ]
+        }
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "cancel queued transactions.",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "propose transactions."
+        },
+        {
+          "permission": "interact",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "description": "update the minimum delay of the timelock.",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+          "via": [
+            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
+          "via": [
+            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "via": [
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+          "via": [
+            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
+          "via": [
+            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
+          "via": [
+            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "via": [
+            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xFb209827c58283535b744575e11953DCC4bEAD88",
+          "via": [
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "delay": 259200
+        }
+      ],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
+      "sinceTimestamp": 1661457944,
+      "values": {
+        "$admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
+        "$implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
+        "$pastUpgrades": [
+          [
+            "2022-08-25T20:05:44.000Z",
+            "0x248787fbf0415ff1da68ba618da0cbdd5dcc7c6029be38709f95ea837211edc5",
+            ["0xfCEa474C6bD5Dd4eDF5f37EE6Bea5567F0B52A08"]
+          ],
+          [
+            "2022-08-31T02:31:26.000Z",
+            "0x07bbd6efdc155699ab2807c0d1509e98e06aa58ce25f208f09c03899f3a128cd",
+            ["0x1066CEcC8880948FE55e427E94F1FF221d626591"]
+          ]
+        ],
+        "$upgradeCount": 2
+      },
+      "derivedName": "Bridge"
+    },
+    {
       "name": "OneStepProverHostIo",
       "address": "0x8D78382913467Cd25374C75BA918b0A723Bc2544",
       "template": "orbitstack/OneStepProverHostIo",
@@ -708,8 +1010,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -814,8 +1120,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" }
           ]
@@ -905,8 +1215,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -1020,8 +1334,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -1082,8 +1400,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" }
           ]
@@ -1190,8 +1512,12 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" }
           ]
@@ -1302,15 +1628,33 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "description": "cancel queued transactions.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
         },
         {
           "permission": "interact",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "description": "propose transactions.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "description": "update the minimum delay of the timelock.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
         },
         {
           "permission": "interact",
@@ -1326,8 +1670,12 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
           ]
@@ -1339,119 +1687,6 @@
             { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" },
             { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" }
           ]
-        }
-      ],
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "cancel queued transactions.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "description": "update the minimum delay of the timelock.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "interact",
-          "from": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-          "via": [
-            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
-          "via": [
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-          "via": [
-            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
-          "via": [
-            { "address": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
-          "via": [
-            { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "via": [
-            { "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678" },
-            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
         }
       ],
       "directlyReceivedPermissions": [
@@ -3086,6 +3321,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "via": [
+            { "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD" },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
           "via": [
             { "address": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148" },
@@ -3220,9 +3463,15 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
         },
         {
           "permission": "interact",
@@ -3232,8 +3481,14 @@
         },
         {
           "permission": "upgrade",
-          "to": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-          "via": [{ "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }]
+          "to": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "via": [
+            {
+              "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
+              "delay": 259200
+            },
+            { "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd" }
+          ]
         },
         {
           "permission": "upgrade",
@@ -3965,6 +4220,17 @@
       "function updateWhitelistSource(address newSource)",
       "function whitelist() view returns (address)"
     ],
+    "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -4198,6 +4464,17 @@
       "function roots(bytes32) view returns (bytes32)",
       "function spent(uint256) view returns (bytes32)",
       "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
+    ],
+    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x86f0cf42Ad673B3D666d103E009EC142D1298a17": [
       "constructor()",
@@ -4666,6 +4943,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
+    "orbitstack/ArbitrumBridge": "0x381a650186099635e9fa0b93529504a3684c383109e7a9e0468a1bc0834be121",
     "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
     "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
     "orbitstack/CustomGateway": "0x07d5a2445b8573be667a0001dad30fcb296a41acbeb368dac5bceb4fed45661c",
