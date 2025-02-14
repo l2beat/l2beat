@@ -71,7 +71,7 @@ const ChartContainer = ({
           //  Tooltip cursor line
           '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
           // Tooltip
-          '[&_.recharts-tooltip-wrapper]:!transition-none',
+          '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
           // Cartesian grid line
           "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
           // Cartesian X axis tick text
@@ -175,7 +175,6 @@ const ChartLegendContent = React.forwardRef<
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
           return (
             <div
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -190,7 +189,7 @@ const ChartLegendContent = React.forwardRef<
                 <div
                   className="size-2.5 shrink-0 rounded-sm"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: itemConfig?.color ?? item.color,
                   }}
                 />
               )}

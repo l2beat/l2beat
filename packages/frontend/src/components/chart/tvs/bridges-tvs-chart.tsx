@@ -7,9 +7,9 @@ import { ChartContainer, ChartTooltip } from '~/components/core/chart/chart'
 import { ChartMilestone } from '~/components/core/chart/chart-milestones'
 import { getCommonChartComponents } from '~/components/core/chart/common'
 import {
-  SignatureGradientFillDef,
-  SignatureGradientStrokeDef,
-} from '~/components/core/chart/signature-gradient-def'
+  RollupsFillGradientDef,
+  RollupsStrokeGradientDef,
+} from '~/components/core/chart/defs/rollups-gradient-def'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { INFINITY } from '~/consts/characters'
@@ -85,8 +85,8 @@ export function BridgesTvsChart() {
         <ChartContainer config={chartConfig} isLoading={isLoading}>
           <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
             <defs>
-              <SignatureGradientFillDef id={'signature-gradient-fill'} />
-              <SignatureGradientStrokeDef id={'signature-gradient-stroke'} />
+              <RollupsFillGradientDef id={'signature-gradient-fill'} />
+              <RollupsStrokeGradientDef id={'signature-gradient-stroke'} />
             </defs>
             <ChartTooltip content={<CustomTooltip />} />
             <Area

@@ -200,8 +200,7 @@ function CustomTooltip({
         </span>
       </div>
       {payload.map((entry) => {
-        if (entry.value === undefined || entry.name === 'milestone.value')
-          return null
+        if (entry.value === undefined) return null
         const config = chartConfig[entry.name as keyof typeof chartConfig]
         return (
           <div key={entry.name}>

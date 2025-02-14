@@ -40,9 +40,17 @@
     --chart-external: 45deg 100% 51.4%;
     --chart-canonical: 266deg 57.7% 52.7%;
 
-    --chart-signature-gradient-fill: 302 100% 68.6%;
-    --chart-signature-gradient-stroke-1: 266 57.7% 52.7%;
-    --chart-signature-gradient-stroke-2: 321 84.3% 60%;
+    --chart-rollups-fill-gradient: 302 100% 68.6%;
+    --chart-rollups-stroke-gradient-1: 266 57.7% 52.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 190deg 73.6% 55.5%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180deg 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 191deg 70.8% 37.6%;
+
+    --chart-others-fill-gradient: 53.8deg 70.9% 56.9%;
+    --chart-others-stroke-gradient-1: 44.9deg 100% 33.5%;
+    --chart-others-stroke-gradient-2: 43deg 60% 45.1%;
   }
 
   .dark {
@@ -77,9 +85,17 @@
     --chart-external: 45deg 100% 51.4%;
     --chart-canonical: 266deg 57.7% 52.7%;
 
-    --chart-signature-gradient-fill: 313 40.1% 38.6%;
-    --chart-signature-gradient-stroke-1: 284 87.1% 75.7%;
-    --chart-signature-gradient-stroke-2: 321 84.3% 60%;
+    --chart-rollups-fill-gradient: 313 40.1% 38.6%;
+    --chart-rollups-stroke-gradient-1: 284 87.1% 75.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 193deg 55.1% 36.7%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180deg 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 190deg 73.6% 55.5%;
+
+    --chart-others-fill-gradient: 50.1deg 59% 40.2%;
+    --chart-others-stroke-gradient-1: 45.1deg 100% 52%;
+    --chart-others-stroke-gradient-2: 43deg 60% 45.1%;
   }
 }
 
