@@ -7,13 +7,14 @@ export interface CommonChartComponentsProps<
   },
 > {
   chartData: T[] | undefined
-  yAxis?: YAxisProps
+  yAxis?: Omit<YAxisProps, 'scale'> & { scale?: 'log' | 'lin' }
 }
 
 export function getCommonChartComponents<T extends { timestamp: number }>({
   chartData,
   yAxis,
 }: CommonChartComponentsProps<T>) {
+  const { scale, ...rest } = yAxis ?? {}
   return [
     <CartesianGrid key={'cartesian-grid'} vertical={false} />,
     <YAxis
@@ -23,7 +24,10 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       mirror
       tickCount={3}
       dy={-10}
-      {...yAxis}
+      {...(scale === 'log'
+        ? { scale: 'log', domain: ['dataMin', 'dataMax'] }
+        : {})}
+      {...rest}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(chartData)} />,
   ]
