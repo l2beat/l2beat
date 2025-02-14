@@ -35,9 +35,7 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { useChartLoading } from '../core/chart-loading-context'
 import type { ChartUnit } from '../types'
-import { useRecategorisedTvsChartRenderParams } from './use-recategorised-tvs-chart-render-params'
 
 const chartConfig = {
   rollups: {
@@ -66,12 +64,6 @@ export function ScalingSummaryTvsChart({
     previewRecategorisation: checked,
   })
 
-  const { change, total } = useRecategorisedTvsChartRenderParams({
-    data,
-    unit,
-    milestones: [],
-  })
-
   const chartData = useMemo(() => {
     return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
       return {
@@ -82,10 +74,16 @@ export function ScalingSummaryTvsChart({
       }
     })
   }, [data])
+  const meta = getMeta(chartData)
 
   return (
     <section className="flex flex-col gap-4">
-      <Header total={total} change={change} unit={unit} timeRange={timeRange} />
+      <Header
+        total={meta?.total}
+        change={meta?.change}
+        unit={unit}
+        timeRange={timeRange}
+      />
       <ChartContainer config={chartConfig} isLoading={isLoading}>
         <AreaChart
           data={chartData}
@@ -191,15 +189,13 @@ function CustomTooltip({
 }
 
 interface Props {
-  total: Record<ChartUnit, number | undefined> | undefined
-  change: number
+  total: number | undefined
+  change: number | undefined
   unit: ChartUnit
   timeRange: TvsChartRange
 }
 
 function Header({ total, unit, change, timeRange }: Props) {
-  const loading = useChartLoading()
-  const value = total?.[unit]
   return (
     <div className="flex items-start justify-between">
       <div>
@@ -224,13 +220,13 @@ function Header({ total, unit, change, timeRange }: Props) {
       </div>
       <div className="flex flex-col items-end">
         <div className="whitespace-nowrap text-right text-xl font-bold">
-          {value === undefined ? (
+          {total === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32" />
           ) : (
-            formatCurrency(value, unit)
+            formatCurrency(total, unit)
           )}
         </div>
-        {loading ? (
+        {change === undefined ? (
           <Skeleton className="my-0.5 h-4 w-40" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs">
@@ -241,4 +237,39 @@ function Header({ total, unit, change, timeRange }: Props) {
       </div>
     </div>
   )
+}
+
+function getMeta(
+  data:
+    | {
+        timestamp: number
+        rollups: number
+        validiumsAndOptimiums: number
+        others: number
+      }[]
+    | undefined,
+) {
+  if (!data) {
+    return undefined
+  }
+  const oldestDataPoint = data.at(0)
+  const newestDataPoint = data.at(-1)
+  if (!oldestDataPoint || !newestDataPoint) {
+    return undefined
+  }
+
+  const oldestTotal =
+    oldestDataPoint.rollups +
+    oldestDataPoint.validiumsAndOptimiums +
+    oldestDataPoint.others
+  const newestTotal =
+    newestDataPoint.rollups +
+    newestDataPoint.validiumsAndOptimiums +
+    newestDataPoint.others
+  const change = newestTotal / oldestTotal - 1
+
+  return {
+    total: newestTotal,
+    change,
+  }
 }

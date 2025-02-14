@@ -3,7 +3,6 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { Skeleton } from '../../core/skeleton'
 import { PercentChange } from '../../percent-change'
-import { useChartLoading } from '../core/chart-loading-context'
 import { ChartTimeRange } from '../core/chart-time-range'
 import { tvsRangeToReadable } from './tvs-range-to-readable'
 
@@ -13,7 +12,6 @@ interface Props {
   change: number | undefined
   range: TvsChartRange
   timeRange: [number, number] | undefined
-  isLoading?: boolean
 }
 
 export function TvsChartHeader({
@@ -22,10 +20,7 @@ export function TvsChartHeader({
   change,
   range,
   timeRange,
-  isLoading,
 }: Props) {
-  const loading = useChartLoading()
-
   const changeOverTime =
     range === 'max' ? (
       INFINITY
@@ -50,7 +45,7 @@ export function TvsChartHeader({
             formatCurrency(value, unit)
           )}
         </div>
-        {loading || isLoading ? (
+        {change === undefined ? (
           <Skeleton className="my-[3px] h-3.5 w-32 lg:my-1 lg:h-4" />
         ) : (
           <p className="whitespace-nowrap text-right text-xs font-medium text-secondary lg:text-base">

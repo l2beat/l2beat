@@ -114,7 +114,6 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         change={meta?.change}
         range={timeRange}
         timeRange={chartRange}
-        isLoading={isLoading}
       />
       <div className="relative size-full">
         <ChartContainer
