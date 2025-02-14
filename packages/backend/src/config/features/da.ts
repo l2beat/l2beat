@@ -32,9 +32,12 @@ export async function getDaTrackingConfig(
       type: 'celestia' as const,
       name: 'celestia',
       url: env.string('CELESTIA_BLOBS_API_URL'),
-      callsPerMinute: env.integer('CELESTIA_BLOBS_API_CALLS_PER_MINUTE', 2000),
-      batchSize: 30,
-      startingBlockNumber: 1,
+      callsPerMinute: env.integer(
+        'CELESTIA_BLOBS_API_CALLS_PER_MINUTE',
+        20_000,
+      ),
+      batchSize: 50,
+      startingBlockNumber: 3007976,
     })
   }
 

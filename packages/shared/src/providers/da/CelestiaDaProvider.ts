@@ -9,14 +9,12 @@ export class CelestiaDaProvider implements DaProvider {
   ) {}
 
   async getBlobs(from: number, to: number): Promise<CelestiaBlob[]> {
-    const blobs: CelestiaBlob[] = []
-
+    const promises = []
     for (let i = from; i <= to; i++) {
-      const blobsFromBlock = await this.getBlobsFromBlock(i)
-      blobs.push(...blobsFromBlock)
+      promises.push(this.getBlobsFromBlock(i))
     }
-
-    return blobs
+    const blobArrays = await Promise.all(promises)
+    return blobArrays.flat()
   }
 
   private async getBlobsFromBlock(

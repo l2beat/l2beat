@@ -1,6 +1,6 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { PolkadotRpcClient } from '../../clients/rpc-polkadot/PolkadotRpcClient'
-import type { AvailBlob, DaBlob, DaProvider } from './DaProvider'
+import type { AvailBlob, DaProvider } from './DaProvider'
 
 const TIMESTAMP_SHIFT = 4300
 const DATA_EXTRINSIC_SHIFT = 236
@@ -11,15 +11,13 @@ export class AvailDaProvider implements DaProvider {
     private readonly daLayer: string,
   ) {}
 
-  async getBlobs(from: number, to: number): Promise<DaBlob[]> {
-    const blobs: DaBlob[] = []
-
+  async getBlobs(from: number, to: number): Promise<AvailBlob[]> {
+    const promises = []
     for (let i = from; i <= to; i++) {
-      const blockBlobs = await this.getBlobsFromBlock(i)
-      blobs.push(...blockBlobs)
+      promises.push(this.getBlobsFromBlock(i))
     }
-
-    return blobs
+    const blobArrays = await Promise.all(promises)
+    return blobArrays.flat()
   }
 
   private async getBlobsFromBlock(blockNumber: number): Promise<AvailBlob[]> {
