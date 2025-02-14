@@ -39,7 +39,6 @@ import type { ActivityChartStats } from '~/server/features/scaling/activity/get-
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
@@ -54,7 +53,7 @@ const chartConfig = {
     color: 'hsl(var(--indicator-rollups))',
   },
   validiumsAndOptimiums: {
-    label: 'Validiums & Optimiums',
+    label: 'Validiums and Optimiums',
     color: 'hsl(var(--indicator-validiums-optimiums))',
   },
   others: {
@@ -166,77 +165,83 @@ function CustomTooltip({
   syncedUntil,
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
-
   return (
-    <div className={cn(tooltipContentVariants(), '!w-40 sm:!w-60')}>
-      <div className="mb-1.5 whitespace-nowrap">
-        {formatTimestamp(timestamp, {
-          longMonthName: true,
+    <div className={tooltipContentVariants()}>
+      <div className="flex w-40 flex-col gap-1 sm:w-60">
+        <div className="mb-1.5 whitespace-nowrap">
+          {formatTimestamp(timestamp, {
+            longMonthName: true,
+          })}
+        </div>
+        <div className="flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-secondary">Average UOPS</span>
+          </div>
+        </div>
+        <HorizontalSeparator className="my-1" />
+        {payload.map((entry) => {
+          if (entry.value === undefined) return null
+          const config = chartConfig[entry.name as keyof typeof chartConfig]
+          return (
+            <div
+              key={entry.name}
+              className="flex w-full items-center justify-between gap-2"
+            >
+              <div className="flex items-center gap-1">
+                <div
+                  className="relative inline-block size-3 rounded"
+                  style={{
+                    backgroundColor: config.color,
+                  }}
+                />
+                <span className="w-20 leading-none sm:w-fit">
+                  {config.label}
+                </span>
+              </div>
+              <span className="whitespace-nowrap font-bold tabular-nums">
+                {syncedUntil && syncedUntil < timestamp
+                  ? 'Not synced'
+                  : formatActivityCount(entry.value)}
+              </span>
+            </div>
+          )
+        })}
+
+        <div className="mt-2 flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-secondary">Operations count</span>
+          </div>
+        </div>
+        <HorizontalSeparator className="my-1" />
+        {payload.map((entry) => {
+          if (entry.value === undefined) return null
+          const config = chartConfig[entry.name as keyof typeof chartConfig]
+          console.log(entry.name, config)
+          return (
+            <div
+              key={entry.name}
+              className="flex w-full items-start justify-between gap-2"
+            >
+              <div className="flex items-center gap-1">
+                <div
+                  className="relative inline-block size-3 rounded"
+                  style={{
+                    backgroundColor: config.color,
+                  }}
+                />
+                <span className="w-20 leading-none sm:w-fit">
+                  {config.label}
+                </span>
+              </div>
+              <span className="whitespace-nowrap font-bold tabular-nums">
+                {syncedUntil && syncedUntil < timestamp
+                  ? 'Not synced'
+                  : formatInteger(entry.value * UnixTime.DAY)}
+              </span>
+            </div>
+          )
         })}
       </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
-          <span className="text-sm text-secondary">Average UOPS</span>
-        </div>
-      </div>
-      <HorizontalSeparator />
-      {payload.map((entry) => {
-        if (entry.value === undefined) return null
-        const config = chartConfig[entry.name as keyof typeof chartConfig]
-        return (
-          <div
-            key={entry.name}
-            className="flex w-full items-start justify-between gap-2"
-          >
-            <div className="flex items-start gap-1">
-              <div
-                className="relative mt-0.5 inline-block size-3 rounded sm:mt-1"
-                style={{
-                  backgroundColor: config.color,
-                }}
-              />
-              <span className="w-20 sm:w-fit">{config.label}</span>
-            </div>
-            <span className="whitespace-nowrap font-bold tabular-nums">
-              {syncedUntil && syncedUntil < timestamp
-                ? 'Not synced'
-                : formatActivityCount(entry.value)}
-            </span>
-          </div>
-        )
-      })}
-
-      <div className="mt-2 flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
-          <span className="text-sm text-secondary">Operations count</span>
-        </div>
-      </div>
-      <HorizontalSeparator />
-      {payload.map((entry) => {
-        if (entry.value === undefined) return null
-        const config = chartConfig[entry.name as keyof typeof chartConfig]
-        return (
-          <div
-            key={entry.name}
-            className="flex w-full items-start justify-between gap-2"
-          >
-            <div className="flex items-start gap-1">
-              <div
-                className="relative mt-0.5 inline-block size-3 rounded sm:mt-1"
-                style={{
-                  backgroundColor: config.color,
-                }}
-              />
-              <span className="w-20 sm:w-fit">{config.label}</span>
-            </div>
-            <span className="whitespace-nowrap font-bold tabular-nums">
-              {syncedUntil && syncedUntil < timestamp
-                ? 'Not synced'
-                : formatInteger(entry.value * UnixTime.DAY)}
-            </span>
-          </div>
-        )
-      })}
     </div>
   )
 }

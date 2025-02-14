@@ -33,7 +33,6 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { ChevronIcon } from '~/icons/chevron'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { useChartLoading } from '../core/chart-loading-context'
@@ -146,49 +145,49 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div
-      className={cn(
-        tooltipContentVariants(),
-        'flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60',
-      )}
-    >
-      <div>{formatTimestamp(label, { longMonthName: true })}</div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:hidden">
-          Total
-        </span>
-        <span className="hidden text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:inline">
-          Total value secured
-        </span>
-        {'$20.00B'}
-      </div>
-      <HorizontalSeparator />
-
-      {payload.map((entry) => {
-        if (entry.value === undefined) return null
-        const config = chartConfig[entry.name as keyof typeof chartConfig]
-        return (
-          <div
-            key={entry.name}
-            className="flex items-start justify-between gap-x-1"
-          >
-            <span className="flex items-start gap-1">
+    <div className={tooltipContentVariants()}>
+      <div className="flex !w-[158px] flex-col gap-1 [@media(min-width:600px)]:!w-60">
+        <div>{formatTimestamp(label, { longMonthName: true })}</div>
+        <div className="flex w-full items-center justify-between gap-2">
+          <span className="text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:hidden">
+            Total
+          </span>
+          <span className="hidden text-sm text-gray-700 dark:text-gray-50 [@media(min-width:600px)]:inline">
+            Total value secured
+          </span>
+          {'$20.00B'}
+        </div>
+        <HorizontalSeparator />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            return (
               <div
-                role="img"
-                aria-label="Square icon"
-                className="mt-0.5 size-3 rounded sm:mt-1"
-                style={{
-                  backgroundColor: config.color,
-                }}
-              />
-              <span className="w-20 sm:w-fit">{config.label}</span>
-            </span>
-            <span className="whitespace-nowrap font-medium">
-              {formatCurrency(entry.value, 'usd')}
-            </span>
-          </div>
-        )
-      })}
+                key={entry.name}
+                className="flex items-center justify-between gap-x-1"
+              >
+                <span className="flex items-center gap-1">
+                  <div
+                    role="img"
+                    aria-label="Square icon"
+                    className="size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </span>
+                <span className="whitespace-nowrap font-medium">
+                  {formatCurrency(entry.value, 'usd')}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
