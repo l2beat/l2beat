@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xac664e154d29487307b51000e82427aabca697db
+
+# Diff at Fri, 14 Feb 2025 11:20:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21637082
+- current block number: 21844312
+
+## Description
+
+vKey and verifier upgrade.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x001758559af75612b9d16de030ed47309d7d28fadd3839a3addaa78d2d4e2754"
++        "0x008deea30a17c13a2fa7200fa0609b668b1673a3401a3eb7121c2a4692409736"
+      values.rangeVkeyCommitment:
+-        "0x39979c7850d2d3f00c30b29a503c80e245af53ce02a1202518ae0d3c1f8691d0"
++        "0x72f2aa2345210ed43468b3084102ca212311b456482025bd0fed05294d3d6138"
+      values.rollupConfigHash:
+-        "0x60875d3128003350b1726b6a370c2ab6fa8b8ff7802134ed77fb2caa1f1d3db8"
++        "0xb687221eb250467cf026eaaeef39f33ca2af3ebea6c8eaabc7c7a2634d111ccd"
+      values.verifier:
+-        "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B"
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
+    contract SuccinctGatewaySP1Multisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B"
++        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63.sol | 1432 ++++++++++++++++++++
+ ...-0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16.sol | 1432 ++++++++++++++++++++
+ 2 files changed, 2864 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637082 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B) {
+    +++ description: This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.
+      name:
+-        "SuccinctGateway"
++        "SP1VerifierGateway"
+      values.opSuccinctVerifier:
+-        ["0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",false]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf76688119ca801a5b0d9c0f04894d7301faea09b
 
 # Diff at Mon, 10 Feb 2025 19:04:26 GMT:

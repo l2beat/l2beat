@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "scroll",
-  "blockNumber": 6694912,
+  "blockNumber": 13418769,
   "configHash": "0x40b498787793f3e052f74d25a8424df89c08caa6a3f9806cb796c8a76ef50c89",
   "contracts": [
     {
@@ -38,14 +38,14 @@
         "lpToken": "0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "68183656877608917",
-        "poolBalance": 2462659462553,
+        "plannerFee": "811470384891119569",
+        "poolBalance": 2819219232233,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        "treasuryFee": 2304526795,
-        "tvl": 2310681817458
+        "treasuryFee": 25444228957,
+        "tvl": 2360898822794
       }
     },
     {
@@ -108,7 +108,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": 0,
+        "deficitOffset": "7000000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x2A6c43e0DBDCde23d40c82F45682BC6D8A6dB219",
@@ -118,19 +118,19 @@
           "creditMessaging": "0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
           "lzToken": "0x0000000000000000000000000000000000000000"
         },
-        "getTransferGasLimit": 2300,
+        "getTransferGasLimit": 15000,
         "localEid": 30214,
         "lpToken": "0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "598960801454452859",
-        "poolBalance": "2956610241000000000000",
+        "plannerFee": "181196259205248056",
+        "poolBalance": "5840886036000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 2088685,
-        "tvl": "907870118000000000000"
+        "treasuryFee": 27770330,
+        "tvl": "2980916176000000000000"
       }
     }
   ],

@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21637082,
-  "configHash": "0x05a5cc07458ebf54bd9eedf5eacd61b47c57428826f95b8581a70a0f5d97eba7",
+  "blockNumber": 21844312,
+  "configHash": "0x4439bec25117875094944dfd82567793264d0beb675c27704afd44909d8c7b78",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -29,7 +29,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619794",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619819",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -101,8 +101,8 @@
       }
     },
     {
-      "name": "SuccinctGateway",
-      "address": "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+      "name": "SP1VerifierGateway",
+      "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "template": "succinct/SP1SuccinctGateway",
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
@@ -114,22 +114,28 @@
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
           "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof.",
+          "via": []
         }
       ],
-      "sinceTimestamp": 1730486951,
+      "sinceTimestamp": 1720099223,
       "values": {
         "$immutable": true,
-        "oldVerifier": ["0x0000000000000000000000000000000000000000", false],
-        "oldVerifier2": ["0x0000000000000000000000000000000000000000", false],
-        "oldVerifier3": ["0xE780809121774D06aD9B0EEeC620fF4B3913Ced1", true],
-        "oldVerifier4": ["0x0000000000000000000000000000000000000000", false],
-        "oldVerifier5": ["0x0000000000000000000000000000000000000000", false],
+        "oldVerifier": ["0xc350F063C13a3Ca21331610fe159E697a5c9c2FB", true],
+        "oldVerifier2": ["0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc", true],
+        "oldVerifier3": ["0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3", true],
+        "oldVerifier4": ["0x1764C29FBd94865198588f10FC75D4f6636d158d", true],
+        "oldVerifier5": ["0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16", true],
         "opSuccinctVerifier": [
-          "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
+          "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
           false
         ],
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": ["0x0000000000000000000000000000000000000000", false]
+        "verifier": ["0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63", false]
       },
       "fieldMeta": {
         "oldVerifier": {
@@ -176,7 +182,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 52,
+        "nonce": 55,
         "VERSION": "1.3.0"
       }
     },
@@ -270,7 +276,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 74,
+        "nonce": 81,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -374,7 +380,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21631609
+          "prevBlockNum": 21837854
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -421,7 +427,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 98,
+        "nonce": 101,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -462,19 +468,6 @@
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
         "version": "2.1.0"
-      }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D",
-      "sourceHashes": [
-        "0x5ebb775f2803d074da1b09f713044da7c8b74dd951913810947e8560b3a45845"
-      ],
-      "sinceTimestamp": 1735950131,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x11b6a09d63d255ad425ee3a7f6211d5ec63fbde9805b40551c3136275b6f4eb4",
-        "VERSION": "v4.0.0-rc.3"
       }
     },
     {
@@ -524,7 +517,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"],
-        "aggregationVkey": "0x001758559af75612b9d16de030ed47309d7d28fadd3839a3addaa78d2d4e2754",
+        "aggregationVkey": "0x008deea30a17c13a2fa7200fa0609b668b1673a3401a3eb7121c2a4692409736",
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -532,21 +525,21 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 264150,
-        "latestOutputIndex": 107,
-        "nextBlockNumber": 268470,
-        "nextOutputIndex": 108,
+        "latestBlockNumber": 512580,
+        "latestOutputIndex": 164,
+        "nextBlockNumber": 516900,
+        "nextOutputIndex": 165,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x39979c7850d2d3f00c30b29a503c80e245af53ce02a1202518ae0d3c1f8691d0",
-        "rollupConfigHash": "0x60875d3128003350b1726b6a370c2ab6fa8b8ff7802134ed77fb2caa1f1d3db8",
+        "rangeVkeyCommitment": "0x72f2aa2345210ed43468b3084102ca212311b456482025bd0fed05294d3d6138",
+        "rollupConfigHash": "0xb687221eb250467cf026eaaeef39f33ca2af3ebea6c8eaabc7c7a2634d111ccd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
         "SUBMISSION_INTERVAL": 4320,
         "submissionInterval": 4320,
-        "verifier": "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+        "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "version": "v1.0.0-rc2"
       },
       "derivedName": "OPSuccinctL2OutputOracle"
@@ -563,7 +556,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
         }
       ],
@@ -586,6 +579,39 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+      "sourceHashes": [
+        "0x12f4e310568377cf39c9992ed73fee2df73ea33090ec45ec342cfe4e5ce7c25b"
+      ],
+      "sinceTimestamp": 1729727135,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x54bdcae3adb83d4ce9ed91d99a31da3086e2b117abf3685164e9f28d78670b05",
+        "VERSION": "v3.0.0"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
+        }
+      ],
+      "sinceTimestamp": 1735949699,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      }
     },
     {
       "name": "SystemConfig",
@@ -763,16 +789,6 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-          "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-        }
-      ]
-    },
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
@@ -892,7 +908,7 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -1081,19 +1097,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D": [
-      "error InvalidProof()",
-      "error ProofInvalid()",
-      "error PublicInputNotInField()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(uint256[8] proof, uint256[2] input) view",
-      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xAb427Bb4125C36688A5a6ec7b1cA0A3A1A15E0c2": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
@@ -1139,6 +1142,15 @@
     ],
     "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
+    ],
+    "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -1188,6 +1200,15 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xE41997Df2A412ed5B56ac9f3997A72B6BeE9d888": [
       "constructor()",
