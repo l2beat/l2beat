@@ -62,6 +62,11 @@ export function Layout() {
               /uops-analyzer
             </Link>
           </li>
+          <li>
+            <Link className="font-mono underline" to="/monitor">
+              /monitor
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="h-full flex-1 overflow-scroll">
