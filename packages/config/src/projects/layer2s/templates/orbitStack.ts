@@ -184,11 +184,11 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
   // some orbit chains represent maxTimeVariation as an array, others an object
   const result = discovery.getContractValue<
     | {
-        delayBlocks: number
-        futureBlocks: number
-        delaySeconds: number
-        futureSeconds: number
-      }
+      delayBlocks: number
+      futureBlocks: number
+      delaySeconds: number
+      futureSeconds: number
+    }
     | number[]
   >('SequencerInbox', 'maxTimeVariation')
 
@@ -392,7 +392,7 @@ function orbitStackCommon(
   if (postsToExternalDA) {
     assert(
       templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      undefined,
       'DA badge is required for external DA',
     )
   }
@@ -445,19 +445,19 @@ function orbitStackCommon(
     isArchived: templateVars.isArchived ?? undefined,
     contracts: templateVars.discoveryDrivenData
       ? {
-          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
-          risks: nativeContractRisks,
-        }
+        addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+        risks: nativeContractRisks,
+      }
       : {
-          addresses: mergeContracts(
-            {
-              [templateVars.discovery.chain]:
-                templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            },
-            templateVars.nonTemplateContracts ?? {},
-          ),
-          risks: nativeContractRisks,
-        },
+        addresses: mergeContracts(
+          {
+            [templateVars.discovery.chain]:
+              templateVars.discovery.resolveOrbitStackTemplates().contracts,
+          },
+          templateVars.nonTemplateContracts ?? {},
+        ),
+        risks: nativeContractRisks,
+      },
     chainConfig: templateVars.chainConfig,
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
@@ -465,42 +465,42 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
       dataAvailability:
         (templateVars.nonTemplateTechnology?.dataAvailability ??
-        postsToExternalDA)
+          postsToExternalDA)
           ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
+            if (isUsingValidBlobstreamWmr) {
+              return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
 
-                return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
+              return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+                membersCount,
+                requiredSignatures,
+              })
+            }
+          })()
           : {
-              ...(usesBlobs
-                ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-                : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-              references: [
+            ...(usesBlobs
+              ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+              : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+            references: [
+              {
+                title:
+                  'Sequencing followed by deterministic execution - Arbitrum documentation',
+                url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+              },
+              ...explorerReferences(explorerUrl, [
                 {
                   title:
-                    'Sequencing followed by deterministic execution - Arbitrum documentation',
-                  url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+                    'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                  address: safeGetImplementation(templateVars.sequencerInbox),
                 },
-                ...explorerReferences(explorerUrl, [
-                  {
-                    title:
-                      'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                    address: safeGetImplementation(templateVars.sequencerInbox),
-                  },
-                ]),
-              ],
-            },
+              ]),
+            ],
+          },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -560,18 +560,18 @@ function orbitStackCommon(
     permissions: templateVars.discoveryDrivenData
       ? generateDiscoveryDrivenPermissions(allDiscoveries)
       : mergePermissions(
-          {
-            [templateVars.discovery.chain]: {
-              actors: [
-                sequencers,
-                validators,
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .permissions,
-              ],
-            },
+        {
+          [templateVars.discovery.chain]: {
+            actors: [
+              sequencers,
+              validators,
+              ...templateVars.discovery.resolveOrbitStackTemplates()
+                .permissions,
+            ],
           },
-          templateVars.nonTemplatePermissions ?? {},
-        ),
+        },
+        templateVars.nonTemplatePermissions ?? {},
+      ),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -662,28 +662,28 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     dataAvailability:
       (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
         ? (() => {
-            if (isUsingValidBlobstreamWmr) {
-              return RISK_VIEW.DATA_CELESTIA(true)
-            } else {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            }
-          })()
+          if (isUsingValidBlobstreamWmr) {
+            return RISK_VIEW.DATA_CELESTIA(true)
+          } else {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+            return RISK_VIEW.DATA_EXTERNAL_DAC({
+              membersCount,
+              requiredSignatures,
+            })
+          }
+        })()
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
       (isUsingValidBlobstreamWmr
         ? pickWorseRisk(
-            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-          )
+          RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+          RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+        )
         : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
@@ -786,60 +786,60 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       templateVars.stage ??
       (postsToExternalDA
         ? {
-            stage: 'NotApplicable',
-          }
+          stage: 'NotApplicable',
+        }
         : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
+          {
+            stage0: {
+              callsItselfRollup: true,
+              stateRootsPostedToL1: true,
+              dataAvailabilityOnL1: true,
+              rollupNodeSourceAvailable:
+                templateVars.isNodeAvailable ?? 'UnderReview',
             },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
+            stage1: {
+              principle: false,
+              stateVerificationOnL1: true,
+              fraudProofSystemAtLeast5Outsiders: false,
+              usersHave7DaysToExit: false,
+              usersCanExitWithoutCooperation: true,
+              securityCouncilProperlySetUp: false,
             },
-          )),
+            stage2: {
+              proofSystemOverriddenOnlyInCaseOfABug: false,
+              fraudProofSystemIsPermissionless: false,
+              delayWith30DExitWindow: false,
+            },
+          },
+          {
+            rollupNodeLink: templateVars.nodeSourceLink,
+          },
+        )),
     dataAvailability: postsToExternalDA
       ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
+        if (isUsingValidBlobstreamWmr) {
+          return {
+            layer: DA_LAYERS.CELESTIA,
+            bridge: DA_BRIDGES.BLOBSTREAM,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }
-        })()
+        } else {
+          const DAC = templateVars.discovery.getContractValue<{
+            membersCount: number
+            requiredSignatures: number
+          }>('SequencerInbox', 'dacKeyset')
+          const { membersCount, requiredSignatures } = DAC
+
+          return {
+            layer: DA_LAYERS.DAC,
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          }
+        }
+      })()
       : baseChain.dataAvailability,
     stackedRiskView: getStackedRisks(),
     riskView,
@@ -866,12 +866,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
           ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
+            type: 'rpc',
+            startBlock: 1,
+            defaultUrl: templateVars.rpcUrl,
+            defaultCallsPerMinute: 1500,
+            adjustCount: { type: 'SubtractOne' },
+          }
           : undefined),
       daTracking: getDaTracking(templateVars),
     },
@@ -896,23 +896,23 @@ function getDaTracking(
 
   return usesBlobs
     ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        inbox: templateVars.sequencerInbox.address,
-        sequencers: batchPosters,
-      }
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: templateVars.sequencerInbox.address,
+      sequencers: batchPosters,
+    }
     : templateVars.celestiaDaNamespace
       ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          namespace: templateVars.celestiaDaNamespace,
-        }
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        namespace: templateVars.celestiaDaNamespace,
+      }
       : templateVars.availDaAppId
         ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
-            appId: templateVars.availDaAppId,
-          }
+          type: 'avail',
+          daLayer: ProjectId('avail'),
+          appId: templateVars.availDaAppId,
+        }
         : undefined
 }
 
@@ -1020,83 +1020,82 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       liveness: postsToExternalDA
         ? undefined
         : (templateVars.display.liveness ?? {
-            warnings: {
-              stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-            },
-            explanation: `${
-              templateVars.display.name
+          warnings: {
+            stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+          },
+          explanation: `${templateVars.display.name
             } is an ${category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
               selfSequencingDelaySeconds,
             )}. The state root gets finalized ${formatSeconds(
               challengePeriodSeconds,
             )} after it has been posted.`,
-          }),
+        }),
     },
     stage:
       templateVars.stage ??
       (postsToExternalDA
         ? {
-            stage: 'NotApplicable',
-          }
+          stage: 'NotApplicable',
+        }
         : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
+          {
+            stage0: {
+              callsItselfRollup: true,
+              stateRootsPostedToL1: true,
+              dataAvailabilityOnL1: true,
+              rollupNodeSourceAvailable:
+                templateVars.isNodeAvailable ?? 'UnderReview',
             },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
+            stage1: {
+              principle: false,
+              stateVerificationOnL1: true,
+              fraudProofSystemAtLeast5Outsiders: false,
+              usersHave7DaysToExit: false,
+              usersCanExitWithoutCooperation: true,
+              securityCouncilProperlySetUp: false,
             },
-          )),
+            stage2: {
+              proofSystemOverriddenOnlyInCaseOfABug: false,
+              fraudProofSystemIsPermissionless: false,
+              delayWith30DExitWindow: false,
+            },
+          },
+          {
+            rollupNodeLink: templateVars.nodeSourceLink,
+          },
+        )),
     dataAvailability: postsToExternalDA
       ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
+        if (isUsingValidBlobstreamWmr) {
+          return {
+            layer: DA_LAYERS.CELESTIA,
+            bridge: DA_BRIDGES.BLOBSTREAM,
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
           }
-        })()
+        } else {
+          const DAC = templateVars.discovery.getContractValue<{
+            membersCount: number
+            requiredSignatures: number
+          }>('SequencerInbox', 'dacKeyset')
+          const { membersCount, requiredSignatures } = DAC
+
+          return {
+            layer: DA_LAYERS.DAC,
+            bridge: DA_BRIDGES.DAC_MEMBERS({
+              membersCount,
+              requiredSignatures,
+            }),
+            mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+          }
+        }
+      })()
       : {
-          layer: usesBlobs
-            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA,
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        },
+        layer: usesBlobs
+          ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
+          : DA_LAYERS.ETH_CALLDATA,
+        bridge: DA_BRIDGES.ENSHRINED,
+        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      },
     riskView: {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
@@ -1108,30 +1107,30 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       },
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
-        postsToExternalDA)
+          postsToExternalDA)
           ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return RISK_VIEW.DATA_CELESTIA(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
-                return RISK_VIEW.DATA_EXTERNAL_DAC({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
+            if (isUsingValidBlobstreamWmr) {
+              return RISK_VIEW.DATA_CELESTIA(true)
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            }
+          })()
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
         (isUsingValidBlobstreamWmr
           ? pickWorseRisk(
-              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-            )
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
           : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
       sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
@@ -1163,12 +1162,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined
           ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              adjustCount: { type: 'SubtractOne' },
-            }
+            type: 'rpc',
+            startBlock: 1,
+            defaultUrl: templateVars.rpcUrl,
+            defaultCallsPerMinute: 1500,
+            adjustCount: { type: 'SubtractOne' },
+          }
           : undefined),
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
