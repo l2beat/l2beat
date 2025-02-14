@@ -54,6 +54,7 @@ import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { teva } from './teva'
+import { ungaii } from './ungaii'
 import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
@@ -94,6 +95,7 @@ export const layer3s: Layer3[] = [
   rari,
   zklinknova,
   teva,
+  ungaii,
   xai,
   onchain,
   orb3,
