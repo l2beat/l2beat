@@ -12,7 +12,7 @@ export const pepeunchained: Layer2 = underReviewL2({
     name: 'Pepe Unchained',
     slug: 'pepeunchained',
     description:
-      'Pepe Unchained is an Optimistic Rollup utilizing the OP Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
+      'Pepe Unchained is an Optimium utilizing the OP Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
     purposes: ['Universal'],
     category: 'Optimium', //Celestia
     stack: 'OP Stack',
