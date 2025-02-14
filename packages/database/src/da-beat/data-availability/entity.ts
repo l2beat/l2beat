@@ -11,7 +11,7 @@ export interface DataAvailabilityRecord {
 }
 
 export function toRecord(
-  row: Selectable<DataAvailability>,
+  row: Selectable<Omit<DataAvailability, 'configurationId'>>,
 ): DataAvailabilityRecord {
   return {
     configurationId: row.configurationId,
