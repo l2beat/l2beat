@@ -2008,7 +2008,7 @@ abstract contract OCR2Abstract is ITypeAndVersion {
   /// @param report serialized report, which the signatures are signing.
   /// @param rs ith element is the R components of the ith signature on report. Must have at most MAX_NUM_ORACLES entries
   /// @param ss ith element is the S components of the ith signature on report. Must have at most MAX_NUM_ORACLES entries
-  /// @param rawVs ith element is the the V component of the ith signature
+  /// @param rawVs ith element is the V component of the ith signature
   function transmit(
     // NOTE: If these parameters are changed, expectedMsgDataLength and/or
     // TRANSMIT_MSGDATA_CONSTANT_LENGTH_COMPONENT need to be changed accordingly
@@ -2658,7 +2658,7 @@ contract AggregateRateLimiter is OwnerIsCreator {
 }
 
 interface IAny2EVMOffRamp {
-  /// @notice Returns the the current nonce for a receiver.
+  /// @notice Returns the current nonce for a receiver.
   /// @param sender The sender address
   /// @return nonce The nonce value belonging to the sender address.
   function getSenderNonce(address sender) external view returns (uint64 nonce);
