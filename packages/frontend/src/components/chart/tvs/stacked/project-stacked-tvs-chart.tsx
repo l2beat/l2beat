@@ -1,9 +1,7 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { useState } from 'react'
-import { Chart } from '~/components/chart/core/chart'
-import { ChartProvider } from '~/components/chart/core/chart-provider'
+import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { TokenCombobox } from '~/components/token-combobox'
 import type {
@@ -12,15 +10,13 @@ import type {
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart-time-range'
+import { newGetChartRange } from '../../core/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../../types'
 import { ProjectTokenChart } from '../project-token-chart'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
-import { StackedTvsChartHover } from './stacked-tvs-chart-hover'
-import { StackedTvsChartLegend } from './stacked-tvs-chart-legend'
-import { useStackedTvsChartRenderParams } from './use-stacked-tvs-chart-render-params'
+import { StackedTvsChart } from './stacked-tvs-chart'
 
 interface Props {
   milestones: Milestone[]
@@ -76,7 +72,7 @@ export function ProjectStackedTvsChart({
 interface DefaultChartProps {
   projectId: string
   isBridge: boolean
-  milestones: Milestone[]
+  milestones: Record<number, Milestone>
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens | undefined
@@ -104,45 +100,48 @@ function DefaultChart({
     excludeAssociatedTokens: false,
   })
 
-  const { columns, chartRange, valuesStyle } = useStackedTvsChartRenderParams({
-    milestones,
-    unit,
-    data,
-  })
+  const chartData = useMemo(
+    () =>
+      data?.map(([timestamp, native, canonical, external, ethPrice]) => {
+        const divider = unit === 'usd' ? 100 : ethPrice
+        return {
+          timestamp,
+          native: native / divider,
+          canonical: canonical / divider,
+          external: external / divider,
+        }
+      }),
+    [data, unit],
+  )
+  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
 
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={(value: number) => formatCurrency(value, unit)}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <StackedTvsChartHover {...data} unit={unit} />
-      )}
-    >
-      <section className="flex flex-col">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
-          <TvsChartTimeRangeControls
-            projectSection
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
+    <section className="flex flex-col">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <TvsChartTimeRangeControls
+          projectSection
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
+      </ChartControlsWrapper>
+      <StackedTvsChart
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+        className="mb-2 mt-4"
+      />
+      <TvsChartUnitControls unit={unit} setUnit={setUnit}>
+        {tokens && (
+          <TokenCombobox
+            tokens={tokens}
+            value={token}
+            setValue={setToken}
+            isBridge={isBridge}
           />
-        </ChartControlsWrapper>
-        <Chart className="mt-4" />
-        <StackedTvsChartLegend className="my-2" />
-        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          {tokens && (
-            <TokenCombobox
-              tokens={tokens}
-              value={token}
-              setValue={setToken}
-              isBridge={isBridge}
-            />
-          )}
-        </TvsChartUnitControls>
-      </section>
-    </ChartProvider>
+        )}
+      </TvsChartUnitControls>
+    </section>
   )
 }
