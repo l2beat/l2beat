@@ -104,14 +104,14 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   )
 
   const chartRange = newGetChartRange(chartData)
-  const meta = getMeta(chartData)
+  const stats = getStats(chartData)
 
   return (
     <section className="flex flex-col gap-2">
       <TvsChartHeader
         unit={unit}
-        value={meta?.total}
-        change={meta?.change}
+        value={stats?.total}
+        change={stats?.change}
         range={timeRange}
         timeRange={chartRange}
       />
@@ -237,7 +237,7 @@ function CustomTooltip({
   )
 }
 
-function getMeta(
+function getStats(
   data:
     | {
         timestamp: number

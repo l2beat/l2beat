@@ -1,0 +1,258 @@
+'use client'
+import type { Milestone } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { capitalize } from 'lodash'
+import { useMemo } from 'react'
+import type { TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  useChart,
+} from '~/components/core/chart/chart'
+import { getCommonChartComponents } from '~/components/core/chart/common'
+import {
+  RollupsFillGradientDef,
+  RollupsStrokeGradientDef,
+} from '~/components/core/chart/defs/rollups-gradient-def'
+import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { Skeleton } from '~/components/core/skeleton'
+import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import { TokenCombobox } from '~/components/token-combobox'
+import { useIsClient } from '~/hooks/use-is-client'
+import type {
+  ProjectToken,
+  ProjectTokens,
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import { api } from '~/trpc/react'
+import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
+import { formatCurrency } from '~/utils/number-format/format-currency'
+import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../core/chart-time-range'
+import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
+import type { ChartUnit } from '../types'
+import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
+
+interface Props {
+  projectId: string
+  isBridge: boolean
+  milestones: Record<number, Milestone>
+  timeRange: TvsChartRange
+  setTimeRange: (timeRange: TvsChartRange) => void
+  tokens: ProjectTokens
+  token: ProjectToken
+  setToken: (token: ProjectToken | undefined) => void
+  unit: ChartUnit
+  setUnit: (unit: ChartUnit) => void
+  showStackedChartLegend?: boolean
+}
+
+export function ProjectTokenChart({
+  projectId,
+  isBridge,
+  milestones,
+  timeRange,
+  setTimeRange,
+  tokens,
+  token,
+  setToken,
+  unit,
+  setUnit,
+  showStackedChartLegend,
+}: Props) {
+  const properUnit = unit === 'usd' ? 'usd' : token.symbol
+
+  const { data, isLoading } = api.tvs.tokenChart.useQuery({
+    token: {
+      chain: token.chain,
+      address: token.address,
+      projectId,
+    },
+    range: timeRange,
+  })
+
+  const chartConfig = {
+    value: {
+      label: token.name,
+      color: sourceToColor(token.source),
+      legendLabel: capitalize(token.source),
+    },
+  } satisfies ChartConfig
+
+  const chartData = useMemo(() => {
+    return data?.map(([timestamp, amount, usdValue]) => ({
+      timestamp,
+      value: unit === 'usd' ? usdValue : amount,
+    }))
+  }, [data, unit])
+
+  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+
+  const milestonesData = useMemo(() => {
+    return chartData?.map(({ timestamp }) => ({
+      timestamp,
+      milestone: milestones[timestamp],
+    }))
+  }, [chartData, milestones])
+
+  return (
+    <section>
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <TvsChartTimeRangeControls
+          projectSection
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
+      </ChartControlsWrapper>
+      <ChartContainer
+        className="mb-2 mt-4"
+        config={chartConfig}
+        isLoading={isLoading}
+        dataWithMilestones={milestonesData}
+      >
+        <AreaChart data={chartData} margin={{ top: 20 }}>
+          {isBridge && (
+            <defs>
+              <RollupsFillGradientDef id="fill" />
+              <RollupsStrokeGradientDef id="stroke" />
+            </defs>
+          )}
+          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
+          {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
+          <Area
+            dataKey="value"
+            fill={isBridge ? 'url(#fill)' : 'var(--color-value)'}
+            fillOpacity={1}
+            stroke={isBridge ? 'url(#stroke)' : 'none'}
+            strokeWidth={2}
+            isAnimationActive={false}
+          />
+          {getCommonChartComponents({
+            chartData,
+            yAxis: {
+              tick: {
+                width: 150,
+              },
+              tickFormatter: (value: number) =>
+                formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
+            },
+          })}
+        </AreaChart>
+      </ChartContainer>
+      <div className={cn(!showStackedChartLegend && 'mt-4')}>
+        <TokenChartUnitControls
+          isBridge={isBridge}
+          unit={unit}
+          setUnit={setUnit}
+          tokens={tokens}
+          token={token}
+          setToken={setToken}
+        />
+      </div>
+    </section>
+  )
+}
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+  unit,
+}: TooltipProps<number, string> & { unit: string }) {
+  const { config: chartConfig } = useChart()
+  if (!active || !payload || typeof label !== 'number') return null
+  return (
+    <div className={tooltipContentVariants()}>
+      <div className="flex min-w-28 flex-col gap-1">
+        <div>{formatTimestamp(label, { longMonthName: true })}</div>
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = chartConfig[entry.name!]!
+            return (
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-x-1"
+              >
+                <span className="flex items-center gap-1">
+                  <div
+                    role="img"
+                    aria-label="Square icon"
+                    className="size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </span>
+                <span className="whitespace-nowrap font-medium">
+                  {formatCurrency(entry.value, unit)}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+interface ControlsProps {
+  isBridge: boolean
+  unit: ChartUnit
+  setUnit: (value: ChartUnit) => void
+  tokens: ProjectTokens
+  token: ProjectToken
+  setToken: (token: ProjectToken | undefined) => void
+}
+
+function TokenChartUnitControls({
+  isBridge,
+  unit,
+  setUnit,
+  tokens,
+  token,
+  setToken,
+}: ControlsProps) {
+  const isClient = useIsClient()
+
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {isClient ? (
+        <RadioGroup name="tokenChartUnit" value={unit} onValueChange={setUnit}>
+          <RadioGroupItem value="usd">USD</RadioGroupItem>
+          <RadioGroupItem value="eth">{token.symbol}</RadioGroupItem>
+        </RadioGroup>
+      ) : (
+        <Skeleton className="h-8 w-[104.82px]" />
+      )}
+      <TokenCombobox
+        tokens={tokens}
+        value={token}
+        setValue={setToken}
+        isBridge={isBridge}
+      />
+    </div>
+  )
+}
+
+function sourceToColor(source: ProjectToken['source']) {
+  switch (source) {
+    case 'native':
+      return 'hsl(var(--chart-native))'
+    case 'canonical':
+      return 'hsl(var(--chart-canonical))'
+    case 'external':
+      return 'hsl(var(--chart-external))'
+    default:
+      assertUnreachable(source)
+  }
+}

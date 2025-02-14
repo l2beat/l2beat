@@ -74,13 +74,13 @@ export function ScalingSummaryTvsChart({
       }
     })
   }, [data])
-  const meta = getMeta(chartData)
+  const stats = getStats(chartData)
 
   return (
     <section className="flex flex-col gap-4">
       <Header
-        total={meta?.total}
-        change={meta?.change}
+        total={stats?.total}
+        change={stats?.change}
         unit={unit}
         timeRange={timeRange}
       />
@@ -239,7 +239,7 @@ function Header({ total, unit, change, timeRange }: Props) {
   )
 }
 
-function getMeta(
+function getStats(
   data:
     | {
         timestamp: number

@@ -1,8 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useState } from 'react'
-import { Chart } from '~/components/chart/core/chart'
-import { ChartProvider } from '~/components/chart/core/chart-provider'
+import { useMemo, useState } from 'react'
 import type {
   ProjectToken,
   ProjectTokens,
@@ -12,12 +10,14 @@ import { api } from '~/trpc/react'
 import { TokenCombobox } from '../../token-combobox'
 import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../core/chart-time-range'
+import { newGetChartRange } from '../core/utils/get-chart-range-from-columns'
+import { mapMilestones } from '../core/utils/map-milestones'
 import type { ChartUnit } from '../types'
-import { ProjectTokenChart } from './token/project-token-chart'
-import { TvsChartHover } from './tvs-chart-hover'
+import { ProjectTokenChart } from './project-token-chart'
+import type { TvsChartDataPoint } from './tvs-chart'
+import { TvsChart } from './tvs-chart'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 import { TvsChartUnitControls } from './tvs-chart-unit-controls'
-import { useTvsChartRenderParams } from './use-tvs-chart-render-params'
 
 interface Props {
   projectId: string
@@ -36,6 +36,10 @@ export function ProjectTvsChart({
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const mappedMilestones = useMemo(
+    () => mapMilestones(milestones),
+    [milestones],
+  )
 
   if (tokens && token) {
     return (
@@ -58,7 +62,7 @@ export function ProjectTvsChart({
     <DefaultChart
       isBridge={isBridge}
       projectId={projectId}
-      milestones={milestones}
+      milestones={mappedMilestones}
       timeRange={timeRange}
       setTimeRange={setTimeRange}
       tokens={tokens}
@@ -73,7 +77,7 @@ export function ProjectTvsChart({
 interface DefaultChartProps {
   projectId: string
   isBridge: boolean
-  milestones: Milestone[]
+  milestones: Record<number, Milestone>
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens | undefined
@@ -101,38 +105,43 @@ function DefaultChart({
     excludeAssociatedTokens: false,
   })
 
-  const { chartRange, formatYAxisLabel, valuesStyle, columns } =
-    useTvsChartRenderParams({ milestones, unit, data })
+  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+    ([timestamp, native, canonical, external, ethPrice]) => {
+      const total = native + canonical + external
+      return {
+        timestamp,
+        value: unit === 'usd' ? total / 100 : total / ethPrice,
+      }
+    },
+  )
+  const chartRange = useMemo(() => newGetChartRange(chartData), [chartData])
+
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => <TvsChartHover data={data} />}
-    >
-      <section className="flex flex-col gap-4">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
-          <TvsChartTimeRangeControls
-            projectSection
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
+    <section className="flex flex-col gap-4">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <TvsChartTimeRangeControls
+          projectSection
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
+      </ChartControlsWrapper>
+      <TvsChart
+        data={chartData}
+        unit={unit}
+        isLoading={isLoading}
+        milestones={milestones}
+      />
+      <TvsChartUnitControls unit={unit} setUnit={setUnit}>
+        {tokens && (
+          <TokenCombobox
+            tokens={tokens}
+            setValue={setToken}
+            value={token}
+            isBridge={isBridge}
           />
-        </ChartControlsWrapper>
-        <Chart />
-        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          {tokens && (
-            <TokenCombobox
-              tokens={tokens}
-              setValue={setToken}
-              value={token}
-              isBridge={isBridge}
-            />
-          )}
-        </TvsChartUnitControls>
-      </section>
-    </ChartProvider>
+        )}
+      </TvsChartUnitControls>
+    </section>
   )
 }
