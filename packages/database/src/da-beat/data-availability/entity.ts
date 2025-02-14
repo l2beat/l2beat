@@ -3,6 +3,7 @@ import type { Insertable, Selectable } from 'kysely'
 import type { DataAvailability } from '../../kysely/generated/types'
 
 export interface DataAvailabilityRecord {
+  configurationId: string
   projectId: string
   daLayer: string
   timestamp: UnixTime
@@ -10,9 +11,10 @@ export interface DataAvailabilityRecord {
 }
 
 export function toRecord(
-  row: Selectable<Omit<DataAvailability, 'configurationId'>>,
+  row: Selectable<DataAvailability>,
 ): DataAvailabilityRecord {
   return {
+    configurationId: row.configurationId,
     projectId: row.projectId,
     daLayer: row.daLayer,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -24,10 +26,7 @@ export function toRow(
   record: DataAvailabilityRecord,
 ): Insertable<DataAvailability> {
   return {
-    // Temporary solution until next PR is merged
-    // Indexer writing to this table is disable
-    // Table has no records
-    configurationId: 'TEMP',
+    configurationId: record.configurationId,
     projectId: record.projectId,
     daLayer: record.daLayer,
     timestamp: record.timestamp.toDate(),
