@@ -1,3 +1,137 @@
+Generated with discovered.json: 0xfcff6126006b8b5b03cde012364bb4489e8eb733
+
+# Diff at Fri, 14 Feb 2025 08:03:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2292c9ed914c0bc0ea59823c1f7642c7fd880d25 block: 735231
+- current block number: 737223
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x793500709506652Fcc61F0d2D0fDa605638D4293"}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"}
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.5.description:
++        "transfer KYC NFTs to a different address."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x793500709506652Fcc61F0d2D0fDa605638D4293"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.4.description:
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
++        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
+      receivedPermissions.3.description:
++        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
++++ description: Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.
+      values.AdditionalRoles.2:
++        {"roleId":"14661544942390944024","label":"SECURITY_COUNCIL_ROLE"}
+      values.RolesGranted.8663528507529876195.account:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
+      values.RolesGranted.8663528507529876195.since:
+-        1733181166
++        1740077455
++++ description: List of roles granted to accounts.
+      values.RolesGranted.14661544942390944024:
++        {"account":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","delay":604800,"since":1739472657,"newMember":true}
+      values.TargetAdminDelayUpdated.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7:
++        {"delay":604800,"since":1739904656}
+      values.TargetFunctionRoleUpdated.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.selector:
+-        "0x3659cfe6"
++        "0x72592851"
+      values.TargetFunctionRoleUpdated.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.roleId:
+-        "8663528507529876195"
++        "14661544942390944024"
+      values.TargetFunctionRoleUpdated.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7:
++        {"selector":"0x3659cfe6","roleId":"8663528507529876195"}
+    }
+```
+
+```diff
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7) {
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for the KYC status and KYC metadata of user wallets.
+      issuedPermissions.13:
++        {"permission":"upgrade","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","via":[]}
+      issuedPermissions.12:
++        {"permission":"upgrade","to":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","via":[]}
+      issuedPermissions.11:
++        {"permission":"interact","to":"0xb539019776eF803E89EC062Ad54cA24D1Fdb008a","description":"manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.","via":[]}
+      issuedPermissions.10:
++        {"permission":"interact","to":"0xacC000818e5Bbd911D5d449aA81CB5cA24024739","description":"transfer KYC NFTs to a different address.","via":[]}
+      issuedPermissions.9.permission:
+-        "upgrade"
++        "interact"
+      issuedPermissions.9.to:
+-        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      issuedPermissions.9.description:
++        "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+      issuedPermissions.8.to:
+-        "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a"
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      values.accessControl.KYC_PROVIDER_ROLE.members.6:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      values.accessControl.UPGRADER_ROLE.members.1:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+      values.accessControl.GOVERNANCE_ROLE.members.2:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++++ severity: HIGH
+      values.DEFAULT_ADMINs.1:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++++ severity: HIGH
+      values.GOVERNANCErs.2:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++++ severity: MEDIUM
+      values.KYC_PROVIDERs.6:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
++++ severity: HIGH
+      values.UPGRADERs.1:
++        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 735231 (main branch discovery), not current.
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      fieldMeta.getSystemContracts.description:
+-        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts."
++        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
+    }
+```
+
 Generated with discovered.json: 0x37b67b83806fca58df9b08c3cdaeedb5aa92e6c2
 
 # Diff at Wed, 12 Feb 2025 11:32:56 GMT:
