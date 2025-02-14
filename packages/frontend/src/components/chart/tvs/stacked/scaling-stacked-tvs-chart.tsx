@@ -129,7 +129,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
               type="natural"
               fill="var(--color-native)"
               fillOpacity={1}
-              stroke="var(--color-native)"
+              strokeWidth={0}
               stackId="a"
               isAnimationActive={false}
               activeDot={false}
@@ -139,7 +139,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
               type="natural"
               fill="var(--color-external)"
               fillOpacity={1}
-              stroke="var(--color-external)"
+              strokeWidth={0}
               stackId="a"
               isAnimationActive={false}
               activeDot={false}
@@ -149,7 +149,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
               type="natural"
               fill="var(--color-canonical)"
               fillOpacity={1}
-              stroke="var(--color-canonical)"
+              strokeWidth={0}
               stackId="a"
               isAnimationActive={false}
               activeDot={{ stroke: 'hsl(var(--primary))' }}

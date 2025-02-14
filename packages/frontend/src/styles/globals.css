@@ -33,11 +33,18 @@
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
-    --chart-da-celestia: 284 100% 78%;
-    --chart-da-avail: 151 90% 48%;
+
     --chart-native: 320 100% 63.7%;
     --chart-external: 45 100% 51.4%;
     --chart-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
+
+    --chart-da-celestia: 284 100% 78%;
+    --chart-da-avail: 151 90% 48%;
 
     --chart-ethereum-fill-gradient: 217 77.8% 49.4%;
     --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
@@ -87,6 +94,11 @@
     --chart-native: 320 100% 63.7%;
     --chart-external: 45 100% 51.4%;
     --chart-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
 
     --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
     --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
