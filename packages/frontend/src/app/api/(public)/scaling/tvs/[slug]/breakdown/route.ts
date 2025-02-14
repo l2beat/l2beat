@@ -34,7 +34,7 @@ const getCachedResponse = cache(
   },
   ['scaling-tvs-project-breakdown-route'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

@@ -2886,6 +2886,12 @@
       "source": "canonical",
       "supply": "zero",
       "coingeckoId": "forta"
+    },
+    {
+      "symbol": "G7",
+      "address": "0xf18e4466f26b4ca55bbab890b314a54976e45b17",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "nova": [
@@ -5897,6 +5903,15 @@
           }
         ]
       }
+    }
+  ],
+  "unichain": [
+    {
+      "symbol": "USDC",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

@@ -3,6 +3,7 @@ import type { Insertable, Selectable } from 'kysely'
 import type { DataAvailability } from '../../kysely/generated/types'
 
 export interface DataAvailabilityRecord {
+  configurationId: string
   projectId: string
   daLayer: string
   timestamp: UnixTime
@@ -13,6 +14,7 @@ export function toRecord(
   row: Selectable<DataAvailability>,
 ): DataAvailabilityRecord {
   return {
+    configurationId: row.configurationId,
     projectId: row.projectId,
     daLayer: row.daLayer,
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -24,6 +26,7 @@ export function toRow(
   record: DataAvailabilityRecord,
 ): Insertable<DataAvailability> {
   return {
+    configurationId: record.configurationId,
     projectId: record.projectId,
     daLayer: record.daLayer,
     timestamp: record.timestamp.toDate(),

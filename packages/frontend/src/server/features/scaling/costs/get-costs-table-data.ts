@@ -1,4 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -45,7 +46,8 @@ export const getCachedCostsTableData = cache(
   },
   ['costs-table-data'],
   {
-    tags: ['costs'],
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 
