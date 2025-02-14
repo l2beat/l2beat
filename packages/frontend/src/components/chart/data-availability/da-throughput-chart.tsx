@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ChartConfig } from '~/components/core/chart/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
+import { ChartTimeRange } from '../core/chart-time-range'
 import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
+import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { DaAbsoluteThroughputChart } from './da-absolute-throughput-chart'
 import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 
@@ -30,12 +32,21 @@ export function DaThroughputChart() {
   const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
+  const chartRange = useMemo(
+    () => getChartRange(data?.map((d) => [d.timestamp])),
+    [data],
+  )
 
   return (
     <div>
-      <h1 className="mb-4 whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
-        Share of total data posted
-      </h1>
+      <div className="mb-4">
+        <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
+          {metric === 'percentage'
+            ? 'Share of total data posted'
+            : 'Total data posted'}
+        </h1>
+        <ChartTimeRange range={chartRange} />
+      </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart
           data={data}
