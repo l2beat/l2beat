@@ -18,6 +18,7 @@ import { deri } from './deri'
 import { dodochain } from './dodochain'
 import { donatuz } from './donatuz'
 import { educhain } from './educhain'
+import { evedex } from './evedex'
 import { fiefdom } from './fiefdom'
 import { forta } from './forta'
 import { g7 } from './g7'
@@ -79,6 +80,7 @@ export const layer3s: Layer3[] = [
   dodochain,
   donatuz,
   educhain,
+  evedex,
   fiefdom,
   forta,
   g7,
