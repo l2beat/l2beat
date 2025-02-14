@@ -1,14 +1,14 @@
 Generated with discovered.json: 0xf2796acd4f1771f9f8e80ec550f65a1e1fa548a4
 
-# Diff at Fri, 14 Feb 2025 12:19:33 GMT:
+# Diff at Fri, 14 Feb 2025 14:18:07 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@98d265fa205626210dcbfb66032dbf7c6545879a block: 21786859
+- comparing to: main@866ac0e034ddb1e78e333932f83648ad55ba1b25 block: 21786859
 - current block number: 21786859
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Make Nova discovery driven.
 
 ## Config/verification related changes
 

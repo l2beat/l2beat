@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x3bd69a31808e9d131a8de16e3ef6d5816957d950
+
+# Diff at Fri, 14 Feb 2025 14:18:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@866ac0e034ddb1e78e333932f83648ad55ba1b25 block: 81620827
+- current block number: 81620827
+
+## Description
+
+Make Nova discovery driven.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ArbChildToParentRewardRouter (0x36D0170D92F66e8949eB276C3AC4FEA64f83704d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7f05a40f5b4820273cdd386a5d21a16c01f8728e
 
 # Diff at Wed, 12 Feb 2025 18:44:36 GMT:
