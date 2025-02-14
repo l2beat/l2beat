@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "metis",
-  "blockNumber": 17386539,
+  "blockNumber": 19714541,
   "configHash": "0xa8bebc942203333ef34ed655fafb608072cc8038c52571a57eafa0d3bf2c6ff3",
   "contracts": [
     {
@@ -36,14 +36,14 @@
         "lpToken": "0x16C58802FD464D2Ac33B8f1DB57D7717f8365d91",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "468043191475948754",
-        "poolBalance": "935086575000000000000",
+        "plannerFee": "648705583184445758",
+        "poolBalance": "2317457552000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x420000000000000000000000000000000000000A",
-        "treasuryFee": 436756,
-        "tvl": "548518904000000000000"
+        "treasuryFee": 5282956,
+        "tvl": "129646152000000000000"
       }
     },
     {
@@ -80,14 +80,14 @@
         "lpToken": "0x222A9a6dD812CA5a27fFfEC39816A2DF6837D396",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "484502171552392862",
-        "poolBalance": 3001648036254,
+        "plannerFee": "485470518497289148",
+        "poolBalance": 2836077993545,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
-        "treasuryFee": 1758963818,
-        "tvl": 1187087448272
+        "treasuryFee": 23237486873,
+        "tvl": 332651386362
       }
     },
     {
@@ -169,14 +169,14 @@
         "lpToken": "0x2D4848d502B8B16b8ad86945d3D4e92F2d229dFF",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
-        "plannerFee": "11000000000000000",
-        "poolBalance": "10502070000000000000",
+        "plannerFee": "952831000000000000",
+        "poolBalance": "951920000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
         "treasuryFee": 0,
-        "tvl": "10502070000000000000"
+        "tvl": "9354386000000000000"
       }
     }
   ],
