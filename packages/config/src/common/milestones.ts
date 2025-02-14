@@ -1,6 +1,6 @@
 import type { Milestone } from '../types'
 
-export const HOMEPAGE_MILESTONES: Milestone[] = [
+const HOMEPAGE_MILESTONES_LIST: Milestone[] = [
   {
     title: 'First ZK Rollup (DEX)',
     date: '2019-12-04T00:00:00Z',
@@ -113,3 +113,13 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     type: 'general',
   },
 ]
+
+function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
+  const result: Record<number, Milestone> = {}
+  for (const milestone of milestones) {
+    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
+    result[timestamp] = milestone
+  }
+  return result
+}
+export const HOMEPAGE_MILESTONES = mapMilestones(HOMEPAGE_MILESTONES_LIST)

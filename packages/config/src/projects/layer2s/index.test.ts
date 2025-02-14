@@ -11,7 +11,7 @@ import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 import { describe } from 'mocha'
 import { chains } from '../../chains'
-import { NUGGETS } from '../../common'
+import { HOMEPAGE_MILESTONES, NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
@@ -20,7 +20,7 @@ import type {
   ReferenceLink,
   ScalingProjectTechnology,
 } from '../../types'
-import { layer2s, milestonesLayer2s } from './index'
+import { layer2s } from './index'
 
 describe('layer2s', () => {
   describe('links', () => {
@@ -421,7 +421,7 @@ describe('layer2s', () => {
             })
           }
         }
-        for (const milestone of milestonesLayer2s) {
+        for (const milestone of Object.values(HOMEPAGE_MILESTONES)) {
           it(`Milestone: ${milestone.title} (main page) name is no longer than 50 characters`, () => {
             expect(milestone.title.length).toBeLessThanOrEqual(50)
           })
@@ -444,7 +444,7 @@ describe('layer2s', () => {
             })
           }
         }
-        for (const milestone of milestonesLayer2s) {
+        for (const milestone of Object.values(HOMEPAGE_MILESTONES)) {
           if (milestone.description === undefined) {
             continue
           }
@@ -469,7 +469,7 @@ describe('layer2s', () => {
             })
           }
         }
-        for (const milestone of milestonesLayer2s) {
+        for (const milestone of Object.values(HOMEPAGE_MILESTONES)) {
           if (milestone.description === undefined) {
             continue
           }
@@ -493,7 +493,7 @@ describe('layer2s', () => {
           })
         }
       }
-      for (const milestone of milestonesLayer2s) {
+      for (const milestone of Object.values(HOMEPAGE_MILESTONES)) {
         it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
           expect(
             UnixTime.fromDate(new Date(milestone.date)).isFull('day'),

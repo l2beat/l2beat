@@ -1,4 +1,3 @@
-import { HOMEPAGE_MILESTONES } from '../../common'
 import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
@@ -399,5 +398,3 @@ export const layer2s: Layer2[] = [
   zksynclite,
   zora,
 ]
-
-export const milestonesLayer2s = HOMEPAGE_MILESTONES
