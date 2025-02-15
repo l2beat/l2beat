@@ -10,7 +10,6 @@ import { CustomLink } from '~/components/link/custom-link'
 import { Markdown } from '~/components/markdown/markdown'
 import { externalLinks } from '~/consts/external-links'
 import { ChevronIcon } from '~/icons/chevron'
-import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
 import type { ZkCatalogProjectDetails } from '../_utils/get-zk-catalog-project-details'
 import { LastUsedCell } from './last-used-cell'
 import { SubVerifiersTable } from './sub-verifiers-table'
@@ -59,7 +58,7 @@ export function Verifiers(props: Props) {
                     </td>
                     <td className="hidden pr-4 text-sm md:table-cell md:text-base">
                       <EtherscanLink
-                        etherscanUrl={getExplorerUrlByChainId(item.chainId)}
+                        href={item.url}
                         address={item.contractAddress.toString()}
                       />
                     </td>

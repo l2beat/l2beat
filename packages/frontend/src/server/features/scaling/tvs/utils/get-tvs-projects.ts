@@ -1,10 +1,7 @@
 import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  bridgeToBackendProject,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
   toBackendProject,
 } from '@l2beat/backend-shared'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
@@ -62,11 +59,7 @@ export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
 }
 
 const projects = [...layer2s, ...layer3s, ...bridges]
-const backendProjects = [
-  ...layer2s.map(layer2ToBackendProject),
-  ...layer3s.map(layer3ToBackendProject),
-  ...bridges.map(bridgeToBackendProject),
-]
+const backendProjects = projects.map(toBackendProject)
 
 export function getTvsProjects(
   filter: (p: Layer2 | Layer3 | Bridge) => boolean,
