@@ -603,6 +603,8 @@ export type OnchainVerifier = {
   name: string
   description: string
   contractAddress: EthereumAddress
+  /** Link to the smart contract code on an explorer. Automatically set. */
+  url?: string
   chainId: ChainId
   subVerifiers: SubVerifier[]
 } & (

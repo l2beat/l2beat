@@ -36,4 +36,11 @@ function adjustRefactored(project: BaseProject) {
   if (project.statuses) {
     project.statuses.isUnverified ||= !isProjectVerified(project)
   }
+  if (project.proofVerification) {
+    for (const verifier of project.proofVerification.verifiers) {
+      const chain = chains.find((x) => x.chainId === verifier.chainId)
+      assert(chain?.explorerUrl, `Missing explorerUrl for: ${verifier.chainId}`)
+      verifier.url = `${chain.explorerUrl}/address/${verifier.contractAddress}#code`
+    }
+  }
 }
