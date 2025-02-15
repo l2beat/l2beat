@@ -1,5 +1,6 @@
 import {
   type Bridge,
+  type ChainConfig,
   type Layer2,
   type Layer2FinalityConfig,
   type Layer2LivenessConfig,
@@ -27,6 +28,7 @@ import {
 
 export interface BackendProject {
   projectId: ProjectId
+  chain?: ChainConfig
   slug: string
   isArchived?: boolean
   type: 'layer2' | 'bridge' | 'layer3'
@@ -74,6 +76,7 @@ function layer2ToBackendProject(layer2: Layer2): BackendProject {
     projectId: layer2.id,
     slug: layer2.display.slug,
     type: 'layer2',
+    chain: layer2.chainConfig,
     isUpcoming: layer2.isUpcoming,
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map(toProjectEscrow),
@@ -93,6 +96,7 @@ function bridgeToBackendProject(bridge: Bridge): BackendProject {
     projectId: bridge.id,
     slug: bridge.display.slug,
     type: 'bridge',
+    chain: bridge.chainConfig,
     escrows: bridge.config.escrows.map(toProjectEscrow),
     associatedTokens: bridge.config.associatedTokens,
   }
@@ -186,6 +190,7 @@ function layer3ToBackendProject(layer3: Layer3): BackendProject {
     projectId: layer3.id,
     slug: layer3.display.slug,
     type: 'layer3',
+    chain: layer3.chainConfig,
     isUpcoming: layer3.isUpcoming,
     escrows: layer3.config.escrows.map(toProjectEscrow),
     associatedTokens: layer3.config.associatedTokens,

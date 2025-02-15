@@ -35,7 +35,7 @@ export const xchain: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'xchain',
     chainId: 94524,
-    explorerUrl: 'https://xchain-explorer.idex.io/',
+    explorerUrl: 'https://xchain-explorer.idex.io',
     explorerApi: {
       url: 'https://xchain-explorer.idex.io/api',
       type: 'blockscout',

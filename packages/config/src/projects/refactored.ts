@@ -1,4 +1,6 @@
 import type { BaseProject } from '../types'
+import { bsc } from './chains/bsc'
+import { gnosis } from './chains/gnosis'
 import { avail } from './da-beat/avail/avail'
 import { vector } from './da-beat/avail/vector'
 import { blobstream } from './da-beat/celestia/blobstream'
@@ -38,4 +40,7 @@ export const refactored: BaseProject[] = [
   memo,
   espresso,
   eigenda,
+  // chains
+  bsc,
+  gnosis,
 ]

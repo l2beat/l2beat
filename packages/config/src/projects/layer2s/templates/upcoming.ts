@@ -1,6 +1,7 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
 import type {
+  ChainConfig,
   Layer2,
   Layer2Display,
   Layer3,
@@ -15,6 +16,7 @@ export interface UpcomingConfigL2 {
   display: Layer2Display
   capability: ScalingProjectCapability
   badges?: BadgeId[]
+  chainConfig?: ChainConfig
 }
 
 export interface UpcomingConfigL3 {
@@ -40,6 +42,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     config: {
       escrows: [],
     },
+    chainConfig: templateVars.chainConfig,
     riskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,
     contracts: CONTRACTS.EMPTY,

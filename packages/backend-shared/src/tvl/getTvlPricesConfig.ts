@@ -1,7 +1,8 @@
-import { chains, tokenList } from '@l2beat/config'
+import { type ChainConfig, tokenList } from '@l2beat/config'
 import { assert, type PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 
 export function getTvlPricesConfig(
+  chains: ChainConfig[],
   minTimestampOverride?: UnixTime,
 ): PriceConfigEntry[] {
   const prices = new Map<string, PriceConfigEntry>()

@@ -4,7 +4,13 @@ import {
   toBackendProject,
 } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  bridges,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import type { TvlConfig } from '../Config'
@@ -14,6 +20,7 @@ import { getChainTvlConfig, getChainsWithTokens } from './chains'
 export function getTvlConfig(
   flags: FeatureFlags,
   env: Env,
+  chains: ChainConfig[],
   minTimestampOverride?: UnixTime,
 ): TvlConfig {
   const projects = [...layer2s, ...layer3s, ...bridges].map(toBackendProject)
@@ -31,14 +38,14 @@ export function getTvlConfig(
   const chainConfigs = uniq(
     getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
   ).map((chain) =>
-    getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
+    getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, chains, {
       minTimestamp: minTimestampOverride,
     }),
   )
 
   return {
-    amounts: getTvlAmountsConfig(projects),
-    prices: getTvlPricesConfig(minTimestampOverride),
+    amounts: getTvlAmountsConfig(projects, chains),
+    prices: getTvlPricesConfig(chains, minTimestampOverride),
     chains: chainConfigs,
     chainConverter: new ChainConverter(
       chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),

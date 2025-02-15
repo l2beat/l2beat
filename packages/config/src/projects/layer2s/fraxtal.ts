@@ -80,7 +80,7 @@ export const fraxtal: Layer2 = opStackL2({
   chainConfig: {
     name: 'fraxtal',
     chainId: 252,
-    explorerUrl: 'https://fraxscan.com/',
+    explorerUrl: 'https://fraxscan.com',
     explorerApi: {
       url: 'https://api.fraxscan.com/api',
       type: 'etherscan',

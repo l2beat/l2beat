@@ -78,7 +78,7 @@ export const unichain: Layer2 = opStackL2({
     name: 'unichain',
     chainId: 130,
     coingeckoPlatform: 'unichain',
-    explorerUrl: 'https://uniscan.xyz/',
+    explorerUrl: 'https://uniscan.xyz',
     explorerApi: {
       url: 'https://api.uniscan.xyz/api',
       type: 'etherscan',

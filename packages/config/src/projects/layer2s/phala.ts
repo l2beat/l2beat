@@ -98,7 +98,7 @@ export const phala: Layer2 = {
   chainConfig: {
     name: 'phala',
     chainId: 2035,
-    explorerUrl: 'https://explorer.phala.network/',
+    explorerUrl: 'https://explorer.phala.network',
     explorerApi: {
       url: 'https://explorer.phala.network/api',
       type: 'blockscout',

@@ -6,7 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -46,6 +45,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -95,7 +95,7 @@ export interface PolygonCDKStackConfig {
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
-  const explorerUrl = ethereum.explorerUrl
+  const explorerUrl = EXPLORER_URLS['ethereum']
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')

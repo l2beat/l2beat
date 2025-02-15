@@ -25,7 +25,7 @@ export const abstract: Layer2 = zkStackL2({
         'https://jumper.exchange/?toChain=2741&toToken=0x0000000000000000000000000000000000000000',
       ],
       documentation: ['https://docs.abs.xyz/'],
-      explorers: ['https://abscan.org/'],
+      explorers: ['https://abscan.org'],
       repositories: ['https://github.com/Abstract-Foundation'],
       socialMedia: [
         'https://x.com/abstractchain',
@@ -40,7 +40,7 @@ export const abstract: Layer2 = zkStackL2({
   chainConfig: {
     name: 'abstract',
     chainId,
-    explorerUrl: 'https://abscan.org/',
+    explorerUrl: 'https://abscan.org',
     explorerApi: {
       url: 'https://api.abscan.org/api',
       type: 'etherscan',

@@ -1,6 +1,12 @@
 import { writeFileSync } from 'fs'
 import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
-import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  ProjectService,
+  layer2s,
+  layer3s,
+  tokenList,
+} from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter, ChainId } from '@l2beat/shared-pure'
@@ -31,12 +37,18 @@ async function main() {
   const chainsToSupport = Object.keys(escrowsByChain)
 
   const providers = new Map(
-    chainsToSupport.map((chain) => [chain, getProvider(chain)]),
+    chainsToSupport.map((chain) => [chain, getProvider(chain, chains)]),
   )
   const etherscanClients = new Map(
-    chainsToSupport.map((chain) => [chain, getEtherscanClient(chain)]),
+    chainsToSupport.map((chain) => [chain, getEtherscanClient(chain, chains)]),
   )
   const coingeckoClient = getCoingeckoClient()
+
+  const ps = new ProjectService()
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+
   const chainConverter = new ChainConverter(
     chains.map((c) => ({
       chainId: ChainId(c.chainId),
@@ -338,7 +350,7 @@ main().then(() => {
   console.log('done')
 })
 
-function getProvider(chain: string) {
+function getProvider(chain: string, chains: ChainConfig[]) {
   const env = getEnv()
   const config = chains.find((c) => c.name === chain)
   assert(config, `Unsupported chain: ${chain}`)
@@ -370,7 +382,7 @@ function getCoingeckoClient() {
   return coingeckoClient
 }
 
-function getEtherscanClient(chain: string) {
+function getEtherscanClient(chain: string, chains: ChainConfig[]) {
   const env = getEnv()
   const config = chains.find((c) => c.name === chain)
 

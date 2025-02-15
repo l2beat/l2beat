@@ -47,7 +47,7 @@ export const zora: Layer2 = opStackL2({
   chainConfig: {
     name: 'zora',
     chainId: 7777777,
-    explorerUrl: 'https://explorer.zora.energy/',
+    explorerUrl: 'https://explorer.zora.energy',
     explorerApi: {
       url: 'https://explorer.zora.energy/api',
       type: 'blockscout',

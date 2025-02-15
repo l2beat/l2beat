@@ -1,5 +1,6 @@
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { getTokenBreakdown } from './utils/get-token-breakdown'
 import { getTvsBreakdown } from './utils/get-tvs-breakdown'
 import { toTvsProject } from './utils/get-tvs-projects'
@@ -14,7 +15,10 @@ export async function getTvsProjectStats(project: Layer2 | Layer3 | Bridge) {
 
 type TvsProjectStats = Awaited<ReturnType<typeof getTvsProjectStatsData>>
 async function getTvsProjectStatsData(project: Layer2 | Layer3 | Bridge) {
-  const tvsProject = toTvsProject(project)
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const tvsProject = toTvsProject(project, chains)
   const tvsValues = await getTvsValuesForProjects([tvsProject], '7d')
   const projectTvsValues = tvsValues[project.id]
   if (!projectTvsValues) {

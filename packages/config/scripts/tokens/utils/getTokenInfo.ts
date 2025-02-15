@@ -6,8 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
-
-import { ethereum } from '../../../src/chains/ethereum'
+import { MIN_TIMESTAMP_FOR_TVL } from '../../../src/projects/da-beat/ethereum/ethereum'
 import type { ScriptLogger } from './ScriptLogger'
 import { getContractCreationTimestamp } from './getContractCreationTimestamp'
 
@@ -144,8 +143,7 @@ async function getDeploymentTimestamp(
   )
 
   assert(
-    ethereum.minTimestampForTvl &&
-      contractCreationTimestamp.gt(ethereum.minTimestampForTvl),
+    contractCreationTimestamp.gt(MIN_TIMESTAMP_FOR_TVL),
     'Deployment timestamp looks odd, provide manual override in tokens.jsonc',
   )
 
@@ -163,7 +161,7 @@ async function getCoingeckoListingTimestamp(
     await coingeckoClient.getCoinMarketChartRange(
       coingeckoId,
       'usd',
-      ethereum.minTimestampForTvl ?? new UnixTime(0),
+      MIN_TIMESTAMP_FOR_TVL,
       UnixTime.now(),
     )
 

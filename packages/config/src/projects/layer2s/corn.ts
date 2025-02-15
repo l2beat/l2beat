@@ -83,7 +83,7 @@ export const corn: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'corn',
     chainId: 21000000,
-    explorerUrl: 'https://maizenet-explorer.usecorn.com/',
+    explorerUrl: 'https://maizenet-explorer.usecorn.com',
     explorerApi: {
       url: 'https://maizenet-explorer.usecorn.com/api',
       type: 'blockscout',

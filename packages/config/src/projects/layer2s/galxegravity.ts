@@ -52,7 +52,7 @@ export const galxegravity: Layer2 = orbitStackL2({
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
-    explorerUrl: 'https://gscan.xyz/',
+    explorerUrl: 'https://gscan.xyz',
     explorerApi: {
       url: 'https://explorer.gravity.xyz/api',
       type: 'blockscout',

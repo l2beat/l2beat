@@ -143,7 +143,7 @@ export const scroll: Layer2 = {
   chainConfig: {
     name: 'scroll',
     chainId: 534352,
-    explorerUrl: 'https://scrollscan.com/',
+    explorerUrl: 'https://scrollscan.com',
     explorerApi: {
       url: 'https://api.scrollscan.com/api',
       type: 'etherscan',

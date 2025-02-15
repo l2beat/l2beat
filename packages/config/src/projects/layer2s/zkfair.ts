@@ -151,7 +151,7 @@ export const zkfair: Layer2 = {
   chainConfig: {
     name: 'zkfair',
     chainId: 42766,
-    explorerUrl: 'https://scan.zkfair.io/',
+    explorerUrl: 'https://scan.zkfair.io',
     explorerApi: {
       url: 'https://scan.zkfair.io/api/',
       type: 'blockscout',

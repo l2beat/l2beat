@@ -455,7 +455,7 @@ export const ink: Layer2 = {
     name: 'ink',
     chainId: 57073,
     blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
-    explorerUrl: 'https://explorer.inkonchain.com/',
+    explorerUrl: 'https://explorer.inkonchain.com',
     explorerApi: {
       url: 'https://explorer.inkonchain.com/api',
       type: 'blockscout',
