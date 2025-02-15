@@ -106,10 +106,7 @@ function saveToJson(fileName: string, file: Buffer) {
       return obj
     }, {})
 
-  writeFileSync(
-    tinifiedLogosFile,
-    JSON.stringify(sortedLogos, null, 2) + '\n',
-  )
+  writeFileSync(tinifiedLogosFile, JSON.stringify(sortedLogos, null, 2) + '\n')
 }
 
 function getHash(file: Buffer) {
