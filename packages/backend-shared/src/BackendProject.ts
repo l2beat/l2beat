@@ -69,7 +69,7 @@ export function toBackendProject(
   throw new Error(`Unknown project type: ${project}`)
 }
 
-export function layer2ToBackendProject(layer2: Layer2): BackendProject {
+function layer2ToBackendProject(layer2: Layer2): BackendProject {
   return {
     projectId: layer2.id,
     slug: layer2.display.slug,
@@ -88,7 +88,7 @@ export function layer2ToBackendProject(layer2: Layer2): BackendProject {
   }
 }
 
-export function bridgeToBackendProject(bridge: Bridge): BackendProject {
+function bridgeToBackendProject(bridge: Bridge): BackendProject {
   return {
     projectId: bridge.id,
     slug: bridge.display.slug,
@@ -181,7 +181,7 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-export function layer3ToBackendProject(layer3: Layer3): BackendProject {
+function layer3ToBackendProject(layer3: Layer3): BackendProject {
   return {
     projectId: layer3.id,
     slug: layer3.display.slug,

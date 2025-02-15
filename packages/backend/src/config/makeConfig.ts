@@ -1,8 +1,5 @@
 import { join } from 'path'
-import {
-  bridgeToBackendProject,
-  layer2ToBackendProject,
-} from '@l2beat/backend-shared'
+import { toBackendProject } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
 import { ProjectService, bridges, chains, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
@@ -49,9 +46,8 @@ export async function makeConfig(
   return {
     name,
     isReadonly,
-    projects: layer2s
-      .map(layer2ToBackendProject)
-      .concat(bridges.map(bridgeToBackendProject)),
+    // (sz-piotr) why are layer3s omitted here?
+    projects: [...layer2s, ...bridges].map(toBackendProject),
     clock: {
       minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,

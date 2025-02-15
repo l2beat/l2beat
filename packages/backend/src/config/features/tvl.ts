@@ -1,10 +1,8 @@
 import {
-  bridgeToBackendProject,
   chainConverter,
   getTvlAmountsConfig,
   getTvlPricesConfig,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
+  toBackendProject,
 } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
@@ -19,10 +17,7 @@ export function getTvlConfig(
   env: Env,
   minTimestampOverride?: UnixTime,
 ): TvlConfig {
-  const projects = layer2s
-    .map(layer2ToBackendProject)
-    .concat(bridges.map(bridgeToBackendProject))
-    .concat(layer3s.map(layer3ToBackendProject))
+  const projects = [...layer2s, ...layer3s, ...bridges].map(toBackendProject)
 
   const sharedEscrowsChains = layer2s
     .filter((c) =>
