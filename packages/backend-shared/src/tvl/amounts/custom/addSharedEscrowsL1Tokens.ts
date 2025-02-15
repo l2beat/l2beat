@@ -1,4 +1,4 @@
-import { chains } from '@l2beat/config'
+import type { ChainConfig } from '@l2beat/config'
 import { assert, type AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
 import type { BackendProject } from '../../../BackendProject'
 import { getEscrowEntry } from '../escrow'
@@ -6,6 +6,7 @@ import { getEscrowEntry } from '../escrow'
 export function addSharedEscrowsL1Tokens(
   projects: BackendProject[],
   entries: AmountConfigEntry[],
+  chains: ChainConfig[],
 ): AmountConfigEntry[] {
   const projectsWithL1Tokens = projects.filter(projectHasL1Tokens)
   if (projectsWithL1Tokens.length === 0) {
