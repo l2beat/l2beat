@@ -21,13 +21,13 @@ export function runConfigAdjustments() {
     .map((x) => x.chainConfig)
     .filter((x) => x !== undefined)
 
-  layer2s.forEach((p) => adjustEscrows(p, chains))
-  layer3s.forEach((p) => adjustEscrows(p, chains))
-  bridges.forEach((p) => adjustEscrows(p, chains))
+  layer2s.forEach((p) => adjustLegacy(p, chains))
+  layer3s.forEach((p) => adjustLegacy(p, chains))
+  bridges.forEach((p) => adjustLegacy(p, chains))
   refactored.forEach((p) => adjustRefactored(p, chains))
 }
 
-function adjustEscrows(
+function adjustLegacy(
   project: Layer2 | Layer3 | Bridge,
   chains: ChainConfig[],
 ) {
@@ -36,6 +36,7 @@ function adjustEscrows(
     assert(chain, `Missing chain: ${escrow.chain}`)
     escrow.chainId = chain?.chainId
   }
+  adjustContracts(project, chains)
 }
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
@@ -47,6 +48,23 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       const chain = chains.find((x) => x.chainId === verifier.chainId)
       assert(chain?.explorerUrl, `Missing explorerUrl for: ${verifier.chainId}`)
       verifier.url = `${chain.explorerUrl}/address/${verifier.contractAddress}#code`
+    }
+  }
+  adjustContracts(project, chains)
+}
+
+function adjustContracts(
+  project: Layer2 | Layer3 | Bridge | BaseProject,
+  chains: ChainConfig[],
+) {
+  if (project.contracts) {
+    for (const chainName in project.contracts.addresses) {
+      for (const contract of project.contracts.addresses[chainName]) {
+        const chain = chains.find((x) => x.name === contract.chain)
+        assert(chain, `Missing chain: ${contract.chain}`)
+        assert(chain.explorerUrl, `Missing explorer url: ${chain.name}`)
+        contract.url = `${chain.explorerUrl}/address/${contract.address}#code`
+      }
     }
   }
 }

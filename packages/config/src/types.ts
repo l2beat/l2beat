@@ -1090,6 +1090,8 @@ export interface ProjectContract {
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
+  /** Explorer url for the code of that contract. Set automatically */
+  url?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
