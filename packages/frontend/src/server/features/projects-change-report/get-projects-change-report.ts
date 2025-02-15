@@ -1,4 +1,3 @@
-import { chains } from '@l2beat/config'
 import type { FieldDiff } from '@l2beat/discovery'
 import { diffDiscovery } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery-types'

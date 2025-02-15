@@ -12,7 +12,6 @@ import {
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
-import { chainConverter } from '../breakdown/chain-converter'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -183,7 +182,7 @@ function toDisplayableToken(
     iconUrl,
     name,
     symbol,
-    chain: chainConverter.toName(token.chainId),
+    chain: token.chainName,
     source,
   }
 }

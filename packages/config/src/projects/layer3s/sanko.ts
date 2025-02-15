@@ -45,7 +45,7 @@ export const sanko: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'sanko',
     chainId: 1996,
-    explorerUrl: 'https://explorer.sanko.xyz/',
+    explorerUrl: 'https://explorer.sanko.xyz',
     explorerApi: {
       url: 'https://explorer.sanko.xyz/api',
       type: 'blockscout',

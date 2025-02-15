@@ -45,6 +45,11 @@ function toToken(generated: GeneratedToken): Token {
   return {
     id: AssetId.create(chain.name, generated.address),
     ...generated,
+    chainName: chain.name,
+    url:
+      generated.address && chain.explorerUrl
+        ? `${chain.explorerUrl}/address/${generated.address}`
+        : undefined,
     sinceTimestamp,
   }
 }

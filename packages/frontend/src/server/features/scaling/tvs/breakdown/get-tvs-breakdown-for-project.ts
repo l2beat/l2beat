@@ -59,7 +59,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
               escrowAddress: EthereumAddress.random(),
             },
           ],
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -83,7 +83,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
               escrowAddress: EthereumAddress.random(),
             },
           ],
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -97,7 +97,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           chainId: ChainId.ETHEREUM,
           usdValue: 100,
           usdPrice: '1',
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
@@ -111,7 +111,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           chainId: ChainId.ETHEREUM,
           usdValue: 100,
           usdPrice: '1',
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',

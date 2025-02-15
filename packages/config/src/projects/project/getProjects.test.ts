@@ -165,6 +165,14 @@ describe('getProjects', () => {
       }
     })
 
+    it('every explorerUrl does not end with /', () => {
+      for (const chain of chains) {
+        if (chain.explorerUrl) {
+          expect(chain.explorerUrl).toMatchRegex(/\w$/)
+        }
+      }
+    })
+
     describe('every multicall3 contract has the same address', () => {
       const address = EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',

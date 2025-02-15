@@ -84,7 +84,7 @@ export const silicon: Layer2 = polygonCDKStack({
   chainConfig: {
     name: 'silicon',
     chainId: 2355,
-    explorerUrl: 'https://scope.silicon.network/',
+    explorerUrl: 'https://scope.silicon.network',
     minTimestampForTvl: new UnixTime(1724183531),
   },
   nonTemplateTechnology: {

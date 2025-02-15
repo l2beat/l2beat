@@ -13,7 +13,6 @@ import {
   assertUnreachable,
 } from '@l2beat/shared-pure'
 import { assignTokenMetaToBreakdown } from './assign-token-meta-to-breakdown'
-import { chainConverter } from './chain-converter'
 import { getLatestAmountForConfigurations } from './get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from './get-latest-price-for-configurations'
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
