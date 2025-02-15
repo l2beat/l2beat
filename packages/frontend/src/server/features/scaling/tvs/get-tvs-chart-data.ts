@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getEthPrices } from './utils/get-eth-prices'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
@@ -57,7 +58,14 @@ export const getCachedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const tvsProjects = getTvsProjects(projectsFilter, previewRecategorisation)
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const tvsProjects = getTvsProjects(
+      projectsFilter,
+      chains,
+      previewRecategorisation,
+    )
     const [ethPrices, values] = await Promise.all([
       getEthPrices(),
       getTvsValuesForProjects(tvsProjects, range),

@@ -1,4 +1,5 @@
 import type { ConfigMapping } from '@l2beat/backend-shared'
+import type { ChainConfig } from '@l2beat/config'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type {
   AmountConfigEntry,
@@ -8,6 +9,8 @@ import type {
 } from '@l2beat/shared-pure'
 import {
   assert,
+  ChainConverter,
+  ChainId,
   UnixTime,
   asNumber,
   assertUnreachable,
@@ -18,8 +21,15 @@ import { getLatestPriceForConfigurations } from './get-latest-price-for-configur
 import { recordToSortedBreakdown } from './record-to-sorted-breakdown'
 import type { BreakdownRecord, CanonicalAssetBreakdownData } from './types'
 
-export function getTvsBreakdown(configMapping: ConfigMapping) {
+export function getTvsBreakdown(
+  configMapping: ConfigMapping,
+  chains: ChainConfig[],
+) {
   return async function (projectId: ProjectId, target?: UnixTime) {
+    const chainConverter = new ChainConverter(
+      chains.map((c) => ({ name: c.name, chainId: ChainId(c.chainId) })),
+    )
+
     const targetTimestamp =
       target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
