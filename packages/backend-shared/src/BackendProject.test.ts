@@ -14,7 +14,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { toBackendProject, mapTokens } from './BackendProject'
+import { mapTokens, toBackendProject } from './BackendProject'
 
 describe('BackendProject', () => {
   describe(mapTokens.name, () => {

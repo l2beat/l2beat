@@ -16,14 +16,14 @@ import {
   type TrackedTxConfigEntry,
   createTrackedTxId,
 } from '@l2beat/shared'
-import type {
-  EthereumAddress,
-  ProjectId,
-  Token,
-  TokenBridgedUsing,
-  UnixTime,
+import {
+  assert,
+  type EthereumAddress,
+  type ProjectId,
+  type Token,
+  type TokenBridgedUsing,
+  type UnixTime,
 } from '@l2beat/shared-pure'
-import { chainConverter } from './chainConverter'
 
 export interface BackendProject {
   projectId: ProjectId
@@ -193,7 +193,8 @@ function layer3ToBackendProject(layer3: Layer3): BackendProject {
 }
 
 function toProjectEscrow(escrow: ProjectEscrow): BackendProjectEscrow {
-  const chainId = chainConverter.toChainId(escrow.chain)
+  const chainId = escrow.chainId
+  assert(chainId, 'Missing escrow chainId')
 
   const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
 

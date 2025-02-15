@@ -1,12 +1,11 @@
 import {
-  chainConverter,
   getTvlAmountsConfig,
   getTvlPricesConfig,
   toBackendProject,
 } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import type { TvlConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
@@ -41,7 +40,9 @@ export function getTvlConfig(
     amounts: getTvlAmountsConfig(projects),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,
-    chainConverter,
+    chainConverter: new ChainConverter(
+      chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    ),
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
       100,
