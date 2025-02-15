@@ -186,6 +186,8 @@ export interface ScalingProjectDisplay {
 
 export interface ProjectEscrow {
   chain: string
+  /** Automatically set in config based on chain name. */
+  chainId?: number
   /** Address of the escrow. Use etherscan to verify its correctness. */
   address: EthereumAddress
   /** Should use name of the contract for escrow name */
