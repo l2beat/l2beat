@@ -14,6 +14,7 @@ import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
   type DailyReminderChainEntry,
   UpdateNotifier,
@@ -42,11 +43,18 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -67,6 +75,7 @@ describe(UpdateNotifier.name, () => {
         ChainId.ETHEREUM,
         dependents,
         [],
+        UnixTime.now(),
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
@@ -114,6 +123,10 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
         findLatestId: async () => undefined,
@@ -123,10 +136,13 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -155,6 +171,7 @@ describe(UpdateNotifier.name, () => {
         ChainId.ETHEREUM,
         dependents,
         [],
+        UnixTime.now(),
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
@@ -206,6 +223,10 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
         findLatestId: async () => undefined,
@@ -215,10 +236,13 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(0)
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -241,6 +265,7 @@ describe(UpdateNotifier.name, () => {
         ChainId.ETHEREUM,
         dependents,
         [],
+        UnixTime.now(),
       )
 
       const internalMessage = [
@@ -292,6 +317,10 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
         findLatestId: async () => 0,
@@ -300,10 +329,13 @@ describe(UpdateNotifier.name, () => {
       updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        mockObject<Database>({
+          updateNotifier: updateNotifierRepository,
+        }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const project = 'project-a'
@@ -324,6 +356,7 @@ describe(UpdateNotifier.name, () => {
         ChainId.ETHEREUM,
         dependents,
         [],
+        UnixTime.now(),
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
@@ -358,6 +391,10 @@ describe(UpdateNotifier.name, () => {
         insert: async () => 0,
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
@@ -367,6 +404,7 @@ describe(UpdateNotifier.name, () => {
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {
@@ -443,6 +481,10 @@ describe(UpdateNotifier.name, () => {
         },
       })
 
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
+
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
         insert: async () => 0,
       })
@@ -458,6 +500,7 @@ describe(UpdateNotifier.name, () => {
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {
@@ -498,11 +541,15 @@ describe(UpdateNotifier.name, () => {
         insert: async () => 0,
         findLatestId: async () => undefined,
       })
+      const updateMessagesService = mockObject<UpdateMessagesService>({
+        storeAndPrune: async () => {},
+      })
       const updateNotifier = new UpdateNotifier(
         mockObject<Database>({ updateNotifier: updateNotifierRepository }),
         discordClient,
         chainConverter,
         Logger.SILENT,
+        updateMessagesService,
       )
 
       const reminders = {}

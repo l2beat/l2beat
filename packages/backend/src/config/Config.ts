@@ -172,6 +172,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
+  readonly updateMessagesRetentionPeriodDays: number
 }
 
 export interface VerifiersConfig {
