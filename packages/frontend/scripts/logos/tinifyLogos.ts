@@ -98,9 +98,17 @@ function getTinifiedLogos() {
 function saveToJson(fileName: string, file: Buffer) {
   tinifiedLogos[fileName] = getHash(file)
 
+  // Sort the object by keys before saving
+  const sortedLogos = Object.keys(tinifiedLogos)
+    .sort()
+    .reduce((obj: Record<string, string>, key) => {
+      obj[key] = tinifiedLogos[key]!
+      return obj
+    }, {})
+
   writeFileSync(
     tinifiedLogosFile,
-    JSON.stringify(tinifiedLogos, null, 2) + '\n',
+    JSON.stringify(sortedLogos, null, 2) + '\n',
   )
 }
 
