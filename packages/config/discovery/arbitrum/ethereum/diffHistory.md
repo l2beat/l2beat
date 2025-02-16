@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7f553e5e04247f485fbcd029c589e0be82c5e2df
+Generated with discovered.json: 0xe6ef8a8e9fe2b6f6cfd398a8509913d15a343e0b
 
-# Diff at Fri, 14 Feb 2025 13:40:41 GMT:
+# Diff at Sun, 16 Feb 2025 12:02:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 21815910
@@ -33,6 +33,12 @@ Provide description of changes. This section will be preserved.
 -        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
 +        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17)
+    +++ description: None
 ```
 
 ```diff
@@ -72,6 +78,12 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6)
+    +++ description: None
+```
+
+```diff
     contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       directlyReceivedPermissions.6.from:
@@ -81,6 +93,12 @@ Provide description of changes. This section will be preserved.
 -        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
 +        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3)
+    +++ description: None
 ```
 
 ```diff
@@ -105,12 +123,24 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061)
+    +++ description: None
+```
+
+```diff
     contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
     +++ description: None
       directlyReceivedPermissions.7.from:
 -        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
 +        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78)
+    +++ description: None
 ```
 
 ```diff
@@ -143,6 +173,18 @@ Provide description of changes. This section will be preserved.
 -   Status: DELETED
     contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35)
     +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0)
+    +++ description: None
 ```
 
 ```diff
@@ -214,6 +256,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 -   Status: DELETED
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
     contract OneStepProverHostIo (0x8D78382913467Cd25374C75BA918b0A723Bc2544)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
 ```
@@ -228,6 +276,30 @@ Provide description of changes. This section will be preserved.
 -   Status: DELETED
     contract OneStepProofEntry (0xa328BAF257A937b7934429a5d8458d98693C6FC7)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c)
+    +++ description: None
 ```
 
 ```diff
@@ -277,6 +349,12 @@ Provide description of changes. This section will be preserved.
 -        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
 +        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b)
+    +++ description: None
 ```
 
 ```diff
@@ -332,6 +410,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 .../{.flat@21815910 => .flat}/Bridge/Bridge.sol    |  579 ++-
  .../ChallengeManager.sol => /dev/null              |  994 -----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
  .../EdgeChallengeManager/EdgeChallengeManager.sol  | 3193 ++++++++++++++
  .../TransparentUpgradeableProxy.p.sol              |   18 +-
  .../{.flat@21815910 => .flat}/Inbox/Inbox.sol      | 1450 +++---
@@ -342,133 +421,32 @@ Provide description of changes. This section will be preserved.
  .../OneStepProverMemory.sol                        |  421 +-
  .../{.flat@21815910 => .flat}/Outbox/Outbox.sol    |  332 +-
  .../ethereum/.flat/ParentToChildRewardRouter.sol   |  514 +++
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  132 -
+ .../dev/null                                       |  140 -
  .../RollupEventInbox/RollupEventInbox.sol          |  115 +-
  .../RollupProxy/RollupAdminLogic.1.sol             | 2739 ++++++------
  .../RollupProxy/RollupProxy.p.sol                  |  106 +-
  .../RollupProxy/RollupUserLogic.2.sol              | 4620 ++++++++++----------
  .../SequencerInbox/SequencerInbox.sol              | 1008 +++--
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 --
+ .../Validator/Validator.sol => /dev/null           |  554 ---
+ .../GnosisSafe.sol => /dev/null                    |  953 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
  .../.flat@21815910/ValidatorUtils.sol => /dev/null |  323 --
- 18 files changed, 11011 insertions(+), 7303 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 21815910 (main branch discovery), not current.
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78)
-    +++ description: None
-```
-
-```diff
-    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      issuedPermissions.17:
--        {"permission":"validate","to":"0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.16:
--        {"permission":"validate","to":"0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.15:
--        {"permission":"validate","to":"0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.14:
--        {"permission":"validate","to":"0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.13:
--        {"permission":"validate","to":"0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.12:
--        {"permission":"validate","to":"0xAB1A39332e934300eBCc57B5f95cA90631a347FF","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.11:
--        {"permission":"validate","to":"0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.10:
--        {"permission":"validate","to":"0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.9:
--        {"permission":"validate","to":"0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.8:
--        {"permission":"validate","to":"0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.7:
--        {"permission":"validate","to":"0x610Aa279989F440820e14248BD3879B148717974","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.6:
--        {"permission":"validate","to":"0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.5:
--        {"permission":"validate","to":"0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      issuedPermissions.4:
--        {"permission":"validate","to":"0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
-      values.validators:
--        ["0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","0x610Aa279989F440820e14248BD3879B148717974","0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","0xAB1A39332e934300eBCc57B5f95cA90631a347FF","0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
-    }
-```
-
-```diff
--   Status: DELETED
-    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b)
-    +++ description: None
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ 38 files changed, 11011 insertions(+), 17110 deletions(-)
 ```
 
 Generated with discovered.json: 0x199f45c208ed1e8e6ec0d90b461838a057d5fa5e

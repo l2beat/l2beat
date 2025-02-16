@@ -8,7 +8,11 @@
     "latestConfirmed",
     "latestNodeCreated"
   ],
-  "ignoreRelatives": ["validatorWalletCreator", "rollupEventInbox", "stakeToken"],
+  "ignoreRelatives": [
+    "validatorWalletCreator",
+    "rollupEventInbox",
+    "stakeToken"
+  ],
   "fields": {
     "owner": {
       "target": {
@@ -18,20 +22,6 @@
             "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
           }
         ]
-      }
-    },
-    "validators": {
-      "target": {
-        "permissions": [
-          {
-            "type": "validate",
-            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-          }
-        ]
-      },
-      "handler": {
-        "type": "arbitrumActors",
-        "actorType": "validator"
       }
     },
     "minimumAssertionPeriod": {

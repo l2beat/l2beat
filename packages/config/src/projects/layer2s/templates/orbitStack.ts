@@ -379,10 +379,6 @@ function orbitStackCommon(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
-  const currentRequiredStake = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'currentRequiredStake',
-  )
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
@@ -575,12 +571,19 @@ function orbitStackCommon(
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
-      defaultStateValidation(
-        minimumAssertionPeriod,
-        currentRequiredStake,
-        challengePeriodSeconds,
-        existFastConfirmer,
-      ),
+      (() => {
+        const currentRequiredStake =
+          templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'currentRequiredStake',
+          )
+        return defaultStateValidation(
+          minimumAssertionPeriod,
+          currentRequiredStake,
+          challengePeriodSeconds,
+          existFastConfirmer,
+        )
+      })(),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
@@ -1140,10 +1143,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               'validatorWhitelistDisabled',
             )
           if (validatorWhitelistDisabled) {
-            console.log('A')
             return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
           }
-          console.log(validatorWhitelistDisabled)
           const validatorAfkBlocks =
             templateVars.discovery.getContractValue<number>(
               'RollupProxy',
