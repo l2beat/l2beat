@@ -20,6 +20,20 @@
         ]
       }
     },
+    "validators": {
+      "target": {
+        "permissions": [
+          {
+            "type": "validate",
+            "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          }
+        ]
+      },
+      "handler": {
+        "type": "arbitrumActors",
+        "actorType": "validator"
+      }
+    },
     "minimumAssertionPeriod": {
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
     },
