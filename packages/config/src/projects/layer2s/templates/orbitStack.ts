@@ -379,10 +379,6 @@ function orbitStackCommon(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
-  const currentRequiredStake = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'currentRequiredStake',
-  )
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
@@ -575,12 +571,19 @@ function orbitStackCommon(
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
-      defaultStateValidation(
-        minimumAssertionPeriod,
-        currentRequiredStake,
-        challengePeriodSeconds,
-        existFastConfirmer,
-      ),
+      (() => {
+        const currentRequiredStake =
+          templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'currentRequiredStake',
+          )
+        return defaultStateValidation(
+          minimumAssertionPeriod,
+          currentRequiredStake,
+          challengePeriodSeconds,
+          existFastConfirmer,
+        )
+      })(),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
@@ -925,12 +928,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const challengePeriodSeconds = challengePeriodBlocks * assumedBlockTime
 
-  const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
-  )
-  const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
-
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
@@ -1137,14 +1134,33 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),
       },
-      proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
-        ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-          challengePeriodSeconds + validatorAfkTimeSeconds,
-        ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-        secondLine: formatDelay(
-          challengePeriodSeconds + validatorAfkTimeSeconds,
-        ),
-      },
+      proposerFailure:
+        templateVars.nonTemplateRiskView?.proposerFailure ??
+        (() => {
+          const validatorWhitelistDisabled =
+            templateVars.discovery.getContractValue<boolean>(
+              'RollupProxy',
+              'validatorWhitelistDisabled',
+            )
+          if (validatorWhitelistDisabled) {
+            return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+          }
+          const validatorAfkBlocks =
+            templateVars.discovery.getContractValue<number>(
+              'RollupProxy',
+              'VALIDATOR_AFK_BLOCKS',
+            )
+          const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
+
+          return {
+            ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+              challengePeriodSeconds + validatorAfkTimeSeconds,
+            ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+            secondLine: formatDelay(
+              challengePeriodSeconds + validatorAfkTimeSeconds,
+            ),
+          }
+        })(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
