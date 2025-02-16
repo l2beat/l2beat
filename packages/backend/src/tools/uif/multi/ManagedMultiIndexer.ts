@@ -44,6 +44,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       saved,
       this.options.configurations,
       this.options.serializeConfiguration,
+      this.options.configurationsTrimmingDisabled,
     )
     await this.updateSavedConfigurations(state.diff)
     this.ranges = toRanges(state.configurations)
@@ -54,8 +55,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     if (
       diff.toAdd.length === 0 &&
       diff.toUpdate.length === 0 &&
-      diff.toDelete.length === 0 &&
-      diff.toRemoveData.length === 0
+      diff.toDelete.length === 0
     ) {
       return
     }
@@ -83,6 +83,14 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         })
       }
 
+      if (diff.toTrimDataAfterUpdate.length > 0) {
+        await this.removeData(diff.toTrimDataAfterUpdate)
+      }
+
+      if (diff.toWipeDataAfterUpdate.length > 0) {
+        await this.removeData(diff.toWipeDataAfterUpdate)
+      }
+
       if (diff.toDelete.length > 0) {
         await this.options.indexerService.deleteConfigurations(
           this.indexerId,
@@ -93,8 +101,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         })
       }
 
-      if (diff.toRemoveData.length > 0) {
-        await this.removeData(diff.toRemoveData)
+      if (diff.toWipeDataAfterDelete.length > 0) {
+        await this.removeData(diff.toWipeDataAfterDelete)
       }
     })
   }
