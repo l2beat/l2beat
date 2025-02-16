@@ -16,7 +16,9 @@ export const tea: Layer2 = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://tea.xyz/assam'],
-      apps: ['https://tea-assam-fo46m5b966-32f74f2af939fed4.testnets.rollbridge.app'],
+      apps: [
+        'https://tea-assam-fo46m5b966-32f74f2af939fed4.testnets.rollbridge.app',
+      ],
       explorers: ['https://assam.tea.xyz/'],
       documentation: ['https://docs.tea.xyz/tea'],
       repositories: ['https://github.com/teaxyz'],
