@@ -387,6 +387,8 @@ function getDaTracking(
     'SystemConfig',
     'sequencerInbox',
   )
+
+  // TODO: update to deployment block number from discovery
   const inboxStartBlock = templateVars.discovery.getContractValue<number>(
     'SystemConfig',
     'startBlock',
@@ -409,6 +411,7 @@ function getDaTracking(
       ? {
           type: 'celestia',
           daLayer: ProjectId('celestia'),
+          // TODO: update to value from discovery
           sinceBlock: templateVars.celestiaDa.sinceBlock,
           namespace: templateVars.celestiaDa.namespace,
         }
@@ -416,6 +419,7 @@ function getDaTracking(
         ? {
             type: 'avail',
             daLayer: ProjectId('avail'),
+            // TODO: update to value from discovery
             sinceBlock: templateVars.availDa.sinceBlock,
             appId: templateVars.availDa.appId,
           }
