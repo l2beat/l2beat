@@ -1230,10 +1230,27 @@
       }
     },
     {
+      "name": "BeaconKintoWallet",
+      "address": "0x87f0eE85bF3198654900a422832157abBba30828",
+      "sourceHashes": [
+        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
+      ],
+      "sinceTimestamp": 1703803644,
+      "values": {
+        "$immutable": true,
+        "implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
+        "owner": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      },
+      "derivedName": "UpgradeableBeacon"
+    },
+    {
       "name": "",
       "address": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
       "unverified": true,
+      "template": "orbitstack/UpgradeExecutor",
       "proxyType": "EIP1967 proxy",
+      "displayName": "UpgradeExecutor",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1280,8 +1297,27 @@
             ["0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00"]
           ]
         ],
-        "$upgradeCount": 2
-      }
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": {
+            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+            "members": ["0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"]
+          },
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": {
+            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+            "members": [
+              "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
+              "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B",
+              "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+            ]
+          }
+        }
+      },
+      "errors": { "executors": "Processing error occurred." }
     },
     {
       "name": "KintoWalletFactory",
@@ -1625,8 +1661,8 @@
           "severity": "HIGH",
           "description": "List of scheduled operations."
         },
-        "AdditionalRoles": {
-          "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."
+        "AdditionalRoleLabels": {
+          "description": "Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."
         },
         "RolesGranted": { "description": "List of roles granted to accounts." }
       },
@@ -1962,6 +1998,7 @@
       "name": "KintoFoundation",
       "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
     },
+    { "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5" },
     { "address": "0x0C1df30B4576A1A94D9528854516D4d425Cf9323" },
     { "address": "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4" },
     { "address": "0x4181803232280371E02a875F51515BE57B215231" },
@@ -1978,6 +2015,7 @@
       ]
     },
     { "address": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c" },
+    { "address": "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B" },
     {
       "address": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "severity": "MEDIUM",
@@ -2690,6 +2728,16 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x87f0eE85bF3198654900a422832157abBba30828": [
+      "constructor(address implementation_) payable",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3246,6 +3294,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
 }
