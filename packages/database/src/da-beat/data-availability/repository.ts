@@ -22,9 +22,11 @@ export class DataAvailabilityRepository extends BaseRepository {
         .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
-            totalSize: eb.ref('excluded.totalSize'),
-          })),
+          cb
+            .columns(['timestamp', 'daLayer', 'projectId'])
+            .doUpdateSet((eb) => ({
+              totalSize: eb.ref('excluded.totalSize'),
+            })),
         )
         .execute()
     })

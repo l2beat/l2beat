@@ -11,8 +11,17 @@ describe('splitIntoSubfiles', () => {
   const leftDir = path.join(testDir, 'left')
   const rightDir = path.join(testDir, 'right')
   let config: Configuration
+  let originalConsole: {
+    log: typeof console.log
+    error: typeof console.error
+  } = {
+    log: console.log,
+    error: console.error,
+  }
 
   before(() => {
+    originalConsole = { log: console.log, error: console.error }
+
     // Set up test directories
     fs.mkdirSync(leftDir, { recursive: true })
     fs.mkdirSync(rightDir, { recursive: true })
@@ -29,10 +38,15 @@ describe('splitIntoSubfiles', () => {
       difftasticPath: 'difft',
       context: 3,
     }
+
+    console.error = () => {}
+    console.log = () => {}
   })
 
   after(() => {
     mockFs.restore()
+    console.log = originalConsole.log
+    console.error = originalConsole.error
   })
 
   it('should split Solidity files into subfiles', () => {

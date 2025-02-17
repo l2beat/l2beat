@@ -4,11 +4,12 @@ import { useChartLoading } from './chart-loading-context'
 
 interface Props {
   range: [number, number] | undefined
+  isLoading?: boolean
 }
 
-export function ChartTimeRange({ range }: Props) {
+export function ChartTimeRange({ range, isLoading }: Props) {
   const loading = useChartLoading()
-  if (loading) {
+  if (loading || isLoading) {
     return <Skeleton className="h-5 w-44 lg:h-6 lg:w-52" />
   }
 

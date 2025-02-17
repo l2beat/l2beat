@@ -171,6 +171,7 @@ import { sxt } from './sxt'
 import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { tea } from './tea'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
@@ -373,6 +374,7 @@ export const layer2s: Layer2[] = [
   sxnetwork,
   taiko,
   tanx,
+  tea,
   telos,
   ten,
   termstructure,
