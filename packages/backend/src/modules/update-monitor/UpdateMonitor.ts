@@ -212,6 +212,7 @@ export class UpdateMonitor {
       projectConfig,
       blockNumber,
       runner.chain,
+      timestamp,
     )
 
     await this.db.updateMonitor.upsert({
@@ -289,6 +290,7 @@ export class UpdateMonitor {
     projectConfig: DiscoveryConfig,
     blockNumber: number,
     chain: string,
+    timestamp: UnixTime,
   ) {
     if (diff.length > 0) {
       const dependents = findDependents(
@@ -309,6 +311,7 @@ export class UpdateMonitor {
         this.chainConverter.toChainId(chain),
         dependents,
         unknownContracts,
+        timestamp,
       )
     }
   }

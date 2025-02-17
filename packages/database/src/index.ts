@@ -9,6 +9,7 @@ export type { StakeRecord } from './da-beat/stake/entity'
 export type { DiscoveryCacheRecord } from './discovery/discovery-cache/entity'
 export type { UpdateMonitorRecord } from './discovery/update-monitor/entity'
 export type { UpdateNotifierRecord } from './discovery/update-notifier/entity'
+export type { UpdateMessageRecord } from './discovery/update-message/entity'
 export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
 export type {
   AggregatedLivenessRange,
