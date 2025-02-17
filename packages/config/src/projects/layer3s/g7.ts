@@ -1,6 +1,5 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
@@ -59,8 +58,8 @@ export const g7: Layer3 = orbitStackL3({
   milestones: [
     {
       title: 'G7 Mainnet launch',
-      url: 'https://x.com/G7_DAO/status/1886897963353694319', 
-      date: '2025-02-04T00:00:00Z', 
+      url: 'https://x.com/G7_DAO/status/1886897963353694319',
+      date: '2025-02-04T00:00:00Z',
       description: 'G7 Network Mainnet is live.',
       type: 'general',
     },
