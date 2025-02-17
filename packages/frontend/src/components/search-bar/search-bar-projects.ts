@@ -17,7 +17,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     ],
   })
 
-  const tvs = await get7dTokenBreakdown({ type: 'layer2' })
+  const tvs = await get7dTokenBreakdown({ type: 'all' })
 
   return projects.flatMap((p): SearchBarProject[] => {
     const results: SearchBarProject[] = []
