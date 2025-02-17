@@ -33,14 +33,13 @@ interface Props {
   milestones: Milestone[] | undefined
 }
 
-export function TvsChart({ data, unit, isLoading, milestones }: Props) {
-  const chartConfig = {
-    value: {
-      label: unit.toUpperCase(),
-      color: 'hsl(var(--indicator-rollups))',
-    },
-  } satisfies ChartConfig
+const chartConfig = {
+  value: {
+    color: 'hsl(var(--indicator-rollups))',
+  },
+} satisfies ChartConfig
 
+export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   const timestampedMilestones = useMemo(
     () => getTimestampedMilestones(data, milestones ?? []),
     [data, milestones],
@@ -110,7 +109,7 @@ function CustomTooltip({
                     }}
                   />
                   <span className="w-20 leading-none sm:w-fit">
-                    {config.label}
+                    {unit.toUpperCase()}
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
