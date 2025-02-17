@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import type { ChartConfig } from '~/components/core/chart/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
@@ -10,21 +9,6 @@ import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-contro
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { DaAbsoluteThroughputChart } from './da-absolute-throughput-chart'
 import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
-
-const chartConfig = {
-  ethereum: {
-    label: 'Ethereum (blobs)',
-    color: 'hsl(var(--chart-ethereum))',
-  },
-  celestia: {
-    label: 'Celestia (fake)',
-    color: 'hsl(var(--chart-da-celestia))',
-  },
-  avail: {
-    label: 'Avail (fake)',
-    color: 'hsl(var(--chart-da-avail))',
-  },
-} satisfies ChartConfig
 
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
@@ -45,17 +29,9 @@ export function DaThroughputChart() {
         <ChartTimeRange range={chartRange} isLoading={isLoading} />
       </div>
       {metric === 'percentage' ? (
-        <DaPercentageThroughputChart
-          data={data}
-          chartConfig={chartConfig}
-          isLoading={isLoading}
-        />
+        <DaPercentageThroughputChart data={data} isLoading={isLoading} />
       ) : (
-        <DaAbsoluteThroughputChart
-          data={data}
-          chartConfig={chartConfig}
-          isLoading={isLoading}
-        />
+        <DaAbsoluteThroughputChart data={data} isLoading={isLoading} />
       )}
       <div className="flex justify-between">
         <RadioGroup

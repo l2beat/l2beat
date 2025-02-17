@@ -69,7 +69,7 @@ export function StackedTvsChart({
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
-          fill="var(--color-native)"
+          fill={chartConfig.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -78,7 +78,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="external"
-          fill="var(--color-external)"
+          fill={chartConfig.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -87,7 +87,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="canonical"
-          fill="var(--color-canonical)"
+          fill={chartConfig.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"

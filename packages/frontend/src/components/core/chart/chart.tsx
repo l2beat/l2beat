@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 'use client'
 
 import * as React from 'react'
@@ -11,9 +10,6 @@ import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
-
-// Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: '', dark: '.dark' } as const
 
 export type ChartConfig = Record<
   string,
@@ -59,15 +55,12 @@ function ChartContainer<T extends { timestamp: number }>({
   milestones?: Milestone[]
   isLoading?: boolean
 }) {
-  const uniqueId = React.useId()
-  const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
   const hasData = data && data.length > 1
   return (
     <ChartContext.Provider value={{ config }}>
       <div
-        data-chart={chartId}
         ref={ref}
         className={cn(
           'group relative h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
@@ -92,7 +85,6 @@ function ChartContainer<T extends { timestamp: number }>({
         )}
         {...props}
       >
-        <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer>
           {isLoading ? (
             <ChartLoader />
@@ -116,37 +108,6 @@ function ChartContainer<T extends { timestamp: number }>({
   )
 }
 ChartContainer.displayName = 'Chart'
-
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.color,
-  )
-
-  if (!colorConfig.length) {
-    return null
-  }
-
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([_, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color = itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join('\n')}
-}
-`,
-          )
-          .join('\n'),
-      }}
-    />
-  )
-}
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -250,10 +211,4 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
-export {
-  ChartContainer,
-  ChartTooltip,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
-}
+export { ChartContainer, ChartTooltip, ChartLegend, ChartLegendContent }

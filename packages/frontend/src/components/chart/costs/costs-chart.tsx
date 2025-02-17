@@ -78,8 +78,8 @@ export function CostsChart({
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="calldata"
-          stroke="var(--color-calldata)"
-          fill="var(--color-calldata)"
+          stroke={chartConfig.calldata.color}
+          fill={chartConfig.calldata.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -89,8 +89,8 @@ export function CostsChart({
         />
         <Area
           dataKey="blobs"
-          stroke="var(--color-blobs)"
-          fill="var(--color-blobs)"
+          stroke={chartConfig.blobs.color}
+          fill={chartConfig.blobs.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -100,8 +100,8 @@ export function CostsChart({
         />
         <Area
           dataKey="compute"
-          stroke="var(--color-compute)"
-          fill="var(--color-compute)"
+          stroke={chartConfig.compute.color}
+          fill={chartConfig.compute.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -111,8 +111,8 @@ export function CostsChart({
         />
         <Area
           dataKey="overhead"
-          stroke="var(--color-overhead)"
-          fill="var(--color-overhead)"
+          stroke={chartConfig.overhead.color}
+          fill={chartConfig.overhead.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"

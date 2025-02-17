@@ -4,7 +4,6 @@ import { assert } from '@l2beat/shared-pure'
 import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -16,6 +15,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { daChartConfig } from './chart-config'
 
 interface DataPoint {
   timestamp: number
@@ -27,17 +27,12 @@ interface DataPoint {
 interface Props {
   data: DataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaAbsoluteThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   return (
     <ChartContainer
       data={data}
-      config={chartConfig}
+      config={daChartConfig}
       className="mb-2"
       isLoading={isLoading}
     >
@@ -47,21 +42,21 @@ export function DaAbsoluteThroughputChart({
         <Line
           dataKey="ethereum"
           isAnimationActive={false}
-          stroke="var(--color-ethereum)"
+          stroke={daChartConfig.ethereum.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="celestia"
           isAnimationActive={false}
-          stroke="var(--color-celestia)"
+          stroke={daChartConfig.celestia.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="avail"
           isAnimationActive={false}
-          stroke="var(--color-avail)"
+          stroke={daChartConfig.avail.color}
           strokeWidth={2}
           dot={false}
         />

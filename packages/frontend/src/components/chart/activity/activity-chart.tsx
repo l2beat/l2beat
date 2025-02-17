@@ -79,7 +79,7 @@ export function ActivityChart({
       color:
         type === 'ValidiumsAndOptimiums'
           ? 'hsl(var(--chart-validiums-optimiums))'
-          : `hsl(var(--indicator-${type.toLowerCase()}))`,
+          : `hsl(var(--chart-${type.toLowerCase()}))`,
     },
     ethereum: {
       label: 'Ethereum',
@@ -108,7 +108,7 @@ export function ActivityChart({
           isAnimationActive={false}
           activeDot={{
             ...DEFAULT_ACTIVE_DOT,
-            fill: 'var(--color-projects)',
+            fill: chartConfig.projects.color,
           }}
         />
         {showMainnet && (
@@ -122,7 +122,7 @@ export function ActivityChart({
             isAnimationActive={false}
             activeDot={{
               ...DEFAULT_ACTIVE_DOT,
-              fill: 'var(--color-ethereum)',
+              fill: chartConfig.ethereum.color,
             }}
           />
         )}

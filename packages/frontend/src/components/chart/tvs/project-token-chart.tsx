@@ -121,7 +121,7 @@ export function ProjectTokenChart({
           {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
           <Area
             dataKey="value"
-            fill={isBridge ? 'url(#fill)' : 'var(--color-value)'}
+            fill={isBridge ? 'url(#fill)' : chartConfig.value.color}
             fillOpacity={1}
             stroke={isBridge ? 'url(#stroke)' : 'none'}
             strokeWidth={2}

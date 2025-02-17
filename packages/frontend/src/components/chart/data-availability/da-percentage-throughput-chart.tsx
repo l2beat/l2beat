@@ -5,7 +5,6 @@ import { round } from 'lodash'
 import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -17,6 +16,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { daChartConfig } from './chart-config'
 
 interface DataPoint {
   timestamp: number
@@ -28,13 +28,8 @@ interface DataPoint {
 interface Props {
   data: DataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaPercentageThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   const chartData = data?.map((item) => {
     const total = item.ethereum + item.celestia + item.avail
 
@@ -49,7 +44,7 @@ export function DaPercentageThroughputChart({
   return (
     <ChartContainer
       data={chartData}
-      config={chartConfig}
+      config={daChartConfig}
       className="mb-2"
       isLoading={isLoading}
     >
@@ -64,20 +59,20 @@ export function DaPercentageThroughputChart({
         <Bar
           dataKey="ethereum"
           stackId="a"
-          fill="var(--color-ethereum)"
+          fill={daChartConfig.ethereum.color}
           isAnimationActive={false}
         />
 
         <Bar
           dataKey="celestia"
           stackId="a"
-          fill="var(--color-celestia)"
+          fill={daChartConfig.celestia.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="avail"
           stackId="a"
-          fill="var(--color-avail)"
+          fill={daChartConfig.avail.color}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
