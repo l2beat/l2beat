@@ -99,7 +99,7 @@ export const STATE_EXITS_ONLY: TableReadyValue = {
   orderHint: -Infinity,
 }
 
-export function STATE_ARBITRUM_FRAUD_PROOFS(
+export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   nOfChallengers: number,
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
@@ -625,6 +625,23 @@ export function EXIT_WINDOW_NITRO(
   }
 }
 
+export function EXIT_WINDOW_PERMISSIONLESS_BOLD(
+  l2TimelockDelay: number,
+  selfSequencingDelay: number,
+  l1TimelockDelay: number,
+): TableReadyValue {
+  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(l2TimelockDelay)} delay on L2 and a ${formatSeconds(l1TimelockDelay)} delay on L1. Since there is a ${formatSeconds(selfSequencingDelay)} delay to force a tx (forcing the inclusion in the following state update), users have ${formatSeconds(l2TimelockDelay + l1TimelockDelay - selfSequencingDelay)} to exit.`
+  const warning: WarningWithSentiment = {
+    value: 'The Security Council can upgrade with no delay.',
+    sentiment: 'bad',
+  }
+  return {
+    ...EXIT_WINDOW(l2TimelockDelay + l1TimelockDelay, selfSequencingDelay),
+    description: description,
+    warning: warning,
+  }
+}
+
 export const EXIT_WINDOW_NON_UPGRADABLE: TableReadyValue = {
   value: '∞',
   description:
@@ -654,7 +671,7 @@ export const RISK_VIEW = {
   STATE_ZKP_ST_SN_WRAP,
   STATE_ZKP_L3,
   STATE_EXITS_ONLY,
-  STATE_ARBITRUM_FRAUD_PROOFS,
+  STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS,
 
   // dataAvailability
   DATA_ON_CHAIN,
@@ -705,6 +722,7 @@ export const RISK_VIEW = {
   // exitWindow
   EXIT_WINDOW,
   EXIT_WINDOW_NITRO,
+  EXIT_WINDOW_PERMISSIONLESS_BOLD,
   EXIT_WINDOW_ZKSTACK,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,

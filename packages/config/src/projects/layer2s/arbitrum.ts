@@ -16,11 +16,7 @@ const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-const validatorAfkBlocks = discovery.getContractValue<number>(
-  'RollupProxy',
-  'VALIDATOR_AFK_BLOCKS',
-)
-const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
   'confirmPeriodBlocks',
@@ -317,11 +313,9 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateRiskView: {
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+    exitWindow: RISK_VIEW.EXIT_WINDOW_PERMISSIONLESS_BOLD(
       l2TimelockDelay,
       selfSequencingDelay,
-      challengeWindowSeconds,
-      validatorAfkTime,
       l1TimelockDelay,
     ),
     stateValidation: RISK_VIEW.STATE_FP_INT,
@@ -378,7 +372,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Bold, permissionless proof system, deployed',
+      title: 'BoLD, permissionless proof system, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',
       date: '2025-02-15T00:00:00Z',
       type: 'general',

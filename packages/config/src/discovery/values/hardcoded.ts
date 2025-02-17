@@ -16,7 +16,6 @@ UNDERSTAND WHAT YOU ARE DOING BEFORE YOU UPDATE THIS FILE
 // which should be used inside project's hardcoded tests
 export const HARDCODED = {
   ARBITRUM: {
-    SET_VALIDATOR_COUNT: 7,
     SET_SEQUENCER_COUNT: 3,
   },
   OPTIMISM: {
