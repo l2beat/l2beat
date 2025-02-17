@@ -54,12 +54,6 @@ export {
   estimateSimilarity,
   removeComments,
 } from './flatten/utils'
-export {
-  calculateInversion,
-  type InvertedAddressDetails,
-  type InvertedAddresses,
-  type Role,
-} from './inversion/runInversion'
 export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { AllProviders } from './discovery/provider/AllProviders'

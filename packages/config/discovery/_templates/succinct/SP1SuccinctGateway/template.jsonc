@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+  "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
   "ignoreRelatives": [
     "oldVerifier",
     "oldVerifier2",
@@ -87,7 +87,7 @@
         "permissions": [
           {
             "type": "interact",
-            "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+            "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
           }
         ]
       }

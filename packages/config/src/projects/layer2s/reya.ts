@@ -85,7 +85,6 @@ export const reya: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://rpc.reya.network',
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Reya DEX launch',

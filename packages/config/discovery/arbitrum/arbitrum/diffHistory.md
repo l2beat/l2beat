@@ -8,7 +8,7 @@ Generated with discovered.json: 0x56fd4402f972dcff9aef0151c126fbfa34f822b5
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ignored unused SC on L2.
 
 ## Config/verification related changes
 

@@ -4020,6 +4020,20 @@
       "supply": "zero"
     },
     {
+      "name": "Pepe Unchained",
+      "coingeckoId": "pepe-unchained",
+      "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+      "symbol": "PEPU",
+      "decimals": 18,
+      "deploymentTimestamp": 1717589039,
+      "coingeckoListingTimestamp": 1733961600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52681/large/wn6wNj1C_400x400.jpg?1734021973",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "PepeFork",
       "coingeckoId": "pepefork",
       "address": "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E",
@@ -6867,6 +6881,20 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1730847151,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 130,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Ether",
@@ -10517,28 +10545,6 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "name": "TapToken",
-      "coingeckoId": "tapioca-dao-token",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "symbol": "TAP",
-      "decimals": 18,
-      "deploymentTimestamp": 1718405557,
-      "coingeckoListingTimestamp": 1718668800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38756/large/TAPP.png?1718729124",
-      "chainId": 42161,
-      "source": "native",
-      "supply": "circulatingSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
     },
     {
       "name": "Tether USD",

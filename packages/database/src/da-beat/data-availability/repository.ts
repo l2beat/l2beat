@@ -3,6 +3,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
 import { selectDataAvailability } from './select'
 
+// TODO: cleanup unused methods after removing EthereumDaIndexer
 export class DataAvailabilityRepository extends BaseRepository {
   async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
@@ -21,7 +22,7 @@ export class DataAvailabilityRepository extends BaseRepository {
         .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['timestamp', 'projectId']).doUpdateSet((eb) => ({
+          cb.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
             totalSize: eb.ref('excluded.totalSize'),
           })),
         )

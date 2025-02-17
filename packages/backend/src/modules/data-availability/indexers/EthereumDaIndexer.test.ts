@@ -71,6 +71,7 @@ describe(EthereumDaIndexer.name, () => {
       // aggregated data from previous bucket
       const pastBucketRecords: DataAvailabilityRecord[] = [
         {
+          configurationId: 'TEMP',
           projectId: selector,
           daLayer: 'ethereum',
           timestamp: START.toStartOf('day'),
@@ -100,12 +101,14 @@ describe(EthereumDaIndexer.name, () => {
       expect(daProvider.getBlobs).toHaveBeenCalledWith(0, 50)
       expect(repository.upsertMany).toHaveBeenCalledWith([
         {
+          configurationId: 'TEMP',
           projectId: selector,
           daLayer: 'ethereum',
           timestamp: START.toStartOf('day'),
           totalSize: 1600n, // 1000 + 100 + 200 + 300
         },
         {
+          configurationId: 'TEMP',
           projectId: selector,
           daLayer: 'ethereum',
           timestamp: START.add(1, 'days').toStartOf('day'),

@@ -260,7 +260,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       'Security Council',
     ),
   ],
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // Custom ERC20 Gateway
