@@ -38,6 +38,5 @@ export const playblock: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

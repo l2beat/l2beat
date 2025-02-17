@@ -1,10 +1,9 @@
-import { InvertCommand } from './cli/invertCommand'
 import { SingleDiscoveryCommand } from './cli/singleDiscoveryCommand'
 
 import { run, subcommands } from 'cmd-ts'
 import { DiscoverCommand } from './cli/discoverCommand'
 
-const targets = [SingleDiscoveryCommand, InvertCommand, DiscoverCommand]
+const targets = [SingleDiscoveryCommand, DiscoverCommand]
 
 const main = subcommands({
   name: 'discovery',
