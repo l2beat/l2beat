@@ -193,6 +193,7 @@ export const taiko: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
       sequencers: [],
     },

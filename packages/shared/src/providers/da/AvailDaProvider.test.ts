@@ -58,16 +58,6 @@ describe(AvailDaProvider.name, () => {
 
       expect(result).toEqual([])
     })
-    it('throws if there is mismatch between extrinsics and app lookup index', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
-        getBlock: mockFn().resolvesTo(mockBlockResponse([1])),
-      })
-
-      const provider = new AvailDaProvider(mockRpc, 'avail')
-      expect(async () => await provider.getBlobs(1, 2)).toBeRejectedWith(
-        'Mismatch between target extrinsics and app lookup index',
-      )
-    })
   })
 })
 

@@ -498,6 +498,7 @@ export const starknet: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
       sequencers: [
         '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',

@@ -45,7 +45,10 @@ export const mantapacific: Layer2 = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIZiad33fbxA7Z0=',
+  },
   associatedTokens: ['MANTA'],
   chainConfig: {
     name: 'mantapacific',
