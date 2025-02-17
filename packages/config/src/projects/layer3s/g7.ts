@@ -6,7 +6,7 @@ import { Badge } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
-const discovery = new ProjectDiscovery('g7', 'arbitrum')
+const discovery = new ProjectDiscovery('game7', 'arbitrum')
 
 export const g7: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1738899615),
