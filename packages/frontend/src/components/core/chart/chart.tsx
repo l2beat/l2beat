@@ -64,8 +64,8 @@ function ChartContainer<T extends { timestamp: number }>({
         className={cn(
           'group relative h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
           "flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-          //  Tooltip cursor line
-          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
+          // Tooltip cursor line
+          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary [&_.recharts-curve.recharts-tooltip-cursor]:stroke-2',
           // Tooltip
           '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
           // Cartesian grid line

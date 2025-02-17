@@ -28,6 +28,7 @@ import {
   ValidiumsAndOptimiumsFillGradientDef,
   ValidiumsAndOptimiumsStrokeGradientDef,
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
@@ -108,15 +109,17 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
-          <ChartTooltip
-            content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
-          />
+
           <Area
             dataKey="rollups"
             stroke="url(#rollups-stroke)"
             fill="url(#rollups-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.rollups.color,
+            }}
             isAnimationActive={false}
           />
           <Area
@@ -125,6 +128,10 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             fill="url(#validiums-and-optimiums-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.validiumsAndOptimiums.color,
+            }}
             isAnimationActive={false}
           />
           <Area
@@ -133,6 +140,10 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             fill="url(#others-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.others.color,
+            }}
             isAnimationActive={false}
           />
           <Area
@@ -141,7 +152,14 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             fill="url(#ethereum-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.ethereum.color,
+            }}
             isAnimationActive={false}
+          />
+          <ChartTooltip
+            content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
           />
           {getCommonChartComponents({
             chartData,

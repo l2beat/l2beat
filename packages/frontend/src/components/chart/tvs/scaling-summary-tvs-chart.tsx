@@ -23,6 +23,7 @@ import {
   ValidiumsAndOptimiumsFillGradientDef,
   ValidiumsAndOptimiumsStrokeGradientDef,
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
@@ -105,6 +106,10 @@ export function ScalingSummaryTvsChart({
             fill="url(#rollups-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.rollups.color,
+            }}
             isAnimationActive={false}
           />
           <Area
@@ -113,6 +118,10 @@ export function ScalingSummaryTvsChart({
             fill="url(#validiums-and-optimiums-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.validiumsAndOptimiums.color,
+            }}
             isAnimationActive={false}
           />
           <Area
@@ -121,6 +130,10 @@ export function ScalingSummaryTvsChart({
             fill="url(#others-fill)"
             fillOpacity={1}
             strokeWidth={2}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: chartMeta.others.color,
+            }}
             isAnimationActive={false}
           />
           {getCommonChartComponents({

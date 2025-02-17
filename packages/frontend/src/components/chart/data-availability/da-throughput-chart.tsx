@@ -26,7 +26,7 @@ export function DaThroughputChart() {
             ? 'Share of total data posted'
             : 'Total data posted'}
         </h1>
-        <ChartTimeRange range={chartRange} isLoading={isLoading} />
+        <ChartTimeRange range={chartRange} />
       </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart data={data} isLoading={isLoading} />
