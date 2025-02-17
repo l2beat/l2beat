@@ -47,6 +47,7 @@ describe(CelestiaDaProvider.name, () => {
 function createMockRpcClient() {
   return mockObject<CelestiaRpcClient>({
     getBlockResult: async (blockNumber: number) => ({
+      height: '100',
       txs_results: [
         {
           log: [
