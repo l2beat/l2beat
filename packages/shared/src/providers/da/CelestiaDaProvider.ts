@@ -39,7 +39,7 @@ export class CelestiaDaProvider implements DaProvider {
 
       assert(
         namespaces.length === sizes.length,
-        'Namespaces and sizes should be equal length',
+        `[${blockNumber}] Namespaces and sizes should be equal length`,
       )
 
       return namespaces.map((namespace, i) => ({
