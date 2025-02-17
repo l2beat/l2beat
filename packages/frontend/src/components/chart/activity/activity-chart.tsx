@@ -2,7 +2,6 @@
 
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
@@ -32,7 +31,6 @@ import {
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -89,17 +87,13 @@ export function ActivityChart({
     },
   } satisfies ChartConfig
 
-  const timestampedMilestones = useMemo(
-    () => getTimestampedMilestones(data, milestones),
-    [data, milestones],
-  )
-
   return (
     <ChartContainer
+      data={data}
       className={className}
       config={chartConfig}
       isLoading={isLoading}
-      timestampedMilestones={timestampedMilestones}
+      milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />

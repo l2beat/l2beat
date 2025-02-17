@@ -1,7 +1,6 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
 
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -14,7 +13,6 @@ import {
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -58,16 +56,12 @@ export function StackedTvsChart({
   isLoading,
   className,
 }: Props) {
-  const timestampedMilestones = useMemo(
-    () => getTimestampedMilestones(data, milestones ?? []),
-    [data, milestones],
-  )
-
   return (
     <ChartContainer
+      data={data}
       config={chartConfig}
       isLoading={isLoading}
-      timestampedMilestones={timestampedMilestones}
+      milestones={milestones}
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>

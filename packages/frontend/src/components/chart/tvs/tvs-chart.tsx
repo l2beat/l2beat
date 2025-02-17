@@ -1,6 +1,5 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartConfig } from '~/components/core/chart/chart'
@@ -15,7 +14,6 @@ import {
 } from '~/components/core/chart/defs/rollups-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -40,16 +38,12 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
-  const timestampedMilestones = useMemo(
-    () => getTimestampedMilestones(data, milestones ?? []),
-    [data, milestones],
-  )
-
   return (
     <ChartContainer
       config={chartConfig}
+      data={data}
       isLoading={isLoading}
-      timestampedMilestones={timestampedMilestones}
+      milestones={milestones}
     >
       <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
         <defs>

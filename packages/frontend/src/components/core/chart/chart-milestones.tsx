@@ -1,6 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CustomLink } from '~/components/link/custom-link'
 import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
@@ -14,15 +14,24 @@ import {
   DrawerTrigger,
 } from '../drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
-import type { TimestampedMilestone } from './utils/get-timestamped-milestones'
+import { getTimestampedMilestones } from './utils/get-timestamped-milestones'
 
-interface Props {
-  timestampedMilestones: TimestampedMilestone[] | undefined
+interface Props<T extends { timestamp: number }> {
+  data: T[] | undefined
+  milestones: Milestone[]
   ref: React.RefObject<HTMLDivElement | null>
 }
 
-export function ChartMilestones({ timestampedMilestones, ref }: Props) {
+export function ChartMilestones<T extends { timestamp: number }>({
+  data,
+  milestones,
+  ref,
+}: Props<T>) {
   const [width, setWidth] = useState<number>()
+  const timestampedMilestones = useMemo(
+    () => getTimestampedMilestones(data, milestones),
+    [data, milestones],
+  )
 
   useEffect(() => {
     if (!ref.current) return

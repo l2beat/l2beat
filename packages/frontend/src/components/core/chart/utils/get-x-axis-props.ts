@@ -11,7 +11,7 @@ const common: XAxisProps = {
 export function getXAxisProps<T extends { timestamp: number }>(
   data: T[] | undefined,
 ): XAxisProps {
-  if (!data) {
+  if (!data || data.length === 0) {
     return {
       ...common,
       ticks: [],

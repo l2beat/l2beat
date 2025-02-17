@@ -5,11 +5,12 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
+import type { Milestone } from '@l2beat/config'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
-import type { TimestampedMilestone } from './utils/get-timestamped-milestones'
+import { ChartNoDataState } from './chart-no-data-state'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -40,27 +41,29 @@ export function useChart() {
   return context
 }
 
-const ChartContainer = ({
+function ChartContainer<T extends { timestamp: number }>({
   id,
   className,
   children,
   config,
+  data,
   isLoading,
-  timestampedMilestones,
+  milestones,
   ...props
 }: React.ComponentProps<'div'> & {
   config: ChartConfig
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
-  timestampedMilestones?: TimestampedMilestone[]
+  data: T[] | undefined
+  milestones?: Milestone[]
   isLoading?: boolean
-}) => {
+}) {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
-
+  const hasData = data && data.length > 1
   return (
     <ChartContext.Provider value={{ config }}>
       <div
@@ -91,19 +94,22 @@ const ChartContainer = ({
       >
         <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer>
-          {isLoading ? <ChartLoader /> : children}
+          {isLoading ? (
+            <ChartLoader />
+          ) : hasData ? (
+            children
+          ) : (
+            <ChartNoDataState />
+          )}
         </RechartsPrimitive.ResponsiveContainer>
-        {!isLoading && isClient && (
+        {!isLoading && hasData && isClient && (
           <Logo
             animated={false}
             className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
           />
         )}
-        {!isLoading && timestampedMilestones && (
-          <ChartMilestones
-            timestampedMilestones={timestampedMilestones}
-            ref={ref}
-          />
+        {!isLoading && milestones && (
+          <ChartMilestones data={data} milestones={milestones} ref={ref} />
         )}
       </div>
     </ChartContext.Provider>
