@@ -164,9 +164,17 @@ interface OpStackConfigCommon {
     category?: ScalingProjectCategory
   }
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDaNamespace?: string
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDaAppId?: string
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -379,6 +387,11 @@ function getDaTracking(
     'SystemConfig',
     'sequencerInbox',
   )
+  const inboxStartBlock = templateVars.discovery.getContractValue<number>(
+    'SystemConfig',
+    'startBlock',
+  )
+
   const sequencer = templateVars.discovery.getContractValue<string>(
     'SystemConfig',
     'batcherHash',
@@ -388,20 +401,23 @@ function getDaTracking(
     ? {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxStartBlock,
         inbox: sequencerInbox,
         sequencers: [sequencer],
       }
-    : templateVars.celestiaDaNamespace
+    : templateVars.celestiaDa
       ? {
           type: 'celestia',
           daLayer: ProjectId('celestia'),
-          namespace: templateVars.celestiaDaNamespace,
+          sinceBlock: templateVars.celestiaDa.sinceBlock,
+          namespace: templateVars.celestiaDa.namespace,
         }
-      : templateVars.availDaAppId
+      : templateVars.availDa
         ? {
             type: 'avail',
             daLayer: ProjectId('avail'),
-            appId: templateVars.availDaAppId,
+            sinceBlock: templateVars.availDa.sinceBlock,
+            appId: templateVars.availDa.appId,
           }
         : undefined
 }

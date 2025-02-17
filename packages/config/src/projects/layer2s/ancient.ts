@@ -48,7 +48,10 @@ export const ancient: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.ancient8.gg/',
   genesisTimestamp: new UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
+  },
   milestones: [
     {
       title: 'Ancient8 Network Launch',

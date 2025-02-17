@@ -34,7 +34,10 @@ export const hypr: Layer2 = opStackL2({
     },
   },
   genesisTimestamp: new UnixTime(1705509623),
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABqVjuNvNnoE=',
+  },
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
