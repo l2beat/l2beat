@@ -60,7 +60,12 @@ export function DaPercentageThroughputChart({
       className="mb-2"
       isLoading={isLoading}
     >
-      <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <BarChart
+        accessibilityLayer
+        data={chartData}
+        margin={{ top: 20 }}
+        barCategoryGap={0}
+      >
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
