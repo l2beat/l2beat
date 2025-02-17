@@ -52,6 +52,5 @@ export const popboss: Layer3 = orbitStackL3({
     defaultCallsPerMinute: 3000,
     adjustCount: { type: 'SubtractOne' },
   },
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

@@ -16,7 +16,6 @@ You MUST install an environment file called `.env` in the `packages/backend` dir
 
 - `pnpm discover [chain] [project]` run discovery for the project (e.g., `pnpm discover ethereum optimism`)
 - `pnpm discover --help` print out all the possible switches for discovery
-- `pnpm invert [chain] [project] --mermaid` builds a mermaid graph of the project
 
 A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
 If you misspell the chain name, a list of all possible chains is printed

@@ -2331,20 +2331,6 @@
       "source": "native"
     },
     {
-      "symbol": "TAP",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "source": "native",
-      "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
       "symbol": "ETHFI",
       "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
       "coingeckoId": "ether-fi",
