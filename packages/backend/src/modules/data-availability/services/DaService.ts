@@ -10,30 +10,10 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import type { DaTrackingConfig } from '../../../config/Config'
 
 export class DaService {
-  constructor(
-    private configurations:
-      | {
-          configurationId: string
-          type: 'ethereum'
-          projectId: ProjectId
-          config: EthereumDaTrackingConfig | { type: 'baseLayer' }
-        }[]
-      | {
-          configurationId: string
-          type: 'celestia'
-          projectId: ProjectId
-          config: CelestiaDaTrackingConfig | { type: 'baseLayer' }
-        }[]
-      | {
-          configurationId: string
-          type: 'avail'
-          projectId: ProjectId
-          config: AvailDaTrackingConfig | { type: 'baseLayer' }
-        }[],
-  ) {}
+  constructor(private configurations: DaTrackingConfig[]) {}
 
   generateRecords(
     blobs: DaBlob[],
@@ -45,7 +25,8 @@ export class DaService {
       const existing = updatedRecords.find(
         (r) =>
           r.timestamp.toNumber() === record.timestamp.toNumber() &&
-          r.configurationId === record.configurationId,
+          r.daLayer === record.daLayer &&
+          r.projectId === record.projectId,
       )
       if (existing) {
         existing.totalSize += record.totalSize
@@ -67,20 +48,23 @@ export class DaService {
 
     for (const c of this.configurations) {
       switch (c.type) {
-        case 'ethereum': {
-          assert(blob.type === 'ethereum')
-          if (c.config.type === 'baseLayer') {
+        case 'baseLayer': {
+          if (blob.daLayer === c.daLayer) {
             records.push({
-              configurationId: c.configurationId,
+              configurationId: 'TEMP',
               projectId: c.projectId,
               daLayer: blob.daLayer,
               timestamp: blob.blockTimestamp.toStartOf('day'),
               totalSize: blob.size,
             })
-          } else {
-            if (matchEthereumProject(blob, c.config)) {
+          }
+          break
+        }
+        case 'ethereum': {
+          if (blob.type === 'ethereum') {
+            if (matchEthereumProject(blob, c)) {
               records.push({
-                configurationId: c.configurationId,
+                configurationId: 'TEMP',
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
                 timestamp: blob.blockTimestamp.toStartOf('day'),
@@ -91,19 +75,10 @@ export class DaService {
           break
         }
         case 'celestia': {
-          assert(blob.type === 'celestia')
-          if (c.config.type === 'baseLayer') {
-            records.push({
-              configurationId: c.configurationId,
-              projectId: c.projectId,
-              daLayer: blob.daLayer,
-              timestamp: blob.blockTimestamp.toStartOf('day'),
-              totalSize: blob.size,
-            })
-          } else {
-            if (matchCelestiaProject(blob, c.config)) {
+          if (blob.type === 'celestia') {
+            if (matchCelestiaProject(blob, c)) {
               records.push({
-                configurationId: c.configurationId,
+                configurationId: 'TEMP',
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
                 timestamp: blob.blockTimestamp.toStartOf('day'),
@@ -114,19 +89,10 @@ export class DaService {
           break
         }
         case 'avail': {
-          assert(blob.type === 'avail')
-          if (c.config.type === 'baseLayer') {
-            records.push({
-              configurationId: c.configurationId,
-              projectId: c.projectId,
-              daLayer: blob.daLayer,
-              timestamp: blob.blockTimestamp.toStartOf('day'),
-              totalSize: blob.size,
-            })
-          } else {
-            if (matchAvailProject(blob, c.config)) {
+          if (blob.type === 'avail') {
+            if (matchAvailProject(blob, c)) {
               records.push({
-                configurationId: c.configurationId,
+                configurationId: 'TEMP',
                 projectId: c.projectId,
                 daLayer: blob.daLayer,
                 timestamp: blob.blockTimestamp.toStartOf('day'),

@@ -1,81 +1,71 @@
-import type {
-  AvailDaTrackingConfig,
-  CelestiaDaTrackingConfig,
-  EthereumDaTrackingConfig,
-} from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import type { DaTrackingConfig } from '../../../config/Config'
 import { DaService } from './DaService'
 
 const MOCK_ETHEREUM_CONFIGS = [
   {
-    configurationId: 'TEMP',
+    type: 'baseLayer' as const,
+    daLayer: ProjectId('ethereum'),
     projectId: ProjectId('ethereum'),
-    type: 'ethereum' as const,
-    config: { type: 'baseLayer' },
+    sinceBlock: 0,
   },
   {
-    configurationId: '0x1',
+    type: 'ethereum' as const,
+    daLayer: ProjectId('ethereum'),
     projectId: ProjectId('project-ethereum-1'),
-    type: 'ethereum' as const,
-    config: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: 'ethereum-1-inbox',
-      sequencers: ['ethereum-1-seq1', 'ethereum-1-seq1'],
-    } as EthereumDaTrackingConfig,
+    inbox: 'ethereum-1-inbox',
+    sequencers: ['ethereum-1-seq1', 'ethereum-1-seq1'],
+    sinceBlock: 0,
   },
   {
-    configurationId: '0x2',
-    projectId: ProjectId('project-ethereum-2'),
     type: 'ethereum' as const,
-    config: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: 'ethereum-2-inbox',
-      sequencers: [],
-    } as EthereumDaTrackingConfig,
+    daLayer: ProjectId('ethereum'),
+    projectId: ProjectId('project-ethereum-2'),
+    inbox: 'ethereum-2-inbox',
+    sequencers: [],
+    sinceBlock: 0,
   },
 ]
 
 const MOCK_CELESTIA_CONFIGS = [
   {
-    configurationId: 'TEMP',
+    type: 'baseLayer' as const,
     projectId: ProjectId('celestia'),
-    type: 'celestia' as const,
-    config: { type: 'baseLayer' },
+    daLayer: ProjectId('celestia'),
+    sinceBlock: 0,
   },
   {
-    configurationId: '0x3',
-    projectId: ProjectId('project-celestia-1'),
     type: 'celestia' as const,
-    config: {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      namespace: 'celestia-1',
-    } as CelestiaDaTrackingConfig,
+    daLayer: ProjectId('celestia'),
+    projectId: ProjectId('project-celestia-1'),
+    namespace: 'celestia-1',
+    sinceBlock: 0,
   },
 ]
 
 const MOCK_AVAIL_CONFIGS = [
   {
-    configurationId: 'TEMP',
+    type: 'baseLayer' as const,
     projectId: ProjectId('avail'),
-    type: 'avail' as const,
-    config: { type: 'baseLayer' },
+    daLayer: ProjectId('avail'),
+    sinceBlock: 0,
   },
   {
-    configurationId: '0x4',
-    projectId: ProjectId('project-avail-1'),
     type: 'avail' as const,
-    config: {
-      type: 'avail',
-      daLayer: ProjectId('avail'),
-      appId: 'avail-1',
-    } as AvailDaTrackingConfig,
+    daLayer: ProjectId('avail'),
+    projectId: ProjectId('project-avail-1'),
+    appId: 'avail-1',
+    sinceBlock: 0,
   },
+]
+
+const MOCK_CONFIGURATIONS: DaTrackingConfig[] = [
+  ...MOCK_ETHEREUM_CONFIGS,
+  ...MOCK_CELESTIA_CONFIGS,
+  ...MOCK_AVAIL_CONFIGS,
 ]
 
 describe(DaService.name, () => {
@@ -124,7 +114,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_ETHEREUM_CONFIGS)
+      const service = new DaService(MOCK_CONFIGURATIONS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -176,7 +166,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_CELESTIA_CONFIGS)
+      const service = new DaService(MOCK_CONFIGURATIONS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -221,7 +211,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_AVAIL_CONFIGS)
+      const service = new DaService(MOCK_CONFIGURATIONS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -319,7 +309,7 @@ describe(DaService.name, () => {
         },
       ]
 
-      const service = new DaService(MOCK_ETHEREUM_CONFIGS)
+      const service = new DaService(MOCK_CONFIGURATIONS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([

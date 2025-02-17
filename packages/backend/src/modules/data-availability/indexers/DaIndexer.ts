@@ -1,8 +1,8 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
-import type { ProjectDaTrackingConfig } from '@l2beat/config'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
+import type { DaTrackingConfig } from '../../../config/Config'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
   Configuration,
@@ -10,9 +10,6 @@ import type {
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import type { DaService } from '../../data-availability/services/DaService'
-
-type WithBaseLayer = ProjectDaTrackingConfig | { type: 'baseLayer' }
-type DaTrackingConfig = WithBaseLayer & { project: string }
 
 export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<DaTrackingConfig>, 'name'> {
@@ -88,11 +85,10 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
         to,
       )
 
-    const projects = new Set(configurations.map((c) => c.properties.project))
-    projects.add(this.$.daLayer)
+    const projects = new Set(configurations.map((c) => c.properties.projectId))
 
     const onlyRecordsForConfigurations = recordsForDaLayerInRange.filter((p) =>
-      projects.has(p.projectId),
+      projects.has(ProjectId(p.projectId)),
     )
 
     return onlyRecordsForConfigurations

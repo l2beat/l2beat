@@ -25,13 +25,16 @@ export async function getDaTrackingConfig(
       url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
       callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
-      startingBlockNumber: 19426618, // Start of Blobs on Ethereum
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('ethereum'),
       type: 'ethereum',
-      projectId: ProjectId('ethereum'),
-      config: { type: 'baseLayer' as const },
+      config: {
+        type: 'baseLayer' as const,
+        daLayer: 'ethereum',
+        projectId: ProjectId('ethereum'),
+        sinceBlock: 19426618, // Start of Blobs on Ethereum
+      },
     })
   }
 
@@ -45,13 +48,16 @@ export async function getDaTrackingConfig(
         20_000,
       ),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
-      startingBlockNumber: 1,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
       type: 'celestia',
-      projectId: ProjectId('celestia'),
-      config: { type: 'baseLayer' as const },
+      config: {
+        type: 'baseLayer' as const,
+        daLayer: 'celestia',
+        projectId: ProjectId('celestia'),
+        sinceBlock: 1,
+      },
     })
   }
 
@@ -62,13 +68,16 @@ export async function getDaTrackingConfig(
       url: env.string('AVAIL_BLOBS_API_URL'),
       callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 2000),
       batchSize: env.integer('AVAIL_BLOBS_BATCH_SIZE', 100),
-      startingBlockNumber: 1,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('avail'),
       type: 'avail',
-      projectId: ProjectId('avail'),
-      config: { type: 'baseLayer' as const },
+      config: {
+        type: 'baseLayer' as const,
+        daLayer: 'avail',
+        projectId: ProjectId('avail'),
+        sinceBlock: 1,
+      },
     })
   }
 
@@ -89,8 +98,7 @@ async function getDaTrackingProjects(ps: ProjectService) {
 
   return projects.map((project) => ({
     configurationId: createDaTrackingId(project.daTrackingConfig),
-    projectId: project.id,
-    config: project.daTrackingConfig,
+    config: { ...project.daTrackingConfig, projectId: project.id },
   }))
 }
 
