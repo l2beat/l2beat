@@ -33,7 +33,7 @@ interface Props {
 
 const chartConfig = {
   value: {
-    color: 'hsl(var(--indicator-rollups))',
+    color: 'hsl(var(--chart-rollups))',
   },
 } satisfies ChartConfig
 
@@ -53,7 +53,6 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="value"
-          type="natural"
           fill="url(#fill)"
           fillOpacity={1}
           stroke="url(#stroke)"

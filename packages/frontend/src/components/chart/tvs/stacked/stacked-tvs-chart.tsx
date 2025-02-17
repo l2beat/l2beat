@@ -37,15 +37,15 @@ interface Props {
 const chartConfig = {
   native: {
     label: 'Native',
-    color: 'hsl(var(--chart-native))',
+    color: 'hsl(var(--chart-tvs-native))',
   },
   external: {
     label: 'External',
-    color: 'hsl(var(--chart-external))',
+    color: 'hsl(var(--chart-tvs-external))',
   },
   canonical: {
     label: 'Canonical',
-    color: 'hsl(var(--chart-canonical))',
+    color: 'hsl(var(--chart-tvs-canonical))',
   },
 } satisfies ChartConfig
 
@@ -69,7 +69,6 @@ export function StackedTvsChart({
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
-          type="natural"
           fill="var(--color-native)"
           fillOpacity={1}
           strokeWidth={0}
@@ -79,7 +78,6 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="external"
-          type="natural"
           fill="var(--color-external)"
           fillOpacity={1}
           strokeWidth={0}
@@ -89,7 +87,6 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="canonical"
-          type="natural"
           fill="var(--color-canonical)"
           fillOpacity={1}
           strokeWidth={0}

@@ -46,7 +46,6 @@ export function DaAbsoluteThroughputChart({
         <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="ethereum"
-          type="natural"
           isAnimationActive={false}
           stroke="var(--color-ethereum)"
           strokeWidth={2}
@@ -54,7 +53,6 @@ export function DaAbsoluteThroughputChart({
         />
         <Line
           dataKey="celestia"
-          type="natural"
           isAnimationActive={false}
           stroke="var(--color-celestia)"
           strokeWidth={2}
@@ -62,7 +60,6 @@ export function DaAbsoluteThroughputChart({
         />
         <Line
           dataKey="avail"
-          type="natural"
           isAnimationActive={false}
           stroke="var(--color-avail)"
           strokeWidth={2}

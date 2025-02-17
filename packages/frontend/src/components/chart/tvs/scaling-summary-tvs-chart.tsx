@@ -40,15 +40,15 @@ import type { ChartUnit } from '../types'
 const chartConfig = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--indicator-rollups))',
+    color: 'hsl(var(--chart-rollups))',
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'hsl(var(--indicator-validiums-optimiums))',
+    color: 'hsl(var(--chart-validiums-optimiums))',
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--indicator-others))',
+    color: 'hsl(var(--chart-others))',
   },
 } satisfies ChartConfig
 

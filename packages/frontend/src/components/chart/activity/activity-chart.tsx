@@ -78,12 +78,12 @@ export function ActivityChart({
         (type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type),
       color:
         type === 'ValidiumsAndOptimiums'
-          ? 'hsl(var(--indicator-validiums-optimiums))'
+          ? 'hsl(var(--chart-validiums-optimiums))'
           : `hsl(var(--indicator-${type.toLowerCase()}))`,
     },
     ethereum: {
       label: 'Ethereum',
-      color: 'hsl(var(--indicator-ethereum))',
+      color: 'hsl(var(--chart-ethereum))',
     },
   } satisfies ChartConfig
 

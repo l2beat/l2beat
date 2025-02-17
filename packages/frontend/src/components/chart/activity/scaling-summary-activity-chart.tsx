@@ -50,19 +50,19 @@ interface Props {
 const chartConfig = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--indicator-rollups))',
+    color: 'hsl(var(--chart-rollups))',
   },
   validiumsAndOptimiums: {
     label: 'Validiums and Optimiums',
-    color: 'hsl(var(--indicator-validiums-optimiums))',
+    color: 'hsl(var(--chart-validiums-optimiums))',
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--indicator-others))',
+    color: 'hsl(var(--chart-others))',
   },
   ethereum: {
     label: 'Ethereum',
-    color: 'hsl(var(--indicator-ethereum))',
+    color: 'hsl(var(--chart-ethereum))',
   },
 } satisfies ChartConfig
 
