@@ -26,7 +26,7 @@ export const tea: Layer2 = upcomingL2({
         'https://twitter.com/teaprotocol',
         'https://t.me/teaprotocol',
         'https://linkedin.com/company/teaxyz/',
-        'https://discord.tea.xyz/',
+        'https://discord.com/invite/tea-906608167901876256',
       ],
     },
   },
