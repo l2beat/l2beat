@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
@@ -11,6 +12,7 @@ import {
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -50,7 +52,7 @@ interface Props {
   data: CostsChartDataPoint[] | undefined
   unit: CostsUnit
   isLoading: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestone[]
   resolution: CostsResolution
   className?: string
 }
@@ -63,10 +65,19 @@ export function CostsChart({
   className,
   resolution,
 }: Props) {
-  const milestonesData = data?.map((p) => ({
-    timestamp: p.timestamp,
-    milestone: milestones[p.timestamp],
-  }))
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones)
+  }, [milestones])
+
+  const milestonesData = useMemo(
+    () =>
+      data?.map((p) => ({
+        timestamp: p.timestamp,
+        milestone: mappedMilestones[p.timestamp],
+      })),
+    [data, mappedMilestones],
+  )
+
   return (
     <ChartContainer
       config={chartConfig}

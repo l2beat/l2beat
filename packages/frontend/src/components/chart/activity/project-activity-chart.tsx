@@ -14,7 +14,6 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './activity-chart'
@@ -48,26 +47,20 @@ export function ProjectActivityChart({
 
   const type = getChartType(category)
 
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
   const chartData = useMemo(
     () =>
       chart?.data.map(
         ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
           const projectMetric = metric === 'tps' ? projectsTx : projectsUops
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          const milestone = mappedMilestones[timestamp]
           return {
             timestamp,
             projects: projectMetric / UnixTime.DAY,
             ethereum: ethereumMetric / UnixTime.DAY,
-            milestone,
           }
         },
       ),
-    [chart?.data, mappedMilestones, metric],
+    [chart?.data, metric],
   )
 
   const chartRange = getChartRange(chartData)

@@ -15,6 +15,7 @@ import {
 } from '~/components/core/chart/defs/rollups-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -29,7 +30,7 @@ interface Props {
   data: TvsChartDataPoint[] | undefined
   unit: ChartUnit
   isLoading: boolean
-  milestones: Record<number, Milestone> | undefined
+  milestones: Milestone[] | undefined
 }
 
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
@@ -40,13 +41,16 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
     },
   } satisfies ChartConfig
 
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones ?? [])
+  }, [milestones])
+
   const milestonesData = useMemo(() => {
-    if (!milestones) return undefined
     return data?.map((point) => ({
       timestamp: point.timestamp,
-      milestone: milestones[point.timestamp],
+      milestone: mappedMilestones[point.timestamp],
     }))
-  }, [data, milestones])
+  }, [data, mappedMilestones])
 
   return (
     <ChartContainer

@@ -72,7 +72,7 @@ export function ProjectStackedTvsChart({
 interface DefaultChartProps {
   projectId: string
   isBridge: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens | undefined

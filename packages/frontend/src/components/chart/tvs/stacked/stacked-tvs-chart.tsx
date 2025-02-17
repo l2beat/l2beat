@@ -14,6 +14,7 @@ import {
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -29,7 +30,7 @@ export interface StackedTvsChartDataPoint {
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
-  milestones: Record<number, Milestone>
+  milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
   className?: string
@@ -57,13 +58,17 @@ export function StackedTvsChart({
   isLoading,
   className,
 }: Props) {
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones)
+  }, [milestones])
+
   const milestonesData = useMemo(
     () =>
       data?.map((point) => ({
         timestamp: point.timestamp,
-        milestone: milestones[point.timestamp],
+        milestone: mappedMilestones[point.timestamp],
       })),
-    [data, milestones],
+    [data, mappedMilestones],
   )
 
   return (

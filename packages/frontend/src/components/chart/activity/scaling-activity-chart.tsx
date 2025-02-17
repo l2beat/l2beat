@@ -20,7 +20,6 @@ import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { Checkbox } from '../../core/checkbox'
 import type { ChartScale } from '../types'
 import type { ActivityChartType } from './activity-chart'
@@ -73,26 +72,20 @@ export function ScalingActivityChart({
     previewRecategorisation: checked,
   })
 
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
   const chartData = useMemo(
     () =>
       data?.data.map(
         ([timestamp, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
           const projectMetric = metric === 'tps' ? projectsTx : projectsUops
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
-          const milestone = mappedMilestones[timestamp]
           return {
             timestamp,
             projects: projectMetric / UnixTime.DAY,
             ethereum: ethereumMetric / UnixTime.DAY,
-            milestone,
           }
         },
       ),
-    [data?.data, mappedMilestones, metric],
+    [data?.data, metric],
   )
   const chartRange = getChartRange(chartData)
 
@@ -107,7 +100,7 @@ export function ScalingActivityChart({
         data={chartData}
         syncedUntil={data?.syncedUntil}
         isLoading={isLoading}
-        milestones={mappedMilestones}
+        milestones={milestones}
         showMainnet={showMainnet}
         scale={scale}
         metric={metric}

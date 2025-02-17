@@ -18,6 +18,7 @@ import {
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -41,7 +42,7 @@ import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 interface Props {
   projectId: string
   isBridge: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestone[]
   timeRange: TvsChartRange
   setTimeRange: (timeRange: TvsChartRange) => void
   tokens: ProjectTokens
@@ -93,12 +94,16 @@ export function ProjectTokenChart({
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones)
+  }, [milestones])
+
   const milestonesData = useMemo(() => {
     return chartData?.map(({ timestamp }) => ({
       timestamp,
-      milestone: milestones[timestamp],
+      milestone: mappedMilestones[timestamp],
     }))
-  }, [chartData, milestones])
+  }, [chartData, mappedMilestones])
 
   return (
     <section>

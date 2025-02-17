@@ -2,6 +2,7 @@
 
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
@@ -31,6 +32,7 @@ import {
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -50,7 +52,7 @@ interface Props {
   data: ActivityChartDataPoint[] | undefined
   syncedUntil: number | undefined
   isLoading: boolean
-  milestones: Record<number, Milestone>
+  milestones: Milestone[]
   showMainnet: boolean
   scale: ChartScale
   metric: ActivityMetric
@@ -87,10 +89,18 @@ export function ActivityChart({
     },
   } satisfies ChartConfig
 
-  const milestonesData = data?.map((point) => ({
-    timestamp: point.timestamp,
-    milestone: milestones[point.timestamp],
-  }))
+  const mappedMilestones = useMemo(() => {
+    return mapMilestones(milestones)
+  }, [milestones])
+
+  const milestonesData = useMemo(
+    () =>
+      data?.map((point) => ({
+        timestamp: point.timestamp,
+        milestone: mappedMilestones[point.timestamp],
+      })),
+    [data, mappedMilestones],
+  )
 
   return (
     <ChartContainer

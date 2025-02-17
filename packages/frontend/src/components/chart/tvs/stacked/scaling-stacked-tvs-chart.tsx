@@ -15,7 +15,6 @@ import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
 import { getChartRange } from '../../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../../core/chart/utils/map-milestones'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
@@ -55,11 +54,6 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     previewRecategorisation: checked,
   })
 
-  const mappedMilestones = useMemo(
-    () => mapMilestones(milestones),
-    [milestones],
-  )
-
   const chartData = useMemo(
     () =>
       data?.map(([timestamp, native, canonical, external, ethPrice]) => {
@@ -69,10 +63,9 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
           native: native / divider,
           canonical: canonical / divider,
           external: external / divider,
-          milestone: mappedMilestones[timestamp],
         }
       }),
-    [data, mappedMilestones, unit],
+    [data, unit],
   )
 
   const chartRange = getChartRange(chartData)
@@ -89,7 +82,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       />
       <StackedTvsChart
         data={chartData}
-        milestones={mappedMilestones}
+        milestones={milestones}
         unit={unit}
         isLoading={isLoading}
       />
@@ -119,7 +112,6 @@ function getStats(
         native: number
         canonical: number
         external: number
-        milestone: Milestone | undefined
       }[]
     | undefined,
 ) {

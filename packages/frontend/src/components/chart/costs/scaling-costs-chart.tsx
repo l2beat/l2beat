@@ -20,7 +20,6 @@ import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { mapMilestones } from '../../core/chart/utils/map-milestones'
 import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
@@ -64,10 +63,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     filter,
     previewRecategorisation: checked,
   })
-
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
 
   const chartData = useMemo(() => {
     return data?.map(
@@ -122,7 +117,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         data={chartData}
         unit={unit}
         isLoading={isLoading}
-        milestones={mappedMilestones}
+        milestones={milestones}
         resolution={resolution}
         className="mb-2 mt-4"
       />
