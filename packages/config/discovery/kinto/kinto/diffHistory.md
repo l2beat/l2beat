@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x33ec4b3f321d9fa77192a5ddb1a614ab28b02cf2
+Generated with discovered.json: 0x03dc43848ad1ae12a0a1c28da6ee61cea7703556
 
-# Diff at Sat, 15 Feb 2025 13:58:00 GMT:
+# Diff at Mon, 17 Feb 2025 17:29:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@4091ce04373646e743c4d54ea4e92db915d8f56c block: 735231
@@ -128,22 +128,6 @@ discovery. Values are for block 735231 (main branch discovery), not current.
       fieldMeta.getSystemContracts.description:
 -        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts."
 +        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
-    }
-```
-
-```diff
-    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b) {
-    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
-      values.accessControl:
-+        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775":{"adminRole":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","members":["0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"]},"0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63":{"adminRole":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","members":["0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5","0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"]}}
-      template:
-+        "orbitstack/UpgradeExecutor"
-      displayName:
-+        "UpgradeExecutor"
-      description:
-+        "Central contract defining the access control permissions for upgrading the system contract implementations."
-      errors:
-+        {"executors":"Processing error occurred."}
     }
 ```
 
