@@ -35,13 +35,6 @@ export const rari: Layer3 = orbitStackL3({
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
   celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('L1GatewayRouter', {
-        description: 'Router managing token <--> gateway mapping.',
-      }),
-    ],
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -58,7 +51,6 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

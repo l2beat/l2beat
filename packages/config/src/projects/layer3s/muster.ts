@@ -37,7 +37,6 @@ export const muster: Layer3 = orbitStackL3({
   },
   rpcUrl: 'https://muster.alt.technology',
   discovery,
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
