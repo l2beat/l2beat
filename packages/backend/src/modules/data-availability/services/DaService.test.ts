@@ -163,7 +163,7 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_PROJECT_CONFIGS)
+      const service = new DaService(MOCK_CONFIGURATIONS)
       const result = service.generateRecords(mockBlobs, mockRecords)
 
       expect(result).toEqual([
@@ -254,14 +254,12 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'avail',
           daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: '0x4',
           projectId: 'project-avail-1',
           daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),

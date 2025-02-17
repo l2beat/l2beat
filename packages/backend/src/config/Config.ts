@@ -217,6 +217,7 @@ export interface DataAvailabilityTrackingConfig {
     url: string
     callsPerMinute: number
     batchSize: number
+    startingBlock: number
   }[]
 
   readonly projects: {

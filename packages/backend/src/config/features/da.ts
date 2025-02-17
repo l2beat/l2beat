@@ -2,7 +2,7 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
 import { createHash } from 'crypto'
-import { ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
 
 export async function getDaTrackingConfig(
@@ -25,6 +25,7 @@ export async function getDaTrackingConfig(
       url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
       callsPerMinute: env.integer('BLOBSCAN_CALLS_PER_MINUTE', 60),
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
+      startingBlock: 19426618,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('ethereum'),
@@ -48,6 +49,7 @@ export async function getDaTrackingConfig(
         20_000,
       ),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
+      startingBlock: 1,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
@@ -68,6 +70,7 @@ export async function getDaTrackingConfig(
       url: env.string('AVAIL_BLOBS_API_URL'),
       callsPerMinute: env.integer('AVAIL_BLOBS_API_CALLS_PER_MINUTE', 2000),
       batchSize: env.integer('AVAIL_BLOBS_BATCH_SIZE', 100),
+      startingBlock: 1,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('avail'),
@@ -81,7 +84,7 @@ export async function getDaTrackingConfig(
     })
   }
 
-  const projects = await getDaTrackingProjects(ps)
+  const projects = await getDaTrackingProjects(ps, layers)
   const projectsWithBaseLayers = [...projectsForLayers, ...projects]
 
   return {
@@ -90,16 +93,39 @@ export async function getDaTrackingConfig(
   }
 }
 
-async function getDaTrackingProjects(ps: ProjectService) {
-  const projects = await ps.getProjects({
-    select: ['daTrackingConfig'],
-    whereNot: ['isUpcoming'],
-  })
+async function getDaTrackingProjects(
+  ps: ProjectService,
+  enabledLayers: { name: string; startingBlock: number }[],
+) {
+  const projects = (
+    await ps.getProjects({
+      select: ['daTrackingConfig'],
+      whereNot: ['isUpcoming'],
+    })
+  ).filter((p) =>
+    enabledLayers.find((l) => l.name === p.daTrackingConfig.daLayer),
+  )
 
-  return projects.map((project) => ({
-    configurationId: createDaTrackingId(project.daTrackingConfig),
-    config: { ...project.daTrackingConfig, projectId: project.id },
-  }))
+  return projects.map((project) => {
+    const layer = enabledLayers.find(
+      (l) => l.name === project.daTrackingConfig.daLayer,
+    )
+    assert(layer, `No layer found for ${project.daTrackingConfig.daLayer}`)
+
+    const sinceBlock =
+      layer.startingBlock > project.daTrackingConfig.sinceBlock
+        ? layer.startingBlock
+        : project.daTrackingConfig.sinceBlock
+
+    return {
+      configurationId: createDaTrackingId(project.daTrackingConfig),
+      config: {
+        ...project.daTrackingConfig,
+        projectId: project.id,
+        sinceBlock,
+      },
+    }
+  })
 }
 
 function createDaTrackingId(config: ProjectDaTrackingConfig): string {

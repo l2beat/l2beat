@@ -1,6 +1,6 @@
 import { INDEXER_NAMES } from '@l2beat/backend-shared'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { DaTrackingConfig } from '../../../config/Config'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
@@ -42,12 +42,19 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
     this.logger.info('Fetching blobs', {
       from,
       to: adjustedTo,
-      configurations: configurations.length,
     })
 
     const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
 
-    const previousRecords = await this.getPreviousRecords(blobs, configurations)
+    this.logger.info('Fetched blobs', {
+      blobs: blobs.length,
+    })
+
+    const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
+
+    this.logger.info('Fetched previous records', {
+      previousRecords: previousRecords.length,
+    })
 
     const records = this.$.daService.generateRecords(blobs, previousRecords)
 
@@ -64,10 +71,7 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
     }
   }
 
-  private async getPreviousRecords(
-    blobs: DaBlob[],
-    configurations: Configuration<DaTrackingConfig>[],
-  ) {
+  private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
     if (blobs.length === 0) return []
 
     const from = new UnixTime(
@@ -78,38 +82,15 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       Math.max(...blobs.map((b) => b.blockTimestamp.toNumber())),
     ).toEndOf('day')
 
-    const recordsForDaLayerInRange =
-      await this.$.db.dataAvailability.getForDaLayerInTimeRange(
-        this.$.daLayer,
-        from,
-        to,
-      )
-
-    const projects = new Set(configurations.map((c) => c.properties.projectId))
-
-    const onlyRecordsForConfigurations = recordsForDaLayerInRange.filter((p) =>
-      projects.has(ProjectId(p.projectId)),
+    return await this.$.db.dataAvailability.getForDaLayerInTimeRange(
+      this.$.daLayer,
+      from,
+      to,
     )
-
-    return onlyRecordsForConfigurations
   }
 
-  override async removeData(_: RemovalConfiguration[]) {
-    // for (const configuration of configurations) {
-    //   const deletedRecords = await this.$.db.price.deleteByConfigInTimeRange(
-    //     configuration.id,
-    //     new UnixTime(configuration.from),
-    //     new UnixTime(configuration.to),
-    //   )
-    //   if (deletedRecords > 0) {
-    //     this.logger.info('Deleted records', {
-    //       from: configuration.from,
-    //       to: configuration.to,
-    //       id: configuration.id,
-    //       deletedRecords,
-    //     })
-    //   }
-    // }
+  override removeData(_: RemovalConfiguration[]): Promise<void> {
+    throw new Error('This indexer should not invalidate')
   }
 
   get daLayer() {
