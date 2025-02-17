@@ -84,7 +84,11 @@ export function ScalingSummaryTvsChart({
         unit={unit}
         timeRange={timeRange}
       />
-      <ChartContainer config={chartConfig} isLoading={isLoading}>
+      <ChartContainer
+        config={chartConfig}
+        data={chartData}
+        isLoading={isLoading}
+      >
         <AreaChart
           data={chartData}
           margin={{ top: 20, right: 0, left: 0, bottom: 0 }}

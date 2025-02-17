@@ -95,7 +95,11 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   return (
     <section className="flex flex-col gap-4">
       <Header stats={stats} />
-      <ChartContainer config={chartConfig} isLoading={isLoading}>
+      <ChartContainer
+        config={chartConfig}
+        data={chartData}
+        isLoading={isLoading}
+      >
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
             <RollupsFillGradientDef id="rollups-fill" />
