@@ -37,11 +37,9 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
-  ProjectContract,
   ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
-  ProjectPermissions,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
@@ -64,13 +62,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
-import {
-  explorerReferences,
-  mergeBadges,
-  mergeContracts,
-  mergePermissions,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
