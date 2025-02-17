@@ -184,13 +184,9 @@ const config: Config = {
       'icon-secondary': 'hsl(var(--icon-secondary))',
       overlay: 'hsl(var(--overlay))',
       divider: 'hsl(var(--divider))',
-      'indicator-rollups': 'hsl(var(--indicator-rollups))',
-      'indicator-validiums-optimiums':
-        'hsl(var(--indicator-validiums-optimiums))',
-      'indicator-others': 'hsl(var(--indicator-others))',
-      'indicator-ethereum': 'hsl(var(--indicator-ethereum))',
-      'link-stroke': 'hsl(var(--link-stroke))',
       link: 'hsl(var(--link))',
+      'link-stroke': 'hsl(var(--link-stroke))',
+      'chart-ethereum': 'hsl(var(--chart-ethereum))',
     },
     screens: {
       xs: '400px',

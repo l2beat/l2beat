@@ -52,9 +52,6 @@ function getDaRiskEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => number,
 ): DaRiskEntry {
-  console.log(layer.id)
-  console.log(bridges.map((x) => x.id))
-
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
       name: b.daBridge.name,

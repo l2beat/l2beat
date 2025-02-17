@@ -1,23 +1,22 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useState } from 'react'
-import { Chart } from '~/components/chart/core/chart'
-import { ChartProvider } from '~/components/chart/core/chart-provider'
+import { useMemo, useState } from 'react'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import type {
   ProjectToken,
   ProjectTokens,
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
+import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { TokenCombobox } from '../../token-combobox'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../core/chart-time-range'
 import type { ChartUnit } from '../types'
-import { ProjectTokenChart } from './token/project-token-chart'
-import { TvsChartHover } from './tvs-chart-hover'
+import { ProjectTokenChart } from './project-token-chart'
+import type { TvsChartDataPoint } from './tvs-chart'
+import { TvsChart } from './tvs-chart'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'
 import { TvsChartUnitControls } from './tvs-chart-unit-controls'
-import { useTvsChartRenderParams } from './use-tvs-chart-render-params'
 
 interface Props {
   projectId: string
@@ -101,38 +100,43 @@ function DefaultChart({
     excludeAssociatedTokens: false,
   })
 
-  const { chartRange, formatYAxisLabel, valuesStyle, columns } =
-    useTvsChartRenderParams({ milestones, unit, data })
+  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+    ([timestamp, native, canonical, external, ethPrice]) => {
+      const total = native + canonical + external
+      return {
+        timestamp,
+        value: unit === 'usd' ? total / 100 : total / ethPrice,
+      }
+    },
+  )
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => <TvsChartHover data={data} />}
-    >
-      <section className="flex flex-col gap-4">
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
-          <TvsChartTimeRangeControls
-            projectSection
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
+    <section className="flex flex-col gap-4">
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <TvsChartTimeRangeControls
+          projectSection
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
+      </ChartControlsWrapper>
+      <TvsChart
+        data={chartData}
+        unit={unit}
+        isLoading={isLoading}
+        milestones={milestones}
+      />
+      <TvsChartUnitControls unit={unit} setUnit={setUnit}>
+        {tokens && (
+          <TokenCombobox
+            tokens={tokens}
+            setValue={setToken}
+            value={token}
+            isBridge={isBridge}
           />
-        </ChartControlsWrapper>
-        <Chart />
-        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-          {tokens && (
-            <TokenCombobox
-              tokens={tokens}
-              setValue={setToken}
-              value={token}
-              isBridge={isBridge}
-            />
-          )}
-        </TvsChartUnitControls>
-      </section>
-    </ChartProvider>
+        )}
+      </TvsChartUnitControls>
+    </section>
   )
 }

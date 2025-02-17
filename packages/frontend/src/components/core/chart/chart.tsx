@@ -1,29 +1,28 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 'use client'
 
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
+import type { Milestone } from '@l2beat/config'
+import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
+import { ChartMilestones } from './chart-milestones'
+import { ChartNoDataState } from './chart-no-data-state'
 
-// Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: '', dark: '.dark' } as const
-
-export type ChartConfig = Record<
+export type ChartMeta = Record<
   string,
   {
     label?: React.ReactNode
     icon?: React.ComponentType
-  } & (
-    | { color?: string; theme?: never }
-    | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  )
+    color?: string
+    legendLabel?: string
+  }
 >
 
 type ChartContextProps = {
-  config: ChartConfig
+  meta: ChartMeta
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -38,31 +37,37 @@ export function useChart() {
   return context
 }
 
-const ChartContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> & {
-    config: ChartConfig
-    children: React.ComponentProps<
-      typeof RechartsPrimitive.ResponsiveContainer
-    >['children']
-    isLoading?: boolean
-  }
->(({ id, className, children, config, isLoading, ...props }, ref) => {
-  const uniqueId = React.useId()
-  const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
-
+function ChartContainer<T extends { timestamp: number }>({
+  className,
+  children,
+  meta,
+  data,
+  isLoading,
+  milestones,
+  ...props
+}: React.ComponentProps<'div'> & {
+  meta: ChartMeta
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >['children']
+  data: T[] | undefined
+  milestones?: Milestone[]
+  isLoading?: boolean
+}) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const isClient = useIsClient()
+  const hasData = data && data.length > 1
   return (
-    <ChartContext.Provider value={{ config }}>
+    <ChartContext.Provider value={{ meta }}>
       <div
-        data-chart={chartId}
         ref={ref}
         className={cn(
           'group relative h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
           "flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-          //  Tooltip cursor line
-          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
+          // Tooltip cursor line
+          '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary [&_.recharts-curve.recharts-tooltip-cursor]:stroke-2',
           // Tooltip
-          '[&_.recharts-tooltip-wrapper]:!transition-none',
+          '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
           // Cartesian grid line
           "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
           // Cartesian X axis tick text
@@ -79,54 +84,29 @@ const ChartContainer = React.forwardRef<
         )}
         {...props}
       >
-        <ChartStyle id={chartId} config={config} />
         <RechartsPrimitive.ResponsiveContainer>
-          {isLoading ? <ChartLoader /> : children}
+          {isLoading ? (
+            <ChartLoader />
+          ) : hasData ? (
+            children
+          ) : (
+            <ChartNoDataState />
+          )}
         </RechartsPrimitive.ResponsiveContainer>
-        {!isLoading && (
+        {!isLoading && hasData && isClient && (
           <Logo
             animated={false}
             className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
           />
         )}
+        {!isLoading && milestones && (
+          <ChartMilestones data={data} milestones={milestones} ref={ref} />
+        )}
       </div>
     </ChartContext.Provider>
   )
-})
+}
 ChartContainer.displayName = 'Chart'
-
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, config]) => config.theme || config.color,
-  )
-
-  if (!colorConfig.length) {
-    return null
-  }
-
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join('\n')}
-}
-`,
-          )
-          .join('\n'),
-      }}
-    />
-  )
-}
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
@@ -144,7 +124,7 @@ const ChartLegendContent = React.forwardRef<
     { className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey },
     ref,
   ) => {
-    const { config } = useChart()
+    const { meta: config } = useChart()
 
     if (!payload?.length) {
       return null
@@ -163,7 +143,6 @@ const ChartLegendContent = React.forwardRef<
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
           return (
             <div
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -178,12 +157,12 @@ const ChartLegendContent = React.forwardRef<
                 <div
                   className="size-2.5 shrink-0 rounded-sm"
                   style={{
-                    backgroundColor: item.color,
+                    backgroundColor: itemConfig?.color ?? item.color,
                   }}
                 />
               )}
               <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
-                {itemConfig?.label}
+                {itemConfig?.legendLabel ?? itemConfig?.label}
               </span>
             </div>
           )
@@ -196,7 +175,7 @@ ChartLegendContent.displayName = 'ChartLegend'
 
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
-  config: ChartConfig,
+  config: ChartMeta,
   payload: unknown,
   key: string,
 ) {
@@ -231,10 +210,4 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
-export {
-  ChartContainer,
-  ChartTooltip,
-  ChartLegend,
-  ChartLegendContent,
-  ChartStyle,
-}
+export { ChartContainer, ChartTooltip, ChartLegend, ChartLegendContent }

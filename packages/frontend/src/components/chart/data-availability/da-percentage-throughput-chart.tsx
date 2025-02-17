@@ -2,10 +2,9 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { round } from 'lodash'
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -13,10 +12,11 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { daChartMeta } from './meta'
 
 interface DataPoint {
   timestamp: number
@@ -28,13 +28,8 @@ interface DataPoint {
 interface Props {
   data: DataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaPercentageThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   const chartData = data?.map((item) => {
     const total = item.ethereum + item.celestia + item.avail
 
@@ -47,43 +42,47 @@ export function DaPercentageThroughputChart({
   })
 
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
-      <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+    <ChartContainer
+      data={chartData}
+      meta={daChartMeta}
+      className="mb-2"
+      isLoading={isLoading}
+    >
+      <BarChart
+        accessibilityLayer
+        data={chartData}
+        margin={{ top: 20 }}
+        barCategoryGap={0}
+      >
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
           dataKey="ethereum"
           stackId="a"
-          fill="var(--color-ethereum)"
+          fill={daChartMeta.ethereum.color}
           isAnimationActive={false}
         />
 
         <Bar
           dataKey="celestia"
           stackId="a"
-          fill="var(--color-celestia)"
+          fill={daChartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="avail"
           stackId="a"
-          fill="var(--color-avail)"
+          fill={daChartMeta.avail.color}
           isAnimationActive={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(chartData)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          unit="%"
-          domain={[0, 100]}
-          allowDataOverflow
-          mirror
-          tickCount={3}
-          tick={{
-            dy: -10,
-          }}
-        />
+        {getCommonChartComponents({
+          chartData,
+          yAxis: {
+            unit: '%',
+            domain: [0, 100],
+            allowDataOverflow: true,
+          },
+        })}
       </BarChart>
     </ChartContainer>
   )
@@ -94,7 +93,7 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { config } = useChart()
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (

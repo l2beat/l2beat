@@ -1,10 +1,9 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
+import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -12,10 +11,11 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { daChartMeta } from './meta'
 
 interface DataPoint {
   timestamp: number
@@ -27,55 +27,48 @@ interface DataPoint {
 interface Props {
   data: DataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaAbsoluteThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+    <ChartContainer
+      data={data}
+      meta={daChartMeta}
+      className="mb-2"
+      isLoading={isLoading}
+    >
       <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="ethereum"
-          type="natural"
           isAnimationActive={false}
-          stroke="var(--color-ethereum)"
+          stroke={daChartMeta.ethereum.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="celestia"
-          type="natural"
           isAnimationActive={false}
-          stroke="var(--color-celestia)"
+          stroke={daChartMeta.celestia.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="avail"
-          type="natural"
           isAnimationActive={false}
-          stroke="var(--color-avail)"
+          stroke={daChartMeta.avail.color}
           strokeWidth={2}
           dot={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(data)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={3}
-          tick={{
-            width: 100,
-            dy: -10,
-          }}
-          tickFormatter={formatBytes}
-        />
+        {getCommonChartComponents({
+          chartData: data,
+          yAxis: {
+            tick: {
+              width: 100,
+            },
+            tickFormatter: (value: number) => formatBytes(value),
+          },
+        })}
       </LineChart>
     </ChartContainer>
   )
@@ -86,7 +79,7 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { config } = useChart()
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (

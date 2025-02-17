@@ -1,22 +1,20 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { useState } from 'react'
-import { Chart } from '~/components/chart/core/chart'
-import { ChartProvider } from '~/components/chart/core/chart-provider'
+import { useMemo, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { useChartLoading } from '../core/chart-loading-context'
-import { ProjectChartTimeRange } from '../core/chart-time-range'
-import { CostsChartHover } from './costs-chart-hover'
-import { CostsChartLegend } from './costs-chart-legend'
+import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
+import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
+import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
-import { useCostChartRenderParams } from './use-cost-chart-render-params'
 
 interface Props {
   milestones: Milestone[]
@@ -31,41 +29,70 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     filter: { type: 'projects', projectIds: [projectId] },
   })
 
-  const { chartRange, columns, formatYAxisLabel, valuesStyle } =
-    useCostChartRenderParams({
-      data,
-      milestones,
-      unit,
-    })
+  const chartData = useMemo(() => {
+    return data?.map(
+      ([
+        timestamp,
+        overheadGas,
+        overheadEth,
+        overheadUsd,
+        calldataGas,
+        calldataEth,
+        calldataUsd,
+        computeGas,
+        computeEth,
+        computeUsd,
+        blobsGas,
+        blobsEth,
+        blobsUsd,
+      ]) => {
+        const calldata =
+          unit === 'usd'
+            ? calldataUsd
+            : unit === 'eth'
+              ? calldataEth
+              : calldataGas
+        const blobs =
+          unit === 'usd' ? blobsUsd : unit === 'eth' ? blobsEth : blobsGas
+        const compute =
+          unit === 'usd' ? computeUsd : unit === 'eth' ? computeEth : computeGas
+        const overhead =
+          unit === 'usd'
+            ? overheadUsd
+            : unit === 'eth'
+              ? overheadEth
+              : overheadGas
+        return {
+          timestamp,
+          calldata,
+          blobs,
+          compute,
+          overhead,
+        }
+      },
+    )
+  }, [data, unit])
+  const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <div className="flex flex-col">
-      <ChartProvider
-        columns={columns}
-        valuesStyle={valuesStyle}
-        formatYAxisLabel={formatYAxisLabel}
-        range={range}
+    <div>
+      <ChartControlsWrapper>
+        <ProjectChartTimeRange range={chartRange} />
+        <CostsChartTimeRangeControls
+          projectSection
+          timeRange={range}
+          setTimeRange={setRange}
+        />
+      </ChartControlsWrapper>
+      <CostsChart
+        data={chartData}
+        unit={unit}
         isLoading={isLoading}
-        renderHoverContents={(data) => (
-          <CostsChartHover
-            data={data}
-            unit={unit}
-            resolution={rangeToResolution(range)}
-          />
-        )}
-      >
-        <ChartControlsWrapper>
-          <ProjectChartTimeRange range={chartRange} />
-          <CostsChartTimeRangeControls
-            projectSection
-            timeRange={range}
-            setTimeRange={setRange}
-          />
-        </ChartControlsWrapper>
-        <Chart className="mt-4" />
-        <CostsChartLegend className="my-2" />
-        <UnitControls unit={unit} setUnit={setUnit} />
-      </ChartProvider>
+        milestones={milestones}
+        resolution={rangeToResolution(range)}
+        className="mb-2 mt-4"
+      />
+      <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
     </div>
   )
 }
@@ -73,15 +100,15 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
 function UnitControls({
   unit,
   setUnit,
+  isLoading,
 }: {
   unit: CostsUnit
   setUnit: (value: CostsUnit) => void
+  isLoading: boolean
 }) {
-  const loading = useChartLoading()
-
   return (
     <div className="flex items-center justify-between gap-2">
-      {loading ? (
+      {isLoading ? (
         <Skeleton className="h-8 w-[156px]" />
       ) : (
         <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
