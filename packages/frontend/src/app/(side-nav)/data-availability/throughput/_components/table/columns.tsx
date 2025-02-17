@@ -43,17 +43,15 @@ export const publicSystemsColumns = [
       columnHelper.display({
         header: 'MAX',
         cell: (ctx) => (
-          <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-            <TableValueCell
-              value={
-                ctx.row.original.maxThroughput
-                  ? {
-                      value: `${ctx.row.original.maxThroughput} MB/s`,
-                    }
-                  : undefined
-              }
-            />
-          </SyncStatusWrapper>
+          <TableValueCell
+            value={
+              ctx.row.original.maxThroughput
+                ? {
+                    value: `${ctx.row.original.maxThroughput} MB/s`,
+                  }
+                : undefined
+            }
+          />
         ),
       }),
     ],
@@ -107,9 +105,7 @@ export const publicSystemsColumns = [
   columnHelper.display({
     header: 'Finality',
     cell: (ctx) => (
-      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell value={{ value: ctx.row.original.finality ?? '' }} />
-      </SyncStatusWrapper>
+      <TableValueCell value={{ value: ctx.row.original.finality ?? '' }} />
     ),
   }),
 ]
