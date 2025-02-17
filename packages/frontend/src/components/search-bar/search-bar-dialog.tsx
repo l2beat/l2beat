@@ -69,7 +69,10 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               keys: ['name', (e) => e.tags?.join() ?? ''],
               scoreFn: (match) => {
                 const score =
-                  match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1)
+                  match.score *
+                  (match.obj.category === 'zkCatalog' || match.obj.isUpcoming
+                    ? 0.9
+                    : 1)
 
                 const normalizedTVS = normalizeTVS(
                   match.obj.tvs ?? 0,
