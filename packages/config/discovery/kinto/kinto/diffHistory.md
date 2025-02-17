@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf12eea38be12e4204266059efd3174c88cc7bf2b
+
+# Diff at Mon, 17 Feb 2025 13:02:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@3bbb29315ffc61a2dfad2ee73f72130e847b115f block: 735231
+- current block number: 735231
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 735231 (main branch discovery), not current.
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl:
++        {"roles":{"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}},"targets":{}}
+    }
+```
+
 Generated with discovered.json: 0x37b67b83806fca58df9b08c3cdaeedb5aa92e6c2
 
 # Diff at Wed, 12 Feb 2025 11:32:56 GMT:
