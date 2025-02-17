@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "conduit-test",
+  "chain": "sepolia",
+  "initialAddresses": [
+    "0xF7b9702532a6a853Fcb789FA3f80DEECEfEdbDce"
+  ]
+}
