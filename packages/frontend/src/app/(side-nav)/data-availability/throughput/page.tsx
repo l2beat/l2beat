@@ -1,10 +1,12 @@
 import { CountBadge } from '~/components/badge/count-badge'
+import { DaThroughputChart } from '~/components/chart/data-availability/da-throughput-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import { PublicSystemInfo } from '../_components/da-category-info'
@@ -17,7 +19,7 @@ export default async function Page() {
 
   return (
     <div>
-      <MainPageHeader>DABEAT Throughput</MainPageHeader>
+      <MainPageHeader>Throughput</MainPageHeader>
       {/* 
         Negative margin is there to make the tabs align with the side nav
         Padding from directory tabs can not be removed because it is needed
@@ -31,6 +33,8 @@ export default async function Page() {
             </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
+            <DaThroughputChart />
+            <HorizontalSeparator className="my-5" />
             <PublicSystemInfo />
             <DaThroughputPublicTable items={publicSystems} />
           </DirectoryTabsContent>
