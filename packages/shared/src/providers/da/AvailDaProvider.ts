@@ -1,4 +1,4 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { PolkadotRpcClient } from '../../clients/rpc-polkadot/PolkadotRpcClient'
 import type { AvailBlob, DaProvider } from './DaProvider'
 
@@ -46,11 +46,12 @@ export class AvailDaProvider implements DaProvider {
 
     const appIndex = block.header.extension.V3.appLookup.index
 
-    assert(
-      targetExtrinsics.length ===
-        block.header.extension.V3.appLookup.index.length,
-      'Mismatch between target extrinsics and app lookup index',
-    )
+    if (
+      targetExtrinsics.length !==
+      block.header.extension.V3.appLookup.index.length
+    ) {
+      return []
+    }
 
     for (const index in appIndex) {
       // actual data starts at byte ~236
