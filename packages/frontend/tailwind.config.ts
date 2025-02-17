@@ -185,6 +185,7 @@ const config: Config = {
       overlay: 'hsl(var(--overlay))',
       divider: 'hsl(var(--divider))',
       link: 'hsl(var(--link))',
+      'chart-ethereum': 'hsl(var(--chart-ethereum))',
     },
     screens: {
       xs: '400px',
