@@ -12,6 +12,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/chart'
+import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -103,7 +104,7 @@ export function StackedTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={{ stroke: 'hsl(var(--primary))' }}
+          activeDot={DEFAULT_ACTIVE_DOT}
         />
         {getCommonChartComponents({
           chartData: data,

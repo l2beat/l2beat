@@ -13,6 +13,7 @@ import {
   RollupsFillGradientDef,
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
+import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -67,7 +68,7 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           stroke="url(#stroke)"
           strokeWidth={2}
           isAnimationActive={false}
-          activeDot={{ fill: 'white', stroke: 'hsl(var(--primary))' }}
+          activeDot={DEFAULT_ACTIVE_DOT}
         />
         {getCommonChartComponents({
           chartData: data,

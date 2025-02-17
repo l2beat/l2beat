@@ -29,6 +29,7 @@ import {
   ValidiumsAndOptimiumsFillGradientDef,
   ValidiumsAndOptimiumsStrokeGradientDef,
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -73,9 +74,8 @@ export function ActivityChart({
   const chartConfig = {
     projects: {
       label:
-        (projectName ?? type === 'ValidiumsAndOptimiums')
-          ? 'Validiums and Optimiums'
-          : type,
+        projectName ??
+        (type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type),
       color:
         type === 'ValidiumsAndOptimiums'
           ? 'hsl(var(--indicator-validiums-optimiums))'
@@ -110,6 +110,10 @@ export function ActivityChart({
           fillOpacity={1}
           dot={false}
           isAnimationActive={false}
+          activeDot={{
+            ...DEFAULT_ACTIVE_DOT,
+            fill: 'var(--color-ethereum)',
+          }}
         />
         {showMainnet && (
           <Area
@@ -120,6 +124,10 @@ export function ActivityChart({
             fillOpacity={1}
             dot={false}
             isAnimationActive={false}
+            activeDot={{
+              ...DEFAULT_ACTIVE_DOT,
+              fill: 'var(--color-projects)',
+            }}
           />
         )}
         {getCommonChartComponents({
