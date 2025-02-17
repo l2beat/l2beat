@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 737223,
-  "configHash": "0x0ab2da4247373aed05a36b539622cb22fa6ec01aba7dde9e64ca162e5b72c166",
+  "blockNumber": 738329,
+  "configHash": "0x37337ee4548a87d0cef8821a7d9f5950303d1d2523087959c326c0896cd0d403",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1739520135,
+        "clock": 1739626508,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1739520135,
+        "clock": 1739626508,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1739520135,
+        "clock": 1739626508,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "31024425229172320475",
+        "getDeposit": "30856006947310280475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -808,7 +808,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4462,
+        "getNonce": 4463,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -889,7 +889,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 14451,
+        "globalMessageCount": 14575,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1230,10 +1230,27 @@
       }
     },
     {
+      "name": "BeaconKintoWallet",
+      "address": "0x87f0eE85bF3198654900a422832157abBba30828",
+      "sourceHashes": [
+        "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
+      ],
+      "sinceTimestamp": 1703803644,
+      "values": {
+        "$immutable": true,
+        "implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
+        "owner": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+      },
+      "derivedName": "UpgradeableBeacon"
+    },
+    {
       "name": "",
       "address": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
       "unverified": true,
+      "template": "orbitstack/UpgradeExecutor",
       "proxyType": "EIP1967 proxy",
+      "displayName": "UpgradeExecutor",
+      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1280,8 +1297,27 @@
             ["0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00"]
           ]
         ],
-        "$upgradeCount": 2
-      }
+        "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": {
+            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+            "members": ["0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"]
+          },
+          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": {
+            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+            "members": [
+              "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
+              "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B",
+              "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+            ]
+          }
+        }
+      },
+      "errors": { "executors": "Processing error occurred." }
     },
     {
       "name": "KintoWalletFactory",
@@ -1449,7 +1485,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 71400
+        "totalWallets": 71462
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1565,11 +1601,11 @@
       "sinceTimestamp": 1729791296,
       "values": {
         "$immutable": true,
-        "AdditionalRoles": [
-          { "roleId": "1635978423191113331", "label": "NIO_GOVERNOR_ROLE" },
-          { "roleId": "8663528507529876195", "label": "UPGRADER_ROLE" },
-          { "roleId": "14661544942390944024", "label": "SECURITY_COUNCIL_ROLE" }
-        ],
+        "AdditionalRoleLabels": {
+          "NIO_GOVERNOR_ROLE": ["1635978423191113331"],
+          "UPGRADER_ROLE": ["8663528507529876195"],
+          "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
+        },
         "ADMIN_ROLE": 0,
         "expiration": 604800,
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1659,8 +1695,8 @@
           "severity": "HIGH",
           "description": "List of scheduled operations."
         },
-        "AdditionalRoles": {
-          "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."
+        "AdditionalRoleLabels": {
+          "description": "Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."
         },
         "RolesGranted": { "description": "List of roles granted to accounts." }
       },
@@ -1745,16 +1781,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "489143041108271653792013",
-        "getUnclaimedLimit": "191001579689043782630702",
+        "getTotalLimit": "491506441233492556754598",
+        "getUnclaimedLimit": "192575054612891899746925",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0x427fda436436b22ff40c7d1a192fad07f35f2f8cb3f34a28c780007fd6f375b2",
+        "root": "0x594af43244dc7b8c0edf7f1689db4014be75b7ca6b572cc5e05ed685e00e5d22",
         "startTime": 1718690400,
-        "totalClaimed": "298141461419227871161311",
+        "totalClaimed": "298931386620600657007673",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1982,7 +2018,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1739517189,
+        "lastMonitoredAt": 1739623333,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1996,7 +2032,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 71740,
+        "totalSupply": 71802,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -2035,6 +2071,7 @@
       "name": "KintoFoundation",
       "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
     },
+    { "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5" },
     { "address": "0x0C1df30B4576A1A94D9528854516D4d425Cf9323" },
     { "address": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e" },
     { "address": "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4" },
@@ -2052,6 +2089,7 @@
       ]
     },
     { "address": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c" },
+    { "address": "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B" },
     {
       "address": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "severity": "MEDIUM",
@@ -2764,6 +2802,16 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x87f0eE85bF3198654900a422832157abBba30828": [
+      "constructor(address implementation_) payable",
+      "function implementation() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3320,6 +3368,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
+    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
 }

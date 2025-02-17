@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xfcff6126006b8b5b03cde012364bb4489e8eb733
+Generated with discovered.json: 0x33ec4b3f321d9fa77192a5ddb1a614ab28b02cf2
 
-# Diff at Fri, 14 Feb 2025 08:03:03 GMT:
+# Diff at Sat, 15 Feb 2025 13:58:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2292c9ed914c0bc0ea59823c1f7642c7fd880d25 block: 735231
-- current block number: 737223
+- comparing to: main@4091ce04373646e743c4d54ea4e92db915d8f56c block: 735231
+- current block number: 738329
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related. Some Access manager Events are not correctly fetched.
 
 ## Watched changes
 
@@ -47,9 +47,8 @@ Provide description of changes. This section will be preserved.
 +        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
       receivedPermissions.3.description:
 +        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
-+++ description: Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.
-      values.AdditionalRoles.2:
-+        {"roleId":"14661544942390944024","label":"SECURITY_COUNCIL_ROLE"}
+      values.AdditionalRoleLabels.SECURITY_COUNCIL_ROLE:
++        ["14661544942390944024"]
       values.RolesGranted.8663528507529876195.account:
 -        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
 +        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e"
@@ -130,6 +129,43 @@ discovery. Values are for block 735231 (main branch discovery), not current.
 -        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts."
 +        "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA."
     }
+```
+
+```diff
+    contract  (0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775":{"adminRole":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","members":["0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"]},"0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63":{"adminRole":"0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775","members":["0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5","0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"]}}
+      template:
++        "orbitstack/UpgradeExecutor"
+      displayName:
++        "UpgradeExecutor"
+      description:
++        "Central contract defining the access control permissions for upgrading the system contract implementations."
+      errors:
++        {"executors":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.AdditionalRoles:
+-        [{"roleId":"1635978423191113331","label":"NIO_GOVERNOR_ROLE"},{"roleId":"8663528507529876195","label":"UPGRADER_ROLE"}]
++++ description: Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.
+      values.AdditionalRoleLabels:
++        {"NIO_GOVERNOR_ROLE":["1635978423191113331"],"UPGRADER_ROLE":["8663528507529876195"]}
+      fieldMeta.AdditionalRoles:
+-        {"description":"Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."}
+      fieldMeta.AdditionalRoleLabels:
++        {"description":"Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x37b67b83806fca58df9b08c3cdaeedb5aa92e6c2
