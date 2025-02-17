@@ -44,3 +44,7 @@ export {
   isDiscoveryDriven,
 } from './utils/discoveryDriven'
 export { isVerified } from './verification/isVerified'
+
+import { runConfigAdjustments } from './adjustments'
+
+runConfigAdjustments()

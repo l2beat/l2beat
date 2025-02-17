@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -280,9 +279,4 @@ export const eigenda: BaseProject = {
       type: 'general',
     },
   ],
-}
-
-// TODO: different solution for this
-if (eigenda.statuses) {
-  eigenda.statuses.isUnverified = !isProjectVerified(eigenda)
 }

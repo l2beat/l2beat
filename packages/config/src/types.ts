@@ -186,6 +186,8 @@ export interface ScalingProjectDisplay {
 
 export interface ProjectEscrow {
   chain: string
+  /** Automatically set in config based on chain name. */
+  chainId?: number
   /** Address of the escrow. Use etherscan to verify its correctness. */
   address: EthereumAddress
   /** Should use name of the contract for escrow name */
@@ -601,6 +603,8 @@ export type OnchainVerifier = {
   name: string
   description: string
   contractAddress: EthereumAddress
+  /** Link to the smart contract code on an explorer. Automatically set. */
+  url?: string
   chainId: ChainId
   subVerifiers: SubVerifier[]
 } & (

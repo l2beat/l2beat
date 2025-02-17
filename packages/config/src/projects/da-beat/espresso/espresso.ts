@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -304,9 +303,4 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       type: 'general',
     },
   ],
-}
-
-// TODO: different solution for this
-if (espresso.statuses) {
-  espresso.statuses.isUnverified = !isProjectVerified(espresso)
 }
