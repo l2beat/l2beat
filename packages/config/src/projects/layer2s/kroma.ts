@@ -189,6 +189,7 @@ export const kroma: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0xfF00000000000000000000000000000000000255',
       sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
     },

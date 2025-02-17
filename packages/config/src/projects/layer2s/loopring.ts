@@ -121,6 +121,7 @@ export const loopring: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11',
       sequencers: [],
     },

@@ -169,6 +169,7 @@ export const linea: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0xd19d4b5d358258f05d7b411e21a1460d11b0876f',
       sequencers: [
         '0xa9268341831efa4937537bc3e9eb36dbece83c7e',

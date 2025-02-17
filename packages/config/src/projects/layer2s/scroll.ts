@@ -215,6 +215,7 @@ export const scroll: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
       sequencers: [
         '0xcf2898225ed05be911d3709d9417e86e0b4cfc8f',
