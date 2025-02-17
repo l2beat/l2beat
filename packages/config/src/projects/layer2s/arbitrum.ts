@@ -373,7 +373,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Bold, permissionless proof system, deployed',
+      title: 'BoLD, permissionless proof system, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',
       date: '2025-02-15T00:00:00Z',
       type: 'general',
