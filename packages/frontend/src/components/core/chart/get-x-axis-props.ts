@@ -52,12 +52,6 @@ function getCondition(actualRangeInDays: number) {
         date.getDate() === 1 &&
         date.getMonth() % 2 === 0
       )
-    if (actualRangeInDays <= 730)
-      return (
-        start.toNumber() % UnixTime.DAY === 0 &&
-        date.getDate() === 1 &&
-        date.getMonth() % 4 === 0
-      )
     if (actualRangeInDays <= 1095)
       return (
         start.toNumber() % UnixTime.DAY === 0 &&

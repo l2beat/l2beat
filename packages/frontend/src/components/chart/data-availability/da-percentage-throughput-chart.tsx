@@ -1,6 +1,7 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
+import { round } from 'lodash'
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
@@ -36,20 +37,12 @@ export function DaPercentageThroughputChart({
 }: Props) {
   const chartData = data?.map((item) => {
     const total = item.ethereum + item.celestia + item.avail
-    // -0.1 is just a quick hack around the fact that the sum of the percentages is not 100%
-    const ethereumPercent = (item.ethereum / total) * 100 - 0.1
-    const celestiaPercent = (item.celestia / total) * 100 - 0.1
-    const availPercent =
-      Math.min(
-        (item.avail / total) * 100,
-        100 - ethereumPercent - celestiaPercent,
-      ) - 0.1
 
     return {
       timestamp: item.timestamp,
-      ethereum: ethereumPercent,
-      celestia: celestiaPercent,
-      avail: availPercent,
+      ethereum: round((item.ethereum / total) * 100, 2),
+      celestia: round((item.celestia / total) * 100, 2),
+      avail: round((item.avail / total) * 100, 2),
     }
   })
 
@@ -83,6 +76,8 @@ export function DaPercentageThroughputChart({
           tickLine={false}
           axisLine={false}
           unit="%"
+          domain={[0, 100]}
+          allowDataOverflow
           mirror
           tickCount={3}
           tick={{
