@@ -5,10 +5,10 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
-import type { Milestone } from '@l2beat/config'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
+import type { TimestampedMilestone } from './utils/get-timestamped-milestones'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -45,14 +45,14 @@ const ChartContainer = ({
   children,
   config,
   isLoading,
-  dataWithMilestones,
+  timestampedMilestones,
   ...props
 }: React.ComponentProps<'div'> & {
   config: ChartConfig
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
-  dataWithMilestones?: { milestone: Milestone | undefined }[]
+  timestampedMilestones?: TimestampedMilestone[]
   isLoading?: boolean
 }) => {
   const uniqueId = React.useId()
@@ -97,8 +97,11 @@ const ChartContainer = ({
             className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
           />
         )}
-        {!isLoading && dataWithMilestones && (
-          <ChartMilestones chartData={dataWithMilestones} ref={ref} />
+        {!isLoading && timestampedMilestones && (
+          <ChartMilestones
+            timestampedMilestones={timestampedMilestones}
+            ref={ref}
+          />
         )}
       </div>
     </ChartContext.Provider>

@@ -32,7 +32,7 @@ import {
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
+import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -89,17 +89,9 @@ export function ActivityChart({
     },
   } satisfies ChartConfig
 
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
-  const milestonesData = useMemo(
-    () =>
-      data?.map((point) => ({
-        timestamp: point.timestamp,
-        milestone: mappedMilestones[point.timestamp],
-      })),
-    [data, mappedMilestones],
+  const timestampedMilestones = useMemo(
+    () => getTimestampedMilestones(data, milestones),
+    [data, milestones],
   )
 
   return (
@@ -107,7 +99,7 @@ export function ActivityChart({
       className={className}
       config={chartConfig}
       isLoading={isLoading}
-      dataWithMilestones={milestonesData}
+      timestampedMilestones={timestampedMilestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />

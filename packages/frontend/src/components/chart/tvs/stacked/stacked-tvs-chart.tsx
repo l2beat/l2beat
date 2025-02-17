@@ -14,7 +14,7 @@ import {
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
+import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
@@ -58,29 +58,21 @@ export function StackedTvsChart({
   isLoading,
   className,
 }: Props) {
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
-  const milestonesData = useMemo(
-    () =>
-      data?.map((point) => ({
-        timestamp: point.timestamp,
-        milestone: mappedMilestones[point.timestamp],
-      })),
-    [data, mappedMilestones],
+  const timestampedMilestones = useMemo(
+    () => getTimestampedMilestones(data, milestones ?? []),
+    [data, milestones],
   )
 
   return (
     <ChartContainer
       config={chartConfig}
       isLoading={isLoading}
-      dataWithMilestones={milestonesData}
+      timestampedMilestones={timestampedMilestones}
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
-        <ChartTooltip content={<CustomTooltip />} />
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
           type="natural"
@@ -126,7 +118,8 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
+  unit,
+}: TooltipProps<number, string> & { unit: ChartUnit }) {
   if (!active || !payload || typeof label !== 'number') return null
   const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
@@ -140,7 +133,7 @@ function CustomTooltip({
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
-          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
+          <span className="text-primary">{formatCurrency(total, unit)}</span>
         </div>
         <HorizontalSeparator />
         <div>
@@ -166,7 +159,7 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {formatCurrency(entry.value, 'usd')}
+                  {formatCurrency(entry.value, unit)}
                 </span>
               </div>
             )

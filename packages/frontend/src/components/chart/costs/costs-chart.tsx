@@ -12,7 +12,7 @@ import {
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { mapMilestones } from '~/components/core/chart/utils/map-milestones'
+import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -65,24 +65,16 @@ export function CostsChart({
   className,
   resolution,
 }: Props) {
-  const mappedMilestones = useMemo(() => {
-    return mapMilestones(milestones)
-  }, [milestones])
-
-  const milestonesData = useMemo(
-    () =>
-      data?.map((p) => ({
-        timestamp: p.timestamp,
-        milestone: mappedMilestones[p.timestamp],
-      })),
-    [data, mappedMilestones],
+  const timestampedMilestones = useMemo(
+    () => getTimestampedMilestones(data, milestones),
+    [data, milestones],
   )
 
   return (
     <ChartContainer
       config={chartConfig}
       isLoading={isLoading}
-      dataWithMilestones={milestonesData}
+      timestampedMilestones={timestampedMilestones}
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>

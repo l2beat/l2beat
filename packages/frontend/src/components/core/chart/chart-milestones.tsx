@@ -14,16 +14,14 @@ import {
   DrawerTrigger,
 } from '../drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
+import type { TimestampedMilestone } from './utils/get-timestamped-milestones'
 
-export function ChartMilestones<
-  T extends { milestone: Milestone | undefined },
->({
-  chartData,
-  ref,
-}: {
-  chartData: T[] | undefined
+interface Props {
+  timestampedMilestones: TimestampedMilestone[] | undefined
   ref: React.RefObject<HTMLDivElement | null>
-}) {
+}
+
+export function ChartMilestones({ timestampedMilestones, ref }: Props) {
   const [width, setWidth] = useState<number>()
 
   useEffect(() => {
@@ -36,13 +34,13 @@ export function ChartMilestones<
     setWidth(ref.current.getBoundingClientRect().width)
   })
 
-  if (!chartData || width === undefined) return null
+  if (!timestampedMilestones || width === undefined) return null
 
   return (
     <div data-role="milestones">
-      {chartData?.map((data, index) => {
+      {timestampedMilestones?.map((data, index) => {
         if (!data.milestone) return null
-        const x = index / (chartData.length - 1)
+        const x = index / (timestampedMilestones.length - 1)
         return (
           <ChartMilestone
             key={data.milestone.date}
@@ -146,46 +144,32 @@ function ChartMilestone({
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>{icon}</TooltipTrigger>
       <TooltipContent side="top">
-        <ChartMilestoneHover milestone={milestone} />
+        <div className="mb-1 whitespace-nowrap">
+          {formatDate(milestone.date.slice(0, 10))}
+        </div>
+        <div className="mb-2 flex max-w-[216px] flex-wrap font-bold">
+          {milestone.type === 'incident' ? (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              className="absolute mt-[2px] fill-red-800 stroke-red-700 md:mt-1"
+              role="img"
+            >
+              <path
+                d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
+                strokeWidth="2"
+              />
+            </svg>
+          ) : (
+            <div className="absolute mt-[2px] size-2.5 rotate-45 border-2 border-green-500 bg-green-700 md:mt-1"></div>
+          )}
+          <span className="ml-4 text-left">{milestone.title}</span>
+        </div>
+        <div className="mb-1 max-w-[216px] text-left">
+          {milestone.description}
+        </div>
       </TooltipContent>
     </Tooltip>
-  )
-}
-
-interface Props {
-  milestone: Milestone
-}
-
-function ChartMilestoneHover({ milestone }: Props) {
-  const isMobile = useIsMobile()
-  return (
-    <div>
-      <div className="mb-1 whitespace-nowrap">
-        {formatDate(milestone.date.slice(0, 10))}
-      </div>
-      <div className="mb-2 flex max-w-[216px] flex-wrap font-bold">
-        {milestone.type === 'incident' ? (
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            className="absolute mt-[2px] fill-red-800 stroke-red-700 md:mt-1"
-            role="img"
-          >
-            <path
-              d="M2.11842 14.4966L9.13637 2.46527C9.52224 1.80374 10.4781 1.80375 10.864 2.46528L17.882 14.497C18.2708 15.1637 17.7899 16.0008 17.0182 16.0008L10.0003 16.0008L10.0002 16.0008L2.98214 16.0004C2.21039 16.0004 1.72956 15.1632 2.11842 14.4966Z"
-              strokeWidth="2"
-            />
-          </svg>
-        ) : (
-          <div className="absolute mt-[2px] size-2.5 rotate-45 border-2 border-green-500 bg-green-700 md:mt-1"></div>
-        )}
-        <span className="ml-4 text-left">{milestone.title}</span>
-      </div>
-      <div className="mb-1 max-w-[216px] text-left">
-        {milestone.description}
-      </div>
-      {isMobile && <CustomLink href={milestone.url}>Learn more</CustomLink>}
-    </div>
   )
 }
