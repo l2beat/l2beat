@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -11,7 +11,6 @@ const discovery = new ProjectDiscovery('playblock', 'nova')
 export const playblock: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720191862), // 2024-07-05T15:04:22Z
   discovery,
-  hostChain: ProjectId('nova'),
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
@@ -39,27 +38,5 @@ export const playblock: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'RollupOwnerEOA',
-          discovery.getAccessControlRolePermission(
-            'UpgradeExecutor',
-            'EXECUTOR_ROLE',
-          ),
-          'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
-        ),
-      ],
-    },
-  },
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('ProxyAdmin', {
-        description:
-          'This contract can upgrade the implementations of the rollup proxies.',
-      }),
-    ],
-  },
   customDa: AnytrustDAC({ discovery }),
 })

@@ -281,7 +281,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": true,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingEigenDA": false
         },
         "overhead": 1100,
         "owner": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
@@ -398,7 +399,10 @@
   "eoas": [
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A" },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     { "address": "0x35Aee2b2aa6ACB13C3a38a58AEb069C163734FaD" },
     {
       "address": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",

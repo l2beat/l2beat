@@ -56,7 +56,7 @@ const getCachedResponse = cache(
   },
   ['scaling-tvs-route'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

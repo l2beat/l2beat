@@ -36,7 +36,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
   },
   ['getCachedTvsBreakdownForProject'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

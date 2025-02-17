@@ -9,6 +9,7 @@ import type {
   ProjectLivenessInfo,
 } from '../../types'
 import { isVerified } from '../../verification/isVerified'
+import { badges } from '../badges'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
@@ -52,6 +53,8 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       description: p.display.description,
       links: p.display.links,
     },
+    contracts: p.contracts,
+    permissions: p.permissions,
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -69,6 +72,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
+      badges: p.badges?.map((id) => ({ ...badges[id], id })),
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -86,6 +90,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
     milestones: p.milestones,
+    daTrackingConfig: p.config.daTracking,
     // tags
     isScaling: true,
     isZkCatalog: p.stateValidation?.proofVerification ? true : undefined,
@@ -155,6 +160,8 @@ function bridgeToProject(p: Bridge): BaseProject {
       destination: p.technology.destination,
       validatedBy: p.riskView.validatedBy.value,
     },
+    contracts: p.contracts,
+    permissions: p.permissions,
     bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],

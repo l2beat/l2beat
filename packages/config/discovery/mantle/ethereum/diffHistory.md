@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x40fd0aceb1b11ae0548b3afd418d36b0ee0edb01
+
+# Diff at Fri, 14 Feb 2025 10:58:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21680644
+- current block number: 21844254
+
+## Description
+
+MS signer changes.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.6:
+-        "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A"
++        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+      values.$members.4:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+      values.$members.3:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+      values.$members.2:
+-        "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC"
++        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x7735cDcc85E63A7684C29652DbE8B845e0b4635A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
+Generated with discovered.json: 0xe4d8cddd84a7321c4a3efc6354505347078a6f1b
+
+# Diff at Mon, 10 Feb 2025 19:04:14 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21680644
+- current block number: 21680644
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680644 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x79eafeddf5109bc94236e6500db930f6e22cdb22
 
 # Diff at Tue, 04 Feb 2025 12:31:42 GMT:

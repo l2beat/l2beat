@@ -68,8 +68,15 @@ function createDaLayerIndexers(
 ): DataAvailabilityIndexer[] {
   const indexerService = new IndexerService(dependencies.database)
 
-  const indexers: DataAvailabilityIndexer[] = config.layers.flatMap((layer) => {
-    if (layer === 'ethereum') {
+  const daLayers: Set<ProjectId> = new Set()
+  for (const project of config.projects) {
+    daLayers.add(project.config.daLayer)
+  }
+
+  const indexers: DataAvailabilityIndexer[] = Array.from(
+    daLayers.values(),
+  ).flatMap((layer) => {
+    if (layer === ProjectId('ethereum')) {
       const blockTimestampProvider =
         providers.block.getBlockTimestampProvider(layer)
 

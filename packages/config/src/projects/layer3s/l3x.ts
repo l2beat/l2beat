@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
@@ -12,7 +12,6 @@ const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 
 export const l3x: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
-  hostChain: ProjectId('arbitrum'),
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
@@ -51,7 +50,6 @@ export const l3x: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,

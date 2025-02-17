@@ -23,7 +23,7 @@ export async function getScalingLivenessEntries() {
     getProjectsChangeReport(),
     getLiveness(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'livenessInfo'],
+      select: ['statuses', 'scalingInfo', 'livenessInfo', 'display'],
       optional: ['scalingDa'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
@@ -56,7 +56,10 @@ export interface ScalingLivenessEntry extends CommonScalingEntry {
 }
 
 function getScalingLivenessEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'livenessInfo', 'scalingDa'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'livenessInfo' | 'display',
+    'scalingDa'
+  >,
   changes: ProjectChanges,
   liveness: LivenessProject | undefined,
   tvs: number | undefined,

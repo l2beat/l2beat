@@ -2,6 +2,7 @@ import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
+  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type {
@@ -10,25 +11,51 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId } from '@l2beat/shared-pure'
 
 export class DaService {
+  readonly mappedConfig: {
+    ethereum: {
+      id: ProjectId
+      config: EthereumDaTrackingConfig
+    }[]
+    celestia: {
+      id: ProjectId
+      config: CelestiaDaTrackingConfig
+    }[]
+    avail: {
+      id: ProjectId
+      config: AvailDaTrackingConfig
+    }[]
+  }
+
   constructor(
-    private readonly configs: {
-      ethereum: {
-        id: ProjectId
-        config: EthereumDaTrackingConfig
-      }[]
-      celestia: {
-        id: ProjectId
-        config: CelestiaDaTrackingConfig
-      }[]
-      avail: {
-        id: ProjectId
-        config: AvailDaTrackingConfig
-      }[]
-    },
-  ) {}
+    config: {
+      id: ProjectId
+      config: ProjectDaTrackingConfig
+    }[],
+  ) {
+    this.mappedConfig = {
+      ethereum: config
+        .filter((entry) => entry.config.type === 'ethereum')
+        .map((entry) => ({
+          id: entry.id,
+          config: entry.config as EthereumDaTrackingConfig,
+        })),
+      celestia: config
+        .filter((entry) => entry.config.type === 'celestia')
+        .map((entry) => ({
+          id: entry.id,
+          config: entry.config as CelestiaDaTrackingConfig,
+        })),
+      avail: config
+        .filter((entry) => entry.config.type === 'avail')
+        .map((entry) => ({
+          id: entry.id,
+          config: entry.config as AvailDaTrackingConfig,
+        })),
+    }
+  }
 
   generateRecords(
     blobs: DaBlob[],
@@ -64,7 +91,8 @@ export class DaService {
     blob: DaBlob,
   ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
     const daLayerRecord: DataAvailabilityRecord = {
-      projectId: ProjectId(blob.type),
+      projectId: blob.daLayer,
+      daLayer: blob.daLayer,
       timestamp: blob.blockTimestamp.toStartOf('day'),
       totalSize: blob.size,
     }
@@ -73,17 +101,17 @@ export class DaService {
 
     switch (blob.type) {
       case 'ethereum':
-        projectId = this.configs.ethereum.find((entry) =>
+        projectId = this.mappedConfig.ethereum.find((entry) =>
           matchEthereumProject(blob, entry.config),
         )?.id
         break
       case 'celestia':
-        projectId = this.configs.celestia.find((entry) =>
+        projectId = this.mappedConfig.celestia.find((entry) =>
           matchCelestiaProject(blob, entry.config),
         )?.id
         break
       case 'avail':
-        projectId = this.configs.avail.find((entry) =>
+        projectId = this.mappedConfig.avail.find((entry) =>
           matchAvailProject(blob, entry.config),
         )?.id
         break
@@ -92,6 +120,7 @@ export class DaService {
     const projectRecord = projectId
       ? {
           projectId,
+          daLayer: blob.daLayer,
           timestamp: blob.blockTimestamp.toStartOf('day'),
           totalSize: blob.size,
         }

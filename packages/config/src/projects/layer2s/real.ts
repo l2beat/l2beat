@@ -56,7 +56,6 @@ export const real: Layer2 = orbitStackL2({
     minTimestampForTvl: new UnixTime(1710580715),
     coingeckoPlatform: 're-al',
   },
-  discoveryDrivenData: true,
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),

@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 21802841,
+  "blockNumber": 21829679,
   "configHash": "0xa14b37f05264d23aaf9493d93e86e30ca827917ccbc325307de28a7a7c64ac98",
   "contracts": [
     {
@@ -149,8 +149,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 980060,
-          "prevBlockNum": 21802529
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 21829462
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -684,10 +684,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 26166780,
-        "latestOutputIndex": 14761,
-        "nextBlockNumber": 26168580,
-        "nextOutputIndex": 14762,
+        "latestBlockNumber": 26326980,
+        "latestOutputIndex": 14850,
+        "nextBlockNumber": 26328780,
+        "nextOutputIndex": 14851,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -790,7 +790,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": true
+          "isSequencerSendingBlobTx": true,
+          "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -854,9 +855,9 @@
           "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-          "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e",
+          "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
-          "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
+          "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
@@ -868,7 +869,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1108,7 +1109,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628498",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628598",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1197,7 +1198,6 @@
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
     { "address": "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c" },
-    { "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e" },
     {
       "address": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
       "receivedPermissions": [
@@ -1210,7 +1210,6 @@
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
     { "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f" },
     { "address": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf" },
-    { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
     { "address": "0x92827223f6b397CE9F208eE352bacA710765cACb" },
@@ -1223,8 +1222,10 @@
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
     { "address": "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7" },
     { "address": "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81" },
+    { "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90" },
     { "address": "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB" },
     { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
+    { "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c" },
     { "address": "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4" },
     { "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D" }
   ],

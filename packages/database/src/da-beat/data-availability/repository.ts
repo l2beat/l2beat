@@ -3,6 +3,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
 import { selectDataAvailability } from './select'
 
+// TODO: cleanup unused methods after removing EthereumDaIndexer
 export class DataAvailabilityRepository extends BaseRepository {
   async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
@@ -21,9 +22,11 @@ export class DataAvailabilityRepository extends BaseRepository {
         .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['timestamp', 'projectId']).doUpdateSet((eb) => ({
-            totalSize: eb.ref('excluded.totalSize'),
-          })),
+          cb
+            .columns(['timestamp', 'daLayer', 'projectId'])
+            .doUpdateSet((eb) => ({
+              totalSize: eb.ref('excluded.totalSize'),
+            })),
         )
         .execute()
     })
@@ -67,6 +70,39 @@ export class DataAvailabilityRepository extends BaseRepository {
       .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
+  }
+
+  async getByProjectIdsAndTimeRange(
+    projectIds: string[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getLargestPosterByProjectIdsAndTimestamp(
+    projectIds: string[],
+    timestamp: UnixTime,
+  ) {
+    const row = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('projectId', 'in', projectIds)
+      .where('timestamp', '=', timestamp.toDate())
+      .orderBy('totalSize', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row && toRecord(row)
   }
 
   async getByProjectIdAndFrom(

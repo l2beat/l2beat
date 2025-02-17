@@ -35,6 +35,19 @@ const OP_STACK_CELESTIA_DA_EXAMPLE_INPUT =
 const BLOB_TX_TYPE = 3
 
 /**
+ * https://specs.optimism.io/experimental/alt-da.html#input-commitment-submission
+ * These versioning prefixes are super weird.
+ *
+ * aevo: 		  0x01 01 00  	(EIGEN)
+ * soma: 		  0x01 00 00 		(EIGEN)
+ * donatuz: 	0x01 01 00		(EIGEN)
+ * automata: 	0x01 00 a5 		(challenges)
+ * syndicate: 0x01 00 9c		(keccak256)
+ */
+const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
+const EIGEN_DA_COMMITMENT_THIRD_BYTE = '00'
+
+/**
  * This is a OP Stack specific handler that is used to check if
  * the OP Stack project is still posting the transaction data on Ethereum.
  */
@@ -93,11 +106,23 @@ export class OpStackDAHandler implements Handler {
     const isSequencerSendingBlobTx =
       hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
+    const isUsingEigenDA =
+      hasTxs &&
+      lastTxs.some((tx) => {
+        const thirdByte = tx.input.slice(6, 8)
+
+        const prefixMatch = tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX)
+        const thirdByteMatch = thirdByte === EIGEN_DA_COMMITMENT_THIRD_BYTE
+
+        return prefixMatch && thirdByteMatch
+      })
+
     return {
       field: this.field,
       value: {
         isSomeTxsLengthEqualToCelestiaDAExample,
         isSequencerSendingBlobTx,
+        isUsingEigenDA,
       },
     }
   }

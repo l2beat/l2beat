@@ -124,6 +124,7 @@ import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { pepeunchained } from './pepeunchained'
 import { phala } from './phala'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
@@ -134,6 +135,7 @@ import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
+import { r0ar } from './r0ar'
 import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
@@ -169,6 +171,7 @@ import { sxt } from './sxt'
 import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { tea } from './tea'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
@@ -325,6 +328,7 @@ export const layer2s: Layer2[] = [
   parallel,
   patex,
   payy,
+  pepeunchained,
   phala,
   playchain,
   plumenetwork,
@@ -343,6 +347,7 @@ export const layer2s: Layer2[] = [
   rhinofi,
   rise,
   river,
+  r0ar,
   rss3,
   rufus,
   scroll,
@@ -369,6 +374,7 @@ export const layer2s: Layer2[] = [
   sxnetwork,
   taiko,
   tanx,
+  tea,
   telos,
   ten,
   termstructure,

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe15df813d52d414c3cf9a7e9ef950c6bb747eb6e
+
+# Diff at Mon, 10 Feb 2025 13:45:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2b0c549e9be2ec1627969531e2ff05c01d31a788 block: 21808054
+- current block number: 21816462
+
+## Description
+
+Add description to explain the differences between the two multisigs that can be used.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21808054 (main branch discovery), not current.
+
+```diff
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896) {
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+      description:
+-        "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time."
++        "An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages."
+    }
+```
+
 Generated with discovered.json: 0xb96ca09ceb1ec8cb97c9551db7056e11394d3075
 
 # Diff at Sun, 09 Feb 2025 14:57:27 GMT:

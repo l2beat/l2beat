@@ -540,7 +540,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": true
+          "isSequencerSendingBlobTx": true,
+          "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -595,7 +596,10 @@
         }
       ]
     },
-    { "address": "0x356000Cec4fC967f8FC372381D983426760A0391" },
+    {
+      "name": "Caldera",
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
     {
       "address": "0x52ee324F2bCD0c5363d713eb9f62D1eE47266ac1",
       "receivedPermissions": [

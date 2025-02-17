@@ -8,7 +8,7 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId } from './projects/badges'
+import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -702,25 +702,23 @@ export interface CustomDa {
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
-// General da-layer tracking
-
-export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
-// Per-project da-layer tracking
-
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
+  daLayer: ProjectId
   inbox: string
   sequencers?: string[]
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
+  daLayer: ProjectId
   namespace: string
   signers?: string[]
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
+  daLayer: ProjectId
   appId: string
 }
 
@@ -815,6 +813,7 @@ export interface BaseProject {
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
+  daTrackingConfig?: ProjectDaTrackingConfig
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
@@ -885,7 +884,10 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
+  badges: ScalingProjectBadge[] | undefined
 }
+
+export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
 
 export type ScalingProjectStage =
   | 'Not applicable'
@@ -921,12 +923,11 @@ export interface DaLayer {
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
   consensusAlgorithm?: DaConsensusAlgorithm
-  throughput?: DaLayerThroughput
+  throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
-  daTracking?: DaLayerTrackingConfig
 }
 
 export interface DaBridge {
@@ -965,10 +966,20 @@ export interface DaLayerThroughput {
    */
   size: number
   /**
+   * Desired size of blob data per block. Should be less than or equal to size.
+   * @unit KB - kilobytes
+   */
+  target?: number
+  /**
    * Batch frequency for data availability. Together with batchSize it determines max throughput.
    * @unit seconds
    */
   frequency: number
+  /**
+   * Inclusive timestamp of when this throughput was introduced.
+   * If more than one throughput is provided, it will be used as the end time of previous one
+   */
+  sinceTimestamp: number
 }
 
 export interface DaEconomicSecurity {
@@ -1059,6 +1070,13 @@ export interface ProjectContracts {
   risks: ScalingProjectRisk[]
 }
 
+export interface ProjectUpgradeableActor {
+  /** Actor from permissions that can upgrade */
+  name: string
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  delay: string
+}
+
 export interface ProjectContract {
   /** Address of the contract */
   address: EthereumAddress
@@ -1072,10 +1090,8 @@ export interface ProjectContract {
   description?: string
   /** Details about upgradeability */
   upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
   /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
   /** Other considerations worth mentioning about the upgrade process */
   upgradeConsiderations?: string
   /** Pasuable contract */

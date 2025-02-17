@@ -162,7 +162,7 @@
       }
     },
     "StaticMerkleRootMultisigIsm": {
-      "description": "An ISM contract that verifies if a threshold of {{threshold}} validators signed a message. The validator set is immutably defined at deployment time.",
+      "description": "An ISM contract that verifies if a threshold of {{threshold}} validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.",
       "fields": {
         // the two hardcoded values can be decoded from the metaproxy's contract bytecode (set at deployment time)
         "validators": {

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,7 +13,6 @@ export const inevm: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -52,7 +51,6 @@ export const inevm: Layer3 = orbitStackL3({
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   rpcUrl: 'https://inevm.calderachain.xyz/http',
   discovery,
-  discoveryDrivenData: true,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

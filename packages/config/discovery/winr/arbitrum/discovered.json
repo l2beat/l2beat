@@ -1,8 +1,8 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "blockNumber": 298397636,
-  "configHash": "0xf77e4d0b0cd028cdff2cda657a7aa48082158a113bf5aa88d16f42ef0235755f",
+  "blockNumber": 305988230,
+  "configHash": "0x799d9036086018abcf5a56648b6cec22844d0bc8abe6b9cf781374d9b6b12038",
   "contracts": [
     {
       "name": "ChallengeManager",
@@ -61,6 +61,12 @@
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
       "issuedPermissions": [
         {
+          "permission": "fastconfirm",
+          "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
+        },
+        {
           "permission": "interact",
           "to": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
@@ -76,6 +82,12 @@
           "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
+        },
+        {
+          "permission": "validate",
+          "to": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -109,7 +121,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "0x0000000000000000000000000000000000000000",
+        "anyTrustFastConfirmer": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4",
         "arbOsFromWmRoot": "ArbOS v32 wasmModuleRoot",
         "baseStake": "100000000000000000",
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -119,26 +131,29 @@
         "confirmPeriodBlocks": 300,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2352,
+        "firstUnresolvedNode": 2878,
         "inbox": "0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42",
         "isERC20Enabled": false,
         "lastStakeBlock": 19879132,
-        "latestConfirmed": 2351,
-        "latestNodeCreated": 2352,
+        "latestConfirmed": 2877,
+        "latestNodeCreated": 2877,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
-        "minimumAssertionPeriod": 75,
+        "minimumAssertionPeriod": 1,
         "outbox": "0xBA99217992620b76aae0D574c70bD313B30D3D1d",
         "owner": "0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA",
         "paused": false,
         "rollupDeploymentBlock": 19877313,
         "rollupEventInbox": "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "setValidatorCount": 1,
+        "setValidatorCount": 2,
         "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"],
+        "validators": [
+          "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4",
+          "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"
+        ],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
@@ -376,7 +391,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 9 (33%)",
-        "nonce": 57,
+        "nonce": 67,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -463,7 +478,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 15879,
+        "batchCount": 16729,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x1A48A9e82dDb9cd157a67493Cc5E246D0cDd8307"],
         "bridge": "0xF3f01622Ac969156760c32190995F9dC5b3eb7FA",
@@ -493,7 +508,7 @@
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3445,
+        "totalDelayedMessagesRead": 3717,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -502,6 +517,43 @@
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       }
+    },
+    {
+      "name": "WinrFastconfirmerMultisig",
+      "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+        },
+        {
+          "permission": "validate",
+          "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1739374326,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": ["0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e"],
+        "$threshold": 1,
+        "domainSeparator": "0x46e26685d8049a39e74163d2d40c35d22e80d4e89e6e39fa6e012777120741aa",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 31,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "ERC20Outbox",
@@ -724,12 +776,12 @@
           "0xe966442c0E8F28C48eF4F02BfF7a29876Dcd30CC"
         ],
         "allowedOutboxList": ["0xBA99217992620b76aae0D574c70bD313B30D3D1d"],
-        "delayedMessageCount": 3445,
+        "delayedMessageCount": 3717,
         "nativeToken": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
         "rollup": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
         "sequencerInbox": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
-        "sequencerMessageCount": 15879,
-        "sequencerReportedSubMessageCount": 41961367
+        "sequencerMessageCount": 16729,
+        "sequencerReportedSubMessageCount": 44251850
       }
     },
     {
@@ -748,11 +800,6 @@
     {
       "address": "0x0000000000000000000000000000000000000000",
       "directlyReceivedPermissions": [
-        {
-          "permission": "fastconfirm",
-          "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
-        },
         {
           "permission": "interact",
           "from": "0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456",
@@ -779,6 +826,18 @@
     {
       "address": "0xA7bDF7f042C8DED17C0573657da4d920Df9a7d1e",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
+        },
+        {
+          "permission": "validate",
+          "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "via": [{ "address": "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4" }]
+        },
         {
           "permission": "validate",
           "from": "0x2633ea91d15BeE85105C9b27E068f406F2F36a4a",
@@ -1252,6 +1311,9 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x8E4d378F7FB7CA940d88682B6f057b81D0495Cf4": [
+      "constructor(address _singleton)"
+    ],
     "0xBA99217992620b76aae0D574c70bD313B30D3D1d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1400,6 +1462,56 @@
     ],
     "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
+    ],
+    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   },
   "usedTemplates": {

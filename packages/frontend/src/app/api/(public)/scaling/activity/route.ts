@@ -44,7 +44,7 @@ const getCachedResponse = cache(
   },
   ['scaling-activity-route'],
   {
-    tags: ['activity'],
-    revalidate: UnixTime.DAY,
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )

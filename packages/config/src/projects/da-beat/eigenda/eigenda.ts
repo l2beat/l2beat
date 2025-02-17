@@ -245,11 +245,11 @@ export const eigenda: BaseProject = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
-        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+        text: `the EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',

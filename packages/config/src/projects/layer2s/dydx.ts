@@ -54,20 +54,26 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 )
 
 const priorityExecutorUpgradeability = {
-  upgradableBy: ['Rollup Admin'],
-  upgradeDelay: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
-    minPriorityDelay,
-  )} if overridden by Priority Controller`,
+  upgradableBy: [
+    {
+      name: 'Rollup Admin',
+      delay: `${formatSeconds(maxPriorityDelay)} or ${formatSeconds(
+        minPriorityDelay,
+      )} if overridden by Priority Controller`,
+    },
+  ],
 }
 
 const shortTimelockUpgradeability = {
-  upgradableBy: ['Treasury Admin'],
-  upgradeDelay: `${formatSeconds(shortTimelockDelay)}`,
+  upgradableBy: [
+    { name: 'Treasury Admin', delay: formatSeconds(shortTimelockDelay) },
+  ],
 }
 
 const longTimelockUpgradeability = {
-  upgradableBy: ['Safety Module Admin'],
-  upgradeDelay: `${formatSeconds(longTimelockDelay)}`,
+  upgradableBy: [
+    { name: 'Safety Module Admin', delay: formatSeconds(longTimelockDelay) },
+  ],
 }
 const finalizationPeriod = 0
 
