@@ -1,6 +1,7 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { AbiCoder } from 'ethers/lib/utils'
+import { z } from 'zod'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
@@ -16,6 +17,7 @@ export type OpStackDAHandlerDefinition = z.infer<
 export const OpStackDAHandlerDefinition = z.strictObject({
   type: z.literal('opStackDA'),
   sequencerAddress: z.string(),
+  inboxAddress: z.string(),
 })
 
 /**
@@ -58,9 +60,13 @@ export class OpStackDAHandler implements Handler {
     readonly field: string,
     readonly definition: OpStackDAHandlerDefinition,
   ) {
-    const dependency = getReferencedName(this.definition.sequencerAddress)
-    if (dependency) {
-      this.dependencies.push(dependency)
+    const dependencies = [
+      getReferencedName(this.definition.sequencerAddress),
+      getReferencedName(this.definition.inboxAddress),
+    ].filter((d) => d !== undefined)
+
+    if (dependencies.length > 0) {
+      this.dependencies.push(...dependencies)
     }
   }
 
@@ -117,13 +123,177 @@ export class OpStackDAHandler implements Handler {
         return prefixMatch && thirdByteMatch
       })
 
+    // EIGEN
+    const resolvedInbox = resolveReference(
+      this.definition.inboxAddress,
+      referenceInput,
+    )
+    const inboxAddress = valueToAddress(resolvedInbox)
+
+    const latestBlock = await provider.getBlock(provider.blockNumber)
+
+    const latestBlockTimestamp = latestBlock?.timestamp
+
+    // Should not happen
+    assert(latestBlockTimestamp, 'not yet mined')
+
+    const oneDayBefore = new UnixTime(latestBlockTimestamp).add(-1, 'days')
+
+    const blockDayBefore = await provider.raw(
+      `optimism_eigen_reference_block_${oneDayBefore.toNumber()}`,
+      ({ etherscanClient }) =>
+        etherscanClient.getBlockNumberAtOrBefore(oneDayBefore),
+    )
+
+    const CONFIRM_BATCH_ADDRESS = EthereumAddress(
+      '0x454Ef2f69f91527856E06659f92a66f464C1ca4e',
+    )
+
+    const confirmBatchTxs = await provider.raw(
+      `optimism_eigen_confirm_batch_${CONFIRM_BATCH_ADDRESS}_${blockDayBefore}_${provider.blockNumber}`,
+      ({ etherscanClient }) =>
+        etherscanClient.getTransactions(
+          CONFIRM_BATCH_ADDRESS,
+          blockDayBefore,
+          provider.blockNumber,
+        ),
+    )
+
+    const inboxTxs = await provider.raw(
+      `optimism_eigen_inbox_tx_${inboxAddress}_${blockDayBefore}_${provider.blockNumber}`,
+      ({ etherscanClient }) =>
+        etherscanClient.getTransactions(
+          inboxAddress,
+          blockDayBefore,
+          provider.blockNumber,
+        ),
+    )
+
+    // TODO: refine readability and optimize? it takes a bit
+    const verificationResult = inboxTxs.map((tx) => {
+      const blobInformation = parseEigenDACommitment(tx.input)
+      let isVerified = false
+
+      if (
+        blobInformation.possibleBatchRoots &&
+        blobInformation.possibleBatchRoots.length > 0
+      ) {
+        // Try each possible batch root
+        for (const batchRoot of blobInformation.possibleBatchRoots) {
+          const hasMatchingConfirmation = confirmBatchTxs.find((confirmTx) => {
+            const batchConfirmation = decodeBatchConfirmation(confirmTx.input)
+
+            return (
+              batchConfirmation &&
+              batchConfirmation.blobHeadersRoot === batchRoot.hash
+            )
+          })
+
+          if (hasMatchingConfirmation) {
+            isVerified = true
+            break
+          }
+        }
+      }
+
+      // Legacy
+      const matchingConfirmTx = confirmBatchTxs.find((confirmTx) => {
+        const batchConfirmation = decodeBatchConfirmation(confirmTx.input)
+        return (
+          batchConfirmation &&
+          batchConfirmation.blobHeadersRoot === blobInformation.batchRootHash
+        )
+      })
+
+      if (matchingConfirmTx) {
+        isVerified = true
+      }
+
+      return {
+        isVerified,
+      }
+    })
+
+    const verified = verificationResult.filter((x) => x?.isVerified).length
+
+    const successRate = (verified / inboxTxs.length) * 100
+
+    const EIGEN_DA_VERIFICATION_THRESHOLD = 0.8
+
+    const isUsingEigenDAPercent = successRate >= EIGEN_DA_VERIFICATION_THRESHOLD
+
     return {
       field: this.field,
       value: {
         isSomeTxsLengthEqualToCelestiaDAExample,
         isSequencerSendingBlobTx,
         isUsingEigenDA,
+        isUsingEigenDAPercent,
+        successRate,
       },
     }
+  }
+}
+
+export function parseEigenDACommitment(inputData: string) {
+  const hexData = inputData.startsWith('0x') ? inputData.slice(2) : inputData
+
+  const REFERENCE_LENGTH = 1090
+  const BATCH_ROOT_OFFSET = 208
+  const BATCH_ROOT_HASH_LENGTH = 64
+
+  // For long inputs, scan for possible batch roots
+  if (hexData.length > 1150) {
+    const possibleBatchRoots = []
+
+    for (let i = 0; i <= hexData.length - 64; i++) {
+      possibleBatchRoots.push({
+        hash: '0x' + hexData.slice(i, i + 64),
+        position: i,
+      })
+    }
+
+    return {
+      batchRootHash: '0x' + hexData.slice(-64),
+      possibleBatchRoots,
+    }
+  }
+
+  // For standard length inputs, use fixed offset
+  const batchRootStart = hexData.length - REFERENCE_LENGTH + BATCH_ROOT_OFFSET
+
+  return {
+    batchRootHash:
+      '0x' +
+      hexData.slice(batchRootStart, batchRootStart + BATCH_ROOT_HASH_LENGTH),
+    possibleBatchRoots: undefined,
+  }
+}
+
+function decodeBatchConfirmation(inputData: string) {
+  if (!inputData.startsWith('0x7794965a')) {
+    // Skip invalid selectors
+    return
+  }
+
+  // Remove '0x' and function selector
+  const data = inputData.slice(10)
+  const abiCoder = new AbiCoder()
+
+  const batchHeaderType =
+    'tuple(bytes32 blobHeadersRoot, bytes quorumNumbers, bytes signedStakeForQuorums, uint32 referenceBlockNumber)'
+  const nonSignerStakesType =
+    'tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256,uint256)[] nonSignerPubkeys, tuple(uint256,uint256)[] quorumApks, tuple(uint256,uint256,uint256,uint256) apkG2, tuple(uint256,uint256) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices)'
+
+  const decoded = abiCoder.decode(
+    [batchHeaderType, nonSignerStakesType],
+    '0x' + data,
+  )
+
+  return {
+    blobHeadersRoot: decoded[0].blobHeadersRoot,
+    quorumNumbers: decoded[0].quorumNumbers,
+    signedStakeForQuorums: decoded[0].signedStakeForQuorums,
+    referenceBlockNumber: decoded[0].referenceBlockNumber,
   }
 }

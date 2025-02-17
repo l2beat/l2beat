@@ -209,6 +209,26 @@ export class BlockscoutClient implements IEtherscanClient {
     }))
   }
 
+  async getTransactions(
+    address: EthereumAddress,
+    fromBlock: number,
+    toBlock: number,
+  ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
+    const response = await this.call('account', 'txlist', {
+      address: address.toString(),
+      startblock: fromBlock.toString(),
+      endblock: toBlock.toString(),
+      sort: 'asc',
+    })
+
+    const resp = TransactionListResult.parse(response)
+    return resp.map((r) => ({
+      input: r.input,
+      to: EthereumAddress(r.to),
+      hash: Hash256(r.hash),
+    }))
+  }
+
   async call(module: string, action: string, params: Record<string, string>) {
     const query = new URLSearchParams({
       module,
