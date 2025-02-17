@@ -119,25 +119,65 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 1000n,
         },
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: '0x2',
           projectId: 'project-ethereum-2',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
+        },
+      ])
+    })
+
+    it('should match avail blobs', async () => {
+      const TIME = UnixTime.now()
+
+      const mockBlobs = [
+        // blob matching avail project-avail-1
+        {
+          type: 'avail',
+          daLayer: 'avail',
+          appId: 'avail-1',
+          blockTimestamp: TIME,
+          size: BigInt(100),
+        } as AvailBlob,
+        // blob not matching any project
+        {
+          type: 'avail',
+          daLayer: 'avail',
+          appId: 'any',
+          size: BigInt(200),
+          blockTimestamp: TIME,
+        } as AvailBlob,
+      ]
+
+      const mockRecords: DataAvailabilityRecord[] = []
+
+      const service = new DaService(MOCK_PROJECT_CONFIGS)
+      const result = service.generateRecords(mockBlobs, mockRecords)
+
+      expect(result).toEqual([
+        {
+          projectId: 'avail',
+          daLayer: 'avail',
+          timestamp: TIME.toStartOf('day'),
+          totalSize: 300n,
+        },
+        {
+          projectId: 'project-avail-1',
+          daLayer: 'avail',
+          timestamp: TIME.toStartOf('day'),
+          totalSize: 100n,
         },
       ])
     })
@@ -171,14 +211,12 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'celestia',
           daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: '0x3',
           projectId: 'project-celestia-1',
           daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
@@ -277,7 +315,6 @@ describe(DaService.name, () => {
       const mockRecords: DataAvailabilityRecord[] = [
         // ethereum record for previous day
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -285,7 +322,6 @@ describe(DaService.name, () => {
         },
         // project record for previous day
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -293,7 +329,6 @@ describe(DaService.name, () => {
         },
         // ethereum record for current day
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -301,7 +336,6 @@ describe(DaService.name, () => {
         },
         // project record for current day
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -314,7 +348,6 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -322,7 +355,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -330,7 +362,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -338,7 +369,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -346,7 +376,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
@@ -354,7 +383,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: '0x1',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
