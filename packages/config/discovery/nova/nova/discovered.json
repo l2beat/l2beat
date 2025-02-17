@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "nova",
-  "blockNumber": 81620827,
-  "configHash": "0xcfe9045c04b36c2cac9d6467251d8f73ad12ae98e51fed1df903c44d0e2ad156",
+  "blockNumber": 82373521,
+  "configHash": "0x54a986fa66addea674ea166f6308618c520347ae39a19d7a847b5e929d407c71",
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -401,7 +401,7 @@
         ],
         "$upgradeCount": 3,
         "counterpartGateway": "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-        "exitNum": 2374,
+        "exitNum": 2376,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2CustomGateway"
@@ -491,7 +491,7 @@
         "beaconProxyFactory": "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
-        "exitNum": 878,
+        "exitNum": 888,
         "router": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
       },
       "derivedName": "L2ERC20Gateway"
@@ -615,7 +615,7 @@
         "l2Gateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "name": "Arbitrum",
         "symbol": "ARB",
-        "totalSupply": "221776137865927120728272"
+        "totalSupply": "221751729861181297118468"
       },
       "derivedName": "L2CustomGatewayToken"
     }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x70fb91faa3c582bbe27b66191c78e729b63f17b9
+Generated with discovered.json: 0x5802a202d8b6c3d4ba35fd55f2cbce969f2a25e5
 
-# Diff at Mon, 17 Feb 2025 08:21:34 GMT:
+# Diff at Mon, 17 Feb 2025 13:41:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 21815910
-- current block number: 21843848
+- current block number: 21866457
 
 ## Description
 
@@ -65,7 +65,7 @@ Provide description of changes. This section will be preserved.
 -        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
 +        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       values.buffer:
-+        {"bufferBlocks":14400,"max":14400,"threshold":150,"prevBlockNumber":21843746,"replenishRateInBasis":500,"prevSequencedBlockNumber":21843805}
++        {"bufferBlocks":14400,"max":14400,"threshold":150,"prevBlockNumber":21866282,"replenishRateInBasis":500,"prevSequencedBlockNumber":21866343}
       values.isDelayBufferable:
 +        true
     }
