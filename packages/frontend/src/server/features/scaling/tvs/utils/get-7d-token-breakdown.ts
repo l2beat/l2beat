@@ -17,11 +17,13 @@ export function get7dTokenBreakdown(
 export type LatestTvs = Awaited<ReturnType<typeof get7dTokenBreakdownData>>
 export async function get7dTokenBreakdownData({
   type,
-}: { type: 'layer2' | 'bridge' }) {
+}: { type: 'layer2' | 'bridge' | 'all' }) {
   const projectsToQuery = getTvsProjects((project) =>
-    type === 'layer2'
-      ? project.type === 'layer2' || project.type === 'layer3'
-      : project.type === 'bridge',
+    type === 'all'
+      ? true
+      : type === 'layer2'
+        ? project.type === 'layer2' || project.type === 'layer3'
+        : project.type === 'bridge',
   )
 
   const tvsValues = await getTvsValuesForProjects(projectsToQuery, '7d')
