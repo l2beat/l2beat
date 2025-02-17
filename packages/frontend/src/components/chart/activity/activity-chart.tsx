@@ -112,7 +112,7 @@ export function ActivityChart({
           isAnimationActive={false}
           activeDot={{
             ...DEFAULT_ACTIVE_DOT,
-            fill: 'var(--color-ethereum)',
+            fill: 'var(--color-projects)',
           }}
         />
         {showMainnet && (
@@ -126,7 +126,7 @@ export function ActivityChart({
             isAnimationActive={false}
             activeDot={{
               ...DEFAULT_ACTIVE_DOT,
-              fill: 'var(--color-projects)',
+              fill: 'var(--color-ethereum)',
             }}
           />
         )}
