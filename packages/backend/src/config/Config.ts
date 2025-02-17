@@ -198,6 +198,8 @@ export interface DaBeatConfig {
   readonly availWsUrl: string
 }
 
+export type DaTrackingConfig = ProjectDaTrackingConfig | { type: 'baseLayer' }
+
 export interface DataAvailabilityTrackingConfig {
   readonly layers: {
     type: 'ethereum' | 'celestia' | 'avail'
@@ -212,6 +214,6 @@ export interface DataAvailabilityTrackingConfig {
     /** Hash computed automatically based on fields */
     configurationId: string
     projectId: ProjectId
-    config: ProjectDaTrackingConfig
+    config: DaTrackingConfig
   }[]
 }

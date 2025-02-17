@@ -3,7 +3,6 @@ import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
-  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import { assert, ProjectId } from '@l2beat/shared-pure'
@@ -16,6 +15,7 @@ import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
 import { DaService } from './services/DaService'
+import type { DaTrackingConfig } from '../../config/Config'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -124,9 +124,8 @@ export function initDataAvailabilityModule(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      serializeConfiguration: (
-        value: ProjectDaTrackingConfig | { type: 'baseLayer' },
-      ) => JSON.stringify(value),
+      serializeConfiguration: (value: DaTrackingConfig) =>
+        JSON.stringify(value),
       configurationsTrimmingDisabled: true,
     })
     daIndexers.push(indexer)
