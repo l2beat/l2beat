@@ -18,7 +18,6 @@ import {
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { getTimestampedMilestones } from '~/components/core/chart/utils/get-timestamped-milestones'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
@@ -94,11 +93,6 @@ export function ProjectTokenChart({
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
-  const timestampedMilestones = useMemo(
-    () => getTimestampedMilestones(chartData, milestones ?? []),
-    [chartData, milestones],
-  )
-
   return (
     <section>
       <ChartControlsWrapper>
@@ -112,8 +106,9 @@ export function ProjectTokenChart({
       <ChartContainer
         className="mb-2 mt-4"
         config={chartConfig}
+        data={chartData}
         isLoading={isLoading}
-        timestampedMilestones={timestampedMilestones}
+        milestones={milestones}
       >
         <AreaChart data={chartData} margin={{ top: 20 }}>
           {isBridge && (

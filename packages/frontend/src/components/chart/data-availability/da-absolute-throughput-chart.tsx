@@ -35,7 +35,12 @@ export function DaAbsoluteThroughputChart({
   chartConfig,
 }: Props) {
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+    <ChartContainer
+      data={data}
+      config={chartConfig}
+      className="mb-2"
+      isLoading={isLoading}
+    >
       <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />

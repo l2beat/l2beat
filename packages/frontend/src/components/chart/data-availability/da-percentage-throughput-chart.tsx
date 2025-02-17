@@ -54,7 +54,12 @@ export function DaPercentageThroughputChart({
   })
 
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      config={chartConfig}
+      className="mb-2"
+      isLoading={isLoading}
+    >
       <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
