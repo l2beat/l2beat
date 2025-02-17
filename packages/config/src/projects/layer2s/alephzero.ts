@@ -37,7 +37,6 @@ export const alephzero: Layer2 = orbitStackL2({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xccaF21F002EAF230c9Fa810B34837a3739B70F7B'),

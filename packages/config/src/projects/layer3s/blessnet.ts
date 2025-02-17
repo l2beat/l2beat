@@ -57,7 +57,6 @@ export const blessnet: Layer3 = orbitStackL3({
   // associatedTokens: ['BLESS'],
   rpcUrl: 'https://blessnet.calderachain.xyz/http',
   discovery,
-  discoveryDrivenData: true,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

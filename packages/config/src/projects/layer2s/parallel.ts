@@ -132,7 +132,6 @@ export const parallel: Layer2 = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'ArbOS v20 upgrade',

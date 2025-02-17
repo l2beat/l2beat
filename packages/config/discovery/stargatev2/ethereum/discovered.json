@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 21829862,
+  "blockNumber": 21844076,
   "configHash": "0xdb7674d1ff56723d66de2a0fe8d1bb84db6be42b1004c69fc2670146f1bb51b7",
   "contracts": [
     {
@@ -146,13 +146,13 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "21669870634047213",
-        "poolBalance": "630466020000000000000",
+        "plannerFee": "21786536762099363",
+        "poolBalance": "635437677000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 721590,
+        "treasuryFee": 721407,
         "tvl": "6000066726000000000000"
       }
     },
@@ -213,7 +213,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 894,
+        "nonce": 899,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -340,14 +340,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "539870253516202221",
-        "poolBalance": "154121539236000000000000",
+        "plannerFee": "557425349121081193",
+        "poolBalance": "151886633543000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 7061280,
-        "tvl": "13171255161000000000000"
+        "treasuryFee": 7163161,
+        "tvl": "13657119267000000000000"
       }
     },
     {
@@ -405,14 +405,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "341939619941452839",
-        "poolBalance": 17510236543546,
+        "plannerFee": "352711289750109836",
+        "poolBalance": 17759964083815,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 121335095848,
-        "tvl": 11329482130921
+        "treasuryFee": 127757259516,
+        "tvl": 11129287130921
       }
     },
     {
@@ -527,14 +527,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "328932077199632593",
-        "poolBalance": 229703833896166,
+        "plannerFee": "338100845832313192",
+        "poolBalance": 249917498833189,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 71816765120,
-        "tvl": 16080243781152
+        "treasuryFee": 75071840097,
+        "tvl": 16476043998226
       }
     },
     {
@@ -631,7 +631,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 229,
+        "nonce": 230,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
