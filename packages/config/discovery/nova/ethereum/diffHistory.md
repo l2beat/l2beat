@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf2796acd4f1771f9f8e80ec550f65a1e1fa548a4
+Generated with discovered.json: 0xb78a2e5623446823a544df02afa0deb5085b7b50
 
-# Diff at Fri, 14 Feb 2025 14:45:54 GMT:
+# Diff at Mon, 17 Feb 2025 15:12:18 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@866ac0e034ddb1e78e333932f83648ad55ba1b25 block: 21786859
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 21786859
 - current block number: 21786859
 
 ## Description
@@ -384,6 +384,8 @@ discovery. Values are for block 21786859 (main branch discovery), not current.
 +        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
       issuedPermissions.0.via.0.delay:
 +        259200
+      values.isPostBoLD:
++        false
     }
 ```
 
