@@ -109,21 +109,18 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 1000n,
         },
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-2',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -161,14 +158,12 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'avail',
           daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: 'TEMP',
           projectId: 'project-avail-1',
           daLayer: 'avail',
           timestamp: TIME.toStartOf('day'),
@@ -206,14 +201,12 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'celestia',
           daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
         },
         {
-          configurationId: 'TEMP',
           projectId: 'project-celestia-1',
           daLayer: 'celestia',
           timestamp: TIME.toStartOf('day'),
@@ -267,7 +260,6 @@ describe(DaService.name, () => {
       const mockRecords: DataAvailabilityRecord[] = [
         // ethereum record for previous day
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -275,7 +267,6 @@ describe(DaService.name, () => {
         },
         // project record for previous day
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -283,7 +274,6 @@ describe(DaService.name, () => {
         },
         // ethereum record for current day
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -291,7 +281,6 @@ describe(DaService.name, () => {
         },
         // project record for current day
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -304,7 +293,6 @@ describe(DaService.name, () => {
 
       expect(result).toEqual([
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -312,7 +300,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(-1, 'days'),
@@ -320,7 +307,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -328,7 +314,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
@@ -336,7 +321,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'ethereum',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),
@@ -344,7 +328,6 @@ describe(DaService.name, () => {
         },
 
         {
-          configurationId: 'TEMP',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day').add(1, 'days'),

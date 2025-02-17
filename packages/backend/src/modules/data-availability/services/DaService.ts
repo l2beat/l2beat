@@ -91,7 +91,6 @@ export class DaService {
     blob: DaBlob,
   ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
     const daLayerRecord: DataAvailabilityRecord = {
-      configurationId: 'TEMP', // temporary solution until next PR
       projectId: blob.daLayer,
       daLayer: blob.daLayer,
       timestamp: blob.blockTimestamp.toStartOf('day'),
@@ -120,7 +119,6 @@ export class DaService {
 
     const projectRecord = projectId
       ? {
-          configurationId: 'TEMP', // temporary solution until next PR
           projectId,
           daLayer: blob.daLayer,
           timestamp: blob.blockTimestamp.toStartOf('day'),
