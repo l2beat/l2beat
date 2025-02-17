@@ -643,6 +643,7 @@
         "genesisAssertionHash": "0x75c2df1d9a6f98d1de62c8fc955f91b87f16fefa2fafe4d6b52118fc30e1c278",
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "isPostBoLD": true,
         "latestConfirmed": "0xf631513085d80b11588f37e9e9540ae71e9c288ef17cbb7f10a12cbc92d4c746",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
@@ -652,7 +653,6 @@
         "rollupDeploymentBlock": 21830860,
         "rollupEventInbox": "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "setValidatorCount": 0,
         "stakerCount": 1,
         "stakeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "totalWithdrawableFunds": 0,
@@ -673,9 +673,6 @@
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
-        },
-        "setValidatorCount": {
-          "description": "Increments on each Validator change."
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
@@ -4976,7 +4973,7 @@
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/ParentToChildRewardRouter": "0x6dc8b188b923e4d062919c1b8d1658eb4d65863c8ebbc7304a00b3f92688ef1f",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxyBoLD": "0xcf6d0bc469421be48070268e617a6a953ac43c2fdce3b56bdbb835c0019c8bf2",
+    "orbitstack/RollupProxyBoLD": "0x2967121897fe7a95a5191f6510aee7f8fe7b8768a6b09168511622c60db20d89",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
     "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
     "orbitstack/Timelock": "0x6995d1593d881b36fd5d7ee91d1b5eaa3e88438ac90bc3f2280bd04257143076",

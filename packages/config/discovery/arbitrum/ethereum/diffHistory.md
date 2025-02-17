@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe6ef8a8e9fe2b6f6cfd398a8509913d15a343e0b
+Generated with discovered.json: 0x70fb91faa3c582bbe27b66191c78e729b63f17b9
 
-# Diff at Sun, 16 Feb 2025 12:02:15 GMT:
+# Diff at Mon, 17 Feb 2025 08:21:34 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 21815910
@@ -447,6 +447,20 @@ Provide description of changes. This section will be preserved.
  .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
  .../ValidatorWallet.sol => /dev/null               |  769 ----
  38 files changed, 11011 insertions(+), 17110 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21815910 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
 ```
 
 Generated with discovered.json: 0x199f45c208ed1e8e6ec0d90b461838a057d5fa5e

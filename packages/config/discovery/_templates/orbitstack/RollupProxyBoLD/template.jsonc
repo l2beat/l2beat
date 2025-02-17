@@ -14,6 +14,12 @@
     "stakeToken"
   ],
   "fields": {
+    "isPostBoLD": {
+      "handler": {
+        "type": "hardcoded",
+        "value": true
+      }
+    },
     "owner": {
       "target": {
         "permissions": [
@@ -41,18 +47,6 @@
         "args": []
       },
       "returnType": "(ArbOsWasmModuleRoot)"
-    },
-    "setValidatorCount": {
-      "description": "Increments on each Validator change.",
-      "handler": {
-        "type": "eventCount",
-        "topics": [
-          // event OwnerFunctionCalled(uint256 indexed id);
-          "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
-          // id == 6 is emitted inside setValidator()
-          "0x0000000000000000000000000000000000000000000000000000000000000006"
-        ]
-      }
     },
     "challenges": {
       "description": "Emitted on createChallenge() in RollupUserLogic.",

@@ -64,13 +64,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
-import {
-  explorerReferences,
-  mergeBadges,
-  mergeContracts,
-  mergePermissions,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -394,19 +388,6 @@ function orbitStackCommon(
   }
   const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
 
-  const validators: ProjectPermission =
-    templateVars.discovery.getPermissionDetails(
-      'Validators/Proposers',
-      templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
-      'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    )
-
-  if (validators.accounts.length === 0) {
-    throw new Error(
-      `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
-    )
-  }
-
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
       'Sequencers',
@@ -434,26 +415,21 @@ function orbitStackCommon(
     ) ?? EthereumAddress.ZERO
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  // const validatorWhitelistDisabled =
+  //   templateVars.discovery.getContractValue<boolean>(
+  //     'RollupProxy',
+  //     'validatorWhitelistDisabled',
+  //   )
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: templateVars.discoveryDrivenData
-      ? {
-          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
-          risks: nativeContractRisks,
-        }
-      : {
-          addresses: mergeContracts(
-            {
-              [templateVars.discovery.chain]:
-                templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            },
-            templateVars.nonTemplateContracts ?? {},
-          ),
-          risks: nativeContractRisks,
-        },
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+      risks: nativeContractRisks,
+    },
     chainConfig: templateVars.chainConfig,
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
@@ -553,21 +529,7 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: templateVars.discoveryDrivenData
-      ? generateDiscoveryDrivenPermissions(allDiscoveries)
-      : mergePermissions(
-          {
-            [templateVars.discovery.chain]: {
-              actors: [
-                sequencers,
-                validators,
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .permissions,
-              ],
-            },
-          },
-          templateVars.nonTemplatePermissions ?? {},
-        ),
+    permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -655,7 +617,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-      ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
         nOfChallengers,
         templateVars.hasAtLeastFiveExternalChallengers ?? false,
         challengePeriodSeconds,
@@ -940,11 +902,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
-  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
-    'RollupProxy',
-    'validators',
-  ).length
-
   const upgradeability = templateVars.upgradeability ?? {
     upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
@@ -995,6 +952,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       'postsBlobs',
     ) ??
     false
+
+  const validatorWhitelistDisabled =
+    templateVars.discovery.getContractValue<boolean>(
+      'RollupProxy',
+      'validatorWhitelistDisabled',
+    )
 
   return {
     type: 'layer2',
@@ -1095,14 +1058,26 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         },
     riskView: {
-      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-        ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
-          nOfChallengers,
-          templateVars.hasAtLeastFiveExternalChallengers ?? false,
-          challengePeriodSeconds,
-        ),
-        secondLine: formatChallengePeriod(challengePeriodSeconds),
-      },
+      stateValidation:
+        templateVars.nonTemplateRiskView?.stateValidation ??
+        (() => {
+          if (validatorWhitelistDisabled) {
+            return RISK_VIEW.STATE_FP_INT
+          }
+
+          const nOfChallengers = templateVars.discovery.getContractValue<
+            string[]
+          >('RollupProxy', 'validators').length
+
+          return {
+            ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+              nOfChallengers,
+              templateVars.hasAtLeastFiveExternalChallengers ?? false,
+              challengePeriodSeconds,
+            ),
+            secondLine: formatChallengePeriod(challengePeriodSeconds),
+          }
+        })(),
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
         postsToExternalDA)
@@ -1137,11 +1112,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       proposerFailure:
         templateVars.nonTemplateRiskView?.proposerFailure ??
         (() => {
-          const validatorWhitelistDisabled =
-            templateVars.discovery.getContractValue<boolean>(
-              'RollupProxy',
-              'validatorWhitelistDisabled',
-            )
           if (validatorWhitelistDisabled) {
             return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
           }

@@ -99,7 +99,7 @@ export const STATE_EXITS_ONLY: TableReadyValue = {
   orderHint: -Infinity,
 }
 
-export function STATE_ARBITRUM_FRAUD_PROOFS(
+export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   nOfChallengers: number,
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
@@ -671,7 +671,7 @@ export const RISK_VIEW = {
   STATE_ZKP_ST_SN_WRAP,
   STATE_ZKP_L3,
   STATE_EXITS_ONLY,
-  STATE_ARBITRUM_FRAUD_PROOFS,
+  STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS,
 
   // dataAvailability
   DATA_ON_CHAIN,
