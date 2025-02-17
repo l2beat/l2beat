@@ -219,7 +219,6 @@ function CustomTooltip({
           {payload.map((entry) => {
             if (entry.value === undefined) return null
             const config = chartConfig[entry.name as keyof typeof chartConfig]
-            console.log(entry.name, config)
             return (
               <div
                 key={entry.name}
