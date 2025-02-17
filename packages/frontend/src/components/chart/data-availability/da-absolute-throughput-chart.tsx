@@ -66,6 +66,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
             tick: {
               width: 100,
             },
+            tickFormatter: (value: number) => formatBytes(value),
           },
         })}
       </LineChart>
