@@ -55,7 +55,7 @@ export function ChartMilestones<
   )
 }
 
-export function ChartMilestone({
+function ChartMilestone({
   milestone,
   left,
 }: {
