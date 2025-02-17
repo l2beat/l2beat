@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5802a202d8b6c3d4ba35fd55f2cbce969f2a25e5
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+BoLD upgrade. Proposing and challenging is now permissionless. Sequencer censorship now has a buffer.
 
 ## Watched changes
 
