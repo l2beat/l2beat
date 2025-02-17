@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -47,7 +47,7 @@ interface Props {
   timeRange: ActivityTimeRange
 }
 
-const chartConfig = {
+const chartMeta = {
   rollups: {
     label: 'Rollups',
     color: 'hsl(var(--chart-rollups))',
@@ -64,7 +64,7 @@ const chartConfig = {
     label: 'Ethereum',
     color: 'hsl(var(--chart-ethereum))',
   },
-} satisfies ChartConfig
+} satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { checked } = useRecategorisationPreviewContext()
@@ -95,11 +95,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   return (
     <section className="flex flex-col gap-4">
       <Header stats={stats} />
-      <ChartContainer
-        config={chartConfig}
-        data={chartData}
-        isLoading={isLoading}
-      >
+      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
             <RollupsFillGradientDef id="rollups-fill" />
@@ -186,7 +182,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
                 key={entry.name}
@@ -222,7 +218,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
                 key={entry.name}

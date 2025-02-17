@@ -1,7 +1,7 @@
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 
-export type DaChartConfig = typeof daChartConfig
-export const daChartConfig = {
+export type DaChartMeta = typeof daChartMeta
+export const daChartMeta = {
   ethereum: {
     label: 'Ethereum (blobs)',
     color: 'hsl(var(--chart-ethereum))',
@@ -14,4 +14,4 @@ export const daChartConfig = {
     label: 'Avail (fake)',
     color: 'hsl(var(--chart-da-avail))',
   },
-} as const satisfies ChartConfig
+} as const satisfies ChartMeta

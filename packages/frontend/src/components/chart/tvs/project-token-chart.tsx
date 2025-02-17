@@ -6,10 +6,10 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import {
-  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
+  type ChartMeta,
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
@@ -76,13 +76,13 @@ export function ProjectTokenChart({
     range: timeRange,
   })
 
-  const chartConfig = {
+  const chartMeta = {
     value: {
       label: token.name,
       color: sourceToColor(token.source),
       legendLabel: capitalize(token.source),
     },
-  } satisfies ChartConfig
+  } satisfies ChartMeta
 
   const chartData = useMemo(() => {
     return data?.map(([timestamp, amount, usdValue]) => ({
@@ -105,7 +105,7 @@ export function ProjectTokenChart({
       </ChartControlsWrapper>
       <ChartContainer
         className="mb-2 mt-4"
-        config={chartConfig}
+        meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
         milestones={milestones}
@@ -121,7 +121,7 @@ export function ProjectTokenChart({
           {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
           <Area
             dataKey="value"
-            fill={isBridge ? 'url(#fill)' : chartConfig.value.color}
+            fill={isBridge ? 'url(#fill)' : chartMeta.value.color}
             fillOpacity={1}
             stroke={isBridge ? 'url(#stroke)' : 'none'}
             strokeWidth={2}
@@ -159,7 +159,7 @@ function CustomTooltip({
   label,
   unit,
 }: TooltipProps<number, string> & { unit: string }) {
-  const { config: chartConfig } = useChart()
+  const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   return (
     <div className={tooltipContentVariants()}>
@@ -168,7 +168,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name!]!
+            const config = meta[entry.name!]!
             return (
               <div
                 key={entry.name}

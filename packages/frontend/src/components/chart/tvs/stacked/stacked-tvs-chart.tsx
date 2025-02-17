@@ -4,7 +4,7 @@ import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -34,7 +34,7 @@ interface Props {
   className?: string
 }
 
-const chartConfig = {
+const chartMeta = {
   native: {
     label: 'Native',
     color: 'hsl(var(--chart-tvs-native))',
@@ -47,7 +47,7 @@ const chartConfig = {
     label: 'Canonical',
     color: 'hsl(var(--chart-tvs-canonical))',
   },
-} satisfies ChartConfig
+} satisfies ChartMeta
 
 export function StackedTvsChart({
   data,
@@ -59,7 +59,7 @@ export function StackedTvsChart({
   return (
     <ChartContainer
       data={data}
-      config={chartConfig}
+      meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
       className={className}
@@ -69,7 +69,7 @@ export function StackedTvsChart({
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
-          fill={chartConfig.native.color}
+          fill={chartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -78,7 +78,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="external"
-          fill={chartConfig.external.color}
+          fill={chartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -87,7 +87,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="canonical"
-          fill={chartConfig.canonical.color}
+          fill={chartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -130,7 +130,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
                 key={entry.name}

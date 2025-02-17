@@ -11,7 +11,7 @@ import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
 
-export type ChartConfig = Record<
+export type ChartMeta = Record<
   string,
   {
     label?: React.ReactNode
@@ -22,7 +22,7 @@ export type ChartConfig = Record<
 >
 
 type ChartContextProps = {
-  config: ChartConfig
+  meta: ChartMeta
 }
 
 const ChartContext = React.createContext<ChartContextProps | null>(null)
@@ -38,16 +38,15 @@ export function useChart() {
 }
 
 function ChartContainer<T extends { timestamp: number }>({
-  id,
   className,
   children,
-  config,
+  meta,
   data,
   isLoading,
   milestones,
   ...props
 }: React.ComponentProps<'div'> & {
-  config: ChartConfig
+  meta: ChartMeta
   children: React.ComponentProps<
     typeof RechartsPrimitive.ResponsiveContainer
   >['children']
@@ -59,7 +58,7 @@ function ChartContainer<T extends { timestamp: number }>({
   const isClient = useIsClient()
   const hasData = data && data.length > 1
   return (
-    <ChartContext.Provider value={{ config }}>
+    <ChartContext.Provider value={{ meta }}>
       <div
         ref={ref}
         className={cn(
@@ -125,7 +124,7 @@ const ChartLegendContent = React.forwardRef<
     { className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey },
     ref,
   ) => {
-    const { config } = useChart()
+    const { meta: config } = useChart()
 
     if (!payload?.length) {
       return null
@@ -176,7 +175,7 @@ ChartLegendContent.displayName = 'ChartLegend'
 
 // Helper to extract item config from a payload.
 function getPayloadConfigFromPayload(
-  config: ChartConfig,
+  config: ChartMeta,
   payload: unknown,
   key: string,
 ) {

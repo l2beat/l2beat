@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -19,7 +19,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { formatNumber } from '~/utils/number-format/format-number'
 
-const chartConfig = {
+const chartMeta = {
   calldata: {
     label: 'Calldata',
     color: 'hsl(var(--chart-costs-calldata))',
@@ -36,7 +36,7 @@ const chartConfig = {
     label: 'Overhead',
     color: 'hsl(var(--chart-costs-overhead))',
   },
-} satisfies ChartConfig
+} satisfies ChartMeta
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -66,7 +66,7 @@ export function CostsChart({
   return (
     <ChartContainer
       data={data}
-      config={chartConfig}
+      meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
       className={className}
@@ -78,8 +78,8 @@ export function CostsChart({
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="calldata"
-          stroke={chartConfig.calldata.color}
-          fill={chartConfig.calldata.color}
+          stroke={chartMeta.calldata.color}
+          fill={chartMeta.calldata.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -89,8 +89,8 @@ export function CostsChart({
         />
         <Area
           dataKey="blobs"
-          stroke={chartConfig.blobs.color}
-          fill={chartConfig.blobs.color}
+          stroke={chartMeta.blobs.color}
+          fill={chartMeta.blobs.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -100,8 +100,8 @@ export function CostsChart({
         />
         <Area
           dataKey="compute"
-          stroke={chartConfig.compute.color}
-          fill={chartConfig.compute.color}
+          stroke={chartMeta.compute.color}
+          fill={chartMeta.compute.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -111,8 +111,8 @@ export function CostsChart({
         />
         <Area
           dataKey="overhead"
-          stroke={chartConfig.overhead.color}
-          fill={chartConfig.overhead.color}
+          stroke={chartMeta.overhead.color}
+          fill={chartMeta.overhead.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -166,7 +166,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
                 key={entry.name}

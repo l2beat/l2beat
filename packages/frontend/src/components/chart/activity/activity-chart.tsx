@@ -5,7 +5,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -71,7 +71,7 @@ export function ActivityChart({
   projectName,
   className,
 }: Props) {
-  const chartConfig = {
+  const chartMeta = {
     projects: {
       label:
         projectName ??
@@ -85,13 +85,13 @@ export function ActivityChart({
       label: 'Ethereum',
       color: 'hsl(var(--chart-ethereum))',
     },
-  } satisfies ChartConfig
+  } satisfies ChartMeta
 
   return (
     <ChartContainer
       data={data}
       className={className}
-      config={chartConfig}
+      meta={chartMeta}
       isLoading={isLoading}
       milestones={milestones}
     >
@@ -108,7 +108,7 @@ export function ActivityChart({
           isAnimationActive={false}
           activeDot={{
             ...DEFAULT_ACTIVE_DOT,
-            fill: chartConfig.projects.color,
+            fill: chartMeta.projects.color,
           }}
         />
         {showMainnet && (
@@ -122,7 +122,7 @@ export function ActivityChart({
             isAnimationActive={false}
             activeDot={{
               ...DEFAULT_ACTIVE_DOT,
-              fill: chartConfig.ethereum.color,
+              fill: chartMeta.ethereum.color,
             }}
           />
         )}
@@ -169,7 +169,7 @@ function CustomTooltip({
   label: timestamp,
   syncedUntil,
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
-  const { config: chartConfig } = useChart()
+  const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
   return (
     <div className={tooltipContentVariants()}>
@@ -188,7 +188,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name!]!
+            const config = meta[entry.name!]!
             return (
               <div
                 key={entry.name}
@@ -224,7 +224,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name!]!
+            const config = meta[entry.name!]!
             return (
               <div
                 key={entry.name}

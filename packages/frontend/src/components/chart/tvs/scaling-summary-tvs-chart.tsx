@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -37,7 +37,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
 
-const chartConfig = {
+const chartMeta = {
   rollups: {
     label: 'Rollups',
     color: 'hsl(var(--chart-rollups))',
@@ -50,7 +50,7 @@ const chartConfig = {
     label: 'Others',
     color: 'hsl(var(--chart-others))',
   },
-} satisfies ChartConfig
+} satisfies ChartMeta
 
 export function ScalingSummaryTvsChart({
   unit,
@@ -84,11 +84,7 @@ export function ScalingSummaryTvsChart({
         unit={unit}
         timeRange={timeRange}
       />
-      <ChartContainer
-        config={chartConfig}
-        data={chartData}
-        isLoading={isLoading}
-      >
+      <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
         <AreaChart
           data={chartData}
           margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
@@ -161,7 +157,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name as keyof typeof chartConfig]
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
                 key={entry.name}

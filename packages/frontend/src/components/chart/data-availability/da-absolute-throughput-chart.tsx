@@ -15,7 +15,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
-import { daChartConfig } from './chart-config'
+import { daChartMeta } from './meta'
 
 interface DataPoint {
   timestamp: number
@@ -32,7 +32,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   return (
     <ChartContainer
       data={data}
-      config={daChartConfig}
+      meta={daChartMeta}
       className="mb-2"
       isLoading={isLoading}
     >
@@ -42,21 +42,21 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
         <Line
           dataKey="ethereum"
           isAnimationActive={false}
-          stroke={daChartConfig.ethereum.color}
+          stroke={daChartMeta.ethereum.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="celestia"
           isAnimationActive={false}
-          stroke={daChartConfig.celestia.color}
+          stroke={daChartMeta.celestia.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="avail"
           isAnimationActive={false}
-          stroke={daChartConfig.avail.color}
+          stroke={daChartMeta.avail.color}
           strokeWidth={2}
           dot={false}
         />
@@ -78,7 +78,7 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { config } = useChart()
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (

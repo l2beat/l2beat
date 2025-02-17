@@ -2,7 +2,7 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { ChartConfig } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartTooltip,
@@ -31,16 +31,16 @@ interface Props {
   milestones: Milestone[] | undefined
 }
 
-const chartConfig = {
+const chartMeta = {
   value: {
     color: 'hsl(var(--chart-rollups))',
   },
-} satisfies ChartConfig
+} satisfies ChartMeta
 
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   return (
     <ChartContainer
-      config={chartConfig}
+      meta={chartMeta}
       data={data}
       isLoading={isLoading}
       milestones={milestones}
@@ -77,7 +77,7 @@ function CustomTooltip({
   label,
   unit,
 }: TooltipProps<number, string> & { unit: ChartUnit }) {
-  const { config: chartConfig } = useChart()
+  const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   return (
     <div className={tooltipContentVariants()}>
@@ -86,7 +86,7 @@ function CustomTooltip({
         <div>
           {payload.map((entry) => {
             if (entry.value === undefined) return null
-            const config = chartConfig[entry.name!]!
+            const config = meta[entry.name!]!
             return (
               <div
                 key={entry.name}

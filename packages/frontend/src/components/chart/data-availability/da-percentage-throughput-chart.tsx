@@ -16,7 +16,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
-import { daChartConfig } from './chart-config'
+import { daChartMeta } from './meta'
 
 interface DataPoint {
   timestamp: number
@@ -44,7 +44,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   return (
     <ChartContainer
       data={chartData}
-      config={daChartConfig}
+      meta={daChartMeta}
       className="mb-2"
       isLoading={isLoading}
     >
@@ -59,20 +59,20 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
         <Bar
           dataKey="ethereum"
           stackId="a"
-          fill={daChartConfig.ethereum.color}
+          fill={daChartMeta.ethereum.color}
           isAnimationActive={false}
         />
 
         <Bar
           dataKey="celestia"
           stackId="a"
-          fill={daChartConfig.celestia.color}
+          fill={daChartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="avail"
           stackId="a"
-          fill={daChartConfig.avail.color}
+          fill={daChartMeta.avail.color}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
@@ -93,7 +93,7 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { config } = useChart()
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
