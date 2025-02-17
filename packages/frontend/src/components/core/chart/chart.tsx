@@ -5,6 +5,7 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/logo'
 
+import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
@@ -58,6 +59,7 @@ const ChartContainer = ({
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, '')}`
   const ref = React.useRef<HTMLDivElement>(null)
+  const isClient = useIsClient()
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -91,7 +93,7 @@ const ChartContainer = ({
         <RechartsPrimitive.ResponsiveContainer>
           {isLoading ? <ChartLoader /> : children}
         </RechartsPrimitive.ResponsiveContainer>
-        {!isLoading && (
+        {!isLoading && isClient && (
           <Logo
             animated={false}
             className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
