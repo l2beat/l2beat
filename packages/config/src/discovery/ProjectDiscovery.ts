@@ -1,10 +1,5 @@
 import { join } from 'path'
-import {
-  ConfigReader,
-  type InvertedAddresses,
-  RolePermissionEntries,
-  calculateInversion,
-} from '@l2beat/discovery'
+import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import {
   type ContractParameters,
   type ContractValue,
@@ -34,21 +29,11 @@ import type {
   ProjectPermission,
   ProjectPermissionedAccount,
   ProjectPermissions,
+  ProjectUpgradeableActor,
   ReferenceLink,
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
-import {
-  ORBIT_STACK_CONTRACT_DESCRIPTION,
-  ORBIT_STACK_PERMISSION_TEMPLATES,
-  type OrbitStackContractTemplate,
-} from './OrbitStackTypes'
-import { PermissionedContract } from './PermissionedContract'
-import type {
-  StackPermissionTemplate,
-  StackPermissionsTag,
-} from './StackTemplateTypes'
-import { findRoleMatchingTemplate } from './values/templateUtils'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -118,7 +103,6 @@ export class ProjectDiscovery {
     excludedTokens,
     premintedTokens,
     upgradableBy,
-    upgradeDelay,
     isUpcoming,
     includeInTotal,
     source,
@@ -137,8 +121,7 @@ export class ProjectDiscovery {
     tokens: string[] | '*'
     excludedTokens?: string[]
     premintedTokens?: string[]
-    upgradableBy?: string[]
-    upgradeDelay?: string
+    upgradableBy?: ProjectUpgradeableActor[]
     isUpcoming?: boolean
     includeInTotal?: boolean
     source?: ProjectEscrow['source']
@@ -158,7 +141,6 @@ export class ProjectDiscovery {
       name,
       description,
       upgradableBy,
-      upgradeDelay,
     }
 
     const contract = this.getContractDetails(address.toString(), options)
@@ -188,144 +170,6 @@ export class ProjectDiscovery {
       eoas.find((x) => x.address.toString() === address.toString()) !==
       undefined
     )
-  }
-
-  getInversion(): InvertedAddresses {
-    return calculateInversion(this.discoveries[0])
-  }
-
-  transformToPermissions(resolved: Record<string, PermissionedContract>) {
-    return Object.values(resolved)
-      .map((contract) => {
-        const entry = this.getEntryByAddress(contract.address)
-        assert(isNonNullable(entry), `Entry not found in the discovery`)
-        const description = contract.generateDescription()
-        if (description !== '') {
-          return {
-            name: contract.name,
-            accounts: this.formatPermissionedAccounts([contract.address]),
-            description,
-            chain: this.chain,
-          }
-        }
-      })
-      .filter(notUndefined)
-  }
-
-  resolveOrbitStackTemplates(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): {
-    permissions: ProjectPermission[]
-    contracts: ProjectContract[]
-  } {
-    return this.resolveStackTemplates(
-      ORBIT_STACK_PERMISSION_TEMPLATES,
-      ORBIT_STACK_CONTRACT_DESCRIPTION,
-      overrides,
-      contractOverrides,
-    )
-  }
-
-  invertByTag(
-    resolved: Record<string, PermissionedContract>,
-    tag: StackPermissionsTag,
-  ): Record<string, string> {
-    const result: Record<string, string> = {}
-
-    for (const [contractName, contract] of Object.entries(resolved)) {
-      const tagged = contract.getByTag(tag)
-      for (const contractTag of tagged) {
-        result[contractTag] = contractName
-      }
-    }
-
-    return result
-  }
-
-  resolveStackTemplates(
-    permissionTemplates: StackPermissionTemplate[],
-    contractTemplates: OrbitStackContractTemplate[],
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): {
-    permissions: ProjectPermission[]
-    contracts: ProjectContract[]
-  } {
-    const resolved = this.computeStackContractPermissions(
-      permissionTemplates,
-      overrides,
-      contractOverrides,
-    )
-
-    const adminOf = this.invertByTag(resolved, 'admin')
-
-    const contracts = contractTemplates.map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...(adminOf[d.name] && {
-          upgradableBy: [adminOf[d.name]],
-          upgradeDelay: 'No delay',
-        }),
-      }),
-    )
-
-    return {
-      permissions: this.transformToPermissions(resolved),
-      contracts,
-    }
-  }
-
-  computeStackContractPermissions(
-    templates: StackPermissionTemplate[],
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): Record<string, PermissionedContract> {
-    const inversion = this.getInversion()
-
-    const contracts: Record<string, PermissionedContract> = {}
-    const getContract = (name: string, address: EthereumAddress) => {
-      contracts[name] ??= new PermissionedContract(name, address)
-      return contracts[name]
-    }
-
-    for (const template of templates) {
-      for (const invertedContract of inversion.values()) {
-        const role = findRoleMatchingTemplate(
-          invertedContract,
-          template,
-          contractOverrides,
-        )
-        if (!role) {
-          continue
-        }
-
-        const contractKey =
-          overrides?.[role.name] ?? invertedContract.name ?? role.name
-
-        const contractAddress = EthereumAddress(invertedContract.address)
-        const contract = getContract(contractKey, contractAddress)
-        const referenced = getContract(role.atName, role.atAddress)
-
-        if (template.description !== undefined) {
-          contract.addDescription(
-            stringFormat(template.description, role.atName),
-          )
-        }
-
-        if (template.tags !== undefined) {
-          for (const tag of template.tags) {
-            contract.addTag(tag, role.atName)
-            referenced.addTagReference(tag, contractKey)
-          }
-        }
-      }
-    }
-
-    return contracts
   }
 
   getMultisigDescription(identifier: string): string[] {
@@ -985,6 +829,7 @@ export class ProjectDiscovery {
             value.permission,
             value.description ?? '',
             value.condition ?? '',
+            value.delay?.toString() ?? '',
           ].join('►'),
       ),
     ).map(([key, entries]) => {
@@ -1232,14 +1077,17 @@ export class ProjectDiscovery {
         )
 
         const upgraders = Object.keys(upgradersWithDelay)
-        const minDelay = Math.min(...Object.values(upgradersWithDelay))
         const upgradableBy =
           upgraders.length === 0
             ? {}
             : {
-                upgradableBy: upgraders,
-                upgradeDelay:
-                  minDelay === 0 ? 'No delay' : formatSeconds(minDelay),
+                upgradableBy: upgraders.map((actor) => ({
+                  name: actor,
+                  delay:
+                    upgradersWithDelay[actor] === 0
+                      ? 'no'
+                      : formatSeconds(upgradersWithDelay[actor]),
+                })),
               }
 
         return this.getContractDetails(contract.address.toString(), {
@@ -1286,13 +1134,6 @@ function isNonNullable<T>(
   return value !== null && value !== undefined
 }
 
-function stringFormat(str: string, ...val: string[]) {
-  for (let index = 0; index < val.length; index++) {
-    str = str.replaceAll(`{${index}}`, val[index])
-  }
-  return str
-}
-
 const roleDescriptions: {
   [key in (typeof RolePermissionEntries)[number]]: {
     name: string
@@ -1320,9 +1161,9 @@ const roleDescriptions: {
   },
   validate: {
     // ORBIT specific
-    name: 'Validator/Proposer',
+    name: 'Validator',
     description:
-      'Can propose new state roots (called nodes) and challenge state roots on the host chain.',
+      'Orbit stack specific Proposer and Challenger role. Can propose new state roots (called nodes) and challenge state roots on the host chain.',
   },
   operateLinea: {
     // LINEA specific

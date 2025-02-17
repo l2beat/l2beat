@@ -101,7 +101,12 @@ describe('discovery config.jsonc', () => {
         )
       }
     }
-  })
+  }).timeout(5000) // TODO(radomski): The test is taking a lot of time because
+  // we need to recompute the hashes for every single template shape to run
+  // this test. Right now this test is flaky (nondeterministic) on CI. If
+  // calculating the template shape hashes will take more than 2 seconds it
+  // will fail. The amount of shapes is going to keep growing linearly.
+  // Something needs to be done with this problem.
 
   it('discovery.json does not include errors', () => {
     for (const configs of chainConfigs ?? []) {
@@ -122,13 +127,13 @@ describe('discovery config.jsonc', () => {
     describe('every override correspond to existing contract', () => {
       for (const configs of chainConfigs ?? []) {
         for (const c of configs) {
-          it(`${c.name} on ${c.chain}`, () => {
-            for (const key of Object.keys(c.raw.overrides ?? {})) {
+          for (const key of Object.keys(c.raw.overrides ?? {})) {
+            it(`${c.name} on ${c.chain} with the override ${key}`, () => {
               if (!EthereumAddress.check(key)) {
                 expect(() => c.for(key)).not.toThrow()
               }
-            }
-          })
+            })
+          }
         }
       }
     })

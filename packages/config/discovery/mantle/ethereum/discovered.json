@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 21680644,
+  "blockNumber": 21844254,
   "configHash": "0x697136942f0883bfe5dfcb94d8e1b7b817ecc96e4d11e2feeee479ee22700f15",
   "contracts": [
     {
@@ -301,7 +301,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 109,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -355,10 +355,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 74711546,
-        "latestOutputIndex": 7521,
-        "nextBlockNumber": 74713346,
-        "nextOutputIndex": 7522,
+        "latestBlockNumber": 75697946,
+        "latestOutputIndex": 8069,
+        "nextBlockNumber": 75699746,
+        "nextOutputIndex": 8070,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -461,7 +461,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingEigenDA": false
         },
         "overhead": 188,
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
@@ -664,11 +665,11 @@
         "$members": [
           "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089",
           "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3",
-          "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC",
-          "0x207E804758e28F2b3fD6E4219671B327100b82f8",
-          "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
+          "0x50dCf0B40E593301aA75DcB54f36f379607595CE",
+          "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F",
+          "0xdC3644e172813ADbF6D130262e2416975Ac48Af3",
           "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1",
-          "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
+          "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498",
           "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
           "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070",
           "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B",
@@ -681,7 +682,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 13 (46%)",
-        "nonce": 51,
+        "nonce": 53,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -779,15 +780,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 50141,
+          "one_duration": 52190,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 50142,
-          "latestTime": 1737559067
+          "dataStoreId": 52191,
+          "latestTime": 1739534003
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -845,7 +846,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637704",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638083",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -881,33 +882,6 @@
       "values": {
         "$immutable": true,
         "owner": "0xca35F8338054739D138884685e08b39EE2217794"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1684377983,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x5881541E79f5D9d5d72c87E8Ea6F681CAb289B12",
-          "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xc1d265aa3661784e967614a86ab34bbccd5c4a901612dfe9cde9f949b055b09f",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 2,
-        "VERSION": "1.3.0"
       }
     },
     {
@@ -1126,7 +1100,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 593078,
-          "prevBlockNum": 21680630
+          "prevBlockNum": 21844079
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
@@ -1374,7 +1348,6 @@
         }
       ]
     },
-    { "address": "0x2288226d687c01B7332c2A99A0C5A4a112c63f1e" },
     {
       "address": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749",
       "receivedPermissions": [
@@ -1386,8 +1359,9 @@
     },
     { "address": "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb" },
     { "address": "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8" },
-    { "address": "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC" },
     { "address": "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1" },
+    { "address": "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498" },
+    { "address": "0x50dCf0B40E593301aA75DcB54f36f379607595CE" },
     {
       "address": "0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8",
       "receivedPermissions": [
@@ -1398,7 +1372,6 @@
         }
       ]
     },
-    { "address": "0x5881541E79f5D9d5d72c87E8Ea6F681CAb289B12" },
     { "address": "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317" },
     { "address": "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3" },
     { "address": "0x630E93130809c4acE55249229Ee6B043b929A9Ad" },
@@ -1452,6 +1425,7 @@
       ]
     },
     { "address": "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a" },
+    { "address": "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F" },
     { "address": "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc" },
     {
       "address": "0xB61298691FE0df10634A67dd83b2253E74cbF7fb",
@@ -1486,6 +1460,7 @@
         }
       ]
     },
+    { "address": "0xdC3644e172813ADbF6D130262e2416975Ac48Af3" },
     { "address": "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B" },
     { "address": "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070" },
     { "address": "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089" }
@@ -1765,9 +1740,6 @@
       "function pairingGasLimit() view returns (uint256)",
       "function verifyLowDegreenessProof(bytes header, tuple(uint256[2] X, uint256[2] Y) potElement, bytes potMerkleProof, tuple(uint256 X, uint256 Y) lowDegreenessProof) view returns (bool)",
       "function verifyZeroPaddingProof(bytes header, tuple(uint256 X, uint256 Y) paddingProof, tuple(uint256 X, uint256 Y) paddingQuotientPolyCommit) returns (bool)"
-    ],
-    "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A": [
-      "constructor(address _singleton)"
     ],
     "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E": [
       "constructor(address _delegation, address _permissionManager)",

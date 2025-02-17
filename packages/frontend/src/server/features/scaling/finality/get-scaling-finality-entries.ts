@@ -19,7 +19,13 @@ import { getFinalitySyncWarning } from './utils/is-finality-synced'
 
 export async function getFinalityProjects() {
   const projects = await ps.getProjects({
-    select: ['statuses', 'scalingInfo', 'finalityInfo', 'finalityConfig'],
+    select: [
+      'statuses',
+      'scalingInfo',
+      'finalityInfo',
+      'finalityConfig',
+      'display',
+    ],
     optional: ['scalingDa'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
@@ -76,7 +82,10 @@ export interface ScalingFinalityEntry extends CommonScalingEntry {
 }
 
 function getScalingFinalityEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'finalityInfo', 'scalingDa'>,
+  project: Project<
+    'scalingInfo' | 'statuses' | 'finalityInfo' | 'display',
+    'scalingDa'
+  >,
   changes: ProjectChanges,
   finalityProjectData: FinalityProjectData | undefined,
   tvs: number | undefined,

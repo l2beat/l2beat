@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "polygonzkevm",
-  "blockNumber": 19516552,
+  "blockNumber": 19948557,
   "configHash": "0x5431ef445e0e00f97a85ed79d0c9d2a253ab7cbbc32974df5f4c946e241e62a8",
   "contracts": [
     {
@@ -65,17 +65,18 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
+          "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+          "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+          "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
           "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-          "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0xe1cb4394c03df39d0d0d616a14a46acd94d4358f3439b1d5bd0d7c60910315b9",
         "getChainId": 1101,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 94,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 105,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1386,12 +1387,13 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0" },
     { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
     { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e" },
     { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
     { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
-    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" }
+    { "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF" }
   ],
   "abis": {
     "0x3c2269811836af69497E5F486A85D7316753cf62": [

@@ -23,10 +23,12 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
   ].sort(sortFn)
 
   return {
-    rollups: rollups.filter((entry) => !entry.statuses?.underReview),
-    validiumsAndOptimiums: validiumsAndOptimiums.filter(
-      (entry) => !entry.statuses?.underReview,
+    rollups: rollups.filter(
+      (entry) => entry.statuses?.underReview !== 'config',
     ),
-    others: others.filter((entry) => !entry.statuses?.underReview),
+    validiumsAndOptimiums: validiumsAndOptimiums.filter(
+      (entry) => entry.statuses?.underReview !== 'config',
+    ),
+    others: others.filter((entry) => entry.statuses?.underReview !== 'config'),
   }
 }

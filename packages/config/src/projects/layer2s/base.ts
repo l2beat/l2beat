@@ -207,6 +207,12 @@ export const base: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+    },
     finality: {
       type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),

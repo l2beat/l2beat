@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21665575,
+  "blockNumber": 21829713,
   "configHash": "0x3f25302e430d2a24d8c2a26dbf86e95b2ff3a7a516615e159d6fe75713bcf52c",
   "contracts": [
     {
@@ -56,10 +56,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 130000,
-        "latestOutputIndex": 25,
-        "nextBlockNumber": 135000,
-        "nextOutputIndex": 26,
+        "latestBlockNumber": 390000,
+        "latestOutputIndex": 77,
+        "nextBlockNumber": 395000,
+        "nextOutputIndex": 78,
         "proposer": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "PROPOSER": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
         "startingBlockNumber": 0,
@@ -139,7 +139,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": false,
+          "isUsingEigenDA": true
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -178,14 +179,20 @@
       "template": "opstack/OptimismPortal_soon",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x59c5fe4b963d6487e129935b3a6f9f6340305c191ed4ed9d5623fe4dcd4b473c"
+        "0x8970317120da471aba019c65d0f23fec669b03ba35e9eceec59a50a85bb53201"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It also disallows ERC20 token deposits. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
+      "description": "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.",
       "issuedPermissions": [
         {
           "permission": "guard",
           "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
+          "description": "freeze specific withdrawals.",
           "via": []
         },
         {
@@ -198,15 +205,24 @@
       "sinceTimestamp": 1735877303,
       "values": {
         "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "0x84Afee7709273060212BA3223F250a1E3EaEa317",
+        "$implementation": "0x24331B68bea70c2b086BC883EEEA551BAF80C2BA",
         "$pastUpgrades": [
           [
             "2025-01-03T04:13:23.000Z",
             "0x557adf57420f4cad2ac0e42b83fa2190aea6f942112a3fcb9022ccddaff10570",
             ["0x84Afee7709273060212BA3223F250a1E3EaEa317"]
+          ],
+          [
+            "2025-02-12T03:13:59.000Z",
+            "0x171143120577a3f09614a4054f56a007ccc92e1ab16a0dedb844b9559872a51b",
+            ["0x24331B68bea70c2b086BC883EEEA551BAF80C2BA"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
+        "frozenWithdrawals": [
+          "0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba",
+          "0x77c7fcaac9f6db1aaa8dabe8e1cd1b1c6969c556ad076c5d1f05b22f8d95cb2b"
+        ],
         "guardian": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
         "l2Oracle": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -214,7 +230,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 328258,
-          "prevBlockNum": 21664877
+          "prevBlockNum": 21827670
         },
         "paused": false,
         "superchainConfig": "0xD02631b334FfDCD5674217e57fe524c44B341DD4",
@@ -222,7 +238,8 @@
         "version": "2.8.1-beta.1"
       },
       "fieldMeta": {
-        "MIN_BRIDGE_VALUE": { "description": "Minimum deposit value." }
+        "MIN_BRIDGE_VALUE": { "description": "Minimum deposit value." },
+        "frozenWithdrawals": { "description": "Lists all frozen withdrawals." }
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
@@ -356,7 +373,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621934",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627589",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -488,7 +505,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -552,6 +569,11 @@
         {
           "permission": "guard",
           "from": "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
+        },
+        {
+          "permission": "interact",
+          "from": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
+          "description": "freeze specific withdrawals."
         }
       ]
     },
@@ -607,6 +629,54 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x24331B68bea70c2b086BC883EEEA551BAF80C2BA": [
+      "constructor()",
+      "error BadTarget()",
+      "error CallPaused()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error GasEstimation()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error LargeCalldata()",
+      "error NoValue()",
+      "error NonReentrant()",
+      "error NotAllow()",
+      "error OutOfGas()",
+      "error SmallGasLimit()",
+      "error TransferFailed()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error ValueHaveDust()",
+      "error ValueTooLow()",
+      "event Initialized(uint8 version)",
+      "event TransactionDeposited(address indexed from, bytes32 indexed to, uint256 indexed version, bytes opaqueData)",
+      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
+      "event WithdrawalFrozenStateUpdated(bytes32 indexed withdrawalHash, bool frozen)",
+      "event WithdrawalProven(bytes32 indexed withdrawalHash, bytes32 indexed from, address indexed to)",
+      "function MIN_BRIDGE_VALUE() view returns (uint256)",
+      "function balance() view returns (uint256)",
+      "function depositERC20Transaction(bytes32, uint256, uint256, uint64, bool, bytes) pure",
+      "function depositTransaction(bytes32 _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
+      "function donateETH() payable",
+      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
+      "function finalizedWithdrawals(bytes32) view returns (bool)",
+      "function frozenWithdrawals(bytes32) view returns (bool)",
+      "function guardian() view returns (address)",
+      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
+      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
+      "function l2Oracle() view returns (address)",
+      "function l2Sender() view returns (bytes32)",
+      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
+      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
+      "function paused() view returns (bool paused_)",
+      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
+      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen)",
+      "function version() pure returns (string)"
     ],
     "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE": [
       "constructor()",
@@ -708,51 +778,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x84Afee7709273060212BA3223F250a1E3EaEa317": [
-      "constructor()",
-      "error BadTarget()",
-      "error CallPaused()",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error GasEstimation()",
-      "error InvalidDataRemainder()",
-      "error InvalidHeader()",
-      "error LargeCalldata()",
-      "error NoValue()",
-      "error NonReentrant()",
-      "error NotAllow()",
-      "error OutOfGas()",
-      "error SmallGasLimit()",
-      "error TransferFailed()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "error ValueHaveDust()",
-      "error ValueTooLow()",
-      "event Initialized(uint8 version)",
-      "event TransactionDeposited(address indexed from, bytes32 indexed to, uint256 indexed version, bytes opaqueData)",
-      "event WithdrawalFinalized(bytes32 indexed withdrawalHash, bool success)",
-      "event WithdrawalProven(bytes32 indexed withdrawalHash, bytes32 indexed from, address indexed to)",
-      "function MIN_BRIDGE_VALUE() view returns (uint256)",
-      "function balance() view returns (uint256)",
-      "function depositERC20Transaction(bytes32, uint256, uint256, uint64, bool, bytes) pure",
-      "function depositTransaction(bytes32 _to, uint256 _value, uint64 _gasLimit, bool _isCreation, bytes _data) payable",
-      "function donateETH() payable",
-      "function finalizeWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx)",
-      "function finalizedWithdrawals(bytes32) view returns (bool)",
-      "function guardian() view returns (address)",
-      "function initialize(address _l2Oracle, address _systemConfig, address _superchainConfig)",
-      "function isOutputFinalized(uint256 _l2OutputIndex) view returns (bool)",
-      "function l2Oracle() view returns (address)",
-      "function l2Sender() view returns (bytes32)",
-      "function minimumGasLimit(uint64 _byteCount) pure returns (uint64)",
-      "function params() view returns (uint128 prevBaseFee, uint64 prevBoughtGas, uint64 prevBlockNum)",
-      "function paused() view returns (bool paused_)",
-      "function proveWithdrawalTransaction(tuple(uint256 nonce, bytes32 sender, address target, uint256 value, uint256 gasLimit, bytes data) _tx, uint256 _l2OutputIndex, bytes32 _pdaPubkey, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) _outputRootProof, bytes[] _withdrawalProof)",
-      "function provenWithdrawals(bytes32) view returns (bytes32 outputRoot, uint128 timestamp, uint128 l2OutputIndex)",
-      "function superchainConfig() view returns (address)",
-      "function systemConfig() view returns (address)",
-      "function version() pure returns (string)"
     ],
     "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d": [
       "constructor(address _owner)",
@@ -964,7 +989,7 @@
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
     "opstack/L1StandardBridge_soon": "0x938c95c414d3b4ebb043b858ccba485a4bdb3e4d4737e75462a3192c4d2a6970",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
-    "opstack/OptimismPortal_soon": "0xdb0961d7bf84351d2c8c6a0416f0b816199451f1b98809fba45a7bf10ce4a4c1",
+    "opstack/OptimismPortal_soon": "0x9cfb2d44d8bb45742e371246df8436a65bb7d88705c9589f1dd5bc5d6eb9feee",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"
   }
 }

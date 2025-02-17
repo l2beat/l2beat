@@ -12,7 +12,9 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
     ...getCommonProjectColumns(columnHelper, opts),
     columnHelper.accessor((row) => row.name, {
       id: 'name',
-      cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+      cell: (ctx) => (
+        <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+      ),
       meta: opts?.activity
         ? {
             headClassName: 'w-0 min-w-[154px]',

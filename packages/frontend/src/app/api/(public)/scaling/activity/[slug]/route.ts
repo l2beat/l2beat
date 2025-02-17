@@ -86,7 +86,7 @@ const getCachedResponse = cache(
   },
   ['scaling-activity-project-route'],
   {
-    tags: ['activity'],
-    revalidate: UnixTime.DAY,
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )

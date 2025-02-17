@@ -1,5 +1,6 @@
-import type { ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { checkRisk } from '../../test/helpers'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { getProjects } from './getProjects'
@@ -88,5 +89,52 @@ describe('getProjects', () => {
       // Array comparison to have a better error message with actual names
       expect(projectsWithoutDaBeatEntry).toEqual([])
     })
+  })
+
+  describe('contracts', () => {
+    for (const project of getProjects()) {
+      describe(project.id, () => {
+        const contracts = project.contracts?.addresses ?? {}
+        for (const [chain, perChain] of Object.entries(contracts)) {
+          for (const [i, contract] of perChain.entries()) {
+            const description = contract.description
+            if (description) {
+              it(`contracts[${i}].description - each line ends with a dot`, () => {
+                for (const descLine of description.trimEnd().split('\n')) {
+                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
+                }
+              })
+            }
+
+            it(`contracts[${chain}][${i}] name isn't empty`, () => {
+              expect(contract.name.trim().length).toBeGreaterThan(0)
+            })
+            const upgradableBy = contract.upgradableBy
+            const permissionsForChain = (project.permissions ?? {})[chain]
+            const all = [
+              ...(permissionsForChain?.roles ?? []),
+              ...(permissionsForChain?.actors ?? []),
+            ]
+            const actors = all.map((x) => {
+              if (x.name === 'EOA') {
+                assert(x.accounts[0].type === 'EOA')
+                return x.accounts[0].address
+              }
+              return x.name
+            })
+
+            if (upgradableBy) {
+              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
+                expect(actors).toInclude(...upgradableBy.map((a) => a.name))
+              })
+            }
+          }
+        }
+
+        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
+          checkRisk(risk, `contracts.risks[${i}]`)
+        }
+      })
+    }
   })
 })

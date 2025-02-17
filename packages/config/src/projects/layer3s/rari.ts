@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
@@ -16,7 +16,6 @@ export const rari: Layer3 = orbitStackL3({
   ],
   additionalPurposes: ['NFT'],
   discovery,
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'RARI Chain',
@@ -35,13 +34,7 @@ export const rari: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('L1GatewayRouter', {
-        description: 'Router managing token <--> gateway mapping.',
-      }),
-    ],
-  },
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
@@ -58,7 +51,6 @@ export const rari: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens that require minting custom token on L2.',
     }),
   ],
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

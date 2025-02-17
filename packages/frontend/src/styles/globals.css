@@ -24,15 +24,14 @@
     --icon-secondary: 222 8.21% 40.6%;
     --overlay: 231 30.4% 13.5% / 60%;
     --divider: 223 15.9% 82.7%;
-    --indicator-rollups: 321 84.3% 60%;
-    --indicator-validiums-optimiums: 180 50.2% 42.5%;
-    --indicator-others: 44.9 100% 33.5%;
-    --indicator-ethereum: 223 69% 50.6%;
     --link-stroke: 212 100% 86.5%;
     --link: 223 69% 50.6%;
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
+    --chart-rollups: 321 84.3% 60%;
+    --chart-validiums-optimiums: 180 50.2% 42.5%;
+    --chart-others: 44.9 100% 33.5%;
 
     --chart-native: 320 100% 63.7%;
     --chart-external: 45 100% 51.4%;
@@ -81,15 +80,14 @@
     --icon-secondary: 222 8.21% 40.6%;
     --overlay: 0 0% 0% / 60%;
     --divider: 226 14.3% 28.8%;
-    --indicator-rollups: 284 87.1% 75.7%;
-    --indicator-validiums-optimiums: 190 73.6% 55.5%;
-    --indicator-others: 54.2 70.9% 56.9%;
-    --indicator-ethereum: 212 100% 66.3%;
     --link-stroke: 217 56.3% 18.8%;
     --link: 212 100% 66.3%;
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
+    --chart-rollups: 284 87.1% 75.7%;
+    --chart-validiums-optimiums: 190 73.6% 55.5%;
+    --chart-others: 54.2 70.9% 56.9%;
 
     --chart-native: 320 100% 63.7%;
     --chart-external: 45 100% 51.4%;

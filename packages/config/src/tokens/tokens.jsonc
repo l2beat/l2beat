@@ -1375,6 +1375,10 @@
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
     },
     {
+      "symbol": "PEPU",
+      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+    },
+    {
       "symbol": "PERP",
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
@@ -2327,20 +2331,6 @@
       "source": "native"
     },
     {
-      "symbol": "TAP",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "source": "native",
-      "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
       "symbol": "ETHFI",
       "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
       "coingeckoId": "ether-fi",
@@ -2886,6 +2876,12 @@
       "source": "canonical",
       "supply": "zero",
       "coingeckoId": "forta"
+    },
+    {
+      "symbol": "G7",
+      "address": "0xf18e4466f26b4ca55bbab890b314a54976e45b17",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "nova": [
@@ -4695,6 +4691,28 @@
   ],
   "zksync2": [
     {
+      "symbol": "USDN",
+      "category": "stablecoin",
+      "address": "0x0469d9d1dE0ee58fA1153ef00836B9BbCb84c0B6",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDM",
+      "address": "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply" // totalSupply < circulatingSupply and token is minted by admins
+    },
+    {
       "symbol": "FIUSD",
       "address": "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9",
       "source": "native",
@@ -5875,6 +5893,15 @@
           }
         ]
       }
+    }
+  ],
+  "unichain": [
+    {
+      "symbol": "USDC",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

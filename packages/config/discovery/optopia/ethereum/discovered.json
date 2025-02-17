@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 21184911,
-  "configHash": "0x7c506a1eabbab73ca42ccd6096a866c9aca67062c90b0931c2c938ce109ecc2e",
+  "configHash": "0xa5ca41380985f233def00828bdd3be74812224662e7aa0f17d2b1aa2970a87fe",
   "contracts": [
     {
       "name": "AddressManager",
@@ -404,7 +404,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": true
+          "isSequencerSendingBlobTx": true,
+          "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -475,7 +476,7 @@
       }
     },
     {
-      "name": "",
+      "name": "OptimismMintableERC20Factory",
       "address": "0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
@@ -498,7 +499,8 @@
           ]
         ],
         "$upgradeCount": 1
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "L2OutputOracle",

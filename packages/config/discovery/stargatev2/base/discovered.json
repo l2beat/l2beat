@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "base",
-  "blockNumber": 15999031,
+  "blockNumber": 26369623,
   "configHash": "0xb7b66a3efc8958e302ff550aba900b0adfb1178f09c4385a9e877f179c116449",
   "contracts": [
     {
@@ -23,7 +23,7 @@
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
-        "deficitOffset": 0,
+        "deficitOffset": 25000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x08ed1d79D509A6f1020685535028ae60C144441E",
@@ -38,14 +38,14 @@
         "lpToken": "0x53983F31E8E0D0c3Fd0b8d85654989A1336317d7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "178144685021710130",
-        "poolBalance": 7147540103594,
+        "plannerFee": "348358157080511197",
+        "poolBalance": 39440407760052,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-        "treasuryFee": 2354476061,
-        "tvl": 6748552799568
+        "treasuryFee": 95699808778,
+        "tvl": 5996780881932
       }
     },
     {
@@ -108,7 +108,7 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": 0,
+        "deficitOffset": "11500000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x17E450Be3Ba9557F2378E20d64AD417E59Ef9A34",
@@ -118,19 +118,19 @@
           "creditMessaging": "0x12dC9256Acc9895B076f6638D628382881e62CeE",
           "lzToken": "0x0000000000000000000000000000000000000000"
         },
-        "getTransferGasLimit": 2300,
+        "getTransferGasLimit": 15000,
         "localEid": 30184,
         "lpToken": "0x98fB8522d891F43B771e2d27367b41Ba138D0B80",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x81EAb64E630C4a2E3E849268A6B64cb76D1C8109",
-        "plannerFee": "692452773280578133",
-        "poolBalance": "2638685080000000000000",
+        "plannerFee": "703324140287204229",
+        "poolBalance": "11657105256000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 3397562,
-        "tvl": "2431776563000000000000"
+        "treasuryFee": 55024146,
+        "tvl": "5725241323000000000000"
       }
     }
   ],

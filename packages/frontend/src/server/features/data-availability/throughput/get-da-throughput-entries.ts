@@ -1,23 +1,39 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, formatSeconds, notUndefined } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
+import { getThroughputSyncWarning } from './is-throughput-synced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
-  const projects = await ps.getProjects({
+  const projectsWithDaTracking = await ps.getProjects({
+    select: ['daTrackingConfig'],
+  })
+
+  const uniqueDaLayersInProjects = new Set(
+    projectsWithDaTracking.map((l) => l.daTrackingConfig.daLayer),
+  )
+
+  const daLayers = await ps.getProjects({
     select: ['daLayer', 'statuses'],
   })
-  const projectsWithDaTracking = projects.filter((p) => p.daLayer.daTracking)
 
-  if (projectsWithDaTracking.length === 0) {
+  const daLayersWithDaTracking = daLayers.filter((p) =>
+    uniqueDaLayersInProjects.has(p.id),
+  )
+
+  if (daLayersWithDaTracking.length === 0) {
     return []
   }
-  const latestData = await getDaThroughput(projectsWithDaTracking)
 
-  const entries = projectsWithDaTracking.map((project) =>
-    getDaThroughputEntry(project, latestData[project.id]),
+  const latestData = await getDaThroughput(
+    daLayersWithDaTracking,
+    projectsWithDaTracking,
   )
+
+  const entries = daLayersWithDaTracking
+    .map((project) => getDaThroughputEntry(project, latestData[project.id]))
+    .filter(notUndefined)
   return entries
 }
 
@@ -35,12 +51,18 @@ export interface DaThroughputEntry extends CommonProjectEntry {
     | undefined
   totalPosted: string | undefined
   finality: string | undefined
+  isSynced: boolean
 }
 
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
-  throughputData: ThroughputData[string] | undefined,
-): DaThroughputEntry {
+  data: ThroughputData[string] | undefined,
+): DaThroughputEntry | undefined {
+  if (!data) return undefined
+
+  const notSyncedStatus = data
+    ? getThroughputSyncWarning(data.syncedUntil)
+    : undefined
   return {
     id: ProjectId(project.id),
     slug: project.slug,
@@ -49,28 +71,25 @@ function getDaThroughputEntry(
     href: `/data-availability/projects/${project.slug}`,
     statuses: {
       underReview: project.statuses.isUnderReview ? 'config' : undefined,
+      syncWarning: notSyncedStatus,
     },
     isPublic: project.daLayer.systemCategory === 'public',
-    pastDayAvgThroughput: throughputData?.pastDayAvgThroughput,
-    maxThroughput: throughputData?.maxThroughput,
-    pastDayAvgCapacityUtilization:
-      throughputData?.pastDayAvgCapacityUtilization,
-    largestPoster: throughputData?.largestPoster
+    pastDayAvgThroughput: data.pastDayAvgThroughput,
+    maxThroughput: data.maxThroughput,
+    pastDayAvgCapacityUtilization: data.pastDayAvgCapacityUtilization,
+    largestPoster: data.largestPoster
       ? {
-          ...throughputData?.largestPoster,
-          totalPosted: formatBytes(
-            Number(throughputData.largestPoster.totalPosted),
-          ),
+          ...data.largestPoster,
+          totalPosted: formatBytes(Number(data.largestPoster.totalPosted)),
         }
       : undefined,
-    totalPosted: throughputData?.totalPosted
-      ? formatBytes(Number(throughputData.totalPosted))
-      : undefined,
+    totalPosted: formatBytes(Number(data.totalPosted)),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,
         })
       : undefined,
+    isSynced: !notSyncedStatus,
   }
 }
 

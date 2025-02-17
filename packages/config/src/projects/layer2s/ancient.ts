@@ -10,8 +10,7 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 const discovery = new ProjectDiscovery('ancient')
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
 }
 
 export const ancient: Layer2 = opStackL2({
@@ -49,6 +48,7 @@ export const ancient: Layer2 = opStackL2({
   rpcUrl: 'https://rpc.ancient8.gg/',
   genesisTimestamp: new UnixTime(1705985147),
   isNodeAvailable: 'UnderReview',
+  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADE4vVvVyRsg=',
   milestones: [
     {
       title: 'Ancient8 Network Launch',

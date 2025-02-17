@@ -457,16 +457,15 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
-} as const satisfies Record<
-  string,
-  {
-    display: {
-      name: string
-      description: string
-    }
-    type: BadgeType
+} as const satisfies Record<string, BadgeInfo>
+
+export type BadgeInfo = {
+  display: {
+    name: string
+    description: string
   }
->
+  type: BadgeType
+}
 
 export const Badge: {
   [T in BadgeType]: {

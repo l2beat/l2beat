@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -11,7 +11,6 @@ export const deri = orbitStackL3({
   addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
   additionalBadges: [Badge.L3ParentChain.Arbitrum],
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Deri',
@@ -33,6 +32,5 @@ export const deri = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   usesBlobs: true,
 })

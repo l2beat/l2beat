@@ -20,8 +20,7 @@ import { Badge } from '../badges'
 const discovery = new ProjectDiscovery('immutablezkevm')
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
 }
 
 const withdrawalDelay = discovery.getContractValue<number>(

@@ -22,8 +22,7 @@ import { getStage } from './common/stages/getStage'
 const discovery = new ProjectDiscovery('taiko')
 
 const upgradesTaikoMultisig = {
-  upgradableBy: ['TaikoAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'TaikoAdmin', delay: 'no' }],
 }
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
@@ -191,6 +190,12 @@ export const taiko: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+      sequencers: [],
+    },
     trackedTxs: [
       {
         uses: [
@@ -349,11 +354,11 @@ export const taiko: Layer2 = {
       references: [
         {
           title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
+          url: 'https://etherscan.io/address/0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66#code#F1#L26',
         },
         {
           title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
+          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
         },
       ],
       risks: [
@@ -379,7 +384,7 @@ export const taiko: Layer2 = {
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          url: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
+          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
         },
       ],
       risks: [],

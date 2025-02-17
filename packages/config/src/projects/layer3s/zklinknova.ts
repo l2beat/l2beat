@@ -34,53 +34,43 @@ const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 const lineaDiscovery = new ProjectDiscovery('zklinknova', 'linea')
 
 const optimismUpgradability = {
-  upgradableBy: ['OptimismOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'OptimismOwner', delay: 'no' }],
 }
 
 const arbitrumUpgradability = {
-  upgradableBy: ['ArbitrumOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ArbitrumOwner', delay: 'no' }],
 }
 
 const baseUpgradability = {
-  upgradableBy: ['BaseOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'BaseOwner', delay: 'no' }],
 }
 
 const mantapacificUpgradability = {
-  upgradableBy: ['MantaOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'MantaOwner', delay: 'no' }],
 }
 
 const mantleUpgradability = {
-  upgradableBy: ['MantleOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'MantleOwner', delay: 'no' }],
 }
 
 const scrollUpgradability = {
-  upgradableBy: ['ScrollOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'ScrollOwner', delay: 'no' }],
 }
 
 const blastUpgradability = {
-  upgradableBy: ['BlastOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'BlastOwner', delay: 'no' }],
 }
 
 const zksync2Upgradability = {
-  upgradableBy: ['EraOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'EraOwner', delay: 'no' }],
 }
 
 const ethereumUpgradability = {
-  upgradableBy: ['EthereumOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'EthereumOwner', delay: 'no' }],
 }
 
 const lineaUpgradability = {
-  upgradableBy: ['LineaOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LineaOwner', delay: 'no' }],
 }
 
 const executionDelaySeconds = lineaDiscovery.getContractValue<number>(
@@ -792,7 +782,7 @@ export const zklinknova: Layer3 = {
           'Owner of the L1ERC20Bridge on Scroll.',
         ),
         scrollDiscovery.getMultisigPermission(
-          'AdminMultisig',
+          'ScrollOwner',
           'Admin of the zkLink contract on Scroll and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
       ],

@@ -95,6 +95,12 @@ export const fuel: Layer2 = {
         chain: 'ethereum',
       },
     ],
+    daTracking: {
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
+      sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+    },
     trackedTxs: [
       {
         uses: [
@@ -287,19 +293,16 @@ export const fuel: Layer2 = {
       [discovery.chain]: [
         discovery.getContractDetails('FuelERC20Gateway', {
           description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelMessagePortal', {
           description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelChainState', {
           description:
             'Contract that allows state root submissions and settlement.',
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
       ],
     },
