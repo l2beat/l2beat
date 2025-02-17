@@ -705,23 +705,26 @@ export type DaChallengeMechanism = 'DA Challenges' | 'None'
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
   daLayer: ProjectId
-  sinceBlock: number
   inbox: string
   sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
   daLayer: ProjectId
-  sinceBlock: number
   namespace: string
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
   daLayer: ProjectId
-  sinceBlock: number
   appId: string
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export type ProjectDaTrackingConfig =

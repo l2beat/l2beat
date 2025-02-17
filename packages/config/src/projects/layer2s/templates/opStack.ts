@@ -389,10 +389,11 @@ function getDaTracking(
   )
 
   // TODO: update to deployment block number from discovery
-  const inboxStartBlock = templateVars.discovery.getContractValue<number>(
-    'SystemConfig',
-    'startBlock',
-  )
+  const inboxStartBlock =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      'SystemConfig',
+      'startBlock',
+    ) ?? 0
 
   const sequencer = templateVars.discovery.getContractValue<string>(
     'SystemConfig',

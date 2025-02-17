@@ -122,8 +122,22 @@ export const loopring: Layer2 = {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11',
-      sequencers: [],
+      inbox: '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
+      sequencers: [
+        '0x2b263f55Bf2125159Ce8Ec2Bb575C649f822ab46',
+        '0x4774d954D20DB98492B0487BC9F91dc401dBA3aE',
+        '0x53dD53dAf8F112BcA64332eA97398EfbC8a0E234',
+        '0x212e75BF264C4FB3133fA5ef6f47A34367020A1A',
+        '0x238b649E62a0C383b54060b1625516b489183843',
+        '0x3243Ed9fdCDE2345890DDEAf6b083CA4cF0F68f2',
+        '0xbfCc986cA6E6729c1D191cC0179ef060b87a7C42',
+        '0xA921aF7e4dd279e1325399E4E3Bf13d0E57f48Fc',
+        '0xeadb3d065f8d15cc05e92594523516aD36d1c834',
+        '0xB1a6BF349c947A540a5fe6f1e89992ACDad836AB',
+        '0xeDEE915Ae45Cc4B2FDd1Ce12a2f70dCa0B2AD9e5',
+        '0xE6b0cf8ed864F9bfEBa1b03bac785B5aC82cf095',
+        '0x487e8Be2BaD383b5B62fC5fb46005A8Fac10E341',
+      ],
     },
     trackedTxs: [
       {
