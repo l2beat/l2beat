@@ -1,6 +1,6 @@
 'use client'
 
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
@@ -29,6 +29,13 @@ interface Props {
   recentlyAdded: SearchBarProject[]
 }
 
+function normalizeTVS(tvs: number, minTVS: number, maxTVS: number): number {
+  if (maxTVS === minTVS) {
+    return 1
+  }
+  return (tvs - minTVS) / (maxTVS - minTVS)
+}
+
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
@@ -48,6 +55,10 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [setOpen])
 
+  const tvsValues = allProjects.map((p) => p.tvs).filter(notUndefined)
+  const minTVS = Math.min(...tvsValues)
+  const maxTVS = Math.max(...tvsValues)
+
   const filteredProjects = useMemo(
     () =>
       value === ''
@@ -57,21 +68,26 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
               limit: 15,
               keys: ['name', (e) => e.tags?.join() ?? ''],
               scoreFn: (match) => {
-                let score =
+                const score =
                   match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1)
 
-                if (
-                  match.obj.tvs &&
-                  match.obj.name.toLowerCase().startsWith(value.toLowerCase())
-                ) {
-                  score += match.obj.tvs
-                }
+                const normalizedTVS = normalizeTVS(
+                  match.obj.tvs ?? 0,
+                  minTVS,
+                  maxTVS,
+                )
 
-                return score
+                const tvsWeight = 0.65
+                const fuzzysortWeight = 1 - tvsWeight
+
+                const finalScore =
+                  score * fuzzysortWeight + normalizedTVS * tvsWeight
+
+                return finalScore
               },
             })
             .map((match) => match.obj),
-    [value, recentlyAdded, allProjects],
+    [value, recentlyAdded, allProjects, minTVS, maxTVS],
   )
 
   const filteredPages = useMemo(
