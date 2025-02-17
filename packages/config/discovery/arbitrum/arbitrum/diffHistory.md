@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x56fd4402f972dcff9aef0151c126fbfa34f822b5
+Generated with discovered.json: 0x4e966327b7bab231258e0ea9e6daad43508f5d0c
 
-# Diff at Mon, 17 Feb 2025 13:41:33 GMT:
+# Diff at Mon, 17 Feb 2025 15:16:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 305003923
-- current block number: 307018456
+- current block number: 307041304
 
 ## Description
 
