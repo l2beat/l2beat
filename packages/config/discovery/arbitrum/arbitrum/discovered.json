@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 305003923,
-  "configHash": "0xed316a53cda9b24ec2ec61d93059e3e9bbd3c8bf41b12958871950f2fb400a1c",
+  "configHash": "0x3ca2e5704ba98aaa882d5afbaa513f21622c838ebf716ac5d84f6dcd6fff7371",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -1285,7 +1285,7 @@
     { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
     { "address": "0xf6B6F07862A02C85628B3A9688beae07fEA9C863" },
     {
-      "name": "L1Timelock",
+      "name": "L1Timelock_l2alias",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
       "receivedPermissions": [
         {
@@ -2086,7 +2086,7 @@
     "orbitstack/layer2/CoreGovernor": "0x4a4d94f8ca063b9c0b64d4d7852d12f942319ff0522943e598e8db4fd645874c",
     "orbitstack/layer2/L2ARBGateway": "0x684643f9d4327e7295f9dfc2874632cf62727339c0cb58341bbc977f9131b8d9",
     "orbitstack/layer2/L2ArbitrumToken": "0xce8b9ed107289e7841621ee7fbe1a902511314f181cfd1f19ae0430c2ce0bc0d",
-    "orbitstack/layer2/L2BaseFee": "0x9102f326d76e14dfd0e8eff2770740a6a433a97ca2e05b1b7c3b3ab4ba19e4e5",
+    "orbitstack/layer2/L2BaseFee": "0x94a0bd2de227f8393be3cb1d9c7f7227ff96b5623cca10cafc19c2ec35bb0eac",
     "orbitstack/layer2/L2DAIGateway": "0xf62d88fdb3ffda1159ae16afa7762cd5f909c5e837b03b7433453712fde4cca0",
     "orbitstack/layer2/L2ERC20Gateway": "0x9af7a72e6e45c280674cd1cd2889abb905790b660d3b7a2ea55c9505124c5113",
     "orbitstack/layer2/L2GatewayRouter": "0xde7841cda710dd016b3815e3e941932d9ac3e1cbb99e687910642079e927d33f",
@@ -2094,7 +2094,7 @@
     "orbitstack/layer2/L2ProxyAdmin": "0x74efd53ce25e5ba49dc47e87493897384bb28e708119c970fc73bda333ee00a5",
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/layer2/L2SecurityCouncilPropose": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
-    "orbitstack/layer2/L2SurplusFee": "0xba09d5be62f993a7a5305a66264bcb65fab108c178c65b3bb5fb57d74af6937e",
+    "orbitstack/layer2/L2SurplusFee": "0xc5ab7cd559b6a2c80f92fafb398291abf7be7ffd34761502080874871399f87d",
     "orbitstack/layer2/L2Timelock": "0x6b0a85dd2ef03e82843ea4523251c17f0e6dfd927e9664e402f2f20cfba7b2b8",
     "orbitstack/layer2/L2UpgradeExecutor": "0xf101040cdb996345dea48abf86af9a8bd3d3e9c28460dc54d2f2a483118283e5",
     "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
