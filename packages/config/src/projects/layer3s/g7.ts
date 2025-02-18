@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
@@ -44,12 +44,19 @@ export const g7: Layer3 = orbitStackL3({
   associatedTokens: ['G7'],
   gasTokens: ['G7'],
   nonTemplateEscrows: [
+    // discovery.getEscrowDetails({
+    //   address: EthereumAddress('0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e'),
+    //   name: 'StandardGateway',
+    //   description:
+    //     'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination.',
+    //   tokens: '*',
+    // }),
+
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e'),
-      name: 'StandardGateway',
-      description:
-        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination.',
-      tokens: '*',
+      address: EthereumAddress('0x404922a9B29b4a5205a6074AbA31A7392BD28944'),
+      tokens: ['USDC'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description: 'Main entry point for users depositing USDC.',
     }),
   ],
   bridge: discovery.getContract('ERC20Bridge'),

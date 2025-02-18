@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xd3cda4c5450d573d4460db98810518f8e4f721c0
+Generated with discovered.json: 0x764dffe99661901069e8d0f974c07404a20e4c17
 
-# Diff at Mon, 17 Feb 2025 23:53:04 GMT:
+# Diff at Tue, 18 Feb 2025 10:34:32 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 307164252
+- current block number: 307317012
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Game7 full discovery.
 
 ## Initial discovery
 
@@ -49,6 +49,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract ProxyAdmin (0x401eCb1D350407f13ba348573E5630B83638E30D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDCGateway (0x404922a9B29b4a5205a6074AbA31A7392BD28944)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ERC20RollupEventInbox (0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1)
     +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
 ```
@@ -79,8 +91,20 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract L1OrbitGatewayRouter (0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
     contract ChallengeManager (0x832CF28be3042b6F60D7225E393E924D7f0936F6)
     +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
+    +++ description: None
 ```
 
 ```diff
@@ -97,6 +121,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract ERC20Inbox (0xB1146A7eb098ECF46e8AAf695f4A960A963948d6)
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
 ```
@@ -105,6 +135,12 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract ProxyAdmin (0xd12478d6edD1db996313E2F4350F2FD99c118B6E)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1OrbitERC20Gateway (0xe41363751bd1C305384375F428585C20e3dF516A)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
 ```
 
 ```diff
