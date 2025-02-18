@@ -13,10 +13,10 @@ export const river: Layer2 = opStackL2({
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS, REASON_FOR_BEING_OTHER.NO_DA_ORACLE,],
   daProvider: CELESTIA_DA_PROVIDER,
-  // celestiaDa: {
-  //   sinceBlock: 0, // Edge Case: config added @ DA Module start
-  //   namespace: 'XXXX', not found on celenium.io
-  // },
+  celestiaDa: {
+    sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4Sor8Q7yCoU=',
+  },
   display: {
     name: 'Towns',
     slug: 'towns',
