@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import { get7dTokenBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-token-breakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-tvs-breakdown'
 import { ps } from '~/server/projects'
 import type { SearchBarProject } from './search-bar-entry'
 
@@ -17,7 +17,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     ],
   })
 
-  const tvs = await get7dTokenBreakdown({ type: 'all' })
+  const tvs = await get7dTvsBreakdown({ type: 'all' })
 
   return projects.flatMap((p): SearchBarProject[] => {
     const results: SearchBarProject[] = []

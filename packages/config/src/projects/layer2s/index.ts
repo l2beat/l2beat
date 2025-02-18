@@ -115,6 +115,7 @@ import { nova } from './nova'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
+import { openzk } from './openzk'
 import { optimism } from './optimism'
 import { optopia } from './optopia'
 import { orderly } from './orderly'
@@ -319,6 +320,7 @@ export const layer2s: Layer2[] = [
   oev,
   ola,
   omgnetwork,
+  openzk,
   optimism,
   optopia,
   orderly,

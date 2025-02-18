@@ -45,17 +45,21 @@ export class DataAvailabilityRepository extends BaseRepository {
 
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
-    timeRange: [UnixTime, UnixTime],
+    timeRange: [UnixTime | null, UnixTime],
   ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.db
+    let query = this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
 
     return rows.map(toRecord)
   }

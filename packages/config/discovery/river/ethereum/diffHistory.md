@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf068ecbf1a782d175616f455e7174c72dc008a14
+
+# Diff at Tue, 18 Feb 2025 10:12:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21065199
+- current block number: 21872580
+
+## Description
+
+DA switched from Ethereum blobs to Celestia without any L1 config changes.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xf565303B5326C8653E78e5f73a2984f6F778C9E8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isSomeTxsLengthEqualToCelestiaDAExample:
+-        false
++        true
+      values.opStackDA.isSequencerSendingBlobTx:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xa76d39631544f0a506652c3bee93d041bce61481
 
 # Diff at Mon, 10 Feb 2025 19:04:31 GMT:

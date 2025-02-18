@@ -17,11 +17,11 @@ const chartConfig = {
     color: 'hsl(var(--chart-ethereum))',
   },
   celestia: {
-    label: 'Celestia (fake)',
+    label: 'Celestia',
     color: 'hsl(var(--chart-da-celestia))',
   },
   avail: {
-    label: 'Avail (fake)',
+    label: 'Avail',
     color: 'hsl(var(--chart-da-avail))',
   },
 } satisfies ChartConfig
@@ -32,10 +32,7 @@ export function DaThroughputChart() {
   const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
-  const chartRange = useMemo(
-    () => getChartRange(data?.map((d) => [d.timestamp])),
-    [data],
-  )
+  const chartRange = useMemo(() => getChartRange(data), [data])
 
   return (
     <div>

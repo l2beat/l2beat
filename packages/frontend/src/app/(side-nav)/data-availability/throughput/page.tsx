@@ -9,12 +9,16 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import { api } from '~/trpc/server'
 import { PublicSystemInfo } from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throuput-public-table'
 
 export default async function Page() {
-  const entries = await getDaThroughputEntries()
+  const [entries] = await Promise.all([
+    getDaThroughputEntries(),
+    api.da.chart.prefetch({ range: '30d' }),
+  ])
   const { publicSystems } = groupBySystem(entries)
 
   return (

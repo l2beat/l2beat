@@ -149,6 +149,24 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
       ])
     })
+
+    it('allows to query for null from', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+      ])
+
+      const results = await repository.getByProjectIdsAndTimeRange(
+        ['project-a', 'project-b'],
+        [null, START.add(1, 'days')],
+      )
+
+      expect(results).toEqualUnsorted([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+      ])
+    })
   })
 
   describe(DataAvailabilityRepository.prototype
