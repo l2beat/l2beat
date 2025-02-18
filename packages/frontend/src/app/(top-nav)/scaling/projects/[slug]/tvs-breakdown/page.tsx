@@ -48,7 +48,7 @@ export default async function Page(props: Props) {
     notFound()
   }
 
-  const projects7dData = await get7dTvsBreakdown()
+  const projects7dData = await get7dTvsBreakdown({ type: 'layer2' })
   const project7dData = projects7dData.projects[project.id.toString()]!
   if (!project7dData) {
     notFound()
