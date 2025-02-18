@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21829283,
+  "blockNumber": 21872746,
   "configHash": "0x9d306adba0d16ce54eaf9a8b94002beb407338174cdff04ed346e5ae99550fa3",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -526,12 +526,12 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558",
           "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
         ],
-        "$threshold": 2,
+        "$threshold": 1,
         "domainSeparator": "0xfb9e6f08849613661213b07b88f684c3e7df02a1757b854698a5ef7b4d584893",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1015,7 +1015,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1667880,
+        "l1ToL2MessageNonce": 1668060,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1036,9 +1036,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1050268614656564716620813462954963353407845709627146661007196397566597702493",
-        "stateBlockNumber": 1144012,
-        "stateRoot": "1730044722935930349606872623563630972257615128041069665782579237623395359308",
+        "stateBlockHash": "1773311497793231035193256382873075100627531031652299242138433633210677216116",
+        "stateBlockNumber": 1160572,
+        "stateRoot": "867434328978030437115377391793043859704275562686704712176326273565714095445",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
