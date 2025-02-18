@@ -1,27 +1,33 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
 import { Badge } from '../badges'
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
-export const g7: Layer3 = underReviewL3({
-  id: 'g7',
-  capability: 'universal',
+const discovery = new ProjectDiscovery('game7', 'arbitrum')
+
+const L1OrbitERC20Gateway = discovery.getContract('L1OrbitERC20Gateway')
+
+export const g7: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1738899615),
-  badges: [
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
+  discovery,
+  additionalBadges: [
+    Badge.DA.DAC,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Conduit,
   ],
-  hostChain: ProjectId('arbitrum'),
+  additionalPurposes: ['Gaming'],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
   display: {
     name: 'Game7',
     slug: 'g7',
     description:
       'Game7 is a DAO initiated by BitDAO and Forte to accelerate the adoption of sustainable, web3-native gaming.',
-    purposes: ['Gaming'],
-    category: 'Optimium',
-    stack: 'Arbitrum',
     links: {
       websites: ['https://game7.io/'],
       documentation: ['https://docs.game7.io/'],
@@ -36,20 +42,34 @@ export const g7: Layer3 = underReviewL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://mainnet-rpc.game7.io',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
-  },
-  escrows: [
+  rpcUrl: 'https://mainnet-rpc.game7.io',
+  associatedTokens: ['G7'],
+  gasTokens: ['G7'],
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: L1OrbitERC20Gateway.address,
+      name: L1OrbitERC20Gateway.name,
+      description: L1OrbitERC20Gateway.description,
+      tokens: '*',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x404922a9B29b4a5205a6074AbA31A7392BD28944'),
+      tokens: ['USDC'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description: 'Main entry point for users depositing USDC.',
+    }),
+  ],
+  bridge: discovery.getContract('ERC20Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  milestones: [
     {
-      address: EthereumAddress('0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e'),
-      sinceTimestamp: new UnixTime(1728556666),
-      tokens: ['G7'],
-      includeInTotal: false,
-      chain: 'arbitrum',
+      title: 'G7 Mainnet launch',
+      url: 'https://x.com/G7_DAO/status/1886897963353694319',
+      date: '2025-02-04T00:00:00Z',
+      description: 'G7 Network Mainnet is live.',
+      type: 'general',
     },
   ],
+  customDa: AnytrustDAC({ discovery }),
 })

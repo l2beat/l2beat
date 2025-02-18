@@ -27,7 +27,7 @@ async function main() {
     const app = new Application(config, logger)
     await app.start()
   } catch (e) {
-    logger.error('Failed to start the application', e)
+    logger.critical('Failed to start the application', e)
 
     // wait 10 seconds for the error to be reported
     console.log('Waiting 10 seconds for the error to be reported')

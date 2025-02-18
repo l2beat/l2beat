@@ -94,7 +94,7 @@ export const publicSystemsColumns = [
           value={
             ctx.row.original.largestPoster
               ? {
-                  value: `${ctx.row.original.largestPoster.name} ${ctx.row.original.largestPoster.percentage}%`,
+                  value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
                   secondLine: ctx.row.original.largestPoster.totalPosted,
                 }
               : undefined

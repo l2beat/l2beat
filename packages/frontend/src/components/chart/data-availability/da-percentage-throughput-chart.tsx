@@ -2,6 +2,7 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { round } from 'lodash'
+import { useMemo } from 'react'
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
@@ -16,17 +17,11 @@ import {
 import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 
-interface DataPoint {
-  timestamp: number
-  ethereum: number
-  celestia: number
-  avail: number
-}
-
 interface Props {
-  data: DataPoint[] | undefined
+  data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
   chartConfig: ChartConfig
 }
@@ -35,20 +30,34 @@ export function DaPercentageThroughputChart({
   isLoading,
   chartConfig,
 }: Props) {
-  const chartData = data?.map((item) => {
-    const total = item.ethereum + item.celestia + item.avail
-
-    return {
-      timestamp: item.timestamp,
-      ethereum: round((item.ethereum / total) * 100, 2),
-      celestia: round((item.celestia / total) * 100, 2),
-      avail: round((item.avail / total) * 100, 2),
-    }
-  })
+  const chartData = useMemo(() => {
+    return data?.map(([timestamp, ethereum, celestia, avail]) => {
+      const total = ethereum + celestia + avail
+      if (total === 0) {
+        return {
+          timestamp: timestamp,
+          ethereum: 0,
+          celestia: 0,
+          avail: 0,
+        }
+      }
+      return {
+        timestamp: timestamp,
+        ethereum: round((ethereum / total) * 100, 2),
+        celestia: round((celestia / total) * 100, 2),
+        avail: round((avail / total) * 100, 2),
+      }
+    })
+  }, [data])
 
   return (
     <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
-      <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <BarChart
+        accessibilityLayer
+        data={chartData}
+        margin={{ top: 20 }}
+        barCategoryGap={0}
+      >
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
@@ -57,7 +66,6 @@ export function DaPercentageThroughputChart({
           fill="var(--color-ethereum)"
           isAnimationActive={false}
         />
-
         <Bar
           dataKey="celestia"
           stackId="a"
