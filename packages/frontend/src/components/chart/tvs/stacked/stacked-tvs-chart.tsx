@@ -12,7 +12,6 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
-import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
@@ -66,7 +65,6 @@ export function StackedTvsChart({
     >
       <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
           fill={chartMeta.native.color}
@@ -92,7 +90,6 @@ export function StackedTvsChart({
           strokeWidth={0}
           stackId="a"
           isAnimationActive={false}
-          activeDot={DEFAULT_ACTIVE_DOT}
         />
         {getCommonChartComponents({
           chartData: data,
@@ -101,6 +98,7 @@ export function StackedTvsChart({
           },
         })}
       </AreaChart>
+      <ChartTooltip content={<CustomTooltip unit={unit} />} />
     </ChartContainer>
   )
 }

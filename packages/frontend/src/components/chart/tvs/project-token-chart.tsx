@@ -117,7 +117,6 @@ export function ProjectTokenChart({
               <RollupsStrokeGradientDef id="stroke" />
             </defs>
           )}
-          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
           {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
           <Area
             dataKey="value"
@@ -137,6 +136,7 @@ export function ProjectTokenChart({
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
             },
           })}
+          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
         </AreaChart>
       </ChartContainer>
       <div className={cn(!showStackedChartLegend && 'mt-4')}>

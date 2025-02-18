@@ -10,7 +10,6 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
-import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -117,7 +116,6 @@ export function CostsChart({
           strokeWidth={0}
           stackId="a"
           dot={false}
-          activeDot={DEFAULT_ACTIVE_DOT}
           isAnimationActive={false}
         />
 

@@ -30,7 +30,6 @@ import {
   ValidiumsAndOptimiumsFillGradientDef,
   ValidiumsAndOptimiumsStrokeGradientDef,
 } from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
-import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
@@ -96,7 +95,6 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="projects"
@@ -106,10 +104,6 @@ export function ActivityChart({
           fillOpacity={1}
           dot={false}
           isAnimationActive={false}
-          activeDot={{
-            ...DEFAULT_ACTIVE_DOT,
-            fill: chartMeta.projects.color,
-          }}
         />
         {showMainnet && (
           <Area
@@ -120,10 +114,6 @@ export function ActivityChart({
             fillOpacity={1}
             dot={false}
             isAnimationActive={false}
-            activeDot={{
-              ...DEFAULT_ACTIVE_DOT,
-              fill: chartMeta.ethereum.color,
-            }}
           />
         )}
         {getCommonChartComponents({
@@ -136,6 +126,7 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
           },
         })}
+        <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />
         <defs>
           {type === 'Rollups' && (
             <>

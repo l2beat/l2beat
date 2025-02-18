@@ -36,14 +36,8 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   }, [data])
 
   return (
-    <ChartContainer
-      data={chartData}
-      meta={daChartMeta}
-      className="mb-2"
-      isLoading={isLoading}
-    >
+    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
       <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="ethereum"
@@ -75,6 +69,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
             tickFormatter: (value: number) => formatBytes(value),
           },
         })}
+        <ChartTooltip content={<CustomTooltip />} />
       </LineChart>
     </ChartContainer>
   )

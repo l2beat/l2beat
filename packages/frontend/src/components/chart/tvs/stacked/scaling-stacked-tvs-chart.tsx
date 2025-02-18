@@ -72,7 +72,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const stats = getStats(chartData)
 
   return (
-    <section className="flex flex-col gap-2">
+    <section>
       <TvsChartHeader
         unit={unit}
         value={stats?.total}
@@ -81,6 +81,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         timeRange={chartRange}
       />
       <StackedTvsChart
+        className="mt-4 mb-2"
         data={chartData}
         milestones={milestones}
         unit={unit}

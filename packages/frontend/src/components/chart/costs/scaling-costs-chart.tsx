@@ -111,7 +111,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section className="flex flex-col">
+    <section>
       <Header resolution={resolution} chartRange={chartRange} />
       <CostsChart
         data={chartData}

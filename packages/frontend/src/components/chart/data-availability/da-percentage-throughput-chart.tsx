@@ -46,19 +46,13 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   }, [data])
 
   return (
-    <ChartContainer
-      data={chartData}
-      meta={daChartMeta}
-      className="mb-2"
-      isLoading={isLoading}
-    >
+    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
       <BarChart
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
         barCategoryGap={0}
       >
-        <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
           dataKey="ethereum"
@@ -88,6 +82,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
             allowDataOverflow: true,
           },
         })}
+        <ChartTooltip content={<CustomTooltip />} />
       </BarChart>
     </ChartContainer>
   )

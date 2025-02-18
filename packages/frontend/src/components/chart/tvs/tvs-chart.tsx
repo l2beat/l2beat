@@ -13,7 +13,6 @@ import {
   RollupsFillGradientDef,
   RollupsStrokeGradientDef,
 } from '~/components/core/chart/defs/rollups-gradient-def'
-import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -50,7 +49,6 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           <RollupsFillGradientDef id="fill" />
           <RollupsStrokeGradientDef id="stroke" />
         </defs>
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="value"
           fill="url(#fill)"
@@ -58,7 +56,6 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           stroke="url(#stroke)"
           strokeWidth={2}
           isAnimationActive={false}
-          activeDot={DEFAULT_ACTIVE_DOT}
         />
         {getCommonChartComponents({
           chartData: data,
@@ -66,6 +63,7 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },
         })}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
       </AreaChart>
     </ChartContainer>
   )
