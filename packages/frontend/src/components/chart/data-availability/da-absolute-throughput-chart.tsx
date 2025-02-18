@@ -91,7 +91,6 @@ function CustomTooltip({
   const { config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
-  console.log(payload)
   return (
     <div className={tooltipContentVariants()}>
       <div className="text-secondary">{formatTimestamp(label)}</div>
