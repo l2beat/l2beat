@@ -8071,6 +8071,50 @@
       }
     },
     {
+      "name": "Yay Kelp DAO’s Airdrop Gain ETH",
+      "coingeckoId": "yay-kelp-dao-s-airdrop-gain-eth",
+      "address": "0xda14b3B7aEF494b8c37ed9710d14e44D490316fa",
+      "symbol": "YAYAGETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1736588737,
+      "coingeckoListingTimestamp": 1739836800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54281/large/yayagETH200w.png?1739438881",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yay StakeStone Ether",
+      "coingeckoId": "yay-stakestone-ether",
+      "address": "0x54e86315C03217b76A7466C302245fD10ebEf25A",
+      "symbol": "YAYSTONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1736507735,
+      "coingeckoListingTimestamp": 1739836800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54279/large/Yay!_Stone200w.png?1739438931",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "ENA",
       "coingeckoId": "ethena",
       "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",

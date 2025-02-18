@@ -5878,6 +5878,36 @@
   ],
   "soneium": [
     {
+      "symbol": "YAYAGETH",
+      "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYSTONE",
+      "address": "0x54e86315c03217b76a7466c302245fd10ebef25a",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ASTR",
       "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
       "coingeckoId": "astar",
