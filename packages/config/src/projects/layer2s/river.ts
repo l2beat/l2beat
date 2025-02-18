@@ -11,7 +11,10 @@ export const river: Layer2 = opStackL2({
   addedAt: new UnixTime(1729867724), // 2024-10-25T17:48:44Z
   additionalBadges: [Badge.RaaS.Caldera, Badge.DA.Celestia],
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS, REASON_FOR_BEING_OTHER.NO_DA_ORACLE,],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   celestiaDa: {
     sinceBlock: 4071540, // first blob in this celestia block https://celenium.io/block/4071540?tab=transactions
