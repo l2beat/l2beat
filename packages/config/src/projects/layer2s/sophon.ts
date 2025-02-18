@@ -107,7 +107,10 @@ export const sophon: Layer2 = zkStackL2({
         'External contract escrowing USDC deposited to Sophon via canonical messaging.',
     }),
   ],
-  availDaAppId: '17',
+  availDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    appId: '17',
+  },
   milestones: [
     {
       title: 'Mainnet public launch',

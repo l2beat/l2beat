@@ -198,18 +198,31 @@ export interface DaBeatConfig {
   readonly availWsUrl: string
 }
 
+type BaseLayerConfig = {
+  type: 'baseLayer'
+  daLayer: string
+  projectId: ProjectId
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export type DaTrackingConfig =
+  | (ProjectDaTrackingConfig & { projectId: ProjectId })
+  | BaseLayerConfig
+
 export interface DataAvailabilityTrackingConfig {
-  readonly blobscan: {
-    readonly baseUrl: string
-    readonly callsPerMinute: number
-    readonly timeout: number
-  }
-  readonly ethereum: {
-    readonly minHeight: number
-    readonly batchSize: number
-  }
+  readonly layers: {
+    type: 'ethereum' | 'celestia' | 'avail'
+    name: string
+    url: string
+    callsPerMinute: number
+    batchSize: number
+    startingBlock: number
+  }[]
+
   readonly projects: {
-    id: ProjectId
-    config: ProjectDaTrackingConfig
+    /** Hash computed automatically based on fields */
+    configurationId: string
+    config: DaTrackingConfig
   }[]
 }

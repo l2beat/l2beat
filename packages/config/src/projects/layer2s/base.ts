@@ -210,6 +210,7 @@ export const base: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
       sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
     },
