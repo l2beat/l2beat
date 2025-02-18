@@ -4020,6 +4020,20 @@
       "supply": "zero"
     },
     {
+      "name": "Pepe Unchained",
+      "coingeckoId": "pepe-unchained",
+      "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+      "symbol": "PEPU",
+      "decimals": 18,
+      "deploymentTimestamp": 1717589039,
+      "coingeckoListingTimestamp": 1733961600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52681/large/wn6wNj1C_400x400.jpg?1734021973",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "PepeFork",
       "coingeckoId": "pepefork",
       "address": "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E",
@@ -6691,6 +6705,28 @@
       }
     },
     {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1719601787,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
@@ -8030,6 +8066,50 @@
           {
             "name": "Chainlink CCIP",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yay Kelp DAO’s Airdrop Gain ETH",
+      "coingeckoId": "yay-kelp-dao-s-airdrop-gain-eth",
+      "address": "0xda14b3B7aEF494b8c37ed9710d14e44D490316fa",
+      "symbol": "YAYAGETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1736588737,
+      "coingeckoListingTimestamp": 1739836800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54281/large/yayagETH200w.png?1739438881",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yay StakeStone Ether",
+      "coingeckoId": "yay-stakestone-ether",
+      "address": "0x54e86315C03217b76A7466C302245fD10ebEf25A",
+      "symbol": "YAYSTONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1736507735,
+      "coingeckoListingTimestamp": 1739836800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54279/large/Yay!_Stone200w.png?1739438931",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -10497,6 +10577,28 @@
       }
     },
     {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1719602078,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
       "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
@@ -10531,28 +10633,6 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "name": "TapToken",
-      "coingeckoId": "tapioca-dao-token",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "symbol": "TAP",
-      "decimals": 18,
-      "deploymentTimestamp": 1718405557,
-      "coingeckoListingTimestamp": 1718668800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38756/large/TAPP.png?1718729124",
-      "chainId": 42161,
-      "source": "native",
-      "supply": "circulatingSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
     },
     {
       "name": "Tether USD",

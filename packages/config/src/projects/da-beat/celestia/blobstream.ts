@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -115,9 +114,4 @@ export const blobstream: BaseProject = {
     arbitrumDiscovery,
     baseDiscovery,
   ]),
-}
-
-// TODO: different solution for this
-if (blobstream.statuses) {
-  blobstream.statuses.isUnverified = !isProjectVerified(blobstream)
 }

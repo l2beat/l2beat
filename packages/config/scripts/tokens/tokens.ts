@@ -13,9 +13,8 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
-
 import { isEqual } from 'lodash'
-import { chains } from '../../src'
+import { ProjectService } from '../../src'
 import type {
   GeneratedToken,
   Output,
@@ -38,13 +37,18 @@ main().catch((e: unknown) => {
 // TODO:
 // - load all generated into result and save result every time
 async function main() {
-  const logger = new ScriptLogger({})
+  const logger: ScriptLogger = new ScriptLogger({})
   logger.notify('Running tokens script...\n')
   const coingeckoClient = getCoingeckoClient()
   let coinList: CoinListPlatformEntry[] | undefined = undefined
   const sourceToken = readTokensFile(logger)
   const output = readGeneratedFile(logger)
   const result: GeneratedToken[] = output.tokens
+
+  const ps = new ProjectService()
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (x) => x.chainConfig,
+  )
 
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
@@ -69,7 +73,11 @@ async function main() {
 
   for (const [chain, tokens] of Object.entries(sourceToken)) {
     const chainLogger = logger.prefix(chain)
-    const chainConfig = getChainConfiguration(chainLogger, chain)
+    const chainConfig = chains.find((c) => c.name === chain)
+    logger.assert(
+      chainConfig !== undefined,
+      `Configuration not found, add chain configuration to project .ts file`,
+    )
     const chainId = getChainId(chainLogger, chainConfig)
 
     for (const token of tokens) {
@@ -189,15 +197,6 @@ function getCoingeckoClient() {
     logger: Logger.WARN,
   })
   return coingeckoClient
-}
-
-function getChainConfiguration(logger: ScriptLogger, chain: string) {
-  const chainConfig = chains.find((c) => c.name === chain)
-  logger.assert(
-    chainConfig !== undefined,
-    `Configuration not found, add chain configuration to project .ts file`,
-  )
-  return chainConfig
 }
 
 function getChainId(logger: ScriptLogger, chain: ChainConfig) {

@@ -39,7 +39,6 @@ export const oev: Layer2 = orbitStackL2({
   },
   rpcUrl: 'https://oev.rpc.api3.org/http',
   discovery,
-  discoveryDrivenData: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

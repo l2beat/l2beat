@@ -47,10 +47,7 @@ export const externallyBridgedColumns = [
 
       return (
         value.tokenAddress && (
-          <TokenAddressCell
-            address={value.tokenAddress}
-            explorer={value.explorerUrl}
-          />
+          <TokenAddressCell address={value.tokenAddress} url={value.url} />
         )
       )
     },

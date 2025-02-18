@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
@@ -25,16 +26,18 @@ export const publicSystemsColumns = [
       columnHelper.display({
         header: 'PAST DAY AVG',
         cell: (ctx) => (
-          <TableValueCell
-            emptyMode="no-data"
-            value={
-              ctx.row.original.pastDayAvgThroughput
-                ? {
-                    value: `${ctx.row.original.pastDayAvgThroughput} MB/s`,
-                  }
-                : undefined
-            }
-          />
+          <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+            <TableValueCell
+              emptyMode="no-data"
+              value={
+                ctx.row.original.pastDayAvgThroughput
+                  ? {
+                      value: `${ctx.row.original.pastDayAvgThroughput} MB/s`,
+                    }
+                  : undefined
+              }
+            />
+          </SyncStatusWrapper>
         ),
         meta: {
           tooltip:
@@ -63,15 +66,17 @@ export const publicSystemsColumns = [
   columnHelper.display({
     header: 'past day avg\ncapacity used',
     cell: (ctx) => (
-      <TableValueCell
-        value={
-          ctx.row.original.pastDayAvgCapacityUtilization
-            ? {
-                value: `${ctx.row.original.pastDayAvgCapacityUtilization}%`,
-              }
-            : undefined
-        }
-      />
+      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+        <TableValueCell
+          value={
+            ctx.row.original.pastDayAvgCapacityUtilization
+              ? {
+                  value: `${ctx.row.original.pastDayAvgCapacityUtilization}%`,
+                }
+              : undefined
+          }
+        />
+      </SyncStatusWrapper>
     ),
     meta: {
       headClassName: 'pl-2',
@@ -83,17 +88,19 @@ export const publicSystemsColumns = [
   columnHelper.display({
     header: 'past day\nlargest poster (L2)',
     cell: (ctx) => (
-      <TableValueCell
-        emptyMode="no-data"
-        value={
-          ctx.row.original.largestPoster
-            ? {
-                value: `${ctx.row.original.largestPoster.name} ${ctx.row.original.largestPoster.percentage}%`,
-                secondLine: ctx.row.original.largestPoster.totalPosted,
-              }
-            : undefined
-        }
-      />
+      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+        <TableValueCell
+          emptyMode="no-data"
+          value={
+            ctx.row.original.largestPoster
+              ? {
+                  value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
+                  secondLine: ctx.row.original.largestPoster.totalPosted,
+                }
+              : undefined
+          }
+        />
+      </SyncStatusWrapper>
     ),
     meta: {
       tooltip:
@@ -103,7 +110,9 @@ export const publicSystemsColumns = [
   columnHelper.display({
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
-      <TableValueCell value={{ value: ctx.row.original.totalPosted ?? '' }} />
+      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+        <TableValueCell value={{ value: ctx.row.original.totalPosted ?? '' }} />
+      </SyncStatusWrapper>
     ),
     meta: {
       tooltip:

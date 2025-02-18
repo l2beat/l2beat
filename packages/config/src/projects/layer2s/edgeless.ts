@@ -53,7 +53,6 @@ export const edgeless: Layer2 = orbitStackL2({
       chain: 'ethereum',
     },
   ],
-  discoveryDrivenData: true,
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

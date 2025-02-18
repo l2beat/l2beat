@@ -7,7 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { BackendProject } from '../../BackendProject'
-import { chainConverter } from '../../chainConverter'
 
 export function getCirculatingSupplyEntry(
   chain: ChainConfig,
@@ -18,8 +17,7 @@ export function getCirculatingSupplyEntry(
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
 
   const address = token.address ?? 'native'
-  const chainName = chainConverter.toName(token.chainId)
-  const assetId = AssetId.create(chainName, address)
+  const assetId = AssetId.create(chain.name, address)
   const dataSource = 'coingecko'
   const includeInTotal = !token.excludeFromTotal
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
@@ -32,7 +30,7 @@ export function getCirculatingSupplyEntry(
     address: address,
     assetId: assetId,
     category: token.category,
-    chain: chainName,
+    chain: chain.name,
     coingeckoId: token.coingeckoId,
     dataSource: dataSource,
     decimals: token.decimals,

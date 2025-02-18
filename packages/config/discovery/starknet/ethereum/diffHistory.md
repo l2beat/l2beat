@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x29be27d9add222db7f9524fc4f59c2a719f8b786
+
+# Diff at Tue, 18 Feb 2025 10:46:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829283
+- current block number: 21872746
+
+## Description
+
+StarkgateETHSecurityAgentMultisig threshold = 1.
+
+## Watched changes
+
+```diff
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      values.$threshold:
+-        2
++        1
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x05d59101790c6bc4d07b88f4a179106d1bc46dab
 
 # Diff at Wed, 12 Feb 2025 08:41:35 GMT:

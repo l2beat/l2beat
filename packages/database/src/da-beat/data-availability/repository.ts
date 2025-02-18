@@ -3,16 +3,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
 import { selectDataAvailability } from './select'
 
-// TODO: cleanup unused methods after removing EthereumDaIndexer
 export class DataAvailabilityRepository extends BaseRepository {
-  async getAll(): Promise<DataAvailabilityRecord[]> {
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .execute()
-    return rows.map(toRecord)
-  }
-
   async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
@@ -22,67 +13,53 @@ export class DataAvailabilityRepository extends BaseRepository {
         .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
-          cb.columns(['timestamp', 'configurationId']).doUpdateSet((eb) => ({
-            totalSize: eb.ref('excluded.totalSize'),
-          })),
+          cb
+            .columns(['timestamp', 'daLayer', 'projectId'])
+            .doUpdateSet((eb) => ({
+              totalSize: eb.ref('excluded.totalSize'),
+            })),
         )
         .execute()
     })
     return records.length
   }
 
-  async deleteByProjectFrom(
-    project: string,
-    fromInclusive: UnixTime,
-  ): Promise<number> {
-    const result = await this.db
-      .deleteFrom('DataAvailability')
-      .where((eb) =>
-        eb.and([
-          eb('projectId', '=', project.toString()),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-        ]),
-      )
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
-  async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('DataAvailability')
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
-  async getByProjectAndTimeRange(
-    projectId: string,
-    timeRange: [UnixTime, UnixTime],
+  async getForDaLayerInTimeRange(
+    daLayer: string,
+    from: UnixTime,
+    to: UnixTime,
   ): Promise<DataAvailabilityRecord[]> {
-    const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
-      .orderBy('timestamp', 'asc')
+      .where((eb) =>
+        eb.and([
+          eb('daLayer', '=', daLayer),
+          eb('timestamp', '>=', from.toDate()),
+          eb('timestamp', '<=', to.toDate()),
+        ]),
+      )
       .execute()
     return rows.map(toRecord)
   }
 
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
-    timeRange: [UnixTime, UnixTime],
+    timeRange: [UnixTime | null, UnixTime],
   ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.db
+    let query = this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
-      .execute()
+
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
 
     return rows.map(toRecord)
   }
@@ -103,17 +80,20 @@ export class DataAvailabilityRepository extends BaseRepository {
     return row && toRecord(row)
   }
 
-  async getByProjectIdAndFrom(
-    projectId: string,
-    fromInclusive: UnixTime,
-  ): Promise<DataAvailabilityRecord[]> {
+  // Test only
+  async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
-      .where('projectId', '=', projectId)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .orderBy('timestamp', 'asc')
       .execute()
     return rows.map(toRecord)
+  }
+
+  // Test only
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

@@ -16,7 +16,6 @@
  * DO NOT ADD NEW NON-TYPE EXPORTS to @l2beat/config. Thanks!
  */
 
-export { chains } from './chains'
 export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
 export {
@@ -44,4 +43,7 @@ export {
   isDiscoveryDriven,
 } from './utils/discoveryDriven'
 export { isVerified } from './verification/isVerified'
-export { ClingoExporter } from './discovery/ClingoExporter'
+
+import { runConfigAdjustments } from './adjustments'
+
+runConfigAdjustments()

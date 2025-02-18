@@ -4767,20 +4767,6 @@
       "isAssociated": false
     },
     {
-      "id": "arbitrum-0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "ticker": "TAP",
-      "symbol": "TAP",
-      "name": "TapToken",
-      "amount": {
-        "type": "circulatingSupply",
-        "ticker": "TAP"
-      },
-      "sinceTimestamp": 1718668800,
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
       "id": "arbitrum-0xD56734d7f9979dD94FAE3d67C7e928234e71cD4C",
       "ticker": "TIA.n",
       "symbol": "TIA.n",

@@ -186,6 +186,8 @@ export interface ScalingProjectDisplay {
 
 export interface ProjectEscrow {
   chain: string
+  /** Automatically set in config based on chain name. */
+  chainId?: number
   /** Address of the escrow. Use etherscan to verify its correctness. */
   address: EthereumAddress
   /** Should use name of the contract for escrow name */
@@ -601,6 +603,8 @@ export type OnchainVerifier = {
   name: string
   description: string
   contractAddress: EthereumAddress
+  /** Link to the smart contract code on an explorer. Automatically set. */
+  url?: string
   chainId: ChainId
   subVerifiers: SubVerifier[]
 } & (
@@ -648,6 +652,7 @@ export interface Bridge {
   isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
+  chainConfig?: ChainConfig
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
@@ -707,19 +712,24 @@ export interface EthereumDaTrackingConfig {
   daLayer: ProjectId
   inbox: string
   sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
   daLayer: ProjectId
   namespace: string
-  signers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
   daLayer: ProjectId
   appId: string
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export type ProjectDaTrackingConfig =
@@ -819,6 +829,7 @@ export interface BaseProject {
   daBridge?: DaBridge
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
+  chainConfig?: ChainConfig
   milestones?: Milestone[]
   // tags
   isBridge?: true
@@ -1084,6 +1095,8 @@ export interface ProjectContract {
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
+  /** Explorer url for the code of that contract. Set automatically */
+  url?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */

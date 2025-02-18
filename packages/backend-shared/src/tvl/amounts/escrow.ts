@@ -7,7 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
-import { chainConverter } from '../../chainConverter'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getEscrowEntry(
@@ -19,8 +18,7 @@ export function getEscrowEntry(
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
   const address = token.address ?? 'native'
-  const chainName = chainConverter.toName(token.chainId)
-  const assetId = AssetId.create(chainName, address)
+  const assetId = AssetId.create(chain.name, address)
   const bridgedUsing = escrow.bridgedUsing
   const includeInTotal = token.excludeFromTotal
     ? false
@@ -42,7 +40,7 @@ export function getEscrowEntry(
     assetId: assetId,
     bridgedUsing: bridgedUsing,
     category: token.category,
-    chain: chainName,
+    chain: chain.name,
     dataSource: chain.name,
     decimals: token.decimals,
     escrowAddress: escrow.address,

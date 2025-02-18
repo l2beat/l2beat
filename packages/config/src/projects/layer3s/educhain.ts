@@ -43,7 +43,6 @@ export const educhain: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
-  discoveryDrivenData: true,
   associatedTokens: ['EDU'],
   gasTokens: ['EDU'],
   nonTemplateEscrows: [

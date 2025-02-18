@@ -27,7 +27,7 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step. The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced."
+    description: "Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step. The challenge protocol can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault (for the zkEVM prover path), meaning that DA is not always enforced."
     orderHint: Infinity
     secondLine: "7d challenge period"
     sentiment: "bad"

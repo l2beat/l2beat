@@ -1,7 +1,6 @@
 import { assert, ChainId } from '@l2beat/shared-pure'
-
 import { isEqual } from 'lodash'
-import { chains } from '../../src'
+import { type ChainConfig, ProjectService } from '../../src'
 import type { GeneratedToken } from '../../src/tokens/types'
 import { ScriptLogger } from './utils/ScriptLogger'
 import { readGeneratedFile, readTokensFile } from './utils/fsIntegration'
@@ -10,6 +9,13 @@ describe('tokens script', () => {
   const logger = ScriptLogger.SILENT
   const tokensFile = readTokensFile(logger)
   const generatedFile = readGeneratedFile(logger)
+
+  let chains: ChainConfig[] = []
+  before(async () => {
+    const ps = new ProjectService()
+    const projects = await ps.getProjects({ select: ['chainConfig'] })
+    chains = projects.map((x) => x.chainConfig)
+  })
 
   it('every source has corresponding output entry', () => {
     for (const [chain, tokens] of Object.entries(tokensFile)) {
