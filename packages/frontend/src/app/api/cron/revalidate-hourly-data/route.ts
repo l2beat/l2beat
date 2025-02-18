@@ -18,6 +18,7 @@ export async function GET(req: NextRequest) {
   revalidatePath('/bridges/summary')
   revalidatePath('/bridges/archived')
   revalidatePath('/data-availability/summary')
+  revalidatePath('/data-availability/throughput')
 
   revalidatePath('/scaling/projects/[slug]')
   revalidatePath('/scaling/projects/[slug]/tvs-breakdown')

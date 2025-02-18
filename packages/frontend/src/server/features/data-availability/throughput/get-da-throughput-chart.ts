@@ -54,6 +54,7 @@ const getCachedDaThroughputChartData = cache(
     })
   },
   ['da-throughput-chart-data'],
+  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
 function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
