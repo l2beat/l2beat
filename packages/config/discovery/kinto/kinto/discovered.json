@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 742556,
-  "configHash": "0x312f517a0900c365023459f4dde02313929718a4a41d8d4f021b94a0dcc45720",
+  "blockNumber": 742977,
+  "configHash": "0xfd8e5fa9dd2f2cad7b021c2b7d706f65ca47cfd3e5aba0c2ae5af76dffa36586",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1739872049,
+        "clock": 1739881181,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1739872049,
+        "clock": 1739881181,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1739872049,
+        "clock": 1739881181,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30882504251094040475",
+        "getDeposit": "30838966838224040475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -889,7 +889,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 15005,
+        "globalMessageCount": 15030,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1463,7 +1463,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 71811
+        "totalWallets": 71855
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1579,6 +1579,86 @@
       "sinceTimestamp": 1729791296,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "roles": {
+            "ADMIN_ROLE": {
+              "members": [
+                {
+                  "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+                  "since": 1729791296,
+                  "executionDelay": 0
+                }
+              ]
+            },
+            "NIO_GOVERNOR_ROLE": {
+              "members": [
+                {
+                  "member": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+                  "since": 1729806574,
+                  "executionDelay": 259200
+                }
+              ]
+            },
+            "UPGRADER_ROLE": {
+              "members": [
+                {
+                  "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+                  "since": 1733181166,
+                  "executionDelay": 604800
+                },
+                {
+                  "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+                  "since": 1740077455,
+                  "executionDelay": 604800
+                }
+              ],
+              "grantDelay": 604800
+            },
+            "SECURITY_COUNCIL_ROLE": {
+              "members": [
+                {
+                  "member": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+                  "since": 1739472657,
+                  "executionDelay": 604800
+                }
+              ]
+            }
+          },
+          "targets": {
+            "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
+              "roleFunctions": {
+                "NIO_GOVERNOR_ROLE": [
+                  "sendFunds(address,uint256,address)",
+                  "sendETH(uint256,address)",
+                  "batchSendFunds(address[],uint256[],address[])"
+                ]
+              }
+            },
+            "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+              "roleFunctions": {
+                "UPGRADER_ROLE": [
+                  "upgradeAllWalletImplementations(address)",
+                  "upgradeTo(address)"
+                ]
+              },
+              "adminDelay": 604800
+            },
+            "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+              "roleFunctions": {
+                "UPGRADER_ROLE": ["upgradeTo(address)"],
+                "SECURITY_COUNCIL_ROLE": [
+                  "updateSystemApps(address[])",
+                  "updateSystemContracts(address[])",
+                  "updateReservedContracts(address[])"
+                ]
+              }
+            },
+            "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
+              "roleFunctions": { "UPGRADER_ROLE": ["upgradeTo(address)"] },
+              "adminDelay": 604800
+            }
+          }
+        },
         "AdditionalRoleLabels": {
           "NIO_GOVERNOR_ROLE": ["1635978423191113331"],
           "UPGRADER_ROLE": ["8663528507529876195"],
@@ -1759,8 +1839,8 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "496961882277242998448788",
-        "getUnclaimedLimit": "195734965836793519861338",
+        "getTotalLimit": "497164777466280792680918",
+        "getUnclaimedLimit": "195879850670679661315366",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
@@ -1768,7 +1848,7 @@
         "quarters": 40,
         "root": "0x274bc5fa6da84e132ab12454aed6a67f69646aef9e0f7c3ce311e7e09e854391",
         "startTime": 1718690400,
-        "totalClaimed": "301226916440449478587450",
+        "totalClaimed": "301284926795601131365552",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1996,7 +2076,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1739871910,
+        "lastMonitoredAt": 1739879229,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -2010,7 +2090,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 72151,
+        "totalSupply": 72194,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",

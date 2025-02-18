@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2a4960aee5b83478557082d4118abc65fc7f29f8
+Generated with discovered.json: 0x561a917022e5b5e4148934a9059dfe12e2243921
 
-# Diff at Tue, 18 Feb 2025 09:51:50 GMT:
+# Diff at Tue, 18 Feb 2025 12:20:16 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 735231
-- current block number: 742556
+- current block number: 742977
 
 ## Description
 
@@ -12,7 +12,7 @@ SECURITY_COUNCIL_ROLE added to AccessManager and targets configured. SC granted 
 
 Waiting for the access manager handler to be merged to clean up the discovery.
 
-Config related changes due to editing some descriptions.
+Config related changes due to editing some descriptions and new access manager handler.
 
 ## Watched changes
 
@@ -51,6 +51,14 @@ Config related changes due to editing some descriptions.
 +        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
       receivedPermissions.3.description:
 +        "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+      values.accessControl.roles.UPGRADER_ROLE.members.1:
++        {"member":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","since":1740077455,"executionDelay":604800}
+      values.accessControl.roles.SECURITY_COUNCIL_ROLE:
++        {"members":[{"member":"0x28fC10E12A78f986c78F973Fc70ED88072b34c8e","since":1739472657,"executionDelay":604800}]}
+      values.accessControl.targets.0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b.roleFunctions.SECURITY_COUNCIL_ROLE:
++        ["updateSystemApps(address[])","updateSystemContracts(address[])","updateReservedContracts(address[])"]
+      values.accessControl.targets.0xf369f78E3A0492CC4e96a90dae0728A38498e9c7:
++        {"roleFunctions":{"UPGRADER_ROLE":["upgradeTo(address)"]},"adminDelay":604800}
       values.AdditionalRoleLabels.SECURITY_COUNCIL_ROLE:
 +        ["14661544942390944024"]
       values.RolesGranted.8663528507529876195.account:
@@ -140,6 +148,8 @@ discovery. Values are for block 735231 (main branch discovery), not current.
     +++ description: Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
       values.AdditionalRoles:
 -        [{"roleId":"1635978423191113331","label":"NIO_GOVERNOR_ROLE"},{"roleId":"8663528507529876195","label":"UPGRADER_ROLE"}]
+      values.accessControl:
++        {"roles":{"ADMIN_ROLE":{"members":[{"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1729791296,"executionDelay":0}]},"NIO_GOVERNOR_ROLE":{"members":[{"member":"0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a","since":1729806574,"executionDelay":259200}]},"UPGRADER_ROLE":{"members":[{"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1733181166,"executionDelay":604800}],"grantDelay":604800}},"targets":{"0x793500709506652Fcc61F0d2D0fDa605638D4293":{"roleFunctions":{"NIO_GOVERNOR_ROLE":["sendFunds(address,uint256,address)","sendETH(uint256,address)","batchSendFunds(address[],uint256[],address[])"]}},"0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75":{"roleFunctions":{"UPGRADER_ROLE":["upgradeAllWalletImplementations(address)","upgradeTo(address)"]},"adminDelay":604800},"0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b":{"roleFunctions":{"UPGRADER_ROLE":["upgradeTo(address)"]}}}}
 +++ description: Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.
       values.AdditionalRoleLabels:
 +        {"NIO_GOVERNOR_ROLE":["1635978423191113331"],"UPGRADER_ROLE":["8663528507529876195"]}
