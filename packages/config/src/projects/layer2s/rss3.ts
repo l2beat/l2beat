@@ -88,7 +88,7 @@ export const rss3: Layer2 = opStackL2({
   chainConfig: {
     name: 'rss3',
     chainId: 12553,
-    explorerUrl: 'https://scan.rss3.io/',
+    explorerUrl: 'https://scan.rss3.io',
     explorerApi: {
       url: 'https://scan.rss3.io/api',
       type: 'blockscout',

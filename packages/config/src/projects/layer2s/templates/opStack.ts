@@ -7,7 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -62,6 +61,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -428,7 +428,11 @@ function getDaTracking(
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
-  const common = opStackCommon('layer2', templateVars, ethereum.explorerUrl)
+  const common = opStackCommon(
+    'layer2',
+    templateVars,
+    EXPLORER_URLS['ethereum'],
+  )
   return {
     type: 'layer2',
     ...common,

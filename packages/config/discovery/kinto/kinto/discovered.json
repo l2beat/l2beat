@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 735231,
-  "configHash": "0x82f4cbb32da89ebc4dcd175c90c761d249038574b83d93dc924b9079289e9340",
+  "configHash": "0xb878b4c56d39038f75494b90db949ab29d1c665939e24811209eaa141bc2034d",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -1546,6 +1546,61 @@
       "sinceTimestamp": 1729791296,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "roles": {
+            "ADMIN_ROLE": {
+              "members": [
+                {
+                  "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+                  "since": 1729791296,
+                  "executionDelay": 0
+                }
+              ]
+            },
+            "NIO_GOVERNOR_ROLE": {
+              "members": [
+                {
+                  "member": "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+                  "since": 1729806574,
+                  "executionDelay": 259200
+                }
+              ]
+            },
+            "UPGRADER_ROLE": {
+              "members": [
+                {
+                  "member": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+                  "since": 1733181166,
+                  "executionDelay": 604800
+                }
+              ],
+              "grantDelay": 604800
+            }
+          },
+          "targets": {
+            "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
+              "roleFunctions": {
+                "NIO_GOVERNOR_ROLE": [
+                  "sendFunds(address,uint256,address)",
+                  "sendETH(uint256,address)",
+                  "batchSendFunds(address[],uint256[],address[])"
+                ]
+              }
+            },
+            "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+              "roleFunctions": {
+                "UPGRADER_ROLE": [
+                  "upgradeAllWalletImplementations(address)",
+                  "upgradeTo(address)"
+                ]
+              },
+              "adminDelay": 604800
+            },
+            "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+              "roleFunctions": { "UPGRADER_ROLE": ["upgradeTo(address)"] }
+            }
+          }
+        },
         "AdditionalRoles": [
           { "roleId": "1635978423191113331", "label": "NIO_GOVERNOR_ROLE" },
           { "roleId": "8663528507529876195", "label": "UPGRADER_ROLE" }

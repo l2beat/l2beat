@@ -1,4 +1,4 @@
-import { type ChainConfig, chains, tokenList } from '@l2beat/config'
+import { tokenList } from '@l2beat/config'
 import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
 import type {
   BackendProject,
@@ -23,14 +23,15 @@ export function aggLayerEscrowToEntries(
     ) {
       continue
     }
-    const chain = getChain(project)
-
+    const chain = project.chain
+    assert(chain, `Missing chain for: ${project.projectId}`)
     const configEntry = getAggLayerL2TokenEntry(chain, token, escrow, project)
 
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
-    const chain = getChain(project)
+    const chain = project.chain
+    assert(chain, `Missing chain for: ${project.projectId}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
     const configEntry = getAggLayerNativeEtherPremintedEntry(
@@ -42,7 +43,8 @@ export function aggLayerEscrowToEntries(
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
-    const chain = getChain(project)
+    const chain = project.chain
+    assert(chain, `Missing chain for: ${project.projectId}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
     const l1Weth = tokenList.find(
       (t) => AssetId.create('ethereum', t.address) === AssetId.WETH,
@@ -60,10 +62,4 @@ export function aggLayerEscrowToEntries(
   }
 
   return entries
-}
-
-function getChain(project: BackendProject): ChainConfig {
-  const chain = chains.find((x) => x.name === project.projectId)
-  assert(chain, `Chain not found for project ${project.projectId}`)
-  return chain
 }

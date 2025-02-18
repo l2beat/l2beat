@@ -64,6 +64,8 @@
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
+    --chart-celestia: 285 62.7% 52.7%;
+    --chart-avail: 151 90.2% 48%;
   }
 }
 

@@ -10,7 +10,6 @@ import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 import { describe } from 'mocha'
-import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
@@ -20,6 +19,7 @@ import type {
   ReferenceLink,
   ScalingProjectTechnology,
 } from '../../types'
+import { chains } from '../chains'
 import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
@@ -145,7 +145,8 @@ describe('layer2s', () => {
   describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
       const name = layer2.chainConfig?.name
-      if (name !== undefined) {
+      // polygon-pos is the exception
+      if (name !== undefined && layer2.id !== 'polygon-pos') {
         it(layer2.id.toString(), () => {
           expect(name).toEqual(layer2.id.toString())
         })

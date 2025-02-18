@@ -1,5 +1,5 @@
 import type { Env } from '@l2beat/backend-tools'
-import { type ChainConfig, chains, layer2s, layer3s } from '@l2beat/config'
+import { type ChainConfig, layer2s, layer3s } from '@l2beat/config'
 import {
   ChainId,
   ProjectId,
@@ -27,6 +27,7 @@ export function getChainTvlConfig(
   isEnabled: boolean,
   env: Env,
   chain: string,
+  chains: ChainConfig[],
   options?: {
     minTimestamp?: UnixTime
   },
