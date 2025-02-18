@@ -85,6 +85,11 @@
       // highly custom/manual event-based discovery here, should be automated
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "kintoAccessControl"
+          }
+        },
         "initialAdminRole": {
           "description": "From the constructor args. Has the ADMIN_ROLE (0).",
           "handler": {

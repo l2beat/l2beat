@@ -146,7 +146,9 @@ function makeTechnologyContract(
   // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
   // weird logic would exist here. Instead you'd already have the items you want
   // to display already pre-processed in config
-  const explorerUrl = new URL(item.url ?? '').origin
+  const explorerUrl = item.url
+    ? new URL(item.url).origin
+    : 'https://etherscan.io'
 
   const getAddress = (opts: {
     address: EthereumAddress
