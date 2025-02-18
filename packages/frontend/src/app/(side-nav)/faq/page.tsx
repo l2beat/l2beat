@@ -5,6 +5,8 @@ import { Markdown } from '~/components/markdown/markdown'
 import { PrimaryCard } from '~/components/primary-card'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { FaqSideNav } from './_components/faq-side-nav'
+import type { FaqItem } from './faq-items'
 import { faqItems } from './faq-items'
 
 export const metadata: Metadata = getDefaultMetadata({
@@ -16,8 +18,12 @@ export const metadata: Metadata = getDefaultMetadata({
   },
 })
 
+export interface FaqItemWithId extends FaqItem {
+  id: string
+}
+
 export default async function Page() {
-  const faqItemsWithId = faqItems.map((item) => ({
+  const faqItemsWithId: FaqItemWithId[] = faqItems.map((item) => ({
     ...item,
     id: questionToId(item.question),
   }))
@@ -47,19 +53,7 @@ export default async function Page() {
             )
           })}
         </PrimaryCard>
-        <div className="custom-scrollbar sticky top-6 hidden h-[calc(100vh-230px)] lg:block">
-          <div className="relative flex h-full w-72 shrink-0 flex-col gap-4 overflow-y-auto pr-4">
-            {faqItemsWithId.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="text-base font-medium text-gray-850 transition hover:text-brand dark:text-white dark:opacity-80 dark:hover:opacity-100"
-              >
-                {item.question}
-              </a>
-            ))}
-          </div>
-        </div>
+        <FaqSideNav entries={faqItemsWithId} />
       </main>
       <ScrollToTopButton />
     </>
