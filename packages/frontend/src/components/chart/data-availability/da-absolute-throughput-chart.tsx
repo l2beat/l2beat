@@ -30,15 +30,16 @@ export function DaAbsoluteThroughputChart({
   chartConfig,
 }: Props) {
   const chartData = useMemo(() => {
-    return data?.map((item) => {
+    return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
-        ...item,
-        ethereum: item.ethereum ?? 0,
-        celestia: item.celestia ?? 0,
-        avail: item.avail ?? 0,
+        timestamp,
+        ethereum,
+        celestia,
+        avail,
       }
     })
   }, [data])
+
   return (
     <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
       <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -66,7 +67,7 @@ export function DaAbsoluteThroughputChart({
           dot={false}
         />
         <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(data)} />
+        <XAxis {...getXAxisProps(chartData)} />
         <YAxis
           tickLine={false}
           axisLine={false}
