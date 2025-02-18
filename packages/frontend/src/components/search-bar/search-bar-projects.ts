@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { get7dTokenBreakdown } from '~/server/features/scaling/tvs/utils/get-7d-token-breakdown'
 import { ps } from '~/server/projects'
 import type { SearchBarProject } from './search-bar-entry'
 
@@ -16,6 +17,8 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     ],
   })
 
+  const tvs = await get7dTokenBreakdown({ type: 'all' })
+
   return projects.flatMap((p): SearchBarProject[] => {
     const results: SearchBarProject[] = []
     const common = {
@@ -27,6 +30,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       iconUrl: `/icons/${p.slug}.png`,
       addedAt: p.addedAt.toNumber(),
       tags: [p.slug],
+      tvs: tvs.projects[p.id.toString()]?.breakdown.total ?? 0,
     } satisfies Partial<SearchBarProject>
 
     if (p.isZkCatalog) {
