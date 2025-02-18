@@ -25,7 +25,8 @@
         "opStackDA": {
           "handler": {
             "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
+            "sequencerAddress": "{{ batcherHash }}",
+            "inboxAddress": "{{ sequencerInbox }}"
           }
         },
         "sequencerInbox": {
