@@ -1,4 +1,4 @@
-import { layer2ToBackendProject } from '@l2beat/backend-shared'
+import { toBackendProject } from '@l2beat/backend-shared'
 import { layer2s } from '@l2beat/config'
 import {
   assert,
@@ -17,7 +17,7 @@ describe(mapConfig.name, () => {
     assert(arbitrum, 'Arbitrum not found')
     assert(arbitrum.chainConfig, 'Arbitrum chain config not defined')
 
-    const backendProject = layer2ToBackendProject(arbitrum)
+    const backendProject = toBackendProject(arbitrum)
 
     const result = mapConfig(backendProject, arbitrum.chainConfig)
 

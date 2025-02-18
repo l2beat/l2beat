@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import { type ChainConfig, layer2s, layer3s, tokenList } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { getChainsWithTokens } from '../features/chains'
@@ -7,8 +7,8 @@ import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
 import type { IndexerApi } from './IndexerApi'
 
-export function getChainConfig(env: Env): ChainApi[] {
-  const { configuredChains, projects } = getConfiguredChains()
+export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
+  const { configuredChains, projects } = getConfiguredChains(chains)
 
   const rpcChains: ChainApi[] = []
   for (const chain of configuredChains) {
@@ -91,7 +91,7 @@ function getRpcUrlsFromEnv(env: Env, chain: string) {
   ].filter(notUndefined)
 }
 
-function getConfiguredChains() {
+function getConfiguredChains(chains: ChainConfig[]) {
   const sharedEscrowsChains = layer2s
     .filter((c) =>
       c.config.escrows.some(

@@ -1,10 +1,12 @@
 import { join } from 'path'
-import {
-  bridgeToBackendProject,
-  layer2ToBackendProject,
-} from '@l2beat/backend-shared'
+import { toBackendProject } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import { ProjectService, bridges, chains, layer2s } from '@l2beat/config'
+import {
+  type ChainConfig,
+  ProjectService,
+  bridges,
+  layer2s,
+} from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
@@ -38,7 +40,11 @@ export async function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const tvlConfig = getTvlConfig(flags, env, minTimestampOverride)
+
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const tvlConfig = getTvlConfig(flags, env, chains, minTimestampOverride)
 
   const isReadonly = env.boolean(
     'READONLY',
@@ -49,11 +55,11 @@ export async function makeConfig(
   return {
     name,
     isReadonly,
-    projects: layer2s
-      .map(layer2ToBackendProject)
-      .concat(bridges.map(bridgeToBackendProject)),
+    // (sz-piotr) why are layer3s omitted here?
+    projects: [...layer2s, ...bridges].map(toBackendProject),
     clock: {
-      minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
+      minBlockTimestamp:
+        minTimestampOverride ?? getEthereumMinTimestamp(chains),
       safeTimeOffsetSeconds: 60 * 60,
       hourlyCutoffDays: 7,
       sixHourlyCutoffDays: 90,
@@ -165,7 +171,7 @@ export async function makeConfig(
       chains: new ConfigReader(join(process.cwd(), '../config'))
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
-        .map((chain) => getChainDiscoveryConfig(env, chain)),
+        .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
       cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
       cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
     },
@@ -176,7 +182,7 @@ export async function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
-    chainConfig: getChainConfig(env),
+    chainConfig: getChainConfig(env, chains),
     beaconApi: {
       url: env.optionalString([
         'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
@@ -203,7 +209,7 @@ export async function makeConfig(
   }
 }
 
-function getEthereumMinTimestamp() {
+function getEthereumMinTimestamp(chains: ChainConfig[]) {
   const minBlockTimestamp = chains.find(
     (c) => c.name === 'ethereum',
   )?.minTimestampForTvl

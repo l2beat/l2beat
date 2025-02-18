@@ -8,7 +8,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { unionBy } from 'lodash'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -56,6 +55,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -981,7 +981,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
+    ...orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
