@@ -112,10 +112,18 @@ const ChartLegendContent = React.forwardRef<
     Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
       hideIcon?: boolean
       nameKey?: string
+      reverse?: boolean
     }
 >(
   (
-    { className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey },
+    {
+      className,
+      hideIcon = false,
+      payload,
+      verticalAlign = 'bottom',
+      nameKey,
+      reverse = false,
+    },
     ref,
   ) => {
     const { meta: config } = useChart()
@@ -124,6 +132,7 @@ const ChartLegendContent = React.forwardRef<
       return null
     }
 
+    const actualPayload = reverse ? [...payload].reverse() : payload
     return (
       <div
         ref={ref}
@@ -133,7 +142,7 @@ const ChartLegendContent = React.forwardRef<
           className,
         )}
       >
-        {payload.map((item) => {
+        {actualPayload.map((item) => {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)

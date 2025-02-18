@@ -75,22 +75,11 @@ export function CostsChart({
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
         />
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          dataKey="calldata"
-          stroke={chartMeta.calldata.color}
-          fill={chartMeta.calldata.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          dot={false}
-          activeDot={false}
-          isAnimationActive={false}
-        />
-        <Area
-          dataKey="blobs"
-          stroke={chartMeta.blobs.color}
-          fill={chartMeta.blobs.color}
+          dataKey="overhead"
+          stroke={chartMeta.overhead.color}
+          fill={chartMeta.overhead.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
@@ -110,15 +99,26 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
-          dataKey="overhead"
-          stroke={chartMeta.overhead.color}
-          fill={chartMeta.overhead.color}
+          dataKey="blobs"
+          stroke={chartMeta.blobs.color}
+          fill={chartMeta.blobs.color}
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
           dot={false}
+          activeDot={false}
           isAnimationActive={false}
+        />
+        <Area
+          dataKey="calldata"
+          stroke={chartMeta.calldata.color}
+          fill={chartMeta.calldata.color}
+          fillOpacity={1}
+          strokeWidth={0}
+          stackId="a"
+          dot={false}
           activeDot={DEFAULT_ACTIVE_DOT}
+          isAnimationActive={false}
         />
 
         {getCommonChartComponents({
@@ -146,6 +146,7 @@ function CustomTooltip({
   resolution: CostsResolution
 }) {
   if (!active || !payload || typeof label !== 'number') return null
+  const reversedPayload = [...payload].reverse()
   const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
     <div className={tooltipContentVariants()}>
@@ -164,7 +165,7 @@ function CustomTooltip({
         </div>
         <HorizontalSeparator />
         <div>
-          {payload.map((entry) => {
+          {reversedPayload.map((entry) => {
             if (entry.value === undefined) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (

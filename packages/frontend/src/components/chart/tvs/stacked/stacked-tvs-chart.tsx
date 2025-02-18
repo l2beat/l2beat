@@ -65,7 +65,7 @@ export function StackedTvsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend content={<ChartLegendContent reverse />} />
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <Area
           dataKey="native"
@@ -113,6 +113,7 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: ChartUnit }) {
   if (!active || !payload || typeof label !== 'number') return null
   const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const reversedPayload = [...payload].reverse()
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex w-36 flex-col gap-1 xs:!w-52">
@@ -128,7 +129,7 @@ function CustomTooltip({
         </div>
         <HorizontalSeparator />
         <div>
-          {payload.map((entry) => {
+          {reversedPayload.map((entry) => {
             if (entry.value === undefined) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
