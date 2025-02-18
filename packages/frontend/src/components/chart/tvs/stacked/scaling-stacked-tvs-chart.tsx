@@ -81,7 +81,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         timeRange={chartRange}
       />
       <StackedTvsChart
-        className="mt-4 mb-2"
+        className="mb-2 mt-4"
         data={chartData}
         milestones={milestones}
         unit={unit}

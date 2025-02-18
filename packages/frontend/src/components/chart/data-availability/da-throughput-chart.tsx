@@ -36,7 +36,7 @@ export function DaThroughputChart() {
       ) : (
         <DaAbsoluteThroughputChart data={data} isLoading={isLoading} />
       )}
-      <div className="flex justify-between mt-2">
+      <div className="mt-2 flex justify-between">
         <RadioGroup
           name="metric"
           value={metric}
