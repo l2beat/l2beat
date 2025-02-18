@@ -79,7 +79,9 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
           chartData,
           yAxis: {
             unit: '%',
+            // To avoid showing 100.000001% we specify domain manually
             domain: [0, 100],
+            // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
           },
         })}
