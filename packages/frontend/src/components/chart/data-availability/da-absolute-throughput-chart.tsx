@@ -25,18 +25,19 @@ interface Props {
 }
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   const chartData = useMemo(() => {
-    return data?.map((item) => {
+    return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
-        ...item,
-        ethereum: item.ethereum ?? 0,
-        celestia: item.celestia ?? 0,
-        avail: item.avail ?? 0,
+        timestamp,
+        ethereum,
+        celestia,
+        avail,
       }
     })
   }, [data])
+
   return (
     <ChartContainer
-      data={data}
+      data={chartData}
       meta={daChartMeta}
       className="mb-2"
       isLoading={isLoading}
@@ -66,7 +67,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           dot={false}
         />
         {getCommonChartComponents({
-          chartData: data,
+          chartData,
           yAxis: {
             tick: {
               width: 100,
