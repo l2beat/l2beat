@@ -16,7 +16,10 @@ export function DaThroughputChart() {
   const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
-  const chartRange = useMemo(() => getChartRange(data), [data])
+  const chartRange = useMemo(
+    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    [data],
+  )
 
   return (
     <div>
