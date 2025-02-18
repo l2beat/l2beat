@@ -18,7 +18,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
 }: CommonChartComponentsProps<T>) {
   const { scale, ...rest } = yAxis ?? {}
   return [
-    <CartesianGrid key={'cartesian-grid'} vertical={false} />,
+    <CartesianGrid key={'cartesian-grid'} vertical={false} syncWithTicks />,
     <YAxis
       key={'y-axis'}
       tickLine={false}
