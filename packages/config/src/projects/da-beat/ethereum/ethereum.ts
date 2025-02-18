@@ -129,6 +129,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
     throughput: [
       {
         size: 750, // 0.75 MB
+        target: 375,
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
