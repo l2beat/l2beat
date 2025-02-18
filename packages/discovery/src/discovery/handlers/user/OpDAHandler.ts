@@ -255,7 +255,7 @@ async function getBatchConfirmTransactions(
 }
 
 // We need to align block ranges across different chains is applicable
-// since Eigen AVS lives on Ethereum and project can be an L3
+// since Eigen AVS lives on Ethereum
 async function translateToEthereum(
   provider: IProvider,
   fromBlock: {
