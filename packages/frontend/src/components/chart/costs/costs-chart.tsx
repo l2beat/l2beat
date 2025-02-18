@@ -71,13 +71,9 @@ export function CostsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartTooltip
-          content={<CustomTooltip unit={unit} resolution={resolution} />}
-        />
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           dataKey="overhead"
-          stroke={chartMeta.overhead.color}
           fill={chartMeta.overhead.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -88,7 +84,6 @@ export function CostsChart({
         />
         <Area
           dataKey="compute"
-          stroke={chartMeta.compute.color}
           fill={chartMeta.compute.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -99,7 +94,6 @@ export function CostsChart({
         />
         <Area
           dataKey="blobs"
-          stroke={chartMeta.blobs.color}
           fill={chartMeta.blobs.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -110,7 +104,6 @@ export function CostsChart({
         />
         <Area
           dataKey="calldata"
-          stroke={chartMeta.calldata.color}
           fill={chartMeta.calldata.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -128,6 +121,9 @@ export function CostsChart({
                 : formatCurrency(value, unit),
           },
         })}
+        <ChartTooltip
+          content={<CustomTooltip unit={unit} resolution={resolution} />}
+        />
       </AreaChart>
     </ChartContainer>
   )
