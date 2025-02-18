@@ -2,9 +2,11 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { AbiCoder } from 'ethers/lib/utils'
 import { z } from 'zod'
+import type { Transaction } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
+  type ReferenceInput,
   generateReferenceInput,
   getReferencedName,
   resolveReference,
@@ -46,8 +48,17 @@ const BLOB_TX_TYPE = 3
  * automata: 	0x01 00 a5 		(challenges)
  * syndicate: 0x01 00 9c		(keccak256)
  */
-const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
-const EIGEN_DA_COMMITMENT_THIRD_BYTE = '00'
+const EIGEN_DA_CONSTANTS = {
+  COMMITMENT_PREFIX: '0x01',
+  COMMITMENT_THIRD_BYTE: '00',
+  VERIFICATION_THRESHOLD: 0.8, // 80% success rate required
+  CONFIRM_BATCH_ADDRESS: EthereumAddress(
+    '0x454Ef2f69f91527856E06659f92a66f464C1ca4e',
+  ),
+  REFERENCE_LENGTH: 1090,
+  BATCH_ROOT_OFFSET: 208,
+  BATCH_ROOT_HASH_LENGTH: 64,
+} as const
 
 /**
  * This is a OP Stack specific handler that is used to check if
@@ -112,115 +123,11 @@ export class OpStackDAHandler implements Handler {
     const isSequencerSendingBlobTx =
       hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
-    const isUsingEigenDA =
-      hasTxs &&
-      lastTxs.some((tx) => {
-        const thirdByte = tx.input.slice(6, 8)
-
-        const prefixMatch = tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX)
-        const thirdByteMatch = thirdByte === EIGEN_DA_COMMITMENT_THIRD_BYTE
-
-        return prefixMatch && thirdByteMatch
-      })
-
-    // EIGEN
-    const resolvedInbox = resolveReference(
-      this.definition.inboxAddress,
+    const isUsingEigenDA = await this.checkForEigenDA(
+      provider,
       referenceInput,
+      lastTxs,
     )
-    const inboxAddress = valueToAddress(resolvedInbox)
-
-    const latestBlock = await provider.getBlock(provider.blockNumber)
-
-    const latestBlockTimestamp = latestBlock?.timestamp
-
-    // Should not happen
-    assert(latestBlockTimestamp, 'not yet mined')
-
-    const oneDayBefore = new UnixTime(latestBlockTimestamp).add(-1, 'days')
-
-    const blockDayBefore = await provider.raw(
-      `optimism_eigen_reference_block_${oneDayBefore.toNumber()}`,
-      ({ etherscanClient }) =>
-        etherscanClient.getBlockNumberAtOrBefore(oneDayBefore),
-    )
-
-    const CONFIRM_BATCH_ADDRESS = EthereumAddress(
-      '0x454Ef2f69f91527856E06659f92a66f464C1ca4e',
-    )
-
-    const confirmBatchTxs = await provider.raw(
-      `optimism_eigen_confirm_batch_${CONFIRM_BATCH_ADDRESS}_${blockDayBefore}_${provider.blockNumber}`,
-      ({ etherscanClient }) =>
-        etherscanClient.getTransactions(
-          CONFIRM_BATCH_ADDRESS,
-          blockDayBefore,
-          provider.blockNumber,
-        ),
-    )
-
-    const inboxTxs = await provider.raw(
-      `optimism_eigen_inbox_tx_${inboxAddress}_${blockDayBefore}_${provider.blockNumber}`,
-      ({ etherscanClient }) =>
-        etherscanClient.getTransactions(
-          inboxAddress,
-          blockDayBefore,
-          provider.blockNumber,
-        ),
-    )
-
-    // TODO: refine readability and optimize? it takes a bit
-    const verificationResult = inboxTxs.map((tx) => {
-      const blobInformation = parseEigenDACommitment(tx.input)
-      let isVerified = false
-
-      if (
-        blobInformation.possibleBatchRoots &&
-        blobInformation.possibleBatchRoots.length > 0
-      ) {
-        // Try each possible batch root
-        for (const batchRoot of blobInformation.possibleBatchRoots) {
-          const hasMatchingConfirmation = confirmBatchTxs.find((confirmTx) => {
-            const batchConfirmation = decodeBatchConfirmation(confirmTx.input)
-
-            return (
-              batchConfirmation &&
-              batchConfirmation.blobHeadersRoot === batchRoot.hash
-            )
-          })
-
-          if (hasMatchingConfirmation) {
-            isVerified = true
-            break
-          }
-        }
-      }
-
-      // Legacy
-      const matchingConfirmTx = confirmBatchTxs.find((confirmTx) => {
-        const batchConfirmation = decodeBatchConfirmation(confirmTx.input)
-        return (
-          batchConfirmation &&
-          batchConfirmation.blobHeadersRoot === blobInformation.batchRootHash
-        )
-      })
-
-      if (matchingConfirmTx) {
-        isVerified = true
-      }
-
-      return {
-        isVerified,
-      }
-    })
-
-    const verified = verificationResult.filter((x) => x?.isVerified).length
-
-    const successRate = (verified / inboxTxs.length) * 100
-
-    const EIGEN_DA_VERIFICATION_THRESHOLD = 0.8
-
-    const isUsingEigenDAPercent = successRate >= EIGEN_DA_VERIFICATION_THRESHOLD
 
     return {
       field: this.field,
@@ -228,49 +135,189 @@ export class OpStackDAHandler implements Handler {
         isSomeTxsLengthEqualToCelestiaDAExample,
         isSequencerSendingBlobTx,
         isUsingEigenDA,
-        isUsingEigenDAPercent,
-        successRate,
       },
     }
   }
-}
 
-export function parseEigenDACommitment(inputData: string) {
-  const hexData = inputData.startsWith('0x') ? inputData.slice(2) : inputData
+  private async checkForEigenDA(
+    provider: IProvider,
+    referenceInput: ReferenceInput,
+    sequencerTxs: Transaction[],
+  ) {
+    const isUsingEigenLikeCommitments =
+      sequencerTxs.length > 0 &&
+      sequencerTxs.some((tx) => {
+        const thirdByte = tx.input.slice(6, 8)
 
-  const REFERENCE_LENGTH = 1090
-  const BATCH_ROOT_OFFSET = 208
-  const BATCH_ROOT_HASH_LENGTH = 64
+        const prefixMatch = tx.input.startsWith(
+          EIGEN_DA_CONSTANTS.COMMITMENT_PREFIX,
+        )
+        const thirdByteMatch =
+          thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
 
-  // For long inputs, scan for possible batch roots
-  if (hexData.length > 1150) {
-    const possibleBatchRoots = []
-
-    for (let i = 0; i <= hexData.length - 64; i++) {
-      possibleBatchRoots.push({
-        hash: '0x' + hexData.slice(i, i + 64),
-        position: i,
+        return prefixMatch && thirdByteMatch
       })
+
+    if (!isUsingEigenLikeCommitments) {
+      return false
     }
 
-    return {
-      batchRootHash: '0x' + hexData.slice(-64),
-      possibleBatchRoots,
+    const resolvedInbox = resolveReference(
+      this.definition.inboxAddress,
+      referenceInput,
+    )
+    const inboxAddress = valueToAddress(resolvedInbox)
+
+    const { confirmBatchTxs, inboxTxs } = await fetchEigenDAVerificationData(
+      provider,
+      inboxAddress,
+    )
+
+    const successfulVerifications = countSuccessfulVerifications(
+      inboxTxs,
+      confirmBatchTxs,
+    )
+
+    const successRate = (successfulVerifications / inboxTxs.length) * 100
+
+    return successRate >= EIGEN_DA_CONSTANTS.VERIFICATION_THRESHOLD
+  }
+}
+
+async function fetchEigenDAVerificationData(
+  provider: IProvider,
+  inboxAddress: EthereumAddress,
+) {
+  const latestBlockNumber = provider.blockNumber
+  const latestBlock = await provider.getBlock(latestBlockNumber)
+  assert(latestBlock?.timestamp, 'Missing block timestamp')
+
+  const oneDayBefore = new UnixTime(latestBlock.timestamp).add(-1, 'days')
+
+  const blockDayBefore = await provider.raw(
+    `optimism_eigen_reference_block_${oneDayBefore.toNumber()}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getBlockNumberAtOrBefore(oneDayBefore),
+  )
+
+  const confirmBatchTxs = await provider.raw(
+    `optimism_eigen_confirm_batch_${EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS}_${blockDayBefore}_${latestBlockNumber}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getTransactions(
+        EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS,
+        blockDayBefore,
+        latestBlockNumber,
+      ),
+  )
+
+  const inboxTxs = await provider.raw(
+    `optimism_eigen_inbox_tx_${inboxAddress}_${blockDayBefore}_${latestBlockNumber}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getTransactions(
+        inboxAddress,
+        blockDayBefore,
+        latestBlockNumber,
+      ),
+  )
+
+  return { confirmBatchTxs, inboxTxs }
+}
+
+function countSuccessfulVerifications(
+  inboxTxs: Transaction[],
+  confirmBatchTxs: Transaction[],
+) {
+  let successes = 0
+
+  for (const tx of inboxTxs) {
+    try {
+      const blobInfo = parseEigenDACommitment(tx.input)
+      const hasMatch = findMatchingConfirmation(blobInfo, confirmBatchTxs)
+
+      if (hasMatch) {
+        successes++
+      }
+    } catch {
+      // Invalid commitment format, skip
     }
   }
 
-  // For standard length inputs, use fixed offset
-  const batchRootStart = hexData.length - REFERENCE_LENGTH + BATCH_ROOT_OFFSET
+  return successes
+}
+
+function parseStandardCommitment(hexData: string) {
+  const batchRootStart =
+    hexData.length -
+    EIGEN_DA_CONSTANTS.REFERENCE_LENGTH +
+    EIGEN_DA_CONSTANTS.BATCH_ROOT_OFFSET
 
   return {
-    batchRootHash:
-      '0x' +
-      hexData.slice(batchRootStart, batchRootStart + BATCH_ROOT_HASH_LENGTH),
+    batchRootHash: `0x${hexData.slice(
+      batchRootStart,
+      batchRootStart + EIGEN_DA_CONSTANTS.BATCH_ROOT_HASH_LENGTH,
+    )}`,
     possibleBatchRoots: undefined,
   }
 }
 
-function decodeBatchConfirmation(inputData: string) {
+function parseExtendedCommitment(hexData: string) {
+  const possibleBatchRoots = Array.from(
+    { length: hexData.length - EIGEN_DA_CONSTANTS.BATCH_ROOT_HASH_LENGTH - 1 },
+    (_, i) => ({
+      hash: `0x${hexData.slice(i, i + EIGEN_DA_CONSTANTS.BATCH_ROOT_HASH_LENGTH)}`,
+      position: i,
+    }),
+  )
+
+  return {
+    batchRootHash: `0x${hexData.slice(-64)}`,
+    possibleBatchRoots,
+  }
+}
+
+function getConfirmationRoots(confirmBatchTxs: Transaction[]): Set<string> {
+  const roots = new Set<string>()
+  for (const tx of confirmBatchTxs) {
+    try {
+      const blobHeadersRoot = decodeBatchConfirmation(tx.input)
+      if (blobHeadersRoot) {
+        roots.add(blobHeadersRoot.toLowerCase()) // Normalize case
+      }
+    } catch {
+      // Skip invalid confirmations
+    }
+  }
+  return roots
+}
+
+function findMatchingConfirmation(
+  blobInfo: ReturnType<typeof parseEigenDACommitment>,
+  confirmBatchTxs: Transaction[],
+) {
+  const confirmationRoots = getConfirmationRoots(confirmBatchTxs)
+
+  if (blobInfo.possibleBatchRoots?.length) {
+    return blobInfo.possibleBatchRoots.some(({ hash }) =>
+      confirmationRoots.has(hash.toLowerCase()),
+    )
+  }
+
+  // Check standard single root format
+  return confirmationRoots.has(blobInfo.batchRootHash.toLowerCase())
+}
+
+function parseEigenDACommitment(inputData: string) {
+  const hexData = inputData.startsWith('0x') ? inputData.slice(2) : inputData
+
+  // 1150 is arbitrary, we treat anything longer than that as extended
+  if (hexData.length > 1150) {
+    return parseExtendedCommitment(hexData)
+  }
+
+  return parseStandardCommitment(hexData)
+}
+
+function decodeBatchConfirmation(inputData: string): string | undefined {
   if (!inputData.startsWith('0x7794965a')) {
     // Skip invalid selectors
     return
@@ -290,10 +337,5 @@ function decodeBatchConfirmation(inputData: string) {
     '0x' + data,
   )
 
-  return {
-    blobHeadersRoot: decoded[0].blobHeadersRoot,
-    quorumNumbers: decoded[0].quorumNumbers,
-    signedStakeForQuorums: decoded[0].signedStakeForQuorums,
-    referenceBlockNumber: decoded[0].referenceBlockNumber,
-  }
+  return decoded[0].blobHeadersRoot
 }
