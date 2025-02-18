@@ -5,5 +5,5 @@ export function formatInteger(value: number): string {
     return formatNumber(value)
   }
 
-  return value.toFixed(2)
+  return value.toFixed(0)
 }
