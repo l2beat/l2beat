@@ -76,27 +76,21 @@ function ChartContainer<T extends { timestamp: number }>({
           '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
           // Polar grid
           "[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-polar-grid_[stroke='#ccc']]:stroke-primary/40",
-          // No clue what it does
-          // "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-border"
-          // Handle when there are radial bars
-          // "[&_.recharts-radial-bar-background-sector]:fill-muted",
+          // Reference line
+          "[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-reference-line_[stroke='#ccc']]:stroke-primary/40",
           className,
         )}
         {...props}
       >
         <RechartsPrimitive.ResponsiveContainer>
-          {isLoading ? (
-            <ChartLoader />
-          ) : hasData ? (
-            children
-          ) : (
-            <ChartNoDataState />
-          )}
+          {children}
         </RechartsPrimitive.ResponsiveContainer>
-        {!isLoading && hasData && isClient && (
+        <ChartLoader isLoading={isLoading} />
+        {!hasData && !isLoading && <ChartNoDataState />}
+        {isClient && (
           <Logo
             animated={false}
-            className="pointer-events-none absolute bottom-10 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
+            className="pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
           />
         )}
         {!isLoading && milestones && (
