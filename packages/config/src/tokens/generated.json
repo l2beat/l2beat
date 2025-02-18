@@ -6705,6 +6705,28 @@
       }
     },
     {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1719601787,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "name": "StargateToken",
       "coingeckoId": "stargate-finance",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
@@ -10506,6 +10528,28 @@
           {
             "name": "Layer Zero v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1719602078,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
           }
         ]
       }
