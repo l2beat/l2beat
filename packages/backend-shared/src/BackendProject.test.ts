@@ -139,6 +139,7 @@ const getMockToken = (token: Partial<Token>): Token => {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ETHEREUM,
+    chainName: 'ethereum',
     source: 'canonical',
     supply: 'zero',
     ...token,
