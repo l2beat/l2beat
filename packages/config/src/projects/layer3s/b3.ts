@@ -59,7 +59,10 @@ export const b3: Layer3 = opStackL3({
     adjustCount: { type: 'SubtractOne' },
   },
   genesisTimestamp: new UnixTime(1722378840),
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqMAivUaAM=',
+  },
   isNodeAvailable: false,
   milestones: [
     {

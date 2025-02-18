@@ -712,19 +712,24 @@ export interface EthereumDaTrackingConfig {
   daLayer: ProjectId
   inbox: string
   sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
   daLayer: ProjectId
   namespace: string
-  signers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
   daLayer: ProjectId
   appId: string
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export type ProjectDaTrackingConfig =

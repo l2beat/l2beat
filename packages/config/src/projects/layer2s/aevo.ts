@@ -62,7 +62,10 @@ export const aevo: Layer2 = opStackL2({
     defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADBuw7+PjGs8=',
+  },
   genesisTimestamp: new UnixTime(1679202395),
   isNodeAvailable: false,
   milestones: [

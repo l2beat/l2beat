@@ -203,7 +203,7 @@ export async function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, flags, env)),
+    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     // Must be last
     flags: flags.getResolved(),
   }

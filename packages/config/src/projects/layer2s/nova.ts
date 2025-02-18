@@ -169,7 +169,6 @@ export const nova: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  discoveryDrivenData: true,
   additionalDiscoveries: {
     nova: l2Discovery,
   },

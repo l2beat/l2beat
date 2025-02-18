@@ -68,7 +68,6 @@ export const degen: Layer3 = orbitStackL3({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateContractRisks: [
     {
       category: 'Funds can be stolen if',

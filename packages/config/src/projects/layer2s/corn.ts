@@ -79,7 +79,6 @@ export const corn: Layer2 = orbitStackL2({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'corn',
     chainId: 21000000,

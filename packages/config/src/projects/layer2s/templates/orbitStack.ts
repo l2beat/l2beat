@@ -36,11 +36,9 @@ import type {
   Layer2TxConfig,
   Layer3,
   Milestone,
-  ProjectContract,
   ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
-  ProjectPermissions,
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
@@ -64,13 +62,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
-import {
-  explorerReferences,
-  mergeBadges,
-  mergeContracts,
-  mergePermissions,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -135,10 +127,8 @@ interface OrbitStackConfigCommon {
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
@@ -155,16 +145,23 @@ interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ScalingProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  discoveryDrivenData?: boolean
   isArchived?: boolean
   gasTokens?: string[]
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDaNamespace?: string
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDaAppId?: string
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -443,21 +440,10 @@ function orbitStackCommon(
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: templateVars.discoveryDrivenData
-      ? {
-          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
-          risks: nativeContractRisks,
-        }
-      : {
-          addresses: mergeContracts(
-            {
-              [templateVars.discovery.chain]:
-                templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            },
-            templateVars.nonTemplateContracts ?? {},
-          ),
-          risks: nativeContractRisks,
-        },
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+      risks: nativeContractRisks,
+    },
     chainConfig: templateVars.chainConfig,
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
@@ -557,21 +543,7 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: templateVars.discoveryDrivenData
-      ? generateDiscoveryDrivenPermissions(allDiscoveries)
-      : mergePermissions(
-          {
-            [templateVars.discovery.chain]: {
-              actors: [
-                sequencers,
-                validators,
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .permissions,
-              ],
-            },
-          },
-          templateVars.nonTemplatePermissions ?? {},
-        ),
+    permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
@@ -894,24 +866,32 @@ function getDaTracking(
     'batchPosters',
   )
 
+  // TODO: update to value from discovery
+  const inboxDeploymentBlockNumber = 0
+
   return usesBlobs
     ? {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
         inbox: templateVars.sequencerInbox.address,
         sequencers: batchPosters,
       }
-    : templateVars.celestiaDaNamespace
+    : templateVars.celestiaDa
       ? {
           type: 'celestia',
           daLayer: ProjectId('celestia'),
-          namespace: templateVars.celestiaDaNamespace,
+          // TODO: update to value from discovery
+          sinceBlock: templateVars.celestiaDa.sinceBlock,
+          namespace: templateVars.celestiaDa.namespace,
         }
-      : templateVars.availDaAppId
+      : templateVars.availDa
         ? {
             type: 'avail',
             daLayer: ProjectId('avail'),
-            appId: templateVars.availDaAppId,
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.availDa.sinceBlock,
+            appId: templateVars.availDa.appId,
           }
         : undefined
 }

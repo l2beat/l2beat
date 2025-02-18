@@ -48,7 +48,6 @@ export const fluence: Layer2 = orbitStackL2({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',
