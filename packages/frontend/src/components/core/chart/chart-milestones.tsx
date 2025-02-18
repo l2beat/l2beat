@@ -110,10 +110,14 @@ function ChartMilestone({
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
-        <Icon
-          className="absolute bottom-5 cursor-pointer group-has-[.recharts-legend-wrapper]:bottom-9"
+        <a
+          className="absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-9"
+          href={milestone.url}
           style={{ left }}
-        />
+          target="_blank"
+        >
+          <Icon />
+        </a>
       </TooltipTrigger>
       <TooltipContent side="bottom">
         <div className="mb-1 whitespace-nowrap">
