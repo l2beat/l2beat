@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 21821182,
+  "blockNumber": 21872461,
   "configHash": "0x6b9bf0462334cdadbc9ca9606b62e49f9824d7d1e15fa11bd6972e3070b003b0",
   "contracts": [
     {
@@ -366,12 +366,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2472,
+        "firstUnresolvedNode": 2487,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2471,
-        "latestNodeCreated": 2484,
+        "latestConfirmed": 2486,
+        "latestNodeCreated": 2498,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -802,11 +802,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 4873,
+        "delayedMessageCount": 4923,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 4127,
-        "sequencerReportedSubMessageCount": 731915
+        "sequencerMessageCount": 4170,
+        "sequencerReportedSubMessageCount": 742158
       }
     },
     {
@@ -1040,7 +1040,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 4127,
+        "batchCount": 4170,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1068,7 +1068,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4872,
+        "totalDelayedMessagesRead": 4922,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },

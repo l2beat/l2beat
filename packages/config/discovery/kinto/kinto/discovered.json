@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 735231,
-  "configHash": "0x82f4cbb32da89ebc4dcd175c90c761d249038574b83d93dc924b9079289e9340",
+  "blockNumber": 742556,
+  "configHash": "0x312f517a0900c365023459f4dde02313929718a4a41d8d4f021b94a0dcc45720",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1739359884,
+        "clock": 1739872049,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1739359884,
+        "clock": 1739872049,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1739359884,
+        "clock": 1739872049,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -151,7 +151,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Kinto Token",
         "symbol": "K",
-        "totalSupply": "1074722222222222222219505",
+        "totalSupply": "1574722222222222222219505",
         "TREASURY": "0x793500709506652Fcc61F0d2D0fDa605638D4293",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3"
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30909812368638700475",
+        "getDeposit": "30882504251094040475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -808,7 +808,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4437,
+        "getNonce": 4471,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -889,7 +889,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 14166,
+        "globalMessageCount": 15005,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1247,10 +1247,7 @@
       "name": "",
       "address": "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b",
       "unverified": true,
-      "template": "orbitstack/UpgradeExecutor",
       "proxyType": "EIP1967 proxy",
-      "displayName": "UpgradeExecutor",
-      "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1297,27 +1294,8 @@
             ["0x1ef98348554d453d6bC8794E8E0BFbfA659B5D00"]
           ]
         ],
-        "$upgradeCount": 2,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775": {
-            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-            "members": ["0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b"]
-          },
-          "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": {
-            "adminRole": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-            "members": [
-              "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
-              "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B",
-              "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
-            ]
-          }
-        }
-      },
-      "errors": { "executors": "Processing error occurred." }
+        "$upgradeCount": 2
+      }
     },
     {
       "name": "KintoWalletFactory",
@@ -1485,7 +1463,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 71281
+        "totalWallets": 71811
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1567,6 +1545,21 @@
           "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
         },
         {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet."
+        },
+        {
+          "permission": "interact",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+          "description": "transfer KYC NFTs to a different address."
+        },
+        {
           "permission": "upgrade",
           "from": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b"
         },
@@ -1577,15 +1570,20 @@
         {
           "permission": "upgrade",
           "from": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7"
         }
       ],
       "sinceTimestamp": 1729791296,
       "values": {
         "$immutable": true,
-        "AdditionalRoles": [
-          { "roleId": "1635978423191113331", "label": "NIO_GOVERNOR_ROLE" },
-          { "roleId": "8663528507529876195", "label": "UPGRADER_ROLE" }
-        ],
+        "AdditionalRoleLabels": {
+          "NIO_GOVERNOR_ROLE": ["1635978423191113331"],
+          "UPGRADER_ROLE": ["8663528507529876195"],
+          "SECURITY_COUNCIL_ROLE": ["14661544942390944024"]
+        },
         "ADMIN_ROLE": 0,
         "expiration": 604800,
         "initialAdminRole": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1611,9 +1609,15 @@
             "newMember": true
           },
           "8663528507529876195": {
-            "account": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+            "account": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
             "delay": 604800,
-            "since": 1733181166,
+            "since": 1740077455,
+            "newMember": true
+          },
+          "14661544942390944024": {
+            "account": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e",
+            "delay": 604800,
+            "since": 1739472657,
             "newMember": true
           }
         },
@@ -1621,6 +1625,10 @@
           "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
             "delay": 604800,
             "since": 1733613166
+          },
+          "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
+            "delay": 604800,
+            "since": 1739904656
           }
         },
         "TargetFunctionRoleUpdated": {
@@ -1633,6 +1641,10 @@
             "roleId": "8663528507529876195"
           },
           "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": {
+            "selector": "0x72592851",
+            "roleId": "14661544942390944024"
+          },
+          "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": {
             "selector": "0x3659cfe6",
             "roleId": "8663528507529876195"
           }
@@ -1747,16 +1759,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "485582577142163948635092",
-        "getUnclaimedLimit": "188923120928896834954595",
+        "getTotalLimit": "496961882277242998448788",
+        "getUnclaimedLimit": "195734965836793519861338",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0x1d5121c740cad7b1908e26ba1c55e65e4cbc4bb791c15add89b31dc3fac5c114",
+        "root": "0x274bc5fa6da84e132ab12454aed6a67f69646aef9e0f7c3ce311e7e09e854391",
         "startTime": 1718690400,
-        "totalClaimed": "296659456213267113680497",
+        "totalClaimed": "301226916440449478587450",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1824,6 +1836,24 @@
         },
         {
           "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "permissioned to call `confirmSanction()`, which makes a temporary sanction by a KYC_PROVIDER permanent and does not grant an exit window to the affected wallet.",
+          "via": []
+        },
+        {
+          "permission": "interact",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
+          "description": "transfer KYC NFTs to a different address.",
+          "via": []
+        },
+        {
+          "permission": "interact",
           "to": "0xb539019776eF803E89EC062Ad54cA24D1Fdb008a",
           "description": "manage the KYC status of any user (sanction status and KYC metadata) and mint/burn KintoID NFTs.",
           "via": []
@@ -1831,6 +1861,11 @@
         {
           "permission": "upgrade",
           "to": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "to": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
           "via": []
         }
       ],
@@ -1895,7 +1930,10 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"]
+            "members": [
+              "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+            ]
           },
           "KYC_PROVIDER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1905,12 +1943,16 @@
               "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
               "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
               "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-              "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+              "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
+              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
             ]
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"]
+            "members": [
+              "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+            ]
           },
           "0x85f3421f6b5b49c1607af3732a481b7217b224e9d9648eb16c382bac95689ab0": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -1920,12 +1962,16 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
               "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-              "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
+              "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+              "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
             ]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DEFAULT_ADMINs": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+        "DEFAULT_ADMINs": [
+          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+        ],
         "domainSeparator": "0x3fe5ae163d535eda3ea38de1e41134f95111068b903f4589e3ada0b6699b1c85",
         "EXIT_WINDOW_PERIOD": 864000,
         "faucet": "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03",
@@ -1937,7 +1983,8 @@
         "GOVERNANCE_ROLE": "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1",
         "GOVERNANCErs": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a"
+          "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a",
+          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
         "KYC_PROVIDER_ROLE": "0x6c4079fcac94e7142d8c209744c998efe53a188aadb7e55958f7ad3ea8a1d652",
         "KYC_PROVIDERs": [
@@ -1946,9 +1993,10 @@
           "0x6E31039abF8d248aBed57E307C9E1b7530c269E4",
           "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07"
+          "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
+          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1739359751,
+        "lastMonitoredAt": 1739871910,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1962,9 +2010,12 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 71627,
+        "totalSupply": 72151,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
-        "UPGRADERs": ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"],
+        "UPGRADERs": [
+          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+          "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
+        ],
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
       "fieldMeta": {
@@ -1998,8 +2049,8 @@
       "name": "KintoFoundation",
       "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
     },
-    { "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5" },
     { "address": "0x0C1df30B4576A1A94D9528854516D4d425Cf9323" },
+    { "address": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e" },
     { "address": "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4" },
     { "address": "0x4181803232280371E02a875F51515BE57B215231" },
     { "address": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7" },
@@ -2015,7 +2066,6 @@
       ]
     },
     { "address": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c" },
-    { "address": "0x6Ac951C8b1643e0735ec3F2F0e528f3D89C3519B" },
     {
       "address": "0x6E09F8A68fB5278e0C33D239dC12B2Cec33F4aC7",
       "severity": "MEDIUM",
@@ -3294,7 +3344,6 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
+    "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab"
   }
 }
