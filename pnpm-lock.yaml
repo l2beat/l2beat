@@ -976,19 +976,6 @@ importers:
         specifier: ^8.1.2
         version: 8.1.5
 
-  packages/uif-example:
-    dependencies:
-      '@l2beat/backend-tools':
-        specifier: workspace:*
-        version: link:../backend-tools
-      '@l2beat/uif':
-        specifier: workspace:*
-        version: link:../uif
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-
   packages/uops-dashboard:
     dependencies:
       '@l2beat/backend-tools':
@@ -2800,8 +2787,8 @@ packages:
   '@radix-ui/react-switch@1.1.2':
     resolution: {integrity: sha512-zGukiWHjEdBCRyXvKR6iXAQG6qXm2esuAD6kDOi9Cn+1X6ev3ASo4+CsYaD6Fov9r/AQFekqnD/7+V0Cs6/98g==}
     peerDependencies:
-      '@types/react': 19.0.8
-      '@types/react-dom': 19.0.3
+      '@types/react': '*'
+      '@types/react-dom': '*'
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
     peerDependenciesMeta:
