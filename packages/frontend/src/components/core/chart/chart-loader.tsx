@@ -1,13 +1,8 @@
-import { cn } from '~/utils/cn'
-
-export function ChartLoader({ isLoading }: { isLoading: boolean | undefined }) {
+export function ChartLoader() {
   return (
     <svg
       data-role="chart-loader"
-      className={cn(
-        'pointer-events-none absolute inset-x-0 top-[58px] z-40 m-auto translate-y-[20%] select-none opacity-40 group-has-[.recharts-legend-wrapper]:top-[66px]',
-        !isLoading && 'opacity-0',
-      )}
+      className="pointer-events-none absolute inset-x-0 top-[58px] z-40 m-auto translate-y-[20%] select-none opacity-40 group-has-[.recharts-legend-wrapper]:top-[66px]"
       width="50px"
       height="50px"
       viewBox="0 0 100 100"

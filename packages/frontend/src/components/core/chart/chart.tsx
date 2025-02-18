@@ -85,7 +85,7 @@ function ChartContainer<T extends { timestamp: number }>({
         <RechartsPrimitive.ResponsiveContainer>
           {children}
         </RechartsPrimitive.ResponsiveContainer>
-        <ChartLoader isLoading={isLoading} />
+        {isLoading && <ChartLoader />}
         {!hasData && !isLoading && <ChartNoDataState />}
         {isClient && (
           <Logo
