@@ -1,7 +1,7 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 21808921,
+  "blockNumber": 21875687,
   "configHash": "0x9f822462f565de56e4fd07c24283a53c66be2638322a251f8aa56da7f83c8f7f",
   "contracts": [
     {
@@ -54,7 +54,7 @@
         ],
         "$upgradeCount": 6,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292642246",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292642409",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -217,7 +217,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 79,
+        "nonce": 82,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -273,7 +273,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 796584,
-          "prevBlockNum": 21806357
+          "prevBlockNum": 21874970
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
@@ -366,10 +366,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 5990400,
-        "latestOutputIndex": 9983,
-        "nextBlockNumber": 5991000,
-        "nextOutputIndex": 9984,
+        "latestBlockNumber": 6070800,
+        "latestOutputIndex": 10117,
+        "nextBlockNumber": 6071400,
+        "nextOutputIndex": 10118,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -439,9 +439,7 @@
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
           "isSequencerSendingBlobTx": false,
-          "isUsingEigenDA": true,
-          "isUsingEigenDAPercent": true,
-          "successRate": 95.83333333333334
+          "isUsingEigenDA": true
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
