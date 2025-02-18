@@ -12,7 +12,7 @@ import {
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
-import { chainConverter } from '../breakdown/chain-converter'
+import { ps } from '~/server/projects'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -44,7 +44,11 @@ async function getTokensDataForProject(
   project: Layer2 | Layer3 | Bridge,
 ): Promise<Record<ProjectTokenSource, AssetId[]>> {
   const backendProject = toBackendProject(project)
-  const configMapping = getConfigMapping(backendProject)
+
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const configMapping = getConfigMapping(backendProject, chains)
   const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
   const [priceConfigs, amountConfigs] = await Promise.all([
@@ -183,7 +187,7 @@ function toDisplayableToken(
     iconUrl,
     name,
     symbol,
-    chain: chainConverter.toName(token.chainId),
+    chain: token.chainName,
     source,
   }
 }

@@ -45,7 +45,7 @@ export const b3: Layer3 = opStackL3({
   chainConfig: {
     name: 'b3',
     chainId: 8333,
-    explorerUrl: 'https://explorer.b3.fun/',
+    explorerUrl: 'https://explorer.b3.fun',
     explorerApi: {
       url: 'https://explorer.b3.fun/api/v2/',
       type: 'blockscout',
