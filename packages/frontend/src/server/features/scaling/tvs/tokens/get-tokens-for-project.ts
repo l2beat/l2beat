@@ -1,4 +1,4 @@
-import { chainConverter, toBackendProject } from '@l2beat/backend-shared'
+import { toBackendProject } from '@l2beat/backend-shared'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -12,6 +12,7 @@ import {
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
+import { chainConverter } from '../breakdown/chain-converter'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
