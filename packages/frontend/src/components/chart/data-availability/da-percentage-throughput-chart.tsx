@@ -2,6 +2,7 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { round } from 'lodash'
+import { useMemo } from 'react'
 import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
@@ -15,31 +16,34 @@ import {
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { daChartMeta } from './meta'
 
-interface DataPoint {
-  timestamp: number
-  ethereum: number
-  celestia: number
-  avail: number
-}
-
 interface Props {
-  data: DataPoint[] | undefined
+  data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
 }
 export function DaPercentageThroughputChart({ data, isLoading }: Props) {
-  const chartData = data?.map((item) => {
-    const total = item.ethereum + item.celestia + item.avail
-
-    return {
-      timestamp: item.timestamp,
-      ethereum: round((item.ethereum / total) * 100, 2),
-      celestia: round((item.celestia / total) * 100, 2),
-      avail: round((item.avail / total) * 100, 2),
-    }
-  })
+  const chartData = useMemo(() => {
+    return data?.map((item) => {
+      const total = item.ethereum + item.celestia + item.avail
+      if (total === 0) {
+        return {
+          timestamp: item.timestamp,
+          ethereum: 0,
+          celestia: 0,
+          avail: 0,
+        }
+      }
+      return {
+        timestamp: item.timestamp,
+        ethereum: round((item.ethereum / total) * 100, 2),
+        celestia: round((item.celestia / total) * 100, 2),
+        avail: round((item.avail / total) * 100, 2),
+      }
+    })
+  }, [data])
 
   return (
     <ChartContainer
@@ -62,7 +66,6 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
           fill={daChartMeta.ethereum.color}
           isAnimationActive={false}
         />
-
         <Bar
           dataKey="celestia"
           stackId="a"

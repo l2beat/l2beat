@@ -1,6 +1,7 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
@@ -14,21 +15,25 @@ import {
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { daChartMeta } from './meta'
 
-interface DataPoint {
-  timestamp: number
-  ethereum: number
-  celestia: number
-  avail: number
-}
-
 interface Props {
-  data: DataPoint[] | undefined
+  data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
 }
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const chartData = useMemo(() => {
+    return data?.map((item) => {
+      return {
+        ...item,
+        ethereum: item.ethereum ?? 0,
+        celestia: item.celestia ?? 0,
+        avail: item.avail ?? 0,
+      }
+    })
+  }, [data])
   return (
     <ChartContainer
       data={data}
@@ -36,7 +41,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
       className="mb-2"
       isLoading={isLoading}
     >
-      <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Line
@@ -90,7 +95,6 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
-
           return (
             <div
               key={index}

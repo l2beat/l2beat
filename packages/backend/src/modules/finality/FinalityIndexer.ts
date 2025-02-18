@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer, Retries } from '@l2beat/uif'
+import { ChildIndexer, Indexer } from '@l2beat/uif'
 import { mean } from 'lodash'
 
 import type { Database, FinalityRecord } from '@l2beat/database'
@@ -9,11 +9,6 @@ import {
   batchesToStateUpdateDelays,
 } from './analyzers/types/BaseAnalyzer'
 import type { FinalityConfig } from './types/FinalityConfig'
-
-const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
-  maxAttempts: 10,
-  initialTimeoutMs: 1000,
-})
 
 export class FinalityIndexer extends ChildIndexer {
   readonly indexerId: string
@@ -31,7 +26,7 @@ export class FinalityIndexer extends ChildIndexer {
       }),
       [parentIndexer],
       {
-        updateRetryStrategy: UPDATE_RETRY_STRATEGY,
+        updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       },
     )
     this.indexerId = `finality_indexer_${configuration.projectId.toString()}`

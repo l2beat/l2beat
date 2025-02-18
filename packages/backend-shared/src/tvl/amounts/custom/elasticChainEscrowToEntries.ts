@@ -1,4 +1,4 @@
-import { chains, tokenList } from '@l2beat/config'
+import { type ChainConfig, tokenList } from '@l2beat/config'
 import {
   assert,
   type AmountConfigEntry,
@@ -16,6 +16,7 @@ export function elasticChainEscrowToEntries(
   escrow: BackendProjectEscrow,
   project: BackendProject,
   elasticChainIncludedL1Tokens: string[],
+  chains: ChainConfig[],
 ) {
   assert(
     escrow.sharedEscrow?.type === 'ElasticChain',

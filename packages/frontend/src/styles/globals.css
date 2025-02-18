@@ -100,6 +100,9 @@
     --chart-costs-compute: 320deg 100% 63.7%;
     --chart-costs-overhead: 266deg 57.7% 52.7%;
 
+    --chart-da-celestia: 285 62.7% 52.7%;
+    --chart-da-avail: 151 90.2% 48%;
+
     /* Chart gradients */
 
     --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;

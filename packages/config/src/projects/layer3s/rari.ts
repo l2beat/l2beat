@@ -34,7 +34,10 @@ export const rari: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start  },
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,

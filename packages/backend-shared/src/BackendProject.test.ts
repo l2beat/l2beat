@@ -14,7 +14,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { layer2ToBackendProject, mapTokens } from './BackendProject'
+import { mapTokens, toBackendProject } from './BackendProject'
 
 describe('BackendProject', () => {
   describe(mapTokens.name, () => {
@@ -62,7 +62,7 @@ describe('BackendProject', () => {
   })
 
   describe('Tracked transactions', () => {
-    const projects = layer2s.map(layer2ToBackendProject)
+    const projects = layer2s.map(toBackendProject)
     it('every TrackedTxId is unique', () => {
       const ids = new Set<string>()
       for (const project of projects) {
@@ -139,6 +139,7 @@ const getMockToken = (token: Partial<Token>): Token => {
     sinceTimestamp: new UnixTime(0),
     category: 'other',
     chainId: ChainId.ETHEREUM,
+    chainName: 'ethereum',
     source: 'canonical',
     supply: 'zero',
     ...token,

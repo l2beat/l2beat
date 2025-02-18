@@ -196,6 +196,7 @@ export const ink: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97',
       sequencers: ['0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac'],
     },
@@ -455,7 +456,7 @@ export const ink: Layer2 = {
     name: 'ink',
     chainId: 57073,
     blockscoutV2ApiUrl: 'https://explorer.inkonchain.com/api/v2/',
-    explorerUrl: 'https://explorer.inkonchain.com/',
+    explorerUrl: 'https://explorer.inkonchain.com',
     explorerApi: {
       url: 'https://explorer.inkonchain.com/api',
       type: 'blockscout',

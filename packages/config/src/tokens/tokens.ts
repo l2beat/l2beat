@@ -12,7 +12,7 @@ You can check the detailed steps on how to add new tokens in the tvl.md file in 
 
 import { assert, AssetId, type Token, UnixTime } from '@l2beat/shared-pure'
 
-import { chains } from '../chains'
+import { chains } from '../projects/chains'
 import generated from './generated.json'
 import { GeneratedToken } from './types'
 
@@ -45,6 +45,11 @@ function toToken(generated: GeneratedToken): Token {
   return {
     id: AssetId.create(chain.name, generated.address),
     ...generated,
+    chainName: chain.name,
+    url:
+      generated.address && chain.explorerUrl
+        ? `${chain.explorerUrl}/address/${generated.address}`
+        : undefined,
     sinceTimestamp,
   }
 }

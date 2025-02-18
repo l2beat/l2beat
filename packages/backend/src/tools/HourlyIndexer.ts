@@ -1,13 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { RootIndexer } from '@l2beat/uif'
 
-import type { Clock } from '../../tools/Clock'
+import type { Clock } from './Clock'
 
 export class HourlyIndexer extends RootIndexer {
   constructor(
     logger: Logger,
     private readonly clock: Clock,
-    private readonly module?: string,
   ) {
     super(logger)
   }
@@ -19,7 +18,6 @@ export class HourlyIndexer extends RootIndexer {
 
   tick(): Promise<number> {
     const time = this.clock.getLastHour().toNumber()
-
     return Promise.resolve(time)
   }
 }

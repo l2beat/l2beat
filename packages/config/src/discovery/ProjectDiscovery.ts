@@ -22,7 +22,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
-import { EXPLORER_URLS } from '../chains/explorerUrls'
+import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,

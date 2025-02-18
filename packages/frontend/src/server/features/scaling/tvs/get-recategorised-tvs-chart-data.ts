@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getTvsProjects } from './utils/get-tvs-projects'
 import { getTvsTargetTimestamp } from './utils/get-tvs-target-timestamp'
 import { getTvsValuesForProjects } from './utils/get-tvs-values-for-projects'
@@ -57,7 +58,15 @@ export const getCachedRecategorisedTvsChartData = cache(
       filter,
       previewRecategorisation,
     )
-    const tvsProjects = getTvsProjects(projectsFilter, previewRecategorisation)
+
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const tvsProjects = getTvsProjects(
+      projectsFilter,
+      chains,
+      previewRecategorisation,
+    )
 
     const rollups = tvsProjects.filter(({ category }) => category === 'rollups')
     const validiumsAndOptimiums = tvsProjects.filter(

@@ -8,7 +8,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { unionBy } from 'lodash'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -56,6 +55,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId, badges } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -151,9 +151,17 @@ interface OrbitStackConfigCommon {
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDaNamespace?: string
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDaAppId?: string
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -858,24 +866,32 @@ function getDaTracking(
     'batchPosters',
   )
 
+  // TODO: update to value from discovery
+  const inboxDeploymentBlockNumber = 0
+
   return usesBlobs
     ? {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
+        sinceBlock: inboxDeploymentBlockNumber,
         inbox: templateVars.sequencerInbox.address,
         sequencers: batchPosters,
       }
-    : templateVars.celestiaDaNamespace
+    : templateVars.celestiaDa
       ? {
           type: 'celestia',
           daLayer: ProjectId('celestia'),
-          namespace: templateVars.celestiaDaNamespace,
+          // TODO: update to value from discovery
+          sinceBlock: templateVars.celestiaDa.sinceBlock,
+          namespace: templateVars.celestiaDa.namespace,
         }
-      : templateVars.availDaAppId
+      : templateVars.availDa
         ? {
             type: 'avail',
             daLayer: ProjectId('avail'),
-            appId: templateVars.availDaAppId,
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.availDa.sinceBlock,
+            appId: templateVars.availDa.appId,
           }
         : undefined
 }
@@ -965,7 +981,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
+    ...orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
