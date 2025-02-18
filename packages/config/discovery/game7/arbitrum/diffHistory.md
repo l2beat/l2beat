@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf88bdb3cdde48d1575f634a35b151f3b0c851dab
+Generated with discovered.json: 0x28af2e5ff910536fd1a9f2851a812e77b4849d69
 
-# Diff at Tue, 18 Feb 2025 13:26:09 GMT:
+# Diff at Tue, 18 Feb 2025 15:31:19 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 307358161
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 307386152
 
 ## Description
 
@@ -55,8 +55,8 @@ Game7 full discovery.
 
 ```diff
 +   Status: CREATED
-    contract USDCGateway (0x404922a9B29b4a5205a6074AbA31A7392BD28944)
-    +++ description: None
+    contract L1OrbitUSDCGateway (0x404922a9B29b4a5205a6074AbA31A7392BD28944)
+    +++ description: Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.
 ```
 
 ```diff
@@ -103,12 +103,6 @@ Game7 full discovery.
 
 ```diff
 +   Status: CREATED
-    contract MasterMinter (0x8aFf09e2259cacbF4Fc4e3E53F3bf799EfEEab36)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract UpgradeExecutor (0x8b2600BA65E7908D38Af906fbcafB2f62D395765)
     +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
 ```
@@ -117,12 +111,6 @@ Game7 full discovery.
 +   Status: CREATED
     contract OneStepProver0 (0x91F12800C6b5b4e7d88fE785558213F8EF3F4586)
     +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-```
-
-```diff
-+   Status: CREATED
-    contract FiatTokenV2_2 (0xaf88d065e77c8cC2239327C5EDb3A432268e5831)
-    +++ description: None
 ```
 
 ```diff
