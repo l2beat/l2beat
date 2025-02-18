@@ -10547,28 +10547,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "name": "TapToken",
-      "coingeckoId": "tapioca-dao-token",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "symbol": "TAP",
-      "decimals": 18,
-      "deploymentTimestamp": 1718405557,
-      "coingeckoListingTimestamp": 1718668800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38756/large/TAPP.png?1718729124",
-      "chainId": 42161,
-      "source": "native",
-      "supply": "circulatingSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
       "name": "Tether USD",
       "coingeckoId": "tether",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",

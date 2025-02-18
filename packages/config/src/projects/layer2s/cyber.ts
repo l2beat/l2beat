@@ -71,7 +71,7 @@ export const cyber: Layer2 = opStackL2({
   chainConfig: {
     name: 'cyber',
     chainId: 7560,
-    explorerUrl: 'https://cyberscan.co/',
+    explorerUrl: 'https://cyberscan.co',
     coingeckoPlatform: 'cyber',
     explorerApi: {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',

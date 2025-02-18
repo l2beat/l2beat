@@ -2,7 +2,6 @@ import type {
   AvailDaTrackingConfig,
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
-  ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import type {
@@ -11,51 +10,10 @@ import type {
   DaBlob,
   EthereumBlob,
 } from '@l2beat/shared'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { DaTrackingConfig } from '../../../config/Config'
 
 export class DaService {
-  readonly mappedConfig: {
-    ethereum: {
-      id: ProjectId
-      config: EthereumDaTrackingConfig
-    }[]
-    celestia: {
-      id: ProjectId
-      config: CelestiaDaTrackingConfig
-    }[]
-    avail: {
-      id: ProjectId
-      config: AvailDaTrackingConfig
-    }[]
-  }
-
-  constructor(
-    config: {
-      id: ProjectId
-      config: ProjectDaTrackingConfig
-    }[],
-  ) {
-    this.mappedConfig = {
-      ethereum: config
-        .filter((entry) => entry.config.type === 'ethereum')
-        .map((entry) => ({
-          id: entry.id,
-          config: entry.config as EthereumDaTrackingConfig,
-        })),
-      celestia: config
-        .filter((entry) => entry.config.type === 'celestia')
-        .map((entry) => ({
-          id: entry.id,
-          config: entry.config as CelestiaDaTrackingConfig,
-        })),
-      avail: config
-        .filter((entry) => entry.config.type === 'avail')
-        .map((entry) => ({
-          id: entry.id,
-          config: entry.config as AvailDaTrackingConfig,
-        })),
-    }
-  }
+  constructor(private configurations: DaTrackingConfig[]) {}
 
   generateRecords(
     blobs: DaBlob[],
@@ -67,6 +25,7 @@ export class DaService {
       const existing = updatedRecords.find(
         (r) =>
           r.timestamp.toNumber() === record.timestamp.toNumber() &&
+          r.daLayer === record.daLayer &&
           r.projectId === record.projectId,
       )
       if (existing) {
@@ -77,58 +36,72 @@ export class DaService {
     }
 
     for (const blob of blobs) {
-      const [daLayerRecord, projectRecord] = this.createRecordFromBlob(blob)
-      // DA layer record is always created
-      addOrMerge(daLayerRecord)
-      // project record is created only if we could match to one of the tracked projects
-      if (projectRecord) addOrMerge(projectRecord)
+      const records = this.createRecordsFromBlob(blob)
+      records.forEach((r) => addOrMerge(r))
     }
 
     return updatedRecords
   }
 
-  private createRecordFromBlob(
-    blob: DaBlob,
-  ): [DataAvailabilityRecord, DataAvailabilityRecord | undefined] {
-    const daLayerRecord: DataAvailabilityRecord = {
-      configurationId: 'TEMP', // temporary solution until next PR
-      projectId: blob.daLayer,
-      daLayer: blob.daLayer,
-      timestamp: blob.blockTimestamp.toStartOf('day'),
-      totalSize: blob.size,
-    }
+  private createRecordsFromBlob(blob: DaBlob): DataAvailabilityRecord[] {
+    const records: DataAvailabilityRecord[] = []
 
-    let projectId = undefined
-
-    switch (blob.type) {
-      case 'ethereum':
-        projectId = this.mappedConfig.ethereum.find((entry) =>
-          matchEthereumProject(blob, entry.config),
-        )?.id
-        break
-      case 'celestia':
-        projectId = this.mappedConfig.celestia.find((entry) =>
-          matchCelestiaProject(blob, entry.config),
-        )?.id
-        break
-      case 'avail':
-        projectId = this.mappedConfig.avail.find((entry) =>
-          matchAvailProject(blob, entry.config),
-        )?.id
-        break
-    }
-
-    const projectRecord = projectId
-      ? {
-          configurationId: 'TEMP', // temporary solution until next PR
-          projectId,
-          daLayer: blob.daLayer,
-          timestamp: blob.blockTimestamp.toStartOf('day'),
-          totalSize: blob.size,
+    for (const c of this.configurations) {
+      switch (c.type) {
+        case 'baseLayer': {
+          if (blob.daLayer === c.daLayer) {
+            records.push({
+              projectId: c.projectId,
+              daLayer: blob.daLayer,
+              timestamp: blob.blockTimestamp.toStartOf('day'),
+              totalSize: blob.size,
+            })
+          }
+          break
         }
-      : undefined
+        case 'ethereum': {
+          if (blob.type === 'ethereum') {
+            if (matchEthereumProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+        case 'celestia': {
+          if (blob.type === 'celestia') {
+            if (matchCelestiaProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+        case 'avail': {
+          if (blob.type === 'avail') {
+            if (matchAvailProject(blob, c)) {
+              records.push({
+                projectId: c.projectId,
+                daLayer: blob.daLayer,
+                timestamp: blob.blockTimestamp.toStartOf('day'),
+                totalSize: blob.size,
+              })
+            }
+          }
+          break
+        }
+      }
+    }
 
-    return [daLayerRecord, projectRecord]
+    return records
   }
 }
 
@@ -136,14 +109,14 @@ function matchEthereumProject(
   blob: EthereumBlob,
   config: EthereumDaTrackingConfig,
 ) {
-  const hasInboxMatch = config.inbox === blob.inbox
+  const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
 
   if (!config.sequencers || config.sequencers.length === 0) {
     return hasInboxMatch
   }
 
   const hasMatchingSequencer = config.sequencers.some(
-    (sequencer) => sequencer === blob.sequencer,
+    (sequencer) => sequencer.toLowerCase() === blob.sequencer.toLowerCase(),
   )
 
   return hasInboxMatch && hasMatchingSequencer

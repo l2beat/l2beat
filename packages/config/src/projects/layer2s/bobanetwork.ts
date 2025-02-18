@@ -182,7 +182,7 @@ export const bobanetwork: Layer2 = opStackL2({
     ],
     name: 'bobanetwork',
     chainId: 288,
-    explorerUrl: 'https://eth.bobascan.com/',
+    explorerUrl: 'https://eth.bobascan.com',
     explorerApi: {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
       type: 'etherscan',

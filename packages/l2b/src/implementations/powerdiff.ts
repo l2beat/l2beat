@@ -56,11 +56,15 @@ function diffToHtml(
     config.path2 = splitResult.path2
     for (const list of splitResult.filePathsList) {
       const { left, right } = list
-      const filePathsList = processGitDiff(gitDiffFolders(left, right))
-      const title = `${path.basename(left)} <-> ${path.basename(right)}`
-      result.push(
-        collapsible(title, diffPaths(config, filePathsList).join('\n')),
-      )
+      if (left === right) {
+        result.push(diffPaths(config, [list]))
+      } else {
+        const filePathsList = processGitDiff(gitDiffFolders(left, right))
+        const title = `${path.basename(left)} <-> ${path.basename(right)}`
+        result.push(
+          collapsible(title, diffPaths(config, filePathsList).join('\n')),
+        )
+      }
     }
 
     if (splitResult.filePathsList.length === 0) {

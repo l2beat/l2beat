@@ -93,7 +93,6 @@ export const xai: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'XAI Mainnet Launch',

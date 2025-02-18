@@ -35,7 +35,10 @@ export const karak: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.karak.network/',
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJBA=',
+  },
   isNodeAvailable: true,
   milestones: [
     {

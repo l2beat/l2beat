@@ -45,7 +45,7 @@ export const soneium = opStackL2({
     name: 'soneium',
     chainId: 1868,
     blockscoutV2ApiUrl: 'https://soneium.blockscout.com/api/v2',
-    explorerUrl: 'https://soneium.blockscout.com/',
+    explorerUrl: 'https://soneium.blockscout.com',
     explorerApi: {
       url: 'https://soneium.blockscout.com/api',
       type: 'blockscout',

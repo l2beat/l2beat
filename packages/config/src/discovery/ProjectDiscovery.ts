@@ -1,10 +1,5 @@
 import { join } from 'path'
-import {
-  ConfigReader,
-  type InvertedAddresses,
-  RolePermissionEntries,
-  calculateInversion,
-} from '@l2beat/discovery'
+import { ConfigReader, RolePermissionEntries } from '@l2beat/discovery'
 import {
   type ContractParameters,
   type ContractValue,
@@ -27,7 +22,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { groupBy, isString, sum, uniq } from 'lodash'
-import { EXPLORER_URLS } from '../chains/explorerUrls'
+import { EXPLORER_URLS } from '../projects/chains/explorerUrls'
 import type {
   ProjectContract,
   ProjectEscrow,
@@ -39,17 +34,6 @@ import type {
   ScalingProjectUpgradeability,
   SharedEscrow,
 } from '../types'
-import {
-  ORBIT_STACK_CONTRACT_DESCRIPTION,
-  ORBIT_STACK_PERMISSION_TEMPLATES,
-  type OrbitStackContractTemplate,
-} from './OrbitStackTypes'
-import { PermissionedContract } from './PermissionedContract'
-import type {
-  StackPermissionTemplate,
-  StackPermissionsTag,
-} from './StackTemplateTypes'
-import { findRoleMatchingTemplate } from './values/templateUtils'
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -186,143 +170,6 @@ export class ProjectDiscovery {
       eoas.find((x) => x.address.toString() === address.toString()) !==
       undefined
     )
-  }
-
-  getInversion(): InvertedAddresses {
-    return calculateInversion(this.discoveries[0])
-  }
-
-  transformToPermissions(resolved: Record<string, PermissionedContract>) {
-    return Object.values(resolved)
-      .map((contract) => {
-        const entry = this.getEntryByAddress(contract.address)
-        assert(isNonNullable(entry), `Entry not found in the discovery`)
-        const description = contract.generateDescription()
-        if (description !== '') {
-          return {
-            name: contract.name,
-            accounts: this.formatPermissionedAccounts([contract.address]),
-            description,
-            chain: this.chain,
-          }
-        }
-      })
-      .filter(notUndefined)
-  }
-
-  resolveOrbitStackTemplates(
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): {
-    permissions: ProjectPermission[]
-    contracts: ProjectContract[]
-  } {
-    return this.resolveStackTemplates(
-      ORBIT_STACK_PERMISSION_TEMPLATES,
-      ORBIT_STACK_CONTRACT_DESCRIPTION,
-      overrides,
-      contractOverrides,
-    )
-  }
-
-  invertByTag(
-    resolved: Record<string, PermissionedContract>,
-    tag: StackPermissionsTag,
-  ): Record<string, string> {
-    const result: Record<string, string> = {}
-
-    for (const [contractName, contract] of Object.entries(resolved)) {
-      const tagged = contract.getByTag(tag)
-      for (const contractTag of tagged) {
-        result[contractTag] = contractName
-      }
-    }
-
-    return result
-  }
-
-  resolveStackTemplates(
-    permissionTemplates: StackPermissionTemplate[],
-    contractTemplates: OrbitStackContractTemplate[],
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): {
-    permissions: ProjectPermission[]
-    contracts: ProjectContract[]
-  } {
-    const resolved = this.computeStackContractPermissions(
-      permissionTemplates,
-      overrides,
-      contractOverrides,
-    )
-
-    const adminOf = this.invertByTag(resolved, 'admin')
-
-    const contracts = contractTemplates.map((d) =>
-      this.getContractDetails(overrides?.[d.name] ?? d.name, {
-        description: stringFormat(
-          d.coreDescription,
-          overrides?.[d.name] ?? d.name,
-        ),
-        ...(adminOf[d.name] && {
-          upgradableBy: [{ name: adminOf[d.name], delay: 'no' }],
-        }),
-      }),
-    )
-
-    return {
-      permissions: this.transformToPermissions(resolved),
-      contracts,
-    }
-  }
-
-  computeStackContractPermissions(
-    templates: StackPermissionTemplate[],
-    overrides?: Record<string, string>,
-    contractOverrides?: Record<string, string>,
-  ): Record<string, PermissionedContract> {
-    const inversion = this.getInversion()
-
-    const contracts: Record<string, PermissionedContract> = {}
-    const getContract = (name: string, address: EthereumAddress) => {
-      contracts[name] ??= new PermissionedContract(name, address)
-      return contracts[name]
-    }
-
-    for (const template of templates) {
-      for (const invertedContract of inversion.values()) {
-        const role = findRoleMatchingTemplate(
-          invertedContract,
-          template,
-          contractOverrides,
-        )
-        if (!role) {
-          continue
-        }
-
-        const contractKey =
-          overrides?.[role.name] ?? invertedContract.name ?? role.name
-
-        const contractAddress = EthereumAddress(invertedContract.address)
-        const contract = getContract(contractKey, contractAddress)
-        const referenced = getContract(role.atName, role.atAddress)
-
-        if (template.description !== undefined) {
-          contract.addDescription(
-            stringFormat(template.description, role.atName),
-          )
-        }
-
-        if (template.tags !== undefined) {
-          for (const tag of template.tags) {
-            contract.addTag(tag, role.atName)
-            referenced.addTagReference(tag, contractKey)
-          }
-        }
-      }
-    }
-
-    return contracts
   }
 
   getMultisigDescription(identifier: string): string[] {
@@ -1285,13 +1132,6 @@ function isNonNullable<T>(
   value: T | undefined | null,
 ): value is NonNullable<T> {
   return value !== null && value !== undefined
-}
-
-function stringFormat(str: string, ...val: string[]) {
-  for (let index = 0; index < val.length; index++) {
-    str = str.replaceAll(`{${index}}`, val[index])
-  }
-  return str
 }
 
 const roleDescriptions: {

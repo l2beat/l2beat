@@ -41,7 +41,10 @@ export const lyra: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
+  },
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [

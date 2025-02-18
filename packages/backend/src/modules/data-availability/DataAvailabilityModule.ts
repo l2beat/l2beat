@@ -1,17 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { ProjectId } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
-import type { DataAvailabilityTrackingConfig } from '../../config/Config'
+import type { DaTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
-import { DataAvailabilityDependencies } from './DataAvailabilityDependencies'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
-import { EthereumDaIndexer } from './indexers/EthereumDaIndexer'
-import type { DataAvailabilityIndexer } from './indexers/types'
+import { DaIndexer } from './indexers/DaIndexer'
+import { DaService } from './services/DaService'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -31,83 +29,80 @@ export function initDataAvailabilityModule(
     module: 'data-availability',
   })
 
-  const dependencies = new DataAvailabilityDependencies(
-    config,
-    database,
-    providers,
-  )
+  const blockProviders = providers.block
+  const daProviders = providers.getDaProviders()
+  const daService = new DaService(config.da.projects.map((c) => c.config))
 
-  const indexers = createDaLayerIndexers(
-    config.da,
-    providers,
-    logger,
-    clock,
-    dependencies,
-  )
+  const indexerService = new IndexerService(database)
+
+  const targetIndexers: BlockTargetIndexer[] = []
+  const daIndexers: DaIndexer[] = []
+
+  for (const daLayer of config.da.layers) {
+    const blockTimestampProvider = blockProviders.getBlockTimestampProvider(
+      daLayer.name,
+    )
+
+    const targetIndexer = new BlockTargetIndexer(
+      logger,
+      clock,
+      blockTimestampProvider,
+      daLayer.name,
+    )
+
+    targetIndexers.push(targetIndexer)
+
+    const daProvider = daProviders.getProvider(daLayer.name)
+
+    const configurations = config.da.projects.filter(
+      (c) => c.config.daLayer === daLayer.name,
+    )
+
+    const indexer = new DaIndexer({
+      configurations: configurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.config.sinceBlock,
+        maxHeight: c.config.untilBlock ?? null,
+        properties: c.config,
+      })),
+      daProvider,
+      daService,
+      logger,
+      daLayer: daLayer.name,
+      batchSize: daLayer.batchSize,
+      parents: [targetIndexer],
+      indexerService,
+      db: database,
+      serializeConfiguration: (value: DaTrackingConfig) =>
+        JSON.stringify(value),
+      configurationsTrimmingDisabled: true,
+    })
+    daIndexers.push(indexer)
+  }
 
   return {
     start: async () => {
-      logger.info('Starting data availability indexers')
+      logger.info('Starting target indexers')
       await Promise.all(
-        indexers.map(async (indexer) => {
-          logger.info(`Starting ${indexer.constructor.name}`)
+        targetIndexers.map(async (indexer) => {
+          logger.info(
+            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+          )
           await indexer.start()
         }),
       )
-      logger.info('Data availability indexers started')
+      logger.info('Target indexers started')
+
+      logger.info('Starting DA indexers')
+      await Promise.all(
+        daIndexers.map(async (indexer) => {
+          logger.info(
+            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+          )
+          await indexer.start()
+        }),
+      )
+      logger.info('DA indexers started')
     },
   }
-}
-
-function createDaLayerIndexers(
-  config: DataAvailabilityTrackingConfig,
-  providers: Providers,
-  logger: Logger,
-  clock: Clock,
-  dependencies: DataAvailabilityDependencies,
-): DataAvailabilityIndexer[] {
-  const indexerService = new IndexerService(dependencies.database)
-
-  const daLayers: Set<ProjectId> = new Set()
-  for (const project of config.projects) {
-    daLayers.add(project.config.daLayer)
-  }
-
-  const indexers: DataAvailabilityIndexer[] = Array.from(
-    daLayers.values(),
-  ).flatMap((layer) => {
-    if (layer === ProjectId('ethereum')) {
-      const blockTimestampProvider =
-        providers.block.getBlockTimestampProvider(layer)
-
-      const blockProvider = providers.block.getBlockProvider(layer)
-
-      const daProvider = providers.getDaProviders().getDaProvider(layer)
-
-      const blockTargetIndexer = new BlockTargetIndexer(
-        logger,
-        clock,
-        blockTimestampProvider,
-        ProjectId(layer),
-      )
-
-      const indexer = new EthereumDaIndexer({
-        logger,
-        indexerService,
-        selector: layer,
-        db: dependencies.database,
-        daProvider,
-        blockProvider,
-        parents: [blockTargetIndexer],
-        batchSize: config.ethereum.batchSize,
-        minHeight: config.ethereum.minHeight,
-      })
-
-      return [blockTargetIndexer, indexer]
-    }
-
-    return []
-  })
-
-  return indexers
 }
