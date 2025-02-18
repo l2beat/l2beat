@@ -97,8 +97,8 @@ export function StackedTvsChart({
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },
         })}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
       </AreaChart>
-      <ChartTooltip content={<CustomTooltip unit={unit} />} />
     </ChartContainer>
   )
 }
