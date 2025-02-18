@@ -1,5 +1,4 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
 import { AbiCoder } from 'ethers/lib/utils'
 import { z } from 'zod'
 import type { Transaction } from '../../../utils/IEtherscanClient'
@@ -172,12 +171,10 @@ export class OpStackDAHandler implements Handler {
       provider,
       inboxAddress,
     )
-
     const successfulVerifications = countSuccessfulVerifications(
       inboxTxs,
       confirmBatchTxs,
     )
-
     const successRate = (successfulVerifications / inboxTxs.length) * 100
 
     return successRate >= EIGEN_DA_CONSTANTS.VERIFICATION_THRESHOLD
@@ -194,33 +191,109 @@ async function fetchEigenDAVerificationData(
 
   const oneDayBefore = new UnixTime(latestBlock.timestamp).add(-1, 'days')
 
-  const blockDayBefore = await provider.raw(
-    `optimism_eigen_reference_block_${oneDayBefore.toNumber()}`,
+  const blockNumberDayBefore = await provider.raw(
+    `optimism_eigen_reference_block_${oneDayBefore.toNumber()}_${provider.chain}`,
     ({ etherscanClient }) =>
       etherscanClient.getBlockNumberAtOrBefore(oneDayBefore),
   )
 
-  const confirmBatchTxs = await provider.raw(
-    `optimism_eigen_confirm_batch_${EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS}_${blockDayBefore}_${latestBlockNumber}`,
-    ({ etherscanClient }) =>
-      etherscanClient.getTransactions(
-        EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS,
-        blockDayBefore,
-        latestBlockNumber,
-      ),
+  const fromBlock = {
+    number: blockNumberDayBefore,
+    timestamp: oneDayBefore.toNumber(),
+  }
+  const toBlock = {
+    number: latestBlockNumber,
+    timestamp: latestBlock.timestamp,
+  }
+
+  const confirmBatchTxs = await getBatchConfirmTransactions(
+    provider,
+    fromBlock,
+    toBlock,
   )
 
   const inboxTxs = await provider.raw(
-    `optimism_eigen_inbox_tx_${inboxAddress}_${blockDayBefore}_${latestBlockNumber}`,
+    `optimism_eigen_inbox_tx_${inboxAddress}_${blockNumberDayBefore}_${latestBlockNumber}`,
     ({ etherscanClient }) =>
       etherscanClient.getTransactions(
         inboxAddress,
-        blockDayBefore,
+        blockNumberDayBefore,
         latestBlockNumber,
       ),
   )
-
   return { confirmBatchTxs, inboxTxs }
+}
+
+async function getBatchConfirmTransactions(
+  provider: IProvider,
+  fromBlock: {
+    number: number
+    timestamp: number
+  },
+  toBlock: {
+    number: number
+    timestamp: number
+  },
+) {
+  const {
+    fromBlock: fromBlockEthereum,
+    toBlock: toBlockEthereum,
+    provider: ethereumProvider,
+  } = await translateToEthereum(provider, fromBlock, toBlock)
+
+  const confirmBatchTxs = await ethereumProvider.raw(
+    `optimism_eigen_confirm_batch_${EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS}_${fromBlockEthereum}_${toBlockEthereum}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getTransactions(
+        EIGEN_DA_CONSTANTS.CONFIRM_BATCH_ADDRESS,
+        fromBlockEthereum,
+        toBlockEthereum,
+      ),
+  )
+
+  return confirmBatchTxs
+}
+
+// We need to align block ranges across different chains is applicable
+// since Eigen AVS lives on Ethereum and project can be an L3
+async function translateToEthereum(
+  provider: IProvider,
+  fromBlock: {
+    number: number
+    timestamp: number
+  },
+  toBlock: {
+    number: number
+    timestamp: number
+  },
+) {
+  const ethereumProvider = provider.switchChain('ethereum', fromBlock.number)
+
+  const [ethereumFromBlock, ethereumToBlock] = await Promise.all([
+    ethereumProvider.raw(
+      `optimism_eigen_translate_block_${fromBlock.timestamp}_${provider.chain}`,
+      ({ etherscanClient }) =>
+        etherscanClient.getBlockNumberAtOrBefore(
+          new UnixTime(fromBlock.timestamp),
+        ),
+    ),
+    ethereumProvider.raw(
+      `optimism_eigen_translate_block_${toBlock.timestamp}_${provider.chain}`,
+      ({ etherscanClient }) =>
+        etherscanClient.getBlockNumberAtOrBefore(
+          new UnixTime(toBlock.timestamp),
+        ),
+    ),
+  ])
+
+  assert(ethereumFromBlock, 'Missing ethereum from block')
+  assert(ethereumToBlock, 'Missing ethereum to block')
+
+  return {
+    provider: ethereumProvider,
+    fromBlock: ethereumFromBlock,
+    toBlock: ethereumToBlock,
+  }
 }
 
 function countSuccessfulVerifications(
