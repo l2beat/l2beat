@@ -230,6 +230,16 @@ export function getEthereumDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
+  items.push({
+    type: 'ThroughputSection',
+    props: {
+      id: 'throughput',
+      title: 'Throughput',
+      projectId: layer.id,
+      throughput: layer.daLayer.throughput ?? [],
+    },
+  })
+
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)
       .length > 0
