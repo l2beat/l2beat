@@ -109,14 +109,14 @@ function matchEthereumProject(
   blob: EthereumBlob,
   config: EthereumDaTrackingConfig,
 ) {
-  const hasInboxMatch = config.inbox === blob.inbox
+  const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
 
   if (!config.sequencers || config.sequencers.length === 0) {
     return hasInboxMatch
   }
 
   const hasMatchingSequencer = config.sequencers.some(
-    (sequencer) => sequencer === blob.sequencer,
+    (sequencer) => sequencer.toLowerCase() === blob.sequencer.toLowerCase(),
   )
 
   return hasInboxMatch && hasMatchingSequencer
