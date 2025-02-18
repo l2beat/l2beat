@@ -48,7 +48,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     timeRange: [UnixTime | null, UnixTime],
   ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
-    const query = this.db
+    let query = this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
@@ -56,7 +56,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .orderBy('timestamp', 'asc')
 
     if (from) {
-      query.where('timestamp', '>=', from.toDate())
+      query = query.where('timestamp', '>=', from.toDate())
     }
 
     const rows = await query.execute()

@@ -34,8 +34,8 @@ const getCachedDaThroughputChartData = cache(
   }: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> => {
     const db = getDb()
     const days = rangeToDays(range)
-    const to = UnixTime.now().toStartOf('day')
-    const from = to.add(-(days ?? 730), 'days')
+    const to = UnixTime.now().toStartOf('day').add(-1, 'days')
+    const from = days ? to.add(-days, 'days') : null
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
       ['ethereum', 'celestia', 'avail'],
       [from, to],
