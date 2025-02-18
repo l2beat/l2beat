@@ -8,6 +8,8 @@ import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('game7', 'arbitrum')
 
+const L1OrbitERC20Gateway = discovery.getContract('L1OrbitERC20Gateway')
+
 export const g7: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1738899615),
   discovery,
@@ -44,14 +46,12 @@ export const g7: Layer3 = orbitStackL3({
   associatedTokens: ['G7'],
   gasTokens: ['G7'],
   nonTemplateEscrows: [
-    // discovery.getEscrowDetails({
-    //   address: EthereumAddress('0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e'),
-    //   name: 'StandardGateway',
-    //   description:
-    //     'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination.',
-    //   tokens: '*',
-    // }),
-
+    discovery.getEscrowDetails({
+      address: L1OrbitERC20Gateway.address,
+      name: L1OrbitERC20Gateway.name,
+      description: L1OrbitERC20Gateway.description,
+      tokens: '*',
+    }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x404922a9B29b4a5205a6074AbA31A7392BD28944'),
       tokens: ['USDC'],

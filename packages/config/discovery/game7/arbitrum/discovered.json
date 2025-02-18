@@ -1,7 +1,7 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 307317012,
+  "blockNumber": 307358161,
   "configHash": "0x9b64a371c4e12e460383e94fddb298e663e671041f0eb8f78a855903ef9d614e",
   "contracts": [
     {
@@ -58,7 +58,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 39,
+        "nonce": 41,
         "VERSION": "1.3.0"
       }
     },
@@ -106,13 +106,13 @@
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
-        "delayedMessageCount": 257,
+        "delayedMessageCount": 260,
         "nativeToken": "0xF18e4466F26B4cA55bbAb890b314a54976E45B17",
         "nativeTokenDecimals": 18,
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 534,
-        "sequencerReportedSubMessageCount": 466812
+        "sequencerMessageCount": 535,
+        "sequencerReportedSubMessageCount": 476738
       }
     },
     {
@@ -288,7 +288,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 534,
+        "batchCount": 535,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"],
         "bridge": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
@@ -318,7 +318,7 @@
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 253,
+        "totalDelayedMessagesRead": 257,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -403,12 +403,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 147,
+        "firstUnresolvedNode": 149,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "lastStakeBlock": 20938249,
-        "latestConfirmed": 146,
-        "latestNodeCreated": 146,
+        "latestConfirmed": 148,
+        "latestNodeCreated": 148,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -825,7 +825,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3904592139703313,
+        "totalSupply": 3906532158092238,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       }
