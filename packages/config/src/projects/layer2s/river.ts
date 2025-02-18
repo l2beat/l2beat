@@ -38,6 +38,13 @@ export const river: Layer2 = opStackL2({
   genesisTimestamp: new UnixTime(1716094800), //first sequencer tx
   milestones: [
     {
+      title: 'Move to Celestia DA',
+      url: 'https://etherscan.io/tx/0xcaa90f19341d9419b868e976268b6ed2c53e26b1f782f8265c10667a853ac054',
+      date: '2025-02-17',
+      description: 'The Towns Layer 2 switches from Ethereum to Celestia DA.',
+      type: 'general',
+    },
+    {
       title: 'River Protocol is now Towns Protocol',
       url: 'https://x.com/TownsProtocol/status/1871587022818931001',
       date: '2024-12-25',
