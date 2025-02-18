@@ -10,11 +10,11 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { daChartMeta } from './meta'
 
@@ -95,18 +95,18 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { meta: config } = useChart()
+  const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="text-secondary">
         {formatTimestamp(label, { mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
         {payload.map((entry, index) => {
-          const configEntry = entry.name ? config[entry.name] : undefined
+          const configEntry = entry.name ? meta[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
 
           return (
@@ -128,6 +128,6 @@ function CustomTooltip({
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }

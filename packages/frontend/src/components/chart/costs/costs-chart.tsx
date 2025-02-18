@@ -8,11 +8,11 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
@@ -149,7 +149,7 @@ function CustomTooltip({
   const reversedPayload = [...payload].reverse()
   const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex min-w-40 flex-col gap-1">
         <div>
           {formatTimestamp(label, {
@@ -194,6 +194,6 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }

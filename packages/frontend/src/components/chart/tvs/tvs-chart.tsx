@@ -6,6 +6,7 @@ import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
 import {
@@ -14,7 +15,6 @@ import {
 } from '~/components/core/chart/defs/rollups-gradient-def'
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
@@ -80,7 +80,7 @@ function CustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col gap-1">
         <div>{formatTimestamp(label, { longMonthName: true })}</div>
         <div>
@@ -113,6 +113,6 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }

@@ -11,6 +11,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
 import {
   EthereumFillGradientDef,
@@ -32,7 +33,6 @@ import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { CustomLink } from '~/components/link/custom-link'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { ChevronIcon } from '~/icons/chevron'
@@ -184,7 +184,7 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex w-40 flex-col gap-1 sm:w-60">
         <div className="mb-1 whitespace-nowrap">
           {formatTimestamp(timestamp, {
@@ -263,7 +263,7 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

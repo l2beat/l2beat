@@ -16,7 +16,11 @@ import {
   DrawerTrigger,
 } from '../drawer'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
-import { getTimestampedMilestones } from './utils/get-timestamped-milestones'
+
+type TimestampedMilestone = {
+  timestamp: number
+  milestone: Milestone | undefined
+}
 
 interface Props<T extends { timestamp: number }> {
   data: T[] | undefined
@@ -125,4 +129,26 @@ function ChartMilestone({
       </TooltipContent>
     </Tooltip>
   )
+}
+
+function getTimestampedMilestones<T extends { timestamp: number }>(
+  data: T[] | undefined,
+  milestones: Milestone[],
+): TimestampedMilestone[] {
+  const mappedMilestones = mapMilestones(milestones)
+  return (
+    data?.map((point) => ({
+      timestamp: point.timestamp,
+      milestone: mappedMilestones[point.timestamp],
+    })) ?? []
+  )
+}
+
+function mapMilestones(milestones: Milestone[]): Record<number, Milestone> {
+  const result: Record<number, Milestone> = {}
+  for (const milestone of milestones) {
+    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
+    result[timestamp] = milestone
+  }
+  return result
 }

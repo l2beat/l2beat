@@ -11,6 +11,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
 import {
@@ -32,7 +33,6 @@ import {
 import { DEFAULT_ACTIVE_DOT } from '~/components/core/chart/utils/active-dot'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
@@ -172,7 +172,7 @@ function CustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex w-40 flex-col gap-1 sm:w-60">
         <div className="mb-1 whitespace-nowrap">
           {formatTimestamp(timestamp, {
@@ -251,6 +251,6 @@ function CustomTooltip({
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }

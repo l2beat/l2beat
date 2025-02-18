@@ -9,11 +9,11 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { daChartMeta } from './meta'
 
@@ -83,7 +83,7 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="text-secondary">{formatTimestamp(label)}</div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
@@ -110,7 +110,7 @@ function CustomTooltip({
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

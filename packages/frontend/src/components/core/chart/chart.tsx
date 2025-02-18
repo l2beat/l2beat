@@ -7,6 +7,7 @@ import { Logo } from '~/components/logo'
 import type { Milestone } from '@l2beat/config'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
+import { tooltipContentVariants } from '../tooltip/tooltip'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
@@ -104,76 +105,72 @@ ChartContainer.displayName = 'Chart'
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
+  return <div className={tooltipContentVariants()}>{children}</div>
+}
+
 const ChartLegend = RechartsPrimitive.Legend
 
-const ChartLegendContent = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<'div'> &
-    Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-      hideIcon?: boolean
-      nameKey?: string
-      reverse?: boolean
-    }
->(
-  (
-    {
-      className,
-      hideIcon = false,
-      payload,
-      verticalAlign = 'bottom',
-      nameKey,
-      reverse = false,
-    },
-    ref,
-  ) => {
-    const { meta: config } = useChart()
+function ChartLegendContent({
+  className,
+  hideIcon = false,
+  payload,
+  verticalAlign = 'bottom',
+  nameKey,
+  reverse = false,
+}: React.ComponentProps<'div'> &
+  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
+    hideIcon?: boolean
+    nameKey?: string
+    reverse?: boolean
+  }) {
+  const { meta } = useChart()
 
-    if (!payload?.length) {
-      return null
-    }
+  if (!payload?.length) {
+    return null
+  }
 
-    const actualPayload = reverse ? [...payload].reverse() : payload
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          'flex items-center justify-center gap-2',
-          verticalAlign === 'top' && 'pb-3',
-          className,
-        )}
-      >
-        {actualPayload.map((item) => {
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          const key = `${nameKey ?? item.dataKey ?? 'value'}`
-          const itemConfig = getPayloadConfigFromPayload(config, item, key)
-          return (
-            <div
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              key={item.value}
-              className={cn(
-                'flex items-center gap-[3px] [&>svg]:size-3 [&>svg]:text-secondary',
-              )}
-            >
-              {itemConfig?.icon && !hideIcon ? (
-                <itemConfig.icon />
-              ) : (
-                <div
-                  className="size-2.5 shrink-0 rounded-sm"
-                  style={{
-                    backgroundColor: itemConfig?.color ?? item.color,
-                  }}
-                />
-              )}
-              <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
-                {itemConfig?.legendLabel ?? itemConfig?.label}
-              </span>
-            </div>
-          )
-        })}
-      </div>
-    )
-  },
-)
+  const actualPayload = reverse ? [...payload].reverse() : payload
+  return (
+    <div
+      className={cn(
+        'flex items-center justify-center gap-2',
+        verticalAlign === 'top' && 'pb-3',
+        className,
+      )}
+    >
+      {actualPayload.map((item) => {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        const key = `${nameKey ?? item.dataKey ?? 'value'}`
+        const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+        return (
+          <div
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            key={item.value}
+            className={cn(
+              'flex items-center gap-[3px] [&>svg]:size-3 [&>svg]:text-secondary',
+            )}
+          >
+            {itemConfig?.icon && !hideIcon ? (
+              <itemConfig.icon />
+            ) : (
+              <div
+                className="size-2.5 shrink-0 rounded-sm"
+                style={{
+                  backgroundColor: itemConfig?.color ?? item.color,
+                }}
+              />
+            )}
+            <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
+              {itemConfig?.legendLabel ?? itemConfig?.label}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 ChartLegendContent.displayName = 'ChartLegend'
 
 // Helper to extract item config from a payload.
@@ -213,4 +210,10 @@ function getPayloadConfigFromPayload(
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
-export { ChartContainer, ChartTooltip, ChartLegend, ChartLegendContent }
+export {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipWrapper,
+  ChartLegend,
+  ChartLegendContent,
+}
