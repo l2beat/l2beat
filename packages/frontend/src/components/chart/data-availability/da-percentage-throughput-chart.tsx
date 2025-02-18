@@ -31,21 +31,21 @@ export function DaPercentageThroughputChart({
   chartConfig,
 }: Props) {
   const chartData = useMemo(() => {
-    return data?.map((item) => {
-      const total = item.ethereum + item.celestia + item.avail
+    return data?.map(([timestamp, ethereum, celestia, avail]) => {
+      const total = ethereum + celestia + avail
       if (total === 0) {
         return {
-          timestamp: item.timestamp,
+          timestamp: timestamp,
           ethereum: 0,
           celestia: 0,
           avail: 0,
         }
       }
       return {
-        timestamp: item.timestamp,
-        ethereum: round((item.ethereum / total) * 100, 2),
-        celestia: round((item.celestia / total) * 100, 2),
-        avail: round((item.avail / total) * 100, 2),
+        timestamp: timestamp,
+        ethereum: round((ethereum / total) * 100, 2),
+        celestia: round((celestia / total) * 100, 2),
+        avail: round((avail / total) * 100, 2),
       }
     })
   }, [data])

@@ -8,12 +8,12 @@ import { rangeToDays } from '~/utils/range/range-to-days'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
-export interface DaThroughputDataPoint {
-  timestamp: number
-  ethereum: number
-  celestia: number
-  avail: number
-}
+export type DaThroughputDataPoint = [
+  timestamp: number,
+  ethereum: number,
+  celestia: number,
+  avail: number,
+]
 
 export const DaThroughputChartParams = z.object({
   range: DaThroughputTimeRange,
@@ -45,12 +45,13 @@ const getCachedDaThroughputChartData = cache(
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => {
-      return {
-        timestamp: timestamp.toNumber(),
-        ethereum: grouped[timestamp.toNumber()]?.ethereum ?? 0,
-        celestia: grouped[timestamp.toNumber()]?.celestia ?? 0,
-        avail: grouped[timestamp.toNumber()]?.avail ?? 0,
-      }
+      const timestampValues = grouped[timestamp.toNumber()]
+      return [
+        timestamp.toNumber(),
+        timestampValues?.ethereum ?? 0,
+        timestampValues?.celestia ?? 0,
+        timestampValues?.avail ?? 0,
+      ]
     })
   },
   ['da-throughput-chart-data'],
@@ -95,11 +96,11 @@ function getMockDaThroughputChartData({
     const celestia = ethereum * Math.max(21 * Math.random(), 1)
     const avail = ethereum * 1.5 * Math.random()
 
-    return {
-      timestamp: timestamp.toNumber(),
-      ethereum: Math.round(ethereum),
-      celestia: Math.round(celestia),
-      avail: Math.round(avail),
-    }
+    return [
+      timestamp.toNumber(),
+      Math.round(ethereum),
+      Math.round(celestia),
+      Math.round(avail),
+    ]
   })
 }
