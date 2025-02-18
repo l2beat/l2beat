@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import type { Clock } from '../../../tools/Clock'
+import type { Clock } from './Clock'
 import { HourlyIndexer } from './HourlyIndexer'
 
 const LAST_HOUR = UnixTime.now().add(-1, 'hours')

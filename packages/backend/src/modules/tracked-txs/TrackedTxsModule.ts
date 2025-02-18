@@ -7,12 +7,12 @@ import type { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
-import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
@@ -38,7 +38,7 @@ export function createTrackedTxsModule(
 
   const indexerService = new IndexerService(peripherals.database)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
   const bigQueryClient = peripherals.getClient(
     BigQueryClient,
     config.trackedTxsConfig.bigQuery,
