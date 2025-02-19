@@ -36,6 +36,11 @@ async function main() {
   )
   const chainsToSupport = Object.keys(escrowsByChain)
 
+  const ps = new ProjectService()
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+
   const providers = new Map(
     chainsToSupport.map((chain) => [chain, getProvider(chain, chains)]),
   )
@@ -43,11 +48,6 @@ async function main() {
     chainsToSupport.map((chain) => [chain, getEtherscanClient(chain, chains)]),
   )
   const coingeckoClient = getCoingeckoClient()
-
-  const ps = new ProjectService()
-  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
-    (p) => p.chainConfig,
-  )
 
   const chainConverter = new ChainConverter(
     chains.map((c) => ({
