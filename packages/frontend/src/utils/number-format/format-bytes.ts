@@ -9,3 +9,14 @@ export function formatBytes(bytes: number): string {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
+
+export function formatBpsToMbps(bps: number): string {
+  if (bps === 0) {
+    return '0 MiB/s'
+  }
+
+  const mib = bps / 1024 ** 2
+  const formattedThroughput = Number(mib.toPrecision(4))
+
+  return `${formattedThroughput} MiB/s`
+}

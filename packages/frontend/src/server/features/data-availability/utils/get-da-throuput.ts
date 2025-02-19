@@ -79,6 +79,7 @@ async function getThroughputData(
         daLayer,
         latestThroughput,
       )
+      console.log(daLayer.id, maxThroughputPerSecond)
 
       const pastDayAvgCapacityUtilization =
         Math.round(

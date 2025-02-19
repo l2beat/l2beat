@@ -4,8 +4,10 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
-import { formatBytes } from '~/utils/number-format/format-bytes'
-import { formatThroughputMBPS } from '~/utils/number-format/format-throughput-mbps'
+import {
+  formatBpsToMbps,
+  formatBytes,
+} from '~/utils/number-format/format-bytes'
 
 const columnHelper = createColumnHelper<DaThroughputEntry>()
 
@@ -34,7 +36,7 @@ export const publicSystemsColumns = [
               value={
                 ctx.row.original.pastDayAvgThroughputPerSecond
                   ? {
-                      value: formatThroughputMBPS(
+                      value: formatBpsToMbps(
                         ctx.row.original.pastDayAvgThroughputPerSecond,
                       ),
                     }
@@ -55,7 +57,7 @@ export const publicSystemsColumns = [
             value={
               ctx.row.original.maxThroughputPerSecond
                 ? {
-                    value: formatThroughputMBPS(
+                    value: formatBpsToMbps(
                       ctx.row.original.maxThroughputPerSecond,
                     ),
                   }
