@@ -4,9 +4,6 @@
   "name": "game7",
   "initialAddresses": [
     "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e", // Bridge
-    "0x404922a9B29b4a5205a6074AbA31A7392BD28944" // USDCGateway
-  ],
-  "names": {
-    "0x404922a9B29b4a5205a6074AbA31A7392BD28944": "USDCGateway"
-  }
+    "0x404922a9B29b4a5205a6074AbA31A7392BD28944" // L1OrbitUSDCGateway
+  ]
 }

@@ -174,13 +174,16 @@ export async function makeConfig(
         .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
       cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
       cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
+      updateMessagesRetentionPeriodDays: env.integer(
+        ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
+        30,
+      ),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
     chainConfig: getChainConfig(env, chains),
     beaconApi: {

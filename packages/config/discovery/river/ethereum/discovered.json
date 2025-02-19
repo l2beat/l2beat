@@ -1,7 +1,7 @@
 {
   "name": "river",
   "chain": "ethereum",
-  "blockNumber": 21065199,
+  "blockNumber": 21872580,
   "configHash": "0x7d45316f4acb54779f32a6b318c37b6e4d5318a2000188857e73238fc8484f05",
   "contracts": [
     {
@@ -29,7 +29,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619798",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619908",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -138,7 +138,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -195,10 +195,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 6994800,
-        "latestOutputIndex": 1942,
-        "nextBlockNumber": 6998400,
-        "nextOutputIndex": 1943,
+        "latestBlockNumber": 11865600,
+        "latestOutputIndex": 3295,
+        "nextBlockNumber": 11869200,
+        "nextOutputIndex": 3296,
         "proposer": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "PROPOSER": "0x1F7D2BCe97a04D2f935C62b53fE04fed373d2d17",
         "startingBlockNumber": 0,
@@ -378,7 +378,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20877025
+          "prevBlockNum": 21872430
         },
         "paused": false,
         "superchainConfig": "0xb6aFBB2A7299e968c9f98f8b518bD89e670a420A",
@@ -539,15 +539,15 @@
         "l2OutputOracle": "0x29E7177837652ca00f05fbD2e8aA867d207B2EF8",
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true,
+          "isSequencerSendingBlobTx": false,
           "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
         "optimismMintableERC20Factory": "0xB5984cCf496a8FC2d921A5a425Bd5F7a740BE89C",
         "optimismPortal": "0x9fDEEa19836A413C04e9672d3d09f482278e863c",
-        "overhead": 2100,
+        "overhead": 0,
         "owner": "0x2876c43B17A5750CBea5E2A3C42718374E21D5a2",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
@@ -557,7 +557,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 0,
+        "scalar": "452312848583266388373324160190187140051835877600158453279134889792719822256",
         "sequencerInbox": "0x9BE0c82d5bA973a9e6861695626D4F9983e80C88",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19905424,

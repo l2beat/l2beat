@@ -74,4 +74,13 @@ export class UpdateMonitorController {
       config,
     })
   }
+
+  async getUpdates() {
+    const entries = await this.db.updateMessage.getAll()
+
+    return entries.map((entry) => ({
+      ...entry,
+      timestamp: entry.timestamp.toNumber(),
+    }))
+  }
 }

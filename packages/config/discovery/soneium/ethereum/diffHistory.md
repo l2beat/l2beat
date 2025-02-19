@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x5cb57c7911bf327988786e5137161a83aeff4fc2
+
+# Diff at Tue, 18 Feb 2025 10:39:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829673
+- current block number: 21872714
+
+## Description
+
+Soneium gas limit halved (checked on l2 block explorer since some op stacks have weird custom gas config).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        30000000
+    }
+```
+
 Generated with discovered.json: 0xb822487d0854a6da7090c4fd28a46b32d8a59a58
 
 # Diff at Wed, 12 Feb 2025 10:00:33 GMT:

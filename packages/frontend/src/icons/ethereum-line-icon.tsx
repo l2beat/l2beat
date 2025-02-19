@@ -8,7 +8,7 @@ export function EthereumLineIcon({ className, ...props }: SvgIconProps) {
       height="6"
       viewBox="0 0 10 6"
       {...props}
-      className={cn('fill-indicator-ethereum', className)}
+      className={cn('fill-chart-ethereum', className)}
     >
       <rect width="10" height="6" />
     </svg>

@@ -16,26 +16,26 @@ export async function getDaThroughput(
 
 export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
 async function getThroughputData(
-  projects: Project<'daLayer' | 'statuses'>[],
+  daLayers: Project<'daLayer' | 'statuses'>[],
   projectsWithDaTracking: Project<'daTrackingConfig'>[],
 ) {
   const db = getDb()
 
   const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
   const values = await db.dataAvailability.getByProjectIdsAndTimeRange(
-    projects.map((p) => p.id),
+    daLayers.map((p) => p.id),
     [lastDay.add(-7, 'days'), lastDay],
   )
   const grouped = groupBy(values, 'projectId')
 
   const data = await Promise.all(
-    projects.map(async (project) => {
-      const lastRecord = grouped[project.id]?.at(-1)
+    daLayers.map(async (daLayer) => {
+      const lastRecord = grouped[daLayer.id]?.at(-1)
       if (!lastRecord) {
         return undefined
       }
 
-      const latestThroughput = project.daLayer.throughput
+      const latestThroughput = daLayer.daLayer.throughput
         ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
         .at(-1)
 
@@ -44,13 +44,15 @@ async function getThroughputData(
         'Project does not have throughput data configured',
       )
 
-      const projectsUsingDa = projectsWithDaTracking.filter(
-        (p) => project.id === p.daTrackingConfig.daLayer,
-      )
+      const projectsUsingThisDa = projectsWithDaTracking.filter((p) => {
+        const projectLayers = p.daTrackingConfig.map((p) => p.daLayer)
+        return projectLayers.some((p) => p === daLayer.id)
+      })
+
       const largestPosterRecord =
-        projectsUsingDa.length > 0
+        projectsUsingThisDa.length > 0
           ? await db.dataAvailability.getLargestPosterByProjectIdsAndTimestamp(
-              projectsUsingDa.map((p) => p.id),
+              projectsUsingThisDa.map((p) => p.id),
               lastRecord.timestamp,
             )
           : undefined
@@ -84,7 +86,7 @@ async function getThroughputData(
         Math.round((pastDayAvgThroughput / maxThroughput) * 100 * 100) / 100
 
       return [
-        project.id,
+        daLayer.id,
         {
           totalSize: lastRecord.totalSize,
           syncedUntil: lastRecord.timestamp,

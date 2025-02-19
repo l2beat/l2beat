@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x68f58372d89d566b404aad407c5f3fb557317c45
+
+# Diff at Tue, 18 Feb 2025 09:51:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21786850
+- current block number: 21872461
+
+## Description
+
+Change descriptions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786850 (main branch discovery), not current.
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default.
+      description:
+-        "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2."
++        "Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default."
+    }
+```
+
 Generated with discovered.json: 0xa8e9417b7e0bc31807c08e40571ed161fafa578a
 
 # Diff at Tue, 04 Feb 2025 12:31:35 GMT:

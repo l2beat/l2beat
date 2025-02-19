@@ -2,84 +2,80 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
+import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatBytes } from '~/server/features/data-availability/throughput/utils/format-bytes'
 import { formatTimestamp } from '~/utils/dates'
+import { getDaDataParams } from './get-da-data-params'
+import { daChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaAbsoluteThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+
+export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const { denominator, unit } = getDaDataParams(data)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
         timestamp,
-        ethereum,
-        celestia,
-        avail,
+        ethereum: ethereum / denominator,
+        celestia: celestia / denominator,
+        avail: avail / denominator,
       }
     })
-  }, [data])
+  }, [data, denominator])
 
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
       <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="ethereum"
           isAnimationActive={false}
-          stroke="var(--color-ethereum)"
+          stroke={daChartMeta.ethereum.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="celestia"
           isAnimationActive={false}
-          stroke="var(--color-celestia)"
+          stroke={daChartMeta.celestia.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="avail"
           isAnimationActive={false}
-          stroke="var(--color-avail)"
+          stroke={daChartMeta.avail.color}
           strokeWidth={2}
           dot={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(chartData)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={3}
-          tick={{
-            width: 100,
-            dy: -10,
-          }}
-          tickFormatter={formatBytes}
-        />
+        {getCommonChartComponents({
+          data: chartData,
+          isLoading,
+          yAxis: {
+            unit: ` ${unit}`,
+            tickCount: 3,
+            tick: {
+              width: 100,
+            },
+          },
+        })}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
       </LineChart>
     </ChartContainer>
   )
@@ -89,12 +85,13 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
-  const { config } = useChart()
+  unit,
+}: TooltipProps<number, string> & { unit: string }) {
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="text-secondary">{formatTimestamp(label)}</div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
@@ -114,12 +111,12 @@ function CustomTooltip({
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {formatBytes(entry.value ?? 0)}
+                {entry.value?.toFixed(2)} {unit}
               </span>
             </div>
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
