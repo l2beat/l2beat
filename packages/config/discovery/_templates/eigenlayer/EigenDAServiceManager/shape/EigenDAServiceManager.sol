@@ -1899,7 +1899,7 @@ interface IEigenDAServiceManager is IServiceManager {
 
     /**
      * @notice This function is used for
-     * - submitting data availabilty certificates,
+     * - submitting data availability certificates,
      * - check that the aggregate signature is valid,
      * - and check whether quorum has been achieved or not.
      */
@@ -2037,7 +2037,7 @@ contract EigenDAServiceManager is EigenDAServiceManagerStorage, ServiceManagerBa
 
     /**
      * @notice This function is used for
-     * - submitting data availabilty certificates,
+     * - submitting data availability certificates,
      * - check that the aggregate signature is valid,
      * - and check whether quorum has been achieved or not.
      */
