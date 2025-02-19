@@ -1,4 +1,5 @@
 import { dirname, posix } from 'path'
+import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
@@ -6,6 +7,7 @@ import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { buildAndSaveModelFiles } from '../modelling/build'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
@@ -18,6 +20,7 @@ export interface SaveDiscoveryResultOptions {
   discoveryFilename?: string
   metaFilename?: string
   saveSources?: boolean
+  templatesFolder: string
 }
 
 export async function saveDiscoveryResult(
@@ -31,22 +34,21 @@ export async function saveDiscoveryResult(
     options.rootFolder ?? posix.join('discovery', config.name, config.chain)
   await mkdirp(root)
 
-  await saveDiscoveredJson(root, results, config, blockNumber, options)
+  const discoveryOutput = toDiscoveryOutput(config, blockNumber, results)
+  await saveDiscoveredJson(discoveryOutput, root, options)
   await saveFlatSources(root, results, logger, options)
   if (options.saveSources) {
     await saveSources(root, results, options)
   }
+  buildAndSaveModelFiles(discoveryOutput, options.templatesFolder, root)
 }
 
 async function saveDiscoveredJson(
+  discoveryOutput: DiscoveryOutput,
   rootPath: string,
-  results: Analysis[],
-  config: DiscoveryConfig,
-  blockNumber: number,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const project = toDiscoveryOutput(config, blockNumber, results)
-  const json = await toPrettyJson(project)
+  const json = await toPrettyJson(discoveryOutput)
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, discoveryFilename), json)
 }

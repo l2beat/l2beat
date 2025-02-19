@@ -54,6 +54,12 @@ export const SingleDiscoveryCommand = command({
     )
 
     const rootFolder = `./cache/single-discovery`
+    const templatesFolder = path.join(
+      configReader.rootPath,
+      'discovery',
+      '_templates',
+    )
+
     await rimraf(rootFolder)
 
     await saveDiscoveryResult(
@@ -61,7 +67,10 @@ export const SingleDiscoveryCommand = command({
       projectConfig,
       blockNumber,
       DiscoveryLogger.CLI,
-      { rootFolder },
+      {
+        rootFolder,
+        templatesFolder,
+      },
     )
 
     logger.info(
