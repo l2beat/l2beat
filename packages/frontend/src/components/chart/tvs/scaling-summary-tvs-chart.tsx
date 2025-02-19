@@ -11,6 +11,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
   OthersFillGradientDef,
   OthersStrokeGradientDef,
@@ -41,14 +42,23 @@ const chartMeta = {
   rollups: {
     label: 'Rollups',
     color: 'hsl(var(--chart-rollups))',
+    indicatorType: {
+      shape: 'square',
+    },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
     color: 'hsl(var(--chart-validiums-optimiums))',
+    indicatorType: {
+      shape: 'square',
+    },
   },
   others: {
     label: 'Others',
     color: 'hsl(var(--chart-others))',
+    indicatorType: {
+      shape: 'square',
+    },
   },
 } satisfies ChartMeta
 
@@ -165,13 +175,9 @@ function CustomTooltip({
                 className="flex items-center justify-between gap-x-1"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className="size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

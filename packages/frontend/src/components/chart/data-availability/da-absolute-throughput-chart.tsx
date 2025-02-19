@@ -13,6 +13,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
@@ -103,9 +104,9 @@ function CustomTooltip({
               className="flex items-center justify-between gap-x-6"
             >
               <div className="flex items-center gap-1">
-                <div
-                  className="size-3 shrink-0 rounded"
-                  style={{ backgroundColor: entry.color }}
+                <ChartDataIndicator
+                  backgroundColor={configEntry.color}
+                  type={configEntry.indicatorType}
                 />
                 <span className="text-secondary">{configEntry.label}</span>
               </div>

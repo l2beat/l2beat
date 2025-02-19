@@ -14,6 +14,7 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
@@ -79,10 +80,16 @@ export function ActivityChart({
         type === 'ValidiumsAndOptimiums'
           ? 'hsl(var(--chart-validiums-optimiums))'
           : `hsl(var(--chart-${type.toLowerCase()}))`,
+      indicatorType: {
+        shape: 'square',
+      },
     },
     ethereum: {
       label: 'Ethereum',
       color: 'hsl(var(--chart-ethereum))',
+      indicatorType: {
+        shape: 'square',
+      },
     },
   } satisfies ChartMeta
 
@@ -187,11 +194,9 @@ function CustomTooltip({
                 className="flex w-full items-center justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
-                  <div
-                    className="relative inline-block size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}
