@@ -119,6 +119,7 @@ import { openzk } from './openzk'
 import { optimism } from './optimism'
 import { optopia } from './optopia'
 import { orderly } from './orderly'
+import { ozean } from './ozean'
 import { palm } from './palm'
 import { pandasea } from './pandasea'
 import { paradex } from './paradex'
@@ -324,6 +325,7 @@ export const layer2s: Layer2[] = [
   optimism,
   optopia,
   orderly,
+  ozean,
   palm,
   pandasea,
   paradex,
