@@ -115,6 +115,8 @@ export interface ZkStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export type Upgradeability = {
@@ -593,7 +595,11 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
-): ProjectDaTrackingConfig | undefined {
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const validatorTimelock =
     templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
@@ -606,28 +612,34 @@ function getDaTracking(
   const inboxDeploymentBlockNumber = 0
 
   return templateVars.usesBlobs
-    ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: validatorTimelock,
-        sequencers: validatorsVTL,
-      }
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: validatorTimelock,
+          sequencers: validatorsVTL,
+        },
+      ]
     : templateVars.celestiaDa
-      ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
-        }
-      : templateVars.availDa
-        ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
-          }
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }

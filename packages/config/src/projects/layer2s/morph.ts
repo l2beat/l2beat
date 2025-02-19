@@ -143,21 +143,23 @@ export const morph: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
-      sequencers: [
-        '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',
-        '0x61F2945d4bc9E40B66a6376d1094a50438f613e2',
-        '0x6aB0E960911b50f6d14f249782ac12EC3E7584A0',
-        '0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65',
-        '0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7',
-        '0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80',
-        '0xC412B4e6399F694CfF21D038d225373Fd6596811',
-      ],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
+        sequencers: [
+          '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',
+          '0x61F2945d4bc9E40B66a6376d1094a50438f613e2',
+          '0x6aB0E960911b50f6d14f249782ac12EC3E7584A0',
+          '0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65',
+          '0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7',
+          '0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80',
+          '0xC412B4e6399F694CfF21D038d225373Fd6596811',
+        ],
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
