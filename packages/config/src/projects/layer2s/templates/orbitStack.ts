@@ -162,6 +162,8 @@ interface OrbitStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -853,6 +855,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 function getDaTracking(
   templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
 ): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(

@@ -175,6 +175,8 @@ interface OpStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -377,6 +379,10 @@ function opStackCommon(
 function getDaTracking(
   templateVars: OpStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{

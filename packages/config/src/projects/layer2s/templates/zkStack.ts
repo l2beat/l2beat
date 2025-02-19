@@ -115,6 +115,8 @@ export interface ZkStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export type Upgradeability = {
@@ -594,6 +596,10 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
 ): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const validatorTimelock =
     templateVars.discovery.getContractDetails('ValidatorTimelock').address
 

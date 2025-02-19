@@ -31,7 +31,6 @@ import type {
   Layer2TxConfig,
   Milestone,
   ProjectContract,
-  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
   ProjectTechnologyChoice,
@@ -91,7 +90,6 @@ export interface PolygonCDKStackConfig {
   isArchived?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   architectureImage?: string
-  daTracking?: ProjectDaTrackingConfig[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -184,7 +182,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               defaultCallsPerMinute: 500,
             }
           : undefined),
-      daTracking: templateVars.daTracking,
       trackedTxs:
         templateVars.daProvider !== undefined
           ? undefined
