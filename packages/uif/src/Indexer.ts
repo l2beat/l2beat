@@ -188,17 +188,24 @@ export abstract class Indexer {
     assert(!this.started, 'Indexer already started')
     this.started = true
     this.logger.info('Starting...')
-    const initializedState = await this.initialize()
 
-    if (!initializedState) {
-      return
+    try {
+      const initializedState = await this.initialize()
+
+      if (!initializedState) {
+        return
+      }
+
+      this.dispatch({
+        type: 'Initialized',
+        ...initializedState,
+        childCount: this.children.length,
+      })
+    } catch (error) {
+      this.logger.critical(`Failed to initialize indexer`, {
+        error: JSON.stringify(error),
+      })
     }
-
-    this.dispatch({
-      type: 'Initialized',
-      ...initializedState,
-      childCount: this.children.length,
-    })
   }
 
   subscribe(child: Indexer): void {
