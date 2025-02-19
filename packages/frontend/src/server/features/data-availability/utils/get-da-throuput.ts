@@ -79,7 +79,6 @@ async function getThroughputData(
         daLayer,
         latestThroughput,
       )
-      console.log(daLayer.id, maxThroughputPerSecond)
 
       const pastDayAvgCapacityUtilization =
         Math.round(
@@ -139,7 +138,7 @@ function getMaxThroughputPerSecond(
   latestThroughput: DaLayerThroughput,
 ) {
   const isEthereum = daLayer.id === ProjectId.ETHEREUM
-  const size = isEthereum ? latestThroughput.target! : latestThroughput.size
+  const size = isEthereum ? latestThroughput.target : latestThroughput.size
   assert(size, 'Project does not have throughput data configured')
   return size / latestThroughput.frequency
 }
