@@ -4,18 +4,20 @@ import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 
-export async function getDaThroughput(
+export async function getDaThroughputTable(
   projects: Project<'daLayer' | 'statuses'>[],
   projectsWithDaTracking: Project<'daTrackingConfig'>[],
 ) {
   if (env.MOCK) {
-    return getMockThroughputData(projects)
+    return getMockDaThroughputTableData(projects)
   }
-  return getThroughputData(projects, projectsWithDaTracking)
+  return getDaThroughputTableData(projects, projectsWithDaTracking)
 }
 
-export type ThroughputData = Awaited<ReturnType<typeof getThroughputData>>
-async function getThroughputData(
+export type ThroughputTableData = Awaited<
+  ReturnType<typeof getDaThroughputTableData>
+>
+async function getDaThroughputTableData(
   daLayers: Project<'daLayer' | 'statuses'>[],
   projectsWithDaTracking: Project<'daTrackingConfig'>[],
 ) {
@@ -103,9 +105,9 @@ async function getThroughputData(
   return Object.fromEntries(data.filter(notUndefined))
 }
 
-function getMockThroughputData(
+function getMockDaThroughputTableData(
   projects: Project<'daLayer' | 'statuses'>[],
-): ThroughputData {
+): ThroughputTableData {
   return Object.fromEntries(
     projects
       .map((project) => {

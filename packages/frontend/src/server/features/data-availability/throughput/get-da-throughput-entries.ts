@@ -3,7 +3,10 @@ import { ProjectId, formatSeconds, notUndefined } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { formatBytes } from '../../../../utils/number-format/format-bytes'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
-import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
+import {
+  type ThroughputTableData,
+  getDaThroughputTable,
+} from '../utils/get-da-throuput'
 import { getThroughputSyncWarning } from './is-throughput-synced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
@@ -29,7 +32,7 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
     return []
   }
 
-  const latestData = await getDaThroughput(
+  const latestData = await getDaThroughputTable(
     daLayersWithDaTracking,
     projectsWithDaTracking,
   )
@@ -59,7 +62,7 @@ export interface DaThroughputEntry extends CommonProjectEntry {
 
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
-  data: ThroughputData[string] | undefined,
+  data: ThroughputTableData[string] | undefined,
 ): DaThroughputEntry | undefined {
   if (!data) return undefined
 

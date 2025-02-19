@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { featureFlags } from '~/consts/feature-flags'
-import { getDaThroughput } from '~/server/features/data-availability/utils/get-da-throuput'
+import { getDaThroughputTable } from '~/server/features/data-availability/utils/get-da-throuput'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { formatBytes } from '~/utils/number-format/format-bytes'
@@ -25,7 +25,7 @@ export async function getDaThroughputSection(
     select: ['daTrackingConfig'],
   })
 
-  const throughputData = await getDaThroughput(
+  const throughputData = await getDaThroughputTable(
     [project],
     projectsWithDaTracking,
   )
