@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import { featureFlags } from '~/consts/feature-flags'
 import { getDaThroughput } from '~/server/features/data-availability/utils/get-da-throuput'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
@@ -7,6 +8,8 @@ import { formatBytes } from '~/utils/number-format/format-bytes'
 export async function getDaThroughputSection(
   project: Project<'daLayer' | 'statuses' | 'display'>,
 ) {
+  if (!featureFlags.daThroughput) return undefined
+
   await api.da.projectChart.prefetch({
     range: 'max',
     projectId: project.id,
