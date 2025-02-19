@@ -1,9 +1,7 @@
 'use client'
 
-import type { DaLayerThroughput } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { round } from 'lodash'
+import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
@@ -19,71 +17,41 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
-import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
 
+export type ProjectChartDataWithConfiguredThroughput = [
+  number,
+  number,
+  number | null,
+  number | null,
+]
 interface Props {
-  data: ProjectDaThroughputDataPoint[] | undefined
+  dataWithConfiguredThroughputs:
+    | ProjectChartDataWithConfiguredThroughput[]
+    | undefined
   projectId: ProjectId
   isLoading: boolean
-  throughput: DaLayerThroughput[]
 }
 export function ProjectDaAbsoluteThroughputChart({
-  data,
+  dataWithConfiguredThroughputs,
   isLoading,
   projectId,
-  throughput,
 }: Props) {
-  const configuredThroughputs = throughput
-    .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
-    .map((throughput, index, arr) => {
-      const untilTimestamp = arr[index + 1]?.sinceTimestamp ?? Infinity
-
-      const batchesPerDay = UnixTime.DAY / throughput.frequency
-      const maxDaily = round(throughput.size * batchesPerDay * 1024, 2)
-      const targetDaily = throughput.target
-        ? round(throughput.target * batchesPerDay * 1024, 2)
-        : null
-
-      return {
-        ...throughput,
-        untilTimestamp,
-        maxDaily,
-        targetDaily,
-      }
-    })
-
-  const dataWithConfig:
-    | [number, number, number | null, number | null][]
-    | undefined = useMemo(() => {
-    return data?.map(([timestamp, value]) => {
-      const config = configuredThroughputs.find(
-        ({ sinceTimestamp, untilTimestamp }) =>
-          timestamp >= sinceTimestamp && timestamp < untilTimestamp,
-      )
-
-      return [
-        timestamp,
-        value ?? 0,
-        config?.targetDaily ?? null,
-        config?.maxDaily ?? null,
-      ]
-    })
-  }, [data, configuredThroughputs])
-
-  const { denominator, unit } = getDaDataParams(dataWithConfig)
+  const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
 
   const chartData = useMemo(() => {
-    return dataWithConfig?.map(([timestamp, value, target, max]) => {
-      return {
-        timestamp,
-        project: value / denominator,
-        projectTarget: target ? target / denominator : null,
-        projectMax: max ? max / denominator : null,
-      }
-    })
-  }, [dataWithConfig, denominator])
+    return dataWithConfiguredThroughputs?.map(
+      ([timestamp, value, target, max]) => {
+        return {
+          timestamp,
+          project: value / denominator,
+          projectTarget: target ? target / denominator : null,
+          projectMax: max ? max / denominator : null,
+        }
+      },
+    )
+  }, [dataWithConfiguredThroughputs, denominator])
 
   const projectChartMeta = getProjectChartMeta(projectId)
 

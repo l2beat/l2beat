@@ -30,7 +30,10 @@ export function ThroughputSection({
         for the selected time period, as well as the maximum possible throughput
         per day.
       </p>
-      <ProjectDaThroughputChart projectId={projectId} throughput={throughput} />
+      <ProjectDaThroughputChart
+        projectId={projectId}
+        configuredThroughput={throughput}
+      />
       <div className="grid grid-cols-1 gap-4 rounded-lg bg-surface-secondary p-6 sm:grid-cols-2 lg:grid-cols-4">
         <Detail label="Past day avg. throughput" value={pastDayAvgThroughput} />
         <Detail
