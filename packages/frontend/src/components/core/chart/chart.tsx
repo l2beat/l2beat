@@ -8,19 +8,23 @@ import type { Milestone } from '@l2beat/config'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/tooltip'
+import {
+  ChartDataIndicator,
+  type ChartDataIndicatorType,
+} from './chart-data-indicator'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
 
 export type ChartMeta = Record<
   string,
-  {
-    label?: React.ReactNode
-    icon?: React.ComponentType
-    color?: string
-    legendLabel?: string
-    dashArray?: string
-  }
+  | {
+      label?: React.ReactNode
+      color?: string
+      legendLabel?: string
+      indicatorType?: ChartDataIndicatorType
+    }
+  | undefined
 >
 
 type ChartContextProps = {
@@ -129,14 +133,12 @@ const ChartLegend = RechartsPrimitive.Legend
 
 function ChartLegendContent({
   className,
-  hideIcon = false,
   payload,
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-    hideIcon?: boolean
     nameKey?: string
     reverse?: boolean
   }) {
@@ -159,44 +161,18 @@ function ChartLegendContent({
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
-        const hasDashedLine = !!itemConfig?.dashArray
 
         return (
           <div
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             key={item.value}
-            className={cn(
-              'flex items-center gap-[3px] [&>svg]:size-3 [&>svg]:text-secondary',
-            )}
+            className={cn('flex items-center gap-[3px] [&>svg]:text-secondary')}
           >
-            {itemConfig?.icon && !hideIcon ? (
-              <itemConfig.icon />
-            ) : hasDashedLine ? (
-              <svg
-                width="20"
-                height="10"
-                className="!size-4"
-                viewBox="0 0 20 10"
-              >
-                <line
-                  x1="0"
-                  y1="5"
-                  x2="20"
-                  y2="5"
-                  stroke={item.color}
-                  strokeWidth={3}
-                  strokeDasharray={itemConfig.dashArray}
-                />
-              </svg>
-            ) : (
-              <div
-                className="size-2.5 shrink-0 rounded-sm"
-                style={{
-                  backgroundColor: itemConfig?.color ?? item.color,
-                }}
-              />
-            )}
-            <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
+            <ChartDataIndicator
+              type={itemConfig?.indicatorType}
+              backgroundColor={itemConfig?.color ?? item.color}
+            />
+            <span className="text-2xs font-medium leading-none tracking-[-0.2px] text-secondary">
               {itemConfig?.legendLabel ?? itemConfig?.label}
             </span>
           </div>

@@ -12,11 +12,12 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
 
@@ -77,7 +78,9 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           stroke={projectChartMeta.projectTarget?.color}
           strokeWidth={2}
-          strokeDasharray={projectChartMeta.projectTarget?.dashArray}
+          strokeDasharray={
+            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+          }
           dot={false}
         />
         <Line
@@ -85,7 +88,9 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           stroke={projectChartMeta.projectMax?.color}
           strokeWidth={2}
-          strokeDasharray={projectChartMeta.projectMax?.dashArray}
+          strokeDasharray={
+            projectChartMeta.projectMax?.indicatorType.strokeDasharray
+          }
           dot={false}
         />
         {getCommonChartComponents({
@@ -113,14 +118,13 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="text-secondary">{formatTimestamp(label)}</div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
-          const hasDashedLine = !!configEntry?.dashArray
 
           return (
             <div
@@ -128,24 +132,10 @@ function CustomTooltip({
               className="flex items-center justify-between gap-x-6"
             >
               <div className="flex items-center gap-1">
-                {hasDashedLine ? (
-                  <svg width="20" height="10" viewBox="0 0 20 10">
-                    <line
-                      x1="0"
-                      y1="5"
-                      x2="20"
-                      y2="5"
-                      stroke={configEntry.color}
-                      strokeWidth={3}
-                      strokeDasharray={configEntry.dashArray}
-                    />
-                  </svg>
-                ) : (
-                  <div
-                    className="size-3 shrink-0 rounded"
-                    style={{ backgroundColor: entry.color }}
-                  />
-                )}
+                <ChartDataIndicator
+                  type={configEntry.indicatorType}
+                  backgroundColor={configEntry.color}
+                />
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
@@ -155,56 +145,56 @@ function CustomTooltip({
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 
-function getProjectChartMeta(projectId: ProjectId): ChartMeta {
+function getProjectChartMeta(projectId: ProjectId) {
   switch (projectId) {
     case 'ethereum':
       return {
         project: {
           label: 'Ethereum',
           color: 'hsl(var(--chart-ethereum))',
-          dashArray: 'solid',
+          indicatorType: { shape: 'line' },
         },
         projectTarget: {
           label: 'Ethereum Target',
           color: 'hsl(var(--chart-ethereum-secondary))',
-          dashArray: '9 3',
+          indicatorType: { shape: 'line', strokeDasharray: '9 3' },
         },
         projectMax: {
           label: 'Ethereum Max',
           color: 'hsl(var(--chart-ethereum))',
-          dashArray: '3 3',
+          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
-      }
+      } satisfies ChartMeta
     case 'celestia':
       return {
         project: {
           label: 'Celestia',
           color: 'hsl(var(--chart-da-celestia))',
-          dashArray: 'solid',
+          indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Celestia Max',
           color: 'hsl(var(--chart-da-celestia))',
-          dashArray: '3 3',
+          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
-      }
+      } satisfies ChartMeta
     case 'avail':
       return {
         project: {
           label: 'Avail',
           color: 'hsl(var(--chart-da-avail))',
-          dashArray: 'solid',
+          indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Avail Max',
           color: 'hsl(var(--chart-da-avail))',
-          dashArray: '3 3',
+          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
-      }
+      } satisfies ChartMeta
     default:
       throw new Error(`Unknown project ID: ${projectId}`)
   }
