@@ -15,6 +15,5 @@ DEV_REMOTE_DB_URL_READ_ONLY=
 ```
 3. Run the script
 ```
-./tvl-restore.sh
+./tvl-restore.sh <FEATURE>
 ```
-4. There is also command in the backend `pnpm tvl-restore`
