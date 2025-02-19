@@ -3,33 +3,28 @@
 import { assert } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import { useMemo } from 'react'
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
+import { daChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaPercentageThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       const total = ethereum + celestia + avail
@@ -51,47 +46,44 @@ export function DaPercentageThroughputChart({
   }, [data])
 
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
+    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
       <BarChart
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
         barCategoryGap={0}
       >
-        <ChartTooltip content={<CustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
           dataKey="ethereum"
           stackId="a"
-          fill="var(--color-ethereum)"
+          fill={daChartMeta.ethereum.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="celestia"
           stackId="a"
-          fill="var(--color-celestia)"
+          fill={daChartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="avail"
           stackId="a"
-          fill="var(--color-avail)"
+          fill={daChartMeta.avail.color}
           isAnimationActive={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(chartData)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          unit="%"
-          domain={[0, 100]}
-          allowDataOverflow
-          mirror
-          tickCount={3}
-          tick={{
-            dy: -10,
-          }}
-        />
+        {getCommonChartComponents({
+          data: chartData,
+          isLoading,
+          yAxis: {
+            unit: '%',
+            // To avoid showing 100.000001% we specify domain manually
+            domain: [0, 100],
+            // And allow data overflow to avoid Y Axis labels being off
+            allowDataOverflow: true,
+          },
+        })}
+        <ChartTooltip content={<CustomTooltip />} />
       </BarChart>
     </ChartContainer>
   )
@@ -102,18 +94,18 @@ function CustomTooltip({
   payload,
   label,
 }: TooltipProps<number, string>) {
-  const { config } = useChart()
+  const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="text-secondary">
         {formatTimestamp(label, { mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="grid">
         {payload.map((entry, index) => {
-          const configEntry = entry.name ? config[entry.name] : undefined
+          const configEntry = entry.name ? meta[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
 
           return (
@@ -135,6 +127,6 @@ function CustomTooltip({
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }

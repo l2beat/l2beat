@@ -24,17 +24,44 @@
     --icon-secondary: 222 8.21% 40.6%;
     --overlay: 231 30.4% 13.5% / 60%;
     --divider: 223 15.9% 82.7%;
-    --indicator-rollups: 321 84.3% 60%;
-    --indicator-validiums-optimiums: 180 50.2% 42.5%;
-    --indicator-others: 44.9 100% 33.5%;
-    --indicator-ethereum: 223 69% 50.6%;
     --link-stroke: 212 100% 86.5%;
     --link: 223 69% 50.6%;
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
+    --chart-rollups: 321 84.3% 60%;
+    --chart-validiums-optimiums: 180 50.2% 42.5%;
+    --chart-others: 44.9 100% 33.5%;
+
+    --chart-tvs-native: 320 100% 63.7%;
+    --chart-tvs-external: 45 100% 51.4%;
+    --chart-tvs-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
+
     --chart-da-celestia: 284 100% 78%;
     --chart-da-avail: 151 90% 48%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 217 77.8% 49.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 223deg 69% 50.6%;
+
+    --chart-rollups-fill-gradient: 302 100% 68.6%;
+    --chart-rollups-stroke-gradient-1: 266 57.7% 52.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 190 73.6% 55.5%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 191 70.8% 37.6%;
+
+    --chart-others-fill-gradient: 53.8 70.9% 56.9%;
+    --chart-others-stroke-gradient-1: 44.9 100% 33.5%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 
   .dark {
@@ -55,17 +82,44 @@
     --icon-secondary: 222 8.21% 40.6%;
     --overlay: 0 0% 0% / 60%;
     --divider: 226 14.3% 28.8%;
-    --indicator-rollups: 284 87.1% 75.7%;
-    --indicator-validiums-optimiums: 190 73.6% 55.5%;
-    --indicator-others: 54.2 70.9% 56.9%;
-    --indicator-ethereum: 212 100% 66.3%;
     --link-stroke: 217 56.3% 18.8%;
     --link: 212 100% 66.3%;
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
-    --chart-celestia: 285 62.7% 52.7%;
-    --chart-avail: 151 90.2% 48%;
+    --chart-rollups: 284 87.1% 75.7%;
+    --chart-validiums-optimiums: 190 73.6% 55.5%;
+    --chart-others: 54.2 70.9% 56.9%;
+
+    --chart-tvs-native: 320 100% 63.7%;
+    --chart-tvs-external: 45 100% 51.4%;
+    --chart-tvs-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
+
+    --chart-da-celestia: 285 62.7% 52.7%;
+    --chart-da-avail: 151 90.2% 48%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 217deg 77.8% 49.4%;
+
+    --chart-rollups-fill-gradient: 313 40.1% 38.6%;
+    --chart-rollups-stroke-gradient-1: 284 87.1% 75.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 193 55.1% 36.7%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 190 73.6% 55.5%;
+
+    --chart-others-fill-gradient: 50.1 59% 40.2%;
+    --chart-others-stroke-gradient-1: 45.1 100% 52%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 }
 
