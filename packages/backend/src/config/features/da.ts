@@ -2,7 +2,7 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
 import { createHash } from 'crypto'
-import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import { ProjectId, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
 
 export async function getDaTrackingConfig(
@@ -97,40 +97,32 @@ async function getDaTrackingProjects(
   ps: ProjectService,
   enabledLayers: { name: string; startingBlock: number }[],
 ) {
-  const projects = (
-    await ps.getProjects({
-      select: ['daTrackingConfig'],
-      whereNot: ['isUpcoming'],
-    })
-  ).filter((p) => {
-    const projectLayers = p.daTrackingConfig.map((c) => c.daLayer)
-    return projectLayers.every((p) => enabledLayers.find((l) => l.name === p))
+  const projects = await ps.getProjects({
+    select: ['daTrackingConfig'],
+    whereNot: ['isUpcoming'],
   })
 
   return projects
-    .map((project) => {
-      const result = []
-      for (const config of project.daTrackingConfig) {
+    .flatMap((project) => {
+      return project.daTrackingConfig.map((config) => {
         const layer = enabledLayers.find((l) => l.name === config.daLayer)
-        assert(layer, `No layer found for ${config.daLayer}`)
+        if (layer === undefined) {
+          return undefined // Layer disabled, do not create config
+        }
 
-        const sinceBlock =
-          layer.startingBlock > config.sinceBlock
-            ? layer.startingBlock
-            : config.sinceBlock
+        const sinceBlock = Math.max(layer.startingBlock, config.sinceBlock)
 
-        result.push({
+        return {
           configurationId: createDaTrackingId(config),
           config: {
             ...config,
             projectId: project.id,
             sinceBlock,
           },
-        })
-      }
-      return result
+        }
+      })
     })
-    .flat()
+    .filter(notUndefined)
 }
 
 function createDaTrackingId(config: ProjectDaTrackingConfig): string {
