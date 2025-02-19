@@ -17,23 +17,26 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/get-comm
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
+import { getDaDataParams } from './get-da-data-params'
 import { daChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
 }
+
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const { denominator, unit } = getDaDataParams(data)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       return {
         timestamp,
-        ethereum,
-        celestia,
-        avail,
+        ethereum: ethereum / denominator,
+        celestia: celestia / denominator,
+        avail: avail / denominator,
       }
     })
-  }, [data])
+  }, [data, denominator])
 
   return (
     <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
@@ -64,13 +67,14 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           data: chartData,
           isLoading,
           yAxis: {
+            unit: ` ${unit}`,
+            tickCount: 3,
             tick: {
               width: 100,
             },
-            tickFormatter: (value: number) => formatBytes(value),
           },
         })}
-        <ChartTooltip content={<CustomTooltip />} />
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
       </LineChart>
     </ChartContainer>
   )
@@ -80,7 +84,8 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
+  unit,
+}: TooltipProps<number, string> & { unit: string }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -105,7 +110,7 @@ function CustomTooltip({
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {formatBytes(entry.value ?? 0)}
+                {entry.value?.toFixed(2)} {unit}
               </span>
             </div>
           )
@@ -113,18 +118,4 @@ function CustomTooltip({
       </div>
     </ChartTooltipWrapper>
   )
-}
-
-function formatBytes(bytes: number) {
-  if (bytes < 1024) {
-    return `${bytes} B`
-  }
-  if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(2)} KB`
-  }
-  if (bytes < 1024 * 1024 * 1024) {
-    return `${(bytes / 1024 / 1024).toFixed(2)} MB`
-  }
-
-  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`
 }

@@ -5,7 +5,7 @@ import {
 import { procedure, router } from '../trpc'
 
 export const daRouter = router({
-  chart: procedure.input(DaThroughputChartParams).query(async ({ input }) => {
-    return getDaThroughputChart(input)
-  }),
+  chart: procedure
+    .input(DaThroughputChartParams)
+    .query(async ({ input }) => getDaThroughputChart(input)),
 })
