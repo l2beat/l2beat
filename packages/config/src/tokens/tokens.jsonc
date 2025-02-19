@@ -5878,6 +5878,36 @@
   ],
   "soneium": [
     {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "YAYAGETH",
       "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
       "category": "ether",
