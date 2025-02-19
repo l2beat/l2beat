@@ -4,7 +4,7 @@ import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
 import { getThroughputSyncWarning } from './is-throughput-synced'
-import { formatBytes } from './utils/formatBytes'
+import { formatBytes } from './utils/format-bytes'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const projectsWithDaTracking = await ps.getProjects({

@@ -20,7 +20,7 @@ import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
-import { formatBytes } from '~/server/features/data-availability/throughput/utils/formatBytes'
+import { formatBytes } from '~/server/features/data-availability/throughput/utils/format-bytes'
 import { formatTimestamp } from '~/utils/dates'
 
 interface Props {
