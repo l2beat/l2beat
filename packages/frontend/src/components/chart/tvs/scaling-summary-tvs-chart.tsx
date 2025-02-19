@@ -123,7 +123,8 @@ export function ScalingSummaryTvsChart({
             isAnimationActive={false}
           />
           {getCommonChartComponents({
-            chartData,
+            data: chartData,
+            isLoading,
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },

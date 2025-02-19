@@ -61,7 +61,8 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           dot={false}
         />
         {getCommonChartComponents({
-          chartData,
+          data: chartData,
+          isLoading,
           yAxis: {
             tick: {
               width: 100,

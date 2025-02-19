@@ -127,7 +127,8 @@ export function ProjectTokenChart({
             isAnimationActive={false}
           />
           {getCommonChartComponents({
-            chartData,
+            data: chartData,
+            isLoading,
             yAxis: {
               tick: {
                 width: 150,

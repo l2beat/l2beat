@@ -117,7 +117,8 @@ export function ActivityChart({
           />
         )}
         {getCommonChartComponents({
-          chartData: data,
+          data,
+          isLoading,
           yAxis: {
             tick: {
               width: 100,

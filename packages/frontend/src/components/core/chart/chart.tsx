@@ -87,15 +87,26 @@ function ChartContainer<T extends { timestamp: number }>({
         )}
         {...props}
       >
-        <RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer
+          className={cn(isLoading && 'pointer-events-none')}
+        >
           {children}
         </RechartsPrimitive.ResponsiveContainer>
-        {isLoading && <ChartLoader />}
+        {isLoading && (
+          <ChartLoader
+            className={cn(
+              'absolute inset-x-0 m-auto select-none opacity-40',
+              'top-[48px] group-has-[.recharts-legend-wrapper]:top-[56px]',
+              'md:top-[68px] md:group-has-[.recharts-legend-wrapper]:top-[76px]',
+              'xl:top-[83px] xl:group-has-[.recharts-legend-wrapper]:top-[91px]',
+            )}
+          />
+        )}
         {!hasData && !isLoading && <ChartNoDataState />}
         {isClient && (
           <Logo
             animated={false}
-            className="pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14"
+            className="pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14 "
           />
         )}
         {!isLoading && milestones && (

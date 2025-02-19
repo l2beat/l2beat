@@ -113,7 +113,8 @@ export function CostsChart({
         />
 
         {getCommonChartComponents({
-          chartData: data,
+          data,
+          isLoading,
           yAxis: {
             tickFormatter: (value: number) =>
               unit === 'gas'

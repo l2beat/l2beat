@@ -145,7 +145,8 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             content={<CustomTooltip syncedUntil={data?.syncedUntil} />}
           />
           {getCommonChartComponents({
-            chartData,
+            data: chartData,
+            isLoading,
             yAxis: {
               unit: ' UOPS',
               tick: {

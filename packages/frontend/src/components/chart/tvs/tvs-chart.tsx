@@ -58,7 +58,8 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           isAnimationActive={false}
         />
         {getCommonChartComponents({
-          chartData: data,
+          data,
+          isLoading,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },

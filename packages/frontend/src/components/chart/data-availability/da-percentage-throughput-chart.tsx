@@ -73,7 +73,8 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
           isAnimationActive={false}
         />
         {getCommonChartComponents({
-          chartData,
+          data: chartData,
+          isLoading,
           yAxis: {
             unit: '%',
             // To avoid showing 100.000001% we specify domain manually

@@ -92,10 +92,11 @@ export function StackedTvsChart({
           isAnimationActive={false}
         />
         {getCommonChartComponents({
-          chartData: data,
+          data,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },
+          isLoading,
         })}
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
       </AreaChart>
