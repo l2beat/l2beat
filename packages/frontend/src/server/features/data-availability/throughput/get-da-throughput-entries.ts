@@ -6,7 +6,7 @@ import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import {
   type ThroughputTableData,
   getDaThroughputTable,
-} from '../utils/get-da-throuput-table'
+} from './get-da-throughput-table'
 import { getThroughputSyncWarning } from './is-throughput-synced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
