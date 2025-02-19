@@ -76,18 +76,13 @@ export class DataAvailabilityRepository extends BaseRepository {
     return row && toRecord(row)
   }
 
-  async deleteByProjectInTimeRange(
-    projectId: string,
-    daLayer: string,
-    fromInclusive: UnixTime,
-    toInclusive: UnixTime,
-  ): Promise<number> {
+  async deleteByProject(projectId: string, daLayer: string): Promise<number> {
+    console.log('DB DELETE', projectId, daLayer)
+
     const result = await this.db
       .deleteFrom('DataAvailability')
       .where('projectId', '=', projectId)
       .where('daLayer', '=', daLayer)
-      .where('timestamp', '>=', fromInclusive.toDate())
-      .where('timestamp', '<=', toInclusive.toDate())
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
