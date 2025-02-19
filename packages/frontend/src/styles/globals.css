@@ -1,5 +1,5 @@
-@import './markdown.css';
-@import './article.css';
+@import "./markdown.css";
+@import "./article.css";
 
 @tailwind base;
 @tailwind components;
@@ -165,8 +165,18 @@
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      black 0px,
+      transparent 100%
+    );
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */
