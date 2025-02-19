@@ -31,5 +31,9 @@ export function createUpdateMonitorRouter(
     ),
   )
 
+  router.get('/discovery/changes', async (ctx) => {
+    ctx.body = await updateMonitorController.getUpdates()
+  })
+
   return router
 }
