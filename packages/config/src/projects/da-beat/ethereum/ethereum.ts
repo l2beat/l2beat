@@ -1,7 +1,11 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { BaseProject } from '../../../types'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../common'
 import { linkByDA } from '../common/linkByDA'
+
+export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
+  new Date('2019-11-14T00:00:00Z'),
+)
 
 export const ethereum: BaseProject = {
   id: ProjectId('ethereum'),
@@ -124,7 +128,8 @@ This method allows ZK rollups to prove that the data used in their validity proo
     },
     throughput: [
       {
-        size: 750, // 0.75 MB
+        size: 786432, // 0.75 MiB
+        target: 393216, // 0.375 MiB
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
@@ -168,5 +173,38 @@ This method allows ZK rollups to prove that the data used in their validity proo
           block, discarding blocks with unavailable data. The rollup state
           validating bridge has access to all the data, as it is posted on chain.`,
     },
+  },
+  chainConfig: {
+    name: 'ethereum',
+    chainId: 1,
+    explorerUrl: 'https://etherscan.io',
+    explorerApi: {
+      url: 'https://api.etherscan.io/api',
+      type: 'etherscan',
+    },
+    blockscoutV2ApiUrl: 'https://eth.blockscout.com/api/v2',
+    // Deployment of the first L2
+    minTimestampForTvl: MIN_TIMESTAMP_FOR_TVL,
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 14353601,
+        version: '3',
+      },
+      {
+        sinceBlock: 12336033,
+        batchSize: 150,
+        address: EthereumAddress('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696'),
+        version: '2',
+      },
+      {
+        sinceBlock: 7929876,
+        batchSize: 150,
+        address: EthereumAddress('0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'),
+        version: '1',
+      },
+    ],
+    coingeckoPlatform: 'ethereum',
   },
 }

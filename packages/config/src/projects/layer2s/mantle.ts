@@ -151,7 +151,7 @@ export const mantle: Layer2 = opStackL2({
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
-    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerUrl: 'https://explorer.mantle.xyz',
     explorerApi: {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
       type: 'etherscan',

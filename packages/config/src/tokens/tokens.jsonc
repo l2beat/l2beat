@@ -2153,6 +2153,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -2893,6 +2908,21 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
     {
       "symbol": "CTSI",
       "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
@@ -5848,6 +5878,66 @@
   ],
   "soneium": [
     {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYAGETH",
+      "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYSTONE",
+      "address": "0x54e86315c03217b76a7466c302245fd10ebef25a",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ASTR",
       "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
       "coingeckoId": "astar",
@@ -5902,6 +5992,40 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    }
+  ],
+  "morph": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }

@@ -165,4 +165,58 @@ describe('projects', () => {
       })
     }
   })
+
+  // TODO: refactor config so there are no more zeroes, resync data
+  describe('daTracking', () => {
+    // Some of the projects have sinceBlock set to zero because they were added at DA Module start
+    const excluded = new Set([
+      'aevo',
+      'ancient',
+      'arbitrum',
+      'base',
+      'bob',
+      'fuel',
+      'hypr',
+      'ink',
+      'karak',
+      'kinto',
+      'kroma',
+      'linea',
+      'loopring',
+      'lyra',
+      'eclipse',
+      'mantapacific',
+      'mint',
+      'morph',
+      'optimism',
+      'orderly',
+      'paradex',
+      'polynomial',
+      'scroll',
+      'sophon',
+      'starknet',
+      'superlumio',
+      'taiko',
+      'b3',
+      'deri',
+      'ham',
+      'rari',
+      'stack',
+    ])
+    // All new projects should have non-zero sinceBlock - it will make sync more efficient
+    describe('every project has non-zero sinceBlock', () => {
+      for (const project of [...layer2s, ...layer3s]) {
+        if (project.config.daTracking) {
+          if (!excluded.has(project.id)) {
+            it(project.id, () => {
+              assert(project.config.daTracking) // type issue
+              for (const config of project.config.daTracking) {
+                expect(config.sinceBlock).toBeGreaterThan(0)
+              }
+            })
+          }
+        }
+      }
+    })
+  })
 })

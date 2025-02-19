@@ -7,7 +7,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -62,6 +61,7 @@ import type {
   TransactionApiConfig,
 } from '../../../types'
 import { Badge, type BadgeId } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -164,9 +164,19 @@ interface OpStackConfigCommon {
     category?: ScalingProjectCategory
   }
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
-  celestiaDaNamespace?: string
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
-  availDaAppId?: string
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -368,7 +378,11 @@ function opStackCommon(
 
 function getDaTracking(
   templateVars: OpStackConfigCommon,
-): ProjectDaTrackingConfig | undefined {
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
@@ -379,35 +393,58 @@ function getDaTracking(
     'SystemConfig',
     'sequencerInbox',
   )
+
+  // TODO: update to deployment block number from discovery
+  const inboxStartBlock =
+    templateVars.discovery.getContractValueOrUndefined<number>(
+      'SystemConfig',
+      'startBlock',
+    ) ?? 0
+
   const sequencer = templateVars.discovery.getContractValue<string>(
     'SystemConfig',
     'batcherHash',
   )
 
   return usesBlobs
-    ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        inbox: sequencerInbox,
-        sequencers: [sequencer],
-      }
-    : templateVars.celestiaDaNamespace
-      ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          namespace: templateVars.celestiaDaNamespace,
-        }
-      : templateVars.availDaAppId
-        ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
-            appId: templateVars.availDaAppId,
-          }
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxStartBlock,
+          inbox: sequencerInbox,
+          sequencers: [sequencer],
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }
 
 export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
-  const common = opStackCommon('layer2', templateVars, ethereum.explorerUrl)
+  const common = opStackCommon(
+    'layer2',
+    templateVars,
+    EXPLORER_URLS['ethereum'],
+  )
   return {
     type: 'layer2',
     ...common,

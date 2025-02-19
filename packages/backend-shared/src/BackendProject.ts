@@ -1,5 +1,6 @@
 import {
   type Bridge,
+  type ChainConfig,
   type Layer2,
   type Layer2FinalityConfig,
   type Layer2LivenessConfig,
@@ -16,17 +17,18 @@ import {
   type TrackedTxConfigEntry,
   createTrackedTxId,
 } from '@l2beat/shared'
-import type {
-  EthereumAddress,
-  ProjectId,
-  Token,
-  TokenBridgedUsing,
-  UnixTime,
+import {
+  assert,
+  type EthereumAddress,
+  type ProjectId,
+  type Token,
+  type TokenBridgedUsing,
+  type UnixTime,
 } from '@l2beat/shared-pure'
-import { chainConverter } from './chainConverter'
 
 export interface BackendProject {
   projectId: ProjectId
+  chain?: ChainConfig
   slug: string
   isArchived?: boolean
   type: 'layer2' | 'bridge' | 'layer3'
@@ -69,11 +71,12 @@ export function toBackendProject(
   throw new Error(`Unknown project type: ${project}`)
 }
 
-export function layer2ToBackendProject(layer2: Layer2): BackendProject {
+function layer2ToBackendProject(layer2: Layer2): BackendProject {
   return {
     projectId: layer2.id,
     slug: layer2.display.slug,
     type: 'layer2',
+    chain: layer2.chainConfig,
     isUpcoming: layer2.isUpcoming,
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map(toProjectEscrow),
@@ -88,11 +91,12 @@ export function layer2ToBackendProject(layer2: Layer2): BackendProject {
   }
 }
 
-export function bridgeToBackendProject(bridge: Bridge): BackendProject {
+function bridgeToBackendProject(bridge: Bridge): BackendProject {
   return {
     projectId: bridge.id,
     slug: bridge.display.slug,
     type: 'bridge',
+    chain: bridge.chainConfig,
     escrows: bridge.config.escrows.map(toProjectEscrow),
     associatedTokens: bridge.config.associatedTokens,
   }
@@ -181,11 +185,12 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-export function layer3ToBackendProject(layer3: Layer3): BackendProject {
+function layer3ToBackendProject(layer3: Layer3): BackendProject {
   return {
     projectId: layer3.id,
     slug: layer3.display.slug,
     type: 'layer3',
+    chain: layer3.chainConfig,
     isUpcoming: layer3.isUpcoming,
     escrows: layer3.config.escrows.map(toProjectEscrow),
     associatedTokens: layer3.config.associatedTokens,
@@ -193,7 +198,8 @@ export function layer3ToBackendProject(layer3: Layer3): BackendProject {
 }
 
 function toProjectEscrow(escrow: ProjectEscrow): BackendProjectEscrow {
-  const chainId = chainConverter.toChainId(escrow.chain)
+  const chainId = escrow.chainId
+  assert(chainId, 'Missing escrow chainId')
 
   const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
 

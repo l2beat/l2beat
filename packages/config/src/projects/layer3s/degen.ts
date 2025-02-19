@@ -50,7 +50,7 @@ export const degen: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'degen',
     chainId: 666666666,
-    explorerUrl: 'https://explorer.degen.tips/',
+    explorerUrl: 'https://explorer.degen.tips',
     explorerApi: {
       url: 'https://explorer.degen.tips/api',
       type: 'blockscout',

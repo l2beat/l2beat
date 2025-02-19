@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5e2c6954f87214ba78c26393ca387a5acd70a012
+
+# Diff at Tue, 18 Feb 2025 10:03:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21845212
+- current block number: 21872538
+
+## Description
+
+rangeVkeyCommitment, aggregationVkey changed, rollupConfigHash and verifier unchanged.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x008deea30a17c13a2fa7200fa0609b668b1673a3401a3eb7121c2a4692409736"
++        "0x004f113a89b4e8d162197047643c9d710b42a30e7da7052703855d5c4716a81d"
+      values.rangeVkeyCommitment:
+-        "0x72f2aa2345210ed43468b3084102ca212311b456482025bd0fed05294d3d6138"
++        "0x1dfce47807a22e50513d7a9a130af9de3d1844625b54c4815e46ca5437eb9ba9"
+    }
+```
+
 Generated with discovered.json: 0x37f149776ddb33fd322cc1d4505433966f005a4d
 
 # Diff at Fri, 14 Feb 2025 14:11:54 GMT:
