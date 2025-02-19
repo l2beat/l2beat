@@ -138,7 +138,7 @@
           "handler": {
             "type": "event",
             "select": ["selector", "roleId"],
-            "set": { "event": "TargetFunctionRoleUpdated" },
+            "add": { "event": "TargetFunctionRoleUpdated" },
             "groupBy": "target"
           }
         },
@@ -172,7 +172,16 @@
           "handler": {
             "type": "event",
             "select": ["account", "delay", "since", "newMember"],
-            "set": { "event": "RoleGranted" },
+            "add": { "event": "RoleGranted" },
+            "groupBy": "roleId"
+          }
+        },
+        "RolesRevoked": {
+          "description": "List of roles revoked from accounts.",
+          "handler": {
+            "type": "event",
+            "select": ["roleId", "account"],
+            "add": { "event": "RoleRevoked" },
             "groupBy": "roleId"
           }
         }
