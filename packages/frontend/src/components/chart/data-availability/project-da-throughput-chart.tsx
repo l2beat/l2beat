@@ -15,8 +15,8 @@ import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughp
 
 export function ProjectDaThroughputChart({
   projectId,
-  configuredThroughput,
-}: { projectId: ProjectId; configuredThroughput: DaLayerThroughput[] }) {
+  configuredThroughputs,
+}: { projectId: ProjectId; configuredThroughputs: DaLayerThroughput[] }) {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
@@ -30,7 +30,7 @@ export function ProjectDaThroughputChart({
 
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data,
-    configuredThroughput,
+    configuredThroughputs,
   )
 
   return (
@@ -58,9 +58,9 @@ export function ProjectDaThroughputChart({
 
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputDataPoint[] | undefined,
-  configuredThroughput: DaLayerThroughput[],
+  configuredThroughputs: DaLayerThroughput[],
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
-  const processedConfigs = configuredThroughput
+  const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .map((config, i, arr) => {
       const batchesPerDay = UnixTime.DAY / config.frequency

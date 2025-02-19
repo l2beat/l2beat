@@ -33,7 +33,7 @@ export function ThroughputSection({
       </p>
       <ProjectDaThroughputChart
         projectId={projectId}
-        configuredThroughput={throughput}
+        configuredThroughputs={throughput}
       />
       <div
         className={cn(

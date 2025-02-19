@@ -49,10 +49,7 @@ const getCachedProjectDaThroughputChartData = cache(
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => {
-      return [
-        timestamp.toNumber(),
-        grouped[timestamp.toNumber()]?.[projectId] ?? 0,
-      ]
+      return [timestamp.toNumber(), grouped[timestamp.toNumber()] ?? 0]
     })
   },
   ['project-da-throughput-chart-data'],
@@ -62,16 +59,12 @@ const getCachedProjectDaThroughputChartData = cache(
 function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
-  const result: Record<number, Record<string, number>> = {}
+  const result: Record<number, number> = {}
   for (const record of records) {
     const timestamp = record.timestamp.toNumber()
-    const projectId = record.projectId
     const value = record.totalSize
     if (!result[timestamp]) {
-      result[timestamp] = {}
-    }
-    if (!result[timestamp][projectId]) {
-      result[timestamp][projectId] = Number(value)
+      result[timestamp] = Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
