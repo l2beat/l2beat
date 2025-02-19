@@ -89,8 +89,12 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
     )
   }
 
-  override removeData(_: RemovalConfiguration[]): Promise<void> {
-    throw new Error('This indexer should not invalidate')
+  override removeData(removal: RemovalConfiguration[]): Promise<void> {
+    this.logger.warn('This indexer should not invalidate', {
+      configurations: removal.map((r) => r.id),
+    })
+
+    return Promise.resolve()
   }
 
   get daLayer() {
