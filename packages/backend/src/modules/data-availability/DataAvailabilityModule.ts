@@ -75,7 +75,6 @@ export function initDataAvailabilityModule(
       db: database,
       serializeConfiguration: (value: DaTrackingConfig) =>
         JSON.stringify(value),
-      configurationsTrimmingDisabled: true,
     })
     daIndexers.push(indexer)
   }
