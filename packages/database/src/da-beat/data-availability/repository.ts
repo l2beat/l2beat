@@ -77,8 +77,6 @@ export class DataAvailabilityRepository extends BaseRepository {
   }
 
   async deleteByProject(projectId: string, daLayer: string): Promise<number> {
-    console.log('DB DELETE', projectId, daLayer)
-
     const result = await this.db
       .deleteFrom('DataAvailability')
       .where('projectId', '=', projectId)
