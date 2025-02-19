@@ -11,7 +11,9 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   })
 
   const uniqueDaLayersInProjects = new Set(
-    projectsWithDaTracking.map((l) => l.daTrackingConfig.daLayer),
+    projectsWithDaTracking.flatMap((l) =>
+      l.daTrackingConfig.map((d) => d.daLayer),
+    ),
   )
 
   const daLayers = await ps.getProjects({
