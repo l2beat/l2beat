@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 8535340,
-  "configHash": "0x2eba1a52a15586bfcc096251a49d3de08bc976fb8a487d9f452bc167664b29b6",
+  "configHash": "0x74e495bb0e052214e46f97b0e6535b58b11ac4cfac2c0d2961db91cd32a2f454",
   "contracts": [
     {
       "name": "DeployerWhitelist",
@@ -16,8 +16,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -43,8 +43,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["messageNonce"],
@@ -83,8 +83,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"],
@@ -120,8 +120,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -152,8 +152,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -185,8 +185,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -213,8 +213,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -239,8 +239,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -270,8 +270,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "ignoreInWatchMode": [
@@ -323,8 +323,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -350,8 +350,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -369,19 +369,21 @@
     {
       "name": "L2ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
+      "template": "opstack/Layer2/L2ProxyAdmin",
       "sourceHashes": [
         "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
         "0xe6aa6a8aed0808dc2e9355191d252aeab0c0891c1f81e4c9e51bc206fee6740c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Administration contract for other contract proxies.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000002"
@@ -471,8 +473,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -503,8 +505,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -535,8 +537,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -561,8 +563,8 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x4200000000000000000000000000000000000018",
-          "via": []
+          "to": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
         }
       ],
       "sinceTimestamp": 1730748360,
@@ -645,7 +647,97 @@
       "name": "OPToken",
       "address": "0x4200000000000000000000000000000000000042"
     },
-    { "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944" },
+    {
+      "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000002",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000007",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x420000000000000000000000000000000000000F",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000010",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000011",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000012",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000013",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000014",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000015",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000016",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000017",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000018",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000019",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x420000000000000000000000000000000000001A",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000020",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x4200000000000000000000000000000000000021",
+          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x4200000000000000000000000000000000000018"
+        }
+      ]
+    },
     { "address": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA" },
     { "address": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6" },
     { "address": "0xa356d5D10aA8A842B31530dE71EA86c0760CB2C2" },
@@ -1204,5 +1296,7 @@
       "function version() view returns (string)"
     ]
   },
-  "usedTemplates": {}
+  "usedTemplates": {
+    "opstack/Layer2/L2ProxyAdmin": "0x967722cf238985813947d9d3f21578ee5bc6d6af28471cc0ee046a29fdda0d9d"
+  }
 }
