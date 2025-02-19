@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
-import { formatBytes } from '~/server/features/data-availability/throughput/utils/format-bytes'
 import { getDaThroughput } from '~/server/features/data-availability/utils/get-da-throuput'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 
 export async function getDaThroughputSection(
   project: Project<'daLayer' | 'statuses' | 'display'>,
