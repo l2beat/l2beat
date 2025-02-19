@@ -563,7 +563,7 @@ function orbitStackCommon(
         Badge.Stack.Orbit,
         Badge.VM.EVM,
         daBadge,
-        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoSequencing] : []),
+        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoPreconfs] : []),
       ],
       templateVars.additionalBadges ?? [],
     ),
