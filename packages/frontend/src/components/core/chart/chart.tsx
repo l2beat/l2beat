@@ -92,7 +92,7 @@ function ChartContainer<T extends { timestamp: number }>({
         >
           {children}
         </RechartsPrimitive.ResponsiveContainer>
-        {isLoading && (
+        {(!!isLoading || !isClient) && (
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',

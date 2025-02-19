@@ -1,22 +1,14 @@
-export function formatThroughputMBPS(
-  bytes: number,
-  frequencySeconds: number,
-): string {
+export function formatThroughputMBPS(bytes: number): string {
   if (bytes === 0) {
-    return '0 MB/s'
+    return '0 MiB/s'
   }
 
-  if (frequencySeconds === 0) {
-    throw new Error('Frequency cannot be zero.')
-  }
-
-  const mb = bytes / 1_000
-  const throughput = mb / frequencySeconds
+  const mib = bytes / 1024 ** 2
 
   // Round to at most 4 digits
-  const numDigitsBeforeDecimal = Math.floor(Math.log10(throughput)) + 1
+  const numDigitsBeforeDecimal = Math.floor(Math.log10(mib)) + 1
   const decimalPlaces = Math.max(0, 3 - numDigitsBeforeDecimal)
-  const formattedThroughput = Number(throughput.toFixed(decimalPlaces))
+  const formattedThroughput = Number(mib.toFixed(decimalPlaces))
 
-  return `${formattedThroughput} MB/s`
+  return `${formattedThroughput} MiB/s`
 }

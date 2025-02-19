@@ -158,13 +158,10 @@ export function getCommonDaProjectStats(
     ...durationOfStorage,
   })
 
-  if (project.header.throughput) {
+  if (project.header.maxThroughputPerSecond) {
     stats.push({
       title: 'Max throughput',
-      value: formatThroughputMBPS(
-        project.header.throughput.size,
-        project.header.throughput.frequency,
-      ),
+      value: formatThroughputMBPS(project.header.maxThroughputPerSecond),
     })
   }
 
