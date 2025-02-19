@@ -1255,7 +1255,7 @@ contract AVSDirectory is
     *******************************************************************************/
 
     /**
-     * @dev Initializes the immutable addresses of the strategy mananger, delegationManager, slasher, 
+     * @dev Initializes the immutable addresses of the strategy manager, delegationManager, slasher, 
      * and eigenpodManager contracts
      */
     constructor(IDelegationManager _delegation) AVSDirectoryStorage(_delegation) {
