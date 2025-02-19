@@ -102,30 +102,35 @@ async function getDaTrackingProjects(
       select: ['daTrackingConfig'],
       whereNot: ['isUpcoming'],
     })
-  ).filter((p) =>
-    enabledLayers.find((l) => l.name === p.daTrackingConfig.daLayer),
-  )
-
-  return projects.map((project) => {
-    const layer = enabledLayers.find(
-      (l) => l.name === project.daTrackingConfig.daLayer,
-    )
-    assert(layer, `No layer found for ${project.daTrackingConfig.daLayer}`)
-
-    const sinceBlock =
-      layer.startingBlock > project.daTrackingConfig.sinceBlock
-        ? layer.startingBlock
-        : project.daTrackingConfig.sinceBlock
-
-    return {
-      configurationId: createDaTrackingId(project.daTrackingConfig),
-      config: {
-        ...project.daTrackingConfig,
-        projectId: project.id,
-        sinceBlock,
-      },
-    }
+  ).filter((p) => {
+    const projectLayers = p.daTrackingConfig.map((c) => c.daLayer)
+    return projectLayers.every((p) => enabledLayers.find((l) => l.name === p))
   })
+
+  return projects
+    .map((project) => {
+      const result = []
+      for (const config of project.daTrackingConfig) {
+        const layer = enabledLayers.find((l) => l.name === config.daLayer)
+        assert(layer, `No layer found for ${config.daLayer}`)
+
+        const sinceBlock =
+          layer.startingBlock > config.sinceBlock
+            ? layer.startingBlock
+            : config.sinceBlock
+
+        result.push({
+          configurationId: createDaTrackingId(config),
+          config: {
+            ...config,
+            projectId: project.id,
+            sinceBlock,
+          },
+        })
+      }
+      return result
+    })
+    .flat()
 }
 
 function createDaTrackingId(config: ProjectDaTrackingConfig): string {
