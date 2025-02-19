@@ -4,6 +4,7 @@
     "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "ConduitMultisig2",
     "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "ConduitMultisig3",
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
