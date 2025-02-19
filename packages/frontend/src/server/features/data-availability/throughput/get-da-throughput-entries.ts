@@ -86,10 +86,10 @@ function getDaThroughputEntry(
     largestPoster: data.largestPoster
       ? {
           ...data.largestPoster,
-          totalPosted: formatBytes(Number(data.largestPoster.totalPosted)),
+          totalPosted: formatBytes(data.largestPoster.totalPosted),
         }
       : undefined,
-    totalPosted: formatBytes(Number(data.totalPosted)),
+    totalPosted: formatBytes(data.totalPosted),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,

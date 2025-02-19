@@ -73,7 +73,7 @@ const getCachedDaThroughputTableData = cache(
                     100 *
                     100,
                 ) / 100,
-              totalPosted: largestPosterRecord.totalSize,
+              totalPosted: Number(largestPosterRecord.totalSize),
             }
           : undefined
 
@@ -92,13 +92,13 @@ const getCachedDaThroughputTableData = cache(
         return [
           daLayer.id,
           {
-            totalSize: lastRecord.totalSize,
+            totalSize: Number(lastRecord.totalSize),
             syncedUntil: lastRecord.timestamp,
             pastDayAvgThroughput,
             largestPoster,
             maxThroughput,
             pastDayAvgCapacityUtilization,
-            totalPosted: lastRecord.totalSize,
+            totalPosted: Number(lastRecord.totalSize),
           },
         ] as const
       }),
@@ -119,7 +119,7 @@ function getMockDaThroughputTableData(
         return [
           project.id,
           {
-            totalSize: 101312n,
+            totalSize: 101312,
             syncedUntil:
               project.id === 'avail'
                 ? UnixTime.now().toStartOf('day').add(-2, 'days')
@@ -129,10 +129,10 @@ function getMockDaThroughputTableData(
             largestPoster: {
               name: 'Base',
               percentage: 12,
-              totalPosted: 123123n,
+              totalPosted: 123123,
             },
             pastDayAvgCapacityUtilization: 24,
-            totalPosted: 20312412n,
+            totalPosted: 20312412,
           },
         ] as const
       })

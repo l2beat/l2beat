@@ -41,6 +41,6 @@ export async function getDaThroughputSection(
     largestPoster: projectData.largestPoster
       ? `${projectData.largestPoster.name} (${projectData.largestPoster.percentage}%)`
       : undefined,
-    totalPosted: formatBytes(Number(projectData.totalPosted)),
+    totalPosted: formatBytes(projectData.totalPosted),
   }
 }
