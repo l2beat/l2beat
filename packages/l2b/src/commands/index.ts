@@ -22,6 +22,7 @@ import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
+import { OPConfigs } from './opConfigs'
 
 export function getSubcommands() {
   return [
@@ -40,6 +41,7 @@ export function getSubcommands() {
     FlattenAndDiff,
     GetTokenMinters,
     MatchFlat,
+    OPConfigs,
     Powerdiff,
     RefreshDiscovery,
     SolFmt,
