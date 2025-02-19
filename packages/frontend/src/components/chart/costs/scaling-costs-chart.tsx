@@ -81,28 +81,28 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         blobsEth,
         blobsUsd,
       ]) => {
-        const calldata =
-          unit === 'usd'
-            ? calldataUsd
-            : unit === 'eth'
-              ? calldataEth
-              : calldataGas
-        const blobs =
-          unit === 'usd' ? blobsUsd : unit === 'eth' ? blobsEth : blobsGas
-        const compute =
-          unit === 'usd' ? computeUsd : unit === 'eth' ? computeEth : computeGas
-        const overhead =
-          unit === 'usd'
-            ? overheadUsd
-            : unit === 'eth'
-              ? overheadEth
-              : overheadGas
         return {
           timestamp,
-          calldata,
-          blobs,
-          compute,
-          overhead,
+          calldata:
+            unit === 'usd'
+              ? calldataUsd
+              : unit === 'eth'
+                ? calldataEth
+                : calldataGas,
+          blobs:
+            unit === 'usd' ? blobsUsd : unit === 'eth' ? blobsEth : blobsGas,
+          compute:
+            unit === 'usd'
+              ? computeUsd
+              : unit === 'eth'
+                ? computeEth
+                : computeGas,
+          overhead:
+            unit === 'usd'
+              ? overheadUsd
+              : unit === 'eth'
+                ? overheadEth
+                : overheadGas,
         }
       },
     )
