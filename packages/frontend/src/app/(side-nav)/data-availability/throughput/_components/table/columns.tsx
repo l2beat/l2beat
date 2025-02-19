@@ -49,7 +49,7 @@ export const publicSystemsColumns = [
         },
       }),
       columnHelper.display({
-        header: 'MAX',
+        header: 'SUSTAINED MAX',
         cell: (ctx) => (
           <TableValueCell
             value={

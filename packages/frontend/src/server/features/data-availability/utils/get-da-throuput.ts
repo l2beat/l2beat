@@ -1,5 +1,5 @@
-import type { Project } from '@l2beat/config'
-import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import type { DaLayerThroughput, Project } from '@l2beat/config'
+import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -75,8 +75,10 @@ async function getThroughputData(
 
       const pastDayAvgThroughputPerSecond =
         Number(lastRecord.totalSize) / UnixTime.DAY
-      const maxThroughputPerSecond =
-        latestThroughput.size / latestThroughput.frequency
+      const maxThroughputPerSecond = getMaxThroughputPerSecond(
+        daLayer,
+        latestThroughput,
+      )
 
       const pastDayAvgCapacityUtilization =
         Math.round(
@@ -129,4 +131,14 @@ function getMockThroughputData(
       })
       .filter(notUndefined),
   )
+}
+
+function getMaxThroughputPerSecond(
+  daLayer: Project<'daLayer' | 'statuses'>,
+  latestThroughput: DaLayerThroughput,
+) {
+  const isEthereum = daLayer.id === ProjectId.ETHEREUM
+  const size = isEthereum ? latestThroughput.target! : latestThroughput.size
+  assert(size, 'Project does not have throughput data configured')
+  return size / latestThroughput.frequency
 }
