@@ -202,7 +202,7 @@ export abstract class Indexer {
         childCount: this.children.length,
       })
     } catch (error) {
-      this.logger.critical(`Failed to initialize indexer`, {
+      this.logger.error(`Failed to initialize indexer`, {
         error: JSON.stringify(error),
       })
     }
