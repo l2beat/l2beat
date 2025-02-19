@@ -130,7 +130,7 @@ export async function getDaProjectEntry(
     selected?.daBridge.risks ?? { isNoBridge: true },
   )
 
-  const sections = getRegularDaProjectSections({
+  const sections = await getRegularDaProjectSections({
     layer: layer,
     bridge: selected,
     isVerified: true,
@@ -224,7 +224,7 @@ export async function getEthereumDaProjectEntry(
 
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
-  const sections = getEthereumDaProjectSections({
+  const sections = await getEthereumDaProjectSections({
     layer,
     bridge,
     isVerified: true,
