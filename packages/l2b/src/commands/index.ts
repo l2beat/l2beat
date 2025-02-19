@@ -15,6 +15,7 @@ import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
@@ -22,7 +23,6 @@ import { SolFmt } from './SolFmt'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
-import { OPConfigs } from './opConfigs'
 
 export function getSubcommands() {
   return [
