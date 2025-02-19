@@ -17,6 +17,7 @@ export const fluent: Layer2 = upcomingL2({
       websites: ['https://fluent.xyz/'],
       documentation: ['https://docs.fluent.xyz/'],
       repositories: ['https://github.com/fluentlabs-xyz'],
+      explorers: ['https://blockscout.dev.gblend.xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',
         'https://linkedin.com/company/fluentxyz',
