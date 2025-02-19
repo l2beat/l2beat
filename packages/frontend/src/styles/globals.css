@@ -1,5 +1,5 @@
-@import "./markdown.css";
-@import "./article.css";
+@import './markdown.css';
+@import './article.css';
 
 @tailwind base;
 @tailwind components;
@@ -33,6 +33,7 @@
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
+    --chart-ethereum-secondary: 202 69% 50.6%;
     --chart-da-celestia: 284 100% 78%;
     --chart-da-avail: 151 90% 48%;
   }
@@ -64,6 +65,7 @@
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
+    --chart-ethereum-secondary: 202 69% 50.6%;
     --chart-celestia: 285 62.7% 52.7%;
     --chart-avail: 151 90.2% 48%;
   }
@@ -163,18 +165,8 @@
   }
 
   .chart-fade-out-to-bottom {
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      black 0px,
-      transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, black 0px, transparent 100%);
   }
 
   /* For Webkit-based browsers (Chrome, Safari and Opera) */

@@ -4,6 +4,7 @@ import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
 import { getThroughputSyncWarning } from './is-throughput-synced'
+import { formatBytes } from './utils/formatBytes'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const projectsWithDaTracking = await ps.getProjects({
@@ -91,16 +92,4 @@ function getDaThroughputEntry(
       : undefined,
     isSynced: !notSyncedStatus,
   }
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes === 0) {
-    return '0 B'
-  }
-
-  const k = 1000
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }

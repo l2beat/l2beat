@@ -16,6 +16,7 @@ export type ChartConfig = Record<
   {
     label?: React.ReactNode
     icon?: React.ComponentType
+    dashArray?: string
   } & (
     | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
@@ -163,6 +164,7 @@ const ChartLegendContent = React.forwardRef<
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
+          const hasDashedLine = !!itemConfig?.dashArray
 
           return (
             <div
@@ -174,12 +176,27 @@ const ChartLegendContent = React.forwardRef<
             >
               {itemConfig?.icon && !hideIcon ? (
                 <itemConfig.icon />
+              ) : hasDashedLine ? (
+                <svg
+                  width="20"
+                  height="10"
+                  className="!size-4"
+                  viewBox="0 0 20 10"
+                >
+                  <line
+                    x1="0"
+                    y1="5"
+                    x2="20"
+                    y2="5"
+                    stroke={item.color}
+                    strokeWidth={3}
+                    strokeDasharray={itemConfig.dashArray}
+                  />
+                </svg>
               ) : (
                 <div
                   className="size-2.5 shrink-0 rounded-sm"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
+                  style={{ backgroundColor: item.color }}
                 />
               )}
               <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">

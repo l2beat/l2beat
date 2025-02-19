@@ -20,6 +20,7 @@ import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
+import { formatBytes } from '~/server/features/data-availability/throughput/utils/formatBytes'
 import { formatTimestamp } from '~/utils/dates'
 
 interface Props {
@@ -63,8 +64,8 @@ export function ProjectDaAbsoluteThroughputChart({
       return {
         timestamp,
         project: value ?? 0,
-        projectTarget: config?.targetDaily ?? 0,
-        projectMax: config?.maxDaily ?? 0,
+        projectTarget: config?.targetDaily ?? null,
+        projectMax: config?.maxDaily ?? null,
       }
     })
   }, [data, processedThroughputs])
@@ -92,7 +93,7 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           stroke={projectChartConfig.projectTarget?.color}
           strokeWidth={2}
-          strokeDasharray="9 3"
+          strokeDasharray={projectChartConfig.projectTarget?.dashArray}
           dot={false}
         />
         <Line
@@ -100,7 +101,7 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           stroke={projectChartConfig.projectMax?.color}
           strokeWidth={2}
-          strokeDasharray="3 3"
+          strokeDasharray={projectChartConfig.projectMax?.dashArray}
           dot={false}
         />
         <CartesianGrid vertical={false} horizontal={true} />
@@ -137,16 +138,33 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
+          const hasDashedLine = !!configEntry?.dashArray
+
           return (
             <div
               key={index}
               className="flex items-center justify-between gap-x-6"
             >
               <div className="flex items-center gap-1">
-                <div
-                  className="size-3 shrink-0 rounded"
-                  style={{ backgroundColor: entry.color }}
-                />
+                {hasDashedLine ? (
+                  <svg width="20" height="10" viewBox="0 0 20 10">
+                    <line
+                      x1="0"
+                      y1="5"
+                      x2="20"
+                      y2="5"
+                      stroke={configEntry.color}
+                      strokeWidth={3}
+                      strokeDasharray={configEntry.dashArray}
+                    />
+                  </svg>
+                ) : (
+                  <div
+                    className="size-3 shrink-0 rounded"
+                    style={{ backgroundColor: entry.color }}
+                  />
+                )}
+
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
@@ -160,35 +178,24 @@ function CustomTooltip({
   )
 }
 
-function formatBytes(bytes: number) {
-  if (bytes < 1024) {
-    return `${bytes} B`
-  }
-  if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(2)} KB`
-  }
-  if (bytes < 1024 * 1024 * 1024) {
-    return `${(bytes / 1024 / 1024).toFixed(2)} MB`
-  }
-
-  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`
-}
-
 function getProjectChartConfig(projectId: ProjectId): ChartConfig {
   switch (projectId) {
     case 'ethereum':
       return {
         project: {
-          label: 'Ethereum (blobs)',
+          label: 'Ethereum',
           color: 'hsl(var(--chart-ethereum))',
+          dashArray: 'solid',
         },
         projectTarget: {
-          label: 'Ethereum (blobs) Target',
-          color: 'hsl(var(--chart-ethereum))',
+          label: 'Ethereum Target',
+          color: 'hsl(var(--chart-ethereum-secondary))',
+          dashArray: '9 3',
         },
         projectMax: {
-          label: 'Ethereum (blobs) Max',
+          label: 'Ethereum Max',
           color: 'hsl(var(--chart-ethereum))',
+          dashArray: '3 3',
         },
       }
     case 'celestia':
@@ -196,10 +203,12 @@ function getProjectChartConfig(projectId: ProjectId): ChartConfig {
         project: {
           label: 'Celestia',
           color: 'hsl(var(--chart-da-celestia))',
+          dashArray: 'solid',
         },
         projectMax: {
           label: 'Celestia Max',
           color: 'hsl(var(--chart-da-celestia))',
+          dashArray: '3 3',
         },
       }
     case 'avail':
@@ -207,10 +216,12 @@ function getProjectChartConfig(projectId: ProjectId): ChartConfig {
         project: {
           label: 'Avail',
           color: 'hsl(var(--chart-da-avail))',
+          dashArray: 'solid',
         },
         projectMax: {
           label: 'Avail Max',
           color: 'hsl(var(--chart-da-avail))',
+          dashArray: '3 3',
         },
       }
     default:
