@@ -1763,7 +1763,7 @@
       "constructor(tuple(uint256 chainId, tuple(address inbox, address upgradeExecutor) location)[] _upgradeExecutors, address _l1ArbitrumTimelock, uint256 _l1TimelockMinDelay)",
       "error EmptyActionBytesData(bytes[])",
       "error ParamLengthMismatch(uint256 len1, uint256 len2)",
-      "error UpgadeExecDoesntExist(uint256 chainId)",
+      "error UpgradeExecDoesntExist(uint256 chainId)",
       "error UpgradeExecAlreadyExists(uint256 chindId)",
       "error ZeroAddress()",
       "function DEFAULT_GOV_ACTION_CALLDATA() view returns (bytes)",
