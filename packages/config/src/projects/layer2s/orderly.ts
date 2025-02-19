@@ -120,7 +120,10 @@ export const orderly: Layer2 = opStackL2({
   ],
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABYTLU4hLOUU=',
+  },
   isNodeAvailable: false,
   milestones: [
     {

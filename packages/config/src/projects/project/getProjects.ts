@@ -89,6 +89,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
     proofVerification: p.stateValidation?.proofVerification,
+    chainConfig: p.chainConfig,
     milestones: p.milestones,
     daTrackingConfig: p.config.daTracking,
     // tags
@@ -167,6 +168,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
     isBridge: true,

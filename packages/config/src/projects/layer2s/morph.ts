@@ -146,6 +146,7 @@ export const morph: Layer2 = {
     daTracking: {
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
+      sinceBlock: 0, // Edge Case: config added @ DA Module start
       inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
       sequencers: [
         '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',

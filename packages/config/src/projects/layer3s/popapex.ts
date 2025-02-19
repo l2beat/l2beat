@@ -52,7 +52,6 @@ export const popapex: Layer3 = orbitStackL3({
     defaultCallsPerMinute: 5000,
     adjustCount: { type: 'SubtractOne' },
   },
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Proof of Play Apex halts for two days',

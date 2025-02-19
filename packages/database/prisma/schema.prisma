@@ -74,12 +74,12 @@ model BlockTimestamp {
 }
 
 model DataAvailability {
-  projectId String   @db.VarChar(255)
-  daLayer   String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
+  daLayer   String   @db.VarChar(255)
+  projectId String   @db.VarChar(255)
   totalSize BigInt
 
-  @@id([projectId, timestamp])
+  @@id([timestamp, daLayer, projectId])
 }
 
 model DiscoveryCache {

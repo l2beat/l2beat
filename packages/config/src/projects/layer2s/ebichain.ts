@@ -40,6 +40,5 @@ export const ebichain: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

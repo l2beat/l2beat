@@ -11,7 +11,6 @@ import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
@@ -144,7 +143,12 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain
-  const etherscanUrl = getExplorerUrl(chain)
+  // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
+  // weird logic would exist here. Instead you'd already have the items you want
+  // to display already pre-processed in config
+  const explorerUrl = item.url
+    ? new URL(item.url).origin
+    : 'https://etherscan.io'
 
   const getAddress = (opts: {
     address: EthereumAddress
@@ -157,7 +161,7 @@ function makeTechnologyContract(
       name: name,
       address: opts.address.toString(),
       verificationStatus: toVerificationStatus(!isUnverified),
-      href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
+      href: `${explorerUrl}/address/${opts.address.toString()}#code`,
     }
   }
 

@@ -1,3 +1,248 @@
+Generated with discovered.json: 0xe008f5e14b6b2b231c02b0f951d0f0592d55a602
+
+# Diff at Tue, 18 Feb 2025 10:00:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21844254
+- current block number: 21872493
+
+## Description
+
+Token ProxyAdmin owner transfered to a timelock.
+
+## Watched changes
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      values.owner:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      issuedPermissions.0.via.1:
++        {"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}
+      issuedPermissions.0.via.0.address:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      issuedPermissions.0.via.0.delay:
++        86400
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"0xeA4F1fE4928f1f83a450899C068bcd455BaF4798","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1","via":[{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]}
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94","via":[{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb","via":[{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.17.from:
+-        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
++        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      receivedPermissions.16.from:
+-        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
++        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+      receivedPermissions.16.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      receivedPermissions.15.from:
+-        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      receivedPermissions.15.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.15.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.14.from:
+-        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
++        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      receivedPermissions.13.from:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      receivedPermissions.13.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      receivedPermissions.12.from:
+-        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
++        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
+      receivedPermissions.12.via:
+-        [{"address":"0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"}]
+      receivedPermissions.11.from:
+-        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      receivedPermissions.11.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.10.from:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      receivedPermissions.10.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.10.via.1:
++        {"address":"0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F","delay":86400}
+      receivedPermissions.10.via.0.address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      receivedPermissions.9.from:
+-        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      receivedPermissions.9.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0xca35F8338054739D138884685e08b39EE2217794"
+      receivedPermissions.8.from:
+-        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
++        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
+      receivedPermissions.8.via.0.address:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+      receivedPermissions.7.from:
+-        "0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+      receivedPermissions.7.via:
++        [{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      receivedPermissions.6.description:
++        "set and change address mappings."
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.5.via:
+-        [{"address":"0x0cac2B1a172ac24012621101634DD5ABD6399ADd"}]
+      receivedPermissions.5.description:
++        "propose transactions."
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.4.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      receivedPermissions.4.description:
++        "manage all access control roles."
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x23754725a49c0f003C349A6C7869fF8609a7CEfd"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.3.via.0.address:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.3.via.0.delay:
++        86400
+      receivedPermissions.3.description:
++        "manage all access control roles."
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.2.via:
+-        [{"address":"0x47D58744D8515d9aaEAf961bc03625118bd91EBb"}]
+      receivedPermissions.2.description:
++        "execute transactions that are ready."
+      receivedPermissions.1.from:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
++        "cancel queued transactions."
+      receivedPermissions.1.via:
+-        [{"address":"0xca35F8338054739D138884685e08b39EE2217794"}]
+      directlyReceivedPermissions.2.from:
+-        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
++        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      directlyReceivedPermissions.2.delay:
++        86400
+      directlyReceivedPermissions.1.from:
+-        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
++        "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
+      directlyReceivedPermissions.0.from:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+## Source code changes
+
+```diff
+.../mantle/ethereum/.flat/TimelockController.sol   | 1011 ++++++++++++++++++++
+ 1 file changed, 1011 insertions(+)
+```
+
+Generated with discovered.json: 0x40fd0aceb1b11ae0548b3afd418d36b0ee0edb01
+
+# Diff at Fri, 14 Feb 2025 10:58:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21680644
+- current block number: 21844254
+
+## Description
+
+MS signer changes.
+
+## Watched changes
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      values.$members.6:
+-        "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A"
++        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+      values.$members.4:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+      values.$members.3:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+      values.$members.2:
+-        "0x422f2df38B96395A7E61d4C02aDd4413bb79A9FC"
++        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x7735cDcc85E63A7684C29652DbE8B845e0b4635A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ 2 files changed, 988 deletions(-)
+```
+
 Generated with discovered.json: 0xe4d8cddd84a7321c4a3efc6354505347078a6f1b
 
 # Diff at Mon, 10 Feb 2025 19:04:14 GMT:

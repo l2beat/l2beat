@@ -1375,6 +1375,10 @@
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
     },
     {
+      "symbol": "PEPU",
+      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+    },
+    {
       "symbol": "PERP",
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
@@ -2149,6 +2153,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -2325,20 +2344,6 @@
       "supply": "zero", // the collateral is WBTC on arbitrum
       "coingeckoId": "solv-btc",
       "source": "native"
-    },
-    {
-      "symbol": "TAP",
-      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
-      "source": "native",
-      "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
     },
     {
       "symbol": "ETHFI",
@@ -2886,6 +2891,12 @@
       "source": "canonical",
       "supply": "zero",
       "coingeckoId": "forta"
+    },
+    {
+      "symbol": "G7",
+      "address": "0xf18e4466f26b4ca55bbab890b314a54976e45b17",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "nova": [
@@ -2897,6 +2908,21 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
     {
       "symbol": "CTSI",
       "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
@@ -5852,6 +5878,36 @@
   ],
   "soneium": [
     {
+      "symbol": "YAYAGETH",
+      "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYSTONE",
+      "address": "0x54e86315c03217b76a7466c302245fd10ebef25a",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ASTR",
       "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
       "coingeckoId": "astar",
@@ -5897,6 +5953,15 @@
           }
         ]
       }
+    }
+  ],
+  "unichain": [
+    {
+      "symbol": "USDC",
+      "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

@@ -1,3 +1,32 @@
+Generated with discovered.json: 0xa814fe49ec0a14569130c31289d3d151ba9955ae
+
+# Diff at Fri, 14 Feb 2025 13:29:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 20922333
+- current block number: 21845003
+
+## Description
+
+WorldIdIdentityManager2 admin, owner change (EOA).
+
+## Watched changes
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      issuedPermissions.0.to:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.$admin:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.owner:
+-        "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
++        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
 Generated with discovered.json: 0xef2da8c67b30bebcbc8f5c89fe5d1ad362505ddb
 
 # Diff at Mon, 20 Jan 2025 11:10:21 GMT:

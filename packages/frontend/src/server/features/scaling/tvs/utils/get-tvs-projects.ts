@@ -1,13 +1,10 @@
 import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  bridgeToBackendProject,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
   toBackendProject,
 } from '@l2beat/backend-shared'
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type { Bridge, ChainConfig, Layer2, Layer3 } from '@l2beat/config'
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -33,9 +30,12 @@ export interface TvsProject extends BaseProject {
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
-export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
+export function toTvsProject(
+  project: Layer2 | Layer3 | Bridge,
+  chains: ChainConfig[],
+): TvsProject {
   const backendProject = toBackendProject(project)
-  const amounts = getTvlAmountsConfigForProject(backendProject)
+  const amounts = getTvlAmountsConfigForProject(backendProject, chains)
 
   const minTimestamp = amounts
     .map((x) => x.sinceTimestamp)
@@ -62,14 +62,11 @@ export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
 }
 
 const projects = [...layer2s, ...layer3s, ...bridges]
-const backendProjects = [
-  ...layer2s.map(layer2ToBackendProject),
-  ...layer3s.map(layer3ToBackendProject),
-  ...bridges.map(bridgeToBackendProject),
-]
+const backendProjects = projects.map(toBackendProject)
 
 export function getTvsProjects(
   filter: (p: Layer2 | Layer3 | Bridge) => boolean,
+  chains: ChainConfig[],
   previewRecategorisation?: boolean,
 ): TvsProject[] {
   const filteredProjects = projects
@@ -79,7 +76,7 @@ export function getTvsProjects(
       (project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.projectId),
     )
 
-  const tvsAmounts = getTvlAmountsConfig(backendProjects)
+  const tvsAmounts = getTvlAmountsConfig(backendProjects, chains)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvsAmounts,
     (e) => e.project,

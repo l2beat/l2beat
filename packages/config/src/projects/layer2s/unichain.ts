@@ -61,6 +61,7 @@ export const unichain: Layer2 = opStackL2({
     },
   ),
   rpcUrl: 'https://mainnet.unichain.org',
+  associatedTokens: ['UNI'],
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,
@@ -69,13 +70,15 @@ export const unichain: Layer2 = opStackL2({
     lag: 0,
     stateUpdate: 'disabled',
   },
+  nonTemplateExcludedTokens: ['USDC'],
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),
   isNodeAvailable: true,
   chainConfig: {
     name: 'unichain',
     chainId: 130,
-    explorerUrl: 'https://uniscan.xyz/',
+    coingeckoPlatform: 'unichain',
+    explorerUrl: 'https://uniscan.xyz',
     explorerApi: {
       url: 'https://api.uniscan.xyz/api',
       type: 'etherscan',
@@ -88,6 +91,7 @@ export const unichain: Layer2 = opStackL2({
         version: '3',
       },
     ],
+    minTimestampForTvl: genesisTimestamp,
   },
   milestones: [
     {

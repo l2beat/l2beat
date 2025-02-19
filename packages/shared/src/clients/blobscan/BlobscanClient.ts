@@ -77,6 +77,8 @@ export class BlobScanClient extends ClientCore {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
+      /* Blobscan API has longer response times */
+      timeout: this.$.timeout ?? 30_000,
       ...options,
     })
   }

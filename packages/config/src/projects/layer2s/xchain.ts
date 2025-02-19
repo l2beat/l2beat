@@ -35,7 +35,7 @@ export const xchain: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'xchain',
     chainId: 94524,
-    explorerUrl: 'https://xchain-explorer.idex.io/',
+    explorerUrl: 'https://xchain-explorer.idex.io',
     explorerApi: {
       url: 'https://xchain-explorer.idex.io/api',
       type: 'blockscout',
@@ -49,7 +49,6 @@ export const xchain: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

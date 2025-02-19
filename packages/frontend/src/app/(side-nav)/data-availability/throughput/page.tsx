@@ -1,23 +1,29 @@
 import { CountBadge } from '~/components/badge/count-badge'
+import { DaThroughputChart } from '~/components/chart/data-availability/da-throughput-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import { api } from '~/trpc/server'
 import { PublicSystemInfo } from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throuput-public-table'
 
 export default async function Page() {
-  const entries = await getDaThroughputEntries()
+  const [entries] = await Promise.all([
+    getDaThroughputEntries(),
+    api.da.chart.prefetch({ range: '30d' }),
+  ])
   const { publicSystems } = groupBySystem(entries)
 
   return (
     <div>
-      <MainPageHeader>DABEAT Throughput</MainPageHeader>
+      <MainPageHeader>Throughput</MainPageHeader>
       {/* 
         Negative margin is there to make the tabs align with the side nav
         Padding from directory tabs can not be removed because it is needed
@@ -31,6 +37,8 @@ export default async function Page() {
             </DirectoryTabsTrigger>
           </DirectoryTabsList>
           <DirectoryTabsContent value="public">
+            <DaThroughputChart />
+            <HorizontalSeparator className="my-5" />
             <PublicSystemInfo />
             <DaThroughputPublicTable items={publicSystems} />
           </DirectoryTabsContent>
