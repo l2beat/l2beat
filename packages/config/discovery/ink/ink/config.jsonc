@@ -11,7 +11,6 @@
     "0x4200000000000000000000000000000000000017",
     "0x4200000000000000000000000000000000000015",
     "0x420000000000000000000000000000000000000F",
-    "0x4200000000000000000000000000000000000002",
     "0x4200000000000000000000000000000000000013",
     "0x4200000000000000000000000000000000000019",
     "0x420000000000000000000000000000000000001A",
@@ -33,13 +32,9 @@
     "0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
     "0x4200000000000000000000000000000000000014": "L2ERC721Bridge",
     "0x4200000000000000000000000000000000000020": "SchemaRegistry",
-    "0x4200000000000000000000000000000000000021": "EAS",
-    "0x4200000000000000000000000000000000000002": "DeployerWhitelist"
+    "0x4200000000000000000000000000000000000021": "EAS"
   },
   "overrides": {
-    "DeployerWhitelist": {
-      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
-    },
     "L1FeeVault": {
       "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
       "ignoreMethods": ["totalProcessed"]

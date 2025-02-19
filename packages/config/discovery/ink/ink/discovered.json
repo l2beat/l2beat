@@ -2,30 +2,8 @@
   "name": "ink",
   "chain": "ink",
   "blockNumber": 6479985,
-  "configHash": "0x6f4edf3aa8da432647406356f440a843dceb60d049e59ce19e37379590bd02aa",
+  "configHash": "0xf5735864583a9a1c17898e13c152536fb97ae341f972b04b79dc9bc115e1a4f8",
   "contracts": [
-    {
-      "name": "DeployerWhitelist",
-      "address": "0x4200000000000000000000000000000000000002",
-      "unverified": true,
-      "proxyType": "EIP1967 proxy",
-      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        }
-      ],
-      "sinceTimestamp": 1733498412,
-      "values": {
-        "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0
-      },
-      "derivedName": ""
-    },
     {
       "name": "L2CrossDomainMessenger",
       "address": "0x4200000000000000000000000000000000000007",
@@ -362,10 +340,6 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000002"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007"
         },
         {
@@ -565,11 +539,6 @@
       "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000002",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
-        },
         {
           "permission": "upgrade",
           "from": "0x4200000000000000000000000000000000000007",

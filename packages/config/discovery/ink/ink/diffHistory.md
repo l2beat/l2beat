@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2ca96290ec153ddf4ad17952fa08626f9e725b4c
+Generated with discovered.json: 0xfffd299683732e1ce7512abfd484edcdadf1ebb8
 
-# Diff at Wed, 19 Feb 2025 15:47:17 GMT:
+# Diff at Wed, 19 Feb 2025 16:26:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 6479985
@@ -10,12 +10,6 @@ Generated with discovered.json: 0x2ca96290ec153ddf4ad17952fa08626f9e725b4c
 Provide description of changes. This section will be preserved.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract DeployerWhitelist (0x4200000000000000000000000000000000000002)
-    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
-```
 
 ```diff
 +   Status: CREATED

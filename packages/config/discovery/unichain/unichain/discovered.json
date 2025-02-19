@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 8535340,
-  "configHash": "0x74e495bb0e052214e46f97b0e6535b58b11ac4cfac2c0d2961db91cd32a2f454",
+  "configHash": "0x439c9d2a55e6cfde8d8b458dcffd7d065b28c59ec139852ff46d4b45c0fbce53",
   "contracts": [
     {
       "name": "DeployerWhitelist",
@@ -648,6 +648,7 @@
       "address": "0x4200000000000000000000000000000000000042"
     },
     {
+      "name": "UnichainProxyAdminOwner_L2Alias",
       "address": "0x7E6c183F538abb8572F5cd17109C617b994d6944",
       "receivedPermissions": [
         {
