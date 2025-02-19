@@ -62,6 +62,7 @@
   "conwai": true,
   "coti": true,
   "creator": true,
+  "creatorchain": true,
   "cronoszkevm": true,
   "cyber": true,
   "cyber-da-cyberDABridge": true,

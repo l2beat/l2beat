@@ -31,6 +31,7 @@ import { celo } from './celo'
 import { corn } from './corn'
 import { coti } from './coti'
 import { creator } from './creator'
+import { creatorchain } from './creatorchain'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
@@ -236,6 +237,7 @@ export const layer2s: Layer2[] = [
   coti,
   corn,
   creator,
+  creatorchain,
   cronoszkevm,
   dbk,
   honeypot,
