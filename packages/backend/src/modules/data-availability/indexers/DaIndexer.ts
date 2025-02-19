@@ -107,26 +107,22 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
 
     for (const c of configurations) {
       const configuration = this.configMapping.get(c.id)
+
       assert(configuration, `${c.id}: No configuration found`)
 
-      const deletedRecords =
-        await this.$.db.dataAvailability.deleteByProjectInTimeRange(
-          configuration.projectId,
-          configuration.daLayer,
-          new UnixTime(c.from),
-          new UnixTime(c.to),
-        )
+      const deletedRecords = await this.$.db.dataAvailability.deleteByProject(
+        configuration.projectId,
+        configuration.daLayer,
+      )
 
-      if (deletedRecords > 0) {
-        this.logger.info('Deleted DA records for configuration', {
-          id: c.id,
-          project: configuration.projectId,
-          daLayer: configuration.daLayer,
-          from: c.from,
-          to: c.to,
-          deletedRecords,
-        })
-      }
+      this.logger.info('Deleted DA records for configuration', {
+        id: c.id,
+        project: configuration.projectId.toString(),
+        daLayer: configuration.daLayer,
+        from: c.from,
+        to: c.to,
+        deletedRecords,
+      })
     }
   }
 
