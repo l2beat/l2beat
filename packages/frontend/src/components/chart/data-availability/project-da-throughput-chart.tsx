@@ -3,11 +3,11 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
+import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
-import { ChartTimeRange } from '../core/chart-time-range'
-import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
-import { getChartRange } from '../core/utils/get-chart-range-from-columns'
 import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughput-chart'
 
 export function ProjectDaThroughputChart({
@@ -21,14 +21,14 @@ export function ProjectDaThroughputChart({
   })
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => [timestamp])),
+    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
     [data],
   )
 
   return (
     <div>
       <div className="mt-4 flex justify-between">
-        <ChartTimeRange range={chartRange} isLoading={isLoading} />
+        <ChartTimeRange range={chartRange} />
         <ChartTimeRangeControls
           name="Range"
           value={range}

@@ -19,6 +19,7 @@ export type ChartMeta = Record<
     icon?: React.ComponentType
     color?: string
     legendLabel?: string
+    dashArray?: string
   }
 >
 
@@ -158,6 +159,8 @@ function ChartLegendContent({
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+        const hasDashedLine = !!itemConfig?.dashArray
+
         return (
           <div
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -168,6 +171,23 @@ function ChartLegendContent({
           >
             {itemConfig?.icon && !hideIcon ? (
               <itemConfig.icon />
+            ) : hasDashedLine ? (
+              <svg
+                width="20"
+                height="10"
+                className="!size-4"
+                viewBox="0 0 20 10"
+              >
+                <line
+                  x1="0"
+                  y1="5"
+                  x2="20"
+                  y2="5"
+                  stroke={item.color}
+                  strokeWidth={3}
+                  strokeDasharray={itemConfig.dashArray}
+                />
+              </svg>
             ) : (
               <div
                 className="size-2.5 shrink-0 rounded-sm"

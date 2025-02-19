@@ -16,7 +16,6 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
-import { formatBytes } from '~/server/features/data-availability/throughput/utils/format-bytes'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
 import { daChartMeta } from './meta'
