@@ -43,7 +43,7 @@ describe(formatBytes.name, () => {
 
   describe('forced unit formatting', () => {
     it('force bytes', () => {
-      expect(formatBytes(1024, { unit: 'B' })).toEqual('1024 B')
+      expect(formatBytes(1024, { unit: 'B' })).toEqual('1024.00 B')
       expect(formatBytes(1024 * 1024, { unit: 'B', decimals: 0 })).toEqual(
         '1048576 B',
       )
