@@ -973,12 +973,12 @@ export interface DaConsensusAlgorithm {
 export interface DaLayerThroughput {
   /**
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   size: number
   /**
    * Desired size of blob data per block. Should be less than or equal to size.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   target?: number
   /**

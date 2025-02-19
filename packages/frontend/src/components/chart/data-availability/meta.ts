@@ -7,11 +7,11 @@ export const daChartMeta = {
     color: 'hsl(var(--chart-ethereum))',
   },
   celestia: {
-    label: 'Celestia (fake)',
+    label: 'Celestia',
     color: 'hsl(var(--chart-da-celestia))',
   },
   avail: {
-    label: 'Avail (fake)',
+    label: 'Avail',
     color: 'hsl(var(--chart-da-avail))',
   },
 } as const satisfies ChartMeta
