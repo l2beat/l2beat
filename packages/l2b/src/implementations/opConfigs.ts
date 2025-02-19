@@ -26,7 +26,7 @@ export async function getBlockTime(
 
   const uniqueBlockTimes = [...new Set(blockTimes)]
   if (uniqueBlockTimes.length > 1) {
-    throw new Error('Block times are not constatnt, found')
+    throw new Error('Block times are not constant')
   }
   return uniqueBlockTimes[0]
 }
