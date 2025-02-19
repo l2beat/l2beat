@@ -157,7 +157,12 @@ interface OpStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
   display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
@@ -302,7 +307,10 @@ function opStackCommon(
     chainConfig: templateVars.chainConfig,
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
       transactionApi:
         templateVars.transactionApi ??
         (templateVars.rpcUrl !== undefined

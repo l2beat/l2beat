@@ -55,7 +55,7 @@ export const geist: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['GHST'],
-  gasTokens: ['GHST'],
+  gasTokens: { tracked: ['GHST'] },
   discovery,
   customDa: AnytrustDAC({ discovery }),
 })
