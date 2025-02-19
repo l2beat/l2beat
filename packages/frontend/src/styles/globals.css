@@ -33,7 +33,7 @@
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
-    --chart-ethereum-secondary: 202 69% 50.6%;
+    --chart-ethereum-secondary: 212 100% 66.3%;
     --chart-da-celestia: 284 100% 78%;
     --chart-da-avail: 151 90% 48%;
   }
@@ -65,7 +65,7 @@
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
-    --chart-ethereum-secondary: 202 69% 50.6%;
+    --chart-ethereum-secondary: 223 69% 50.6%;
     --chart-celestia: 285 62.7% 52.7%;
     --chart-avail: 151 90.2% 48%;
   }
