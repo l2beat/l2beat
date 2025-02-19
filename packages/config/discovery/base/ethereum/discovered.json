@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 21844112,
+  "blockNumber": 21880945,
   "configHash": "0x3855a444095ee0170c66fd3a1dcfc263d23ed595059a777ffc9187a5972aaef7",
   "contracts": [
     {
@@ -195,6 +195,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b",
           "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc",
           "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E",
           "0xe32868ec7762650DdE723e945D638A05900974F4",
@@ -213,8 +214,8 @@
         "domainSeparator": "0xf3474c66ee08325b410c3f442c878d01ec97dd55a415a307e9d7d2ea24336289",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 13 (23%)",
-        "nonce": 53,
+        "multisigThreshold": "3 of 14 (21%)",
+        "nonce": 54,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -373,7 +374,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2551,
+        "gameCount": 2673,
         "gameImpls": [
           "0xc5f3677c3C56DB4031ab005a3C9c98e1B79D438e",
           "0xF62c15e2F99d4869A925B8F57076cD85335832A2",
@@ -443,8 +444,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 21844081
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 21880940
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -935,7 +936,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293000177",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293002678",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1265,7 +1266,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20425013000000000000",
+        "totalSupply": "20345013000000000000",
         "version": "1.1.0"
       },
       "derivedName": "DelayedWETH"
@@ -1571,6 +1572,7 @@
     { "address": "0x07dC0893cAfbF810e3E72505041f2865726Fd073" },
     { "address": "0x0aA384EB2fedD2741277A0f72909A0d7275575D7" },
     { "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e" },
+    { "address": "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b" },
     { "address": "0x26c72586FB396325F58718152FEFA94E93Cf177b" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1" },
