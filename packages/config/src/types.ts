@@ -137,7 +137,7 @@ export interface ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
-  daTracking?: ProjectDaTrackingConfig
+  daTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface ScalingProjectUpgradeability {
@@ -823,7 +823,7 @@ export interface BaseProject {
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
-  daTrackingConfig?: ProjectDaTrackingConfig
+  daTrackingConfig?: ProjectDaTrackingConfig[]
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge

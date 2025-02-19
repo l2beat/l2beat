@@ -376,7 +376,7 @@ function opStackCommon(
 
 function getDaTracking(
   templateVars: OpStackConfigCommon,
-): ProjectDaTrackingConfig | undefined {
+): ProjectDaTrackingConfig[] | undefined {
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValue<{
@@ -401,29 +401,35 @@ function getDaTracking(
   )
 
   return usesBlobs
-    ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxStartBlock,
-        inbox: sequencerInbox,
-        sequencers: [sequencer],
-      }
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxStartBlock,
+          inbox: sequencerInbox,
+          sequencers: [sequencer],
+        },
+      ]
     : templateVars.celestiaDa
-      ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
-        }
-      : templateVars.availDa
-        ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
-          }
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }
 
