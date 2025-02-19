@@ -32,13 +32,9 @@ export class DataAvailabilityRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
-      .where((eb) =>
-        eb.and([
-          eb('daLayer', '=', daLayer),
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<=', to.toDate()),
-        ]),
-      )
+      .where('daLayer', '=', daLayer)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
       .execute()
     return rows.map(toRecord)
   }
@@ -78,6 +74,22 @@ export class DataAvailabilityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row && toRecord(row)
+  }
+
+  async deleteByProjectInTimeRange(
+    projectId: string,
+    daLayer: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('DataAvailability')
+      .where('projectId', '=', projectId)
+      .where('daLayer', '=', daLayer)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // Test only

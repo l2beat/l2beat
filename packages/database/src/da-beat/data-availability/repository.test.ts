@@ -203,6 +203,40 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
+  describe(DataAvailabilityRepository.prototype.deleteByProjectInTimeRange
+    .name, () => {
+    it('should delete records within the specified time range', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
+        record('project-a', 'layer-b', START.add(1, 'days'), 200n),
+        record('project-b', 'layer-a', START.add(1, 'days'), 200n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 300n),
+        record('project-a', 'layer-a', START.add(3, 'days'), 400n),
+      ])
+
+      const fromInclusive = START.add(1, 'days')
+      const toInclusive = START.add(2, 'days')
+
+      const deletedCount = await repository.deleteByProjectInTimeRange(
+        'project-a',
+        'layer-a',
+        fromInclusive,
+        toInclusive,
+      )
+
+      expect(deletedCount).toEqual(2)
+
+      const remainingRecords = await repository.getAll()
+      expect(remainingRecords).toEqualUnsorted([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-b', START.add(1, 'days'), 200n),
+        record('project-b', 'layer-a', START.add(1, 'days'), 200n),
+        record('project-a', 'layer-a', START.add(3, 'days'), 400n),
+      ])
+    })
+  })
+
   describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([
