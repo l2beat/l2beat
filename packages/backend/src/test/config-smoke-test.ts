@@ -1,3 +1,4 @@
+import { expect } from 'earl'
 import { getConfig } from '../config'
 
 /**
@@ -9,5 +10,13 @@ describe('Configuration Smoke Test', () => {
   it('should load configuration without throwing', async () => {
     // no expect on purpose - getConfig will throw with a meaningful error message
     await getConfig()
+  })
+
+  it('should throw if configuration missing env variable', async () => {
+    process.env.COINGECKO_API_KEY = undefined
+    // no expect on purpose - getConfig will throw with a meaningful error message
+    await expect(getConfig()).toBeRejectedWith(
+      'Error: Missing environment variable: COINGECKO_API_KEY',
+    )
   })
 })
