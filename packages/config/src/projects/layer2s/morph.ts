@@ -180,6 +180,21 @@ export const morph: Layer2 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
+  chainConfig: {
+    name: 'morph',
+    chainId: 2818,
+    // explorerUrl: 'https://explorer.morphl2.io/', // needed?
+    coingeckoPlatform: 'morph-l2',
+    minTimestampForTvl: new UnixTime(1729490400), // morph block 0
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 3654913,
+        version: '3',
+      },
+    ],
+  },
   technology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_SNARKS,

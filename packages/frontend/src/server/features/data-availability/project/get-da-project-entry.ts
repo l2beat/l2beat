@@ -1,9 +1,4 @@
-import type {
-  DaLayer,
-  DaLayerThroughput,
-  Project,
-  UsedInProject,
-} from '@l2beat/config'
+import type { DaLayer, Project, UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -61,7 +56,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: number | undefined
     durationStorage: number | undefined
-    throughput: DaLayerThroughput | undefined
+    maxThroughputPerSecond: number | undefined
     usedIn: UsedInProject[]
   }
   sections: ProjectDetailsSection[]
@@ -73,7 +68,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: number | undefined
     durationStorage: number
-    throughput: DaLayerThroughput | undefined
+    maxThroughputPerSecond: number | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -177,7 +172,9 @@ export async function getDaProjectEntry(
       tvs: layerTvs,
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
-      throughput: latestThroughput,
+      maxThroughputPerSecond: latestThroughput
+        ? latestThroughput.size / latestThroughput.frequency
+        : undefined,
       usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
     },
     sections,
@@ -253,7 +250,9 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
-      throughput: latestThroughput,
+      maxThroughputPerSecond: latestThroughput
+        ? latestThroughput.size / latestThroughput.frequency
+        : undefined,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,
       callout: {

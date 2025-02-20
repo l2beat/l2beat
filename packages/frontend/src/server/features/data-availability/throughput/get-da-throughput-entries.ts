@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { ProjectId, formatSeconds, notUndefined } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
-import { formatBytes } from '../../../../utils/number-format/format-bytes'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import {
   type ThroughputTableData,
@@ -45,17 +44,23 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
 
 export interface DaThroughputEntry extends CommonProjectEntry {
   isPublic: boolean
-  pastDayAvgThroughput: number | undefined
-  maxThroughput: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  pastDayAvgThroughputPerSecond: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  maxThroughputPerSecond: number | undefined
   pastDayAvgCapacityUtilization: number | undefined
   largestPoster:
     | {
         name: string
         percentage: number
-        totalPosted: string
+        totalPosted: number
       }
     | undefined
-  totalPosted: string | undefined
+  totalPosted: number | undefined
   finality: string | undefined
   isSynced: boolean
 }
@@ -80,16 +85,16 @@ function getDaThroughputEntry(
       syncWarning: notSyncedStatus,
     },
     isPublic: project.daLayer.systemCategory === 'public',
-    pastDayAvgThroughput: data.pastDayAvgThroughput,
-    maxThroughput: data.maxThroughput,
+    pastDayAvgThroughputPerSecond: data.pastDayAvgThroughputPerSecond,
+    maxThroughputPerSecond: data.maxThroughputPerSecond,
     pastDayAvgCapacityUtilization: data.pastDayAvgCapacityUtilization,
     largestPoster: data.largestPoster
       ? {
           ...data.largestPoster,
-          totalPosted: formatBytes(data.largestPoster.totalPosted),
+          totalPosted: Number(data.largestPoster.totalPosted),
         }
       : undefined,
-    totalPosted: formatBytes(data.totalPosted),
+    totalPosted: Number(data.totalPosted),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,

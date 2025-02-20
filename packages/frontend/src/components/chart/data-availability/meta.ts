@@ -8,12 +8,12 @@ export const daChartMeta = {
     indicatorType: { shape: 'square' },
   },
   celestia: {
-    label: 'Celestia (fake)',
+    label: 'Celestia',
     color: 'hsl(var(--chart-da-celestia))',
     indicatorType: { shape: 'square' },
   },
   avail: {
-    label: 'Avail (fake)',
+    label: 'Avail',
     color: 'hsl(var(--chart-da-avail))',
     indicatorType: { shape: 'square' },
   },
