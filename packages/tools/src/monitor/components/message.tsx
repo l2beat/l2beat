@@ -52,7 +52,7 @@ function Message({
           </div>
 
           {/* Message metadata */}
-          <div className="flex flex-col">
+          <div className="flex flex-col justify-between">
             {/* Author and Timestamp */}
             <div className="flex items-baseline space-x-2">
               <span className="font-semibold text-gray-100 text-sm">
@@ -80,7 +80,7 @@ function Message({
 
       {/* Message content */}
       {isExpanded && (
-        <div className="ml-14 cursor-default whitespace-pre-wrap text-gray-300 text-sm leading-snug">
+        <div className="cursor-default whitespace-pre-wrap text-gray-300 text-sm leading-snug md:ml-14">
           {content}
         </div>
       )}

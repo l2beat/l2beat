@@ -32,7 +32,7 @@ export function MonitorApp() {
   }
 
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 md:p-4">
       {entries.map((entry) => {
         const diffs = splitAndClean(entry.message)
 
