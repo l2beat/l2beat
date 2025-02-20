@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 305003923,
-  "configHash": "0x433d1b3747d61c4a9f2cd26e6adb521b399f50307dc6d28cf57406efa5db8974",
+  "configHash": "0x2669c204c7fad7e1a402fea9495fc6c1f51f67bc306fd0e3067af8364214aeb0",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 30358,
+        "exitNum": 30186,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -816,7 +816,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2015,
+        "exitNum": 2014,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"

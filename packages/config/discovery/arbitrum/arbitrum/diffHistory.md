@@ -1,4 +1,28 @@
-Generated with discovered.json: 0xe9e3551bfc174fa1aa3a04a302e8f22da8a2b40e
+Generated with discovered.json: 0x5896a873cd8b51113d0474fa4c7fac2d45b7ccfd
+
+# Diff at Thu, 20 Feb 2025 11:21:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 305003923
+- current block number: 305003923
+
+## Description
+
+Hide an unused SC on L2.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305003923 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x29e97c700d703b45fc915b7e9c5b0299c2b6abac
 
 # Diff at Wed, 12 Feb 2025 18:43:35 GMT:
 
