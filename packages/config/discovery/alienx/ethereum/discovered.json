@@ -2,7 +2,7 @@
   "name": "alienx",
   "chain": "ethereum",
   "blockNumber": 21465135,
-  "configHash": "0x4faa6d048850074572f55d678b9e7fe3444d4f38eadcda4637450d3cf183b025",
+  "configHash": "0xd6af93abcc5bb111436d35fb62ab0210a9c3fe261523b9664b41b4a92b5b9ea1",
   "contracts": [
     {
       "name": "RollupEventInbox",

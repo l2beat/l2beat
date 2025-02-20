@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "synapse",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
     "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",

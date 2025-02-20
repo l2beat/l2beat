@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 307041304,
-  "configHash": "0x032abc29cc8cf15d3a2d2549b0ce394ff7bb3099012eb4671ff07176334f2015",
+  "blockNumber": 305003923,
+  "configHash": "0x433d1b3747d61c4a9f2cd26e6adb521b399f50307dc6d28cf57406efa5db8974",
   "contracts": [
     {
       "name": "L2ERC20Gateway",

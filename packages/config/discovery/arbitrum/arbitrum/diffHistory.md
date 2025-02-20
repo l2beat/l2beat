@@ -1,28 +1,4 @@
-Generated with discovered.json: 0x4e966327b7bab231258e0ea9e6daad43508f5d0c
-
-# Diff at Mon, 17 Feb 2025 15:16:53 GMT:
-
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 305003923
-- current block number: 307041304
-
-## Description
-
-Ignored unused SC on L2.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 305003923 (main branch discovery), not current.
-
-```diff
--   Status: DELETED
-    contract GnosisSafe (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
-    +++ description: None
-```
-
-Generated with discovered.json: 0x92e29eb81912f9fc733c67f2f9d0c95c38b76e9b
+Generated with discovered.json: 0xe9e3551bfc174fa1aa3a04a302e8f22da8a2b40e
 
 # Diff at Wed, 12 Feb 2025 18:43:35 GMT:
 

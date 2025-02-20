@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "phala",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
   "names": {
     "0xb45440830bd8D288bB2B5B01Be303ae60fc855d8": "OPSuccinctL2OutputOracle",
