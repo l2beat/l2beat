@@ -9,11 +9,6 @@ export async function getDaThroughputSection(
 ) {
   if (!featureFlags.daThroughput) return undefined
 
-  await api.da.projectChart.prefetch({
-    range: 'max',
-    projectId: project.id,
-  })
-
   const throughputChart = await api.da.projectChart({
     range: 'max',
     projectId: project.id,
