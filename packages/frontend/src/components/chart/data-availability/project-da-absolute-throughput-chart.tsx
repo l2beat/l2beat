@@ -6,7 +6,6 @@ import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import { pick } from 'lodash'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -58,9 +57,7 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
-  const projectChartMeta = showMax
-    ? getProjectChartMeta(projectId)
-    : (pick(getProjectChartMeta(projectId), ['project']) satisfies ChartMeta)
+  const projectChartMeta = getProjectChartMeta(projectId)
 
   return (
     <ChartContainer
@@ -79,26 +76,30 @@ export function ProjectDaAbsoluteThroughputChart({
           strokeWidth={2}
           dot={false}
         />
-        <Line
-          dataKey="projectTarget"
-          isAnimationActive={false}
-          stroke={projectChartMeta.projectTarget?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-          }
-          dot={false}
-        />
-        <Line
-          dataKey="projectMax"
-          isAnimationActive={false}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          dot={false}
-        />
+        {showMax && (
+          <Line
+            dataKey="projectTarget"
+            isAnimationActive={false}
+            stroke={projectChartMeta.projectTarget?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+            }
+            dot={false}
+          />
+        )}
+        {showMax && (
+          <Line
+            dataKey="projectMax"
+            isAnimationActive={false}
+            stroke={projectChartMeta.projectMax?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectMax?.indicatorType.strokeDasharray
+            }
+            dot={false}
+          />
+        )}
         {getCommonChartComponents({
           data: chartData,
           isLoading,

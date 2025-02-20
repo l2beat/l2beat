@@ -33,7 +33,6 @@ export function ProjectDaThroughputChart({
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data,
     configuredThroughputs,
-    showMax,
   )
 
   return (
@@ -72,7 +71,6 @@ export function ProjectDaThroughputChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputDataPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
-  showMax: boolean,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -82,9 +80,8 @@ function getDataWithConfiguredThroughputs(
       return {
         ...config,
         untilTimestamp: arr[i + 1]?.sinceTimestamp ?? Infinity,
-        maxDaily: showMax ? config.size * batchesPerDay : null,
-        targetDaily:
-          showMax && config.target ? config.target * batchesPerDay : null,
+        maxDaily: config.size * batchesPerDay,
+        targetDaily: config.target ? config.target * batchesPerDay : null,
       }
     })
 
