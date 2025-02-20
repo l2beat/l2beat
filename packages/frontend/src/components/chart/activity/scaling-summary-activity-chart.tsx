@@ -15,21 +15,21 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
+  CyanFillGradientDef,
+  CyanStrokeGradientDef,
+} from '~/components/core/chart/defs/cyan-gradient-def'
+import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/ethereum-gradient-def'
 import {
-  OthersFillGradientDef,
-  OthersStrokeGradientDef,
-} from '~/components/core/chart/defs/others-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
-import {
-  ValidiumsAndOptimiumsFillGradientDef,
-  ValidiumsAndOptimiumsStrokeGradientDef,
-} from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/yellow-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
@@ -51,21 +51,21 @@ interface Props {
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--chart-rollups))',
+    color: 'hsl(var(--chart-pink))',
     indicatorType: {
       shape: 'square',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums and Optimiums',
-    color: 'hsl(var(--chart-validiums-optimiums))',
+    color: 'hsl(var(--chart-cyan))',
     indicatorType: {
       shape: 'square',
     },
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--chart-others))',
+    color: 'hsl(var(--chart-yellow))',
     indicatorType: {
       shape: 'square',
     },
@@ -111,12 +111,12 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
         <AreaChart data={chartData} margin={{ top: 20 }}>
           <defs>
-            <RollupsFillGradientDef id="rollups-fill" />
-            <RollupsStrokeGradientDef id="rollups-stroke" />
-            <ValidiumsAndOptimiumsFillGradientDef id="validiums-and-optimiums-fill" />
-            <ValidiumsAndOptimiumsStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <OthersFillGradientDef id="others-fill" />
-            <OthersStrokeGradientDef id="others-stroke" />
+            <PinkFillGradientDef id="rollups-fill" />
+            <PinkStrokeGradientDef id="rollups-stroke" />
+            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
+            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
