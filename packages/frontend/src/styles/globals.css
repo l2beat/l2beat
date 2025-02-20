@@ -29,6 +29,7 @@
 
     /* Chart colors */
     --chart-ethereum: 223 69% 50.6%;
+    --chart-ethereum-secondary: 212 100% 66.3%;
     --chart-rollups: 321 84.3% 60%;
     --chart-validiums-optimiums: 180 50.2% 42.5%;
     --chart-others: 44.9 100% 33.5%;
@@ -87,6 +88,7 @@
 
     /* Chart colors */
     --chart-ethereum: 212 100% 66.3%;
+    --chart-ethereum-secondary: 223 69% 50.6%;
     --chart-rollups: 284 87.1% 75.7%;
     --chart-validiums-optimiums: 190 73.6% 55.5%;
     --chart-others: 54.2 70.9% 56.9%;

@@ -6,6 +6,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/to-technology-risk'
 import { getDaProjectRiskSummarySection } from './get-da-project-risk-summary-section'
+import { getDaThroughputSection } from './get-da-throughput-section'
 
 type RegularDetailsParams = {
   layer: Project<
@@ -21,7 +22,7 @@ type RegularDetailsParams = {
   bridgeGrissiniValues: RosetteValue[]
 }
 
-export function getRegularDaProjectSections({
+export async function getRegularDaProjectSections({
   layer,
   bridge,
   isVerified,
@@ -58,6 +59,7 @@ export function getRegularDaProjectSections({
     bridge,
     isVerified,
   )
+  const throughputSection = await getDaThroughputSection(layer)
 
   const daLayerItems: ProjectDetailsSection[] = []
 
@@ -149,6 +151,17 @@ export function getRegularDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
+  if (throughputSection) {
+    items.push({
+      type: 'ThroughputSection',
+      props: {
+        id: 'throughput',
+        title: 'Throughput',
+        ...throughputSection,
+      },
+    })
+  }
+
   if (!layer.isUpcoming && layer.milestones && layer.milestones.length > 0) {
     const sortedMilestones = layer.milestones.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
@@ -215,7 +228,7 @@ type EthereumDetailsParams = {
   bridgeGrissiniValues: RosetteValue[]
 }
 
-export function getEthereumDaProjectSections({
+export async function getEthereumDaProjectSections({
   layer,
   bridge,
   isVerified,
@@ -229,6 +242,19 @@ export function getEthereumDaProjectSections({
   )
 
   const items: ProjectDetailsSection[] = []
+
+  const throughputSection = await getDaThroughputSection(layer)
+
+  if (throughputSection) {
+    items.push({
+      type: 'ThroughputSection',
+      props: {
+        id: 'throughput',
+        title: 'Throughput',
+        ...throughputSection,
+      },
+    })
+  }
 
   if (
     riskSummarySection.layer.risks.concat(riskSummarySection.bridge.risks)

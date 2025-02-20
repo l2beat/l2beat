@@ -12,6 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
@@ -37,14 +38,17 @@ const chartMeta = {
   native: {
     label: 'Native',
     color: 'hsl(var(--chart-tvs-native))',
+    indicatorType: { shape: 'square' },
   },
   external: {
     label: 'External',
     color: 'hsl(var(--chart-tvs-external))',
+    indicatorType: { shape: 'square' },
   },
   canonical: {
     label: 'Canonical',
     color: 'hsl(var(--chart-tvs-canonical))',
+    indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 
@@ -137,13 +141,9 @@ function CustomTooltip({
                 className="flex items-center justify-between gap-x-1"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className="size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}
