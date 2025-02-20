@@ -107,16 +107,22 @@ export const stargatev2: Bridge = {
       name: 'Principle of operation',
       description: `
       On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations.
-
+      
+      
       While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
       Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
-
+      
+      
       The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
       They are only a relayer and depend on LayerZero DVNs (distributed validator networks) to verify the message coming from the source chain. These DVNs can be freely configured by the OApp owner (Stargate) for each pair of endpoints.
       Stargatev2 currently has two DVNs configured: Stargate and Nethermind. From the viewpoint of the LayerZero message protocol, each DVN is a single signer and the current threshold for verification is 2.
-
+      
+      
       Just like the assets themselves, so-called *credits* are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
-      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.`,
+      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.
+      
+      
+      In the case of the Executor failing to deliver the bridge message, the user can try to deliver the message to the destination themselves, either if it was already verified or if the user has access to the signed verifier message (e.g. through layerzeroscan.com).`,
       references: [
         {
           title: 'Stargate Docs: Modes of transport',
@@ -148,7 +154,7 @@ export const stargatev2: Bridge = {
         name: 'LayerZero messaging',
         description:
           'The LayerZero message protocol is used: For validation of messages from Stargate over LayerZero, two DVNs are currently configured: Nethermind and Stargate.\
-        If both DVNs agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
+        If both DVNs agree on a message, it is verified and can be executed by an Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
         references: [
           {
             title: 'LayerZero Docs: Security Stack',
@@ -158,7 +164,7 @@ export const stargatev2: Bridge = {
         risks: [
           {
             category: 'Users can be censored if',
-            text: 'both whitelisted DVNs or the LayerZero Executor fail to facilitate the transaction.',
+            text: 'any of the two whitelisted DVNs fail to approve the transaction.',
           },
           {
             category: 'Funds can be stolen if',
