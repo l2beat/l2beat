@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "morph",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
     "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"

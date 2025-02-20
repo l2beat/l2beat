@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "opticsV1",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47", //BridgeRouterBeaconProxy
     "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b" //ReplicaBeaconProxy

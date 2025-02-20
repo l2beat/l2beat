@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zksync2",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x32400084C286CF3E17e7B677ea9583e60a000324", // ZKsync
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063", // L1ERC20Bridge

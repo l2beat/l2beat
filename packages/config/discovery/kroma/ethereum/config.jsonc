@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "kroma",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
     "0x827962404D7104202C5aaa6b929115C8211d9596",

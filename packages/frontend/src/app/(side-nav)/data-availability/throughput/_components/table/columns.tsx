@@ -66,7 +66,8 @@ export const publicSystemsColumns = [
           />
         ),
         meta: {
-          tooltip: 'The maximum amount of data that can be posted per second.',
+          tooltip:
+            'The maximum data throughput that can be maintained over time. For Ethereum, it refers to the target blob throughput, as the blob base fee increases exponentially when blob usage exceeds the target.',
         },
       }),
     ],
@@ -142,7 +143,7 @@ export const publicSystemsColumns = [
     ),
     meta: {
       tooltip:
-        'The time required for a data batch to achieve consensus finality, reducing the risk of reorgs or rollbacks. Faster finality means users can trust that data is available sooner, minimizing the wait time before proceeding with subsequent operations.',
+        'The time required for a data batch to achieve consensus finality, reducing the risk of reorgs or rollbacks. It represents the most optimistic case (normal network conditions). Faster finality means users can trust that data is available sooner, minimizing the wait time before proceeding with subsequent operations.',
     },
   }),
 ]

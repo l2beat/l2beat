@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "optimism",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
     "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f", // syntethix escrow

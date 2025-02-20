@@ -109,18 +109,13 @@ export const DiscoveryContract = z.object({
   references: z.optional(z.array(ExternalReference)),
 })
 
-export type GlobalTypes = z.infer<typeof GlobalTypes>
-export const GlobalTypes = z.record(z.string(), DiscoveryCustomType)
-
-export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
-export const RawDiscoveryConfig = z.object({
-  name: z.string().min(1),
-  chain: z.string().min(1),
-  initialAddresses: z.array(stringAs(EthereumAddress)),
+export type CommonDiscoveryConfig = z.infer<typeof CommonDiscoveryConfig>
+export const CommonDiscoveryConfig = z.object({
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
   overrides: z.optional(z.record(z.string(), DiscoveryContract)),
   types: z.optional(z.record(z.string(), DiscoveryCustomType)),
+  import: z.optional(z.array(z.string())),
   names: z.optional(
     z.record(
       stringAs(EthereumAddress).transform((a) => a.toString()),
@@ -128,4 +123,11 @@ export const RawDiscoveryConfig = z.object({
     ),
   ),
   sharedModules: z.optional(z.record(z.string(), z.string())),
+})
+
+export type RawDiscoveryConfig = z.infer<typeof RawDiscoveryConfig>
+export const RawDiscoveryConfig = CommonDiscoveryConfig.extend({
+  name: z.string().min(1),
+  chain: z.string().min(1),
+  initialAddresses: z.array(stringAs(EthereumAddress)),
 })

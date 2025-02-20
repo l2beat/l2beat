@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "blockNumber": 287770407,
-  "configHash": "0x5d353031f4fe81f16452c65dddd736381f67d31c40251cac6576413e20036934",
+  "configHash": "0xbbd94445270f4a6cd6d09337f9c1930a3989f933df154fd0e0afac681e2484ce",
   "contracts": [
     {
       "name": "ERC20Inbox",

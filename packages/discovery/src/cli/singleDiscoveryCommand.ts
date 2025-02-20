@@ -38,8 +38,6 @@ export const SingleDiscoveryCommand = command({
         chain: chain,
         initialAddresses: [address],
       },
-      {},
-      {},
       configReader,
     )
     const http = new HttpClient()

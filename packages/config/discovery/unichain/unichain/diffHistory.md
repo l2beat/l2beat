@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x8cfe8b9913512b28d89a62fe03113d2f8f65ee63
+
+# Diff at Thu, 20 Feb 2025 09:58:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@3f6bcb8b805098e7609fbf2c2ebf3f4ea8423470 block: 9227118
+- current block number: 9227118
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9227118 (main branch discovery), not current.
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x6e66a44e5391621a06370e2388009449205f7dae
 
 # Diff at Tue, 11 Feb 2025 14:21:47 GMT:

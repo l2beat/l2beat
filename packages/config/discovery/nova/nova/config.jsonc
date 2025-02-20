@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "nova",
   "name": "nova",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8", // L2GatewayRouter
     "0xbf544970E6BD77b21C6492C281AB60d0770451F4", // L2ARBGateway

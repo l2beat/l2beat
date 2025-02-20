@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "worldcoin",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"],
   "names": {
     "0xf7134CE138832c1456F2a91D64621eE90c2bddEa": "WorldIdIdentityManager2",
