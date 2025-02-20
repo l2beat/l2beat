@@ -187,6 +187,7 @@ import { unichain } from './unichain'
 import { union } from './union'
 import { wirex } from './wirex'
 import { witness } from './witness'
+import { wonderfi } from './wonderfi'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
@@ -394,6 +395,7 @@ export const layer2s: Layer2[] = [
   union,
   wirex,
   witness,
+  wonderfi,
   world,
   xchain,
   xlayer,
