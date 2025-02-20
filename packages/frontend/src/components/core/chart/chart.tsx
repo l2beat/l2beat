@@ -162,6 +162,8 @@ function ChartLegendContent({
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
+        if (!itemConfig) return null
+
         return (
           <div
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
