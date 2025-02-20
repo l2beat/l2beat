@@ -40,7 +40,7 @@ export function ProjectDaThroughputChart({
     <div>
       <div className="mt-4 flex justify-between">
         <ChartTimeRange range={chartRange} />
-        <div className="flex gap-1">
+        <div className="flex flex-wrap justify-end gap-1">
           <Checkbox
             name="showMainnetActivity"
             checked={showMax}
@@ -63,6 +63,7 @@ export function ProjectDaThroughputChart({
         projectId={projectId}
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
+        showMax={showMax}
       />
     </div>
   )

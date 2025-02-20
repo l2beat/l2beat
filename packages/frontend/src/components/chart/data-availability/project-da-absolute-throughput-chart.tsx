@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { Line, LineChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
+import { pick } from 'lodash'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -33,11 +34,14 @@ interface Props {
     | undefined
   projectId: ProjectId
   isLoading: boolean
+  showMax: boolean
 }
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   isLoading,
   projectId,
+  showMax,
 }: Props) {
   const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
 
@@ -54,7 +58,9 @@ export function ProjectDaAbsoluteThroughputChart({
     )
   }, [dataWithConfiguredThroughputs, denominator])
 
-  const projectChartMeta = getProjectChartMeta(projectId)
+  const projectChartMeta = showMax
+    ? getProjectChartMeta(projectId)
+    : (pick(getProjectChartMeta(projectId), ['project']) satisfies ChartMeta)
 
   return (
     <ChartContainer
