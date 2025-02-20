@@ -16,7 +16,7 @@ describe('Configuration Smoke Test', () => {
     expect(process.env.COINGECKO_API_KEY).not.toEqual(undefined)
     process.env.COINGECKO_API_KEY = undefined
     // no expect on purpose - getConfig will throw with a meaningful error message
-    await expect(getConfig()).toBeRejectedWith(
+    await expect(getConfig).toBeRejectedWith(
       'Error: Missing environment variable: COINGECKO_API_KEY',
     )
   })
