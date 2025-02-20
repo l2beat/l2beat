@@ -79,11 +79,10 @@ export const corn: Layer2 = orbitStackL2({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'corn',
     chainId: 21000000,
-    explorerUrl: 'https://maizenet-explorer.usecorn.com/',
+    explorerUrl: 'https://maizenet-explorer.usecorn.com',
     explorerApi: {
       url: 'https://maizenet-explorer.usecorn.com/api',
       type: 'blockscout',

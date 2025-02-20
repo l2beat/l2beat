@@ -16,6 +16,8 @@ export interface Token {
   category: 'ether' | 'stablecoin' | 'other'
   iconUrl?: string
   chainId: ChainId
+  chainName: string
+  url?: string
   source: 'canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'zero'
   excludeFromTotal?: true

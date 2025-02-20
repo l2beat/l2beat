@@ -7,55 +7,119 @@
 
 @layer base {
   :root {
-    --primary: 260deg 7.69% 7.65%;
-    --primary-invert: 0deg 0% 98%;
-    --secondary: 222deg 8.21% 40.6%;
-    --positive: 124deg 100% 22.7%;
-    --warning: 44.9deg 100% 33.5%;
+    --primary: 260 7.69% 7.65%;
+    --primary-invert: 0 0% 98%;
+    --secondary: 222 8.21% 40.6%;
+    --positive: 124 100% 22.7%;
+    --warning: 44.9 100% 33.5%;
     --negative: 0 100% 42%;
-    --brand: 285deg 62.7% 52.7%;
-    --background: 230deg 13.6% 91.4%;
-    --background-reading: 0deg 0% 98%;
-    --surface-primary: 0deg 0% 98%;
-    --surface-secondary: 230deg 13.6% 91.4%;
-    --surface-tertiary: 223deg 15.9% 82.7%;
-    --header-primary: 0deg 0% 100%;
-    --header-secondary: 230deg 21.4% 94.5%;
-    --icon-secondary: 222deg 8.21% 40.6%;
-    --overlay: 231deg 30.4% 13.5% / 60%;
-    --divider: 223deg 15.9% 82.7%;
-    --indicator-rollups: 321deg 84.3% 60%;
-    --indicator-validiums-optimiums: 180deg 50.2% 42.5%;
-    --indicator-others: 44.9deg 100% 33.5%;
-    --indicator-ethereum: 223deg 69% 50.6%;
-    --link-stroke: 212deg 100% 86.5%;
-    --link: 223deg 69% 50.6%;
+    --brand: 285 62.7% 52.7%;
+    --background: 230 13.6% 91.4%;
+    --background-reading: 0 0% 98%;
+    --surface-primary: 0 0% 98%;
+    --surface-secondary: 230 13.6% 91.4%;
+    --surface-tertiary: 223 15.9% 82.7%;
+    --header-primary: 0 0% 100%;
+    --header-secondary: 230 21.4% 94.5%;
+    --icon-secondary: 222 8.21% 40.6%;
+    --overlay: 231 30.4% 13.5% / 60%;
+    --divider: 223 15.9% 82.7%;
+    --link-stroke: 212 100% 86.5%;
+    --link: 223 69% 50.6%;
+
+    /* Chart colors */
+    --chart-ethereum: 223 69% 50.6%;
+    --chart-rollups: 321 84.3% 60%;
+    --chart-validiums-optimiums: 180 50.2% 42.5%;
+    --chart-others: 44.9 100% 33.5%;
+
+    --chart-tvs-native: 320 100% 63.7%;
+    --chart-tvs-external: 45 100% 51.4%;
+    --chart-tvs-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
+
+    --chart-da-celestia: 284 100% 78%;
+    --chart-da-avail: 151 90% 48%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 217 77.8% 49.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 223deg 69% 50.6%;
+
+    --chart-rollups-fill-gradient: 302 100% 68.6%;
+    --chart-rollups-stroke-gradient-1: 266 57.7% 52.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 190 73.6% 55.5%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 191 70.8% 37.6%;
+
+    --chart-others-fill-gradient: 53.8 70.9% 56.9%;
+    --chart-others-stroke-gradient-1: 44.9 100% 33.5%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 
   .dark {
-    --primary: 0deg 0% 98%;
-    --primary-invert: 260deg 7.69% 7.65%;
-    --secondary: 223deg 8.04% 56.1%;
-    --positive: 145deg 81.2% 43.7%;
-    --warning: 45deg 100% 51.4%;
+    --primary: 0 0% 98%;
+    --primary-invert: 260 7.69% 7.65%;
+    --secondary: 223 8.04% 56.1%;
+    --positive: 145 81.2% 43.7%;
+    --warning: 45 100% 51.4%;
     --negative: 0 100% 50%;
-    --brand: 284deg 87.1% 75.7%;
-    --background: 0deg 0% 0%;
-    --background-reading: 0deg 0% 0%;
-    --surface-primary: 225deg 14.8% 10.6%;
-    --surface-secondary: 222deg 8.06% 24.3%;
-    --surface-tertiary: 220deg 7.89% 29.8%;
-    --header-primary: 225deg 14.8% 10.6%;
-    --header-secondary: 222deg 16% 15.9%;
-    --icon-secondary: 222deg 8.21% 40.6%;
-    --overlay: 0deg 0% 0% / 60%;
-    --divider: 226deg 14.3% 28.8%;
-    --indicator-rollups: 284deg 87.1% 75.7%;
-    --indicator-validiums-optimiums: 190deg 73.6% 55.5%;
-    --indicator-others: 54.2deg 70.9% 56.9%;
-    --indicator-ethereum: 212deg 100% 66.3%;
-    --link-stroke: 217deg 56.3% 18.8%;
-    --link: 212deg 100% 66.3%;
+    --brand: 284 87.1% 75.7%;
+    --background: 0 0% 0%;
+    --background-reading: 0 0% 0%;
+    --surface-primary: 225 14.8% 10.6%;
+    --surface-secondary: 222 8.06% 24.3%;
+    --surface-tertiary: 220 7.89% 29.8%;
+    --header-primary: 225 14.8% 10.6%;
+    --header-secondary: 222 16% 15.9%;
+    --icon-secondary: 222 8.21% 40.6%;
+    --overlay: 0 0% 0% / 60%;
+    --divider: 226 14.3% 28.8%;
+    --link-stroke: 217 56.3% 18.8%;
+    --link: 212 100% 66.3%;
+
+    /* Chart colors */
+    --chart-ethereum: 212 100% 66.3%;
+    --chart-rollups: 284 87.1% 75.7%;
+    --chart-validiums-optimiums: 190 73.6% 55.5%;
+    --chart-others: 54.2 70.9% 56.9%;
+
+    --chart-tvs-native: 320 100% 63.7%;
+    --chart-tvs-external: 45 100% 51.4%;
+    --chart-tvs-canonical: 266 57.7% 52.7%;
+
+    --chart-costs-calldata: 220deg 100% 57.5%;
+    --chart-costs-blobs: 32.5deg 100% 60.6%;
+    --chart-costs-compute: 320deg 100% 63.7%;
+    --chart-costs-overhead: 266deg 57.7% 52.7%;
+
+    --chart-da-celestia: 285 62.7% 52.7%;
+    --chart-da-avail: 151 90.2% 48%;
+
+    /* Chart gradients */
+
+    --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
+    --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
+    --chart-ethereum-stroke-gradient-2: 217deg 77.8% 49.4%;
+
+    --chart-rollups-fill-gradient: 313 40.1% 38.6%;
+    --chart-rollups-stroke-gradient-1: 284 87.1% 75.7%;
+    --chart-rollups-stroke-gradient-2: 321 84.3% 60%;
+
+    --chart-validiums-optimiums-fill-gradient: 193 55.1% 36.7%;
+    --chart-validiums-optimiums-stroke-gradient-1: 180 50.2% 42.5%;
+    --chart-validiums-optimiums-stroke-gradient-2: 190 73.6% 55.5%;
+
+    --chart-others-fill-gradient: 50.1 59% 40.2%;
+    --chart-others-stroke-gradient-1: 45.1 100% 52%;
+    --chart-others-stroke-gradient-2: 43 60% 45.1%;
   }
 }
 
@@ -139,13 +203,13 @@
   }
   .fade-out-horizontal {
     -webkit-mask-image: linear-gradient(
-      90deg,
+      90,
       transparent,
       black 30px calc(100% - 30px),
       transparent
     ) !important;
     mask-image: linear-gradient(
-      90deg,
+      90,
       transparent,
       black 30px calc(100% - 30px),
       transparent

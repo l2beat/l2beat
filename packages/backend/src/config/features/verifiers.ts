@@ -4,11 +4,15 @@ import type { VerifiersConfig } from '../Config'
 export async function getVerifiersConfig(
   ps: ProjectService,
 ): Promise<VerifiersConfig> {
-  const projects = await ps.getProjects({
+  const verifiers = await ps.getProjects({
     select: ['proofVerification'],
     whereNot: ['isArchived'],
   })
+  const chains = await ps.getProjects({
+    select: ['chainConfig'],
+  })
   return {
-    verifiers: projects.flatMap((p) => p.proofVerification.verifiers),
+    verifiers: verifiers.flatMap((p) => p.proofVerification.verifiers),
+    chains: chains.map((p) => p.chainConfig),
   }
 }

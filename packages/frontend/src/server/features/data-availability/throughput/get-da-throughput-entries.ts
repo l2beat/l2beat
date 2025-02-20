@@ -1,8 +1,9 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, formatSeconds, notUndefined } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import { type ThroughputData, getDaThroughput } from '../utils/get-da-throuput'
+import { getThroughputSyncWarning } from './is-throughput-synced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   const projectsWithDaTracking = await ps.getProjects({
@@ -10,7 +11,9 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   })
 
   const uniqueDaLayersInProjects = new Set(
-    projectsWithDaTracking.map((l) => l.daTrackingConfig.daLayer),
+    projectsWithDaTracking.flatMap((l) =>
+      l.daTrackingConfig.map((d) => d.daLayer),
+    ),
   )
 
   const daLayers = await ps.getProjects({
@@ -30,32 +33,44 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
     projectsWithDaTracking,
   )
 
-  const entries = daLayersWithDaTracking.map((project) =>
-    getDaThroughputEntry(project, latestData[project.id]),
-  )
+  const entries = daLayersWithDaTracking
+    .map((project) => getDaThroughputEntry(project, latestData[project.id]))
+    .filter(notUndefined)
   return entries
 }
 
 export interface DaThroughputEntry extends CommonProjectEntry {
   isPublic: boolean
-  pastDayAvgThroughput: number | undefined
-  maxThroughput: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  pastDayAvgThroughputPerSecond: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  maxThroughputPerSecond: number | undefined
   pastDayAvgCapacityUtilization: number | undefined
   largestPoster:
     | {
         name: string
         percentage: number
-        totalPosted: string
+        totalPosted: number
       }
     | undefined
-  totalPosted: string | undefined
+  totalPosted: number | undefined
   finality: string | undefined
+  isSynced: boolean
 }
 
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
-  throughputData: ThroughputData[string] | undefined,
-): DaThroughputEntry {
+  data: ThroughputData[string] | undefined,
+): DaThroughputEntry | undefined {
+  if (!data) return undefined
+
+  const notSyncedStatus = data
+    ? getThroughputSyncWarning(data.syncedUntil)
+    : undefined
   return {
     id: ProjectId(project.id),
     slug: project.slug,
@@ -64,39 +79,24 @@ function getDaThroughputEntry(
     href: `/data-availability/projects/${project.slug}`,
     statuses: {
       underReview: project.statuses.isUnderReview ? 'config' : undefined,
+      syncWarning: notSyncedStatus,
     },
     isPublic: project.daLayer.systemCategory === 'public',
-    pastDayAvgThroughput: throughputData?.pastDayAvgThroughput,
-    maxThroughput: throughputData?.maxThroughput,
-    pastDayAvgCapacityUtilization:
-      throughputData?.pastDayAvgCapacityUtilization,
-    largestPoster: throughputData?.largestPoster
+    pastDayAvgThroughputPerSecond: data.pastDayAvgThroughputPerSecond,
+    maxThroughputPerSecond: data.maxThroughputPerSecond,
+    pastDayAvgCapacityUtilization: data.pastDayAvgCapacityUtilization,
+    largestPoster: data.largestPoster
       ? {
-          ...throughputData?.largestPoster,
-          totalPosted: formatBytes(
-            Number(throughputData.largestPoster.totalPosted),
-          ),
+          ...data.largestPoster,
+          totalPosted: Number(data.largestPoster.totalPosted),
         }
       : undefined,
-    totalPosted: throughputData?.totalPosted
-      ? formatBytes(Number(throughputData.totalPosted))
-      : undefined,
+    totalPosted: Number(data.totalPosted),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,
         })
       : undefined,
+    isSynced: !notSyncedStatus,
   }
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes === 0) {
-    return '0 B'
-  }
-
-  const k = 1000
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }

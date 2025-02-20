@@ -11,6 +11,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import type { TvsChartResolution } from '../utils/range'
@@ -56,7 +57,11 @@ export const getCachedTokenTvsChartData = cache(
     )
     assert(project, 'Project not found')
     const backendProject = toBackendProject(project)
-    const configMapping = getConfigMapping(backendProject)
+
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const configMapping = getConfigMapping(backendProject, chains)
 
     const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
       project.id,
@@ -108,7 +113,7 @@ export const getCachedTokenTvsChartData = cache(
   },
   ['token-tvs-chart'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

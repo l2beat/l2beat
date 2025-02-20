@@ -190,12 +190,15 @@ export const taiko: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
-      sequencers: [],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+        sequencers: [],
+      },
+    ],
     trackedTxs: [
       {
         uses: [
@@ -341,24 +344,24 @@ export const taiko: Layer2 = {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate state transitions. There are five tiers: The SGX tier, two ZK tiers with RISC0 and SP1 verifiers, the ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
       Since the Guardian tiers are the highest, validity proofs can generally be overwritten by a single Guardian. Consequently, there is no way to force the RISC0 or SP1 tiers.
-      
+
       When proposing a batch (containing one or multiple L2 blocks), the proposer is assigned the designated prover role for that batch and is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the batch, which will be returned once the batch is proven.
       The default (lowest) SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit the proof for the batch. Once elapsed, proving is open to everyone able to submit SGX proofs and a *validity bond*. The two ZK tiers have a proving window of ${RISC0provingWindow}.
-      
+
       After the proof is submitted and during its ${SGXcooldownWindow} *cooldown window*, anyone can contest the batch by submitting a *contest bond*. Provers have to submit a *validity bond* as a commitment to win a potential contest.
-      A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers. 
+      A *validity bond* is TAIKO ${SGXvalidityBond} for SGX vs ${RISC0validityBond} for ZK tiers, while a *contest bond* is TAIKO ${SGXcontestBond} for SGX vs. ${RISC0contestBond} for the two ZK tiers.
       For the Minority guardian tier, *validity* and *contest bonds* are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively.
-      
+
       It is not required to provide a proof for the batch to submit a contestation. When someone contests, a higher level tier has to step in to prove the contested batch. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
       If no one challenges the original SGX proof, it finalizes after ${SGXcooldownWindow} (the cooldown window).`,
       references: [
         {
           title: 'MainnetTierRouter.sol - Etherscan source code, tier ids',
-          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code#F1#L26',
+          url: 'https://etherscan.io/address/0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66#code#F1#L26',
         },
         {
           title: 'TaikoL1.sol - Etherscan source code, liveness bond',
-          url: 'https://etherscan.io/address/0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0#code',
+          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
         },
       ],
       risks: [
@@ -377,21 +380,21 @@ export const taiko: Layer2 = {
     },
     operator: {
       name: 'The system uses a based sequencing mechanism',
-      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. 
-        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window. 
-        Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block. 
+      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract.
+        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window.
+        Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.
         Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
           title: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
-          url: 'https://etherscan.io/address/0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B#code',
+          url: 'https://etherscan.io/address/0x2784423f7c61Bc7B75dB6CdA26959946f437588D#code',
         },
       ],
       risks: [],
     },
     forceTransactions: {
       name: `Users can force any transaction`,
-      description: `The system is designed to allow users to propose L2 blocks directly on L1. 
+      description: `The system is designed to allow users to propose L2 blocks directly on L1.
         Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
         The TaikoAdmin multisig can pause block proposals without delay.`,
       references: [],

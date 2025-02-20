@@ -27,7 +27,6 @@ describe(CelestiaRpcClient.name, () => {
       expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block?height=100', {
         method: 'GET',
         redirect: 'follow',
-        timeout: 5000,
       })
     })
   })
@@ -53,6 +52,7 @@ describe(CelestiaRpcClient.name, () => {
       const http = mockObject<HttpClient>({
         fetch: async () => ({
           result: {
+            height: '100',
             txs_results: [
               {
                 log: JSON.stringify(mockLogs),
@@ -66,6 +66,7 @@ describe(CelestiaRpcClient.name, () => {
       const result = await rpc.getBlockResult(100)
 
       expect(result).toEqual({
+        height: '100',
         txs_results: [
           {
             log: mockLogs,
@@ -77,7 +78,6 @@ describe(CelestiaRpcClient.name, () => {
         {
           method: 'GET',
           redirect: 'follow',
-          timeout: 5000,
         },
       )
     })
@@ -101,7 +101,6 @@ describe(CelestiaRpcClient.name, () => {
         {
           method: 'GET',
           redirect: 'follow',
-          timeout: 5000,
         },
       )
     })

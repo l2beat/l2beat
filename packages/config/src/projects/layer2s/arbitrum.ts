@@ -99,8 +99,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
-    warning:
-      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+    warning: undefined,
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -265,7 +264,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       'Security Council',
     ),
   ],
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // Custom ERC20 Gateway
@@ -326,6 +324,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       validatorAfkTime,
       l1TimelockDelay,
     ),
+    stateValidation: RISK_VIEW.STATE_FP_INT,
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -338,7 +337,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
@@ -347,7 +346,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
+        fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: false,
       },
     },
@@ -372,7 +371,18 @@ export const arbitrum: Layer2 = orbitStackL2({
       ),
     ],
   },
+  stateValidation: {
+    isUnderReview: true,
+    description: '.',
+    categories: [],
+  },
   milestones: [
+    {
+      title: 'Bold, permissionless proof system, deployed',
+      url: 'https://x.com/arbitrum/status/1889710151332245837',
+      date: '2025-02-15T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'Exit window extension to 7 days',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',

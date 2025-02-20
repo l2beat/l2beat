@@ -56,11 +56,15 @@ function diffToHtml(
     config.path2 = splitResult.path2
     for (const list of splitResult.filePathsList) {
       const { left, right } = list
-      const filePathsList = processGitDiff(gitDiffFolders(left, right))
-      const title = `${path.basename(left)} <-> ${path.basename(right)}`
-      result.push(
-        collapsible(title, diffPaths(config, filePathsList).join('\n')),
-      )
+      if (left === right) {
+        result.push(diffPaths(config, [list]))
+      } else {
+        const filePathsList = processGitDiff(gitDiffFolders(left, right))
+        const title = `${path.basename(left)} <-> ${path.basename(right)}`
+        result.push(
+          collapsible(title, diffPaths(config, filePathsList).join('\n')),
+        )
+      }
     }
 
     if (splitResult.filePathsList.length === 0) {
@@ -90,7 +94,7 @@ function diffPaths(
     let diff
     if (filePaths.left === filePaths.right) {
       diff = readFileSync(filePaths.left).toString()
-      if (filePaths.left.startsWith(config.path1)) {
+      if (filePaths.left.startsWith(addTrailingSlash(config.path1))) {
         status = 'removed'
         diff = chalk.redBright(diff)
       } else {
@@ -368,6 +372,10 @@ const HTML_START = `
   `
 
 const HTML_END = '<br><br></body></html>'
+
+function addTrailingSlash(path: string): string {
+  return path.endsWith('/') ? path : `${path}/`
+}
 
 export function powerdiff(
   path1: string,

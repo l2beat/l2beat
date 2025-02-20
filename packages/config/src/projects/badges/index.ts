@@ -441,11 +441,11 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
-  EspressoSequencing: {
+  EspressoPreconfs: {
     display: {
-      name: 'Espresso Sequencing',
+      name: 'Espresso Preconfs',
       description:
-        'The project integrates with Espresso sequencing network. The chain batch poster publishes blocks to Espresso Network and runs in a Trusted Execution Environment (TEE) programmed to verify that only Espresso-validated batches reach the host chain.',
+        'The project integrates with Espresso preconfirmations. The chain batch poster publishes blocks to Espresso Network and runs in a Trusted Execution Environment (TEE) programmed to verify that only Espresso-validated batches reach the host chain.',
     },
     type: BadgeType.Other,
   },

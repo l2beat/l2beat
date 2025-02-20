@@ -143,7 +143,7 @@ export const scroll: Layer2 = {
   chainConfig: {
     name: 'scroll',
     chainId: 534352,
-    explorerUrl: 'https://scrollscan.com/',
+    explorerUrl: 'https://scrollscan.com',
     explorerApi: {
       url: 'https://api.scrollscan.com/api',
       type: 'etherscan',
@@ -212,17 +212,18 @@ export const scroll: Layer2 = {
       defaultCallsPerMinute: 120,
       startBlock: 1,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
-      sequencers: [
-        '0xcf2898225ed05be911d3709d9417e86e0b4cfc8f',
-        '0x2ce8b4a516ebbc8b425764a867b742f76c2244c7',
-        '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
-        '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
-      ],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+        sequencers: [
+          '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
+          '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
+        ],
+      },
+    ],
     trackedTxs: [
       {
         uses: [

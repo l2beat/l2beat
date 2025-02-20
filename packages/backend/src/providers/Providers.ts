@@ -1,6 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import type { Config } from '../config'
+import type { DataAvailabilityTrackingConfig } from '../config/Config'
 import { BlobProviders } from './BlobProviders'
 import { BlockProviders } from './BlockProviders'
 import {
@@ -39,10 +40,7 @@ export class Providers {
       config.finality && this.clients.blob
         ? new BlobProviders(this.clients.blob)
         : undefined
-    this.da =
-      config.da && this.clients.blobscan
-        ? new DaProviders(this.clients.blobscan)
-        : undefined
+    this.da = initDaProviders(config.da, this.clients)
   }
 
   getPriceProviders() {
@@ -67,4 +65,13 @@ export class Providers {
     assert(this.da, 'Da providers unintended access')
     return this.da
   }
+}
+
+function initDaProviders(
+  config: DataAvailabilityTrackingConfig | false,
+  clients: Clients,
+) {
+  if (config === false) return undefined
+
+  return new DaProviders(clients.blobscan, clients.celestia, clients.avail)
 }

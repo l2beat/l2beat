@@ -2,7 +2,6 @@ import { EtherscanLink } from '~/components/etherscan-link'
 import { LastUsedCell } from '../[slug]/_components/last-used-cell'
 import { SubVerifiersTable } from '../[slug]/_components/sub-verifiers-table'
 import { VerifiedCell } from '../[slug]/_components/verified-cell'
-import { getExplorerUrlByChainId } from '../_utils/get-explorer-url'
 import type { ZkCatalogViewEntry } from '../types'
 import { DetailsItem } from './details-item'
 
@@ -17,7 +16,7 @@ export function VerifierCard({
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">
           <EtherscanLink
-            etherscanUrl={getExplorerUrlByChainId(verifier.chainId)}
+            href={verifier.url}
             address={verifier.contractAddress.toString()}
           />
         </DetailsItem>

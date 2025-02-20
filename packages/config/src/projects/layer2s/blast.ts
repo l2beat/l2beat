@@ -76,7 +76,7 @@ export const blast: Layer2 = opStackL2({
     name: 'blast',
     coingeckoPlatform: 'blast',
     chainId: 81457,
-    explorerUrl: 'https://blastscan.io/',
+    explorerUrl: 'https://blastscan.io',
     explorerApi: {
       url: 'https://api.blastscan.io/api',
       type: 'etherscan',

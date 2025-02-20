@@ -26,63 +26,27 @@ import type { Layer2 } from '../../types'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from './templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('kroma')
 
-const proposerRoundDurationSecondsOLD = discovery.getContractValue<number>(
-  'ValidatorPool',
-  'ROUND_DURATION',
-)
-
-const proposerRoundDurationSeconds = discovery.getContractValue<number>(
-  'ValidatorManager',
-  'ROUND_DURATION_SECONDS',
-)
-
-const rootsSubmissionIntervalBlocks = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'SUBMISSION_INTERVAL',
-)
-
-const scPA = discovery.getContractValue<string>('SC_ProxyAdmin', 'owner')
-const shPA = discovery.getContractValue<string>('SH_ProxyAdmin', 'owner')
-const spETHPA = discovery.getContractValue<string>('spETH_ProxyAdmin', 'owner')
-assert(
-  scPA === shPA && shPA === spETHPA,
-  'Spectrum EOA Admin permission changed, please update the .ts file.',
-)
-
-const rootsSubmissionIntervalSeconds = rootsSubmissionIntervalBlocks * 2 // L2 block time
-
 const timelockDefaultDelay = discovery.getContractValue<number>(
-  'Timelock',
+  'TimeLock',
   'getMinDelay',
 )
 
-const upgradesProxy = {
-  upgradableBy: [
-    { name: 'SecurityCouncil', delay: formatSeconds(timelockDefaultDelay) },
-  ],
-}
-
-const SCNumConfirmationsRequired = discovery.getContractValue<number>(
-  'SecurityCouncil',
-  'quorum',
-)
-
-const SCMembers = discovery.getPermissionedAccounts(
-  'SecurityCouncilToken',
-  'tokenOwners',
+assert(
+  timelockDefaultDelay === 0,
+  'timelock has a delay, update the upgrade risk in the contract section.',
 )
 
 const finalizationPeriod = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
-
-const SCMembersSize = SCMembers.length
-
-const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 
 export const kroma: Layer2 = {
   type: 'layer2',
@@ -100,7 +64,7 @@ export const kroma: Layer2 = {
     name: 'Kroma',
     slug: 'kroma',
     description:
-      'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
+      'Kroma aims to develop a universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll and a zkVM based proven with SP1.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
@@ -186,12 +150,15 @@ export const kroma: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOne' },
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      inbox: '0xfF00000000000000000000000000000000000255',
-      sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xfF00000000000000000000000000000000000255',
+        sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
+      },
+    ],
     trackedTxs: [
       {
         uses: [
@@ -246,7 +213,7 @@ export const kroma: Layer2 = {
       ...RISK_VIEW.STATE_FP_INT_ZK,
       description:
         RISK_VIEW.STATE_FP_INT_ZK.description +
-        " The challenge protocol can be subject to delay attacks and can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault, meaning that DA is not enforced.",
+        " The challenge protocol can fail under certain conditions. The current system doesn't use posted L2 txs batches on L1 as inputs to prove a fault (for the zkEVM prover path), meaning that DA is not always enforced.",
       sentiment: 'bad',
       secondLine: formatChallengePeriod(finalizationPeriod),
     },
@@ -287,25 +254,26 @@ export const kroma: Layer2 = {
     stateCorrectness: {
       name: 'Fraud Proofs ensure state correctness',
       description:
-        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. The zkEVM used is based on Scroll.\
-        Once the single block of disagreement is found, the challenger is required to present a ZK proof of the fraud. If the proof is validated, the incorrect\
-        state output is deleted. The Security Council can always override the result of the challenge, it can also delete any L2 state root at any time. If\
-        the malicious attester and challenger collude and are willing to spend bonds, they can perform a delay attack by engaging in continuous challenges\
-        resulting in a lack of finalization of the L2 state root on L1. The protocol can also fail under certain conditions.',
+        'Kroma uses an interactive fraud proof system to find a single block of disagreement, which is then ZK proven. Once the single block of disagreement\
+        is found, the challenger is required to present a ZK proof of the fraud. This can be either a proof verified in a zkEVM verifier base on Scroll, or in a\
+        zkVM verifier built by Succinct SP1. If the proof is validated, the incorrect state output is deleted. The Security Council can always override the\
+        result of the challenge, it can also delete any L2 state root at any time. The protocol\
+        can fail under certain conditions.',
       references: [
         {
           title:
-            'Colosseum.sol#L300 - Etherscan source code, createChallenge function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L437',
-        },
-        {
-          title: 'Colosseum.sol#L378 - Etherscan source code, bisect function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L514',
+            'Colosseum.sol#L300 - Etherscan source code, createChallenge() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L374',
         },
         {
           title:
-            'Colosseum.sol#L434 - Etherscan source code, proveFault function',
-          url: 'https://etherscan.io/address/0xAB54b3e775f645cf4486039bfA4dA539E70c9f99#code#F1#L570',
+            'Colosseum.sol#L378 - Etherscan source code, bisect() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L452',
+        },
+        {
+          title:
+            'Colosseum.sol#L434 - Etherscan source code, proveFaultWithZkEvm() function',
+          url: 'https://etherscan.io/address/0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC#code#F1#L505',
         },
         {
           title:
@@ -314,10 +282,6 @@ export const kroma: Layer2 = {
         },
       ],
       risks: [
-        {
-          category: 'Withdrawals can be delayed if',
-          text: 'the fraud proof system is under a delay attack.',
-        },
         {
           category: 'Funds can be lost if',
           text: 'the cryptography is broken or implemented incorrectly.',
@@ -337,8 +301,8 @@ export const kroma: Layer2 = {
         },
         {
           title:
-            'KromaPortal.sol#L430 - Etherscan source code, depositTransaction function',
-          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+            'KromaPortal.sol - Etherscan source code, depositTransaction() function',
+          url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L455',
         },
       ],
     },
@@ -360,8 +324,8 @@ export const kroma: Layer2 = {
         },
         {
           title:
-            'KromaPortal.sol#430 - Etherscan source code, depositTransaction function',
-          url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L430',
+            'KromaPortal.sol - Etherscan source code, depositTransaction function',
+          url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L455',
         },
       ],
     },
@@ -371,13 +335,13 @@ export const kroma: Layer2 = {
         references: [
           {
             title:
-              'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
-            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L241',
+              'KromaPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L253',
           },
           {
             title:
-              'KromaPortal.sol#L324 - Etherscan source code, finalizeWithdrawalTransaction function',
-            url: 'https://etherscan.io/address/0x381F53695230BAF83a39D1a08304D233A35730Fa#code#F1#L324',
+              'KromaPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            url: 'https://etherscan.io/address/0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316#code#F1#L350',
           },
         ],
       },
@@ -410,137 +374,20 @@ export const kroma: Layer2 = {
     dataFormat:
       'L2 blocks derivation from L1 data plus the format and architecture of batch submission is documented [here](https://specs.kroma.network/protocol/rollup-node.html#derivation).',
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Spectrum EOA Admin',
-          discovery.getPermissionedAccounts('SC_ProxyAdmin', 'owner'),
-          'Can upgrade all Spectrum-related contracts and potentially gain access to all escrowed weETH.',
-        ),
-        discovery.getPermissionDetails(
-          'SecurityCouncil',
-          discovery.getPermissionedAccounts('Colosseum', 'SECURITY_COUNCIL'),
-          `MultiSig (currently ${SCThreshold}) that is a guardian of KromaPortal, privileged Validator that does not need a bond \
-        and privileged actor in Colosseum contract that can remove any L2Output state root regardless of the outcome of the challenge.`,
-        ),
-        discovery.getPermissionDetails(
-          'SecurityCouncil members',
-          SCMembers,
-          `Members of the SecurityCouncil.`,
-          {
-            references: [
-              {
-                title:
-                  'Security Council members - Announcing Kroma Security Council',
-                url: 'https://blog.kroma.network/announcing-kroma-security-council-435b540d2ab4',
-              },
-            ],
-          },
-        ),
-        discovery.getPermissionDetails(
-          'Sequencer',
-          discovery.getPermissionedAccounts('SystemConfig', 'batcherHash'),
-          'Central actor allowed to commit L2 transactions on L1.',
-        ),
-        discovery.getPermissionDetails(
-          'Guardian',
-          discovery.getPermissionedAccounts('KromaPortal', 'GUARDIAN'),
-          'Actor allowed to pause withdrawals. Currently set to the Security Council.',
-        ),
-        discovery.getMultisigPermission(
-          'KromaRewardVaultMultisig',
-          'Escrows a pool of KRO used as validator rewards by the AssetManager.',
-        ),
-      ],
-    },
-  },
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('L2OutputOracle', {
-          description: `The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every ${formatSeconds(
-            rootsSubmissionIntervalSeconds,
-          )}.`,
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('KromaPortal', {
-          description:
-            'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('SystemConfig', {
-          description:
-            'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('L1ERC721Bridge', {
-          description:
-            'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('L1CrossDomainMessenger', {
-          description:
-            "The L1 Cross Domain Messenger contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('Timelock', {
-          description: `Timelock contract behind which the ProxyAdmin is. There is a ${formatSeconds(
-            timelockDefaultDelay,
-          )} delay.`,
-        }),
-        discovery.getContractDetails('SecurityCouncil', {
-          description:
-            'Contract allowed to start upgrades, dismiss challenges and delete roots. It is also designated as a guardian, meaning it can pause withdrawals.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('UpgradeGovernor', {
-          description:
-            'Controls the Timelock. It is governed using a Soulbound NFT.',
-        }),
-        discovery.getContractDetails('ProxyAdmin', {
-          description:
-            "Admin of the L2OutputOracle, Timelock, KromaPortal, SystemConfig, SecurityCouncil, L1CrossDomainMessenger, L1ERC721Bridge, ZKVerifier, Colosseum, L1StandardBridge, UpgradeGovernor, SecurityCouncilToken, ValidatorPool proxies. It's effectively controlled by the Security Council. The proxy is behind a Timelock.",
-        }),
-        discovery.getContractDetails('Colosseum', {
-          description:
-            'Contract used to challenge state roots and prove fraud. The SecurityCouncil can interfere by deleting challenges and roots.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('ValidatorPool', {
-          description: `Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within ${formatSeconds(
-            proposerRoundDurationSecondsOLD,
-          )}, then the submission becomes open to everyone.`,
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('ValidatorManager', {
-          description: `Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within ${formatSeconds(proposerRoundDurationSeconds)}, after which anyone propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.`,
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('AssetManager', {
-          description:
-            'Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('ZKMerkleTrie', {
-          description: 'Trie contract used to prove withdrawals.',
-        }),
-        discovery.getContractDetails('ZKVerifier', {
-          description:
-            'ZK verifier used to verify the last step of a fraud proof, which corresponds to a block.',
-          ...upgradesProxy,
-        }),
-        discovery.getContractDetails('Poseidon2', {
-          description:
-            'Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.',
-        }),
-      ],
-    },
-    risks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK(formatSeconds(timelockDefaultDelay)),
-    ],
+    addresses: generateDiscoveryDrivenContracts([discovery]),
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      title: 'SP1 fault proofs upgrade',
+      url: 'https://blog.kroma.network/kromas-transition-to-zkvm-fault-proof-b8c8d2dc39c6',
+      date: '2025-02-11T00:00:00Z',
+      description:
+        'Kroma adds an option to prove faults using the SP1 zk virtual machine.',
+      type: 'general',
+    },
     {
       title: 'Chain fork #2 - Output root replaced',
       url: 'https://x.com/kroma_network/status/1774683208753590506',

@@ -1,3 +1,3 @@
 export * from './BackendProject'
-export * from './chainConverter'
+export * from './chainToProject'
 export * from './tvl'

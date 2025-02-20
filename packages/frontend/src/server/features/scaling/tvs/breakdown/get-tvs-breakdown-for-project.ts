@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import { getTvsBreakdown } from './get-tvs-breakdown'
 
@@ -29,14 +30,18 @@ type TvsBreakdownForProject = Awaited<
 >
 export const getCachedTvsBreakdownForProjectData = cache(
   async (project: Layer2 | Layer3) => {
-    const backendProject = toBackendProject(project)
-    const configMapping = getConfigMapping(backendProject)
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
 
-    return getTvsBreakdown(configMapping)(backendProject.projectId)
+    const backendProject = toBackendProject(project)
+    const configMapping = getConfigMapping(backendProject, chains)
+
+    return getTvsBreakdown(configMapping, chains)(backendProject.projectId)
   },
   ['getCachedTvsBreakdownForProject'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )
@@ -59,7 +64,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
               escrowAddress: EthereumAddress.random(),
             },
           ],
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -83,7 +88,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
               escrowAddress: EthereumAddress.random(),
             },
           ],
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -97,7 +102,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           chainId: ChainId.ETHEREUM,
           usdValue: 100,
           usdPrice: '1',
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',
@@ -111,7 +116,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           chainId: ChainId.ETHEREUM,
           usdValue: 100,
           usdPrice: '1',
-          explorerUrl: 'https://explorer.com',
+          url: 'https://example.com',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'TKN',

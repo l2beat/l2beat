@@ -1,219 +1,248 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
+import { UnixTime } from '@l2beat/shared-pure'
+import type { TooltipProps } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import { useActivityTimeRangeContext } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-context'
-import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
-import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
-import { Skeleton } from '~/components/core/skeleton'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { useIsClient } from '~/hooks/use-is-client'
-import { useLocalStorage } from '~/hooks/use-local-storage'
-import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
-import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
-import type { ActivityProjectFilter } from '~/server/features/scaling/activity/utils/project-filter-utils'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-import { api } from '~/trpc/react'
-import { Checkbox } from '../../core/checkbox'
-import { Chart } from '../core/chart'
-import { ChartControlsWrapper } from '../core/chart-controls-wrapper'
-import { ChartLegend } from '../core/chart-legend'
-import { ChartProvider } from '../core/chart-provider'
+import type { ChartMeta } from '~/components/core/chart/chart'
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipWrapper,
+  useChart,
+} from '~/components/core/chart/chart'
+import {
+  EthereumFillGradientDef,
+  EthereumStrokeGradientDef,
+} from '~/components/core/chart/defs/ethereum-gradient-def'
+import {
+  OthersFillGradientDef,
+  OthersStrokeGradientDef,
+} from '~/components/core/chart/defs/others-gradient-def'
+import {
+  RollupsFillGradientDef,
+  RollupsStrokeGradientDef,
+} from '~/components/core/chart/defs/rollups-gradient-def'
+import {
+  ValidiumsAndOptimiumsFillGradientDef,
+  ValidiumsAndOptimiumsStrokeGradientDef,
+} from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { formatTimestamp } from '~/utils/dates'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
+import { formatInteger } from '~/utils/number-format/format-integer'
 import type { ChartScale } from '../types'
-import { ActivityChartHeader } from './activity-chart-header'
-import { ActivityChartHover } from './activity-chart-hover'
-import type { ActivityChartType } from './use-activity-chart-render-params'
-import { useActivityChartRenderParams } from './use-activity-chart-render-params'
-import { typeToIndicator } from './utils/get-chart-type'
+
+export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
+
+interface ActivityChartDataPoint {
+  timestamp: number
+  projects: number
+  ethereum: number
+}
 
 interface Props {
+  data: ActivityChartDataPoint[] | undefined
+  syncedUntil: number | undefined
+  isLoading: boolean
   milestones: Milestone[]
-  entries: ScalingActivityEntry[]
-  hideScalingFactor?: boolean
+  showMainnet: boolean
+  scale: ChartScale
+  metric: ActivityMetric
   type: ActivityChartType
+  projectName?: string
+  className?: string
 }
 
 export function ActivityChart({
+  data,
+  syncedUntil,
   milestones,
-  entries,
-  hideScalingFactor,
-  type,
-}: Props) {
-  const { checked } = useRecategorisationPreviewContext()
-  const { timeRange, setTimeRange } = useActivityTimeRangeContext()
-  const { metric } = useActivityMetricContext()
-  const filter = useScalingFilterValues()
-  const [scale, setScale] = useLocalStorage<ChartScale>(
-    'scaling-tvs-scale',
-    'lin',
-  )
-
-  const [showMainnet, setShowMainnet] = useLocalStorage(
-    'scaling-activity-show-mainnet',
-    true,
-  )
-
-  const chartFilter: ActivityProjectFilter = filter.isEmpty
-    ? {
-        type: typeToChartFilterType(type),
-      }
-    : {
-        type: 'projects',
-        projectIds: entries.map((project) => project.id),
-      }
-
-  const { data: stats } = api.activity.chartStats.useQuery({
-    filter: chartFilter,
-    previewRecategorisation: checked,
-  })
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
-    filter: chartFilter,
-    previewRecategorisation: checked,
-  })
-
-  const { columns, valuesStyle, chartRange, formatYAxisLabel } =
-    useActivityChartRenderParams({
-      milestones,
-      chart: data,
-      showMainnet,
-      metric,
-      type,
-    })
-
-  return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={formatYAxisLabel}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <ActivityChartHover
-          {...data}
-          showEthereum={showMainnet}
-          metric={metric}
-          singleProject={
-            chartFilter.type === 'projects' &&
-            chartFilter.projectIds?.length === 1
-          }
-          type={type}
-        />
-      )}
-      useLogScale={scale === 'log'}
-    >
-      <section className="flex flex-col">
-        <ActivityChartHeader
-          stats={stats}
-          range={chartRange}
-          hideScalingFactor={hideScalingFactor}
-        />
-        <Chart className="mt-4" />
-        <ChartLegend
-          className="my-2"
-          elements={[
-            {
-              name:
-                type === 'ValidiumsAndOptimiums'
-                  ? 'Validiums and Optimiums'
-                  : (type ?? 'Projects'),
-              color: typeToIndicator(type),
-            },
-            {
-              name: 'Ethereum',
-              color: 'bg-indicator-ethereum',
-            },
-          ]}
-        />
-        <Controls
-          scale={scale}
-          setScale={setScale}
-          showMainnet={showMainnet}
-          setShowMainnet={setShowMainnet}
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-          metric={metric}
-        />
-      </section>
-    </ChartProvider>
-  )
-}
-
-interface ControlsProps {
-  scale: ChartScale
-  setScale: (scale: ChartScale) => void
-  showMainnet: boolean
-  setShowMainnet: (show: boolean) => void
-  timeRange: ActivityTimeRange
-  setTimeRange: (timeRange: ActivityTimeRange) => void
-  metric: ActivityMetric
-}
-
-function Controls({
-  scale,
-  setScale,
+  isLoading,
   showMainnet,
-  setShowMainnet,
-  timeRange,
-  setTimeRange,
+  scale,
+  type,
   metric,
-}: ControlsProps) {
-  const isClient = useIsClient()
+  projectName,
+  className,
+}: Props) {
+  const chartMeta = {
+    projects: {
+      label:
+        projectName ??
+        (type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type),
+      color:
+        type === 'ValidiumsAndOptimiums'
+          ? 'hsl(var(--chart-validiums-optimiums))'
+          : `hsl(var(--chart-${type.toLowerCase()}))`,
+    },
+    ethereum: {
+      label: 'Ethereum',
+      color: 'hsl(var(--chart-ethereum))',
+    },
+  } satisfies ChartMeta
+
   return (
-    <ChartControlsWrapper>
-      <div className="flex gap-1">
-        {isClient ? (
-          <RadioGroup
-            name="activityChartScale"
-            value={scale}
-            onValueChange={(value) => setScale(value as ChartScale)}
-          >
-            <RadioGroupItem value="log">LOG</RadioGroupItem>
-            <RadioGroupItem value="lin">LIN</RadioGroupItem>
-          </RadioGroup>
-        ) : (
-          <Skeleton className="h-8 w-[91px] md:w-[95px]" />
+    <ChartContainer
+      data={data}
+      className={className}
+      meta={chartMeta}
+      isLoading={isLoading}
+      milestones={milestones}
+    >
+      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+        <ChartLegend content={<ChartLegendContent />} />
+        <Area
+          dataKey="projects"
+          stroke="url(#strokeProjects)"
+          strokeWidth={2}
+          fill="url(#fillProjects)"
+          fillOpacity={1}
+          dot={false}
+          isAnimationActive={false}
+        />
+        {showMainnet && (
+          <Area
+            dataKey="ethereum"
+            stroke="url(#strokeEthereum)"
+            strokeWidth={2}
+            fill="url(#fillEthereum)"
+            fillOpacity={1}
+            dot={false}
+            isAnimationActive={false}
+          />
         )}
-        {isClient ? (
-          <Checkbox
-            name="showMainnetActivity"
-            checked={showMainnet}
-            onCheckedChange={(state) => setShowMainnet(!!state)}
-          >
-            <div className="flex flex-row items-center gap-2">
-              <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden md:inline">
-                {`ETH Mainnet ${metric === 'uops' ? 'Operations' : 'Transactions'}`}
-              </span>
-              <span className="md:hidden">{`ETH ${metric === 'uops' ? 'UOPS' : 'TPS'}`}</span>
-            </div>
-          </Checkbox>
-        ) : (
-          <Skeleton className="h-8 w-[114px] md:w-[230px]" />
-        )}
-      </div>
-      <ActivityTimeRangeControls
-        timeRange={timeRange}
-        setTimeRange={setTimeRange}
-      />
-    </ChartControlsWrapper>
+        {getCommonChartComponents({
+          data,
+          isLoading,
+          yAxis: {
+            tick: {
+              width: 100,
+            },
+            scale,
+            unit: metric === 'tps' ? ' TPS' : ' UOPS',
+          },
+        })}
+        <ChartTooltip content={<CustomTooltip syncedUntil={syncedUntil} />} />
+        <defs>
+          {type === 'Rollups' && (
+            <>
+              <RollupsFillGradientDef id="fillProjects" />
+              <RollupsStrokeGradientDef id="strokeProjects" />
+            </>
+          )}
+          {type === 'ValidiumsAndOptimiums' && (
+            <>
+              <ValidiumsAndOptimiumsFillGradientDef id="fillProjects" />
+              <ValidiumsAndOptimiumsStrokeGradientDef id="strokeProjects" />
+            </>
+          )}
+          {type === 'Others' && (
+            <>
+              <OthersFillGradientDef id="fillProjects" />
+              <OthersStrokeGradientDef id="strokeProjects" />
+            </>
+          )}
+          <EthereumFillGradientDef id="fillEthereum" />
+          <EthereumStrokeGradientDef id="strokeEthereum" />
+        </defs>
+      </AreaChart>
+    </ChartContainer>
   )
 }
 
-function typeToChartFilterType(
-  type: ActivityChartType,
-): Exclude<ActivityProjectFilter['type'], 'all' | 'projects'> {
-  switch (type) {
-    case 'Rollups':
-      return 'rollups'
-    case 'ValidiumsAndOptimiums':
-      return 'validiumsAndOptimiums'
-    case 'Others':
-      return 'others'
-    default:
-      assertUnreachable(type)
-  }
+function CustomTooltip({
+  active,
+  payload,
+  label: timestamp,
+  syncedUntil,
+}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+  const { meta } = useChart()
+  if (!active || !payload || typeof timestamp !== 'number') return null
+  return (
+    <ChartTooltipWrapper>
+      <div className="flex w-40 flex-col gap-1 sm:w-60">
+        <div className="mb-1 whitespace-nowrap">
+          {formatTimestamp(timestamp, {
+            longMonthName: true,
+          })}
+        </div>
+        <div className="flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-secondary">Average UOPS</span>
+          </div>
+        </div>
+        <HorizontalSeparator className="mb-1" />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = meta[entry.name!]!
+            return (
+              <div
+                key={entry.name}
+                className="flex w-full items-center justify-between gap-2"
+              >
+                <div className="flex items-center gap-1">
+                  <div
+                    className="relative inline-block size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </div>
+                <span className="whitespace-nowrap font-bold tabular-nums">
+                  {syncedUntil && syncedUntil < timestamp
+                    ? 'Not synced'
+                    : formatActivityCount(entry.value)}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+
+        <div className="mt-2 flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-secondary">Operations count</span>
+          </div>
+        </div>
+        <HorizontalSeparator className="mb-1" />
+        <div>
+          {payload.map((entry) => {
+            if (entry.value === undefined) return null
+            const config = meta[entry.name!]!
+            return (
+              <div
+                key={entry.name}
+                className="flex w-full items-start justify-between gap-2"
+              >
+                <div className="flex items-center gap-1">
+                  <div
+                    className="relative inline-block size-3 rounded"
+                    style={{
+                      backgroundColor: config.color,
+                    }}
+                  />
+                  <span className="w-20 leading-none sm:w-fit">
+                    {config.label}
+                  </span>
+                </div>
+                <span className="whitespace-nowrap font-bold tabular-nums">
+                  {syncedUntil && syncedUntil < timestamp
+                    ? 'Not synced'
+                    : formatInteger(entry.value * UnixTime.DAY)}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </ChartTooltipWrapper>
+  )
 }

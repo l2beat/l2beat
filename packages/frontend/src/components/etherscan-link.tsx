@@ -2,21 +2,15 @@ import { CustomLink } from './link/custom-link'
 
 interface EtherscanLinkProps {
   address: string
-  truncate?: boolean
-  etherscanUrl?: string
+  href?: string
   className?: string
 }
 
-export function EtherscanLink({
-  address,
-  truncate = true,
-  etherscanUrl = 'https://etherscan.io',
-  className,
-}: EtherscanLinkProps) {
-  const link = `${etherscanUrl}/address/${address}`
+export function EtherscanLink(props: EtherscanLinkProps) {
+  const href = props.href ?? `https://etherscan.io/address/${props.address}`
   return (
-    <CustomLink href={link} className={className}>
-      {truncate ? `${address.slice(0, 6)}…${address.slice(38, 42)}` : address}
+    <CustomLink href={href} className={props.className}>
+      {props.address.slice(0, 6)}…{props.address.slice(38, 42)}
     </CustomLink>
   )
 }

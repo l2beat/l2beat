@@ -41,6 +41,9 @@ export const stack: Layer3 = opStackL3({
   },
   rpcUrl: 'https://rpc.stack.so',
   genesisTimestamp: new UnixTime(1709683711),
-  celestiaDaNamespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M=',
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAADtb2kYRqm8M=',
+  },
   isNodeAvailable: 'UnderReview',
 })

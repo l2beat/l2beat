@@ -1,5 +1,9 @@
 import type { BackendProject } from '@l2beat/backend-shared'
-import type { OnchainVerifier, ProjectDaTrackingConfig } from '@l2beat/config'
+import type {
+  ChainConfig,
+  OnchainVerifier,
+  ProjectDaTrackingConfig,
+} from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type {
   AmountConfigEntry,
@@ -172,10 +176,12 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
+  readonly updateMessagesRetentionPeriodDays: number
 }
 
 export interface VerifiersConfig {
   readonly verifiers: OnchainVerifier[]
+  readonly chains: ChainConfig[]
 }
 
 export interface DiscordConfig {
@@ -198,18 +204,31 @@ export interface DaBeatConfig {
   readonly availWsUrl: string
 }
 
+type BaseLayerConfig = {
+  type: 'baseLayer'
+  daLayer: string
+  projectId: ProjectId
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export type DaTrackingConfig =
+  | (ProjectDaTrackingConfig & { projectId: ProjectId })
+  | BaseLayerConfig
+
 export interface DataAvailabilityTrackingConfig {
-  readonly blobscan: {
-    readonly baseUrl: string
-    readonly callsPerMinute: number
-    readonly timeout: number
-  }
-  readonly ethereum: {
-    readonly minHeight: number
-    readonly batchSize: number
-  }
+  readonly layers: {
+    type: 'ethereum' | 'celestia' | 'avail'
+    name: string
+    url: string
+    callsPerMinute: number
+    batchSize: number
+    startingBlock: number
+  }[]
+
   readonly projects: {
-    id: ProjectId
-    config: ProjectDaTrackingConfig
+    /** Hash computed automatically based on fields */
+    configurationId: string
+    config: DaTrackingConfig
   }[]
 }

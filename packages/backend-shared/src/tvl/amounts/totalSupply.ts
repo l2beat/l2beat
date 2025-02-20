@@ -7,7 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { BackendProject } from '../../BackendProject'
-import { chainConverter } from '../../chainConverter'
 
 export function getTotalSupplyEntry(
   chain: ChainConfig,
@@ -17,8 +16,7 @@ export function getTotalSupplyEntry(
   assert(token.supply === 'totalSupply' && token.address)
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
 
-  const chainName = chainConverter.toName(token.chainId)
-  const assetId = AssetId.create(chainName, token.address)
+  const assetId = AssetId.create(chain.name, token.address)
   const includeInTotal = !token.excludeFromTotal
   const isAssociated = !!project.associatedTokens?.includes(token.symbol)
   const sinceTimestamp = UnixTime.max(
@@ -31,7 +29,7 @@ export function getTotalSupplyEntry(
     address: token.address,
     assetId: assetId,
     category: token.category,
-    chain: chainName,
+    chain: chain.name,
     dataSource: chain.name,
     decimals: token.decimals,
     includeInTotal: includeInTotal,

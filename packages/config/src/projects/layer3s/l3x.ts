@@ -38,7 +38,7 @@ export const l3x: Layer3 = orbitStackL3({
   chainConfig: {
     name: 'l3x',
     chainId: 12324,
-    explorerUrl: 'https://explorer.l3x.com/',
+    explorerUrl: 'https://explorer.l3x.com',
     explorerApi: {
       url: 'https://explorer.l3x.com/api',
       type: 'blockscout',
@@ -50,7 +50,6 @@ export const l3x: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,

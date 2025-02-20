@@ -74,12 +74,12 @@ model BlockTimestamp {
 }
 
 model DataAvailability {
-  projectId String   @db.VarChar(255)
-  daLayer   String   @db.VarChar(255)
   timestamp DateTime @db.Timestamp(6)
+  daLayer   String   @db.VarChar(255)
+  projectId String   @db.VarChar(255)
   totalSize BigInt
 
-  @@id([projectId, timestamp])
+  @@id([timestamp, daLayer, projectId])
 }
 
 model DiscoveryCache {
@@ -180,6 +180,16 @@ model UpdateNotifier {
 
   @@index([blockNumber])
   @@index([projectName])
+}
+
+model UpdateMessage {
+  projectName String @db.VarChar(255)
+  chain       String @db.VarChar(255)
+  blockNumber Int
+  timestamp   DateTime @db.Timestamp(6)
+  message     String @db.Text
+
+  @@id([projectName, chain, blockNumber])
 }
 
 model Value {
