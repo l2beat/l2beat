@@ -3,7 +3,7 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
-import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { Checkbox } from '~/components/core/checkbox'
@@ -37,9 +37,9 @@ export function ProjectDaThroughputChart({
 
   return (
     <div>
-      <div className="mt-4 flex justify-between">
-        <ChartTimeRange range={chartRange} />
-        <div className="flex flex-wrap justify-end gap-1">
+      <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
+        <ProjectChartTimeRange range={chartRange} />
+        <div className="flex justify-between gap-1">
           <Checkbox
             name="showMainnetActivity"
             checked={showMax}
