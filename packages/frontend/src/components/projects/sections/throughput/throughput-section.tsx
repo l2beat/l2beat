@@ -3,23 +3,32 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
 import { cn } from '~/utils/cn'
+import {
+  formatBpsToMbps,
+  formatBytes,
+} from '~/utils/number-format/format-bytes'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
 
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   throughput: DaLayerThroughput[]
-  pastDayAvgCapacityUtilization: string
-  pastDayAvgThroughput: string
-  largestPoster: string | undefined
-  totalPosted: string
+  pastDayAvgCapacityUtilization: number
+  pastDayAvgThroughputPerSecond: number
+  largestPoster:
+    | {
+        name: string
+        percentage: number
+      }
+    | undefined
+  totalPosted: number
 }
 
 export function ThroughputSection({
   projectId,
   throughput,
   pastDayAvgCapacityUtilization,
-  pastDayAvgThroughput,
+  pastDayAvgThroughputPerSecond,
   largestPoster,
   totalPosted,
   ...sectionProps
@@ -41,13 +50,26 @@ export function ThroughputSection({
           '-mx-4 mt-5 bg-surface-secondary p-4 md:mx-0 md:rounded-lg md:p-6',
         )}
       >
-        <Detail label="Past day avg. throughput" value={pastDayAvgThroughput} />
+        <Detail
+          label="Past day avg. throughput"
+          value={formatBpsToMbps(pastDayAvgThroughputPerSecond)}
+        />
         <Detail
           label="Past day avg. capacity used"
-          value={pastDayAvgCapacityUtilization}
+          value={`${pastDayAvgCapacityUtilization}%`}
         />
-        <Detail label="Past day largest poster" value={largestPoster} />
-        <Detail label="Past day total data posted" value={totalPosted} />
+        <Detail
+          label="Past day largest poster"
+          value={
+            largestPoster
+              ? `${largestPoster.name} (${largestPoster.percentage}%)`
+              : undefined
+          }
+        />
+        <Detail
+          label="Past day total data posted"
+          value={formatBytes(totalPosted)}
+        />
       </div>
     </ProjectSection>
   )

@@ -2,7 +2,6 @@
 
 import type { DaLayerThroughput } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { round } from 'lodash'
 import { useMemo, useState } from 'react'
 import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
@@ -64,15 +63,12 @@ function getDataWithConfiguredThroughputs(
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .map((config, i, arr) => {
       const batchesPerDay = UnixTime.DAY / config.frequency
-      const multiplier = batchesPerDay * 1024
 
       return {
         ...config,
         untilTimestamp: arr[i + 1]?.sinceTimestamp ?? Infinity,
-        maxDaily: round(config.size * multiplier, 2),
-        targetDaily: config.target
-          ? round(config.target * multiplier, 2)
-          : null,
+        maxDaily: config.size * batchesPerDay,
+        targetDaily: config.target ? config.target * batchesPerDay : null,
       }
     })
 

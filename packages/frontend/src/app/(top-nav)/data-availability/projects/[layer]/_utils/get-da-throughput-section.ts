@@ -3,7 +3,6 @@ import { featureFlags } from '~/consts/feature-flags'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/get-da-throughput-table'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
-import { formatBytes } from '~/utils/number-format/format-bytes'
 
 export async function getDaThroughputSection(
   project: Project<'daLayer' | 'statuses' | 'display'>,
@@ -36,11 +35,14 @@ export async function getDaThroughputSection(
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
-    pastDayAvgCapacityUtilization: `${projectData.pastDayAvgCapacityUtilization}%`,
-    pastDayAvgThroughput: `${projectData.pastDayAvgThroughput} MB/s`,
+    pastDayAvgCapacityUtilization: projectData.pastDayAvgCapacityUtilization,
+    pastDayAvgThroughputPerSecond: projectData.pastDayAvgThroughputPerSecond,
     largestPoster: projectData.largestPoster
-      ? `${projectData.largestPoster.name} (${projectData.largestPoster.percentage}%)`
+      ? {
+          name: projectData.largestPoster.name,
+          percentage: projectData.largestPoster.percentage,
+        }
       : undefined,
-    totalPosted: formatBytes(projectData.totalPosted),
+    totalPosted: projectData.totalPosted,
   }
 }
