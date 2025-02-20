@@ -81,14 +81,14 @@ export function ActivityChart({
           ? 'hsl(var(--chart-cyan))'
           : `hsl(var(--chart-${type.toLowerCase()}))`,
       indicatorType: {
-        shape: 'square',
+        shape: 'line',
       },
     },
     ethereum: {
       label: 'Ethereum',
       color: 'hsl(var(--chart-ethereum))',
       indicatorType: {
-        shape: 'square',
+        shape: 'line',
       },
     },
   } satisfies ChartMeta
@@ -228,11 +228,9 @@ function CustomTooltip({
                 className="flex w-full items-start justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
-                  <div
-                    className="relative inline-block size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

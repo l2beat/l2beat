@@ -90,7 +90,6 @@ const getCachedDaThroughputTableData = cache(
               100 *
               100,
           ) / 100
-
         return [
           daLayer.id,
           {

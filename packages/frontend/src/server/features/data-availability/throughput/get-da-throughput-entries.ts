@@ -81,7 +81,6 @@ function getDaThroughputEntry(
   if (!data) return undefined
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
-
   const notSyncedStatus = data
     ? getThroughputSyncWarning(new UnixTime(data.syncedUntil))
     : undefined
