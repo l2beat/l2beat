@@ -7,7 +7,7 @@ Generated with discovered.json: 0xfffd299683732e1ce7512abfd484edcdadf1ebb8
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial L2 discovery: 3 unverified contracts, ProxyAdmin gov correctly resolves to L1.
 
 ## Initial discovery
 
