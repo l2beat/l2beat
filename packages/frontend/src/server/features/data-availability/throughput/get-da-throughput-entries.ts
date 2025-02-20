@@ -19,9 +19,10 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
     ),
   )
 
-  const daLayers = await ps.getProjects({
-    select: ['daLayer', 'statuses'],
-  })
+  const [daLayers, daBridges] = await Promise.all([
+    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({ select: ['daBridge'] }),
+  ])
 
   const daLayersWithDaTracking = daLayers.filter((p) =>
     uniqueDaLayersInProjects.has(p.id),
@@ -37,7 +38,9 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   )
 
   const entries = daLayersWithDaTracking
-    .map((project) => getDaThroughputEntry(project, latestData[project.id]))
+    .map((project) =>
+      getDaThroughputEntry(project, daBridges, latestData[project.id]),
+    )
     .filter(notUndefined)
   return entries
 }
@@ -67,9 +70,12 @@ export interface DaThroughputEntry extends CommonProjectEntry {
 
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
+  bridges: Project<'daBridge'>[],
   data: ThroughputTableData[string] | undefined,
 ): DaThroughputEntry | undefined {
   if (!data) return undefined
+
+  const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
 
   const notSyncedStatus = data
     ? getThroughputSyncWarning(data.syncedUntil)
@@ -79,7 +85,7 @@ function getDaThroughputEntry(
     slug: project.slug,
     name: project.name,
     nameSecondLine: project.daLayer.type,
-    href: `/data-availability/projects/${project.slug}`,
+    href: `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`,
     statuses: {
       underReview: project.statuses.isUnderReview ? 'config' : undefined,
       syncWarning: notSyncedStatus,
