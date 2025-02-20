@@ -2,7 +2,7 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Line, LineChart } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
 import {
@@ -14,12 +14,21 @@ import {
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { EmeraldFillGradientDef } from '~/components/core/chart/defs/emerald-gradient-def'
+import {
+  EthereumFillGradientDef,
+  EthereumStrokeGradientDef,
+} from '~/components/core/chart/defs/ethereum-gradient-def'
+import {
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
-import { daChartMeta } from './meta'
+import { getDaChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
@@ -27,6 +36,7 @@ interface Props {
 }
 
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const chartMeta = getDaChartMeta({ shape: 'line' })
   const { denominator, unit } = getDaDataParams(data)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
@@ -40,28 +50,41 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   }, [data, denominator])
 
   return (
-    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
-      <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <defs>
+          <EthereumFillGradientDef id="ethereum-fill" />
+          <EthereumStrokeGradientDef id="ethereum-stroke" />
+          <PinkFillGradientDef id="pink-fill" />
+          <PinkStrokeGradientDef id="pink-stroke" />
+          <EmeraldFillGradientDef id="emerald-fill" />
+        </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        <Line
+        <Area
           dataKey="ethereum"
-          isAnimationActive={false}
-          stroke={daChartMeta.ethereum.color}
+          fill="url(#ethereum-fill)"
+          fillOpacity={1}
+          stroke="url(#ethereum-stroke)"
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <Line
+        <Area
           dataKey="celestia"
-          isAnimationActive={false}
-          stroke={daChartMeta.celestia.color}
+          fill="url(#pink-fill)"
+          fillOpacity={1}
+          stroke="url(#pink-stroke)"
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <Line
+        <Area
           dataKey="avail"
-          isAnimationActive={false}
-          stroke={daChartMeta.avail.color}
+          fill="url(#emerald-fill)"
+          fillOpacity={1}
+          stroke={chartMeta.avail.color}
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
         {getCommonChartComponents({
@@ -76,7 +99,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           },
         })}
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
-      </LineChart>
+      </AreaChart>
     </ChartContainer>
   )
 }

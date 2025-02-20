@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "dydx",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"],
   "maxDepth": 10,
   "names": {

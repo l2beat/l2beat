@@ -2,7 +2,7 @@
   "name": "rss3",
   "chain": "ethereum",
   "blockNumber": 21041870,
-  "configHash": "0xe052369b1bea751c84265b7d4c11ac7e8fb0014861da1926712969fd3411536b",
+  "configHash": "0x6bc0c28b0d8e21d9383fac062ee6fc2654c7b34dcb4a6797226a5f885fe2e5a9",
   "contracts": [
     {
       "name": "ProxyAdmin",

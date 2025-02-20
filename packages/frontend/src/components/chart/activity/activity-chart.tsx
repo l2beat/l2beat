@@ -16,21 +16,21 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
+  CyanFillGradientDef,
+  CyanStrokeGradientDef,
+} from '~/components/core/chart/defs/cyan-gradient-def'
+import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/ethereum-gradient-def'
 import {
-  OthersFillGradientDef,
-  OthersStrokeGradientDef,
-} from '~/components/core/chart/defs/others-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
-import {
-  ValidiumsAndOptimiumsFillGradientDef,
-  ValidiumsAndOptimiumsStrokeGradientDef,
-} from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/yellow-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
@@ -78,17 +78,17 @@ export function ActivityChart({
         (type === 'ValidiumsAndOptimiums' ? 'Validiums and Optimiums' : type),
       color:
         type === 'ValidiumsAndOptimiums'
-          ? 'hsl(var(--chart-validiums-optimiums))'
+          ? 'hsl(var(--chart-cyan))'
           : `hsl(var(--chart-${type.toLowerCase()}))`,
       indicatorType: {
-        shape: 'square',
+        shape: 'line',
       },
     },
     ethereum: {
       label: 'Ethereum',
       color: 'hsl(var(--chart-ethereum))',
       indicatorType: {
-        shape: 'square',
+        shape: 'line',
       },
     },
   } satisfies ChartMeta
@@ -138,20 +138,20 @@ export function ActivityChart({
         <defs>
           {type === 'Rollups' && (
             <>
-              <RollupsFillGradientDef id="fillProjects" />
-              <RollupsStrokeGradientDef id="strokeProjects" />
+              <PinkFillGradientDef id="fillProjects" />
+              <PinkStrokeGradientDef id="strokeProjects" />
             </>
           )}
           {type === 'ValidiumsAndOptimiums' && (
             <>
-              <ValidiumsAndOptimiumsFillGradientDef id="fillProjects" />
-              <ValidiumsAndOptimiumsStrokeGradientDef id="strokeProjects" />
+              <CyanFillGradientDef id="fillProjects" />
+              <CyanStrokeGradientDef id="strokeProjects" />
             </>
           )}
           {type === 'Others' && (
             <>
-              <OthersFillGradientDef id="fillProjects" />
-              <OthersStrokeGradientDef id="strokeProjects" />
+              <YellowFillGradientDef id="fillProjects" />
+              <YellowStrokeGradientDef id="strokeProjects" />
             </>
           )}
           <EthereumFillGradientDef id="fillEthereum" />
@@ -228,11 +228,9 @@ function CustomTooltip({
                 className="flex w-full items-start justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
-                  <div
-                    className="relative inline-block size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

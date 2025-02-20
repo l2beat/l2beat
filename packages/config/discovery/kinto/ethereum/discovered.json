@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 21872461,
-  "configHash": "0x6b9bf0462334cdadbc9ca9606b62e49f9824d7d1e15fa11bd6972e3070b003b0",
+  "configHash": "0xb27b5b0c626503ac0e2ea2968e025e56b70859e9f96497720688e56fc84f2cd4",
   "contracts": [
     {
       "name": "Bridger",

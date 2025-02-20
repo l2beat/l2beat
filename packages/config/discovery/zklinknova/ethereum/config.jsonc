@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zklinknova",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf", // zkLink
     "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6", // L1ERC20Bridge

@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 21786859,
-  "configHash": "0xe574cf5e4bbcc605783f9f6097a2a8e89655209e928c328a3d291ca6db028bf2",
+  "configHash": "0xbb06a5682683eacfe88cf4fdc3fd314a4f5f60a3cea397d25d0d7ef728236afb",
   "contracts": [
     {
       "name": "ValidatorWallet",

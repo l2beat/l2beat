@@ -15,9 +15,9 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
@@ -117,8 +117,8 @@ export function ProjectTokenChart({
         <AreaChart data={chartData} margin={{ top: 20 }}>
           {isBridge && (
             <defs>
-              <RollupsFillGradientDef id="fill" />
-              <RollupsStrokeGradientDef id="stroke" />
+              <PinkFillGradientDef id="fill" />
+              <PinkStrokeGradientDef id="stroke" />
             </defs>
           )}
           {!isBridge && <ChartLegend content={<ChartLegendContent />} />}

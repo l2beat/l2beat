@@ -2,7 +2,7 @@
   "name": "gmnetwork",
   "chain": "ethereum",
   "blockNumber": 21235441,
-  "configHash": "0x0db7c8cfea1644fa3c8acb7c1463b1a7e49a855c227139196acc171dd552874e",
+  "configHash": "0xbc1288efcbb7b634c5ddfd06801883d369b66a3943da1e80f7e625fc0d775928",
   "contracts": [
     {
       "name": "ProxyAdmin",

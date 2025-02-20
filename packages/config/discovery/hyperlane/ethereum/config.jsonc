@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "hyperlane",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xc005dc82818d67AF737725bD4bf75435d065D239",
     "0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
