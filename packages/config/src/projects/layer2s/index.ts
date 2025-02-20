@@ -82,6 +82,7 @@ import { kinto } from './kinto'
 import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
+import { lachain } from './lachain'
 import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
@@ -285,6 +286,7 @@ export const layer2s: Layer2[] = [
   koi,
   kontos,
   kroma,
+  lachain,
   lambda,
   layerai,
   leaf,
