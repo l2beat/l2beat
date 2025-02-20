@@ -51,7 +51,7 @@ export async function makeConfig(
     // if we connect locally to production db, we want to be readonly!
     isLocal && !env.string('LOCAL_DB_URL').includes('localhost'),
   )
-
+  console.log(env.string('COINGECKO_API_KEY'))
   return {
     name,
     isReadonly,
