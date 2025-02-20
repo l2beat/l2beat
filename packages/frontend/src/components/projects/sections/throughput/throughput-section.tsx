@@ -109,7 +109,7 @@ function Detail({
       </span>
       {value ? (
         <SyncStatusWrapper isSynced={isSynced}>
-          <span className="text-lg font-medium text-primary md:font-bold">
+          <span className="text-sm font-medium text-primary xs:text-lg md:font-bold">
             {value}
           </span>
         </SyncStatusWrapper>
