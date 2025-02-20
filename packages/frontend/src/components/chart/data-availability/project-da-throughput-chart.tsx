@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react'
 import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { Checkbox } from '~/components/core/checkbox'
 import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
@@ -17,6 +18,8 @@ export function ProjectDaThroughputChart({
   configuredThroughputs,
 }: { projectId: ProjectId; configuredThroughputs: DaLayerThroughput[] }) {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
+  const [showMax, setShowMax] = useState(false)
+
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
     projectId,
@@ -30,21 +33,31 @@ export function ProjectDaThroughputChart({
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data,
     configuredThroughputs,
+    showMax,
   )
 
   return (
     <div>
       <div className="mt-4 flex justify-between">
         <ChartTimeRange range={chartRange} />
-        <ChartTimeRangeControls
-          name="Range"
-          value={range}
-          setValue={setRange}
-          options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
-            value: v,
-            label: v.toUpperCase(),
-          }))}
-        />
+        <div className="flex gap-1">
+          <Checkbox
+            name="showMainnetActivity"
+            checked={showMax}
+            onCheckedChange={(state) => setShowMax(!!state)}
+          >
+            Show maximum
+          </Checkbox>
+          <ChartTimeRangeControls
+            name="Range"
+            value={range}
+            setValue={setRange}
+            options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+              value: v,
+              label: v.toUpperCase(),
+            }))}
+          />
+        </div>
       </div>
       <ProjectDaAbsoluteThroughputChart
         projectId={projectId}
@@ -58,6 +71,7 @@ export function ProjectDaThroughputChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputDataPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
+  showMax: boolean,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -67,8 +81,9 @@ function getDataWithConfiguredThroughputs(
       return {
         ...config,
         untilTimestamp: arr[i + 1]?.sinceTimestamp ?? Infinity,
-        maxDaily: config.size * batchesPerDay,
-        targetDaily: config.target ? config.target * batchesPerDay : null,
+        maxDaily: showMax ? config.size * batchesPerDay : null,
+        targetDaily:
+          showMax && config.target ? config.target * batchesPerDay : null,
       }
     })
 
