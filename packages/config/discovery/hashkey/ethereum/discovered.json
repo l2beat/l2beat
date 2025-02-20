@@ -2,7 +2,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "blockNumber": 21680579,
-  "configHash": "0x1ed2845deb6ca73e058a2bc55941b0f93c8dc04bbc8a596717f989e58a75461b",
+  "configHash": "0x3814554dcec4c248822eb845ecac78815a8667500216c792659d9c8ea0f160ed",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",

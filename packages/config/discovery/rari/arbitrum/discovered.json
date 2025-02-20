@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 303211044,
-  "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
+  "configHash": "0x1f02ddf628057270ebc7edee37d9b89560a7b632803178beac05b16f3f3ba3d4",
   "contracts": [
     {
       "name": "ProxyAdmin",

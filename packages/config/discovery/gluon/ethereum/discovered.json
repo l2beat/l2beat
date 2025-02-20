@@ -2,7 +2,7 @@
   "name": "gluon",
   "chain": "ethereum",
   "blockNumber": 21686363,
-  "configHash": "0xa1e33743a7552d6f7445074d394e12251ad517082d850543606c93a534575b4d",
+  "configHash": "0x7b054d7428f73f3dd1e4a622b5113ae8c2bf074daa340abeb84f47582d5c14fd",
   "contracts": [
     {
       "name": "SpotData",

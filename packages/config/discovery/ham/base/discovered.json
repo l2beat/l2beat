@@ -2,7 +2,7 @@
   "name": "ham",
   "chain": "base",
   "blockNumber": 22580368,
-  "configHash": "0x26f53f1d27ac36dcccba74de24699c55abf7ef19f4994a3e71283142aedfea04",
+  "configHash": "0xdc845520f31218a8e0cf155536877f64e31fa25d2423b95dbbce8bbee47ec8fe",
   "contracts": [
     {
       "name": "HamMultisig1",

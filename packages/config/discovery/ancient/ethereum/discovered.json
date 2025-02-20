@@ -2,7 +2,7 @@
   "name": "ancient",
   "chain": "ethereum",
   "blockNumber": 21808937,
-  "configHash": "0x6118c78d073d3d89fb3f4f810acd02afcd506704ccc1606c8a08501c5ab2eecc",
+  "configHash": "0xdefb114f4f5f0195ddcd246bd8ec78cc61bc7351e5e6570848214ee33bfc359a",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
