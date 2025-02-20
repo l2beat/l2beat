@@ -179,11 +179,11 @@ export const layerzerov2oft: Bridge = {
       risks: [
         {
           category: 'Users can be censored if',
-          text: 'any required verifiers fail to approve the transfer.',
+          text: 'any required Verifiers fail to approve the transfer.',
         },
         {
           category: 'Funds can be stolen if',
-          text: 'the Executor and the Verifiers collude to submit fraudulent block hash and relay fraudulent transfer.',
+          text: 'all required Verifiers collude to approve and relay a fraudulent transfer.',
         },
         {
           category: 'Funds can be stolen if',
