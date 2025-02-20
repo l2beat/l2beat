@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 305003923,
-  "configHash": "0x433d1b3747d61c4a9f2cd26e6adb521b399f50307dc6d28cf57406efa5db8974",
+  "configHash": "0x2669c204c7fad7e1a402fea9495fc6c1f51f67bc306fd0e3067af8364214aeb0",
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -1097,50 +1097,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
-      "template": "orbitstack/SecurityCouncil",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1734958394,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
-          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
-          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-          "0x8688515028955734350067695939423222009623",
-          "0x88910996671162953E89DdcE5C8137f9077da217",
-          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
-          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
-          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC"
-        ],
-        "$threshold": 1,
-        "domainSeparator": "0xa216ac1734f9ecbff31367c5b2b02c92f2d421add885907ffcead30128e7c621",
-        "getChainId": 42161,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 13 (8%)",
-        "nonce": 0,
-        "VERSION": "1.3.0"
-      },
-      "references": [
-        {
-          "text": "Security Council members - Arbitrum Foundation Docs",
-          "href": "https://docs.arbitrum.foundation/security-council-members"
-        }
-      ]
-    },
-    {
       "name": "CoreGovernor",
       "address": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
       "template": "orbitstack/layer2/CoreGovernor",
@@ -1223,7 +1179,6 @@
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
     },
-    { "address": "0x0E5011001cF9c89b0259BC3B050785067495eBf5" },
     {
       "name": "EmilianoBonassi-Conduit",
       "address": "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
@@ -1236,10 +1191,6 @@
       "name": "yoav.eth-EF",
       "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
     },
-    { "address": "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF" },
-    { "address": "0x5280406912EB8Ec677Df66C326BE48f938DC2e44" },
-    { "address": "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710" },
-    { "address": "0x5772E77ABf5E914c6B1C1Ea15C5a2C3750E2FEEC" },
     {
       "name": "DennisonBertram-Tally",
       "address": "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
@@ -1248,7 +1199,6 @@
       "name": "cts-Zellic",
       "address": "0x5a09A94eE8198D3c474d723337aa58023810022C"
     },
-    { "address": "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF" },
     {
       "name": "fred-Arbitrum",
       "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
@@ -1258,13 +1208,10 @@
       "name": "JohnMorrow-Gauntlet",
       "address": "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
     },
-    { "address": "0x8688515028955734350067695939423222009623" },
     {
       "name": "GriffGreen-Giveth",
       "address": "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
     },
-    { "address": "0x88910996671162953E89DdcE5C8137f9077da217" },
-    { "address": "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5" },
     {
       "name": "StevenThornton-OpenZeppelin",
       "address": "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
@@ -1283,7 +1230,6 @@
       "address": "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
     },
     { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
-    { "address": "0xf6B6F07862A02C85628B3A9688beae07fEA9C863" },
     {
       "name": "L1Timelock_l2alias",
       "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a",
@@ -1325,8 +1271,7 @@
           "from": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
         }
       ]
-    },
-    { "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd" }
+    }
   ],
   "abis": {
     "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9": [
@@ -1975,55 +1920,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "0xdb216562328215E010F819B5aBe947bad4ca961e": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -2065,9 +1961,6 @@
       "function setDefaultGateway(address newL2DefaultGateway)",
       "function setGateway(address[] _l1Token, address[] _gateway)"
     ],
-    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": [
-      "constructor(address _singleton)"
-    ],
     "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2102,7 +1995,6 @@
     "orbitstack/layer2/SecurityCouncilMemberSyncAction": "0x474b5acd9cedfb0791633da5fd1e96b7b457faed65dc691ce65923392e0f83dd",
     "orbitstack/layer2/TreasuryGovernor": "0x4170b604f2d20c4a0ec807932623e3752e43482c8027706b9b46b9e4430a0f45",
     "orbitstack/layer2/TreasuryTimelock": "0x9f09da651b5fdfb63c9cffbbd429e42697ef61c94b994026a3a341aad5ec98fd",
-    "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac",
-    "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa"
+    "orbitstack/layer2/UpgradeExecRouteBuilder": "0x9847b746498bffa2a68a790be0db1563328875748cf497ab0a7e58f8872002ac"
   }
 }

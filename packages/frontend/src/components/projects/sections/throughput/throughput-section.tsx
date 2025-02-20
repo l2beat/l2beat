@@ -2,6 +2,7 @@ import type { DaLayerThroughput } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { cn } from '~/utils/cn'
 import {
   formatBpsToMbps,
@@ -40,10 +41,12 @@ export function ThroughputSection({
         for the selected time period, as well as the maximum possible throughput
         per day.
       </p>
+      <HorizontalSeparator className="my-4" />
       <ProjectDaThroughputChart
         projectId={projectId}
         configuredThroughputs={throughput}
       />
+      <HorizontalSeparator className="my-4" />
       <div
         className={cn(
           'grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:grid-cols-4',
