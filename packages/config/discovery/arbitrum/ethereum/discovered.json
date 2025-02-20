@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 21887612,
+  "blockNumber": 21887731,
   "configHash": "0xbcf48068f3ee9cbe6f429a7053bb96d9add6dc8fef7a52c40a04798d3dbd6184",
   "contracts": [
     {
@@ -195,7 +195,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1661457944,
       "values": {
         "$admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
@@ -233,7 +233,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 820475,
+        "batchCount": 820487,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -245,9 +245,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 21887498,
+          "prevBlockNumber": 21887624,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 21887553
+          "prevSequencedBlockNumber": 21887679
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -273,7 +273,7 @@
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1877401,
+        "totalDelayedMessagesRead": 1877423,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -644,7 +644,7 @@
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0xf594e51428cbbc837b5eef0dd4d663217c003e8a4c8fe8313e6feec0a8cb06b0",
+        "latestConfirmed": "0xa30098efce86a09cd0e09bac7deadd8b6c7a7026a40ab82b69a1826b4ba30557",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1340,11 +1340,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1877410,
+        "delayedMessageCount": 1877432,
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 820475,
-        "sequencerReportedSubMessageCount": 285826914
+        "sequencerMessageCount": 820487,
+        "sequencerReportedSubMessageCount": 285832771
       },
       "derivedName": "Bridge"
     },
@@ -4975,7 +4975,7 @@
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
     "orbitstack/RollupProxyBoLD": "0x2967121897fe7a95a5191f6510aee7f8fe7b8768a6b09168511622c60db20d89",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
-    "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
+    "orbitstack/SequencerInbox": "0xd3e39037ef9e2fbff2690d1f59e38e2319a5f12e8f836cc72c83ae2c0c41a83b",
     "orbitstack/Timelock": "0x6995d1593d881b36fd5d7ee91d1b5eaa3e88438ac90bc3f2280bd04257143076",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
   }
