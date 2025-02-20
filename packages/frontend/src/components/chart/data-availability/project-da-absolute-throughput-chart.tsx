@@ -91,7 +91,6 @@ export function ProjectDaAbsoluteThroughputChart({
           )}
           {projectId === 'avail' && <EmeraldFillGradientDef id="avail-fill" />}
         </defs>
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
@@ -116,6 +115,7 @@ export function ProjectDaAbsoluteThroughputChart({
             strokeDasharray={
               projectChartMeta.projectTarget?.indicatorType.strokeDasharray
             }
+            type="stepAfter"
             dot={false}
           />
         )}
@@ -129,9 +129,11 @@ export function ProjectDaAbsoluteThroughputChart({
             strokeDasharray={
               projectChartMeta.projectMax?.indicatorType.strokeDasharray
             }
+            type="stepAfter"
             dot={false}
           />
         )}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         {getCommonChartComponents({
           data: chartData,
           isLoading,

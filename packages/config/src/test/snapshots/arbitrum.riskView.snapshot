@@ -8,20 +8,19 @@
     value: "Onchain"
   }
   exitWindow: {
-    description: "Non-emergency upgrades are initiated on L2 and go through a 8d delay. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have only 7d to exit. \n    \n  If users post a tx after that time, they would only be able to self propose a state root 12d 17h after the last state root was proposed and then wait for the 6d 8h challenge window, while the upgrade would be confirmed just after the 6d 8h challenge window and the 3d L1 timelock."
-    orderHint: 604800
+    description: "Non-emergency upgrades are initiated on L2 and go through a 8d delay on L2 and a 3d delay on L1. Since there is a 1d delay to force a tx (forcing the inclusion in the following state update), users have 10d to exit."
+    orderHint: 864000
     secondLine: undefined
     sentiment: "warning"
-    value: "7d"
+    value: "10d"
     warning: {
       sentiment: "bad"
       value: "The Security Council can upgrade with no delay."
     }
   }
   proposerFailure: {
-    description: "Anyone can become a Proposer after 12d 17h of inactivity from the currently whitelisted Proposers."
-    orderHint: 1099632
-    secondLine: "12d 17h delay"
+    description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
+    orderHint: 0
     sentiment: "good"
     value: "Self propose"
   }
