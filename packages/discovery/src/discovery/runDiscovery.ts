@@ -10,6 +10,7 @@ import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
+import { TEMPLATES_PATH } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
@@ -49,11 +50,7 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
-  const templatesFolder = path.join(
-    configReader.rootPath,
-    'discovery',
-    '_templates',
-  )
+  const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
     sourcesFolder: config.sourcesFolder,

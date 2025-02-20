@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs'
-import path from 'path'
+import path, { basename } from 'path'
 import type {
   ContractParameters,
   DiscoveryOutput,
@@ -7,12 +7,12 @@ import type {
 } from '@l2beat/discovery-types'
 import { interpolateModelFile } from './interpolate'
 
-export function buildAndSaveModelFiles(
+export function buildAndSaveModels(
   discoveryOutput: DiscoveryOutput,
   templatesFolder: string,
   outputFolder: string,
 ) {
-  const modelFiles: Record<string, string[]> = {}
+  const templateModels: Record<string, string[]> = {}
   const addressToNameMap = buildAddressToNameMap(
     discoveryOutput.contracts,
     discoveryOutput.eoas,
@@ -24,28 +24,28 @@ export function buildAndSaveModelFiles(
     }
 
     const templatePath = path.join(templatesFolder, contract.template)
-    const lpFiles = findAllModelFiles(templatePath)
+    const templateModelPaths = findTemplateModelFiles(templatePath)
 
-    for (const lpFile of lpFiles) {
-      const content = readFileSync(lpFile, 'utf8')
+    for (const path of templateModelPaths) {
+      const content = readFileSync(path, 'utf8')
       const interpolated = interpolateModelFile(
         content,
         contract,
         addressToNameMap,
       )
-      const lpFileName = path.basename(lpFile)
-      modelFiles[lpFileName] = modelFiles[lpFileName] ?? []
-      modelFiles[lpFileName].push(interpolated)
+      const filename = basename(path)
+      templateModels[filename] = templateModels[filename] ?? []
+      templateModels[filename].push(interpolated)
     }
   }
 
-  for (const [lpFileName, content] of Object.entries(modelFiles)) {
-    const outputFile = path.join(outputFolder, lpFileName)
+  for (const [filename, content] of Object.entries(templateModels)) {
+    const outputFile = path.join(outputFolder, filename)
     writeFileSync(outputFile, content.join('\n'))
   }
 }
 
-export function findAllModelFiles(templatePath: string): string[] {
+export function findTemplateModelFiles(templatePath: string): string[] {
   if (!existsSync(templatePath)) {
     throw new Error(`Templates folder ${templatePath} not found`)
   }

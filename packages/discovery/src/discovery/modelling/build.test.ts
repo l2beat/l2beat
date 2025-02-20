@@ -9,12 +9,10 @@ describe(buildAddressToNameMap.name, () => {
       {
         address: EthereumAddress('0x1230000000000000000000000000000000000000'),
         name: 'ContractA',
-        values: {},
       },
       {
         address: EthereumAddress('0xdeadbeef00000000000000000000000000000000'),
         name: 'ContractB',
-        values: {},
       },
     ]
     const eoas: EoaParameters[] = [

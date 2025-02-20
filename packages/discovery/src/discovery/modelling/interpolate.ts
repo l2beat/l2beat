@@ -7,7 +7,7 @@ export function interpolateModelFile(
 ) {
   const withSelfReplaced = content.replace(
     /@self/g,
-    valueToName(contract.address, addressToNameMap),
+    tryCastingToName(contract.address, addressToNameMap),
   )
   const withValuesReplaced = withSelfReplaced.replace(
     /#([a-zA-Z0-9_$.]+)/g,
@@ -20,16 +20,16 @@ export function interpolateModelFile(
       }
       if (Array.isArray(value)) {
         return `(${value
-          .map((v) => valueToName(String(v), addressToNameMap))
+          .map((v) => tryCastingToName(String(v), addressToNameMap))
           .join('; ')})`
       }
-      return valueToName(String(value), addressToNameMap)
+      return tryCastingToName(String(value), addressToNameMap)
     },
   )
   return withValuesReplaced
 }
 
-export function valueToName(
+export function tryCastingToName(
   value: string,
   addressToNameMap: Record<string, string>,
 ): string {

@@ -7,7 +7,7 @@ import { rimraf } from 'rimraf'
 import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
-import { buildAndSaveModelFiles } from '../modelling/build'
+import { buildAndSaveModels } from '../modelling/build'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
@@ -40,7 +40,7 @@ export async function saveDiscoveryResult(
   if (options.saveSources) {
     await saveSources(root, results, options)
   }
-  buildAndSaveModelFiles(discoveryOutput, options.templatesFolder, root)
+  buildAndSaveModels(discoveryOutput, options.templatesFolder, root)
 }
 
 async function saveDiscoveredJson(

@@ -1,7 +1,11 @@
 import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { interpolateModelFile, normalizeId, valueToName } from './interpolate'
+import {
+  interpolateModelFile,
+  normalizeId,
+  tryCastingToName,
+} from './interpolate'
 
 describe(normalizeId.name, () => {
   it('properly normalizes ids', () => {
@@ -11,16 +15,16 @@ describe(normalizeId.name, () => {
   })
 })
 
-describe(valueToName.name, () => {
+describe(tryCastingToName.name, () => {
   it('properly converts addresses to names', () => {
     const addressToNameMap = {
       '0x123': 'ContractA',
       '0x456': 'ContractB',
     }
-    expect(valueToName('0x123', addressToNameMap)).toEqual('contractA')
-    expect(valueToName('0x456', addressToNameMap)).toEqual('contractB')
-    expect(valueToName('0xlalala', addressToNameMap)).toEqual('0xlalala')
-    expect(valueToName('A&B', addressToNameMap)).toEqual('A&B')
+    expect(tryCastingToName('0x123', addressToNameMap)).toEqual('contractA')
+    expect(tryCastingToName('0x456', addressToNameMap)).toEqual('contractB')
+    expect(tryCastingToName('0xlalala', addressToNameMap)).toEqual('0xlalala')
+    expect(tryCastingToName('A&B', addressToNameMap)).toEqual('A&B')
   })
 })
 
