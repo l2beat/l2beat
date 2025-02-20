@@ -31,6 +31,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       configurationsTrimmingDisabled: true,
     })
 
+    assert(
+      $.configurations.every((c) => c.properties.daLayer === $.daLayer),
+      `DaLayer mismatch detected in configurations`,
+    )
+
     this.configMapping = new Map(
       $.configurations.map((c) => [c.id, c.properties]),
     )
