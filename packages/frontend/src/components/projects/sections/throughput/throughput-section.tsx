@@ -1,8 +1,10 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { ClockIcon } from '~/icons/clock'
 import { cn } from '~/utils/cn'
 import {
   formatBpsToMbps,
@@ -23,6 +25,10 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
       }
     | undefined
   totalPosted: number
+  syncStatus: {
+    warning: string | undefined
+    isSynced: boolean
+  }
 }
 
 export function ThroughputSection({
@@ -32,10 +38,19 @@ export function ThroughputSection({
   pastDayAvgThroughputPerSecond,
   largestPoster,
   totalPosted,
+  syncStatus,
   ...sectionProps
 }: ThroughputSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
+      {syncStatus.warning && (
+        <div className="my-3.5 flex items-center gap-3 rounded-lg bg-surface-secondary p-4">
+          <ClockIcon />
+          <span className="text-sm font-medium text-primary">
+            {syncStatus.warning}
+          </span>
+        </div>
+      )}
       <p className="text-base">
         The chart shows the actual size of data posted to the DA Layer per day
         for the selected time period, as well as the maximum possible throughput
@@ -56,10 +71,12 @@ export function ThroughputSection({
         <Detail
           label="Past day avg. throughput"
           value={formatBpsToMbps(pastDayAvgThroughputPerSecond)}
+          isSynced={syncStatus.isSynced}
         />
         <Detail
           label="Past day avg. capacity used"
           value={`${pastDayAvgCapacityUtilization}%`}
+          isSynced={syncStatus.isSynced}
         />
         <Detail
           label="Past day largest poster"
@@ -68,10 +85,12 @@ export function ThroughputSection({
               ? `${largestPoster.name} (${largestPoster.percentage}%)`
               : undefined
           }
+          isSynced={syncStatus.isSynced}
         />
         <Detail
           label="Past day total data posted"
           value={formatBytes(totalPosted)}
+          isSynced={syncStatus.isSynced}
         />
       </div>
     </ProjectSection>
@@ -81,16 +100,19 @@ export function ThroughputSection({
 function Detail({
   label,
   value,
-}: { label: string; value: string | undefined }) {
+  isSynced,
+}: { label: string; value: string | undefined; isSynced: boolean }) {
   return (
     <div className="flex items-center justify-between gap-2 md:flex-col md:items-start">
       <span className="whitespace-nowrap text-xs font-medium text-secondary">
         {label}
       </span>
       {value ? (
-        <span className="text-lg font-medium text-primary md:font-bold">
-          {value}
-        </span>
+        <SyncStatusWrapper isSynced={isSynced}>
+          <span className="text-lg font-medium text-primary md:font-bold">
+            {value}
+          </span>
+        </SyncStatusWrapper>
       ) : (
         <NoDataBadge />
       )}
