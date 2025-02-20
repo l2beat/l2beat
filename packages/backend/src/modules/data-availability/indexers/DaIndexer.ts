@@ -56,13 +56,23 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
 
     const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
 
+    if (blobs.length === 0) {
+      this.logger.info('Empty blobs response received', {
+        from,
+        to: adjustedTo,
+      })
+      return () => {
+        return Promise.resolve(adjustedTo)
+      }
+    }
+
     this.logger.info('Fetched blobs', {
       blobs: blobs.length,
     })
 
     const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
 
-    this.logger.info('Fetched previous records', {
+    this.logger.info('Loaded previous records', {
       previousRecords: previousRecords.length,
     })
 
@@ -82,8 +92,6 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
-    if (blobs.length === 0) return []
-
     const from = new UnixTime(
       Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
     ).toStartOf('day')
