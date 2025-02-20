@@ -189,6 +189,7 @@ import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
 import { xpla } from './xpla'
+import { xsolla } from './xsolla'
 import { xterio } from './xterio'
 import { zentachain } from './zentachain'
 import { zeronetwork } from './zeronetwork'
@@ -393,6 +394,7 @@ export const layer2s: Layer2[] = [
   xchain,
   xlayer,
   xpla,
+  xsolla,
   xterio,
   zentachain,
   zeronetwork,
