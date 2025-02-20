@@ -10,6 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -22,18 +23,22 @@ const chartMeta = {
   calldata: {
     label: 'Calldata',
     color: 'hsl(var(--chart-costs-calldata))',
+    indicatorType: { shape: 'square' },
   },
   blobs: {
     label: 'Blobs',
     color: 'hsl(var(--chart-costs-blobs))',
+    indicatorType: { shape: 'square' },
   },
   compute: {
     label: 'Compute',
     color: 'hsl(var(--chart-costs-compute))',
+    indicatorType: { shape: 'square' },
   },
   overhead: {
     label: 'Overhead',
     color: 'hsl(var(--chart-costs-overhead))',
+    indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 
@@ -169,13 +174,9 @@ function CustomTooltip({
                 className="flex items-center justify-between gap-x-1"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className="size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

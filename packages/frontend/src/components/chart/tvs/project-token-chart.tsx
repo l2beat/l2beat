@@ -13,6 +13,7 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
   RollupsFillGradientDef,
   RollupsStrokeGradientDef,
@@ -81,6 +82,9 @@ export function ProjectTokenChart({
       label: token.name,
       color: sourceToColor(token.source),
       legendLabel: capitalize(token.source),
+      indicatorType: {
+        shape: 'square',
+      },
     },
   } satisfies ChartMeta
 
@@ -176,13 +180,9 @@ function CustomTooltip({
                 className="flex items-center justify-between gap-x-1"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className="size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

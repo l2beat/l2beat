@@ -18,6 +18,7 @@ import type { StageSectionProps } from './stage-section'
 import type { StateDerivationSectionProps } from './state-derivation-section'
 import type { StateValidationSectionProps } from './state-validation-section'
 import type { TechnologySectionProps } from './technology-section'
+import type { ThroughputSectionProps } from './throughput/throughput-section'
 
 type SectionId =
   | 'tvs'
@@ -40,6 +41,7 @@ type SectionId =
   | 'contracts'
   | 'knowledge-nuggets'
   | 'sequencing'
+  | 'throughput'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -60,6 +62,11 @@ interface ProjectDetailsChartSection {
 interface ProjectDetailsCostsSection {
   type: 'CostsSection'
   props: ProjectDetailsProps<CostsSectionProps>
+}
+
+interface ProjectDetailsThroughputSection {
+  type: 'ThroughputSection'
+  props: ProjectDetailsProps<ThroughputSectionProps>
 }
 
 interface ProjectDetailsDetailedDescriptionSection {
@@ -176,4 +183,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
+  | ProjectDetailsThroughputSection
 )

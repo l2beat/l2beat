@@ -16,9 +16,9 @@
     "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "HypERC20Collateral", // usdc lockbox
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
     "0xc005dc82818d67AF737725bD4bf75435d065D239": "Mailbox",
-    "0xd27fe5631533a193776A61B600809a73256eF9a7": "StaticAggregationIsm_default",
-    "0x26a3D8C5b70abb99828997b94D53d3c193A0F24b": "UnknownIsm",
-    "0x011a0D839e043D74c1073337DBf449ac47b82405": "DomainRoutingIsm",
+    "0x57e1787fbdCCf7516721DC621CE17C45509cc2DB": "StaticAggregationIsm_default",
+    "0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835": "UnknownIsm",
+    "0xc72f634784EA020b703E11e88582Beb5903792b9": "DomainRoutingIsm",
     "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm_eclipse",
     "0xf6419b2d603f7d00c383fe8b43e75dd6c0c1d63e": "StaticMessageIdMultisigIsm",
     "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": "StaticMerkleRootMultisigIsm"
@@ -59,8 +59,8 @@
           "handler": {
             "type": "hardcoded", // can be safely hardcoded to this address because a metaproxy is used
             "value": [
-              "0x011a0D839e043D74c1073337DBf449ac47b82405",
-              "0x26a3D8C5b70abb99828997b94D53d3c193A0F24b"
+              "0x3ed820384Dd2Af9b937803bdE6aE5F7a5689D835",
+              "0xc72f634784EA020b703E11e88582Beb5903792b9"
             ]
           }
         },

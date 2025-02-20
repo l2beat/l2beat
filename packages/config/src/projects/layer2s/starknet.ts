@@ -1176,11 +1176,11 @@ export const starknet: Layer2 = {
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
           'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarknetOpsMultisig',
           'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
@@ -1190,10 +1190,13 @@ export const starknet: Layer2 = {
           discovery.getPermissionedAccounts('Starknet', 'operators'),
           'Allowed to post state updates. When the operator is down the state cannot be updated.',
         ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
-          'StarknetOperatorMultisig',
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+          'StarknetOpsMultisig',
+          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+        ),
+        discovery.getMultisigPermission(
+          'StarkgateSecurityAgentMultisig',
+          'Can enable withdrawal limits for tokens in some Starkgate bridge Escrows.',
         ),
         discovery.getPermissionDetails(
           'StarkGate LUSD owner',

@@ -1,13 +1,34 @@
-export function formatBytes(bytes: number): string {
-  if (bytes === 0) {
-    return '0 B'
+interface FormatBytesOptions {
+  decimals?: number
+  unit?: 'B' | 'KiB' | 'MiB' | 'GiB'
+}
+
+export function formatBytes(bytes: number, opts?: FormatBytesOptions) {
+  const decimals = opts?.decimals ?? 2
+  const unit = opts?.unit
+
+  if (unit) {
+    const divisor = {
+      B: 1,
+      KiB: 1024,
+      MiB: 1024 ** 2,
+      GiB: 1024 ** 3,
+    }[unit]
+
+    return `${(bytes / divisor).toFixed(decimals)} ${unit}`
   }
 
-  const k = 1024
-  const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  if (bytes < 1024) {
+    return `${bytes} B`
+  }
+  if (bytes < 1024 ** 2) {
+    return `${(bytes / 1024).toFixed(decimals)} KiB`
+  }
+  if (bytes < 1024 ** 3) {
+    return `${(bytes / 1024 / 1024).toFixed(decimals)} MiB`
+  }
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+  return `${(bytes / 1024 / 1024 / 1024).toFixed(decimals)} GiB`
 }
 
 export function formatBpsToMbps(bps: number): string {
