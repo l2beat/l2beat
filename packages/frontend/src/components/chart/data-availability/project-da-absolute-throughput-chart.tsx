@@ -42,11 +42,14 @@ interface Props {
     | undefined
   projectId: ProjectId
   isLoading: boolean
+  showMax: boolean
 }
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   isLoading,
   projectId,
+  showMax,
 }: Props) {
   const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
 
@@ -102,30 +105,34 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           dot={false}
         />
-        <Area
-          dataKey="projectTarget"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectTarget?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-        />
-        <Area
-          dataKey="projectMax"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          type="stepAfter"
-          dot={false}
-        />
+        {showMax && (
+          <Area
+            dataKey="projectTarget"
+            isAnimationActive={false}
+            fillOpacity={0}
+            stroke={projectChartMeta.projectTarget?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+            }
+            type="stepAfter"
+            dot={false}
+          />
+        )}
+        {showMax && (
+          <Area
+            dataKey="projectMax"
+            isAnimationActive={false}
+            fillOpacity={0}
+            stroke={projectChartMeta.projectMax?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectMax?.indicatorType.strokeDasharray
+            }
+            type="stepAfter"
+            dot={false}
+          />
+        )}
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         {getCommonChartComponents({
           data: chartData,
