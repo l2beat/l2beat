@@ -65,7 +65,7 @@ export function ThroughputSection({
       <div
         className={cn(
           'grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:grid-cols-4',
-          '-mx-4 mt-5 bg-surface-secondary p-4 md:mx-0 md:rounded-lg md:p-6',
+          'mt-5 rounded-lg bg-surface-secondary p-4 md:p-6',
         )}
       >
         <Detail
