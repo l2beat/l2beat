@@ -44,6 +44,9 @@ const getCachedProjectDaThroughputChartData = cache(
       [projectId],
       [from, to],
     )
+    if (throughput.length === 0) {
+      return []
+    }
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput)
 
