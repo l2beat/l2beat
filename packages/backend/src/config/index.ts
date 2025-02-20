@@ -8,6 +8,7 @@ export type { Config }
 
 export function getConfig(): Promise<Config> {
   const env = getEnv()
+  console.log(env.optionalString('COINGECKO_API_KEY'))
   const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
   console.log('Loading config for:', deploymentEnv)
 
