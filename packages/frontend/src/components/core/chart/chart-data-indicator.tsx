@@ -1,4 +1,4 @@
-import { cn } from '~/utils/cn'
+import { assertUnreachable } from '@l2beat/shared-pure'
 
 export type ChartDataIndicatorType =
   | {
@@ -10,17 +10,18 @@ export type ChartDataIndicatorType =
     }
 
 interface Props {
-  type: ChartDataIndicatorType | undefined
+  type: ChartDataIndicatorType
   backgroundColor: string | undefined
 }
 
 export function ChartDataIndicator({ type, backgroundColor }: Props) {
-  switch (type?.shape) {
+  switch (type.shape) {
     case 'line':
       return <LineShape type={type} backgroundColor={backgroundColor} />
     case 'square':
-    default:
       return <SquareShape backgroundColor={backgroundColor} />
+    default:
+      assertUnreachable(type)
   }
 }
 
@@ -28,10 +29,7 @@ function SquareShape({
   backgroundColor,
 }: { backgroundColor: string | undefined }) {
   return (
-    <div
-      className={cn('size-3 shrink-0 rounded-sm')}
-      style={{ backgroundColor }}
-    />
+    <div className="size-3 shrink-0 rounded-sm" style={{ backgroundColor }} />
   )
 }
 function LineShape({

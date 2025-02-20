@@ -31,14 +31,15 @@ interface Props {
   milestones: Milestone[] | undefined
 }
 
-const chartMeta = {
-  value: {
-    color: 'hsl(var(--chart-rollups))',
-    indicatorType: { shape: 'square' },
-  },
-} satisfies ChartMeta
-
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
+  const chartMeta = {
+    value: {
+      color: 'hsl(var(--chart-rollups))',
+      indicatorType: { shape: 'square' },
+      label: unit.toUpperCase(),
+    },
+  } satisfies ChartMeta
+
   return (
     <ChartContainer
       meta={chartMeta}
@@ -99,7 +100,7 @@ function CustomTooltip({
                     type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
-                    {unit.toUpperCase()}
+                    {config.label}
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">

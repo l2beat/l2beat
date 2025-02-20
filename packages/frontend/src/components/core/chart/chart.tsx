@@ -19,10 +19,10 @@ import { ChartNoDataState } from './chart-no-data-state'
 export type ChartMeta = Record<
   string,
   | {
-      label?: React.ReactNode
-      color?: string
+      label: React.ReactNode
+      color: string
       legendLabel?: string
-      indicatorType?: ChartDataIndicatorType
+      indicatorType: ChartDataIndicatorType
     }
   | undefined
 >
@@ -168,7 +168,7 @@ function ChartLegendContent({
           <div
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             key={item.value}
-            className={cn('flex items-center gap-[3px] [&>svg]:text-secondary')}
+            className="flex items-center gap-[3px] [&>svg]:text-secondary"
           >
             <ChartDataIndicator
               type={itemConfig?.indicatorType}
