@@ -225,7 +225,7 @@ function formatZodParsingError(error: ZodError, fileName: string): string {
   ].join('\n')
 }
 
-function resolveImports(
+export function resolveImports(
   basePath: string,
   imports: string[],
   visited: Set<string>,
