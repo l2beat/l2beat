@@ -44,8 +44,8 @@ export function ThroughputSection({
   return (
     <ProjectSection {...sectionProps}>
       {syncStatus.warning && (
-        <div className="my-3.5 flex items-center gap-3 rounded-lg bg-surface-secondary p-4">
-          <ClockIcon />
+        <div className="my-3.5 flex items-start gap-3 rounded-lg bg-surface-secondary p-4">
+          <ClockIcon className="mt-px size-[18px] shrink-0" />
           <span className="text-sm font-medium text-primary">
             {syncStatus.warning}
           </span>
