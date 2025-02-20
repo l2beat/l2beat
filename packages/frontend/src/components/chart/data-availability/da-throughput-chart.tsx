@@ -1,30 +1,14 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import type { ChartConfig } from '~/components/core/chart/chart'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
-import { ChartTimeRange } from '../core/chart-time-range'
-import { ChartTimeRangeControls } from '../core/chart-time-range-controls'
-import { getChartRange } from '../core/utils/get-chart-range-from-columns'
+import { ChartTimeRange } from '../../core/chart/chart-time-range'
+import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-controls'
+import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import { DaAbsoluteThroughputChart } from './da-absolute-throughput-chart'
 import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
-
-const chartConfig = {
-  ethereum: {
-    label: 'Ethereum (blobs)',
-    color: 'hsl(var(--chart-ethereum))',
-  },
-  celestia: {
-    label: 'Celestia',
-    color: 'hsl(var(--chart-da-celestia))',
-  },
-  avail: {
-    label: 'Avail',
-    color: 'hsl(var(--chart-da-avail))',
-  },
-} satisfies ChartConfig
 
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
@@ -32,7 +16,10 @@ export function DaThroughputChart() {
   const { data, isLoading } = api.da.chart.useQuery({
     range,
   })
-  const chartRange = useMemo(() => getChartRange(data), [data])
+  const chartRange = useMemo(
+    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    [data],
+  )
 
   return (
     <div>
@@ -42,22 +29,14 @@ export function DaThroughputChart() {
             ? 'Share of total data posted'
             : 'Total data posted'}
         </h1>
-        <ChartTimeRange range={chartRange} isLoading={isLoading} />
+        <ChartTimeRange range={chartRange} />
       </div>
       {metric === 'percentage' ? (
-        <DaPercentageThroughputChart
-          data={data}
-          chartConfig={chartConfig}
-          isLoading={isLoading}
-        />
+        <DaPercentageThroughputChart data={data} isLoading={isLoading} />
       ) : (
-        <DaAbsoluteThroughputChart
-          data={data}
-          chartConfig={chartConfig}
-          isLoading={isLoading}
-        />
+        <DaAbsoluteThroughputChart data={data} isLoading={isLoading} />
       )}
-      <div className="flex justify-between">
+      <div className="mt-2 flex justify-between">
         <RadioGroup
           name="metric"
           value={metric}

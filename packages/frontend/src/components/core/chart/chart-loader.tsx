@@ -1,8 +1,10 @@
-export function ChartLoader() {
+import { cn } from '~/utils/cn'
+
+export function ChartLoader({ className }: { className?: string }) {
   return (
     <svg
       data-role="chart-loader"
-      className="pointer-events-none absolute inset-0 z-40 m-auto translate-y-[20%] select-none opacity-40 duration-500"
+      className={cn('pointer-events-none z-40', className)}
       width="50px"
       height="50px"
       viewBox="0 0 100 100"

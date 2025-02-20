@@ -66,12 +66,14 @@ export const eclipse: Layer2 = {
         tokens: ['ETH'],
       },
     ],
-    daTracking: {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
-    },
+    daTracking: [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.CELESTIA,

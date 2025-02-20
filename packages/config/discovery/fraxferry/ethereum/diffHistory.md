@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xdb0cf18738c1d2cffbc58661a61d025e0fcf7dad
+
+# Diff at Wed, 19 Feb 2025 14:17:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@90e939c93581cd5b2e00d23bb3ba08dde38932e8 block: 21844142
+- current block number: 21880952
+
+## Description
+
+sFRAX Ferry Bridge (Avalanche), will be reflected on FE, although only in the contract text as a string.
+
+## Watched changes
+
+```diff
+    contract sFRAX Ferry Bridge (Avalanche) (0x59ae66FB395893E3FD965aDb06A52d06C49dF8A9) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x0d5d7f1a32a70a733d8d9b3111967e0e4c5207e9
 
 # Diff at Fri, 14 Feb 2025 10:37:10 GMT:

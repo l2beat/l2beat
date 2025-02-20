@@ -15,6 +15,8 @@ import {
 import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
+const DENCUN_UPGRADE_TIMESTAMP = 1710288000
+
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
@@ -78,6 +80,8 @@ export const getCachedCostsChartData = cache(
     )
     const result = timestamps.map((timestamp) => {
       const entry = summedByTimestamp.get(timestamp.toNumber())
+      const blobsFallback =
+        timestamp.toNumber() >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
       if (!entry) {
         return [
           timestamp.toNumber(),
@@ -90,9 +94,9 @@ export const getCachedCostsChartData = cache(
           0,
           0,
           0,
-          undefined,
-          undefined,
-          undefined,
+          blobsFallback,
+          blobsFallback,
+          blobsFallback,
         ] as const
       }
       return [
@@ -106,9 +110,9 @@ export const getCachedCostsChartData = cache(
         entry.computeGas,
         entry.computeGasEth,
         entry.computeGasUsd,
-        entry.blobsGas,
-        entry.blobsGasEth,
-        entry.blobsGasUsd,
+        entry.blobsGas ?? blobsFallback,
+        entry.blobsGasEth ?? blobsFallback,
+        entry.blobsGasUsd ?? blobsFallback,
       ] as const
     })
     return result

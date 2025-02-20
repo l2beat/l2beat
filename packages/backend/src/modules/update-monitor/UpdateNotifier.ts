@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { DiscoveryDiff } from '@l2beat/discovery'
+import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
   assert,
   type ChainConverter,
@@ -17,6 +17,7 @@ import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
@@ -41,6 +42,7 @@ export class UpdateNotifier {
     private readonly discordClient: DiscordClient | undefined,
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
+    private readonly updateMessagesService: UpdateMessagesService,
   ) {
     this.logger = this.logger.for(this)
   }
@@ -52,6 +54,7 @@ export class UpdateNotifier {
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
+    timestamp: UnixTime,
   ) {
     const nonce = await this.getInternalMessageNonce()
     await this.db.updateNotifier.insert({
@@ -106,6 +109,17 @@ export class UpdateNotifier {
       dependents,
     )
     await this.notify(filteredMessage, 'PUBLIC')
+
+    const filteredWebMessage = discoveryDiffToMarkdown(filteredDiff)
+
+    await this.updateMessagesService.storeAndPrune({
+      projectName: name,
+      chain: this.chainConverter.toName(chainId),
+      blockNumber,
+      message: filteredWebMessage,
+      timestamp,
+    })
+
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
       amount: countDiff(filteredDiff),

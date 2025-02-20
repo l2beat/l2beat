@@ -11,7 +11,9 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   })
 
   const uniqueDaLayersInProjects = new Set(
-    projectsWithDaTracking.map((l) => l.daTrackingConfig.daLayer),
+    projectsWithDaTracking.flatMap((l) =>
+      l.daTrackingConfig.map((d) => d.daLayer),
+    ),
   )
 
   const daLayers = await ps.getProjects({
@@ -39,17 +41,23 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
 
 export interface DaThroughputEntry extends CommonProjectEntry {
   isPublic: boolean
-  pastDayAvgThroughput: number | undefined
-  maxThroughput: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  pastDayAvgThroughputPerSecond: number | undefined
+  /**
+   * @unit B/s - bytes per second
+   */
+  maxThroughputPerSecond: number | undefined
   pastDayAvgCapacityUtilization: number | undefined
   largestPoster:
     | {
         name: string
         percentage: number
-        totalPosted: string
+        totalPosted: number
       }
     | undefined
-  totalPosted: string | undefined
+  totalPosted: number | undefined
   finality: string | undefined
   isSynced: boolean
 }
@@ -74,16 +82,16 @@ function getDaThroughputEntry(
       syncWarning: notSyncedStatus,
     },
     isPublic: project.daLayer.systemCategory === 'public',
-    pastDayAvgThroughput: data.pastDayAvgThroughput,
-    maxThroughput: data.maxThroughput,
+    pastDayAvgThroughputPerSecond: data.pastDayAvgThroughputPerSecond,
+    maxThroughputPerSecond: data.maxThroughputPerSecond,
     pastDayAvgCapacityUtilization: data.pastDayAvgCapacityUtilization,
     largestPoster: data.largestPoster
       ? {
           ...data.largestPoster,
-          totalPosted: formatBytes(Number(data.largestPoster.totalPosted)),
+          totalPosted: Number(data.largestPoster.totalPosted),
         }
       : undefined,
-    totalPosted: formatBytes(Number(data.totalPosted)),
+    totalPosted: Number(data.totalPosted),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,
@@ -91,16 +99,4 @@ function getDaThroughputEntry(
       : undefined,
     isSynced: !notSyncedStatus,
   }
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes === 0) {
-    return '0 B'
-  }
-
-  const k = 1000
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }

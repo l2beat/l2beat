@@ -40,6 +40,9 @@ const getCachedDaThroughputChartData = cache(
       ['ethereum', 'celestia', 'avail'],
       [from, to],
     )
+    if (throughput.length === 0) {
+      return []
+    }
     const { grouped, minTimestamp, maxTimestamp } =
       groupByTimestampAndProjectId(throughput)
 
@@ -75,6 +78,7 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
+
   return {
     grouped: result,
     minTimestamp: new UnixTime(minTimestamp),
