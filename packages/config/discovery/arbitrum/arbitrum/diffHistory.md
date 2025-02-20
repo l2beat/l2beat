@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x5896a873cd8b51113d0474fa4c7fac2d45b7ccfd
 
-# Diff at Thu, 20 Feb 2025 11:21:09 GMT:
+# Diff at Thu, 20 Feb 2025 12:22:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 305003923
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5896a873cd8b51113d0474fa4c7fac2d45b7ccfd
 
 ## Description
 
-Hide an unused SC on L2.
+Config related: Bold templates added
 
 ## Config/verification related changes
 

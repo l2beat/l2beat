@@ -1,6 +1,6 @@
 Generated with discovered.json: 0x0136e291e041f5a9000e5b9200f992d608d40f55
 
-# Diff at Thu, 20 Feb 2025 11:19:18 GMT:
+# Diff at Thu, 20 Feb 2025 12:20:56 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 21815910
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0136e291e041f5a9000e5b9200f992d608d40f55
 
 ## Description
 
-Config related: Bold review with related templates added.
+Config related: Bold templates added
 
 ## Config/verification related changes
 

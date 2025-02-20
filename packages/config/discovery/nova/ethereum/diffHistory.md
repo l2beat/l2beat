@@ -1,9 +1,35 @@
-Generated with discovered.json: 0xe03667d49d386bc534d1e0885587e8246ee665d2
+Generated with discovered.json: 0x8b9091d40e2c7034e7951c32b5efe8b1d577bc8f
 
-# Diff at Mon, 17 Feb 2025 15:12:18 GMT:
+# Diff at Thu, 20 Feb 2025 12:24:38 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@ffdfa0f74baa606307d20416d1f98087d031a330 block: 21786859
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 21786859
+- current block number: 21786859
+
+## Description
+
+Config: Add Bold templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786859 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
+Generated with discovered.json: 0xf2796acd4f1771f9f8e80ec550f65a1e1fa548a4
+
+# Diff at Fri, 14 Feb 2025 14:45:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@866ac0e034ddb1e78e333932f83648ad55ba1b25 block: 21786859
 - current block number: 21786859
 
 ## Description
@@ -384,8 +410,6 @@ discovery. Values are for block 21786859 (main branch discovery), not current.
 +        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
       issuedPermissions.0.via.0.delay:
 +        259200
-      values.isPostBoLD:
-+        false
     }
 ```
 
