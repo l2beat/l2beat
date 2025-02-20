@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21630407,
-  "configHash": "0x4aa93d132532eb799d25f55dfd0ee26d5d3b2f401597a57c8d20101e9e4828a2",
+  "configHash": "0x1ae3cf532a17b517a05e2cd781eed9a331eb09734a6b4e32daa1761d4ad1fc80",
   "contracts": [
     {
       "name": "FuelSecurityCouncil",

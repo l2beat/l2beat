@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "blockNumber": 305262432,
-  "configHash": "0x11e9b8ddc107721f4d45725069a7e80370451c0fef70cc9960b719f3b9143d12",
+  "configHash": "0x16db6457780b358f5b67f9b4bb9b4d3e63d26ad40170bca355b2fa40c1be8896",
   "contracts": [
     {
       "name": "OneStepProofEntry",

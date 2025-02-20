@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 20826378,
-  "configHash": "0x0bf501c04c8a651e85fa108c5fa14c887fb6d66f3740ffd0622a5ff27aad37d9",
+  "configHash": "0xc1894af3d77368962ffba7ddfb6ea274dd6c44ffb4deebde5a90bab3dd034885",
   "contracts": [
     {
       "name": "UpaVerifier",

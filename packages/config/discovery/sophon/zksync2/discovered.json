@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "zksync2",
   "blockNumber": 54952361,
-  "configHash": "0x850990eae70a0c268632fc10906d668a9310c13c7b7ea9b86c2acbe67e799f14",
+  "configHash": "0xfe6a10f9c5340a0a663c85878a39565479c6e537a91545b726dac52e7b896ba3",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [],
   "eoas": [],
