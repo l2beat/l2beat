@@ -1,8 +1,13 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
-import type { DaTrackingConfig } from '../../config/Config'
+import type {
+  DaTrackingConfig,
+  DataAvailabilityTrackingConfig,
+} from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
+import type { BlockProviders } from '../../providers/BlockProviders'
+import type { DaProviders } from '../../providers/DaProviders'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -29,55 +34,16 @@ export function initDataAvailabilityModule(
     module: 'data-availability',
   })
 
-  const blockProviders = providers.block
-  const daProviders = providers.getDaProviders()
-  const daService = new DaService(config.da.projects.map((c) => c.config))
-
-  const indexerService = new IndexerService(database)
-
-  const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: DaIndexer[] = []
-
-  for (const daLayer of config.da.layers) {
-    const blockTimestampProvider = blockProviders.getBlockTimestampProvider(
-      daLayer.name,
-    )
-
-    const targetIndexer = new BlockTargetIndexer(
-      logger,
-      clock,
-      blockTimestampProvider,
-      daLayer.name,
-    )
-
-    targetIndexers.push(targetIndexer)
-
-    const daProvider = daProviders.getProvider(daLayer.name)
-
-    const configurations = config.da.projects.filter(
-      (c) => c.config.daLayer === daLayer.name,
-    )
-
-    const indexer = new DaIndexer({
-      configurations: configurations.map((c) => ({
-        id: c.configurationId,
-        minHeight: c.config.sinceBlock,
-        maxHeight: c.config.untilBlock ?? null,
-        properties: c.config,
-      })),
-      daProvider,
-      daService,
-      logger,
-      daLayer: daLayer.name,
-      batchSize: daLayer.batchSize,
-      parents: [targetIndexer],
-      indexerService,
-      db: database,
-      serializeConfiguration: (value: DaTrackingConfig) =>
-        JSON.stringify(value),
-    })
-    daIndexers.push(indexer)
-  }
+  const { targetIndexers, daIndexers } = createIndexers(
+    config.da,
+    clock,
+    database,
+    logger,
+    providers.block,
+    providers.getDaProviders(),
+    new DaService(config.da.projects.map((c) => c.config)),
+    new IndexerService(database),
+  )
 
   return {
     start: async () => {
@@ -104,4 +70,60 @@ export function initDataAvailabilityModule(
       logger.info('DA indexers started')
     },
   }
+}
+
+function createIndexers(
+  config: DataAvailabilityTrackingConfig,
+  clock: Clock,
+  database: Database,
+  logger: Logger,
+  blockProviders: BlockProviders,
+  daProviders: DaProviders,
+  daService: DaService,
+  indexerService: IndexerService,
+) {
+  const targetIndexers: BlockTargetIndexer[] = []
+  const daIndexers: DaIndexer[] = []
+
+  for (const daLayer of config.layers) {
+    const blockTimestampProvider = blockProviders.getBlockTimestampProvider(
+      daLayer.name,
+    )
+
+    const targetIndexer = new BlockTargetIndexer(
+      logger,
+      clock,
+      blockTimestampProvider,
+      daLayer.name,
+    )
+    targetIndexers.push(targetIndexer)
+
+    const daProvider = daProviders.getProvider(daLayer.name)
+
+    const configurations = config.projects.filter(
+      (c) => c.config.daLayer === daLayer.name,
+    )
+
+    const indexer = new DaIndexer({
+      configurations: configurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.config.sinceBlock,
+        maxHeight: c.config.untilBlock ?? null,
+        properties: c.config,
+      })),
+      daProvider,
+      daService,
+      logger,
+      daLayer: daLayer.name,
+      batchSize: daLayer.batchSize,
+      parents: [targetIndexer],
+      indexerService,
+      db: database,
+      serializeConfiguration: (value: DaTrackingConfig) =>
+        JSON.stringify(value),
+    })
+    daIndexers.push(indexer)
+  }
+
+  return { targetIndexers, daIndexers }
 }
