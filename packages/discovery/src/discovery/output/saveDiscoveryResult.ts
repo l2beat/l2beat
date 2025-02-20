@@ -20,6 +20,7 @@ export interface SaveDiscoveryResultOptions {
   discoveryFilename?: string
   metaFilename?: string
   saveSources?: boolean
+  buildModels?: boolean
   templatesFolder: string
 }
 
@@ -40,7 +41,9 @@ export async function saveDiscoveryResult(
   if (options.saveSources) {
     await saveSources(root, results, options)
   }
-  buildAndSaveModels(discoveryOutput, options.templatesFolder, root)
+  if (options.buildModels) {
+    buildAndSaveModels(discoveryOutput, options.templatesFolder, root)
+  }
 }
 
 async function saveDiscoveredJson(
