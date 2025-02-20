@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 21829669,
-  "configHash": "0x6fa4baa4a860d602d3504cbf18a5315518f04b40d0eef7ebea07b2790e4478f9",
+  "configHash": "0x92736cfbc27150830f3c7b8584097eb4c1c923e06b8cddd3ed89c215c34d8e06",
   "contracts": [
     {
       "name": "LivenessModule",

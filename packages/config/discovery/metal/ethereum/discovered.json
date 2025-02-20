@@ -2,7 +2,7 @@
   "name": "metal",
   "chain": "ethereum",
   "blockNumber": 21829670,
-  "configHash": "0x58bcf46f979d0927881ebf04616bfd267dc9d8e9e2001e64273760ba63eb88c6",
+  "configHash": "0xbba80403fb9541a8beeabed781ebddada7218bbb8af4136780fb04daa76f45c3",
   "contracts": [
     {
       "name": "LivenessModule",

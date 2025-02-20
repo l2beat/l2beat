@@ -2,7 +2,7 @@
   "name": "galxegravity",
   "chain": "ethereum",
   "blockNumber": 21723939,
-  "configHash": "0xc40f7980807d9d235d84469cb03802dc18abb294a431da542da1e8d8bfc3fb0d",
+  "configHash": "0x85e64411cca318877f4204c0174b68e3149d7c056be88cd45a1a571315a1aee1",
   "contracts": [
     {
       "name": "OneStepProverHostIo",

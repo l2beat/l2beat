@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "arbitrum",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
     "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",

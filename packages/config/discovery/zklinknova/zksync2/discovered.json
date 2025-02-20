@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 43367152,
-  "configHash": "0x54355830483d5fff0734516419a96fdade63d6ce9c6fa5a7a3292d6de68a3407",
+  "configHash": "0x7bd477ed55500ab118841c3469b7af5f309a6cdc517f7ea9cc90b11a44f9d815",
   "contracts": [
     {
       "name": "EraOwner",

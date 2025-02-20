@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zkswap",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x714B2D10210f2A3a7AA614F949259C87613689aB"],
   "names": {
     "0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "VerifierExit",

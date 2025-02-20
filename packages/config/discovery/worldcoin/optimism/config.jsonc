@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "optimism",
   "name": "worldcoin",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d"],
   "names": {
     "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": "RecurringGrantDrop",
