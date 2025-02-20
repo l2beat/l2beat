@@ -1,72 +1,92 @@
 import clsx from 'clsx'
+import { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
+import { ArrowIcon } from './common/ArrowIcon'
 
 export function Layout() {
+  const [isOpen, setIsOpen] = useState(true)
+
   return (
-    <div className="flex h-full w-full">
-      <div className="w-[200px] p-4">
+    <div className="flex h-full w-full flex-col md:flex-row">
+      <div className="w-full p-4 md:max-w-[200px]">
         <ul>
-          <li>
-            <p className="mb-4 font-bold">tools.l2beat.com</p>
+          <li className="mb-4 flex items-center justify-between">
+            <p className="font-bold">tools.l2beat.com</p>
+
+            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+              {isOpen ? <ArrowIcon className="rotate-180" /> : <ArrowIcon />}
+            </button>
           </li>
-          <li>
-            <NavLink
-              className={({ isActive }) =>
-                clsx('font-mono underline', isActive && 'text-orange-500')
-              }
-              to="/decoder"
-            >
-              /decoder
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) =>
-                clsx('font-mono underline', isActive && 'text-orange-500')
-              }
-              to="/simulator"
-            >
-              /simulator
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) =>
-                clsx('font-mono underline', isActive && 'text-orange-500')
-              }
-              to="/discolupe"
-            >
-              /discolupe
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) =>
-                clsx('font-mono underline', isActive && 'text-orange-500')
-              }
-              to="/logo-generator"
-            >
-              /logo-generator
-            </NavLink>
-          </li>
-          <li>
-            <Link
-              className="font-mono underline"
-              to="https://protocolbeat.l2beat.com/"
-            >
-              /protocol-beat
-            </Link>
-          </li>
-          <li>
-            <Link className="font-mono underline" to="https://uops.l2beat.com/">
-              /uops-analyzer
-            </Link>
-          </li>
-          <li>
-            <Link className="font-mono underline" to="/monitor">
-              /monitor
-            </Link>
-          </li>
+          {isOpen && (
+            <>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/decoder"
+                >
+                  /decoder
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/simulator"
+                >
+                  /simulator
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/discolupe"
+                >
+                  /discolupe
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/logo-generator"
+                >
+                  /logo-generator
+                </NavLink>
+              </li>
+              <li>
+                <Link
+                  className="font-mono underline"
+                  to="https://protocolbeat.l2beat.com/"
+                >
+                  /protocol-beat
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="font-mono underline"
+                  to="https://uops.l2beat.com/"
+                >
+                  /uops-analyzer
+                </Link>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    clsx('font-mono underline', isActive && 'text-orange-500')
+                  }
+                  to="/monitor"
+                >
+                  /monitor
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <div className="h-full flex-1 overflow-scroll">
