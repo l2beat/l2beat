@@ -93,7 +93,6 @@ export function processAnalysis(
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           description: x.combinedMeta?.description,
-          categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
@@ -114,6 +113,7 @@ export function processAnalysis(
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
           references,
+          category: x.category,
         } satisfies ContractParameters)
       }),
     eoas: results
@@ -130,12 +130,12 @@ export function processAnalysis(
           name: x.name,
           address: x.address,
           description: x.combinedMeta?.description,
-          categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
           receivedPermissions,
           directlyReceivedPermissions,
+          category: x.category,
         } satisfies EoaParameters
       }),
     abis,

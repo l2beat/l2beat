@@ -13,5 +13,8 @@
     "0xbC1653bd3829dfEc575AfC3816D4899cd103B51c": "ZkFoundationMultisig",
     "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController(L2->L1)",
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub"
+  },
+  "overrides": {
+    "0x015318c16AE443a20DE0A776dB06a59F0D279057": { "category": "spam" }
   }
 }
