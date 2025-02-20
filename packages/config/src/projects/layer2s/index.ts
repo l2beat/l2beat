@@ -127,7 +127,7 @@ import { patex } from './patex'
 import { payy } from './payy'
 import { pepeunchained } from './pepeunchained'
 import { phala } from './phala'
-import { playchain } from './playchain'
+import { liftchain } from './liftchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos } from './polygonpos'
@@ -290,6 +290,7 @@ export const layer2s: Layer2[] = [
   layer2finance,
   layer2financezk,
   lens,
+  liftchain,
   lightlink,
   linea,
   lisk,
@@ -332,7 +333,6 @@ export const layer2s: Layer2[] = [
   payy,
   pepeunchained,
   phala,
-  playchain,
   plumenetwork,
   polygonmiden,
   polygonzkevm,
