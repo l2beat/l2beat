@@ -19,7 +19,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
-import { daChartMeta } from './meta'
+import { getDaChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
@@ -27,6 +27,7 @@ interface Props {
 }
 
 export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const chartMeta = getDaChartMeta({ shape: 'line' })
   const { denominator, unit } = getDaDataParams(data)
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
@@ -40,27 +41,27 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   }, [data, denominator])
 
   return (
-    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
+    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
       <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Line
           dataKey="ethereum"
           isAnimationActive={false}
-          stroke={daChartMeta.ethereum.color}
+          stroke={chartMeta.ethereum.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="celestia"
           isAnimationActive={false}
-          stroke={daChartMeta.celestia.color}
+          stroke={chartMeta.celestia.color}
           strokeWidth={2}
           dot={false}
         />
         <Line
           dataKey="avail"
           isAnimationActive={false}
-          stroke={daChartMeta.avail.color}
+          stroke={chartMeta.avail.color}
           strokeWidth={2}
           dot={false}
         />

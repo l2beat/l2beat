@@ -35,7 +35,7 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   const chartMeta = {
     value: {
       color: 'hsl(var(--chart-rollups))',
-      indicatorType: { shape: 'square' },
+      indicatorType: { shape: 'line' },
       label: unit.toUpperCase(),
     },
   } satisfies ChartMeta
