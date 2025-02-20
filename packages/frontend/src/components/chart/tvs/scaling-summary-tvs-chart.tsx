@@ -13,17 +13,17 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
-  OthersFillGradientDef,
-  OthersStrokeGradientDef,
-} from '~/components/core/chart/defs/others-gradient-def'
+  CyanFillGradientDef,
+  CyanStrokeGradientDef,
+} from '~/components/core/chart/defs/cyan-gradient-def'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import {
-  ValidiumsAndOptimiumsFillGradientDef,
-  ValidiumsAndOptimiumsStrokeGradientDef,
-} from '~/components/core/chart/defs/validiums-and-optimiums-gradient-def'
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/yellow-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { Skeleton } from '~/components/core/skeleton'
@@ -41,21 +41,21 @@ import type { ChartUnit } from '../types'
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--chart-rollups))',
+    color: 'hsl(var(--chart-pink))',
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'hsl(var(--chart-validiums-optimiums))',
+    color: 'hsl(var(--chart-cyan))',
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--chart-others))',
+    color: 'hsl(var(--chart-yellow))',
     indicatorType: {
       shape: 'line',
     },
@@ -100,12 +100,12 @@ export function ScalingSummaryTvsChart({
           margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
         >
           <defs>
-            <RollupsFillGradientDef id="rollups-fill" />
-            <RollupsStrokeGradientDef id="rollups-stroke" />
-            <ValidiumsAndOptimiumsFillGradientDef id="validiums-and-optimiums-fill" />
-            <ValidiumsAndOptimiumsStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <OthersFillGradientDef id="others-fill" />
-            <OthersStrokeGradientDef id="others-stroke" />
+            <PinkFillGradientDef id="rollups-fill" />
+            <PinkStrokeGradientDef id="rollups-stroke" />
+            <CyanFillGradientDef id="validiums-and-optimiums-fill" />
+            <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
           <Area

@@ -11,9 +11,9 @@ import {
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
@@ -34,7 +34,7 @@ interface Props {
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   const chartMeta = {
     value: {
-      color: 'hsl(var(--chart-rollups))',
+      color: 'hsl(var(--chart-pink))',
       indicatorType: { shape: 'line' },
       label: unit.toUpperCase(),
     },
@@ -49,8 +49,8 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
     >
       <AreaChart data={data} accessibilityLayer margin={{ top: 20 }}>
         <defs>
-          <RollupsFillGradientDef id="fill" />
-          <RollupsStrokeGradientDef id="stroke" />
+          <PinkFillGradientDef id="fill" />
+          <PinkStrokeGradientDef id="stroke" />
         </defs>
         <Area
           dataKey="value"
