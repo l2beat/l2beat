@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "loopring",
+  "import": ["../../ethereumConfig.jsonc"],
   "names": {
     "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": "ExchangeV3",
     "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": "LoopringIOExchangeOwner",

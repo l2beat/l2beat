@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "shared-eigenlayer",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
     "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",

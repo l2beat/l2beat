@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 21086404,
-  "configHash": "0x423f39ff2586dc4e7ed96dfc7777242f38b82704afddbe897647b82f0032aea5",
+  "configHash": "0x3ecd00e91f6eeaa6ec1d0fa36a5220c60a5445615d44ef1d4447e754255b719b",
   "contracts": [
     {
       "name": "ZKFairAdmin",

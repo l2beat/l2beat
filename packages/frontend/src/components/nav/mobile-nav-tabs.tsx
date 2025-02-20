@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef } from 'react'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../core/overflow-wrapper'
 import type { NavGroup } from './types'
@@ -11,17 +10,7 @@ import type { NavGroup } from './types'
  * Second navbar displayed under the main navbar on mobile.
  */
 export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
-  const ref = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
-
-  useEffect(() => {
-    const tab = document.querySelector('[data-state=selected]')
-    if (tab) {
-      tab.scrollIntoView({
-        inline: 'center',
-      })
-    }
-  }, [])
 
   const currentGroup = groups
     .filter((g) => g.type === 'multiple')
@@ -35,13 +24,21 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
 
   return (
     <OverflowWrapper className="bg-surface-primary">
-      <div className="flex" ref={ref}>
+      <div className="flex">
         {currentGroup.links
           .filter((link) => !link.disabled)
           .map((link) => {
             const isSelected = link.href === pathname
             return (
               <Link
+                ref={(node) => {
+                  if (node && isSelected) {
+                    node.scrollIntoView({
+                      block: 'nearest',
+                      inline: 'center',
+                    })
+                  }
+                }}
                 href={link.href}
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}

@@ -14,17 +14,19 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
-import { daChartMeta } from './meta'
+import { getDaChartMeta } from './meta'
 
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
 }
 export function DaPercentageThroughputChart({ data, isLoading }: Props) {
+  const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       const total = ethereum + celestia + avail
@@ -46,7 +48,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   }, [data])
 
   return (
-    <ChartContainer data={chartData} meta={daChartMeta} isLoading={isLoading}>
+    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
       <BarChart
         accessibilityLayer
         data={chartData}
@@ -57,19 +59,19 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
         <Bar
           dataKey="ethereum"
           stackId="a"
-          fill={daChartMeta.ethereum.color}
+          fill={chartMeta.ethereum.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="celestia"
           stackId="a"
-          fill={daChartMeta.celestia.color}
+          fill={chartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
           dataKey="avail"
           stackId="a"
-          fill={daChartMeta.avail.color}
+          fill={chartMeta.avail.color}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
@@ -114,9 +116,9 @@ function CustomTooltip({
               className="flex items-center justify-between gap-x-6"
             >
               <div className="flex items-center gap-1">
-                <div
-                  className="size-3 shrink-0 rounded"
-                  style={{ backgroundColor: entry.color }}
+                <ChartDataIndicator
+                  backgroundColor={configEntry.color}
+                  type={configEntry.indicatorType}
                 />
                 <span className="text-secondary">{configEntry.label}</span>
               </div>

@@ -8,18 +8,23 @@ import type { Milestone } from '@l2beat/config'
 import { useIsClient } from '~/hooks/use-is-client'
 import { cn } from '~/utils/cn'
 import { tooltipContentVariants } from '../tooltip/tooltip'
+import {
+  ChartDataIndicator,
+  type ChartDataIndicatorType,
+} from './chart-data-indicator'
 import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartNoDataState } from './chart-no-data-state'
 
 export type ChartMeta = Record<
   string,
-  {
-    label?: React.ReactNode
-    icon?: React.ComponentType
-    color?: string
-    legendLabel?: string
-  }
+  | {
+      label: React.ReactNode
+      color: string
+      legendLabel?: string
+      indicatorType: ChartDataIndicatorType
+    }
+  | undefined
 >
 
 type ChartContextProps = {
@@ -96,9 +101,9 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              'top-[48px] group-has-[.recharts-legend-wrapper]:top-[56px]',
-              'md:top-[68px] md:group-has-[.recharts-legend-wrapper]:top-[76px]',
-              'xl:top-[83px] xl:group-has-[.recharts-legend-wrapper]:top-[91px]',
+              'top-[63px] group-has-[.recharts-legend-wrapper]:top-[58px]',
+              'md:top-[84px] md:group-has-[.recharts-legend-wrapper]:top-[78px]',
+              'xl:top-[98px] xl:group-has-[.recharts-legend-wrapper]:top-[93px]',
             )}
           />
         )}
@@ -128,14 +133,12 @@ const ChartLegend = RechartsPrimitive.Legend
 
 function ChartLegendContent({
   className,
-  hideIcon = false,
   payload,
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
 }: React.ComponentProps<'div'> &
   Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-    hideIcon?: boolean
     nameKey?: string
     reverse?: boolean
   }) {
@@ -158,26 +161,21 @@ function ChartLegendContent({
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+
+        if (!itemConfig) return null
+
         return (
           <div
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             key={item.value}
-            className={cn(
-              'flex items-center gap-[3px] [&>svg]:size-3 [&>svg]:text-secondary',
-            )}
+            className="flex items-center gap-[3px] [&>svg]:text-secondary"
           >
-            {itemConfig?.icon && !hideIcon ? (
-              <itemConfig.icon />
-            ) : (
-              <div
-                className="size-2.5 shrink-0 rounded-sm"
-                style={{
-                  backgroundColor: itemConfig?.color ?? item.color,
-                }}
-              />
-            )}
-            <span className="text-2xs font-medium tracking-[-0.2px] text-secondary">
-              {itemConfig?.legendLabel ?? itemConfig?.label}
+            <ChartDataIndicator
+              type={itemConfig.indicatorType}
+              backgroundColor={itemConfig.color}
+            />
+            <span className="text-2xs font-medium leading-none tracking-[-0.2px] text-secondary">
+              {itemConfig.legendLabel ?? itemConfig.label}
             </span>
           </div>
         )

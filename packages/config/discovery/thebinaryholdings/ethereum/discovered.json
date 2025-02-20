@@ -2,7 +2,7 @@
   "name": "thebinaryholdings",
   "chain": "ethereum",
   "blockNumber": 21429035,
-  "configHash": "0xb585346548f7b1407405fcd4b522dcdc832b1393abb8d8f2702267aa0efa7792",
+  "configHash": "0x5562afd33def8036a8fae596b5006577a6188d77416e1a3946d87b1268abca2c",
   "contracts": [
     {
       "name": "L2OutputOracle",
