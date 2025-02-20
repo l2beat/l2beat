@@ -1,9 +1,9 @@
 import { createHash } from 'crypto'
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
-import type { DaProvider } from '@l2beat/shared'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { type MockObject, expect, mockFn, mockObject } from 'earl'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
 import type {
   DaTrackingConfig,
   DataAvailabilityTrackingConfig,
@@ -21,13 +21,66 @@ const DA_LAYER = 'test-layer'
 
 describe(DaIndexer.name, () => {
   describe(DaIndexer.prototype.multiUpdate.name, () => {
-    it('handles empty blobs response', async () => {
-      const daProvider = mockObject<DaProvider>({
-        getBlobs: async () => [], // Empty response
+    it('fetches blobs, generates records, saves metrics to DB', async () => {
+      const blobs = [blob(100, 100_000), blob(200, 200_000)]
+      const previousRecords = [record('project', 100, 100_000)]
+      const generatedRecords = [record('project', 100, 400_000)]
+
+      const { indexer, repository, daService, daProvider } = mockIndexer({
+        blobs,
+        previousRecords,
+        generatedRecords,
+        batchSize: 50,
       })
 
-      const { indexer, repository, daService } = mockIndexer({
-        daProvider,
+      const updateCallback = await indexer.multiUpdate(100, 200, [])
+      const safeHeight = await updateCallback()
+
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+      expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        new UnixTime(100).toStartOf('day'),
+        new UnixTime(200).toEndOf('day'),
+      )
+      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
+        blobs,
+        previousRecords,
+      )
+
+      expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
+
+      expect(safeHeight).toEqual(150)
+    })
+
+    describe('handles batch size', () => {
+      it('from + batchSize > to', async () => {
+        const { indexer, daProvider } = mockIndexer({
+          batchSize: 50,
+        })
+
+        const updateCallback = await indexer.multiUpdate(100, 200, [])
+        const safeHeight = await updateCallback()
+
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
+        expect(safeHeight).toEqual(150)
+      })
+
+      it('from + batchSize < to', async () => {
+        const { indexer, daProvider } = mockIndexer({
+          batchSize: 150,
+        })
+
+        const updateCallback = await indexer.multiUpdate(100, 200, [])
+        const safeHeight = await updateCallback()
+
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 200)
+        expect(safeHeight).toEqual(200)
+      })
+    })
+
+    it('handles empty blobs response', async () => {
+      const { indexer, repository, daService, daProvider } = mockIndexer({
+        blobs: [],
         batchSize: 100,
       })
 
@@ -75,6 +128,51 @@ describe(DaIndexer.name, () => {
   })
 })
 
+function mockIndexer($: {
+  configurations?: DataAvailabilityTrackingConfig['projects']
+  batchSize?: number
+  indexerService?: IndexerService
+  blobs?: DaBlob[]
+  previousRecords?: DataAvailabilityRecord[]
+  generatedRecords?: DataAvailabilityRecord[]
+}) {
+  const repository = mockObject<Database['dataAvailability']>({
+    deleteByProject: mockFn().resolvesTo({}),
+    upsertMany: mockFn().resolvesTo(undefined),
+    getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
+  })
+
+  const daService = mockObject<DaService>({
+    generateRecords: mockFn().returns($.generatedRecords ?? []),
+  })
+
+  const daProvider = mockObject<DaProvider>({
+    getBlobs: async () => $.blobs ?? [], // Empty response
+  })
+
+  const indexer = new DaIndexer({
+    configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
+      id: c.configurationId,
+      minHeight: c.config.sinceBlock,
+      maxHeight: c.config.untilBlock ?? null,
+      properties: c.config,
+    })),
+    daProvider,
+    daService,
+    logger: Logger.SILENT,
+    daLayer: DA_LAYER,
+    batchSize: $.batchSize ?? 100,
+    parents: [],
+    indexerService: $.indexerService ?? mockObject<IndexerService>(),
+    db: mockDatabase({
+      dataAvailability: repository,
+    }),
+    serializeConfiguration: (value: DaTrackingConfig) => JSON.stringify(value),
+  })
+
+  return { repository, indexer, daService, daProvider }
+}
+
 function config(project: string): {
   configurationId: string
   config: DaTrackingConfig
@@ -92,47 +190,28 @@ function config(project: string): {
   }
 }
 
-function mockIndexer($: {
-  configurations?: DataAvailabilityTrackingConfig['projects']
-  daService?: MockObject<DaService>
-  daProvider?: DaProvider
-  batchSize?: number
-  indexerService?: IndexerService
-  previousRecords?: DataAvailabilityRecord[]
-}) {
-  const repository = mockObject<Database['dataAvailability']>({
-    deleteByProject: mockFn().resolvesTo({}),
-    upsertMany: mockFn().resolvesTo(undefined),
-    getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
-  })
-
-  const daService =
-    $.daService ??
-    mockObject<DaService>({
-      generateRecords: mockFn(),
-    })
-
-  const indexer = new DaIndexer({
-    configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
-      id: c.configurationId,
-      minHeight: c.config.sinceBlock,
-      maxHeight: c.config.untilBlock ?? null,
-      properties: c.config,
-    })),
-    daProvider: $.daProvider ?? mockObject<DaProvider>(),
-    daService,
-    logger: Logger.SILENT,
+function blob(timestamp: number, size: number): DaBlob {
+  return {
     daLayer: DA_LAYER,
-    batchSize: $.batchSize ?? 100,
-    parents: [],
-    indexerService: $.indexerService ?? mockObject<IndexerService>(),
-    db: mockDatabase({
-      dataAvailability: repository,
-    }),
-    serializeConfiguration: (value: DaTrackingConfig) => JSON.stringify(value),
-  })
+    blockTimestamp: new UnixTime(timestamp),
+    size: BigInt(size),
+    type: 'ethereum',
+    inbox: '',
+    sequencer: '',
+  }
+}
 
-  return { repository, indexer, daService }
+function record(
+  projectId: string,
+  timestamp: number,
+  size: number,
+): DataAvailabilityRecord {
+  return {
+    projectId,
+    daLayer: DA_LAYER,
+    timestamp: new UnixTime(timestamp),
+    totalSize: BigInt(size),
+  }
 }
 
 function createId(project: string) {
