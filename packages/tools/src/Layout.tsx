@@ -1,10 +1,22 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router'
 import { ArrowIcon } from './common/ArrowIcon'
 
 export function Layout() {
   const [isOpen, setIsOpen] = useState(true)
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth >= 768) {
+        // md breakpoint
+        setIsOpen(true)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <div className="flex h-full w-full flex-col md:flex-row">
