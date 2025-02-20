@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "stargate",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
   "names": {
     "0x8731d54E9D02c286767d56ac03e8037C07e01e98": "Router",

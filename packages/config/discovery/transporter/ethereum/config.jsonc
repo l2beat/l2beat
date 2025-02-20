@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "transporter",
+  "import": ["../../ethereumConfig.jsonc"],
   "maxAddresses": 450,
   "maxDepth": 8,
   "initialAddresses": [
@@ -31,7 +32,7 @@
     }
   },
   "names": {
-    /* 
+    /*
       For a mapping of onramp addresses to dest/source chains, see:
       https://docs.chain.link/ccip/supported-networks/v1_2_0/mainnet
     */

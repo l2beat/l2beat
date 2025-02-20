@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
     "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"

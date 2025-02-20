@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "honeypot",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
     "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366"

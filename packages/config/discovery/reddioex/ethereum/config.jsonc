@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "reddioex",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xB62BcD40A24985f560b5a9745d478791d8F1945C"],
   "names": {
     "0xB62BcD40A24985f560b5a9745d478791d8F1945C": "StarkExchange",

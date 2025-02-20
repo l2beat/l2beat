@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "blobstream",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"],
   "names": {
     "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "Blobstream",

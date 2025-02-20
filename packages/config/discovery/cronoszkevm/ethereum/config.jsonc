@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "cronoszkevm",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
   "names": {
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "fraxtal",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2" //L1StandardBridge
   ],

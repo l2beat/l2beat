@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "zksync2",
   "name": "shared-zk-stack",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x76705327e682F2d96943280D99464Ab61219e34f", // ZkProtocolGovernor
     "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89", // ZkTokenGovernor
