@@ -357,7 +357,7 @@ export const stargatev2: Bridge = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'the OApp owner changes the configuration of the OApp to malicious DVNs and executors.',
+        text: 'the OApp owner changes the configuration of the OApp to a malicious DVN.',
       },
       {
         category: 'Funds can be frozen if',
