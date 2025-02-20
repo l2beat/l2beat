@@ -15,7 +15,7 @@ import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throuput-public-table'
 
 export default async function Page() {
-  const [entries, _] = await Promise.all([
+  const [entries] = await Promise.all([
     getDaThroughputEntries(),
     api.da.chart.prefetch({ range: '30d' }),
   ])
