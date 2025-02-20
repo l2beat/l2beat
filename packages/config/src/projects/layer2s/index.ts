@@ -184,6 +184,7 @@ import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { tusima } from './tusima'
 import { unichain } from './unichain'
+import { union } from './union'
 import { wirex } from './wirex'
 import { witness } from './witness'
 import { world } from './world'
@@ -390,6 +391,7 @@ export const layer2s: Layer2[] = [
   turboprotocol,
   tusima,
   unichain,
+  union,
   wirex,
   witness,
   world,
