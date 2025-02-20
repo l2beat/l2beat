@@ -8,5 +8,5 @@ export const featureFlags = {
   stageOneRequirementsChanged: () =>
     PROJECT_COUNTDOWNS.stageChanges.lt(UnixTime.now()),
   stageSorting: env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
-  daThroughput: env.NEXT_PUBLIC_FEATURE_FLAG_DA_THROUGHPUT,
+  daThroughput: true,
 }
