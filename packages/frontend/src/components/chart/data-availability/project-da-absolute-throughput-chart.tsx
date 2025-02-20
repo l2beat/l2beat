@@ -119,17 +119,19 @@ export function ProjectDaAbsoluteThroughputChart({
             dot={false}
           />
         )}
-        <Area
-          dataKey="projectMax"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          dot={false}
-        />
+        {showMax && (
+          <Area
+            dataKey="projectMax"
+            isAnimationActive={false}
+            fillOpacity={0}
+            stroke={projectChartMeta.projectMax?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectMax?.indicatorType.strokeDasharray
+            }
+            dot={false}
+          />
+        )}
         {getCommonChartComponents({
           data: chartData,
           isLoading,
