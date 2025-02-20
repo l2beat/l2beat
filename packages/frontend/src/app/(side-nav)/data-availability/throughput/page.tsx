@@ -9,20 +9,20 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
-import { api } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { PublicSystemInfo } from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throuput-public-table'
 
 export default async function Page() {
-  const [entries] = await Promise.all([
+  const [entries, _] = await Promise.all([
     getDaThroughputEntries(),
     api.da.chart.prefetch({ range: '30d' }),
   ])
   const { publicSystems } = groupBySystem(entries)
 
   return (
-    <div>
+    <HydrateClient>
       <MainPageHeader>Throughput</MainPageHeader>
       {/* 
         Negative margin is there to make the tabs align with the side nav
@@ -44,6 +44,6 @@ export default async function Page() {
           </DirectoryTabsContent>
         </DirectoryTabs>
       </div>
-    </div>
+    </HydrateClient>
   )
 }
