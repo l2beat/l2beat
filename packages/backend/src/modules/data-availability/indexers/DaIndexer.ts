@@ -15,9 +15,7 @@ export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<DaTrackingConfig>, 'name'> {
   daService: DaService
   daProvider: DaProvider
-  /** Used only for tagging a logger */
   daLayer: string
-  // TODO: rethink
   batchSize: number
 }
 
@@ -115,12 +113,10 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
         configuration.daLayer,
       )
 
-      this.logger.info('Deleted DA records for configuration', {
+      this.logger.info('Wiped DA records for configuration', {
         id: c.id,
         project: configuration.projectId.toString(),
         daLayer: configuration.daLayer,
-        from: c.from,
-        to: c.to,
         deletedRecords,
       })
     }
