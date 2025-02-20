@@ -1,5 +1,10 @@
 import type { Project } from '@l2beat/config'
-import { ProjectId, formatSeconds, notUndefined } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import type { CommonProjectEntry } from '../../utils/get-common-project-entry'
 import {
@@ -76,9 +81,8 @@ function getDaThroughputEntry(
   if (!data) return undefined
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
-
   const notSyncedStatus = data
-    ? getThroughputSyncWarning(data.syncedUntil)
+    ? getThroughputSyncWarning(new UnixTime(data.syncedUntil))
     : undefined
   return {
     id: ProjectId(project.id),

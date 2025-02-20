@@ -53,28 +53,28 @@ const chartMeta = {
     label: 'Rollups',
     color: 'hsl(var(--chart-rollups))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums and Optimiums',
     color: 'hsl(var(--chart-validiums-optimiums))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
   others: {
     label: 'Others',
     color: 'hsl(var(--chart-others))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
   ethereum: {
     label: 'Ethereum',
     color: 'hsl(var(--chart-ethereum))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
 } satisfies ChartMeta
@@ -238,11 +238,9 @@ function CustomTooltip({
                 className="flex w-full items-start justify-between gap-2"
               >
                 <div className="flex items-center gap-1">
-                  <div
-                    className="relative inline-block size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

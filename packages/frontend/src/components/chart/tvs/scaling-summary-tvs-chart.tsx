@@ -43,21 +43,21 @@ const chartMeta = {
     label: 'Rollups',
     color: 'hsl(var(--chart-rollups))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
     color: 'hsl(var(--chart-validiums-optimiums))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
   others: {
     label: 'Others',
     color: 'hsl(var(--chart-others))',
     indicatorType: {
-      shape: 'square',
+      shape: 'line',
     },
   },
 } satisfies ChartMeta
