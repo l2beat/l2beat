@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 21802976,
-  "configHash": "0xbf14208055b1b0986e766dbd757e2bb4afd9bfd504866dc57b45d7ca51ec74bd",
+  "configHash": "0x6e6f318dbd63a4e6f440149594bc20074d0753c16598bdc85c19380b2a47b6d3",
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -51,7 +51,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -75,7 +76,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 1,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -99,7 +101,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "EraAdminProxy",
@@ -282,7 +285,8 @@
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 1,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -312,7 +316,8 @@
         "multisigThreshold": "2 of 5 (40%)",
         "nonce": 4,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -339,7 +344,8 @@
         "multisigThreshold": "1 of 2 (50%)",
         "nonce": 1,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Matter Labs Multisig",
@@ -422,7 +428,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -446,7 +453,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -470,7 +478,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -506,7 +515,8 @@
         "multisigThreshold": "1 of 11 (9%)",
         "nonce": 12,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -530,7 +540,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GenesisUpgrade",
@@ -565,7 +576,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -595,7 +607,8 @@
         "multisigThreshold": "2 of 5 (40%)",
         "nonce": 3,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProtocolUpgradeHandler",
@@ -684,7 +697,8 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 3,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -716,7 +730,8 @@
         "multisigThreshold": "1 of 7 (14%)",
         "nonce": 10,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -744,7 +759,8 @@
         "multisigThreshold": "1 of 3 (33%)",
         "nonce": 10,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ZkFoundationMultisig",
@@ -978,7 +994,8 @@
         "multisigThreshold": "1 of 4 (25%)",
         "nonce": 7,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GnosisSafe",
@@ -1002,7 +1019,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Guardians",
@@ -1195,7 +1213,8 @@
         "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     }
   ],
   "eoas": [
