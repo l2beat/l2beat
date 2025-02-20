@@ -58,6 +58,7 @@ import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
 import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
+import { genlayer } from './genlayer'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
 import { gpt } from './gpt'
@@ -264,6 +265,7 @@ export const layer2s: Layer2[] = [
   fuelv1,
   funki,
   fuse,
+  genlayer,
   gluon,
   gmnetwork,
   gpt,
