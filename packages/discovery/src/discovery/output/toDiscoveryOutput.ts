@@ -13,6 +13,7 @@ import {
   transformToReceived,
 } from '../permission-resolving/transform'
 import { neuterErrors } from './errors'
+import { withGlobal } from '@sinonjs/fake-timers'
 
 export function toDiscoveryOutput(
   config: DiscoveryConfig,
@@ -126,7 +127,7 @@ export function processAnalysis(
             resolvedPermissions,
             x.combinedMeta?.permissions,
           )
-        return {
+        return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
           description: x.combinedMeta?.description,
@@ -136,7 +137,7 @@ export function processAnalysis(
           receivedPermissions,
           directlyReceivedPermissions,
           category: x.category,
-        } satisfies EoaParameters
+        }) satisfies EoaParameters
       }),
     abis,
   }

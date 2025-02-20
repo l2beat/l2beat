@@ -6,14 +6,7 @@ import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
-const emptyOutputMeta: Meta = {
-  description: undefined,
-  issuedPermissions: undefined,
-  receivedPermissions: undefined,
-  directlyReceivedPermissions: undefined,
-  types: undefined,
-  severity: undefined,
-}
+const emptyOutputMeta: Meta = {}
 
 describe(processAnalysis.name, () => {
   const base = {
@@ -96,9 +89,9 @@ describe(processAnalysis.name, () => {
     expect(result).toEqual({
       contracts: [],
       eoas: [
-        { ...emptyOutputMeta, address: ADDRESS_A, name: undefined },
-        { ...emptyOutputMeta, address: ADDRESS_B, name: undefined },
-        { ...emptyOutputMeta, address: ADDRESS_C, name: undefined },
+        { ...emptyOutputMeta, address: ADDRESS_A },
+        { ...emptyOutputMeta, address: ADDRESS_B },
+        { ...emptyOutputMeta, address: ADDRESS_C },
       ],
       abis: {},
     })
@@ -160,7 +153,7 @@ describe(processAnalysis.name, () => {
           sourceHashes: [],
         },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
       abis: CONTRACT_C.abis,
     })
   })
@@ -204,7 +197,7 @@ describe(processAnalysis.name, () => {
           sourceHashes: [],
         },
       ],
-      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D, name: undefined }],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
       abis: {
         ...CONTRACT_A.abis,
         ...CONTRACT_B.abis,
