@@ -13,7 +13,6 @@ import {
   transformToReceived,
 } from '../permission-resolving/transform'
 import { neuterErrors } from './errors'
-import { withGlobal } from '@sinonjs/fake-timers'
 
 export function toDiscoveryOutput(
   config: DiscoveryConfig,
