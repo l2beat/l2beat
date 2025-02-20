@@ -19,8 +19,9 @@
     }
   }
   proposerFailure: {
-    description: "Anyone can be a Proposer and propose new roots to the L1 bridge."
-    orderHint: 0
+    description: "Anyone can become a Proposer after 12d 17h of inactivity from the currently whitelisted Proposers."
+    orderHint: 1099632
+    secondLine: "12d 17h delay"
     sentiment: "good"
     value: "Self propose"
   }

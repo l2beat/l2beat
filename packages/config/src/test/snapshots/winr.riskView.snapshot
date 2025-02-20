@@ -54,8 +54,8 @@
     value: "None"
   }
   proposerFailure: {
-    description: "Anyone can become a Proposer after 6d 9h of inactivity from the currently whitelisted Proposers."
-    orderHint: 553416
+    description: "Anyone can become a Proposer after 19d 3h of inactivity from the currently whitelisted Proposers."
+    orderHint: 1653048
     sentiment: "good"
     value: "Self propose"
   }
