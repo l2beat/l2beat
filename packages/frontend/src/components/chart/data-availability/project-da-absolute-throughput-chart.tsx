@@ -3,7 +3,7 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
-import { Line, LineChart } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
 import type { ChartMeta } from '~/components/core/chart/chart'
@@ -16,6 +16,15 @@ import {
   useChart,
 } from '~/components/core/chart/chart'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { EmeraldFillGradientDef } from '~/components/core/chart/defs/emerald-gradient-def'
+import {
+  EthereumFillGradientDef,
+  EthereumStrokeGradientDef,
+} from '~/components/core/chart/defs/ethereum-gradient-def'
+import {
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
@@ -63,19 +72,41 @@ export function ProjectDaAbsoluteThroughputChart({
       className="mb-2"
       isLoading={isLoading}
     >
-      <LineChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <defs>
+          {projectId === 'ethereum' && (
+            <>
+              <EthereumFillGradientDef id="ethereum-fill" />
+              <EthereumStrokeGradientDef id="ethereum-stroke" />
+            </>
+          )}
+          {projectId === 'celestia' && (
+            <>
+              <PinkFillGradientDef id="celestia-fill" />
+              <PinkStrokeGradientDef id="celestia-stroke" />
+            </>
+          )}
+          {projectId === 'avail' && <EmeraldFillGradientDef id="avail-fill" />}
+        </defs>
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <ChartLegend content={<ChartLegendContent />} />
-        <Line
+        <Area
           dataKey="project"
-          isAnimationActive={false}
-          stroke={projectChartMeta.project?.color}
+          fill={`url(#${projectId}-fill)`}
+          fillOpacity={1}
+          stroke={
+            projectId === 'avail'
+              ? projectChartMeta.project?.color
+              : `url(#${projectId}-stroke)`
+          }
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <Line
+        <Area
           dataKey="projectTarget"
           isAnimationActive={false}
+          fillOpacity={0}
           stroke={projectChartMeta.projectTarget?.color}
           strokeWidth={2}
           strokeDasharray={
@@ -83,9 +114,10 @@ export function ProjectDaAbsoluteThroughputChart({
           }
           dot={false}
         />
-        <Line
+        <Area
           dataKey="projectMax"
           isAnimationActive={false}
+          fillOpacity={0}
           stroke={projectChartMeta.projectMax?.color}
           strokeWidth={2}
           strokeDasharray={
@@ -103,7 +135,7 @@ export function ProjectDaAbsoluteThroughputChart({
             },
           },
         })}
-      </LineChart>
+      </AreaChart>
     </ChartContainer>
   )
 }

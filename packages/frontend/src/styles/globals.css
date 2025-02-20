@@ -63,6 +63,8 @@
     --chart-yellow-fill-gradient: 53.8 70.9% 56.9%;
     --chart-yellow-stroke-gradient-1: 44.9 100% 33.5%;
     --chart-yellow-stroke-gradient-2: 43 60% 45.1%;
+
+    --chart-emerald-fill-gradient: 151 90.2% 64.1%;
   }
 
   .dark {
@@ -122,6 +124,8 @@
     --chart-yellow-fill-gradient: 50.1 59% 40.2%;
     --chart-yellow-stroke-gradient-1: 45.1 100% 52%;
     --chart-yellow-stroke-gradient-2: 43 60% 45.1%;
+
+    --chart-emerald-fill-gradient: 163 93.5% 24.3%;
   }
 }
 
