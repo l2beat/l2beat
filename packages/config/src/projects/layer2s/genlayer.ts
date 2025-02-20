@@ -10,17 +10,15 @@ export const genlayer: Layer2 = upcomingL2({
     name: 'GenLayer',
     slug: 'genlayer',
     description:
-      "GenLayer is the first AI-native blockchain built for AI-powered smart contracts",
+      'GenLayer is the first AI-native blockchain built for AI-powered smart contracts.',
     purposes: ['Universal', 'AI'],
     category: 'ZK Rollup',
     stack: 'ZK Stack',
     links: {
-      websites: ['https://www.genlayer.com/'],
+      websites: ['https://genlayer.com/'],
       documentation: ['https://docs.genlayer.com/'],
       explorers: ['https://genlayer-testnet.explorer.caldera.xyz/'],
-      socialMedia: [
-        'https://x.com/GenLayer',
-      ],
+      socialMedia: ['https://x.com/GenLayer'],
     },
   },
 })

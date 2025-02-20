@@ -15,10 +15,10 @@ export const union: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     stack: 'ZK Stack',
     links: {
-      websites: ['https://www.unionchain.io/'],
+      websites: ['https://unionchain.io/'],
       socialMedia: [
         'https://x.com/unionchain_io',
-        'https://www.linkedin.com/company/unionchain/',
+        'https://linkedin.com/company/unionchain/',
         'https://t.me/union_chain',
       ],
     },

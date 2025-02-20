@@ -18,9 +18,7 @@ export const wonderfi: Layer2 = upcomingL2({
       websites: ['https://labs.wonder.fi/'],
       documentation: ['https://docs.wonderchain.org/'],
       explorers: ['https://explorer.testnet.wonderchain.org/'],
-      socialMedia: [
-        'https://x.com/WonderFiLabs',
-      ],
+      socialMedia: ['https://x.com/WonderFiLabs'],
     },
   },
 })

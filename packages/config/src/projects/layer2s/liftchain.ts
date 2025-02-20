@@ -15,10 +15,10 @@ export const liftchain: Layer2 = upcomingL2({
     category: 'Validium',
     stack: 'ZK Stack',
     links: {
-      websites: ['https://www.liftdata.ai/'],
+      websites: ['https://liftdata.ai/'],
       documentation: ['https://docs.liftdata.ai/'],
       repositories: ['https://github.com/PlayFi-Labs'],
-      socialMedia: ['https://www.liftdata.ai'],
+      socialMedia: ['https://liftdata.ai'],
     },
   },
 })

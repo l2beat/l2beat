@@ -15,12 +15,10 @@ export const lachain: Layer2 = upcomingL2({
     category: 'ZK Rollup',
     stack: 'ZK Stack',
     links: {
-      websites: ['https://www.lachain.network/'],
+      websites: ['https://lachain.network/'],
       documentation: ['https://lachain.gitbook.io/lachain-docs'],
       explorers: ['https://testexplorer.lachain.network/'],
-      socialMedia: [
-        'https://x.com/LaChain_Network',
-      ],
+      socialMedia: ['https://x.com/LaChain_Network'],
     },
   },
 })
