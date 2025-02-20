@@ -1,5 +1,5 @@
-import type { Project } from '@l2beat/config'
-import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import type { DaLayerThroughput, Project } from '@l2beat/config'
+import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -77,26 +77,28 @@ const getCachedDaThroughputTableData = cache(
             }
           : undefined
 
-        const pastDayAvgThroughput = getThroughput(
-          Number(lastRecord.totalSize) / 1000, // Convert to KB
-          86_400,
-        )
-        const maxThroughput = getThroughput(
-          latestThroughput.size,
-          latestThroughput.frequency,
+        const pastDayAvgThroughputPerSecond =
+          Number(lastRecord.totalSize) / UnixTime.DAY
+        const maxThroughputPerSecond = getMaxThroughputPerSecond(
+          daLayer,
+          latestThroughput,
         )
 
         const pastDayAvgCapacityUtilization =
-          Math.round((pastDayAvgThroughput / maxThroughput) * 100 * 100) / 100
+          Math.round(
+            (pastDayAvgThroughputPerSecond / maxThroughputPerSecond) *
+              100 *
+              100,
+          ) / 100
 
         return [
           daLayer.id,
           {
             totalSize: Number(lastRecord.totalSize),
             syncedUntil: lastRecord.timestamp,
-            pastDayAvgThroughput,
+            pastDayAvgThroughputPerSecond,
             largestPoster,
-            maxThroughput,
+            maxThroughputPerSecond,
             pastDayAvgCapacityUtilization,
             totalPosted: Number(lastRecord.totalSize),
           },
@@ -124,8 +126,8 @@ function getMockDaThroughputTableData(
               project.id === 'avail'
                 ? UnixTime.now().toStartOf('day').add(-2, 'days')
                 : UnixTime.now().toStartOf('day').add(-1, 'days'),
-            pastDayAvgThroughput: 1.5,
-            maxThroughput: 4.3,
+            pastDayAvgThroughputPerSecond: 1.5,
+            maxThroughputPerSecond: 4.3,
             largestPoster: {
               name: 'Base',
               percentage: 12,
@@ -140,22 +142,12 @@ function getMockDaThroughputTableData(
   )
 }
 
-function getThroughput(bytes: number, frequencySeconds: number): number {
-  if (bytes === 0) {
-    return 0
-  }
-
-  if (frequencySeconds === 0) {
-    throw new Error('Frequency cannot be zero.')
-  }
-
-  const mb = bytes / 1_000
-  const throughput = mb / frequencySeconds
-
-  // Round to at most 4 digits
-  const numDigitsBeforeDecimal = Math.floor(Math.log10(throughput)) + 1
-  const decimalPlaces = Math.max(0, 3 - numDigitsBeforeDecimal)
-  const formattedThroughput = Number(throughput.toFixed(decimalPlaces))
-
-  return formattedThroughput
+function getMaxThroughputPerSecond(
+  daLayer: Project<'daLayer' | 'statuses'>,
+  latestThroughput: DaLayerThroughput,
+) {
+  const isEthereum = daLayer.id === ProjectId.ETHEREUM
+  const size = isEthereum ? latestThroughput.target! : latestThroughput.size
+  assert(size, 'Project does not have throughput data configured')
+  return size / latestThroughput.frequency
 }
