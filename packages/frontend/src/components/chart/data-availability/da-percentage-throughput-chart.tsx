@@ -53,7 +53,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
         accessibilityLayer
         data={chartData}
         margin={{ top: 20 }}
-        barCategoryGap={0}
+        barCategoryGap={-1}
       >
         <ChartLegend content={<ChartLegendContent />} />
         <Bar
