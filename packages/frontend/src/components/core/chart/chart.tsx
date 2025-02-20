@@ -171,11 +171,11 @@ function ChartLegendContent({
             className="flex items-center gap-[3px] [&>svg]:text-secondary"
           >
             <ChartDataIndicator
-              type={itemConfig?.indicatorType}
-              backgroundColor={itemConfig?.color ?? item.color}
+              type={itemConfig.indicatorType}
+              backgroundColor={itemConfig.color}
             />
             <span className="text-2xs font-medium leading-none tracking-[-0.2px] text-secondary">
-              {itemConfig?.legendLabel ?? itemConfig?.label}
+              {itemConfig.legendLabel ?? itemConfig.label}
             </span>
           </div>
         )
