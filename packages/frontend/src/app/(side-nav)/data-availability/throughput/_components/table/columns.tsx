@@ -4,6 +4,10 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import {
+  formatBpsToMbps,
+  formatBytes,
+} from '~/utils/number-format/format-bytes'
 
 const columnHelper = createColumnHelper<DaThroughputEntry>()
 
@@ -30,9 +34,11 @@ export const publicSystemsColumns = [
             <TableValueCell
               emptyMode="no-data"
               value={
-                ctx.row.original.pastDayAvgThroughput
+                ctx.row.original.pastDayAvgThroughputPerSecond
                   ? {
-                      value: `${ctx.row.original.pastDayAvgThroughput} MB/s`,
+                      value: formatBpsToMbps(
+                        ctx.row.original.pastDayAvgThroughputPerSecond,
+                      ),
                     }
                   : undefined
               }
@@ -45,13 +51,15 @@ export const publicSystemsColumns = [
         },
       }),
       columnHelper.display({
-        header: 'MAX',
+        header: 'SUSTAINED MAX',
         cell: (ctx) => (
           <TableValueCell
             value={
-              ctx.row.original.maxThroughput
+              ctx.row.original.maxThroughputPerSecond
                 ? {
-                    value: `${ctx.row.original.maxThroughput} MB/s`,
+                    value: formatBpsToMbps(
+                      ctx.row.original.maxThroughputPerSecond,
+                    ),
                   }
                 : undefined
             }
@@ -95,7 +103,9 @@ export const publicSystemsColumns = [
             ctx.row.original.largestPoster
               ? {
                   value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
-                  secondLine: ctx.row.original.largestPoster.totalPosted,
+                  secondLine: formatBytes(
+                    ctx.row.original.largestPoster.totalPosted,
+                  ),
                 }
               : undefined
           }
@@ -111,7 +121,13 @@ export const publicSystemsColumns = [
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell value={{ value: ctx.row.original.totalPosted ?? '' }} />
+        <TableValueCell
+          value={{
+            value: ctx.row.original.totalPosted
+              ? formatBytes(ctx.row.original.totalPosted)
+              : '',
+          }}
+        />
       </SyncStatusWrapper>
     ),
     meta: {

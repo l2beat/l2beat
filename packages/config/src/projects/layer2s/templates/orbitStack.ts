@@ -167,6 +167,8 @@ interface OrbitStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -220,14 +222,14 @@ export function getNitroGovernance(
   While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
   the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions,
   their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One and crosschain transactions.
-  
-  
+
+
   Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One
   and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
   (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
   These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-  
-  
+
+
   Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
   CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
     l2TimelockDelay,
@@ -239,12 +241,12 @@ export function getNitroGovernance(
   )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
   and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts
   through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-  
-  
+
+
   Operator roles like the Sequencers and Validators are managed using the same paths.
   Sequencer changes can be delegated to a Batch Poster Manager.
-  
-  
+
+
   Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
   )}
@@ -566,7 +568,7 @@ function orbitStackCommon(
         Badge.Stack.Orbit,
         Badge.VM.EVM,
         daBadge,
-        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoSequencing] : []),
+        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoPreconfs] : []),
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -861,7 +863,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
 function getDaTracking(
   templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
-): ProjectDaTrackingConfig | undefined {
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const usesBlobs =
     templateVars.usesBlobs ??
     templateVars.discovery.getContractValueOrUndefined(
@@ -879,29 +885,35 @@ function getDaTracking(
   const inboxDeploymentBlockNumber = 0
 
   return usesBlobs
-    ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: templateVars.sequencerInbox.address,
-        sequencers: batchPosters,
-      }
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: templateVars.sequencerInbox.address,
+          sequencers: batchPosters,
+        },
+      ]
     : templateVars.celestiaDa
-      ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
-        }
-      : templateVars.availDa
-        ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
-          }
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }
 

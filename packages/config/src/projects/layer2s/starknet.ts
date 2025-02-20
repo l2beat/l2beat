@@ -495,16 +495,18 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
-      sequencers: [
-        '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
-        '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
-      ],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+        sequencers: [
+          '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
+          '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+        ],
+      },
+    ],
     finality: {
       lag: 0,
       type: 'Starknet',
@@ -1154,11 +1156,11 @@ export const starknet: Layer2 = {
   },
   upgradesAndGovernance: `
   The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
-  
-  
+
+
   The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
-  
-  
+
+
   The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
   `,
   permissions: {
@@ -1174,11 +1176,11 @@ export const starknet: Layer2 = {
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
+        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
           'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarknetOpsMultisig',
           'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
@@ -1188,10 +1190,13 @@ export const starknet: Layer2 = {
           discovery.getPermissionedAccounts('Starknet', 'operators'),
           'Allowed to post state updates. When the operator is down the state cannot be updated.',
         ),
-        ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
-          'StarknetOperatorMultisig',
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+          'StarknetOpsMultisig',
+          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+        ),
+        discovery.getMultisigPermission(
+          'StarkgateSecurityAgentMultisig',
+          'Can enable withdrawal limits for tokens in some Starkgate bridge Escrows.',
         ),
         discovery.getPermissionDetails(
           'StarkGate LUSD owner',

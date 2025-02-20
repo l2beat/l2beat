@@ -210,7 +210,9 @@ describe('projects', () => {
           if (!excluded.has(project.id)) {
             it(project.id, () => {
               assert(project.config.daTracking) // type issue
-              expect(project.config.daTracking.sinceBlock).toBeGreaterThan(0)
+              for (const config of project.config.daTracking) {
+                expect(config.sinceBlock).toBeGreaterThan(0)
+              }
             })
           }
         }

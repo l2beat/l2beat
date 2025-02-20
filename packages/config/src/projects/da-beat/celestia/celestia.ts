@@ -142,17 +142,17 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
     pruningWindow: 86400 * 30, // 30 days in seconds
     throughput: [
       {
-        size: 8000, // 8 MB
+        size: 8388608, // 8 MiB
         frequency: 6, // 6 seconds
         sinceTimestamp: 1738022400, // 2025-01-28,
       },
       {
-        size: 2000,
+        size: 2097152, // 2 MiB
         frequency: 6,
         sinceTimestamp: 1733961600, // 2024-12-12
       },
       {
-        size: 2000,
+        size: 2097152, // 2 MiB
         frequency: 12,
         sinceTimestamp: 1698710400, // 2023-10-31
       },
