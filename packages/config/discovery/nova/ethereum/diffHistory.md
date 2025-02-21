@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x81ca79b5487837693b1ce8b46ae2c6385ff7b558
+
+# Diff at Thu, 20 Feb 2025 12:24:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 21786859
+- current block number: 21786859
+
+## Description
+
+Config: Add Bold templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786859 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
 Generated with discovered.json: 0xf2796acd4f1771f9f8e80ec550f65a1e1fa548a4
 
 # Diff at Fri, 14 Feb 2025 14:45:54 GMT:

@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 21802929,
-  "configHash": "0xece1e516b4d6c8360cf38bcef6633134c0fb72adc9e6773ecb060a535ddcb57e",
+  "configHash": "0x3e098fb5851a6e7b53e35d75b81103a858d9463dcae7c6327b1fe2f6d72d3309",
   "contracts": [
     {
       "name": "SharedProxyAdmin",

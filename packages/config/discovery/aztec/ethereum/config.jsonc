@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "aztec",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
     "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"

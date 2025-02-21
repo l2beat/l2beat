@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "allbridge",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xA314330482f325D38A83B492EF6B006224a3bea9",
     "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",

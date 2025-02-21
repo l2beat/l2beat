@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 21829908,
-  "configHash": "0x0d818c76b9d64874081b687d0157bc532fd771d7e89a44c9041fc34489abc0e6",
+  "configHash": "0xf37887f463ed967a5f7943d8ddad550713b7839b3276ece05e8f87835f4366dd",
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -79,7 +79,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -266,7 +265,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -426,7 +424,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.",
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -1319,10 +1316,10 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "lido/L1ERC20TokenBridge": "0x6b130feebf496d13479657eb711e6957c3e73d18677bac07644b4882103ec109",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
+    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
-    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
     "opstack/SuperchainConfig_zircuit": "0xdfaecf1d6aae73a11d0cdc7d6d494005d83334c8c99f4f88da97b741549397ff",
     "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"

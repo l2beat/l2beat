@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 21242106,
-  "configHash": "0x58c97ac9be53efca56c3f570ddefd6e2429a368a9601a183e06d1357654e4416",
+  "configHash": "0x354fc8f593dc44fd2f111533b4a94680235ebf652b703d791b2dbfcefbc852e9",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

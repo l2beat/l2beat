@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 21723791,
-  "configHash": "0x291cf5a36f8aa3d7720fa466ff4353464d16a7f01409e08d26ada147e4e19aaf",
+  "configHash": "0xce4070682dbc2b3fae6d29d64ef1f85d2a071fa62d98bdaa2125787e1c8cb435",
   "contracts": [
     {
       "name": "LayerZero Proof Library",

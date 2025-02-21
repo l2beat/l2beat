@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polynetwork",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x81910675dbaf69dee0fd77570bfd07f8e436386a"],
   "names": {
     "0x81910675DbaF69deE0fD77570BFD07f8E436386A": "PolyWrapper",

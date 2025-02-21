@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 21628404,
-  "configHash": "0x4263749d952187a95e61c9f9b63eb98aca39a0ceb3f15761f75c71ae5dd39eaa",
+  "configHash": "0x327caf95cb6bce1336d8e39bfbcca61f9c7fb790ca24e5c9a37f0687fa6bdab6",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -622,7 +622,7 @@
           ]
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1720173479,
       "values": {
         "$admin": "0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
@@ -1480,7 +1480,7 @@
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
     "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
-    "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
+    "orbitstack/SequencerInbox": "0xd3e39037ef9e2fbff2690d1f59e38e2319a5f12e8f836cc72c83ae2c0c41a83b",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }

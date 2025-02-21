@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xbaedab6db13baa91db4f7d1c2a3f43dc9eeeb3316eec2f8402710a42d2ccd2c9",
+  "configHash": "0x943e5963d31347fea3e5bf6f55754f34c301991b73c4e5191b2b143a3fa9f367",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {

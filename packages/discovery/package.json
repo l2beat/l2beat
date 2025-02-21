@@ -44,6 +44,8 @@
     "@l2beat/typescript-config": "workspace:*",
     "@types/deep-diff": "^1.0.2",
     "@types/lodash": "^4.14.198",
-    "@types/node-fetch": "^2.6.4"
+    "@types/mock-fs": "^4.13.4",
+    "@types/node-fetch": "^2.6.4",
+    "mock-fs": "^5.2.0"
   }
 }

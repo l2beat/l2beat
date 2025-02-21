@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 81620827,
-  "configHash": "0xcfe9045c04b36c2cac9d6467251d8f73ad12ae98e51fed1df903c44d0e2ad156",
+  "configHash": "0xbd6d12716cf29b0ca04e3c59fee70fa284c885aac82600e1aad36546f9df4889",
   "contracts": [
     {
       "name": "L2GatewayRouter",

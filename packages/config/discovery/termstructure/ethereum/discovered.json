@@ -2,7 +2,7 @@
   "name": "termstructure",
   "chain": "ethereum",
   "blockNumber": 20469346,
-  "configHash": "0x4613cdd610e95d44f718834263698109373efd54948b27f56e880764a38022ae",
+  "configHash": "0x89c1bebdd3deb5559e8c25b1e0e261fb80043d9b7b41be2547a1c368b3413785",
   "contracts": [
     {
       "name": "ZkTrueUp",
