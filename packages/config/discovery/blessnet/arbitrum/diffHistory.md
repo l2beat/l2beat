@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xacaf905381646d10766d14a547a281894794ffe1
+Generated with discovered.json: 0x1bac66fef2e684d71ca246add47f4b42d4b1cb61
 
-# Diff at Fri, 21 Feb 2025 13:25:19 GMT:
+# Diff at Fri, 21 Feb 2025 14:12:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 305262432
@@ -8,8 +8,7 @@ Generated with discovered.json: 0xacaf905381646d10766d14a547a281894794ffe1
 
 ## Description
 
-Multisig added as validator, still no state updates.
-Config related: Set orbit stack contract categories.
+Config related: Change some severities and add templates.
 
 ## Watched changes
 

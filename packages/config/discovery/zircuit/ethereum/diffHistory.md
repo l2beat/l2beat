@@ -1,4 +1,42 @@
-Generated with discovered.json: 0x2ebfce076a631de04143b23243cd2a2daad86475
+Generated with discovered.json: 0x0b2c308a2aa405d71d521b397457d98b23a69bcb
+
+# Diff at Fri, 21 Feb 2025 14:12:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829908
+- current block number: 21829908
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829908 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZircuitAdminMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x91c227cc6de096996cdb48c7dda94a83d022f9f2
 
 # Diff at Fri, 21 Feb 2025 09:00:29 GMT:
 
