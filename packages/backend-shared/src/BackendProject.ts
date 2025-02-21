@@ -3,7 +3,7 @@ import {
   type ChainConfig,
   type Layer2,
   type Layer2FinalityConfig,
-  type Layer2LivenessConfig,
+  type ProjectLivenessConfig,
   type Layer3,
   type ProjectEscrow,
   type SharedEscrow,
@@ -28,7 +28,7 @@ export interface BackendProject {
   isUpcoming?: boolean
   escrows: BackendProjectEscrow[]
   transactionApi?: TransactionApiConfig
-  livenessConfig?: Layer2LivenessConfig
+  livenessConfig?: ProjectLivenessConfig
   finalityConfig?: Layer2FinalityConfig
   associatedTokens?: string[]
 }

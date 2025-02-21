@@ -484,7 +484,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
-  liveness?: Layer2LivenessConfig
+  liveness?: ProjectLivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
 }
@@ -544,7 +544,7 @@ interface SharedBridge {
   untilTimestamp?: UnixTime
 }
 
-export interface Layer2LivenessConfig {
+export interface ProjectLivenessConfig {
   duplicateData: {
     from: TrackedTxsConfigSubtype
     to: TrackedTxsConfigSubtype
@@ -817,6 +817,7 @@ export interface BaseProject {
   // tvlConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
+  livenessConfig?: ProjectLivenessConfig
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
