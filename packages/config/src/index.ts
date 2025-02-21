@@ -28,7 +28,6 @@ export {
 export { bridges } from './projects/bridges'
 export { layer2s } from './projects/layer2s'
 export { layer3s } from './projects/layer3s'
-export { onChainProjects } from './projects/onChainProjects'
 export { ProjectService, type Project } from './projects/project/ProjectService'
 export { isUnderReview } from './projects/project/utils/isUnderReview'
 export {
