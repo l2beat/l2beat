@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xdfed7fb42be4940f1639cb8c896c7e6f118f32ae
+
+# Diff at Fri, 21 Feb 2025 11:25:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ce1c041bd14ba7d12811fd26d9c04ce8a544b543 block: 21766618
+- current block number: 21766618
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21766618 (main branch discovery), not current.
+
+```diff
+    contract OneStepProofEntry (0x1F58949AB4C6A65C4055f45fdF9297C5F216CD95) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x251E34E4644D06b319AD39c602b857E47cCa13C3) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x6119D59799E83329847de25Dc787A0D9ab4c0323) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract OneStepProver0 (0xaac292Cb9a205A140003775529181787fdbc4DC6) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1OrbitGatewayRouter (0xb47D14b4282DF795E036e9Ea43E54C31FCB0eCAC) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xE6068c35d4FB1899b9419cE3e7B66D318C652847) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ERC20RollupEventInbox (0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0x6ef2b7c3cebd2c5d57e9569aa0fb34729e5847c7
 
 # Diff at Tue, 04 Feb 2025 12:31:23 GMT:

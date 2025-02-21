@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 21872538,
-  "configHash": "0x2ba49bf02aebbb2c9cc64dc40e63c0b16ac8cb18167a3df6c93c4efad78b464f",
+  "configHash": "0xd62dcaf4ada50039ae795f558c7bdb77c28c29307666ef4a96e034c4639faad8",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

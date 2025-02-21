@@ -2,7 +2,7 @@
   "name": "edgeless",
   "chain": "ethereum",
   "blockNumber": 21766618,
-  "configHash": "0x2a4a5f31d92b4d45050063594422bcf96874ba81e0a46e7515294a77acfc3848",
+  "configHash": "0xcebd290dca055673372d03217ed1be6ca8416fc1868cd459c7253496c6bed5cd",
   "contracts": [
     {
       "name": "StakingManager",
@@ -62,7 +62,8 @@
         "proverHostIo": "0x251E34E4644D06b319AD39c602b857E47cCa13C3",
         "proverMath": "0xE6068c35d4FB1899b9419cE3e7B66D318C652847",
         "proverMem": "0x6119D59799E83329847de25Dc787A0D9ab4c0323"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "OneStepProverHostIo",
@@ -73,7 +74,8 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1732096619,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ValidatorUtils",
@@ -326,7 +328,8 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1732096595,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L1OrbitERC20Gateway",
@@ -737,7 +740,8 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1732096583,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L1OrbitGatewayRouter",
@@ -778,7 +782,8 @@
         "owner": "0xc213d433802ea473e23623476b26FB12e9B4eFe6",
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "RenzoStrategy",
@@ -954,7 +959,8 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1732096607,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ERC20Inbox",
@@ -1032,7 +1038,8 @@
         "$upgradeCount": 1,
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",
         "rollup": "0x890025891508a463A636f81D2f532a97210240de"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SequencerInbox",
@@ -2189,15 +2196,15 @@
     "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
     "orbitstack/CustomGateway": "0x07d5a2445b8573be667a0001dad30fcb296a41acbeb368dac5bceb4fed45661c",
     "orbitstack/ERC20Gateway": "0xe0a16d610d226558ac7f6fe1e8a4f752f31aa0939f378c8e4c1d10c6197832ec",
-    "orbitstack/GatewayRouter": "0x716365f0496eb5c6804067a5971d09346a726a1e4a8aa9930d6fd7d3e4410163",
+    "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
     "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
-    "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
-    "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
-    "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
-    "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
-    "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
+    "orbitstack/OneStepProofEntry": "0xa9e0a44534dd6470c9e4983b809e72ae05099a5d8a7226914647381516197234",
+    "orbitstack/OneStepProver0": "0xcc6f3461eda3b8d3cf889385abf0cc43bf8588626ba712642f7853aad822342c",
+    "orbitstack/OneStepProverHostIo": "0x2576b34dfbc2bd4b4148dc0df3b720416a09e9e5b0459dc1da0a85a26cd8ead0",
+    "orbitstack/OneStepProverMath": "0x15144e860924290ab2e2b1800b8016c75bc5d1cd15f2c4575748533b2e26a483",
+    "orbitstack/OneStepProverMemory": "0x0364688f869d4593ba4412001367c0fba7385dac057862d342d73b1c7a0affc3",
     "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
-    "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
+    "orbitstack/RollupEventInbox": "0xd88d2603baae6441b40e16750ba1922a7749739ffbdc9547293d3480e5ff5574",
     "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
     "orbitstack/SequencerInbox": "0xd3e39037ef9e2fbff2690d1f59e38e2319a5f12e8f836cc72c83ae2c0c41a83b",
     "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",

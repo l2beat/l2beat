@@ -2,7 +2,7 @@
   "name": "xterio",
   "chain": "ethereum",
   "blockNumber": 21235438,
-  "configHash": "0x1d6fd55edeb02bf91587e88ddfd34f71c15ad03d65d0ce2d020aac1b9cfbbb08",
+  "configHash": "0x230aa5a6a3bfe79c7eaa2f5bef47d74e13e6472fcb2bfec85200ff0285b5e264",
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",

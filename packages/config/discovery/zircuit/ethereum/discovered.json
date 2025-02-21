@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 21829908,
-  "configHash": "0xf37887f463ed967a5f7943d8ddad550713b7839b3276ece05e8f87835f4366dd",
+  "configHash": "0xd68426c154ac88be516e0ede3238fb40384a5fdf5507e2f2355bb97ab1d7d800",
   "contracts": [
     {
       "name": "OptimismPortal",

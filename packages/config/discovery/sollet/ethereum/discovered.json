@@ -2,7 +2,7 @@
   "name": "sollet",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0xc2f6d610a5f583366b6068f4d69fe8c7e3ab2d6b02a28ff72c1c6e32000ef913",
+  "configHash": "0x2c6e807c61eed6ead19de8f46ff4f6d576cf62cd3e9809841e9af4aec35c5f88",
   "contracts": [
     {
       "name": "SplTokenSwap",

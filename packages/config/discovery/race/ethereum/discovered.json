@@ -2,7 +2,7 @@
   "name": "race",
   "chain": "ethereum",
   "blockNumber": 21242938,
-  "configHash": "0x43deac14c5805b327781c8b040fc7ac9f118ec117024867d3d8283a35467b463",
+  "configHash": "0xfd5fd032086aa5459d6ec7bb261034bd7947c42bb35d1f8643d989e9dbc6008e",
   "contracts": [
     {
       "name": "OptimismPortal",
