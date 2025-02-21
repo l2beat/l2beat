@@ -1,14 +1,78 @@
-Generated with discovered.json: 0xaf6a485112940d81f0a115b090d6767a68a019b4
+Generated with discovered.json: 0x5c358fb75dba0a560774b7d9d3a4232bede3ac3e
 
-# Diff at Fri, 21 Feb 2025 12:11:36 GMT:
+# Diff at Fri, 21 Feb 2025 13:51:36 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 298084261
-- current block number: 298084261
+- current block number: 308396879
 
 ## Description
 
+Add operator addresses.
 Config related: Set orbit stack contract categories.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.0.to:
+-        "0x0816e1EeE08C701001e5a846f5ae2ee93FABb608"
++        "0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"
+      values.batchPosters.0:
+-        "0x0816e1EeE08C701001e5a846f5ae2ee93FABb608"
++        "0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.14.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      issuedPermissions.13.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      issuedPermissions.3.to:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        4
++        6
+      values.stakerCount:
+-        1
++        2
+      values.validators.4:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+    }
+```
+
+```diff
+    contract EduFastConfirmerMultisig (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b) {
+    +++ description: None
+      values.$members.4:
+-        "0xbdA6d4ecbb176e12314361DF779bdB428f368163"
++        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
+      values.$members.3:
+-        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
++        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
+      values.$members.2:
+-        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
++        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
+      values.$members.1:
+-        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
++        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
+      values.$members.0:
+-        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+    }
+```
 
 ## Config/verification related changes
 
