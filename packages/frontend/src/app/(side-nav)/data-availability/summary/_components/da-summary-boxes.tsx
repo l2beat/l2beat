@@ -1,7 +1,12 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { partition } from 'lodash'
+import { partition, round } from 'lodash'
 import Link from 'next/link'
 import { Breakdown } from '~/components/breakdown/breakdown'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/tooltip'
 import { PercentChange } from '~/components/percent-change'
 import { PrimaryCard } from '~/components/primary-card'
 import { ChevronIcon } from '~/icons/chevron'
@@ -50,9 +55,21 @@ function SummaryTvsBox({
   const ethereum7dAgo = ethereum?.tvs.tvs7d ?? 0
   const others7dAgo = others.reduce((acc, entry) => acc + entry.tvs.tvs7d, 0)
 
-  const breakdown = [
-    { label: 'Ethereum', value: ethereumValue, className: 'bg-chart-ethereum' },
-    { label: 'Alt-DAs', value: othersValue, className: 'bg-[#FF8933]' },
+  const total = ethereumValue + othersValue
+
+  const breakdown: BreakdownItem[] = [
+    {
+      label: 'Ethereum',
+      value: ethereumValue,
+      className: 'bg-chart-ethereum',
+      percentage: round((ethereumValue / total) * 100, 2),
+    },
+    {
+      label: 'Alt-DAs',
+      value: othersValue,
+      className: 'bg-[#FF8933]',
+      percentage: round((othersValue / total) * 100, 2),
+    },
   ]
 
   return (
@@ -72,7 +89,7 @@ function SummaryTvsBox({
           change={calculatePercentageChange(othersValue, others7dAgo)}
         />
       </div>
-      <Breakdown className="h-1 w-full md:h-2" gap={0} values={breakdown} />
+      <BreakdownWithTooltip items={breakdown} />
       <div className="-mt-4 flex gap-4">
         {breakdown.map(({ label, className }) => (
           <BreakdownElement key={label} label={label} color={className} />
@@ -100,21 +117,26 @@ function SummaryThroughputBox({
     0,
   )
 
-  const breakdown = [
+  const total = latest.ethereum + latest.celestia + latest.avail
+
+  const breakdown: BreakdownItem[] = [
     {
       label: 'Ethereum',
-      value: latest.ethereum ?? 0,
+      value: latest.ethereum,
       className: 'bg-[hsl(var(--chart-ethereum))]',
+      percentage: round((latest.ethereum / total) * 100, 2),
     },
     {
       label: 'Celestia',
-      value: latest.celestia ?? 0,
+      value: latest.celestia,
       className: 'bg-[hsl(var(--chart-da-celestia))]',
+      percentage: round((latest.celestia / total) * 100, 2),
     },
     {
       label: 'Avail',
-      value: latest.avail ?? 0,
+      value: latest.avail,
       className: 'bg-[hsl(var(--chart-da-avail))]',
+      percentage: round((latest.avail / total) * 100, 2),
     },
   ]
 
@@ -138,13 +160,44 @@ function SummaryThroughputBox({
         value={formatBytes(totalPosted)}
         change={calculatePercentageChange(totalPosted, totalPosted7d)}
       />
-      <Breakdown className="h-1 w-full md:h-2" gap={0} values={breakdown} />
+      <BreakdownWithTooltip items={breakdown} />
       <div className="-mt-4 flex gap-4">
         {breakdown.map(({ label, className }) => (
           <BreakdownElement key={label} label={label} color={className} />
         ))}
       </div>
     </PrimaryCard>
+  )
+}
+
+interface BreakdownItem {
+  label: string
+  value: number
+  className: string
+  percentage: number
+}
+
+function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <Breakdown className="h-1 w-full md:h-2" gap={0} values={items} />
+      </TooltipTrigger>
+      <TooltipContent className="flex flex-col">
+        {items.map((s) => (
+          <div
+            key={s.label}
+            className="flex items-center justify-between gap-5"
+          >
+            <div className="flex items-baseline gap-1">
+              <div className={cn('size-2.5 rounded-sm', s.className)} />
+              <span>{s.label}</span>
+            </div>
+            <span className="font-medium">{s.percentage.toFixed(1)}%</span>
+          </div>
+        ))}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
