@@ -10,6 +10,7 @@ export interface DiscoveryModuleConfig {
   readonly printStats?: boolean
   readonly verboseTemplatization?: boolean
   readonly saveSources?: boolean
+  readonly buildModels?: boolean
   readonly blockNumber?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string

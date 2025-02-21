@@ -62,7 +62,7 @@ export const real: Layer2 = orbitStackL2({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://real.drpc.org',
-  // gasTokens: ['reETH'], // not on coingecko yet
+  gasTokens: { untracked: ['reETH'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),

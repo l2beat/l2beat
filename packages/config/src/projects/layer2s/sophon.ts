@@ -45,6 +45,7 @@ export const sophon: Layer2 = zkStackL2({
     },
   },
   associatedTokens: ['SOPH'],
+  gasTokens: { tracked: ['SOPH'] },
   rpcUrl: 'https://rpc.sophon.xyz/',
   chainConfig: {
     name: 'sophon',

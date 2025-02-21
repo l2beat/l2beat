@@ -13,7 +13,7 @@ export const galxegravity: Layer2 = orbitStackL2({
   discovery,
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
   associatedTokens: ['G'],
-  gasTokens: ['G'],
+  gasTokens: { tracked: ['G'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

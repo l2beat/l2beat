@@ -25,7 +25,7 @@ export const blockfit: Layer3 = underReviewL3({
       apps: [
         'https://bridge.blockfitscan.io/?destinationChain=BlockFit-Mainnet&sourceChain=arbitrum-nova',
       ],
-      socialMedia: ['https://x.com/Fit24updates', 't.me/fit24updates'],
+      socialMedia: ['https://x.com/Fit24updates', 'https://t.me/fit24updates'],
     },
   },
   transactionApi: {

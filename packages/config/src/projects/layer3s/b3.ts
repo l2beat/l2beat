@@ -34,7 +34,7 @@ export const b3: Layer3 = opStackL3({
       apps: ['https://bridge.b3.fun/'],
       documentation: ['https://docs.b3.fun/'],
       explorers: ['https://explorer.b3.fun/'],
-      repositories: [''],
+      repositories: [],
       socialMedia: [
         'https://x.com/b3dotfun',
         'https://discord.com/invite/b3dotfun',

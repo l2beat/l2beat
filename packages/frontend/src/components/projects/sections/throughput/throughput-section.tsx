@@ -1,4 +1,4 @@
-import type { DaLayerThroughput } from '@l2beat/config'
+import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
@@ -29,6 +29,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
     warning: string | undefined
     isSynced: boolean
   }
+  milestones: Milestone[]
 }
 
 export function ThroughputSection({
@@ -39,6 +40,7 @@ export function ThroughputSection({
   largestPoster,
   totalPosted,
   syncStatus,
+  milestones,
   ...sectionProps
 }: ThroughputSectionProps) {
   return (
@@ -60,6 +62,7 @@ export function ThroughputSection({
       <ProjectDaThroughputChart
         projectId={projectId}
         configuredThroughputs={throughput}
+        milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />
       <div
