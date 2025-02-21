@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21881526,
+  "blockNumber": 21893970,
   "configHash": "0x11585d0cb6dd2a2cc9d9883dbde4fdad08e41cd8aa48e5e22680e5b037437849",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
@@ -941,7 +941,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668179,
+        "l1ToL2MessageNonce": 1668184,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",

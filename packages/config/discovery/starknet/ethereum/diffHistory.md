@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x27b6edaf5a40a339ece6c4f3be831bb0d62760d9
+
+# Diff at Fri, 21 Feb 2025 09:59:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21881526
+- current block number: 21893970
+
+## Description
+
+Governance updates:
+- all starknet bridge escrows including ETH are upgradable by the 2/4 StarkgateBridgeMultisig
+- sharp is still governed by a 2/4 MS
+- SC is governor
+- EOA + MS are operators
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarknetOpsMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd)
+    +++ description: None
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[]}
+      values.$admin:
+-        ["0x83C0A700114101D1283D1405E2c8f21D3F03e988","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.0:
+-        "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ .../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 4 files changed, 1976 deletions(-)
+```
+
 Generated with discovered.json: 0x3a5fa6a00cf12702beeb5b54ca836c421ea300b7
 
 # Diff at Wed, 19 Feb 2025 16:19:41 GMT:
