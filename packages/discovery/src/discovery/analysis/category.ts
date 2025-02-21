@@ -8,7 +8,6 @@ export function resolveCategory(
     return undefined
   }
 
-  console.log(config.categories)
   const result = config.categories?.[config.category]
   if (result === undefined) {
     throw new Error(`Category ${config.category} not found in categories`)
