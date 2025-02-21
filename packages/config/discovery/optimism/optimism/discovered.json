@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 130896600,
-  "configHash": "0x0ec99d20289ef60dd10c41727fc8bc87b0e08e474b4dcca3e8f0bab56a760fbc",
+  "configHash": "0xa1a3a9191a93ada25668a4c34a9f5b26d853c72da3bc5474731cec287cdf141b",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -684,7 +684,6 @@
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     {
-      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {

@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 9227118,
-  "configHash": "0x379519bcf95828b5d33e872906d1a1f251e52130a49050300bf15b4af2916a59",
+  "configHash": "0x559c16155af66e3575a64501ff23def16055804972e58577b393184a314d2af3",
   "contracts": [
     {
       "name": "DeployerWhitelist",
@@ -160,14 +160,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
-            ["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "l1FeeWallet": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -487,14 +481,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
-            ["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -525,14 +513,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
-            ["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
