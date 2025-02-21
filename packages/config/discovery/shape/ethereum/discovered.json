@@ -1,7 +1,7 @@
 {
   "name": "shape",
   "chain": "ethereum",
-  "blockNumber": 21829672,
+  "blockNumber": 21894136,
   "configHash": "0xc100eb92daf855735035d7ba7dc2caf91d889d2b99a40a314ad3c5b6070084b1",
   "contracts": [
     {
@@ -228,7 +228,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 261,
+        "gameCount": 262,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
@@ -238,7 +238,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 261,
+        "permissionedGamesTotal": 262,
         "version": "1.0.0"
       }
     },
