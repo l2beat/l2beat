@@ -22,18 +22,24 @@ const DA_LAYER = 'test-layer'
 describe(DaIndexer.name, () => {
   describe(DaIndexer.prototype.multiUpdate.name, () => {
     it('fetches blobs, generates records, saves metrics to DB', async () => {
+      const configurations = [config('project-a'), config('project-b')]
       const blobs = [blob(100, 100_000), blob(200, 200_000)]
       const previousRecords = [record('project', 100, 100_000)]
       const generatedRecords = [record('project', 100, 400_000)]
 
       const { indexer, repository, daService, daProvider } = mockIndexer({
+        configurations,
         blobs,
         previousRecords,
         generatedRecords,
         batchSize: 50,
       })
 
-      const updateCallback = await indexer.multiUpdate(100, 200, [])
+      const updateCallback = await indexer.multiUpdate(
+        100,
+        200,
+        toIndexerConfigurations(configurations),
+      )
       const safeHeight = await updateCallback()
 
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(100, 150)
@@ -45,6 +51,7 @@ describe(DaIndexer.name, () => {
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,
         previousRecords,
+        configurations.map((c) => c.config),
       )
 
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
@@ -127,6 +134,17 @@ describe(DaIndexer.name, () => {
     _TEST_ONLY_resetUniqueIds()
   })
 })
+
+function toIndexerConfigurations(
+  configurations: { configurationId: string; config: DaTrackingConfig }[],
+): import('/Users/antooni/repos/l2beat/packages/backend/src/tools/uif/multi/types').Configuration<DaTrackingConfig>[] {
+  return configurations.map((c) => ({
+    id: c.configurationId,
+    minHeight: c.config.sinceBlock,
+    maxHeight: c.config.untilBlock ?? null,
+    properties: c.config,
+  }))
+}
 
 function mockIndexer($: {
   configurations?: DataAvailabilityTrackingConfig['projects']

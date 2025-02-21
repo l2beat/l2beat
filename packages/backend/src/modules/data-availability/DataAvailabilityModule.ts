@@ -6,8 +6,6 @@ import type {
   DataAvailabilityTrackingConfig,
 } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
-import type { BlockProviders } from '../../providers/BlockProviders'
-import type { DaProviders } from '../../providers/DaProviders'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -39,10 +37,7 @@ export function initDataAvailabilityModule(
     clock,
     database,
     logger,
-    providers.block,
-    providers.getDaProviders(),
-    new DaService(config.da.projects.map((c) => c.config)),
-    new IndexerService(database),
+    providers,
   )
 
   return {
@@ -77,11 +72,13 @@ function createIndexers(
   clock: Clock,
   database: Database,
   logger: Logger,
-  blockProviders: BlockProviders,
-  daProviders: DaProviders,
-  daService: DaService,
-  indexerService: IndexerService,
+  providers: Providers,
 ) {
+  const daService = new DaService()
+  const indexerService = new IndexerService(database)
+  const blockProviders = providers.block
+  const daProviders = providers.getDaProviders()
+
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
 

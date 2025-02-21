@@ -76,7 +76,11 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       previousRecords: previousRecords.length,
     })
 
-    const records = this.$.daService.generateRecords(blobs, previousRecords)
+    const records = this.$.daService.generateRecords(
+      blobs,
+      previousRecords,
+      configurations.map((c) => c.properties),
+    )
 
     return async () => {
       await this.$.db.dataAvailability.upsertMany(records)
