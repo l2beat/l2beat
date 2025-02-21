@@ -35,7 +35,6 @@ import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { Badge } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
-import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
@@ -245,15 +244,11 @@ const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
 // big governance assert
 assert(
   proxyGovernors[0].address ===
-    discovery.getContract('StarknetAdminMultisig').address &&
-    proxyGovernors[1].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    proxyGovernors.length === 2 &&
+    discovery.getContract('StarknetSecurityCouncil').address &&
+    proxyGovernors.length === 1 &&
     governors[0].address ===
-      discovery.getContract('StarknetOpsMultisig').address &&
-    governors[1].address ===
       discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 2,
+    governors.length === 1,
   'gov has changed, review non-discodriven perms and gov section.',
 )
 
@@ -981,32 +976,33 @@ export const starknet: Layer2 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink: 'https://github.com/NethermindEth/juno',
-    },
-  ),
+  stage: { stage: 'UnderReview' },
+  // getStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: null,
+  //       usersHave7DaysToExit: false,
+  //       usersCanExitWithoutCooperation: false,
+  //       securityCouncilProperlySetUp: null,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: null,
+  //       fraudProofSystemIsPermissionless: null,
+  //       delayWith30DExitWindow: false,
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink: 'https://github.com/NethermindEth/juno',
+  //   },
+  // ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -1112,12 +1108,6 @@ export const starknet: Layer2 = {
             'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
           upgradableBy: [
             {
-              name: 'StarknetAdminMultisig',
-              delay: starknetDelaySeconds
-                ? formatSeconds(starknetDelaySeconds)
-                : 'No delay',
-            },
-            {
               name: 'StarknetSecurityCouncil',
               delay: starknetDelaySeconds
                 ? formatSeconds(starknetDelaySeconds)
@@ -1154,15 +1144,13 @@ export const starknet: Layer2 = {
     },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
-  upgradesAndGovernance: `
-  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
+  // upgradesAndGovernance: `
+  // The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
 
+  // The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
 
-  The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
-
-
-  The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
-  `,
+  // The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
+  // `,
   permissions: {
     [discovery.chain]: {
       actors: [
@@ -1171,28 +1159,19 @@ export const starknet: Layer2 = {
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
-        discovery.getMultisigPermission(
-          'StarknetAdminMultisig',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
           'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
-        discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
-        ),
         discovery.getPermissionDetails(
           'Operators',
           discovery.getPermissionedAccounts('Starknet', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+          'Allowed to post state updates. When all operators are down the state cannot be updated.',
         ),
         discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+          'StarknetSCMinorityMultisig',
+          'An Operator. Allowed to post state updates. This minority multisig with the SecurityCouncil members is the only fallback in case of censorship by other operators.',
         ),
         discovery.getMultisigPermission(
           'StarkgateSecurityAgentMultisig',

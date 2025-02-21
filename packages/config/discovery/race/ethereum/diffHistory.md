@@ -1,4 +1,42 @@
-Generated with discovered.json: 0x140d7aa38cfceb02e5485d85aba67739958e4165
+Generated with discovered.json: 0x0e8504a3ef1eea979089304c3ab26e4fe3b12e07
+
+# Diff at Fri, 21 Feb 2025 14:10:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21242938
+- current block number: 21242938
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21242938 (main branch discovery), not current.
+
+```diff
+    contract RaceMultisig2 (0x2E7B9465B25C081c07274A31DbD05C6146f67961) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x8bF8442d49d52377d735a90F19657a29f29aA83c) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xdaac48696022b772469a6dbe3df4dda1fe673afc
 
 # Diff at Fri, 21 Feb 2025 08:59:58 GMT:
 

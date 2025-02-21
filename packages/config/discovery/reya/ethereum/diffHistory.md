@@ -1,14 +1,65 @@
-Generated with discovered.json: 0x620be456979250b51ca09edf40fee4f5a5fd8648
+Generated with discovered.json: 0x145661ca18c1238c9dfd611fe18e1a6967e80761
 
-# Diff at Fri, 21 Feb 2025 12:11:33 GMT:
+# Diff at Fri, 21 Feb 2025 13:57:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21628402
-- current block number: 21628402
+- current block number: 21895157
 
 ## Description
 
+Add operator addresses.
 Config related: Set orbit stack contract categories.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
++        {"permission":"validate","to":"0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.stakerCount:
+-        1
++        2
+      values.validators.1:
++        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2:
++        {"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x07390626b8Bc2C04b1D93c7D246A0629198D7868"},{"address":"0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"}]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.to:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
+      issuedPermissions.1.via.1:
+-        {"address":"0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"}
+      issuedPermissions.1.via.0:
+-        {"address":"0x07390626b8Bc2C04b1D93c7D246A0629198D7868"}
+      issuedPermissions.1.description:
++        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+      issuedPermissions.0.to:
+-        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
++        "0x29156F8dFfE8979F49E3a085dbb10477373a6051"
+      values.batchPosters.1:
++        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
+      values.batchPosters.0:
+-        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
++        "0x29156F8dFfE8979F49E3a085dbb10477373a6051"
+      values.setIsBatchPosterCount:
+-        1
++        2
+    }
+```
 
 ## Config/verification related changes
 

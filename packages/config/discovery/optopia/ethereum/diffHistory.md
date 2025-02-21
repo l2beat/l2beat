@@ -1,4 +1,34 @@
-Generated with discovered.json: 0x753b698f83ebac48c5ddc853000c554f3b425091
+Generated with discovered.json: 0x6aa601f32edf582941a079e988551da4c9627d27
+
+# Diff at Fri, 21 Feb 2025 14:09:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21184911
+- current block number: 21184911
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x3c4a443b2a78a309d64376df4836d94d0d9d60b7
 
 # Diff at Fri, 21 Feb 2025 08:59:50 GMT:
 
