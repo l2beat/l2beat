@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x27b6edaf5a40a339ece6c4f3be831bb0d62760d9
+Generated with discovered.json: 0x5ddd9b111911291a0fe3d876a54556668cd0ece7
 
-# Diff at Fri, 21 Feb 2025 09:59:19 GMT:
+# Diff at Fri, 21 Feb 2025 10:53:21 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21881526
@@ -52,6 +52,21 @@ Governance updates:
  .../GnosisSafe.sol => /dev/null                    | 953 ---------------------
  .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
  4 files changed, 1976 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21881526 (main branch discovery), not current.
+
+```diff
+    contract StarknetSCMinorityMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      name:
+-        "StarknetOperatorMultisig"
++        "StarknetSCMinorityMultisig"
+    }
 ```
 
 Generated with discovered.json: 0x3a5fa6a00cf12702beeb5b54ca836c421ea300b7

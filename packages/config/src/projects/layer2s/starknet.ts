@@ -244,15 +244,11 @@ const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
 // big governance assert
 assert(
   proxyGovernors[0].address ===
-    discovery.getContract('StarknetAdminMultisig').address &&
-    proxyGovernors[1].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    proxyGovernors.length === 2 &&
+    discovery.getContract('StarknetSecurityCouncil').address &&
+    proxyGovernors.length === 1 &&
     governors[0].address ===
-      discovery.getContract('StarknetOpsMultisig').address &&
-    governors[1].address ===
       discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 2,
+    governors.length === 1,
   'gov has changed, review non-discodriven perms and gov section.',
 )
 
@@ -1112,12 +1108,6 @@ export const starknet: Layer2 = {
             'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
           upgradableBy: [
             {
-              name: 'StarknetAdminMultisig',
-              delay: starknetDelaySeconds
-                ? formatSeconds(starknetDelaySeconds)
-                : 'No delay',
-            },
-            {
               name: 'StarknetSecurityCouncil',
               delay: starknetDelaySeconds
                 ? formatSeconds(starknetDelaySeconds)
@@ -1174,14 +1164,14 @@ export const starknet: Layer2 = {
           'StarkgateBridgeMultisig',
           'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
-        discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
-        ),
         discovery.getPermissionDetails(
           'Operators',
           discovery.getPermissionedAccounts('Starknet', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+          'Allowed to post state updates. When all operators are down the state cannot be updated.',
+        ),
+        discovery.getMultisigPermission(
+          'StarknetSCMinorityMultisig',
+          'An Operator. Allowed to post state updates. This minority multisig with the SecurityCouncil members is the only fallback in case of censorship by other operators.',
         ),
         discovery.getMultisigPermission(
           'StarkgateSecurityAgentMultisig',

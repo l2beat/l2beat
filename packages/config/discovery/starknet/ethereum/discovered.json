@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 21893970,
-  "configHash": "0x11585d0cb6dd2a2cc9d9883dbde4fdad08e41cd8aa48e5e22680e5b037437849",
+  "configHash": "0xa34cb6bea3d0d429b86e317adc662bea86f3c2f5e04ce6a11b999428c6062830",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -1587,7 +1587,7 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
-      "name": "StarknetOperatorMultisig",
+      "name": "StarknetSCMinorityMultisig",
       "address": "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B",
       "template": "GnosisSafe",
       "sourceHashes": [
