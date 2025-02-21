@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "sxnetwork",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xa104C0426e95a5538e89131DbB4163d230C35f86" //erc20bridge
   ],

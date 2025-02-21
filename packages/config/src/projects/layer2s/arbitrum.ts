@@ -16,11 +16,7 @@ const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-const validatorAfkBlocks = discovery.getContractValue<number>(
-  'RollupProxy',
-  'VALIDATOR_AFK_BLOCKS',
-)
-const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
   'confirmPeriodBlocks',
@@ -100,6 +96,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     name: 'Arbitrum One',
     slug: 'arbitrum',
     warning: undefined,
+    architectureImage: 'arbitrumwithbold',
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -190,6 +187,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1661457944),
+        untilTimestamp: new UnixTime(1739368811), // deprecated (reverts)
       },
     },
     {
@@ -204,6 +202,48 @@ export const arbitrum: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1710427823),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x6e620055',
+        functionSignature:
+          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x69cacded',
+        functionSignature:
+          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
       },
     },
     {
@@ -317,11 +357,9 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateRiskView: {
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+    exitWindow: RISK_VIEW.EXIT_WINDOW_PERMISSIONLESS_BOLD(
       l2TimelockDelay,
       selfSequencingDelay,
-      challengeWindowSeconds,
-      validatorAfkTime,
       l1TimelockDelay,
     ),
     stateValidation: RISK_VIEW.STATE_FP_INT,
@@ -378,7 +416,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   },
   milestones: [
     {
-      title: 'Bold, permissionless proof system, deployed',
+      title: 'BoLD, permissionless proof system, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',
       date: '2025-02-15T00:00:00Z',
       type: 'general',

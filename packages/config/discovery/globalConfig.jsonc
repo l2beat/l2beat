@@ -1,0 +1,204 @@
+{
+  "names": {
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
+    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "ConduitMultisig2",
+    "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "ConduitMultisig3",
+    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "SuperchainProxyAdminOwner",
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "OpFoundationUpgradeSafe",
+    "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OpFoundationOperationsSafe",
+    "0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "SuperchainProxyAdmin",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "SuperchainGuardianMultisig",
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "GelatoMultisig",
+    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig",
+    "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "LidoDaoAgent",
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress",
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SuccinctGatewaySP1Multisig",
+    // eoa names (mostly for SCs)
+    // arbitrum SC
+    "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67": "JohnMorrow-Gauntlet",
+    "0x59c8535419bbcb8adffdb3c835435e907e3b183b": "DennisonBertram-Tally",
+    "0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93": "EmilianoBonassi-Conduit",
+    "0x444edf8b90763be7015f1f099a0da0ef10250c71": "AleksanderKryukov-Certora",
+    "0x5dd2205c3aac13e592f0a3d85188c948d1781df1": "fred-Arbitrum",
+    "0x0275b3d54a5ddbf8205a75984796efe8b7357bae": "bartek.eth-L2BEAT",
+    "0x9a301de96b15db3ab778e2969bf6caa909ca56e8": "GoncaloMagalhaes-Immunefi",
+    "0x882c6fcb3d358b9d70b97c6999159cea64168b6f": "GriffGreen-Giveth",
+    "0xe2e9d5b97d8c0457b1cf80bc93802bce4df03e33": "gzeon-OffchainLabs",
+    "0x5a09a94ee8198d3c474d723337aa58023810022c": "cts-Zellic",
+    "0x475816ca2a31d601b4e336f5c2418a67978abf09": "yoav.eth-EF",
+    "0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc": "StevenThornton-OpenZeppelin",
+    // kinto SC
+    "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8": "KintoFoundation",
+    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B": "MamoriLabs",
+    "0x94561e98DD5E55271f91A103e4979aa6C493745E": "MamoriLabs2",
+    "0x356000Cec4fC967f8FC372381D983426760A0391": "Caldera",
+    "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B": "Hypernative",
+    "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2": "Venn/Ironblocks",
+    "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621": "Certora",
+    // kinto validators
+    "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a": "Caldera2",
+    "0x944eB0a2829A859959586b10D54229278534a696": "MamoriLabs3",
+    "0x2bfDA59220413DEd39dD0E443620b5277EcE6348": "Ankr",
+    "0x58028fFbc25aE2e12b96276bDB125955F41D41f3": "Hypernative2",
+    "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f": "Venn2"
+  },
+  "types": {
+    "Undecimal2": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 2 }
+    },
+    "Undecimal18": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 18 }
+    },
+    "Undecimal24": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 24 }
+    },
+    "ZkSyncAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "zksync2" }
+    },
+    "EthereumAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "ethereum" }
+    },
+    "ArbitrumAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "arbitrum" }
+    },
+    "NovaAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "nova" }
+    },
+    "OptimismAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "optimism" }
+    },
+    "PolygonAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "polygonpos" }
+    },
+    "BSCAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "bsc" }
+    },
+    "AvalancheAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "avalanche" }
+    },
+    "CeloAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "celo" }
+    },
+    "LineaAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "linea" }
+    },
+    "BaseAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "base" }
+    },
+    "PolygonZKEVMAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "polygonzkevm" }
+    },
+    "GnosisAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "gnosis" }
+    },
+    "SepoliaAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "sepolia" }
+    },
+    "ScrollAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "scroll" }
+    },
+    "MantleAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "mantle" }
+    },
+    "MetisAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "metis" }
+    },
+    "BobanetworkAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "bobanetwork" }
+    },
+    "ModeAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "mode" }
+    },
+    "ZoraAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "zora" }
+    },
+    "MantapacificAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "mantapacific" }
+    },
+    "BlastAddress": {
+      "typeCaster": "ChainPrefix",
+      "arg": { "prefix": "blast" }
+    },
+    "ArbOsWasmModuleRoot": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0xbb9d58e9527566138b682f3a207c0976d5359837f6e330f4017434cca983ff41": "ArbOS v1-rc1 wasmModuleRoot",
+        "0x9d68e40c47e3b87a8a7e6368cc52915720a6484bb2f47ceabad7e573e3a11232": "ArbOS v2.1 wasmModuleRoot",
+        "0x53c288a0ca7100c0f2db8ab19508763a51c7fd1be125d376d940a65378acaee7": "ArbOS v3 wasmModuleRoot",
+        "0x588762be2f364be15d323df2aa60ffff60f2b14103b34823b6f7319acd1ae7a3": "ArbOS v3.1 wasmModuleRoot",
+        "0xcfba6a883c50a1b4475ab909600fa88fc9cceed9e3ff6f43dccd2d27f6bd57cf": "ArbOS v3.2 wasmModuleRoot",
+        "0xa24ccdb052d92c5847e8ea3ce722442358db4b00985a9ee737c4e601b6ed9876": "ArbOS v4 wasmModuleRoot",
+        "0x1e09e6d9e35b93f33ed22b2bc8dc10bbcf63fdde5e8a1fb8cc1bcd1a52f14bd0": "ArbOS v5 wasmModuleRoot",
+        "0x3848eff5e0356faf1fc9cafecb789584c5e7f4f8f817694d842ada96613d8bab": "ArbOS v6 wasmModuleRoot",
+        "0x53dd4b9a3d807a8cbb4d58fbfc6a0857c3846d46956848cae0a1cc7eca2bb5a8": "ArbOS v7 wasmModuleRoot",
+        "0x2b20e1490d1b06299b222f3239b0ae07e750d8f3b4dedd19f500a815c1548bbc": "ArbOS v7.1 wasmModuleRoot",
+        "0xd1842bfbe047322b3f3b3635b5fe62eb611557784d17ac1d2b1ce9c170af6544": "ArbOS v9 wasmModuleRoot",
+        "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3": "ArbOS v10 wasmModuleRoot",
+        "0xda4e3ad5e7feacb817c21c8d0220da7650fe9051ece68a3f0b1c5d38bbb27b21": "ArbOS v10.1 wasmModuleRoot",
+        "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17": "ArbOS v10.2 wasmModuleRoot",
+        "0xf559b6d4fa869472dabce70fe1c15221bdda837533dfd891916836975b434dec": "ArbOS v10.3 wasmModuleRoot",
+        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a": "ArbOS v11 wasmModuleRoot",
+        "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4": "ArbOS v11.1 wasmModuleRoot",
+        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4": "ArbOS v20 wasmModuleRoot",
+        "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
+        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
+        "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+        "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
+      }
+    },
+    "OpStackAbsolutePrestate": {
+      "typeCaster": "Mapping",
+      "arg": {
+        // source: https://github.com/ethereum-optimism/optimism/blob/4da39879eb494967500fc5cc54d9352d295d9515/op-program/prestates/releases.json
+        "0x0386cde2f2b1bde1189ac9c9b7d66774e6260eca778223def326bfe680c14ab9": "v1.4.1-rc.2 (cannon64)",
+        "0x03045fd433fb5391c40751939d7cb5e9dfe83cf156f9395566a311e7fe9d3aa2": "v1.4.1-rc.2",
+        "0x03b7eaa4e3cbce90381921a4b48008f4769871d64f93d113fcadca08ecee503b": "v1.4.0 (cannon64)",
+        "0x03f89406817db1ed7fd8b31e13300444652cdb0b9c509a674de43483b2f83568": "v1.4.0 (govApproved)",
+        "0x0348ce2059f718af75729c2c56860551b46b665956a641b3cb2cd51e50b7b725": "v1.4.0-rc.2 (cannon64)",
+        "0x0364e4e72922e7d649338f558f8a14b50ca31922a1484e73ea03987fb1516095": "v1.4.0-rc.2",
+        "0x032e5d6119ee983cb87deae3eef16ea6086f2347433c99f1820d60f36a24a6e6": "v1.4.0-rc.1 (cannon64)",
+        "0x03925193e3e89f87835bbdf3a813f60b2aa818a36bbe71cd5d8fd7e79f5e8afe": "v1.4.0-rc.1",
+        "0x03c50b9fd04bdadc228205f340767bbf2d01a030aec39903120d3559d94bb8cc": "v1.3.1-ink",
+        "0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c": "v1.3.1 (govApproved)",
+        "0x03e806a2859a875267a563462a06d4d1d1b455a9efee959a46e21e54b6caf69a": "v1.3.1-rc.1",
+        "0x030de10d9da911a2b180ecfae2aeaba8758961fc28262ce989458c6f9a547922": "v1.3.0-rc.3",
+        "0x0385c3f8ee78491001d92b90b07d0cf387b7b52ab9b83b4d87c994e92cf823ba": "v1.3.0-rc.2",
+        "0x0367c4aa897bffbded0b523f277ca892298dc3c691baf37bc2099b86024f9673": "v1.3.0-rc.1",
+        "0x03617abec0b255dc7fc7a0513a2c2220140a1dcd7a1c8eca567659bd67e05cea": "v1.2.0 (govApproved)",
+        "0x03e69d3de5155f4a80da99dd534561cbddd4f9dd56c9ecc704d6886625711d2b": "v1.1.0",
+        "0x0398bdd93e2e9313befdf82beb709da6a4daf35ce1abb42d8a998ec9bc1c572e": "v1.0.1",
+        "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55": "v1.0.0 (govApproved)",
+        "0x034c8cc69f22c35ae386a97136715dd48aaf97fd190942a111bfa680c2f2f421": "v0.3.0",
+        "0x031e3b504740d0b1264e8cf72b6dde0d497184cfb3f98e451c6be8b33bd3f808": "v0.2.0",
+        "0x038942ec840131a63c49fa514a3f0577ae401fd5584d56ad50cdf5a8b41d4538": "v0.1.0",
+        "0x03babef4b4c6d866d56e6356d961839fd9475931d11e0ea507420a87b0cadbdd": "v0.0.1"
+      }
+    }
+  }
+}

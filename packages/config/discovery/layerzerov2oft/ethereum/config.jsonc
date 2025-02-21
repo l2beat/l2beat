@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "layerzerov2oft",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x1a44076050125825900e736c501f859c50fE728c", // EndpointV2
     "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1", // SendUln302

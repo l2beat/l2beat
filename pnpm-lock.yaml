@@ -425,9 +425,15 @@ importers:
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.17.12
+      '@types/mock-fs':
+        specifier: ^4.13.4
+        version: 4.13.4
       '@types/node-fetch':
         specifier: ^2.6.4
         version: 2.6.11
+      mock-fs:
+        specifier: ^5.2.0
+        version: 5.4.0
 
   packages/discovery-types:
     dependencies:

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "shared-zk-stack",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB" // L1SharedBridge
   ],

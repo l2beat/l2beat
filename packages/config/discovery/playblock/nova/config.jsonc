@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "nova",
   "name": "playblock",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"],
   "names": {
     "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0": "Bridge",

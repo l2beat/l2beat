@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "metis",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
     "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",

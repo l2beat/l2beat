@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "eclipse",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xD7E4b67E735733aC98a88F13d087D8aac670E644", // Treasury
     "0xb23B2492f7A9631104A5877F7FFA00633660968d", // Mailbox

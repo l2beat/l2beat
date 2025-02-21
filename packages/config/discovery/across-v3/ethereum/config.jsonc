@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "across-v3",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
 

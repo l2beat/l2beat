@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "blockNumber": 21829667,
-  "configHash": "0x9cb8f55a9e9a9a59ddf19d8b4d8a47b677d99a5fa75722c6727ce022ff354eae",
+  "configHash": "0x9d0563c4cad3fb6073a64b931a905e09e8b0488f3ffaa7cf3989014463df8d32",
   "contracts": [
     {
       "name": "LivenessModule",

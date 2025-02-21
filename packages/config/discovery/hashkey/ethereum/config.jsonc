@@ -3,6 +3,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "initialAddresses": ["0xe7Aa79B59CAc06F9706D896a047fEb9d3BDA8bD3"],
+  "import": ["../../ethereumConfig.jsonc"],
   "names": {
     "0x441F31C4cdf772558D4EA31f3114de59aE145E7c": "HashkeyUpgradeMultisig",
     "0xC7fCbE26c1Db751d63869F72F782a56710f6be5A": "HashkeyGuardianMultisig",

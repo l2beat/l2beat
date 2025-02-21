@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "blast",
   "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD",
     "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
