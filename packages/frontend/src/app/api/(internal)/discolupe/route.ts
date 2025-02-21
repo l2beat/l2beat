@@ -28,7 +28,7 @@ export async function GET() {
 
 async function getResponse() {
   const tvs = await get7dTvsBreakdown()
-  const costs = getCostsProjects().map((c) => c.id.toString())
+  const costs = (await getCostsProjects()).map((p) => p.id.toString())
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
