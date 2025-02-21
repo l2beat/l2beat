@@ -417,6 +417,12 @@ contract L2OutputOracle is Initializable, ISemver {
     /// @param newNextOutputIndex  Next L2 output index after the deletion.
     event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex);
 
+    /// @notice Emitted when proposer address are updated.
+    event ProposerUpdated(address indexed oldProposer, address indexed newProposer);
+
+    /// @notice Emitted when challenger address are updated.
+    event ChallengerUpdated(address indexed oldChallenger, address indexed newChallenger);
+
     /// @notice Semantic version.
     /// @custom:semver 1.8.0
     string public constant version = "1.8.0";
@@ -675,5 +681,29 @@ contract L2OutputOracle is Initializable, ISemver {
     /// @return L2 timestamp of the given block.
     function computeL2Timestamp(uint256 _l2BlockNumber) public view returns (uint256) {
         return startingTimestamp + ((_l2BlockNumber - startingBlockNumber) * l2BlockTime / 1000);
+    }
+
+    /// @notice Update proposer address.
+    /// @param newProposer The new proposer address.
+    function updateProposer(address newProposer) external {
+        require(newProposer != address(0), "L2OutputOracle: new proposer is the zero address");
+
+        address oldProposer = proposer;
+        require(msg.sender == oldProposer, "L2OutputOracle: only current proposer address can update new proposer address");
+
+        proposer = newProposer;
+        emit ProposerUpdated(oldProposer, newProposer);
+    }
+
+    /// @notice Update challenger address.
+    /// @param newChallenger The new challenger address.
+    function updateChallenger(address newChallenger) external {
+        require(newChallenger != address(0), "L2OutputOracle: new challenger is the zero address");
+
+        address oldChallenger = challenger;
+        require(msg.sender == oldChallenger, "L2OutputOracle: only current challenger address can update new challenger address");
+
+        challenger = newChallenger;
+        emit ChallengerUpdated(oldChallenger, newChallenger);
     }
 }

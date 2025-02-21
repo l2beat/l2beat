@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7257bb802913de1840adf29a61dd1728e55fb0c1
+Generated with discovered.json: 0xe49a543cfa9ec7e20c07800b3952f6236d740c56
 
-# Diff at Fri, 21 Feb 2025 13:27:15 GMT:
+# Diff at Fri, 21 Feb 2025 13:37:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829713
-- current block number: 21895006
+- current block number: 21895028
 
 ## Description
 
@@ -14,26 +14,16 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
 
 ```diff
     contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
-    +++ description: None
-      template:
--        "opstack/L2OutputOracle"
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
       sourceHashes.1:
 -        "0x3703a67e457793b9a26cf1ac8548b5ea17dd768da63011587bb1af5c1f7c1d99"
 +        "0xc308d0e8c98d070154567f6e8fc7c99c648506f9d557f38c98fea53c9c11a499"
-      description:
--        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
-      issuedPermissions.2:
--        {"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
-      issuedPermissions.1:
--        {"permission":"propose","to":"0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A","via":[]}
-      issuedPermissions.0.permission:
--        "challenge"
-+        "upgrade"
+      issuedPermissions.1.to:
+-        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
++        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
       issuedPermissions.0.to:
 -        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
 +        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
-      issuedPermissions.0.via.0:
-+        {"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}
       values.$implementation:
 -        "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE"
 +        "0x3131933F07dC5822ced67416F3744B2C0D0D22B2"
@@ -42,44 +32,20 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
       values.$upgradeCount:
 -        1
 +        2
++++ severity: HIGH
       values.challenger:
 -        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
 +        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
       values.CHALLENGER:
 -        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
 +        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
-      values.deletedOutputs:
--        []
-      values.latestBlockNumber:
--        390000
-+        665000
-      values.latestOutputIndex:
--        77
-+        132
-      values.nextBlockNumber:
--        395000
-+        670000
-      values.nextOutputIndex:
--        78
-+        133
++++ severity: HIGH
       values.proposer:
 -        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
 +        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
       values.PROPOSER:
 -        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
 +        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
-      values.computeL2Timestamp:
-+        [0,0,0,0,0]
-      values.getL2Output:
-+        [["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000],["0x23a327a4ab28338330864f8b775f15a06094fc8c20eda3e9134a1bdc097eb09b",1735993571,10000],["0x7311d32141a197ce513f984037f25ff910667a6bc39bfae16bc2e6415cc2ceed",1736053091,15000],["0xe7b4616425785a16e8aacbea6de887b15be6c7b4ec360884f5dcf75ff0ef3675",1736112611,20000],["0x027ae2995507f0de469f40ae566f73da687e86ea199e449ed7c8d74d5e7f0c6e",1736171363,25000]]
-      values.getL2OutputAfter:
-+        [["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000],["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000],["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000],["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000],["0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",1735933283,5000]]
-      values.getL2OutputIndexAfter:
-+        [0,0,0,0,0]
-      fieldMeta:
--        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."},"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
-      errors:
-+        {"computeL2Timestamp":"Processing error occurred.","getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred."}
     }
 ```
 
@@ -130,41 +96,54 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
 ```diff
     contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
     +++ description: None
-      receivedPermissions.7:
+      receivedPermissions.8:
 +        {"permission":"upgrade","from":"0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xD02631b334FfDCD5674217e57fe524c44B341DD4","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
       receivedPermissions.6.from:
 -        "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9"
-+        "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
++        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
       receivedPermissions.6.description:
 -        "upgrading the bridge implementation can give access to all funds escrowed therein."
       receivedPermissions.5.from:
 -        "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
-+        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
++        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
       receivedPermissions.4.from:
 -        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
-+        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
++        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
       receivedPermissions.3.from:
 -        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
-+        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
++        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
       receivedPermissions.2.from:
 -        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
-+        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
++        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd"
+      receivedPermissions.2.description:
++        "set and change address mappings."
       receivedPermissions.1.permission:
 -        "upgrade"
 +        "interact"
       receivedPermissions.1.from:
 -        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
-+        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd"
++        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+      receivedPermissions.1.via:
+-        [{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]
       receivedPermissions.1.description:
-+        "set and change address mappings."
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.0.permission:
+-        "interact"
++        "challenge"
       receivedPermissions.0.from:
 -        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd"
-+        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
++        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
       receivedPermissions.0.description:
 -        "set and change address mappings."
-+        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       receivedPermissions.0.via:
 -        [{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]
+      severity:
++        "HIGH"
     }
 ```
 
@@ -191,6 +170,24 @@ discovery. Values are for block 21829713 (main branch discovery), not current.
 +        {"severity":"HIGH"}
       fieldMeta.deletedOutputs:
 +        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      template:
++        "opstack/SystemConfig"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      template:
++        "opstack/L1ERC721Bridge"
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
     }
 ```
 

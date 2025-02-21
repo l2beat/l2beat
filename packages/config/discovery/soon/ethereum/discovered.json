@@ -1,23 +1,41 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21895006,
+  "blockNumber": 21895028,
   "configHash": "0x2586d39f1f2143fbdcbe4c9f5e3f336cf642a082ec2bec1731151b88ac9d3d68",
   "contracts": [
     {
       "name": "L2OutputOracle",
       "address": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
+      "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xc308d0e8c98d070154567f6e8fc7c99c648506f9d557f38c98fea53c9c11a499"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
+        {
+          "permission": "challenge",
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+          "via": []
+        },
+        {
+          "permission": "propose",
+          "to": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
+          "via": []
+        },
         {
           "permission": "upgrade",
           "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
           "via": [{ "address": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }]
         }
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
       ],
       "sinceTimestamp": 1735877387,
       "values": {
@@ -38,64 +56,9 @@
         "$upgradeCount": 2,
         "challenger": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
         "CHALLENGER": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
-        "computeL2Timestamp": [0, 0, 0, 0, 0],
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
-        "getL2Output": [
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0x23a327a4ab28338330864f8b775f15a06094fc8c20eda3e9134a1bdc097eb09b",
-            1735993571,
-            10000
-          ],
-          [
-            "0x7311d32141a197ce513f984037f25ff910667a6bc39bfae16bc2e6415cc2ceed",
-            1736053091,
-            15000
-          ],
-          [
-            "0xe7b4616425785a16e8aacbea6de887b15be6c7b4ec360884f5dcf75ff0ef3675",
-            1736112611,
-            20000
-          ],
-          [
-            "0x027ae2995507f0de469f40ae566f73da687e86ea199e449ed7c8d74d5e7f0c6e",
-            1736171363,
-            25000
-          ]
-        ],
-        "getL2OutputAfter": [
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ],
-          [
-            "0xbdbf06a5fdc4b69fa5345338d75c5cd22b7809cacff4eee45caf373749e24102",
-            1735933283,
-            5000
-          ]
-        ],
-        "getL2OutputIndexAfter": [0, 0, 0, 0, 0],
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
         "latestBlockNumber": 665000,
@@ -110,16 +73,19 @@
         "submissionInterval": 5000,
         "version": "1.8.0"
       },
-      "errors": {
-        "computeL2Timestamp": "Processing error occurred.",
-        "getL2Output": "Processing error occurred.",
-        "getL2OutputAfter": "Processing error occurred.",
-        "getL2OutputIndexAfter": "Processing error occurred."
+      "fieldMeta": {
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": "Challenge period (Number of seconds until a state root is finalized)."
+        },
+        "proposer": { "severity": "HIGH" },
+        "challenger": { "severity": "HIGH" },
+        "deletedOutputs": { "severity": "HIGH" }
       }
     },
     {
       "name": "SystemConfig",
       "address": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+      "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xe25c80e0504b1ab9202b66f81f2f479e695d2440a0b5fe1ad31a300a75e64f2a"
@@ -288,11 +254,13 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
+      "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x24cb1546f4d13c900c36748855b85910c515856750676e6d425b2cd42204ff9f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -414,7 +382,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641785",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641786",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -489,7 +457,12 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        },
         {
           "permission": "interact",
           "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
@@ -599,7 +572,16 @@
   ],
   "eoas": [
     { "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643" },
-    { "address": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F" },
+    {
+      "address": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
+      "severity": "HIGH",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        }
+      ]
+    },
     { "address": "0x7b4d0e4d7C961CF967e88f600399d610736DeE51" },
     {
       "address": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
@@ -1015,8 +997,11 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
     "opstack/L1StandardBridge_soon": "0x5a2f05e7471e501e6379b71a07e18805ecf80c1971d04da901c01bd72e21aca4",
+    "opstack/L2OutputOracle": "0xd91f271978defba509ad5603ecad2d9fcb73dd6dd253bf85bbbdad58bf27cf9e",
     "opstack/OptimismPortal_soon": "0x9cfb2d44d8bb45742e371246df8436a65bb7d88705c9589f1dd5bc5d6eb9feee",
-    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }
