@@ -1,8 +1,6 @@
-import type { Layer2, Layer3 } from '../'
+import type { BaseProject } from '../'
 
-export function arePermissionsDiscoveryDriven(
-  project: Layer2 | Layer3,
-): boolean {
+export function arePermissionsDiscoveryDriven(project: BaseProject): boolean {
   if (!project.permissions) {
     return true
   }
@@ -12,13 +10,13 @@ export function arePermissionsDiscoveryDriven(
   })
 }
 
-export function areContractsDiscoveryDriven(project: Layer2 | Layer3): boolean {
-  return Object.values(project.contracts.addresses ?? {}).every((e) =>
+export function areContractsDiscoveryDriven(project: BaseProject): boolean {
+  return Object.values(project.contracts?.addresses ?? {}).every((e) =>
     e.every((a) => a.discoveryDrivenData === true),
   )
 }
 
-export function isDiscoveryDriven(project: Layer2 | Layer3): boolean {
+export function isDiscoveryDriven(project: BaseProject): boolean {
   const permissions = arePermissionsDiscoveryDriven(project)
   const contracts = arePermissionsDiscoveryDriven(project)
 

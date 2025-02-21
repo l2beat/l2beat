@@ -915,6 +915,7 @@ export interface ProjectScalingRisks {
 
 export interface ProjectTvlInfo {
   associatedTokens: string[]
+  escrows: ProjectEscrow[]
   warnings: WarningWithSentiment[]
 }
 

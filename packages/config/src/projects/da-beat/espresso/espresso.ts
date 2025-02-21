@@ -14,7 +14,7 @@ const discovery = new ProjectDiscovery('espresso')
 
 export const espresso: BaseProject = {
   id: ProjectId('espresso'),
-  slug: 'espressoDA',
+  slug: 'espresso-da',
   name: 'Espresso DA',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
