@@ -50,7 +50,7 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 function getDaRiskEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
-  getTvs: (projects: ProjectId[]) => number,
+  getTvs: (projects: ProjectId[]) => { latestTvs: number; tvs7d: number },
 ): DaRiskEntry {
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
@@ -65,7 +65,7 @@ function getDaRiskEntry(
             : undefined,
       },
       risks: b.daBridge.risks,
-      tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
+      tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latestTvs,
     }),
   )
 
@@ -78,7 +78,7 @@ function getDaRiskEntry(
       risks: { isNoBridge: true },
       tvs: getTvs(
         layer.daLayer.usedWithoutBridgeIn.map((project) => project.id),
-      ),
+      ).latestTvs,
     })
   }
 
@@ -96,7 +96,7 @@ function getDaRiskEntry(
       layer.daLayer.usedWithoutBridgeIn
         .concat(bridges.flatMap((p) => p.daBridge.usedIn))
         .map((x) => x.id),
-    ),
+    ).latestTvs,
     risks: {
       economicSecurity: layer.daLayer.risks.economicSecurity,
       fraudDetection: layer.daLayer.risks.fraudDetection,
@@ -106,7 +106,7 @@ function getDaRiskEntry(
 }
 
 function getDacEntries(
-  getTvs: (projectIds: ProjectId[]) => number,
+  getTvs: (projectIds: ProjectId[]) => { latestTvs: number; tvs7d: number },
 ): DaRiskEntry[] {
   const projects = [...layer2s, ...layer3s]
     .filter((project) => project.customDa)
@@ -128,7 +128,7 @@ function getDacEntries(
         slug: parentProject.display.slug,
         href: `/scaling/projects/${parentProject.display.slug}`,
         statuses: {},
-        tvs,
+        tvs: tvs.latestTvs,
         risks: daLayer.risks,
       }
 
@@ -141,7 +141,7 @@ function getDacEntries(
         statuses: {},
         risks: daLayer.risks,
         isPublic: false,
-        tvs,
+        tvs: tvs.latestTvs,
         bridges: [bridgeEntry],
       }
 
