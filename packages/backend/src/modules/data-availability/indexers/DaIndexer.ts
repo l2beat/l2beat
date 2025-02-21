@@ -29,6 +29,7 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       tags: { tag: $.daLayer },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configurationsTrimmingDisabled: true,
+      logErrorgOnInvalidation: true,
     })
 
     assert(
