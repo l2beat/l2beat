@@ -159,5 +159,12 @@ App-specific data can be reconstructed by app clients, which request and assembl
       description: 'Avail mainnet and the AVAIL token launch.',
       type: 'general',
     },
+    {
+      title: 'Block size increase',
+      url: 'https://avail.subscan.io/tech/27',
+      date: '2025-02-18T00:00:00Z',
+      description: 'Avail doubles the block size to 4 MB.',
+      type: 'general',
+    },
   ],
 }
