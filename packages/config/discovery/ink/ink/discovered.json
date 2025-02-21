@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ink",
   "blockNumber": 6621220,
-  "configHash": "0xf5735864583a9a1c17898e13c152536fb97ae341f972b04b79dc9bc115e1a4f8",
+  "configHash": "0xfbc024e8c379fff985fa7946e168a97ab1de35acfb34ae6db031bc0ea0093c05",
   "contracts": [
     {
       "name": "L2CrossDomainMessenger",
@@ -540,6 +540,7 @@
   "eoas": [
     { "address": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f" },
     {
+      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {
