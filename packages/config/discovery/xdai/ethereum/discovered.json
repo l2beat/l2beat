@@ -2,7 +2,7 @@
   "name": "xdai",
   "chain": "ethereum",
   "blockNumber": 21778563,
-  "configHash": "0xb3342445098f5859bdbf171ce3c238310c54545ea09a8c7c57267d581a5f030b",
+  "configHash": "0xd609de378706df2452dafdbfe5ccbed2d144b8d7db1d3b64633f1dc49fdc885d",
   "contracts": [
     {
       "name": "GnosisBridgeGovernanceMultisig",

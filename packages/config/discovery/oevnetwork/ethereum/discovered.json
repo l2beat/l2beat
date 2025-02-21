@@ -2,7 +2,7 @@
   "name": "oevnetwork",
   "chain": "ethereum",
   "blockNumber": 21465199,
-  "configHash": "0xd6af1aec536c4ec79f8600a1dc870adbcb71dea2714313b9ca569ca46305c46c",
+  "configHash": "0xc76df35239568e14e1fb0d84d091761bd1f588028af79789644e079f5823fbf1",
   "contracts": [
     {
       "name": "OneStepProverHostIo",

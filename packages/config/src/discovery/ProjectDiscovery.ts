@@ -907,8 +907,11 @@ export class ProjectDiscovery {
           contract.receivedPermissions === undefined &&
           isMultisigLike(contract),
       ),
-    ]
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    ].filter((e) => (e.category?.priority ?? 0) >= 0)
+
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.eoas)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
 
     const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {

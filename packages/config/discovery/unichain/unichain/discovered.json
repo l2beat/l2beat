@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 9227118,
-  "configHash": "0x379519bcf95828b5d33e872906d1a1f251e52130a49050300bf15b4af2916a59",
+  "configHash": "0x42a3fee61ee698863f3aca78edda54d22a1f9c300591f83a857cdf6b1f4a4871",
   "contracts": [
     {
       "name": "DeployerWhitelist",

@@ -2,7 +2,7 @@
   "name": "muster",
   "chain": "arbitrum",
   "blockNumber": 287772645,
-  "configHash": "0xcfe0bfa772deb052a16c77864826ab2696d73734e5148c62a66a268d52d37b9b",
+  "configHash": "0x782004d33506f175c7b59e0dd3ab9a5996bd251669c9478ce94507bfadd890fa",
   "contracts": [
     {
       "name": "UpgradeExecutor",

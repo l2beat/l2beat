@@ -2,7 +2,7 @@
   "name": "educhain",
   "chain": "arbitrum",
   "blockNumber": 298084261,
-  "configHash": "0xe284e3893e95e16c3f75f34811ad8e8a47b3d0f460e6ddfade4a3e45d9efd80f",
+  "configHash": "0xf520cd1641d929b86dbce2ed21e835df76d153252f623d4c179209ac42382207",
   "contracts": [
     {
       "name": "ChallengeManager",

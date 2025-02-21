@@ -36,7 +36,6 @@ describe('metaUtils', () => {
             target: EthereumAddress.from('0x5678'),
           },
         ],
-        categories: new Set(['Gateways&Escrows', 'Core']),
         types: new Set(['CODE_CHANGE', 'EXTERNAL']),
         severity: 'LOW',
         references: [
@@ -60,7 +59,6 @@ describe('metaUtils', () => {
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
-        categories: new Set(['Upgrades&Governance', 'Core']),
         types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
         severity: 'MEDIUM',
         references: [
@@ -93,11 +91,6 @@ describe('metaUtils', () => {
           },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
-        categories: new Set([
-          'Gateways&Escrows',
-          'Core',
-          'Upgrades&Governance',
-        ]),
         types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2', 'PERMISSION']),
         severity: 'MEDIUM',
         references: [
@@ -298,7 +291,6 @@ describe('metaUtils', () => {
         overhead: {
           target: {
             permissions: [{ type: 'interact', delay: 0 }],
-            category: 'Core',
           },
           severity: 'LOW',
           type: 'CODE_CHANGE',
@@ -313,7 +305,6 @@ describe('metaUtils', () => {
                   'configuring the {{ $.address }} allows to change this number: {{ numberField }}',
               },
             ],
-            category: 'Core',
           },
           severity: 'LOW',
           type: 'CODE_CHANGE',
@@ -336,7 +327,6 @@ describe('metaUtils', () => {
                   'configuring the {{ $.address }} contract allows freeze funds',
               },
             ],
-            category: ['Gateways&Escrows', 'Core'],
           },
           severity: 'HIGH',
           type: ['L2', 'EXTERNAL'],
@@ -345,7 +335,6 @@ describe('metaUtils', () => {
           target: {
             // description: 'The scalar of the contract',
             permissions: [{ type: 'interact', delay: 0 }],
-            category: 'Core',
           },
           severity: 'LOW',
           type: 'CODE_CHANGE',
@@ -382,7 +371,6 @@ describe('metaUtils', () => {
               condition: undefined,
             },
           ],
-          categories: new Set(['Core']),
           severity: 'LOW',
           types: new Set(['CODE_CHANGE']),
           references: undefined,
@@ -390,7 +378,6 @@ describe('metaUtils', () => {
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           canActIndependently: undefined,
           displayName: undefined,
-          categories: new Set(['Core', 'Gateways&Escrows']),
           description: undefined,
           permissions: [
             {
@@ -417,7 +404,6 @@ describe('metaUtils', () => {
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           canActIndependently: undefined,
           displayName: undefined,
-          categories: new Set(['Core', 'Gateways&Escrows']),
           description: undefined,
           permissions: [
             {
@@ -472,13 +458,11 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0x1234'),
               },
             ],
-            categories: new Set(['Core']),
             severity: 'LOW',
             types: new Set(['CODE_CHANGE']),
           },
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
             displayName: undefined,
-            categories: new Set(['Core', 'Gateways&Escrows']),
             description: 'The resource config of the contract',
             permissions: [
               {
@@ -508,13 +492,11 @@ describe('metaUtils', () => {
                 target: EthereumAddress.from('0xbeef'),
               },
             ],
-            categories: new Set(['Core', 'Gateways&Escrows']),
             severity: 'MEDIUM',
             types: new Set(['EXTERNAL', 'L2']),
           },
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
             displayName: undefined,
-            categories: new Set(['Core', 'Gateways&Escrows']),
             description: 'The resource config of the contract',
             permissions: [
               {
@@ -554,7 +536,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
           severity: 'MEDIUM',
           references: undefined,
@@ -575,7 +556,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0x1234'),
             },
           ],
-          categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
           references: undefined,
@@ -596,7 +576,6 @@ describe('metaUtils', () => {
               target: EthereumAddress.from('0xbeef'),
             },
           ],
-          categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
           severity: 'HIGH',
           references: undefined,
@@ -615,7 +594,6 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         [admin.toString()]: {
           displayName: undefined,
-          categories: undefined,
           description: undefined,
           severity: undefined,
           types: undefined,

@@ -2,7 +2,7 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21764836,
-  "configHash": "0x7d43a1e8ea9b4259efc25e8333764b4bd642e8af6168a4e9c543ee7cc6893a64",
+  "configHash": "0x6cffcf3903646691f6579e612b7b94be67c56baba844788be85708e98562e958",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {

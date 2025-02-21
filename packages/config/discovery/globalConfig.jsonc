@@ -1,4 +1,30 @@
 {
+  "categories": {
+    "shared-infra": {
+      "name": "Shared Infrastructure",
+      "priority": 3
+    },
+    "canonical-bridges": {
+      "name": "Canonical Bridges",
+      "priority": 3
+    },
+    "local-infra": {
+      "name": "Local Infrastructure",
+      "priority": 2
+    },
+    "external-escrow": {
+      "name": "External Escrow",
+      "priority": 1
+    },
+    "external-bridges": {
+      "name": "External Bridges",
+      "priority": 1
+    },
+    "spam": {
+      "name": "Spam",
+      "priority": -1
+    }
+  },
   "names": {
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
     "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "ConduitMultisig2",
