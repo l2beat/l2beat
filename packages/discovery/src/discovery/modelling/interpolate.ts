@@ -16,7 +16,7 @@ export function interpolateModelTemplate(
   const withValuesReplaced = withSelfReplaced.replace(
     /#([a-zA-Z0-9_$.]+)(:raw)?/g,
     (_match, key, raw) => {
-      const isRaw = raw !== undefined
+      const leaveRaw = raw !== undefined
       const value = values[key]
       if (value === undefined) {
         throw new Error(
@@ -25,10 +25,10 @@ export function interpolateModelTemplate(
       }
       if (Array.isArray(value)) {
         return `(${value
-          .map((v) => tryCastingToName(String(v), addressToNameMap, isRaw))
+          .map((v) => tryCastingToName(String(v), addressToNameMap, leaveRaw))
           .join('; ')})`
       }
-      return tryCastingToName(String(value), addressToNameMap, isRaw)
+      return tryCastingToName(String(value), addressToNameMap, leaveRaw)
     },
   )
   return withValuesReplaced
@@ -37,9 +37,9 @@ export function interpolateModelTemplate(
 export function tryCastingToName(
   value: string,
   addressToNameMap: Record<string, string>,
-  isRaw: boolean,
+  leaveRaw: boolean,
 ): string {
-  if (isRaw) {
+  if (leaveRaw) {
     return value
   }
   const name = addressToNameMap[value.toLowerCase()]
