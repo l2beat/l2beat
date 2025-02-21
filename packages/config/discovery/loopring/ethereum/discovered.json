@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21543795,
-  "configHash": "0x651d7a4692db99458a0c5d29689edeba898257785b1a3579352e808e0387101d",
+  "configHash": "0xfc79c0eea5174af56b73208165f8fd8a868097f4387c3efa6470d703ac430169",
   "contracts": [
     {
       "name": "ExchangeV3",

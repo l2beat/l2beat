@@ -2,7 +2,7 @@
   "name": "ethernity",
   "chain": "ethereum",
   "blockNumber": 21802884,
-  "configHash": "0x7971dd37cf501fa90bbb8ce1232fe49ba7f314b5b2f484a9a74559c0c98984d5",
+  "configHash": "0x3ec6c6a4f33fd562f663f465a22caba26fdae41bae512fb69515809e1ab49705",
   "contracts": [
     {
       "name": "L1ERC721Bridge",

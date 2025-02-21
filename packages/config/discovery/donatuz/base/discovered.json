@@ -2,7 +2,7 @@
   "name": "donatuz",
   "chain": "base",
   "blockNumber": 25215421,
-  "configHash": "0xc6438c8dbf1f048df895e87488723f9fc68ba45e36a6c0816eac16d746b1e4e1",
+  "configHash": "0x8376fc0794cb63aa38ba1d80e9e7e8d96792f7d212ea4bdb04f2f06f39beadf7",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 21786541,
-  "configHash": "0x32209cf05f9471203494a22bac85a557c5185b950637243f933f228865d6e06b",
+  "configHash": "0x4787fa3caabf470747a404265c500ee2e9a519019a00e43c2b31ebf9ab6fbed3",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [
     {

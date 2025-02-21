@@ -1,22 +1,22 @@
 {
   "categories": {
-    "shared-infra": {
-      "name": "Shared Infrastructure",
-      "priority": 3
-    },
-    "canonical-bridges": {
-      "name": "Canonical Bridges",
-      "priority": 3
-    },
-    "local-infra": {
+    "core": {
       "name": "Local Infrastructure",
+      "priority": 5
+    },
+    "shared": {
+      "name": "Shared Infrastructure",
+      "priority": 4
+    },
+    "gov": {
+      "name": "Governance",
+      "priority": 3
+    },
+    "bridge-canonical": {
+      "name": "Canonical Bridges",
       "priority": 2
     },
-    "external-escrow": {
-      "name": "External Escrow",
-      "priority": 1
-    },
-    "external-bridges": {
+    "bridge-external": {
       "name": "External Bridges",
       "priority": 1
     },

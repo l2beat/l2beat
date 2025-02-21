@@ -2,7 +2,7 @@
   "name": "geist",
   "chain": "base",
   "blockNumber": 25463362,
-  "configHash": "0xaf18796f698e72cdefaac59c2b61eeddd29f50f94c7dfaa44964a5e975e8d8c6",
+  "configHash": "0x827b4cfc01b4f416f9264f76ed7b94db5104bd1053af0b01aaa8143bf9d7a939",
   "contracts": [
     {
       "name": "OneStepProver0",
@@ -98,7 +98,8 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SequencerInbox",
@@ -187,7 +188,8 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OneStepProverHostIo",
@@ -365,7 +367,8 @@
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
-      ]
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OneStepProverMemory",
@@ -474,7 +477,8 @@
         "l2ToL1WithdrawalAmount": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "AlchemyMultisig2",
@@ -627,7 +631,8 @@
         "resultReceiver": "0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09",
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
         "totalChallengesCreated": 0
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OneStepProofEntry",
@@ -725,7 +730,8 @@
           "0xfb6A52Ac0fe3d60895518e393243e5d1F2f43cB7",
           "0x871e290d5447b958131F6d44f915F10032436ee6"
         ]
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ERC20Bridge",
@@ -786,7 +792,8 @@
         "sequencerInbox": "0x400f7c5DaC37aAEe3cE007e43Db54424414743f5",
         "sequencerMessageCount": 6965,
         "sequencerReportedSubMessageCount": 2529973
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ValidatorUtils",
@@ -1651,19 +1658,19 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
-    "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
-    "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
+    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
     "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
     "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
     "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
+    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
-    "orbitstack/SequencerInbox": "0xd3e39037ef9e2fbff2690d1f59e38e2319a5f12e8f836cc72c83ae2c0c41a83b",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
+    "orbitstack/RollupProxy_fastConfirm": "0xce077bad52699b515b5e6b9c6151ed462acecbf44ae75074751dba8f747183e5",
+    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }
 }

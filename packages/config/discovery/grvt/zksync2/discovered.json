@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "zksync2",
   "blockNumber": 54952355,
-  "configHash": "0x42a62c296b59efe7018feec73b121d5137d915cb8db66f577d82e4087ed31fd8",
+  "configHash": "0xd060f05dc8e7c746bf53905c547269963f547b01410231e03e4ed75d83c4808d",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [],
   "eoas": [],

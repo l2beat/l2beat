@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 21637083,
-  "configHash": "0x38909d3476420b94f0858da5e12572c8e45eeb2219820188bd531ae54d0b000f",
+  "configHash": "0x9458118c9144ebe6693f37a4c870f7aa1f0c3f29cc0f4a22a2eabad288667bc9",
   "contracts": [
     {
       "name": "OptimismPortal",

@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 21637079,
-  "configHash": "0x453f28acc2b7ac5afd3942cc18b27fb84a8fdcb51f4f3232f5bab80fc01558a5",
+  "configHash": "0xe51eea7a6577e93a007f814bf4dcb6679a63ad5043158bac0a75d2e5729e468e",
   "contracts": [
     {
       "name": "L1StandardBridge",
