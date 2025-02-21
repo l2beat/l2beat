@@ -32,7 +32,7 @@ export const alephzero: Layer2 = orbitStackL2({
     },
   },
   associatedTokens: ['AZERO'],
-  gasTokens: ['AZERO'],
+  gasTokens: { tracked: ['AZERO'] },
   rpcUrl: 'https://rpc.alephzero.raas.gelato.cloud',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

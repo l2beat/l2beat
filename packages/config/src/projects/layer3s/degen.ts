@@ -18,7 +18,7 @@ export const degen: Layer3 = orbitStackL3({
     Badge.RaaS.Alchemy,
   ],
   additionalPurposes: ['Social'],
-  gasTokens: ['DEGEN'],
+  gasTokens: { tracked: ['DEGEN'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

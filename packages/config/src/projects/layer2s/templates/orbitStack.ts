@@ -146,7 +146,12 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -823,9 +828,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             templateVars.discovery.getEscrowDetails({
               includeInTotal: false,
               address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens ?? ['ETH'],
+              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
               description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -844,6 +849,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }
           : undefined),
       daTracking: getDaTracking(templateVars),
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
 }
@@ -1160,9 +1169,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: templateVars.gasTokens ?? ['ETH'],
+          tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
           description: templateVars.gasTokens
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
           ...upgradeability,
         }),
@@ -1182,6 +1191,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
 }

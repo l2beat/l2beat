@@ -36,7 +36,7 @@ export const winr: Layer3 = orbitStackL3({
   },
   rpcUrl: 'https://rpc.winr.games',
   associatedTokens: ['WINR'],
-  gasTokens: ['WINR'],
+  gasTokens: { tracked: ['WINR'] },
   nonTemplateEscrows: [
     {
       chain: 'arbitrum',
