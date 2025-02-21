@@ -122,6 +122,11 @@ App-specific data can be reconstructed by app clients, which request and assembl
     },
     throughput: [
       {
+        size: 4194304, // 4 MiB
+        frequency: 20, // 20 seconds
+        sinceTimestamp: 1739883920, // 2025-02-18
+      },
+      {
         size: 2097152, // 2 MiB
         frequency: 20, // 20 seconds
         sinceTimestamp: 1721692800, // 2024-07-23

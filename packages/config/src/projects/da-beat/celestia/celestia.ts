@@ -147,12 +147,12 @@ Applications can then retrieve the data by querying the Celestia blockchain for 
         sinceTimestamp: 1738022400, // 2025-01-28,
       },
       {
-        size: 2097152, // 2 MiB
+        size: 1974272, // 1.88 MiB
         frequency: 6,
         sinceTimestamp: 1733961600, // 2024-12-12
       },
       {
-        size: 2097152, // 2 MiB
+        size: 1974272, // 1.88 MiB
         frequency: 12,
         sinceTimestamp: 1698710400, // 2023-10-31
       },
