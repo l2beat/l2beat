@@ -1,4 +1,4 @@
-import type { DaLayerThroughput } from '@l2beat/config'
+import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ProjectDaThroughputChart } from '~/components/chart/data-availability/project-da-throughput-chart'
@@ -23,6 +23,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
       }
     | undefined
   totalPosted: number
+  milestones: Milestone[]
 }
 
 export function ThroughputSection({
@@ -32,6 +33,7 @@ export function ThroughputSection({
   pastDayAvgThroughputPerSecond,
   largestPoster,
   totalPosted,
+  milestones,
   ...sectionProps
 }: ThroughputSectionProps) {
   return (
@@ -45,6 +47,7 @@ export function ThroughputSection({
       <ProjectDaThroughputChart
         projectId={projectId}
         configuredThroughputs={throughput}
+        milestones={milestones}
       />
       <HorizontalSeparator className="my-4" />
       <div

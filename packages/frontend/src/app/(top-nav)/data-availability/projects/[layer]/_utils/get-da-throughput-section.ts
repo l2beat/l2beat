@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 
 export async function getDaThroughputSection(
-  project: Project<'daLayer' | 'statuses' | 'display'>,
+  project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
   if (!featureFlags.daThroughput) return undefined
 
@@ -39,5 +39,6 @@ export async function getDaThroughputSection(
         }
       : undefined,
     totalPosted: projectData.totalPosted,
+    milestones: project.milestones ?? [],
   }
 }

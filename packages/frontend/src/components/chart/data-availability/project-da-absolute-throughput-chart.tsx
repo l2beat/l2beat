@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
+import type { Milestone } from '@l2beat/config'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -43,6 +44,7 @@ interface Props {
   projectId: ProjectId
   isLoading: boolean
   showMax: boolean
+  milestones: Milestone[]
 }
 
 export function ProjectDaAbsoluteThroughputChart({
@@ -50,6 +52,7 @@ export function ProjectDaAbsoluteThroughputChart({
   isLoading,
   projectId,
   showMax,
+  milestones,
 }: Props) {
   const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
 
@@ -74,6 +77,7 @@ export function ProjectDaAbsoluteThroughputChart({
       data={chartData}
       className="mb-2"
       isLoading={isLoading}
+      milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
