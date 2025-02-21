@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x99fb5447c27f6b31aaa9c001687e6bfbe00b6946
+Generated with discovered.json: 0x1cd2a791abac22641990769d932f5e15038678ac
 
-# Diff at Tue, 18 Feb 2025 09:48:18 GMT:
+# Diff at Fri, 21 Feb 2025 11:15:31 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 21872458
+- current block number: 21894348
 
 ## Description
 
@@ -26,7 +26,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract FaultDisputeGame (0x120ffE893423e51409f57DE02c5263D43717D639)
-    +++ description: None
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
 ```
 
 ```diff
@@ -38,13 +38,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract PreimageOracle (0x25CBeDa9431863B5dF4CBA6C3B78dBCED3bFb7F1)
-    +++ description: None
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
 +   Status: CREATED
     contract PermissionedDisputeGame (0x2B6110342f3C326a848cC41a3BFEcCEfD12D639F)
-    +++ description: None
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
 ```
 
 ```diff

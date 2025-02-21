@@ -1,11 +1,8 @@
 {
-    "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-    "chain": "ethereum",
-    "name": "pepeunchained",
-    "initialAddresses": [
-      "0x384e3ae4d5efc9471201039b555eae496b2a7240"
-    ],
-    "names": {
-    }
-  }
-  
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "import": ["../../ethereumConfig.jsonc"],
+  "name": "pepeunchained",
+  "initialAddresses": ["0x384e3ae4d5efc9471201039b555eae496b2a7240"],
+  "names": {}
+}
