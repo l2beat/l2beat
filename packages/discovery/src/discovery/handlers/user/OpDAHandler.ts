@@ -49,7 +49,6 @@ const BLOB_TX_TYPE = 3
 const EIGEN_DA_CONSTANTS = {
   COMMITMENT_PREFIX: '0x01',
   COMMITMENT_THIRD_BYTE: '00',
-  VERIFICATION_THRESHOLD: 1.5, // 80% success rate required
   EIGEN_AVS: EthereumAddress('0x870679e138bcdf293b7ff14dd44b70fc97e12fc0'),
 } as const
 
@@ -157,13 +156,12 @@ export class OpStackDAHandler implements Handler {
     const confirmedBatchHeaderHashes =
       await getConfirmedBatchHeaderHashes(provider)
 
-    const successfulVerifications = outgoingBatchHeaderHashes.filter((hash) =>
-      confirmedBatchHeaderHashes.includes(hash),
+    const successfulVerificationsCount = outgoingBatchHeaderHashes.filter(
+      (hash) => confirmedBatchHeaderHashes.includes(hash),
     ).length
 
-    const successRate = (successfulVerifications / sequencerTxs.length) * 100
-
-    return successRate >= EIGEN_DA_CONSTANTS.VERIFICATION_THRESHOLD
+    // require 100% success rate
+    return successfulVerificationsCount === sequencerTxs.length
   }
 }
 
