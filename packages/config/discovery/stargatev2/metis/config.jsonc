@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "metis",
   "name": "stargatev2",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a"],
   "names": {
     "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a": "TokenMessaging"

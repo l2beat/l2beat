@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "nova",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xFb209827c58283535b744575e11953DCC4bEAD88", // RollupProxy
     "0xc840838bc438d73c16c2f8b22d2ce3669963cd48", // L1GatewayRouter

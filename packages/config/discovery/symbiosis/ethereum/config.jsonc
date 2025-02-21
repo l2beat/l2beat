@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "symbiosis",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
     "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"

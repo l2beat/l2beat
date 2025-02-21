@@ -2,7 +2,7 @@
   "name": "canvasconnect",
   "chain": "ethereum",
   "blockNumber": 19825363,
-  "configHash": "0x29a0a3d54f0ae50cfff066379d0f4f93e360eb2b668d8a31e00477355330c86a",
+  "configHash": "0x8284883cd32f01c20a9bc0065015a23b7b1a9f08371f2ecefa0bee7e1fe17262",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {

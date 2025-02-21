@@ -1,7 +1,8 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "unichain",
   "chain": "unichain",
+  "name": "unichain",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000016",

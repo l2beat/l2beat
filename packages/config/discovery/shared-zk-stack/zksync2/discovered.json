@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 55387644,
-  "configHash": "0xc7390df39511c2b7c0e5399db60a6e06cc86c64433c35fa905aae39d3accae8f",
+  "configHash": "0x44d43486375c16042fda6940f10f999a701922efb61713063e0335b795de7dea",
   "contracts": [
     {
       "name": "ZkTokenGovernor",

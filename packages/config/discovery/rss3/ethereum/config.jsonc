@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "rss3",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8", //L1ERC721Bridge
     "0x1D89222C28C3ba471be822203998f27Df4727C0b", //OptimismMintableERC20Factory

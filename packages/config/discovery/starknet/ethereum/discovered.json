@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 21872746,
-  "configHash": "0x9d306adba0d16ce54eaf9a8b94002beb407338174cdff04ed346e5ae99550fa3",
+  "blockNumber": 21881526,
+  "configHash": "0xcd496383321ab39586e0152812f6a273a9972996917b942a8c4afd246155ce79",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
@@ -88,7 +88,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 26,
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -389,7 +389,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -508,7 +511,7 @@
       }
     },
     {
-      "name": "StarkgateETHSecurityAgentMultisig",
+      "name": "StarkgateSecurityAgentMultisig",
       "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -814,7 +817,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
@@ -1015,7 +1021,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1668060,
+        "l1ToL2MessageNonce": 1668130,
         "messageCancellationDelay": 432100,
         "operators": [
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
@@ -1036,9 +1042,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1773311497793231035193256382873075100627531031652299242138433633210677216116",
-        "stateBlockNumber": 1160572,
-        "stateRoot": "867434328978030437115377391793043859704275562686704712176326273565714095445",
+        "stateBlockHash": "1727110809678905086764867867599134926160606909493548172586718442919557848470",
+        "stateBlockNumber": 1164018,
+        "stateRoot": "462294163136630734658396106659630314672144080136169258333261236004322763650",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -1134,7 +1140,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
@@ -1527,7 +1536,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
         "estimateDepositFeeWei": 100000000000000,
@@ -1632,7 +1644,10 @@
             "adminRole": "SECURITY_ADMIN",
             "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
           },
-          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"]
+          }
         },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,

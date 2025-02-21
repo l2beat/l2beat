@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "ethernity",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x908C324c35fF36F64236A7CDa4D50f3003E9C5C3" // L1StandardBridge
   ],

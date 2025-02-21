@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "arbitrum",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4", // TreasuryGovernor
     "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9", // CoreGovernor
@@ -41,5 +42,10 @@
     "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
     "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias"
   },
-  "overrides": {}
+  "overrides": {
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
+      // unused security council on L2 with the same address on L1. we speculate that its purpose was to prevent address sniping
+      "ignoreDiscovery": true
+    }
+  }
 }

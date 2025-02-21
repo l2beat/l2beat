@@ -13,10 +13,11 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import {
-  RollupsFillGradientDef,
-  RollupsStrokeGradientDef,
-} from '~/components/core/chart/defs/rollups-gradient-def'
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
@@ -81,6 +82,9 @@ export function ProjectTokenChart({
       label: token.name,
       color: sourceToColor(token.source),
       legendLabel: capitalize(token.source),
+      indicatorType: {
+        shape: 'square',
+      },
     },
   } satisfies ChartMeta
 
@@ -113,8 +117,8 @@ export function ProjectTokenChart({
         <AreaChart data={chartData} margin={{ top: 20 }}>
           {isBridge && (
             <defs>
-              <RollupsFillGradientDef id="fill" />
-              <RollupsStrokeGradientDef id="stroke" />
+              <PinkFillGradientDef id="fill" />
+              <PinkStrokeGradientDef id="stroke" />
             </defs>
           )}
           {!isBridge && <ChartLegend content={<ChartLegendContent />} />}
@@ -176,13 +180,9 @@ function CustomTooltip({
                 className="flex items-center justify-between gap-x-1"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className="size-3 rounded"
-                    style={{
-                      backgroundColor: config.color,
-                    }}
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
                   />
                   <span className="w-20 leading-none sm:w-fit">
                     {config.label}

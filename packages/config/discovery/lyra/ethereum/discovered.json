@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "blockNumber": 21637077,
-  "configHash": "0xd2b34cce08747ffe4e4f13d440cef697e19c9ff16fe43022e7f3e96a10fb807d",
+  "configHash": "0xd16dfc44226e1dbee7c623492936504b5029c74d62e4ff9ca08beb711e0f7c0a",
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
