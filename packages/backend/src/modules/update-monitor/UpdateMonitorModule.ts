@@ -9,6 +9,7 @@ import type { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import type { Clock } from '../../tools/Clock'
 import type { ApplicationModule } from '../ApplicationModule'
+import { UpdateMessagesService } from './UpdateMessagesService'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
@@ -34,12 +35,18 @@ export function createUpdateMonitorModule(
     ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
     : undefined
 
+  const updateMessagesService = new UpdateMessagesService(
+    peripherals.database,
+    config.updateMonitor.updateMessagesRetentionPeriodDays,
+  )
+
   const chainConverter = new ChainConverter(config.chains)
   const updateNotifier = new UpdateNotifier(
     peripherals.database,
     discordClient,
     chainConverter,
     logger,
+    updateMessagesService,
   )
 
   // TODO: get rid of that once we achieve full library separation
@@ -72,7 +79,6 @@ export function createUpdateMonitorModule(
 
   const updateMonitorController = new UpdateMonitorController(
     peripherals.database,
-    config.projects,
     chains,
     configReader,
     chainConverter,

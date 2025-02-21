@@ -1,3 +1,4 @@
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   ChainId,
   EthereumAddress,
@@ -137,7 +138,7 @@ export interface ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
-  daTracking?: ProjectDaTrackingConfig
+  daTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface ScalingProjectUpgradeability {
@@ -483,7 +484,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
-  liveness?: Layer2LivenessConfig
+  liveness?: ProjectLivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
 }
@@ -543,7 +544,7 @@ interface SharedBridge {
   untilTimestamp?: UnixTime
 }
 
-export interface Layer2LivenessConfig {
+export interface ProjectLivenessConfig {
   duplicateData: {
     from: TrackedTxsConfigSubtype
     to: TrackedTxsConfigSubtype
@@ -816,14 +817,15 @@ export interface BaseProject {
   // tvlConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
+  livenessConfig?: ProjectLivenessConfig
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
-  // trackedTxsConfig
+  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
-  daTrackingConfig?: ProjectDaTrackingConfig
+  daTrackingConfig?: ProjectDaTrackingConfig[]
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
@@ -973,12 +975,12 @@ export interface DaConsensusAlgorithm {
 export interface DaLayerThroughput {
   /**
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   size: number
   /**
    * Desired size of blob data per block. Should be less than or equal to size.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   target?: number
   /**

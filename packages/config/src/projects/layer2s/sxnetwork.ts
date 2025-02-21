@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 export const sxnetwork: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1722430544), // 2024-07-31T12:55:44Z
   discovery,
-  gasTokens: ['SX'],
+  gasTokens: { tracked: ['SX'] },
   additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   additionalPurposes: ['Betting'],
   reasonsForBeingOther: [

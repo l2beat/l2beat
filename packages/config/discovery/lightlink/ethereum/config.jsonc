@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "lightlink",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x3ca373F5ecB92ac762f9876f6e773082A4589995", // eth bridge
     "0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9", // erc20 bridge

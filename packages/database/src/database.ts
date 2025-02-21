@@ -5,6 +5,7 @@ import { DataAvailabilityRepository } from './da-beat/data-availability/reposito
 import { StakeRepository } from './da-beat/stake/repository'
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { FlatSourcesRepository } from './discovery/flat-sources/repository'
+import { UpdateMessageRepository } from './discovery/update-message/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
 import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
 import { DatabaseClient } from './kysely'
@@ -46,6 +47,7 @@ export function createDatabase(config?: PoolConfig) {
     discoveryCache: new DiscoveryCacheRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     updateNotifier: new UpdateNotifierRepository(db),
+    updateMessage: new UpdateMessageRepository(db),
     flatSources: new FlatSourcesRepository(db),
     // #endregion
 

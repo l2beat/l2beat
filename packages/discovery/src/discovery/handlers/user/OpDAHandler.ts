@@ -1,7 +1,6 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { RLP } from 'ethers/lib/utils'
-import { z } from 'zod'
-import type { Transaction } from '../../../utils/IEtherscanClient'
+import type { EthereumAddress } from '@l2beat/shared-pure'
+import * as z from 'zod'
+
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
@@ -45,11 +44,8 @@ const BLOB_TX_TYPE = 3
  * automata: 	0x01 00 a5 		(challenges)
  * syndicate: 0x01 00 9c		(keccak256)
  */
-const EIGEN_DA_CONSTANTS = {
-  COMMITMENT_PREFIX: '0x01',
-  COMMITMENT_THIRD_BYTE: '00',
-  EIGEN_AVS: EthereumAddress('0x870679e138bcdf293b7ff14dd44b70fc97e12fc0'),
-} as const
+const EIGEN_DA_COMMITMENT_PREFIX = '0x01'
+const EIGEN_DA_COMMITMENT_THIRD_BYTE = '00'
 
 /**
  * This is a OP Stack specific handler that is used to check if
@@ -63,7 +59,6 @@ export class OpStackDAHandler implements Handler {
     readonly definition: OpStackDAHandlerDefinition,
   ) {
     const dependency = getReferencedName(this.definition.sequencerAddress)
-
     if (dependency) {
       this.dependencies.push(dependency)
     }
@@ -111,7 +106,16 @@ export class OpStackDAHandler implements Handler {
     const isSequencerSendingBlobTx =
       hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
-    const isUsingEigenDA = await this.checkForEigenDA(provider, lastTxs)
+    const isUsingEigenDA =
+      hasTxs &&
+      lastTxs.some((tx) => {
+        const thirdByte = tx.input.slice(6, 8)
+
+        const prefixMatch = tx.input.startsWith(EIGEN_DA_COMMITMENT_PREFIX)
+        const thirdByteMatch = thirdByte === EIGEN_DA_COMMITMENT_THIRD_BYTE
+
+        return prefixMatch && thirdByteMatch
+      })
 
     return {
       field: this.field,
@@ -122,86 +126,4 @@ export class OpStackDAHandler implements Handler {
       },
     }
   }
-
-  private async checkForEigenDA(
-    provider: IProvider,
-    sequencerTxs: Transaction[],
-  ) {
-    const isUsingEigenLikeCommitments =
-      sequencerTxs.length > 0 &&
-      sequencerTxs.some((tx) => {
-        const thirdByte = tx.input.slice(6, 8)
-
-        const prefixMatch = tx.input.startsWith(
-          EIGEN_DA_CONSTANTS.COMMITMENT_PREFIX,
-        )
-        const thirdByteMatch =
-          thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
-
-        return prefixMatch && thirdByteMatch
-      })
-
-    if (!isUsingEigenLikeCommitments) {
-      return false
-    }
-
-    const outgoingBatchHeaderHashes = sequencerTxs.map((tx) =>
-      decodeCommitmentRLP(tx.input),
-    )
-
-    const confirmedBatchHeaderHashes =
-      await getConfirmedBatchHeaderHashes(provider)
-
-    const successfulVerificationsCount = outgoingBatchHeaderHashes.filter(
-      (hash) => confirmedBatchHeaderHashes.includes(hash),
-    ).length
-
-    // require 100% success rate
-    return successfulVerificationsCount === sequencerTxs.length
-  }
-}
-
-async function getConfirmedBatchHeaderHashes(
-  provider: IProvider,
-): Promise<string[]> {
-  const ethereumProvider = provider.switchChain(
-    'ethereum',
-    // no clue why block number is needed here
-    // but it spares us translation between the chains
-    21895408, // latest block at the time of coding
-  )
-
-  const logs = await ethereumProvider.getEvents(
-    EIGEN_DA_CONSTANTS.EIGEN_AVS,
-    'event BatchConfirmed(bytes32 indexed batchHeaderHash, uint32 batchId)',
-    [],
-  )
-
-  return logs.map((log) => log.event.batchHeaderHash.toLowerCase())
-}
-
-function decodeCommitmentRLP(inputData: string): string {
-  // strip four commitment type bytes + 0x
-  const eigenCommitment = inputData.slice(5 * 2)
-
-  const rlp = RLP.decode('0x' + eigenCommitment)
-
-  /**
-   * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
-   * @commit 733bcbe
-   */
-  // see: disperser.BlobInfo.blob_verification_proof
-  const RLP_BLOB_VERIFICATION_HEADER_IDX = 1
-  // see: disperser.BlobVerificationProof.batch_metadata
-  const RLP_BLOB_BATCH_METADATA_IDX = 2
-  // see: disperser.BlobVerificationProof.batch_metadata.batch_header_hash
-  const RLP_BLOB_BATCH_HEADER_HASH_IDX = 4
-
-  const blobVerificationProof = rlp[RLP_BLOB_VERIFICATION_HEADER_IDX]
-  const blobBatchHeaderHash =
-    blobVerificationProof[RLP_BLOB_BATCH_METADATA_IDX][
-      RLP_BLOB_BATCH_HEADER_HASH_IDX
-    ]
-
-  return blobBatchHeaderHash.toLowerCase()
 }

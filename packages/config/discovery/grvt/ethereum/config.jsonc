@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "grvt",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E", // GrvtZkEvm
     "0xE17aeD2fC55f4A876315376ffA49FE6358113a65" // GRVTBridgeProxy (permissioned bridge proxy)

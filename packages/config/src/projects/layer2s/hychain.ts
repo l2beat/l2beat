@@ -35,7 +35,7 @@ export const hychain: Layer2 = orbitStackL2({
     },
   },
   discovery,
-  gasTokens: ['TOPIA'],
+  gasTokens: { tracked: ['TOPIA'] },
   associatedTokens: ['TOPIA'],
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

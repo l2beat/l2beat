@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "kinto",
   "name": "kinto",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
@@ -138,7 +139,7 @@
           "handler": {
             "type": "event",
             "select": ["selector", "roleId"],
-            "set": { "event": "TargetFunctionRoleUpdated" },
+            "add": { "event": "TargetFunctionRoleUpdated" },
             "groupBy": "target"
           }
         },
@@ -172,7 +173,16 @@
           "handler": {
             "type": "event",
             "select": ["account", "delay", "since", "newMember"],
-            "set": { "event": "RoleGranted" },
+            "add": { "event": "RoleGranted" },
+            "groupBy": "roleId"
+          }
+        },
+        "RolesRevoked": {
+          "description": "List of roles revoked from accounts.",
+          "handler": {
+            "type": "event",
+            "select": ["roleId", "account"],
+            "add": { "event": "RoleRevoked" },
             "groupBy": "roleId"
           }
         }

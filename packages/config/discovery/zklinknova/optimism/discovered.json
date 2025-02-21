@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 124973335,
-  "configHash": "0x5ba7e8a339488e6724ecbaefbebb36c1f281c4699bdd3060590c0e966c42b145",
+  "configHash": "0x2b12f4737f0ba65b3bb84c66014391a6945e0000bb5823a444e5d894f8d71f1b",
   "contracts": [
     {
       "name": "OptimismOwner",

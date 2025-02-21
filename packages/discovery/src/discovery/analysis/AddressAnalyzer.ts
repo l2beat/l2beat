@@ -8,6 +8,7 @@ import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { get$Beacons, get$Implementations } from '@l2beat/discovery-types'
 import type { ContractConfig } from '../config/ContractConfig'
 import type {
+  DiscoveryCategory,
   DiscoveryCustomType,
   ExternalReference,
 } from '../config/RawDiscoveryConfig'
@@ -20,6 +21,7 @@ import type {
   SourceCodeService,
 } from '../source/SourceCodeService'
 import type { TemplateService } from './TemplateService'
+import { resolveCategory } from './category'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import { type ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
 
@@ -48,6 +50,7 @@ export interface AnalyzedContract {
   combinedMeta?: ContractMeta
   usedTypes?: DiscoveryCustomType[]
   references?: ExternalReference[]
+  category?: DiscoveryCategory
 }
 
 export interface ExtendedTemplate {
@@ -61,6 +64,7 @@ interface AnalyzedEOA {
   name?: string
   address: EthereumAddress
   combinedMeta?: ContractMeta
+  category?: DiscoveryCategory
 }
 
 export type AddressesWithTemplates = Record<string, Set<string>>
@@ -81,7 +85,12 @@ export class AddressAnalyzer {
   ): Promise<Analysis> {
     const code = await provider.getBytecode(address)
     if (code.length === 0) {
-      return { type: 'EOA', name: config.name, address }
+      return {
+        type: 'EOA',
+        name: config.name,
+        address,
+        category: resolveCategory(config),
+      }
     }
 
     const deployment = await provider.getDeployment(address)
@@ -208,6 +217,7 @@ export class AddressAnalyzer {
       references: config.references,
       relatives,
       usedTypes,
+      category: resolveCategory(config),
     }
 
     const analysis: AnalyzedContract = {

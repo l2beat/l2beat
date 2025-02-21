@@ -31,8 +31,7 @@ export const playblock: Layer3 = orbitStackL3({
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
   },
-  // not on coingecko
-  // gasTokens: ['PBG'],
+  gasTokens: { untracked: ['PBG'] },
   // associatedTokens: ['PBG'],
   rpcUrl: 'https://playnance.drpc.org/',
   bridge: discovery.getContract('Bridge'),

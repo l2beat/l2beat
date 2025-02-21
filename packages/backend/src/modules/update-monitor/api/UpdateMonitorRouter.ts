@@ -31,5 +31,13 @@ export function createUpdateMonitorRouter(
     ),
   )
 
+  router.get('/discovery/changes', async (ctx) => {
+    ctx.set('Access-Control-Allow-Origin', '*')
+    ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+    ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+
+    ctx.body = await updateMonitorController.getUpdates()
+  })
+
   return router
 }

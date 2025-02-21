@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "base",
   "blockNumber": 25643771,
-  "configHash": "0x27d0d2266b48ab4ed032f51b489dbffeccbdf3277ffd12758c3cc4bcafd45725",
+  "configHash": "0x8a90287933d4b7bf0fc0f2be8778d61f56da1fd71680d46c31231f878eb06e41",
   "contracts": [
     {
       "name": "LayerZero Multisig",

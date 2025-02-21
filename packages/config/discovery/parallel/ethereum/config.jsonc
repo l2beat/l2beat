@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "parallel",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x5a961c7D162195a9Dc5a357Cc168b0694283382E", // Bridge
     "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d", // L1ERC20Gateway

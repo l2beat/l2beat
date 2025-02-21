@@ -44,7 +44,7 @@ export const g7: Layer3 = orbitStackL3({
   },
   rpcUrl: 'https://mainnet-rpc.game7.io',
   associatedTokens: ['G7'],
-  gasTokens: ['G7'],
+  gasTokens: { tracked: ['G7'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: L1OrbitERC20Gateway.address,

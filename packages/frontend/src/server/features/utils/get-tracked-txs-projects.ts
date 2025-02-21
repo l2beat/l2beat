@@ -1,23 +1,27 @@
-import type { Layer2 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { IndexerConfigurationRecord } from '@l2beat/database'
-import { notUndefined } from '@l2beat/shared-pure'
-import { toTrackedTxConfig } from '../scaling/costs/utils/to-tracked-tx-config'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
+import { createTrackedTxId } from '@l2beat/shared'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { getConfigurationsSyncedUntil } from './get-configurations-synced-until'
 
-export type TrackedTxsProject = ReturnType<typeof getTrackedTxsProjects>[number]
+export type TrackedTxsProject = {
+  id: ProjectId
+  trackedTxsConfigs: TrackedTxConfigEntry[]
+  syncedUntil: UnixTime
+}
 
 export function getTrackedTxsProjects(
-  projects: Layer2[],
+  projects: Project<'trackedTxsConfig'>[],
   configurations: IndexerConfigurationRecord[],
   type: 'liveness' | 'l2costs',
-) {
+): TrackedTxsProject[] {
   return projects
     .map((project) => {
-      const trackedTxsConfigs = toTrackedTxConfig(
-        project.id,
-        project.config.trackedTxs,
-      )
-      if (trackedTxsConfigs === undefined) return
+      const trackedTxsConfigs = project.trackedTxsConfig.map((c) => ({
+        ...c,
+        id: createTrackedTxId(c),
+      }))
 
       const projectRuntimeConfigIds = trackedTxsConfigs
         .filter((c) => c.type === type)
@@ -33,10 +37,10 @@ export function getTrackedTxsProjects(
       if (!syncedUntil) return
 
       return {
-        ...project,
+        id: project.id,
         trackedTxsConfigs,
         syncedUntil,
       }
     })
-    .filter(notUndefined)
+    .filter((x) => x !== undefined)
 }

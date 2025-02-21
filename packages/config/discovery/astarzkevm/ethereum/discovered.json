@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0x1be9382776421fe44d961049d496d1a72cb66d895934cd45ddc0ab55451a17e8",
+  "configHash": "0xb233758095e45101891a8163563c1d799cc58acf9a844e197f3d21ec9e29f080",
   "sharedModules": ["shared-polygon-cdk"],
   "contracts": [
     {

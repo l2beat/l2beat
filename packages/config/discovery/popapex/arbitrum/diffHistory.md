@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x12ee452e2ac022a355535963d732d73c68489503
+Generated with discovered.json: 0x8d861a709b57c4dfd72abca372e744a471ca3d9e
+
+# Diff at Fri, 21 Feb 2025 12:11:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 298723571
+- current block number: 298723571
+
+## Description
+
+Config related: Set orbit stack contract categories.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 298723571 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Outbox (0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ChallengeManager (0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+Generated with discovered.json: 0x8c8a113d16c5a895ed3b9d3a27ca19bb944bccc2
 
 # Diff at Tue, 04 Feb 2025 12:33:56 GMT:
 

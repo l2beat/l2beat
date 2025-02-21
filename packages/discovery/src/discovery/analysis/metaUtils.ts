@@ -4,7 +4,6 @@ import {
   type ContractFieldSeverity,
   type ContractValue,
   type ContractValueType,
-  type StackCategory,
   get$Admins,
   get$Implementations,
 } from '@l2beat/discovery-types'
@@ -29,7 +28,6 @@ export interface ContractMeta {
   displayName?: string
   description?: string
   permissions?: PermissionConfiguration[]
-  categories?: Set<StackCategory>
   types?: Set<ContractValueType>
   severity?: ContractFieldSeverity
   references?: ExternalReference[]
@@ -43,7 +41,6 @@ export function mergeContractMeta(
     displayName: a?.displayName ?? b?.displayName,
     description: a?.description ?? b?.description,
     permissions: mergePermissions(a?.permissions, b?.permissions),
-    categories: mergeSets(a?.categories, b?.categories),
     types: mergeSets(a?.types, b?.types),
     severity: findHighestSeverity(a?.severity, b?.severity),
     canActIndependently: mergeCanActIndependently(
@@ -143,7 +140,6 @@ export function getSelfMeta(
     description,
     references,
     permissions: undefined,
-    categories: undefined,
     severity: undefined,
     types: undefined,
   }
@@ -187,7 +183,6 @@ export function getMetaFromUpgradeability(
     if (upgradeabilityAdmin !== undefined) {
       result[upgradeabilityAdmin.toString()] = {
         displayName: undefined,
-        categories: undefined,
         description: undefined,
         severity: undefined,
         types: undefined,
@@ -214,7 +209,6 @@ function targetConfigToMeta(
     permissions: target.permissions?.map((p) =>
       linkPermission(p, self, analysis.values, analysis),
     ),
-    categories: toSet(target.category),
     types: toSet(field.type),
     severity: Array.from(toSet(field.severity) ?? [])[0],
   }

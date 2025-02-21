@@ -1,6 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { notUndefined } from '@l2beat/shared-pure'
-
 import { CoingeckoQueryService } from '@l2beat/shared'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -46,9 +44,9 @@ export function createTrackedTxsModule(
 
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
-  const runtimeConfigurations = config.projects
-    .flatMap((project) => project.trackedTxsConfig)
-    .filter(notUndefined)
+  const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
+    (project) => project.configurations,
+  )
 
   const livenessModule = createLivenessModule(config, logger, peripherals)
   const l2costsModule = createL2CostsModule(config, logger, peripherals)
@@ -59,7 +57,7 @@ export function createTrackedTxsModule(
   ]
 
   const updaters = [livenessModule?.updater, l2costsModule?.updater].filter(
-    notUndefined,
+    (x) => x !== undefined,
   )
 
   const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
@@ -111,7 +109,7 @@ export function createTrackedTxsModule(
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
       logger: logger.tag({ feature: 'costs' }),
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
     })
   }
 
@@ -121,7 +119,7 @@ export function createTrackedTxsModule(
   if (config.trackedTxsConfig.uses.liveness) {
     livenessAggregatingIndexer = new LivenessAggregatingIndexer({
       db: peripherals.database,
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
@@ -130,7 +128,7 @@ export function createTrackedTxsModule(
 
     anomaliesIndexer = new AnomaliesIndexer({
       db: peripherals.database,
-      projects: config.projects,
+      projects: config.trackedTxsConfig.projects,
       parents: [trackedTxsIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),

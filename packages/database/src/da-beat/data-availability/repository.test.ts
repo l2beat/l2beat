@@ -203,6 +203,30 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
     })
   })
 
+  describe(DataAvailabilityRepository.prototype.deleteByProject.name, () => {
+    it('should delete records within the specified time range', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-b', 'layer-a', START, 100n),
+        record('project-a', 'layer-b', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
+      ])
+
+      const deletedCount = await repository.deleteByProject(
+        'project-a',
+        'layer-a',
+      )
+
+      expect(deletedCount).toEqual(2)
+
+      const remainingRecords = await repository.getAll()
+      expect(remainingRecords).toEqualUnsorted([
+        record('project-b', 'layer-a', START, 100n),
+        record('project-a', 'layer-b', START, 100n),
+      ])
+    })
+  })
+
   describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([

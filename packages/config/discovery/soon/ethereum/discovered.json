@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21829713,
-  "configHash": "0x7bfedabf60947c1f899c63bc4cd6a46e26d700e51fc6049e33c2aa1f3230fb6c",
+  "configHash": "0x2586d39f1f2143fbdcbe4c9f5e3f336cf642a082ec2bec1731151b88ac9d3d68",
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -358,7 +358,6 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1735877339,
       "values": {
@@ -403,7 +402,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -987,7 +985,7 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1StandardBridge_soon": "0x938c95c414d3b4ebb043b858ccba485a4bdb3e4d4737e75462a3192c4d2a6970",
+    "opstack/L1StandardBridge_soon": "0x5a2f05e7471e501e6379b71a07e18805ecf80c1971d04da901c01bd72e21aca4",
     "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
     "opstack/OptimismPortal_soon": "0x9cfb2d44d8bb45742e371246df8436a65bb7d88705c9589f1dd5bc5d6eb9feee",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"

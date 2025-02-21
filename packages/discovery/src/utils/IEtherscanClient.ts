@@ -53,12 +53,6 @@ export interface IEtherscanClient {
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<Transaction[]>
-
-  getTransactions(
-    address: EthereumAddress,
-    fromBlock: number,
-    toBlock: number,
-  ): Promise<Transaction[]>
 }
 
 export function getExplorerClient(

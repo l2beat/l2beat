@@ -8,8 +8,9 @@
 // shared-modules better.
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "sophon",
   "chain": "zksync2",
+  "name": "sophon",
+  "import": ["../../globalConfig.jsonc"],
   "sharedModules": {
     "doesThisKeyDoAnything": "shared-zk-stack"
   },
