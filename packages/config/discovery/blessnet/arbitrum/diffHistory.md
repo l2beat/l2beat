@@ -1,3 +1,83 @@
+Generated with discovered.json: 0xce90bf20330c4c63f56c20a90dbc9bcd903d894e
+
+# Diff at Fri, 21 Feb 2025 11:40:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 305262432
+- current block number: 308363259
+
+## Description
+
+Multisig added as validator, still no state updates.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.7:
++        {"permission":"validate","to":"0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.6.to:
+-        "0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9"
++        "0x571D6CA61B979A967E055696c822CF8C928d3556"
+      issuedPermissions.5.to:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
+      issuedPermissions.4.to:
+-        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
++        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
+      issuedPermissions.3.to:
+-        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
++        "0x089E12e795b3292BcC16f29817bE124C720615b0"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.4:
++        "0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9"
+      values.validators.3:
+-        "0x82Bc29d2a230d99261CFF7Dab9dAB27649784Fd9"
++        "0x571D6CA61B979A967E055696c822CF8C928d3556"
+      values.validators.2:
+-        "0x571D6CA61B979A967E055696c822CF8C928d3556"
++        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
+      values.validators.1:
+-        "0x3D5cFeB6C99343793a8E112dF7D6c331F48e22De"
++        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
+      values.validators.0:
+-        "0x27752e6B947e777E894c1b7E574Ca7593d6F2C49"
++        "0x089E12e795b3292BcC16f29817bE124C720615b0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x089E12e795b3292BcC16f29817bE124C720615b0)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../arbitrum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 ++++++++++++++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305262432 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xF9327276c0E0d255543C095AC6D243B555e645D9) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      fieldMeta.latestConfirmed:
++        {"severity":"HIGH","description":"Was dead, now alive? Remove headerWarn if yes."}
+    }
+```
+
 Generated with discovered.json: 0x87f82d7e0ed70c354beb52e5014a0188de5db681
 
 # Diff at Sun, 09 Feb 2025 08:48:14 GMT:
