@@ -1,8 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
+import Link from 'next/link'
 import { Breakdown } from '~/components/breakdown/breakdown'
 import { PercentChange } from '~/components/percent-change'
 import { PrimaryCard } from '~/components/primary-card'
+import { ChevronIcon } from '~/icons/chevron'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -118,7 +120,19 @@ function SummaryThroughputBox({
 
   return (
     <PrimaryCard className="flex w-full flex-col gap-6 py-6 md:w-1/2">
-      <span className="text-base font-bold md:text-xl">Past Day Data Size</span>
+      <div className="flex items-center gap-2">
+        <span className="text-base font-bold md:text-xl">
+          Past Day Data Size
+        </span>
+        <Link
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke py-1.5 pl-2.5 pr-1.5 text-[13px] font-bold leading-none text-link md:px-3 md:py-2"
+          href="/data-availability/throughput"
+        >
+          <span className="max-md:hidden">View details</span>
+          <span className="md:hidden">Details</span>
+          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+        </Link>
+      </div>
       <ValueWithChange
         label="Past day data posted to projects with public APIs"
         value={formatBytes(totalPosted)}
