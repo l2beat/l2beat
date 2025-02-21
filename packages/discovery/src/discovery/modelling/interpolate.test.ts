@@ -42,10 +42,14 @@ describe(interpolateModelTemplate.name, () => {
       member(@self, 
         #$members
       ).
+      myAddr(#$.address, "#$.address:raw").
+      myName("#$.name").
+      myDescription("#$.description")
     `
     const contract: ContractParameters = {
       address: EthereumAddress.from('0x123'),
       name: 'ContactMsigA',
+      description: 'Description of ContactMsigA',
       values: {
         $threshold: 2,
         $members: [
@@ -55,7 +59,6 @@ describe(interpolateModelTemplate.name, () => {
         ],
       },
     }
-    console.log(contract)
 
     const addressToNameMap = {
       [EthereumAddress.from('0x123').toString()]: 'ContactMsigA',
@@ -70,6 +73,53 @@ describe(interpolateModelTemplate.name, () => {
       member(contactMsigA, 
         (memberA; memberB; 0x0000000000000000000000000000000000000aBc)
       ).
+      myAddr(contactMsigA, "0x0000000000000000000000000000000000000123").
+      myName("ContactMsigA").
+      myDescription("Description of ContactMsigA")
     `)
+  })
+
+  it('fails for missing values', () => {
+    const modelFile = `
+      one(#one).
+      two(#two).
+    `
+    const contract: ContractParameters = {
+      address: EthereumAddress.from('0x123'),
+      name: 'ContactMsigA',
+      description: 'Description of ContactMsigA',
+      values: {
+        one: 1,
+      },
+    }
+
+    const values = contractValuesForInterpolation(contract)
+    expect(() => interpolateModelTemplate(modelFile, values, {})).toThrow(
+      'Field "two" not found in contract ContactMsigA',
+    )
+  })
+})
+
+describe(contractValuesForInterpolation.name, () => {
+  it('properly prepares values for interpolation', () => {
+    const contract: ContractParameters = {
+      address: EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
+      name: 'ContractA',
+      description: 'Description of ContractA',
+      values: {
+        one: 1,
+        two: 2,
+      },
+    }
+    console.log(contract)
+
+    const values = contractValuesForInterpolation(contract)
+    expect(values).toEqual({
+      '$.address': '0x00000000000000000000000000000000deadbeef',
+      '$.name': 'ContractA',
+      '$.description': 'Description of ContractA',
+      one: 1,
+      two: 2,
+    })
   })
 })
