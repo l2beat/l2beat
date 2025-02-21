@@ -8,6 +8,7 @@ import {
 import { MainPageHeader } from '~/components/main-page-header'
 import { featureFlags } from '~/consts/feature-flags'
 import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import { cn } from '~/utils/cn'
 import { getDefaultMetadata } from '~/utils/metadata'
 import {
@@ -26,13 +27,21 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const entries = await getDaSummaryEntries()
+  const [entries, throughputSummaryData] = await Promise.all([
+    getDaSummaryEntries(),
+    getDaThroughputSummary(),
+  ])
   const { publicSystems, customSystems } = groupBySystem(entries)
 
   return (
     <div>
       <MainPageHeader>Summary</MainPageHeader>
-      {featureFlags.daThroughput && <DaSummaryBoxes entries={entries} />}
+      {featureFlags.daThroughput && (
+        <DaSummaryBoxes
+          entries={entries}
+          throughputSummaryData={throughputSummaryData}
+        />
+      )}
       <div
         className={cn(
           'flex flex-col gap-6',
