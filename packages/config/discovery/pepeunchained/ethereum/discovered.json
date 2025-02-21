@@ -1,7 +1,7 @@
 {
   "name": "pepeunchained",
   "chain": "ethereum",
-  "blockNumber": 21894534,
+  "blockNumber": 21894604,
   "configHash": "0x9abdbe615dac01cd3559996eeb2bc67a36e32fab0c712ae4ca8a541717d7777f",
   "contracts": [
     {
@@ -174,7 +174,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 21894514
+          "prevBlockNum": 21894580
         },
         "paused": false,
         "superchainConfig": "0x11654D67e0360A82e5Badd272Ced336B80972135",
