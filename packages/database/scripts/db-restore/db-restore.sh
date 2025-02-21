@@ -2,10 +2,11 @@
 
 source .env
 
-FEATURES_NAMES=("da" "tvl")
+FEATURES_NAMES=("da" "tvl" "finality")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability"
     "IndexerState IndexerConfiguration BlockTimestamp Amount Price Value"
+    "IndexerState IndexerConfiguration Liveness Finality"
 )
 
 clear_tables() {
@@ -83,7 +84,7 @@ TABLES=(${FEATURES_TABLES[$FEATURE_INDEX]})
 clear_tables "${TABLES[@]}"
 
 echo "Migrating DB to latest"
-PRISMA_DB_URL="$PRISMA_DB_URL" pnpm prisma migrate deploy
+PRISMA_DB_URL="$DEV_LOCAL_DB_URL" pnpm prisma migrate deploy
 
 dump_tables "${TABLES[@]}"
 

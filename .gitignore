@@ -29,3 +29,4 @@ packages/backend/src/modules/tvs/local-data-test.json
 packages/backend/src/modules/tvs/local-data.json
 packages/backend/src/token-config.json
 packages/backend/src/token-breakdown.json
+packages/database/tvl.pgdump
