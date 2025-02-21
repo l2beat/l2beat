@@ -4,6 +4,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/range-to-days'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
@@ -17,6 +18,7 @@ export type DaThroughputDataPoint = [
 
 export const DaThroughputChartParams = z.object({
   range: DaThroughputTimeRange,
+  includeL2sOnly: z.boolean(),
 })
 export type DaThroughputChartParams = z.infer<typeof DaThroughputChartParams>
 
@@ -31,13 +33,15 @@ export function getDaThroughputChart(params: DaThroughputChartParams) {
 const getCachedDaThroughputChartData = cache(
   async ({
     range,
+    includeL2sOnly,
   }: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> => {
     const db = getDb()
     const days = rangeToDays(range)
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = days ? to.add(-days, 'days') : null
+    const projectIds = await getProjectIds(includeL2sOnly)
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
-      ['ethereum', 'celestia', 'avail'],
+      projectIds,
       [from, to],
     )
     if (throughput.length === 0) {
@@ -61,19 +65,33 @@ const getCachedDaThroughputChartData = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
+async function getProjectIds(includeL2sOnly: boolean) {
+  if (!includeL2sOnly) {
+    return ['ethereum', 'celestia', 'avail']
+  }
+
+  const projects = await ps.getProjects({
+    select: ['scalingInfo'],
+  })
+
+  return projects
+    .filter((p) => p.scalingInfo.layer === 'layer2')
+    .map((p) => p.id)
+}
+
 function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
     const timestamp = record.timestamp.toNumber()
-    const projectId = record.projectId
+    const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = {}
     }
-    if (!result[timestamp][projectId]) {
-      result[timestamp][projectId] = Number(value)
+    if (!result[timestamp][daLayerId]) {
+      result[timestamp][daLayerId] = Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)

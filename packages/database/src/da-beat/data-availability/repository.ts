@@ -60,6 +60,27 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('daLayer', 'in', daLayers)
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
+  }
+
   async getLargestPosterByProjectIdsAndTimestamp(
     projectIds: string[],
     timestamp: UnixTime,
@@ -74,6 +95,37 @@ export class DataAvailabilityRepository extends BaseRepository {
       .executeTakeFirst()
 
     return row && toRecord(row)
+  }
+
+  async getLargestPosterByDaLayerAndTimestamp(
+    daLayer: string,
+    timestamp: UnixTime,
+  ) {
+    const row = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .where('daLayer', '=', daLayer)
+      .where('timestamp', '=', timestamp.toDate())
+      // exclude the daLayer itself
+      .where('projectId', '!=', daLayer)
+      .orderBy('totalSize', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+
+    return row && toRecord(row)
+  }
+
+  async getLargestPostersByTimestamp(timestamp: UnixTime) {
+    const rows = await this.db
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
+      .whereRef('projectId', '!=', 'daLayer')
+      .where('timestamp', '=', timestamp.toDate())
+      .distinctOn('daLayer')
+      .orderBy(['daLayer', 'totalSize desc'])
+      .execute()
+
+    return rows.map(toRecord)
   }
 
   async deleteByProject(projectId: string, daLayer: string): Promise<number> {

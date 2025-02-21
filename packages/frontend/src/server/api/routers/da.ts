@@ -14,7 +14,5 @@ export const daRouter = router({
     .query(async ({ input }) => getDaThroughputChart(input)),
   projectChart: procedure
     .input(ProjectDaThroughputChartParams)
-    .query(async ({ input }) => {
-      return getProjectDaThroughputChart(input)
-    }),
+    .query(async ({ input }) => getProjectDaThroughputChart(input)),
 })

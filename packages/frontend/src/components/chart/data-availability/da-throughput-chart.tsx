@@ -1,6 +1,8 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useIncludeOnlyL2s } from '~/app/(side-nav)/data-availability/throughput/_context/da-throughput-context'
+import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
@@ -13,9 +15,13 @@ import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
+  const { includeL2sOnly, setIncludeL2sOnly } = useIncludeOnlyL2s()
+
   const { data, isLoading } = api.da.chart.useQuery({
     range,
+    includeL2sOnly,
   })
+
   const chartRange = useMemo(
     () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
     [data],
@@ -37,14 +43,25 @@ export function DaThroughputChart() {
         <DaAbsoluteThroughputChart data={data} isLoading={isLoading} />
       )}
       <div className="mt-2 flex justify-between">
-        <RadioGroup
-          name="metric"
-          value={metric}
-          onValueChange={(v) => setMetric(v as 'percentage' | 'absolute')}
-        >
-          <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
-          <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
-        </RadioGroup>
+        <div className="flex items-center gap-2">
+          <RadioGroup
+            name="metric"
+            value={metric}
+            onValueChange={(v) => setMetric(v as 'percentage' | 'absolute')}
+          >
+            <RadioGroupItem value="percentage">Percentage</RadioGroupItem>
+            <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
+          </RadioGroup>
+          <Checkbox
+            name="include-l2s-only"
+            checked={includeL2sOnly}
+            onCheckedChange={(checked) =>
+              setIncludeL2sOnly(checked === 'indeterminate' ? false : checked)
+            }
+          >
+            Include L2s only
+          </Checkbox>
+        </div>
         <ChartTimeRangeControls
           name="Range"
           value={range}
