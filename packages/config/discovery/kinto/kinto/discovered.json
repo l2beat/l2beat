@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 748108,
-  "configHash": "0x556a82051c21a6fb5c078db50488d1cc20bc00c7d617f0919c94693cd25f0c4c",
+  "blockNumber": 752704,
+  "configHash": "0xb1f340cc4ffc9e1e056d197d7eda4f9adab1d133e63ecb5659ed5cbb76aab963",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1739973545,
+        "clock": 1740138074,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1739973545,
+        "clock": 1740138074,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1739973545,
+        "clock": 1740138074,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30921614981510860475",
+        "getDeposit": "30829484426273200475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -347,224 +347,6 @@
         "walletFactory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75"
       },
       "derivedName": "SponsorPaymaster"
-    },
-    {
-      "name": "KintoWallet",
-      "address": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c",
-      "sourceHashes": [
-        "0xc495bc47dd31384c345f3838b96e95d73efd25ded667a30651c10ca67e13a1b4",
-        "0x5dd932e70772b9520e522fd66660bc292a8fc07ff9f9bd8da3b7c0f0bf59c89d"
-      ],
-      "proxyType": "Beacon proxy",
-      "issuedPermissions": [
-        {
-          "permission": "upgrade",
-          "to": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-          "via": []
-        }
-      ],
-      "sinceTimestamp": 1718651560,
-      "values": {
-        "$admin": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-        "$beacon": "0x87f0eE85bF3198654900a422832157abBba30828",
-        "$implementation": "0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C",
-        "$pastUpgrades": [
-          [
-            "2023-12-31T22:08:08.000Z",
-            "0xb93d5f824b37c9ebd53ba4173510c3ed01c8279fa77897f718287d99f45144d7",
-            ["0xd87FB0bF3c38f216bD1604bFa4d262F95409227d"]
-          ],
-          [
-            "2024-01-10T02:11:16.000Z",
-            "0x5e85052f0f5dc2bb77766f70172c6b9ca9dabb294d82b7bfe123e252e0f4fc63",
-            ["0x893B0AeA9C45FA8d3b0FBbebd03d4220B9514599"]
-          ],
-          [
-            "2024-01-23T21:33:14.000Z",
-            "0x414470a46d49f3adbea31b026b31ee0310bf5f14b6a047163b3ae2b2d1daee76",
-            ["0xAe84C7E23240Dc11f0B2711C20aEDE81E5a28fF2"]
-          ],
-          [
-            "2024-02-01T19:03:14.000Z",
-            "0x29cfa97112038cf710734d93219a57f3b3f8a0dd6c9d1b630f57a4b3260c8515",
-            ["0x9dd64eA97fFFB2CbCd9ea87b9082250Be50FC820"]
-          ],
-          [
-            "2024-02-15T06:48:10.000Z",
-            "0xe94e71b9178761f4e77efa1f8ac0db731607ee1efd75b8c68b632024edd26347",
-            ["0x5248F94285c737Cd088c4d25bd68D45AFA258039"]
-          ],
-          [
-            "2024-04-29T23:39:05.000Z",
-            "0x1bb7899ea6179a8bda54a07440e97b26a8b1205ca5dda1d61d186a96cc53d91f",
-            ["0xA6ddF426008E8b7f1a70237bdEfafB5D928bA72E"]
-          ],
-          [
-            "2024-05-21T16:36:47.000Z",
-            "0xf75350ce91b2f9ab01b40e12d4e304da06e3a98df9dbfff926221ece0658b021",
-            ["0xcF4046C914BB8E437ED07C6FD755f58f430C4DA6"]
-          ],
-          [
-            "2024-05-22T17:18:33.000Z",
-            "0x85685091cfa0d5a4baf4cbd9c4b873ca99d0484464f052dfdd6d54894edd8822",
-            ["0xe761f7d13d6e6D70848fcD2E6bAc211db3741BA6"]
-          ],
-          [
-            "2024-05-22T19:38:03.000Z",
-            "0xb8301be60b27d74a3cd93a176597b83d840390c34f35ed466f9c0b171904bf5d",
-            ["0xF75dAc825E27f1A146fbd5e18681892D5cbca9E8"]
-          ],
-          [
-            "2024-05-22T21:32:50.000Z",
-            "0x7dbaf52bba314950632de04ce4b84c6e239be80b1c7eea61473275a3702d824e",
-            ["0x1d1E45adFA23457be2A595601F993d8826f11D38"]
-          ],
-          [
-            "2024-05-22T22:41:49.000Z",
-            "0xd59013784f82e36b563318b2a47f8b59c77bea95ee539596d371752075b04f7a",
-            ["0xf411E206370B731D5461c6c70657aDC71F5aEF38"]
-          ],
-          [
-            "2024-05-22T23:17:34.000Z",
-            "0x9a0a1e68a7096515886517da175cebb6bca1394817e4b82ef7a51a92854de83c",
-            ["0x43Ab055B44327EF3424b51e974960840d721e4D8"]
-          ],
-          [
-            "2024-05-23T00:36:09.000Z",
-            "0x4534860f727b67344f7f32f4444e584b5bb32d5d34852903430558d31c8c618b",
-            ["0x421459c9af07ccCadf6BCA52319835c2Bfb117e2"]
-          ],
-          [
-            "2024-05-24T01:55:24.000Z",
-            "0x76df358b38dd221b64d26546736753affa6a5f743664105039dd66e42c91a8f9",
-            ["0x8E495c2d6Be781Bd668632AA387e3e1027E80240"]
-          ],
-          [
-            "2024-05-25T16:58:58.000Z",
-            "0x7b8edbfb7a264c7bffbd818550f03bf610667cffb50556cd235733a93c87b5c9",
-            ["0x3deAbC32b749b95Df9B125822cCb123757c4d4F1"]
-          ],
-          [
-            "2024-05-27T16:35:38.000Z",
-            "0x2aefd6ad5ec2db239fc273701abac2b895adc967dab32ba0582a57b696421045",
-            ["0xa7040b6Ed2fC09C7485AA6A89fb2C320E2A739c3"]
-          ],
-          [
-            "2024-05-28T22:53:09.000Z",
-            "0x02c94988c204753ed0c7179ee46543485e9aef832571a0bde46fc873565d546a",
-            ["0xe1FcA7f6d88E30914089b600A73eeF72eaC7f601"]
-          ],
-          [
-            "2024-05-31T19:14:54.000Z",
-            "0x36c58600e88f27fe63c85880d83f4b59d3dcbdb452fc4d8c493f765f49140f7d",
-            ["0x3Ff8593329364dCDC7272fAcb853c8FeC2929B03"]
-          ],
-          [
-            "2024-06-01T17:37:58.000Z",
-            "0xe143dd88482e3585729987aaa636c47880876963681707c71a7279a294331419",
-            ["0xa158e30099C6F7D9546eF2a519F2118E46039307"]
-          ],
-          [
-            "2024-06-10T19:54:37.000Z",
-            "0xee90db98384f3683ab110b036f4b900b149d7b6c2d8822da09072200d66f5183",
-            ["0x2D669eB24988863aA0efA2D593DD40f174D8977B"]
-          ],
-          [
-            "2024-06-12T16:20:50.000Z",
-            "0xed69774070322c707f1325542e505809f267ff84c27bf1f2b94acd6ef071a9d1",
-            ["0x5844A1629fC51439187093eDFd8bBD57109D858D"]
-          ],
-          [
-            "2024-06-15T22:07:48.000Z",
-            "0x6307556dd70bee894ea0145fdc1e4f0044d7bedbd7ac3b25ae4b3b2d2a912ac5",
-            ["0xa54Fe8f99dBB9EB64d7c4E243F3c6aa5De0483Df"]
-          ],
-          [
-            "2024-06-29T15:27:31.000Z",
-            "0x4b63dc55ffb56340d415484cb5215c8f35d05db8cab764b350872172ae75500d",
-            ["0xaF80B25F650A66F5F8e8bc67697C2160024b6Dcf"]
-          ],
-          [
-            "2024-07-04T20:28:23.000Z",
-            "0x2fac94819bd2af509b2ee22403fa3dbf56e5e46a95582af8174977988cebf294",
-            ["0xB6026A3eB7ABee0fee3cAAb7BcfcBd6aDE5f0234"]
-          ],
-          [
-            "2024-07-04T21:04:24.000Z",
-            "0x8025e20e6463f4b3ab05f653ce8d97db63d25ecce25caeee854f568b124e67ea",
-            ["0x39aB919098fE67f305d097d76Df0Ae04af5e640b"]
-          ],
-          [
-            "2024-07-04T21:11:59.000Z",
-            "0x033e14c988ea46e1f6aa56bc4ce6e85c124cedeec4e1260f69add97f97a66286",
-            ["0xdDB14fAD9060afCA4FC5E1Ec108261B465Df285F"]
-          ],
-          [
-            "2024-07-09T03:19:37.000Z",
-            "0xfa102b81f35df0137f5117f79fd9e2434e9b2479082542cfad69b888bf3924b4",
-            ["0x867969538512518e358b7b0296c4383f5bae4992"]
-          ],
-          [
-            "2024-07-10T01:32:19.000Z",
-            "0xf7e3d8d5ddb65c6f03205fdf31223dcf00a488e884edd3f962478b3c56d230bb",
-            ["0xFF41064cC2cF1A76F4FD4f2235c766FDDFb7DCE1"]
-          ],
-          [
-            "2024-07-10T22:25:46.000Z",
-            "0xad3511f1cc75cfff66e27ee41753037a9860686487b8226a16378e4cf599bb34",
-            ["0xC99D77eF43FCA9D491c1f5B900F74649236055C3"]
-          ],
-          [
-            "2024-07-26T01:51:29.000Z",
-            "0xe8831f04c64c5900e29075426b477e5d859b6fc0df247e160200c941f8b2d265",
-            ["0xB15Fc6227FD696C7AD53d25a9fEE6c4831c27b16"]
-          ],
-          [
-            "2024-08-27T16:05:25.000Z",
-            "0x2b935bf76847687fcd243758c04b4ab09489114b398400062a2f45a57ae64037",
-            ["0x667a0A293B6a95841dB5f0Bbf0F02e8e5F71C8e5"]
-          ],
-          [
-            "2024-09-18T21:46:04.000Z",
-            "0x608c39049f980bfbbf9c7b906fe169958b276237fb9dad8ed8dedc600a168415",
-            ["0x1161a537aF45f4ca4AD984ECcf4a8E9692Bf2518"]
-          ],
-          [
-            "2024-09-20T16:00:22.000Z",
-            "0xcebb2902d18cd8a441747fb71e60ffd3d7bee0a66e8f763901cda3f81ab06a4d",
-            ["0xE90C1e020D9d2A74045A1365bd5abEe87Aee8D7C"]
-          ]
-        ],
-        "$upgradeCount": 33,
-        "ALL_SIGNERS": 3,
-        "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
-        "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
-        "getAccessPoint": "0xbd103754B3B4eD40BE01415c3c8F7f6A934Fe16a",
-        "getNonce": 220,
-        "getOwners": [
-          "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4",
-          "0x4181803232280371E02a875F51515BE57B215231"
-        ],
-        "getOwnersCount": 2,
-        "inRecovery": 0,
-        "insurancePolicy": 0,
-        "insuranceTimestamp": 0,
-        "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
-        "MAX_SIGNERS": 4,
-        "MINUS_ONE_SIGNER": 2,
-        "owners": [
-          "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4",
-          "0x4181803232280371E02a875F51515BE57B215231"
-        ],
-        "recoverer": "0xC8B7292CF52B8557d783561823EEE7BbdF55ef1C",
-        "RECOVERY_PRICE": "5000000000000000000",
-        "RECOVERY_TIME": 604800,
-        "signerPolicy": 2,
-        "SINGLE_SIGNER": 1,
-        "TWO_SIGNERS": 4,
-        "WALLET_TARGET_LIMIT": 5
-      }
     },
     {
       "name": "EntryPoint",
@@ -808,7 +590,7 @@
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
         "factory": "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
         "getAccessPoint": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7",
-        "getNonce": 4473,
+        "getNonce": 4477,
         "getOwners": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
@@ -889,7 +671,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 15441,
+        "globalMessageCount": 15789,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1110,12 +892,6 @@
         ],
         "name": "Kinto APP",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
-        "ownerOf": [
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
-          "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
-        ],
         "symbol": "KINTOAPP",
         "systemApps": [
           "0x3e9727470C66B1e77034590926CDe0242B5A3dCc",
@@ -1322,10 +1098,6 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
-        },
-        {
-          "permission": "upgrade",
           "from": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
         }
       ],
@@ -1463,7 +1235,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 72128
+        "totalWallets": 72385
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1859,16 +1631,16 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "499216924995878561675270",
-        "getUnclaimedLimit": "197453613928107533563686",
+        "getTotalLimit": "502872437759479004866033",
+        "getUnclaimedLimit": "198313154830109358033622",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
         "NEW_USER_REWARD_TIMESTAMP": 1729785402,
         "quarters": 40,
-        "root": "0xc56fcedee99305748eb8b2e37a80ec750fca2efb6fcff1fff162c251d34e5f80",
+        "root": "0x8b8ab99570df61d46321c60a07bf22b84a6cc9619706f6b22efbc584c4a89d99",
         "startTime": 1718690400,
-        "totalClaimed": "301763311067771028111584",
+        "totalClaimed": "304559282929369646832411",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -2096,7 +1868,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1739972113,
+        "lastMonitoredAt": 1740136813,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -2110,7 +1882,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 72463,
+        "totalSupply": 72721,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -2151,8 +1923,6 @@
     },
     { "address": "0x0C1df30B4576A1A94D9528854516D4d425Cf9323" },
     { "address": "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e" },
-    { "address": "0x2B409E1Bb2164D6993d0189720a5A3cE8980B5c4" },
-    { "address": "0x4181803232280371E02a875F51515BE57B215231" },
     { "address": "0x474ec69B0fD5Ebc1EfcFe18B2E8Eb510D755b8C7" },
     {
       "address": "0x52F09693c9eEaA93A64BA697e3d3e43a1eB65477",
@@ -2216,12 +1986,10 @@
         }
       ]
     },
-    { "address": "0xbd103754B3B4eD40BE01415c3c8F7f6A934Fe16a" },
     {
       "name": "MamoriLabs",
       "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
     },
-    { "address": "0xC8B7292CF52B8557d783561823EEE7BbdF55ef1C" },
     { "address": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60" }
   ],
   "abis": {
@@ -2449,12 +2217,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletTs(address) view returns (uint256)"
-    ],
-    "0x25EA8c663BA8cCd79284B8c4001e7A245071885c": [
-      "constructor(address beacon, bytes data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
     ],
     "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
       "error DelegateAndRevert(bool success, bytes ret)",
