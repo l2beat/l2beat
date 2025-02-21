@@ -97,7 +97,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           reason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
         )
       }
     }
