@@ -3,8 +3,8 @@ import type {
   TrackedTxLivenessConfig,
 } from '@l2beat/shared'
 import type { SavedConfiguration } from '@l2beat/shared-pure'
-import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 import type { TrackedTxProject } from '../../../../../config/Config'
+import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 
 export function getActiveConfigurations(
   project: TrackedTxProject,

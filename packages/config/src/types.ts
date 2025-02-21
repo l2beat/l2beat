@@ -1,3 +1,4 @@
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   ChainId,
   EthereumAddress,
@@ -818,7 +819,7 @@ export interface BaseProject {
   livenessInfo?: ProjectLivenessInfo
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
-  // trackedTxsConfig
+  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */

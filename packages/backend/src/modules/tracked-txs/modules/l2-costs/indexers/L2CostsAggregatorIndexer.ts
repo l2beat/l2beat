@@ -12,11 +12,11 @@ import {
   clampRangeToDay,
 } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000

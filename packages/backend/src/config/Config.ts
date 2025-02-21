@@ -5,6 +5,7 @@ import type {
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
   ChainId,
@@ -18,7 +19,6 @@ import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
 import type { FinalityProjectConfig } from './features/finality'
-import type { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export interface Config {
   readonly name: string

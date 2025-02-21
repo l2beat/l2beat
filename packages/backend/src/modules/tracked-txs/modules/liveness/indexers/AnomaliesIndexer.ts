@@ -7,6 +7,7 @@ import {
   clampRangeToDay,
   notUndefined,
 } from '@l2beat/shared-pure'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -19,7 +20,6 @@ import { RunningStatistics } from '../utils/RollingVariance'
 import { type Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

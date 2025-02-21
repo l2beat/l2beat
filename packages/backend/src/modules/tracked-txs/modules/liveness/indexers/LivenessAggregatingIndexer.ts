@@ -8,6 +8,7 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -21,7 +22,6 @@ import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

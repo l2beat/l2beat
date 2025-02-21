@@ -4,19 +4,12 @@ import {
   type Layer2,
   type Layer2FinalityConfig,
   type Layer2LivenessConfig,
-  type Layer2TxConfig,
   type Layer3,
   type ProjectEscrow,
   type SharedEscrow,
   type TransactionApiConfig,
   tokenList,
 } from '@l2beat/config'
-import {
-  SHARP_SUBMISSION_ADDRESS,
-  SHARP_SUBMISSION_SELECTOR,
-  type TrackedTxConfigEntry,
-  createTrackedTxId,
-} from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -35,7 +28,6 @@ export interface BackendProject {
   isUpcoming?: boolean
   escrows: BackendProjectEscrow[]
   transactionApi?: TransactionApiConfig
-  trackedTxsConfig?: TrackedTxConfigEntry[] | undefined
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
   associatedTokens?: string[]
@@ -81,10 +73,6 @@ function layer2ToBackendProject(layer2: Layer2): BackendProject {
     isArchived: layer2.isArchived,
     escrows: layer2.config.escrows.map(toProjectEscrow),
     transactionApi: layer2.config.transactionApi,
-    trackedTxsConfig: toBackendTrackedTxsConfig(
-      layer2.id,
-      layer2.config.trackedTxs,
-    ),
     livenessConfig: layer2.config.liveness,
     finalityConfig: layer2.config.finality,
     associatedTokens: layer2.config.associatedTokens,
@@ -100,89 +88,6 @@ function bridgeToBackendProject(bridge: Bridge): BackendProject {
     escrows: bridge.config.escrows.map(toProjectEscrow),
     associatedTokens: bridge.config.associatedTokens,
   }
-}
-
-function toBackendTrackedTxsConfig(
-  projectId: ProjectId,
-  configs: Layer2TxConfig[] | undefined,
-): TrackedTxConfigEntry[] | undefined {
-  if (configs === undefined) return
-
-  return configs.flatMap((config) =>
-    config.uses.map((use) => {
-      const base = {
-        projectId,
-        sinceTimestamp: config.query.sinceTimestamp,
-        untilTimestamp: config.query.untilTimestamp,
-        type: use.type,
-        subtype: use.subtype,
-        costMultiplier:
-          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
-      }
-
-      switch (config.query.formula) {
-        case 'functionCall': {
-          const withParams = {
-            ...base,
-            params: {
-              formula: 'functionCall',
-              address: config.query.address,
-              selector: config.query.selector,
-            },
-          } as const
-          return {
-            ...withParams,
-            id: createTrackedTxId(withParams),
-          }
-        }
-        case 'transfer': {
-          const withParams = {
-            ...base,
-            params: {
-              formula: 'transfer',
-              from: config.query.from,
-              to: config.query.to,
-            },
-          } as const
-          return {
-            ...withParams,
-            id: createTrackedTxId(withParams),
-          }
-        }
-        case 'sharpSubmission': {
-          const withParams = {
-            ...base,
-            params: {
-              formula: 'sharpSubmission',
-              address: SHARP_SUBMISSION_ADDRESS,
-              selector: SHARP_SUBMISSION_SELECTOR,
-              programHashes: config.query.programHashes,
-            },
-          } as const
-          return {
-            ...withParams,
-            id: createTrackedTxId(withParams),
-          }
-        }
-        case 'sharedBridge': {
-          const withParams = {
-            ...base,
-            params: {
-              formula: 'sharedBridge',
-              address: config.query.address,
-              signature: config.query.functionSignature,
-              selector: config.query.selector,
-              chainId: config.query.chainId,
-            },
-          } as const
-          return {
-            ...withParams,
-            id: createTrackedTxId(withParams),
-          }
-        }
-      }
-    }),
-  )
 }
 
 function layer3ToBackendProject(layer3: Layer3): BackendProject {

@@ -3,11 +3,11 @@ import type { AnomalyRecord, Database, LivenessRecord } from '@l2beat/database'
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import { AnomaliesIndexer } from './AnomaliesIndexer'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')

@@ -9,8 +9,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { getActiveConfigurations } from './getActiveConfigurations'
 import type { TrackedTxProject } from '../../../../../config/Config'
+import { getActiveConfigurations } from './getActiveConfigurations'
 
 describe(getActiveConfigurations.name, () => {
   it('should get active configurations', () => {

@@ -14,6 +14,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
@@ -22,7 +23,6 @@ import {
   type ProjectL2Cost,
   type TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)

@@ -7,10 +7,10 @@ import type {
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
-import type { TrackedTxProject } from '../../../../../config/Config'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
