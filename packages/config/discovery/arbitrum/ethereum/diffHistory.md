@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7f17b03b3f1d52f4666d622067ebcde911ffa9f0
+Generated with discovered.json: 0x3d34df03d24482174ebc6c5706fa010c88a4ce74
 
-# Diff at Fri, 21 Feb 2025 05:35:05 GMT:
+# Diff at Fri, 21 Feb 2025 05:52:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@72fe705e53307d22cfc60842c4313d545aee913e block: 21887731
@@ -69,6 +69,12 @@ discovery. Values are for block 21887731 (main branch discovery), not current.
       issuedPermissions.3.via.0.delay:
 -        259200
     }
+```
+
+```diff
+-   Status: DELETED
+    contract FundRetriever (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0)
+    +++ description: None
 ```
 
 ```diff
@@ -282,6 +288,12 @@ discovery. Values are for block 21887731 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9F43ab02cACc8e709b05936a92dC85b76D1523c4)
+    +++ description: None
+```
+
+```diff
     contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
     +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
       issuedPermissions.0.to:
@@ -410,6 +422,12 @@ discovery. Values are for block 21887731 (main branch discovery), not current.
       issuedPermissions.0.via.0.delay:
 -        259200
     }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xf716C9Ee355d7684Ef41d61388ed9C7B3673Bd9C)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x0599209835b4077475f0422fe398ff56ac0b4079
