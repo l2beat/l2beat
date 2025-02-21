@@ -18,10 +18,10 @@ export const teva: Layer3 = underReviewL3({
     stack: 'ZK Stack',
     links: {
       websites: ['https://tevaera.com/tevachain'],
-      apps: [''],
-      documentation: [''],
-      explorers: [''],
-      repositories: [''],
+      apps: [],
+      documentation: [],
+      explorers: [],
+      repositories: [],
       socialMedia: [
         'https://twitter.com/tevaera',
         'https://discord.com/invite/tevaera',
