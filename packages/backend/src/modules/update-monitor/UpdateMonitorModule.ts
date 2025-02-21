@@ -79,7 +79,6 @@ export function createUpdateMonitorModule(
 
   const updateMonitorController = new UpdateMonitorController(
     peripherals.database,
-    config.projects,
     chains,
     configReader,
     chainConverter,

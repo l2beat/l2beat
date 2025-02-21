@@ -1,9 +1,15 @@
+import {
+  SHARP_SUBMISSION_ADDRESS,
+  SHARP_SUBMISSION_SELECTOR,
+  type TrackedTxConfigEntry,
+} from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../common'
 import type {
   BaseProject,
   Bridge,
   Layer2,
+  Layer2TxConfig,
   Layer3,
   ProjectCostsInfo,
   ProjectLivenessInfo,
@@ -86,8 +92,13 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     livenessInfo: getLivenessInfo(p),
+    livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
+    trackedTxsConfig: toBackendTrackedTxsConfig(
+      p.id,
+      p.type === 'layer2' ? p.config.trackedTxs : undefined,
+    ),
     proofVerification: p.stateValidation?.proofVerification,
     chainConfig: p.chainConfig,
     milestones: p.milestones,
@@ -175,4 +186,71 @@ function bridgeToProject(p: Bridge): BaseProject {
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
   }
+}
+
+function toBackendTrackedTxsConfig(
+  projectId: ProjectId,
+  configs: Layer2TxConfig[] | undefined,
+): Omit<TrackedTxConfigEntry, 'id'>[] | undefined {
+  if (configs === undefined) return
+
+  return configs.flatMap((config) =>
+    config.uses.map((use) => {
+      const base = {
+        projectId,
+        sinceTimestamp: config.query.sinceTimestamp,
+        untilTimestamp: config.query.untilTimestamp,
+        type: use.type,
+        subtype: use.subtype,
+        costMultiplier:
+          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
+      }
+
+      switch (config.query.formula) {
+        case 'functionCall': {
+          return {
+            ...base,
+            params: {
+              formula: 'functionCall',
+              address: config.query.address,
+              selector: config.query.selector,
+            },
+          }
+        }
+        case 'transfer': {
+          return {
+            ...base,
+            params: {
+              formula: 'transfer',
+              from: config.query.from,
+              to: config.query.to,
+            },
+          }
+        }
+        case 'sharpSubmission': {
+          return {
+            ...base,
+            params: {
+              formula: 'sharpSubmission',
+              address: SHARP_SUBMISSION_ADDRESS,
+              selector: SHARP_SUBMISSION_SELECTOR,
+              programHashes: config.query.programHashes,
+            },
+          }
+        }
+        case 'sharedBridge': {
+          return {
+            ...base,
+            params: {
+              formula: 'sharedBridge',
+              address: config.query.address,
+              signature: config.query.functionSignature,
+              selector: config.query.selector,
+              chainId: config.query.chainId,
+            },
+          }
+        }
+      }
+    }),
+  )
 }
