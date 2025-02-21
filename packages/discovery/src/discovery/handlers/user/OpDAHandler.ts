@@ -170,7 +170,14 @@ export class OpStackDAHandler implements Handler {
 async function getConfirmedBatchHeaderHashes(
   provider: IProvider,
 ): Promise<string[]> {
-  const logs = await provider.getEvents(
+  const ethereumProvider = provider.switchChain(
+    'ethereum',
+    // no clue why block number is needed here
+    // but it spares us translation between the chains
+    21895408, // latest block at the time of coding
+  )
+
+  const logs = await ethereumProvider.getEvents(
     EIGEN_DA_CONSTANTS.EIGEN_AVS,
     'event BatchConfirmed(bytes32 indexed batchHeaderHash, uint32 batchId)',
     [],
