@@ -7,13 +7,13 @@ export function isThroughputSynced(syncedUntil: UnixTime): boolean {
 
 export function getThroughputSyncWarning(
   syncedUntil: UnixTime,
-  shorter?: boolean,
+  opts?: { shorter?: boolean },
 ): string | undefined {
   if (isThroughputSynced(syncedUntil)) {
     return undefined
   }
 
-  if (shorter) {
+  if (opts?.shorter) {
     return `Throughput data is not synced since ${formatTimestamp(
       syncedUntil.toNumber(),
       {
