@@ -12,8 +12,7 @@ import {
 } from './interpolate'
 
 const RELATIONS_FILENAME = 'relations.lp'
-
-type InlineTemplate = {
+interface InlineTemplate {
   content: string
   when: (
     c: ContractParameters | EoaParameters,
@@ -24,49 +23,49 @@ type InlineTemplate = {
 const contractTemplate: InlineTemplate = {
   content: `
 contract(
-  @self, 
-  "#$.address:raw", 
+  @self,
+  "#$.address:raw",
   "#$.name").`,
   when: (c) => isContract(c),
 }
 const contractDescriptionTemplate: InlineTemplate = {
   content: `
 contractDescription(
-  @self, 
+  @self,
   "#$.description").`,
   when: (c) => isContract(c) && c.description !== undefined,
 }
 const eoaTemplate: InlineTemplate = {
   content: `
 eoa(
-  @self, 
-  "#$.address:raw", 
+  @self,
+  "#$.address:raw",
   "#$.name").`,
   when: (c) => !isContract(c),
 }
 const permissionTemplate: InlineTemplate = {
   content: `
 permission(
-  @self, 
-  "#permission.type", 
+  @self,
+  "#permission.type",
   #permission.giver).`,
   when: () => true,
 }
 const permissionDescriptionTemplate: InlineTemplate = {
   content: `
 permissionDescription(
-  @self, 
-  "#permission.type", 
-  #permission.giver, 
+  @self,
+  "#permission.type",
+  #permission.giver,
   "#permission.description").`,
   when: (_, p) => p?.description !== undefined,
 }
 const permissionDelayTemplate: InlineTemplate = {
   content: `
 permissionDelay(
-  @self, 
-  "#permission.type", 
-  #permission.giver, 
+  @self,
+  "#permission.type",
+  #permission.giver,
   #permission.delay).`,
   when: (_, p) => p?.delay !== undefined && p.delay !== 0,
 }
@@ -81,7 +80,7 @@ export function buildRelationsModels(
     ...discoveryOutput.eoas,
   ]) {
     const contractValues = contractValuesForInterpolation(contractOrEoa)
-
+    
     for (const template of [
       contractTemplate,
       contractDescriptionTemplate,
@@ -108,7 +107,7 @@ export function buildRelationsModels(
         'permission.description': permission.description,
         'permission.delay': permission.delay,
       }
-
+      
       for (const template of [
         permissionTemplate,
         permissionDescriptionTemplate,
