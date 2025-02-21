@@ -2,7 +2,12 @@ import { createHash } from 'crypto'
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type Configuration,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
   DaTrackingConfig,
@@ -137,7 +142,7 @@ describe(DaIndexer.name, () => {
 
 function toIndexerConfigurations(
   configurations: { configurationId: string; config: DaTrackingConfig }[],
-): import('/Users/antooni/repos/l2beat/packages/backend/src/tools/uif/multi/types').Configuration<DaTrackingConfig>[] {
+): Configuration<DaTrackingConfig>[] {
   return configurations.map((c) => ({
     id: c.configurationId,
     minHeight: c.config.sinceBlock,
