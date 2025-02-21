@@ -147,7 +147,7 @@ interface OrbitStackConfigCommon {
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
   gasTokens?: {
-    /** Gas tokens that have been added to tokens.jsonc */
+    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
     tracked?: string[]
     /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
     untracked?: string[]
