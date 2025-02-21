@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ink",
-  "blockNumber": 6479985,
+  "blockNumber": 6621220,
   "configHash": "0xf5735864583a9a1c17898e13c152536fb97ae341f972b04b79dc9bc115e1a4f8",
   "contracts": [
     {
@@ -29,7 +29,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620808",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620809",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -69,14 +69,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 30571726,
+        "blobBaseFee": 9051985,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 1247778664,
+        "l1BaseFee": 668218774,
         "version": "1.3.1-beta.1"
       },
       "derivedName": "GasPriceOracle"
@@ -177,7 +177,10 @@
     {
       "name": "L1BlockNumber",
       "address": "0x4200000000000000000000000000000000000013",
-      "unverified": true,
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x56c885b4644f191a780cd112098dd6bff77fae09fd61699d3d34a1fee191e919"
+      ],
       "proxyType": "EIP1967 proxy",
       "description": "Simple contract that returns the latest L1 block number.",
       "issuedPermissions": [
@@ -192,9 +195,10 @@
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013",
         "$pastUpgrades": [],
-        "$upgradeCount": 0
+        "$upgradeCount": 0,
+        "version": "1.1.1-beta.1"
       },
-      "derivedName": ""
+      "derivedName": "L1BlockNumber"
     },
     {
       "name": "L2ERC721Bridge",
@@ -248,10 +252,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 1247778664,
+        "basefee": 668218774,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
-        "blobBaseFee": 30571726,
+        "blobBaseFee": 9051985,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -260,13 +264,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x98574f75c133bde4e8937eefe06a76632b6e82c6b20397fd76101e777e5e76a7",
+        "hash": "0x5d855eb0b2487a4306655936b1282ad6a305492046bb0b8d95355ab6eef3dc1f",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21881261,
-        "sequenceNumber": 4,
-        "timestamp": 1739978327,
+        "number": 21892946,
+        "sequenceNumber": 12,
+        "timestamp": 1740119555,
         "version": "1.5.1-beta.1"
       },
       "derivedName": "L1Block"
@@ -536,7 +540,6 @@
   "eoas": [
     { "address": "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f" },
     {
-      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {
@@ -678,6 +681,16 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x4200000000000000000000000000000000000013": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x4200000000000000000000000000000000000015": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -689,6 +702,16 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000017": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -851,6 +874,10 @@
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
       "function deployments(address) view returns (address)",
       "function initialize(address _bridge)",
+      "function version() view returns (string)"
+    ],
+    "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013": [
+      "function getL1BlockNumber() view returns (uint256)",
       "function version() view returns (string)"
     ],
     "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015": [
