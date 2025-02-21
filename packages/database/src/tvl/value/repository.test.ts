@@ -12,6 +12,58 @@ describeDatabase(ValueRepository.name, (database) => {
     await repository.deleteAll()
   })
 
+  describe(ValueRepository.prototype.getLatestValues.name, async () => {
+    it('returns latest value for projectId x data source combination for given projects', async () => {
+      await repository.upsertMany([
+        saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceC', 1, 2, 3), // Should be discarded
+
+        saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-B', UnixTime.ZERO, 'sourceA', 1, 2, 3), // Should be discarded
+        saved('Project-C', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3), // Should be discarded,
+      ])
+
+      const latestForProjects = await repository.getLatestValues([
+        ProjectId('Project-A'),
+        ProjectId('Project-B'),
+      ])
+
+      expect(latestForProjects.length).toEqual(4)
+      expect(latestForProjects).toEqualUnsorted([
+        saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+      ])
+    })
+
+    it('returns latest value for projectId x data source combination for all projects', async () => {
+      await repository.upsertMany([
+        saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceC', 1, 2, 3), // Should be discarded
+
+        saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-B', UnixTime.ZERO, 'sourceA', 1, 2, 3), // Should be discarded
+        saved('Project-C', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+      ])
+
+      const latestForProjects = await repository.getLatestValues()
+
+      expect(latestForProjects.length).toEqual(5)
+      expect(latestForProjects).toEqualUnsorted([
+        saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+        saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+        saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+        saved('Project-C', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+      ])
+    })
+  })
+
   describe(ValueRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
