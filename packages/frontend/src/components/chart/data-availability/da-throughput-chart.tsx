@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { useIncludeOnlyL2s } from '~/app/(side-nav)/data-availability/throughput/_context/da-throughput-context'
+import { useIncludeScalingOnly } from '~/app/(side-nav)/data-availability/throughput/_context/da-throughput-context'
 import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
@@ -15,11 +15,11 @@ import { DaPercentageThroughputChart } from './da-percentage-throughput-chart'
 export function DaThroughputChart() {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
-  const { includeL2sOnly, setIncludeL2sOnly } = useIncludeOnlyL2s()
+  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
   const { data, isLoading } = api.da.chart.useQuery({
     range,
-    includeL2sOnly,
+    includeScalingOnly,
   })
 
   const chartRange = useMemo(
@@ -53,13 +53,15 @@ export function DaThroughputChart() {
             <RadioGroupItem value="absolute">Absolute</RadioGroupItem>
           </RadioGroup>
           <Checkbox
-            name="include-l2s-only"
-            checked={includeL2sOnly}
+            name="include-scaling-only"
+            checked={includeScalingOnly}
             onCheckedChange={(checked) =>
-              setIncludeL2sOnly(checked === 'indeterminate' ? false : checked)
+              setIncludeScalingOnly(
+                checked === 'indeterminate' ? false : checked,
+              )
             }
           >
-            Include L2s only
+            Include scaling projects only
           </Checkbox>
         </div>
         <ChartTimeRangeControls

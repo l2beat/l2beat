@@ -13,12 +13,12 @@ import { HydrateClient, api } from '~/trpc/server'
 import { PublicSystemInfo } from '../_components/da-category-info'
 import { groupBySystem } from '../_utils/group-by-system'
 import { DaThroughputPublicTable } from './_components/table/da-throughput-public-table'
-import { IncludeOnlyL2sProvider } from './_context/da-throughput-context'
+import { IncludeScalingOnlyProvider } from './_context/da-throughput-context'
 
 export default async function Page() {
   const [entries] = await Promise.all([
     getDaThroughputEntries(),
-    api.da.chart.prefetch({ range: '30d', includeL2sOnly: false }),
+    api.da.chart.prefetch({ range: '30d', includeScalingOnly: false }),
   ])
   const { publicSystems } = groupBySystem(entries)
 
@@ -31,7 +31,7 @@ export default async function Page() {
         for the tabs to be sticky
       */}
       <div className="flex flex-col gap-6 lg:-mt-4">
-        <IncludeOnlyL2sProvider>
+        <IncludeScalingOnlyProvider>
           <DirectoryTabs defaultValue="public">
             <DirectoryTabsList>
               <DirectoryTabsTrigger value="public">
@@ -45,7 +45,7 @@ export default async function Page() {
               <DaThroughputPublicTable items={publicSystems} />
             </DirectoryTabsContent>
           </DirectoryTabs>
-        </IncludeOnlyL2sProvider>
+        </IncludeScalingOnlyProvider>
       </div>
     </HydrateClient>
   )

@@ -2,38 +2,38 @@
 
 import { type ReactNode, createContext, useContext, useState } from 'react'
 
-interface IncludeOnlyL2sContextType {
-  includeL2sOnly: boolean
-  setIncludeL2sOnly: (value: boolean) => void
+interface IncludeScalingOnlyContextType {
+  includeScalingOnly: boolean
+  setIncludeScalingOnly: (value: boolean) => void
 }
 
-const IncludeOnlyL2sContext = createContext<
-  IncludeOnlyL2sContextType | undefined
+const IncludeScalingOnlyContext = createContext<
+  IncludeScalingOnlyContextType | undefined
 >(undefined)
 
-interface IncludeOnlyL2sProviderProps {
+interface IncludeScalingOnlyProviderProps {
   children: ReactNode
 }
 
-export function IncludeOnlyL2sProvider({
+export function IncludeScalingOnlyProvider({
   children,
-}: IncludeOnlyL2sProviderProps) {
-  const [includeL2sOnly, setIncludeL2sOnly] = useState(false)
+}: IncludeScalingOnlyProviderProps) {
+  const [includeScalingOnly, setIncludeScalingOnly] = useState(false)
 
   return (
-    <IncludeOnlyL2sContext.Provider
-      value={{ includeL2sOnly, setIncludeL2sOnly }}
+    <IncludeScalingOnlyContext.Provider
+      value={{ includeScalingOnly, setIncludeScalingOnly }}
     >
       {children}
-    </IncludeOnlyL2sContext.Provider>
+    </IncludeScalingOnlyContext.Provider>
   )
 }
 
-export function useIncludeOnlyL2s() {
-  const context = useContext(IncludeOnlyL2sContext)
+export function useIncludeScalingOnly() {
+  const context = useContext(IncludeScalingOnlyContext)
   if (!context) {
     throw new Error(
-      'useIncludeOnlyL2s must be used within IncludeOnlyL2sProvider',
+      'useIncludeScalingOnly must be used within IncludeScalingOnlyProvider',
     )
   }
   return context

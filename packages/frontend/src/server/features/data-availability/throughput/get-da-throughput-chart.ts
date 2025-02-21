@@ -18,7 +18,7 @@ export type DaThroughputDataPoint = [
 
 export const DaThroughputChartParams = z.object({
   range: DaThroughputTimeRange,
-  includeL2sOnly: z.boolean(),
+  includeScalingOnly: z.boolean(),
 })
 export type DaThroughputChartParams = z.infer<typeof DaThroughputChartParams>
 
@@ -33,14 +33,14 @@ export function getDaThroughputChart(params: DaThroughputChartParams) {
 const getCachedDaThroughputChartData = cache(
   async ({
     range,
-    includeL2sOnly,
+    includeScalingOnly,
   }: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> => {
     const db = getDb()
     const days = rangeToDays(range)
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = days ? to.add(-days, 'days') : null
     const daLayerIds = ['ethereum', 'celestia', 'avail']
-    const throughput = includeL2sOnly
+    const throughput = includeScalingOnly
       ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
           daLayerIds,
           [from, to],

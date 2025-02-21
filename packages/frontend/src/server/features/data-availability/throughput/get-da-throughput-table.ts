@@ -20,7 +20,7 @@ export type ThroughputTableData = Awaited<
   ReturnType<typeof getCachedDaThroughputTableData>
 >
 const getCachedDaThroughputTableData = cache(
-  async (daLayerIds: string[], opts?: { includeL2sOnly?: boolean }) => {
+  async (daLayerIds: string[], opts?: { scalingProjectsOnly?: boolean }) => {
     const db = getDb()
     const lastDay = UnixTime.now().toStartOf('day').add(-1, 'days')
     const [values, daLayers] = await Promise.all([
@@ -72,7 +72,7 @@ const getCachedDaThroughputTableData = cache(
 
     const data = daLayers
       .map((daLayer) => {
-        const grDaL = opts?.includeL2sOnly
+        const grDaL = opts?.scalingProjectsOnly
           ? onlyL2sDaLayerValues
           : groupedDaLayerValues
         const lastRecord = grDaL[daLayer.id]?.at(-1)

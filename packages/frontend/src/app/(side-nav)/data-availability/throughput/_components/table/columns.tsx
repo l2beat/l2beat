@@ -9,7 +9,7 @@ import {
   formatBytes,
 } from '~/utils/number-format/format-bytes'
 
-export type DaThroughputTableData = Omit<DaThroughputEntry, 'l2sOnlyData'>
+export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 
 const columnHelper = createColumnHelper<DaThroughputTableData>()
 
