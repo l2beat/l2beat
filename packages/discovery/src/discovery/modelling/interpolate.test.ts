@@ -111,7 +111,6 @@ describe(contractValuesForInterpolation.name, () => {
         two: 2,
       },
     }
-    console.log(contract)
 
     const values = contractValuesForInterpolation(contract)
     expect(values).toEqual({
