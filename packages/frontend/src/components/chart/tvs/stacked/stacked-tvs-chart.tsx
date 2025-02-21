@@ -7,8 +7,6 @@ import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/chart'
@@ -68,7 +66,6 @@ export function StackedTvsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           dataKey="native"
           fill={chartMeta.native.color}
