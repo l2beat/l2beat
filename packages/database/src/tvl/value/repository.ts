@@ -1,14 +1,12 @@
-import type { ProjectId } from '@l2beat/shared-pure'
-import type { QueryCreator } from 'kysely'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import type { DB } from '../../kysely'
 import {
   type CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../../utils/deleteArchivedRecords'
 import { type ValueRecord, toRecord, toRow } from './entity'
-import { selectValue, selectValueWithPrefix } from './select'
+import { selectValue } from './select'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
@@ -27,40 +25,24 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatestValues(projectIds?: ProjectId[]) {
+  async getValuesByProjectIdsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<ValueRecord[]> {
     if (projectIds?.length === 0) return []
-    const maxTimestampsQuery = (cb: QueryCreator<DB>) => {
-      let query = cb
-        .selectFrom('Value')
-        .select(({ fn }) => [
-          'projectId',
-          'dataSource',
-          fn.max('timestamp').as('max_timestamp'),
-        ])
-        .groupBy(['projectId', 'dataSource'])
-      if (projectIds) {
-        query = query.where(
-          'projectId',
-          'in',
-          projectIds.map((id) => id.toString()),
-        )
-      }
-
-      return query
-    }
-
+    const [from, to] = timeRange
     const rows = await this.db
-      .with('max_timestamps', maxTimestampsQuery)
       .selectFrom('Value')
-      .select(selectValueWithPrefix('Value'))
-      .innerJoin('max_timestamps', (join) =>
-        join
-          .onRef('Value.projectId', '=', 'max_timestamps.projectId')
-          .onRef('Value.dataSource', '=', 'max_timestamps.dataSource')
-          .onRef('Value.timestamp', '=', 'max_timestamps.max_timestamp'),
+      .select(selectValue)
+      .where(
+        'projectId',
+        'in',
+        projectIds.map((id) => id.toString()),
       )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 
