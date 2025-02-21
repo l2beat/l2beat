@@ -2,7 +2,8 @@ import type { ContractParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import {
-  interpolateModelFile,
+  contractValuesForInterpolation,
+  interpolateModelTemplate,
   normalizeId,
   tryCastingToName,
 } from './interpolate'
@@ -21,14 +22,20 @@ describe(tryCastingToName.name, () => {
       '0x123': 'ContractA',
       '0x456': 'ContractB',
     }
-    expect(tryCastingToName('0x123', addressToNameMap)).toEqual('contractA')
-    expect(tryCastingToName('0x456', addressToNameMap)).toEqual('contractB')
-    expect(tryCastingToName('0xlalala', addressToNameMap)).toEqual('0xlalala')
-    expect(tryCastingToName('A&B', addressToNameMap)).toEqual('A&B')
+    expect(tryCastingToName('0x123', addressToNameMap, false)).toEqual(
+      'contractA',
+    )
+    expect(tryCastingToName('0x456', addressToNameMap, false)).toEqual(
+      'contractB',
+    )
+    expect(tryCastingToName('0xlalala', addressToNameMap, false)).toEqual(
+      '0xlalala',
+    )
+    expect(tryCastingToName('A&B', addressToNameMap, false)).toEqual('A&B')
   })
 })
 
-describe(interpolateModelFile.name, () => {
+describe(interpolateModelTemplate.name, () => {
   it('properly interpolates the model file', () => {
     const modelFile = `
       msig(@self, #$threshold).
@@ -56,7 +63,8 @@ describe(interpolateModelFile.name, () => {
       [EthereumAddress.from('0x789').toString()]: 'MemberB',
     }
 
-    const result = interpolateModelFile(modelFile, contract, addressToNameMap)
+    const values = contractValuesForInterpolation(contract)
+    const result = interpolateModelTemplate(modelFile, values, addressToNameMap)
     expect(result).toEqual(`
       msig(contactMsigA, 2).
       member(contactMsigA, 
