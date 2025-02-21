@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -36,4 +36,12 @@ export const pepeunchained: Layer2 = opStackL2({
   rpcUrl: 'https://rpc-pepe-unchained-gupg0lo9wf.t.conduit.xyz',
   genesisTimestamp: new UnixTime(1733132700),
   isNodeAvailable: true,
+  nonTemplateEscrows: [
+    {
+      address: EthereumAddress('0x384e3ae4d5efc9471201039b555eae496b2a7240'),
+      sinceTimestamp: new UnixTime(1733132700),
+      tokens: ['PEPU'],
+      chain: 'ethereum',
+    },
+  ],
 })
