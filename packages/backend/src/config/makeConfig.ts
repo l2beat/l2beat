@@ -55,8 +55,6 @@ export async function makeConfig(
   return {
     name,
     isReadonly,
-    // (sz-piotr) why are layer3s omitted here?
-    projects: [...layer2s, ...bridges].map(toBackendProject),
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
@@ -119,6 +117,12 @@ export async function makeConfig(
         },
     tvl: flags.isEnabled('tvl') && tvlConfig,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
+      // (sz-piotr) why are layer3s omitted here?
+      projects: [...layer2s, ...bridges].map(toBackendProject).map((p) => ({
+        id: p.projectId,
+        isArchived: !!p.isArchived,
+        configurations: p.trackedTxsConfig ?? [],
+      })),
       bigQuery: {
         clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
         privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),

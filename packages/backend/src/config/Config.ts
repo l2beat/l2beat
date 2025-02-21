@@ -18,11 +18,11 @@ import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
 import type { FinalityProjectConfig } from './features/finality'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export interface Config {
   readonly name: string
   readonly isReadonly: boolean
-  readonly projects: BackendProject[]
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
@@ -97,7 +97,14 @@ export interface TvlConfig {
   readonly tvlCleanerEnabled: boolean
 }
 
+export interface TrackedTxProject {
+  readonly id: ProjectId
+  readonly isArchived: boolean
+  readonly configurations: TrackedTxConfigEntry[]
+}
+
 export interface TrackedTxsConfig {
+  readonly projects: TrackedTxProject[]
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string

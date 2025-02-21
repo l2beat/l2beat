@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
@@ -22,11 +21,12 @@ import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  projects: BackendProject[]
+  projects: TrackedTxProject[]
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {
@@ -104,13 +104,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
-          projectId: project.projectId,
+          projectId: project.id,
         })
         continue
       }
 
       this.logger.debug('Liveness records loaded', {
-        projectId: project.projectId,
+        projectId: project.id,
         count: livenessRecords.length,
       })
 
@@ -119,7 +119,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'batchSubmissions',
           batchSubmissions,
           syncTo,
@@ -128,7 +128,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       )
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'stateUpdates',
           stateUpdates,
           syncTo,
@@ -137,7 +137,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       )
       aggregatedRecords.push(
         ...this.aggregatedRecords(
-          project.projectId,
+          project.id,
           'proofSubmissions',
           proofSubmissions,
           syncTo,

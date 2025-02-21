@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   AggregatedL2CostRecord,
   Database,
@@ -17,6 +16,7 @@ import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -28,7 +28,7 @@ export interface ProjectL2Cost extends L2CostRecord {
 export interface L2CostsAggregatorIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  projects: BackendProject[]
+  projects: TrackedTxProject[]
 }
 
 export interface TrackedTxMultiplier {
@@ -277,11 +277,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     const multipliers: TrackedTxMultiplier[] = []
 
     for (const project of this.$.projects) {
-      if (!project.trackedTxsConfig) {
-        continue
-      }
-
-      const projectMultipliers = project.trackedTxsConfig
+      const projectMultipliers = project.configurations
         .filter((u): u is TrackedTxCostsConfig => u.type === 'l2costs')
         .map((e) => {
           return {

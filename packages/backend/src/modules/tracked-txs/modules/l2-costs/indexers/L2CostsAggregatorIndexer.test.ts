@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedL2CostRecord,
@@ -23,39 +22,40 @@ import {
   type ProjectL2Cost,
   type TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)
 
-const MOCK_PROJECTS: BackendProject[] = [
-  mockObject<BackendProject>({
-    projectId: ProjectId('project1'),
+const MOCK_PROJECTS: TrackedTxProject[] = [
+  {
+    id: ProjectId('project1'),
     isArchived: false,
-    trackedTxsConfig: undefined,
-  }),
-  mockObject<BackendProject>({
-    projectId: ProjectId('project2'),
+    configurations: [],
+  },
+  {
+    id: ProjectId('project2'),
     isArchived: false,
-    trackedTxsConfig: [
+    configurations: [
       {
+        projectId: ProjectId('project2'),
         params: {
           formula: 'functionCall',
           address: EthereumAddress.random(),
           selector: '0x1234',
         },
-        projectId: ProjectId('project2'),
         sinceTimestamp: new UnixTime(1000),
         id: 'p2-t1',
         type: 'liveness',
         subtype: 'batchSubmissions',
       },
       {
+        projectId: ProjectId('project2'),
         params: {
           address: EthereumAddress.random(),
           formula: 'functionCall',
           selector: '0x1234',
         },
-        projectId: ProjectId('project2'),
         sinceTimestamp: new UnixTime(1000),
         id: 'p2-t2',
         type: 'l2costs',
@@ -63,25 +63,25 @@ const MOCK_PROJECTS: BackendProject[] = [
         costMultiplier: 0.6,
       },
     ],
-  }),
-  mockObject<BackendProject>({
-    projectId: ProjectId('project3'),
+  },
+  {
+    id: ProjectId('project3'),
     isArchived: false,
-    trackedTxsConfig: [
+    configurations: [
       {
+        projectId: ProjectId('project3'),
         params: {
           from: EthereumAddress.random(),
           to: EthereumAddress.random(),
           formula: 'transfer',
         },
-        projectId: ProjectId('project3'),
         sinceTimestamp: new UnixTime(2000),
         id: 'p3-t1',
         type: 'l2costs',
         subtype: 'stateUpdates',
       },
     ],
-  }),
+  },
 ]
 
 describe(L2CostsAggregatorIndexer.name, () => {

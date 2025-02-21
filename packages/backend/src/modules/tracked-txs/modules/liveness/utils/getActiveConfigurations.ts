@@ -1,23 +1,23 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   TrackedTxConfigEntry,
   TrackedTxLivenessConfig,
 } from '@l2beat/shared'
 import type { SavedConfiguration } from '@l2beat/shared-pure'
 import { getSyncedUntil } from '../../../utils/getSyncedUntil'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 export function getActiveConfigurations(
-  project: BackendProject,
+  project: TrackedTxProject,
   configurations: Omit<
     SavedConfiguration<TrackedTxConfigEntry>,
     'properties'
   >[],
 ): TrackedTxLivenessConfig[] | undefined {
-  if (project.isArchived || !project.trackedTxsConfig) {
+  if (project.isArchived) {
     return undefined
   }
 
-  const livenessConfigs = project.trackedTxsConfig.filter(
+  const livenessConfigs = project.configurations.filter(
     (c) => c.type === 'liveness',
   ) as TrackedTxLivenessConfig[]
 

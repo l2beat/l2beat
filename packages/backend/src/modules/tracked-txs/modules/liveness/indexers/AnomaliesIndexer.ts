@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type { AnomalyRecord, Database } from '@l2beat/database'
 import {
   assert,
@@ -20,11 +19,12 @@ import { RunningStatistics } from '../utils/RollingVariance'
 import { type Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   db: Database
-  projects: BackendProject[]
+  projects: TrackedTxProject[]
 }
 
 export class AnomaliesIndexer extends ManagedChildIndexer {
@@ -104,13 +104,13 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
-          projectId: project.projectId,
+          projectId: project.id,
         })
         continue
       }
 
       this.logger.debug('Liveness records loaded', {
-        projectId: project.projectId,
+        projectId: project.id,
         count: livenessRecords.length,
       })
 
@@ -119,7 +119,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
       anomalies.push(
         ...this.detectAnomalies(
-          project.projectId,
+          project.id,
           'batchSubmissions',
           batchSubmissions,
           to,
@@ -127,17 +127,12 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       )
 
       anomalies.push(
-        ...this.detectAnomalies(
-          project.projectId,
-          'stateUpdates',
-          stateUpdates,
-          to,
-        ),
+        ...this.detectAnomalies(project.id, 'stateUpdates', stateUpdates, to),
       )
 
       anomalies.push(
         ...this.detectAnomalies(
-          project.projectId,
+          project.id,
           'proofSubmissions',
           proofSubmissions,
           to,

@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
 import type {
   AggregatedLivenessRecord,
@@ -11,6 +10,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
+import type { TrackedTxProject } from '../../../../../config/Config'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
@@ -18,11 +18,11 @@ const MIN = NOW.add(-100, 'days')
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
-const MOCK_PROJECTS = [
-  mockObject<BackendProject>({
-    projectId: ProjectId('mocked-project'),
+const MOCK_PROJECTS: TrackedTxProject[] = [
+  {
+    id: ProjectId('mocked-project'),
     isArchived: false,
-    trackedTxsConfig: [
+    configurations: [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
@@ -30,7 +30,7 @@ const MOCK_PROJECTS = [
         untilTimestamp: UnixTime.now(),
       }),
     ],
-  }),
+  },
 ]
 
 const MOCK_CONFIGURATIONS = [
@@ -101,7 +101,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       })
       const mockLiveness: AggregatedLivenessRecord[] = [
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           range: '30D',
           min: 10,
@@ -214,7 +214,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       const indexer = createIndexer({ tag: 'aggregatedRecords' })
 
       const result = indexer.aggregatedRecords(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         MOCK_LIVENESS.map((record) => ({
           ...record,
