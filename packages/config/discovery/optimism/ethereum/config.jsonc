@@ -203,8 +203,7 @@
         "opStackDA": {
           "handler": {
             "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}",
-            "inboxAddress": "{{ sequencerInbox }}"
+            "sequencerAddress": "{{ batcherHash }}"
           }
         },
         "sequencerInbox": {

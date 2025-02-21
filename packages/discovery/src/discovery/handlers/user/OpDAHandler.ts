@@ -17,7 +17,6 @@ export type OpStackDAHandlerDefinition = z.infer<
 export const OpStackDAHandlerDefinition = z.strictObject({
   type: z.literal('opStackDA'),
   sequencerAddress: z.string(),
-  inboxAddress: z.string(),
 })
 
 /**
@@ -63,13 +62,10 @@ export class OpStackDAHandler implements Handler {
     readonly field: string,
     readonly definition: OpStackDAHandlerDefinition,
   ) {
-    const dependencies = [
-      getReferencedName(this.definition.sequencerAddress),
-      getReferencedName(this.definition.inboxAddress),
-    ].filter((d) => d !== undefined)
+    const dependency = getReferencedName(this.definition.sequencerAddress)
 
-    if (dependencies.length > 0) {
-      this.dependencies.push(...dependencies)
+    if (dependency) {
+      this.dependencies.push(dependency)
     }
   }
 
