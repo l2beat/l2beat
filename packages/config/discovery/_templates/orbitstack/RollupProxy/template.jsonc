@@ -3,6 +3,7 @@
   "displayName": "RollupProxy",
   "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
   "ignoreMethods": ["proxiableUUID"],
+  "category": "core",
   "ignoreInWatchMode": [
     "firstUnresolvedNode",
     "latestConfirmed",

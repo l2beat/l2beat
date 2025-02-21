@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 20675743,
-  "configHash": "0x0b255c8356d856775ae02161f535e721855c90859876ee710215c8f19a723d43",
+  "configHash": "0xb515be04326b0122498a9cdc835388aa792aa6e5c4b353529db0b0aa3c696475",
   "contracts": [
     {
       "name": "Arbitrator",

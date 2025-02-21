@@ -2,7 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "blockNumber": 21637081,
-  "configHash": "0x6069f146040f4b16f093922a9b0400ff2e2b0cf3d63975550c49095b6d852938",
+  "configHash": "0x018cc0089785804f5074a24abdfb63277c17041b39521811f9240c6439c54035",
   "contracts": [
     {
       "name": "ConduitMultisig",

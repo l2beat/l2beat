@@ -2,7 +2,7 @@
   "name": "syndicateframe",
   "chain": "base",
   "blockNumber": 22580417,
-  "configHash": "0x2d971ab089b5353b4e9d83939853c2b3ce2d8729dbacc81799af4007798e560f",
+  "configHash": "0x0882bed378919dc64a93efef84c71a8d11abaf2fe76a3277c309674f311a4c74",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

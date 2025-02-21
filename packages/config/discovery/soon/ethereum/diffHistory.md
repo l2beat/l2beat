@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6ccb22e9b93ea99a266bc6e5ca50dbbd93b1e245
+Generated with discovered.json: 0x7257bb802913de1840adf29a61dd1728e55fb0c1
 
-# Diff at Fri, 21 Feb 2025 13:11:55 GMT:
+# Diff at Fri, 21 Feb 2025 13:27:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829713
-- current block number: 21894929
+- current block number: 21895006
 
 ## Description
 
@@ -77,7 +77,7 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
       values.getL2OutputIndexAfter:
 +        [0,0,0,0,0]
       fieldMeta:
--        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."}}
+-        {"FINALIZATION_PERIOD_SECONDS":{"description":"Challenge period (Number of seconds until a state root is finalized)."},"proposer":{"severity":"HIGH"},"challenger":{"severity":"HIGH"},"deletedOutputs":{"severity":"HIGH"}}
       errors:
 +        {"computeL2Timestamp":"Processing error occurred.","getL2Output":"Processing error occurred.","getL2OutputAfter":"Processing error occurred.","getL2OutputIndexAfter":"Processing error occurred."}
     }
@@ -112,24 +112,10 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
 
 ```diff
     contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
-    +++ description: None
-      template:
--        "opstack/SuperchainConfigFake"
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
       sourceHashes.1:
 -        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
 +        "0x280407852e66d748a811537f910566851115897f01a3de6b9cc11aebe341b900"
-      description:
--        "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      issuedPermissions.1:
--        {"permission":"upgrade","to":"0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
-      issuedPermissions.0.permission:
--        "guard"
-+        "upgrade"
-      issuedPermissions.0.to:
--        "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593"
-+        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
-      issuedPermissions.0.via.0:
-+        {"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}
       values.$implementation:
 -        "0xB64160864b3b092a5F482e606A17453f90d0c965"
 +        "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be"
@@ -188,6 +174,24 @@ Minor upgrade to allow changing the proposer, challenger and guardian by the res
 .../L2OutputOracle/L2OutputOracle.sol              | 30 ++++++++++++++++++++++
  .../SuperchainConfig/SuperchainConfig.sol          |  5 ++++
  2 files changed, 35 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829713 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
 ```
 
 Generated with discovered.json: 0xa3607f0b7cb7ddd27383a47d9140b246a690633c

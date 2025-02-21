@@ -34,7 +34,11 @@
     "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
     "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
-    "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow"
+    "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow",
+    "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon",
+    "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0": "EdgeChallengeManager",
+    "0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow",
+    "0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
   },
   "overrides": {
     "Outbox": {
@@ -75,7 +79,8 @@
         "l1Router",
         "l2Counterpart",
         "l2Dai"
-      ]
+      ],
+      "category": "bridge-external"
     },
     "ValidatorUtils": {
       "fields": {
@@ -98,6 +103,7 @@
       ]
     },
     "wstETHEscrow": {
+      "category": "bridge-external",
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {
@@ -112,6 +118,15 @@
     },
     "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
-    }
+    },
+
+    "LPTL1Escrow": { "category": "bridge-external" },
+    "L1Escrow": { "category": "bridge-external" },
+
+    "ArbitrumProxyAdmin": { "category": "spam" },
+    "UpgradeExecutorAdmin": { "category": "spam" },
+    "UpgradeableBeacon": { "category": "spam" },
+    "GatewaysAdmin": { "category": "spam" },
+    "OutboxEntry": { "category": "spam" }
   }
 }

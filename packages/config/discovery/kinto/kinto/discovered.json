@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "kinto",
-  "blockNumber": 752704,
-  "configHash": "0xb1f340cc4ffc9e1e056d197d7eda4f9adab1d133e63ecb5659ed5cbb76aab963",
+  "blockNumber": 752779,
+  "configHash": "0x1b9e510a77173d67ddbc00a2ab809c58dc0b2731266ca499c917f10e35713ac8",
   "contracts": [
     {
       "name": "NioGuardians",
@@ -23,7 +23,7 @@
       "sinceTimestamp": 1729791292,
       "values": {
         "$immutable": true,
-        "clock": 1740138074,
+        "clock": 1740144130,
         "CLOCK_MODE": "mode=timestamp",
         "eip712Domain": {
           "fields": "0x0f",
@@ -65,7 +65,7 @@
         "accessManager": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "BALLOT_TYPEHASH": "0xf2aad550cf55f045cb27e9c559f9889fdfb6e6cdaa032301d6ea397784ae51d7",
         "baseDelaySeconds": 259200,
-        "clock": 1740138074,
+        "clock": 1740144130,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -133,7 +133,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "clock": 1740138074,
+        "clock": 1740144130,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -336,7 +336,7 @@
         "appRegistry": "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
         "COST_OF_POST": 200000,
         "entryPoint": "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb",
-        "getDeposit": "30829484426273200475",
+        "getDeposit": "30815552048696320475",
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "MAX_COST_OF_PREVERIFICATION": 4000000,
         "MAX_COST_OF_VERIFICATION": 530000,
@@ -671,7 +671,7 @@
         "capacitorFactory__": "0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c",
         "chainSlug": 7887,
         "executionManager__": "0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead",
-        "globalMessageCount": 15789,
+        "globalMessageCount": 15799,
         "hasher__": "0x9652Dd5e1388CA80712470122F27be0d1c33B48b",
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
@@ -1235,7 +1235,7 @@
         "kintoID": "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
         "owner": "0xacC000818e5Bbd911D5d449aA81CB5cA24024739",
         "rewardsDistributor": "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA",
-        "totalWallets": 72385
+        "totalWallets": 72391
       },
       "fieldMeta": { "owner": { "severity": "HIGH" } },
       "derivedName": "KintoWalletFactory"
@@ -1631,8 +1631,8 @@
         "$upgradeCount": 8,
         "bonusAmount": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getTotalLimit": "502872437759479004866033",
-        "getUnclaimedLimit": "198313154830109358033622",
+        "getTotalLimit": "503006990241390183344984",
+        "getUnclaimedLimit": "198425802471429844008269",
         "KINTO": "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87",
         "NEW_USER_REWARD": "1000000000000000000",
         "NEW_USER_REWARD_END_TIMESTAMP": 1734133547,
@@ -1640,7 +1640,7 @@
         "quarters": 40,
         "root": "0x8b8ab99570df61d46321c60a07bf22b84a6cc9619706f6b22efbc584c4a89d99",
         "startTime": 1718690400,
-        "totalClaimed": "304559282929369646832411",
+        "totalClaimed": "304581187769960339336715",
         "totalTokens": "4000000000000000000000000",
         "UPDATER_ROLE": "0x56730d7d989818781b81ff2da8c4c452dd13af73dfb8c4f4723e21d17335fd24",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -1868,7 +1868,7 @@
           "0x6fe642404B7B23F31251103Ca0efb538Ad4aeC07",
           "0xacC000818e5Bbd911D5d449aA81CB5cA24024739"
         ],
-        "lastMonitoredAt": 1740136813,
+        "lastMonitoredAt": 1740144130,
         "name": "Kinto ID",
         "ownerOf": [
           "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -1882,7 +1882,7 @@
           "https://kinto.xyz/api/v1/nft-kinto-id/3",
           "https://kinto.xyz/api/v1/nft-kinto-id/4"
         ],
-        "totalSupply": 72721,
+        "totalSupply": 72726,
         "UPGRADER_ROLE": "0x189ab7a9244df0848122154315af71fe140f3db0fe014031783b0946b8c9d2e3",
         "UPGRADERs": [
           "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",

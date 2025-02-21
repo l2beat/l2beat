@@ -2,7 +2,7 @@
   "name": "swan",
   "chain": "ethereum",
   "blockNumber": 20413034,
-  "configHash": "0x29a798854b389817cf2c1a5659f876666711172f04667eafac0d72cfff76714d",
+  "configHash": "0x3aba13af1986bbcd5e6d664b290bfddbf3430c10ea30f9014c53c6ba4f4cd0c8",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

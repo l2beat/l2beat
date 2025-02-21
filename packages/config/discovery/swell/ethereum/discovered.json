@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 21829674,
-  "configHash": "0xc661219bc9c466987067614b6037805e472beba6d886d993a72f267c3e6dd00d",
+  "configHash": "0x575eb5b13a9a5297dc4f89fc3d774cbebfc4bcf4dd2a8831f9e816b2256c7297",
   "contracts": [
     {
       "name": "LivenessModule",

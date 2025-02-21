@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x1a18313889b9316af1a1f886876b0c577a453fd2
+
+# Diff at Fri, 21 Feb 2025 12:12:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 81006902
+- current block number: 81006902
+
+## Description
+
+Config related: Set orbit stack contract categories.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81006902 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Outbox (0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Inbox (0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0x9b67dca724ba42ed33b52c118f4320dd48043840
 
 # Diff at Thu, 20 Feb 2025 12:23:05 GMT:

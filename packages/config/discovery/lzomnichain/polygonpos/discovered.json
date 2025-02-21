@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "polygonpos",
   "blockNumber": 67252326,
-  "configHash": "0xeb7469daad2847fe22e11e0d011b02eb388a93b0625904b0b13a1d28876d7f61",
+  "configHash": "0x6398d6a41d9a81e35720b7be72965eafb0e4e82de931fba2efd9e7e1cf8f47ba",
   "contracts": [
     {
       "name": "ProxyAdmin",

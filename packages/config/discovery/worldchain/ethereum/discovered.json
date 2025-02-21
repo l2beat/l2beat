@@ -1,8 +1,8 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 21894286,
-  "configHash": "0x37f6dbb8cf999d9817d94bdd2e8e479577549991d376643549fa8d4b653c5ee2",
+  "blockNumber": 21895014,
+  "configHash": "0xc71449ac6141b0470a7fe4127f6aa50d259d32f3cab794e8a6be3f013fbd2a4e",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -69,7 +69,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1077,
+        "gameCount": 1080,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -79,7 +79,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 1077,
+        "permissionedGamesTotal": 1080,
         "version": "1.0.0"
       }
     },
@@ -1125,7 +1125,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 21894272
+          "prevBlockNum": 21894870
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1261,7 +1261,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631847",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631853",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

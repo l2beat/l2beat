@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "blockNumber": 25121106,
-  "configHash": "0xb66056ab8148df6fc3a18eaa020012dc7b0937b3b6360b52e2a78dfd87f14012",
+  "configHash": "0x078bfcb5f204f7b47d6a371c38737bc49e752dbb82ea4f0daa5a504ebba7f841",
   "contracts": [
     {
       "name": "ProxyAdmin",

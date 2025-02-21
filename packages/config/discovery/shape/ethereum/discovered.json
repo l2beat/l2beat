@@ -1,8 +1,8 @@
 {
   "name": "shape",
   "chain": "ethereum",
-  "blockNumber": 21894136,
-  "configHash": "0xc100eb92daf855735035d7ba7dc2caf91d889d2b99a40a314ad3c5b6070084b1",
+  "blockNumber": 21895001,
+  "configHash": "0x36c597fda7d0ea4e67a213fb03746336a652ffaf6331180a1f95bab5bfc39255",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -228,7 +228,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 262,
+        "gameCount": 263,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
@@ -238,7 +238,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 262,
+        "permissionedGamesTotal": 263,
         "version": "1.0.0"
       }
     },
