@@ -1,8 +1,8 @@
 import { config as dotenv } from 'dotenv'
 
-export function getEnv(): Env {
+export function getEnv(overrides?: Record<string, string | undefined>): Env {
   dotenv()
-  return new Env({ ...process.env })
+  return new Env({ ...process.env, ...overrides })
 }
 
 export class Env {

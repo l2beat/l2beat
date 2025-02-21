@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { createDatabase } from '@l2beat/database'
 import { HttpClient, type TrackedTxCostsConfig } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { command, optional, positional, run, string } from 'cmd-ts'
 import { makeConfig } from '../src/config/makeConfig'
 
@@ -32,7 +32,7 @@ const cmd = command({
   name: 'starkware-multiplier',
   args,
   handler: async (args) => {
-    const env = getEnv()
+    const env = getEnv({ FEATURES: 'tracked-txs' })
     const config = await makeConfig(env, {
       name: 'Script/Local',
       isLocal: true,
@@ -48,10 +48,11 @@ const cmd = command({
       ...config.database.connectionPoolSize,
     })
 
-    const projectConfig = config.projects.find(
-      (p) => p.projectId === args.project,
+    assert(config.trackedTxsConfig !== false)
+    const projectConfig = config.trackedTxsConfig.projects.find(
+      (p) => p.id === args.project,
     )
-    const costsConfigs = projectConfig?.trackedTxsConfig?.filter(
+    const costsConfigs = projectConfig?.configurations.filter(
       (c): c is TrackedTxCostsConfig =>
         c.sinceTimestamp.lte(endDate) &&
         (!c.untilTimestamp || c.untilTimestamp.gte(startDate)) &&

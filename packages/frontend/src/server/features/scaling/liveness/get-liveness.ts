@@ -8,6 +8,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, range } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
 import type { TrackedTxsProject } from '../../utils/get-tracked-txs-projects'
 import { getTrackedTxsProjects } from '../../utils/get-tracked-txs-projects'
@@ -18,7 +19,6 @@ import type {
   LivenessProject,
   LivenessResponse,
 } from './types'
-import { getLivenessProjects } from './utils/get-liveness-projects'
 
 export async function getLiveness() {
   if (env.MOCK) {
@@ -36,8 +36,14 @@ async function getLivenessData() {
     'tracked_txs_indexer',
   )
 
+  const livenessProjects = await ps.getProjects({
+    select: ['trackedTxsConfig'],
+    optional: ['livenessConfig'],
+    whereNot: ['isUpcoming', 'isArchived'],
+  })
+
   const trackedTxsProjects = getTrackedTxsProjects(
-    getLivenessProjects(),
+    livenessProjects,
     configurations,
     'liveness',
   )
@@ -55,6 +61,10 @@ async function getLivenessData() {
   const anomaliesByProjectId = groupBy(anomalyRecords, (r) => r.projectId)
 
   for (const project of trackedTxsProjects) {
+    const livenessConfig = livenessProjects.find(
+      (p) => p.id === project.id,
+    )?.livenessConfig
+
     const projectRecords = recordsByProjectId[project.id]
     if (!projectRecords) {
       continue
@@ -86,8 +96,8 @@ async function getLivenessData() {
       anomalies: mapAnomalyRecords(anomalies),
     }
     // duplicate data from one subtype to another if configured
-    if (project.config.liveness) {
-      const { from, to } = project.config.liveness.duplicateData
+    if (livenessConfig) {
+      const { from, to } = livenessConfig.duplicateData
       const data = livenessData[from]
       assert(data, 'From data must exist')
       livenessData[to] = { ...data }

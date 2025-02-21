@@ -1,3 +1,9 @@
+import {
+  type TrackedTxConfigEntry,
+  type TrackedTxFunctionCallConfig,
+  type TrackedTxTransferConfig,
+  createTrackedTxId,
+} from '@l2beat/shared'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { checkRisk } from '../../test/helpers'
@@ -205,6 +211,69 @@ describe('getProjects', () => {
           expect(contracts).toEqual(contracts.slice().sort((a, b) => b - a))
         })
       }
+    })
+  })
+
+  describe('Tracked transactions', () => {
+    it('every TrackedTxId is unique', () => {
+      const ids = new Set<string>()
+      for (const project of projects) {
+        const trackedTxsIds =
+          project.trackedTxsConfig?.map((entry) => createTrackedTxId(entry)) ??
+          []
+        for (const id of trackedTxsIds) {
+          assert(!ids.has(id), `Duplicate TrackedTxsId in ${project.id}`)
+          ids.add(id)
+        }
+      }
+    })
+    describe('transfers', () => {
+      it('every configuration points to unique transfer params', () => {
+        const transfers = new Set<string>()
+        for (const project of projects) {
+          const transferConfigs = project.trackedTxsConfig?.filter(
+            (
+              e,
+            ): e is TrackedTxConfigEntry & {
+              params: TrackedTxTransferConfig
+            } => e.params.formula === 'transfer',
+          )
+          for (const config of transferConfigs ?? []) {
+            const key = `${config.params.from.toString()}-${config.params.to.toString()}-${
+              config.type
+            }`
+            assert(
+              !transfers.has(key),
+              `Duplicate transfer config in ${project.id}`,
+            )
+            transfers.add(key)
+          }
+        }
+      })
+    })
+    describe('function calls', () => {
+      it('every configuration points to unique function call params', () => {
+        const functionCalls = new Set<string>()
+        for (const project of projects) {
+          const functionCallConfigs = project.trackedTxsConfig?.filter(
+            (
+              e,
+            ): e is TrackedTxConfigEntry & {
+              params: TrackedTxFunctionCallConfig
+            } => e.params.formula === 'functionCall',
+          )
+          for (const config of functionCallConfigs ?? []) {
+            const key = `${config.params.address.toString()}-${
+              config.params.selector
+            }-${config.untilTimestamp?.toString()}-${config.type}`
+            assert(
+              !functionCalls.has(key),
+              `Duplicate function call config in ${project.id}`,
+            )
+            functionCalls.add(key)
+          }
+        }
+      })
     })
   })
 })
