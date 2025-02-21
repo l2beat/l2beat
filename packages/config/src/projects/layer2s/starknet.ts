@@ -1169,11 +1169,6 @@ export const starknet: Layer2 = {
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
-        discovery.getMultisigPermission(
-          'StarknetAdminMultisig',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
@@ -1187,10 +1182,6 @@ export const starknet: Layer2 = {
           'Operators',
           discovery.getPermissionedAccounts('Starknet', 'operators'),
           'Allowed to post state updates. When the operator is down the state cannot be updated.',
-        ),
-        discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
         ),
         discovery.getMultisigPermission(
           'StarkgateSecurityAgentMultisig',
