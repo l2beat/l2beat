@@ -1,10 +1,10 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database/dist/da-beat/data-availability/entity'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/range-to-days'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
@@ -39,16 +39,22 @@ const getCachedDaThroughputChartData = cache(
     const days = rangeToDays(range)
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = days ? to.add(-days, 'days') : null
-    const projectIds = await getProjectIds(includeL2sOnly)
-    const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
-      projectIds,
-      [from, to],
-    )
+    const daLayerIds = ['ethereum', 'celestia', 'avail']
+    const throughput = includeL2sOnly
+      ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+          daLayerIds,
+          [from, to],
+        )
+      : await db.dataAvailability.getByProjectIdsAndTimeRange(daLayerIds, [
+          from,
+          to,
+        ])
+
     if (throughput.length === 0) {
       return []
     }
     const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput)
+      groupByTimestampAndDaLayerId(throughput)
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => {
@@ -65,21 +71,9 @@ const getCachedDaThroughputChartData = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
-async function getProjectIds(includeL2sOnly: boolean) {
-  if (!includeL2sOnly) {
-    return ['ethereum', 'celestia', 'avail']
-  }
-
-  const projects = await ps.getProjects({
-    select: ['scalingInfo'],
-  })
-
-  return projects
-    .filter((p) => p.scalingInfo.layer === 'layer2')
-    .map((p) => p.id)
-}
-
-function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
+function groupByTimestampAndDaLayerId(
+  records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
+) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}

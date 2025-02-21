@@ -1,6 +1,12 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
+import {
+  type DataAvailabilityRecord,
+  type ProjectsSummedDataAvailabilityRecord,
+  toProjectsSummedRecord,
+  toRecord,
+  toRow,
+} from './entity'
 import { selectDataAvailability } from './select'
 
 export class DataAvailabilityRepository extends BaseRepository {
@@ -58,6 +64,38 @@ export class DataAvailabilityRepository extends BaseRepository {
     const rows = await query.execute()
 
     return rows.map(toRecord)
+  }
+
+  async getSummedProjectsByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select([
+        'daLayer',
+        'timestamp',
+        (eb) => eb.fn.sum('totalSize').as('totalSize'),
+      ])
+      .where('daLayer', 'in', daLayers)
+      .whereRef('projectId', '!=', 'daLayer')
+      .groupBy(['timestamp', 'daLayer'])
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) =>
+      toProjectsSummedRecord({
+        ...row,
+        totalSize: row.totalSize.toString(),
+      }),
+    )
   }
 
   async getByDaLayersAndTimeRange(
