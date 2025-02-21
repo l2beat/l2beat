@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { RLP } from 'ethers/lib/utils'
 import { z } from 'zod'
 import type { Transaction } from '../../../utils/IEtherscanClient'
@@ -10,7 +10,6 @@ import {
   resolveReference,
 } from '../reference'
 import { valueToAddress } from '../utils/valueToAddress'
-
 export type OpStackDAHandlerDefinition = z.infer<
   typeof OpStackDAHandlerDefinition
 >
@@ -18,7 +17,6 @@ export const OpStackDAHandlerDefinition = z.strictObject({
   type: z.literal('opStackDA'),
   sequencerAddress: z.string(),
 })
-
 /**
  * This is an example of transaction data that is posted on Ethereum
  * when a project is using the OP Stack, but it is not posting the
@@ -164,12 +162,9 @@ export class OpStackDAHandler implements Handler {
 async function getConfirmedBatchHeaderHashes(
   provider: IProvider,
 ): Promise<string[]> {
-  const ethereumProvider = provider.switchChain(
-    'ethereum',
-    // no clue why block number is needed here
-    // but it spares us translation between the chains
-    21895408, // latest block at the time of coding
-  )
+  const blockToSwitch = await getEthereumBlock(provider)
+
+  const ethereumProvider = provider.switchChain('ethereum', blockToSwitch)
 
   const logs = await ethereumProvider.getEvents(
     EIGEN_DA_CONSTANTS.EIGEN_AVS,
@@ -180,11 +175,39 @@ async function getConfirmedBatchHeaderHashes(
   return logs.map((log) => log.event.batchHeaderHash.toLowerCase())
 }
 
-function decodeCommitmentRLP(inputData: string): string {
-  // strip four commitment type bytes + 0x
-  const eigenCommitment = inputData.slice(5 * 2)
+async function getEthereumBlock(provider: IProvider) {
+  if (provider.chain === 'ethereum') {
+    return provider.blockNumber
+  }
 
-  const rlp = RLP.decode('0x' + eigenCommitment)
+  const currentBlock = await provider.getBlock(provider.blockNumber)
+  assert(currentBlock, 'Current block is undefined')
+
+  const timestamp = new UnixTime(currentBlock.timestamp)
+
+  // We need to switch to ethereum to get the block number.
+  // Eigen AVS lives there.
+  // Yet we need to pass 'some' block number to the provider to perform the switch.
+  // Can't do. You get the idea. That's why we pass 0. It doesn't matter.
+  const ethereumProvider = provider.switchChain('ethereum', 0)
+
+  const correspondingEthereumBlock = await ethereumProvider.raw(
+    `optimism_eigen_cross_chain_translate_${provider.blockNumber}_${provider.chain}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getBlockNumberAtOrBefore(timestamp),
+  )
+
+  return correspondingEthereumBlock
+}
+function decodeCommitmentRLP(inputData: string): string {
+  // strip three commitment type bytes + 0x
+  const eigenCommitment = inputData.slice(4 * 2)
+  // Sometimes it's prefixed with 00, sometimes it's not.
+  const noTypeCommitment = eigenCommitment.startsWith('00')
+    ? eigenCommitment.slice(2)
+    : eigenCommitment
+
+  const rlp = RLP.decode('0x' + noTypeCommitment)
 
   /**
    * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
