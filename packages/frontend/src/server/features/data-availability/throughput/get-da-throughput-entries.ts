@@ -40,17 +40,13 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
 
   const latestData = await getDaThroughputTable(daLayerIds)
 
-  const latestL2sOnlyData = await getDaThroughputTable(daLayerIds, {
-    scalingProjectsOnly: true,
-  })
-
   const entries = daLayersWithDaTracking
     .map((project) =>
       getDaThroughputEntry(
         project,
         daBridges,
-        latestData[project.id],
-        latestL2sOnlyData[project.id],
+        latestData.data[project.id],
+        latestData.scalingOnlyData[project.id],
       ),
     )
     .filter(notUndefined)
@@ -89,8 +85,8 @@ export interface DaThroughputEntry extends CommonProjectEntry {
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge'>[],
-  data: ThroughputTableData[string] | undefined,
-  scalingOnlyData: ThroughputTableData[string] | undefined,
+  data: ThroughputTableData['data'][string] | undefined,
+  scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   if (!data) return undefined
 
