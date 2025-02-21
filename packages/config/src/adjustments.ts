@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { CONTRACTS } from './common'
+import { badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
 import { layer3s } from './projects/layer3s'
@@ -36,6 +37,12 @@ function adjustLegacy(
     const chain = chains.find((x) => x.name === escrow.chain)
     assert(chain, `Missing chain: ${escrow.chain}`)
     escrow.chainId = chain?.chainId
+  }
+  if (project.type !== 'bridge') {
+    project.badges?.sort(badgesCompareFn)
+    if (project.badges?.length === 0) {
+      project.badges = undefined
+    }
   }
   adjustContracts(project, chains)
 }

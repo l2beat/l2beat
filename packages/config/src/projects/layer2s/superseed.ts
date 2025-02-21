@@ -1,6 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
 export const superseed: Layer2 = underReviewL2({
@@ -8,10 +8,10 @@ export const superseed: Layer2 = underReviewL2({
   capability: 'universal',
   addedAt: new UnixTime(1714316238), // 2024-04-28T14:57:18Z
   badges: [
-    Badge.Infra.Superchain,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
+    BADGES.Infra.Superchain,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.VM.EVM,
   ],
   display: {
     name: 'Superseed',

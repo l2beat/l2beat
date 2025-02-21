@@ -30,7 +30,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 
 const discovery = new ProjectDiscovery('apex')
@@ -122,10 +122,10 @@ export const apex: Layer2 = {
   addedAt: new UnixTime(1663927910), // 2022-09-23T10:11:50Z
   capability: 'appchain',
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.DAC,
-    Badge.Stack.StarkEx,
-    Badge.Infra.SHARP,
+    BADGES.VM.AppChain,
+    BADGES.DA.DAC,
+    BADGES.Stack.StarkEx,
+    BADGES.Infra.SHARP,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.LOW_DAC_THRESHOLD],
   display: {

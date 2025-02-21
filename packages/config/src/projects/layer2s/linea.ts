@@ -25,7 +25,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2, ProjectPermissionedAccount } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PERFORMED_BY } from '../zk-catalog/common/performedBy'
 import { getStage } from './common/stages/getStage'
 
@@ -690,5 +690,5 @@ export const linea: Layer2 = {
       type: 'general',
     },
   ],
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.L3HostChain],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.Other.L3HostChain],
 }

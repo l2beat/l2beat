@@ -19,13 +19,6 @@
 export { HOMEPAGE_MILESTONES } from './global/milestones'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
-export {
-  badges,
-  badgesCompareFn,
-  BadgeType,
-  type Badge,
-  type BadgeId,
-} from './projects/badges'
 export { bridges } from './projects/bridges'
 export { layer2s } from './projects/layer2s'
 export { layer3s } from './projects/layer3s'

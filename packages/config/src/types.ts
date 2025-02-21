@@ -9,7 +9,6 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -113,7 +112,7 @@ export interface ScalingProject {
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
-  badges?: BadgeId[]
+  badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -897,10 +896,15 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
-  badges: ScalingProjectBadge[] | undefined
+  badges: Badge[] | undefined
 }
 
-export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
+export interface Badge {
+  id: string
+  type: string
+  name: string
+  description: string
+}
 
 export type ScalingProjectStage =
   | 'Not applicable'

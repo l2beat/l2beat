@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
 export const blessnet: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1731061027), // 2024-11-08T10:17:07+00:00
   additionalPurposes: ['Interoperability'],
-  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.DAC],
   isArchived: true,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,

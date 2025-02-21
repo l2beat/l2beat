@@ -33,7 +33,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -1249,11 +1249,11 @@ export const starknet: Layer2 = {
     },
   ],
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
-    Badge.Other.Governance,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
+    BADGES.Other.Governance,
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

@@ -25,7 +25,7 @@ import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import {
@@ -133,11 +133,11 @@ export const ink: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1729797861), // 2024-10-24T21:24:21Z
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Gelato,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
+    BADGES.RaaS.Gelato,
   ],
   display: {
     name: 'Ink',

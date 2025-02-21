@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
 export const pepeunchained: Layer2 = underReviewL2({
   id: 'pepeunchained',
   capability: 'universal',
   addedAt: new UnixTime(1739541812), // 2025-02-14T14:03:32Z
-  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.RaaS.Conduit],
+  badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Conduit],
   display: {
     name: 'Pepe Unchained',
     slug: 'pepeunchained',

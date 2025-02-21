@@ -15,7 +15,7 @@ import type {
   ProjectLivenessInfo,
 } from '../../types'
 import { isVerified } from '../../verification/isVerified'
-import { badges } from '../badges'
+import { badgesCompareFn } from '../badges'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
@@ -78,7 +78,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges: p.badges?.map((id) => ({ ...badges[id], id })),
+      badges:
+        p.badges && p.badges.length > 0
+          ? p.badges.sort(badgesCompareFn)
+          : undefined,
     },
     scalingStage: p.stage,
     scalingRisks: {
