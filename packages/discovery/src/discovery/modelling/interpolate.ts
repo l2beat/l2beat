@@ -60,7 +60,7 @@ export function contractValuesForInterpolation(
 ): Record<string, ContractValue | undefined> {
   const values = isContract(contract) ? contract.values : {}
   return {
-    '$.address': contract.address,
+    '$.address': contract.address.toLowerCase(),
     '$.name': contract.name ?? '',
     '$.description': contract.description,
     ...values,
