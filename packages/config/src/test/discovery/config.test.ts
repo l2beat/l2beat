@@ -72,7 +72,7 @@ describe('discovery config.jsonc', () => {
     expect(notEqual).toBeEmpty()
     notEqual.forEach((p) => {
       console.log(
-        `Following projects do not have the same name in config and discovery.json. Run "pnpm discover <config.name>" - ${p}`,
+        `Following projects do not have the same name in config and discovery.json. Run "l2b discover <config.name>" - ${p}`,
       )
     })
   })
@@ -112,7 +112,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           reason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
         )
       }
     }
@@ -130,7 +130,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           discovery.contracts.every((c) => c.errors === undefined),
-          `${c.name} discovery.json includes errors. Run "pnpm discover ${c.name}".`,
+          `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
         )
       }
     }
