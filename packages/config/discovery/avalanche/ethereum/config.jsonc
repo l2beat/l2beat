@@ -1,7 +1,8 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "avalanche",
   "chain": "ethereum",
+  "name": "avalanche",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     // These addresses where hardcoded in .ts file of this project. We require
     // having them in the discovery in order to be able to tell if this address

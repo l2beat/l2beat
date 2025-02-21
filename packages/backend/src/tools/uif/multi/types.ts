@@ -51,4 +51,9 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
       and move the configuration state to minHeight
   */
   configurationsTrimmingDisabled?: boolean
+  /** For indexers that e.g. calculate aggregate sums we want to know
+      whether invalidation has been triggered - cause it will most likely
+      result in corruption of data, so we will have to handle it manually.
+  */
+  logErrorgOnInvalidation?: boolean
 }

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "sophon",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3", // SophonZkEvm
     "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987" // L1USDCBridge

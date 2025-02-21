@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "socket",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x943AC2775928318653e91d350574436A1b9b16f9", // Socket
     // SOCKET SCRIPT OUTPUT FROM HERE ------------V

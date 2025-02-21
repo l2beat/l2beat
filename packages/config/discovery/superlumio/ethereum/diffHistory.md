@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x62cf5c2be4f4055ff9dc15fe6f3f4e82ac23aefb
+Generated with discovered.json: 0x4b5be43c0eb7b07f9b3a29ede383ccb89b719e2c
+
+# Diff at Fri, 21 Feb 2025 09:00:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21637088
+- current block number: 21637088
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637088 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+Generated with discovered.json: 0x1e5e1146485d75fe9df95976bbb559c4957e3b71
 
 # Diff at Mon, 10 Feb 2025 19:04:52 GMT:
 

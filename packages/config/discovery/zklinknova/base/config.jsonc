@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "base",
   "name": "zklinknova",
+  "import": ["../../baseConfig.jsonc"],
   "initialAddresses": [
     "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
     "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"

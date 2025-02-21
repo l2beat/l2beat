@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x837b4c2b62ae3be2642843bd31ea31e85d9e4935
+Generated with discovered.json: 0x52353b72721938a923563be3856cdd594daec82f
+
+# Diff at Fri, 21 Feb 2025 09:00:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829713
+- current block number: 21829713
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829713 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x60bdddbca822d6bd327eb3c371358fba035c25fa
 
 # Diff at Wed, 12 Feb 2025 15:49:29 GMT:
 

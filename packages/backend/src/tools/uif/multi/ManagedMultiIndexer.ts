@@ -165,6 +165,13 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   // #region invalidate
 
   async invalidate(targetHeight: number): Promise<number> {
+    if (this.options.logErrorgOnInvalidation) {
+      const ids = this.options.configurations.map((c) => c.id)
+      this.logger.error(`Invalidation detected`, {
+        targetHeight: targetHeight,
+        configurations: JSON.stringify(ids),
+      })
+    }
     return await Promise.resolve(targetHeight)
   }
 

@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x69bd9acb9f278e51f8fc2c039b9bca3393a0c69d
+Generated with discovered.json: 0x30c22396d76eaf242b2d3adc92171076beead6af
+
+# Diff at Fri, 21 Feb 2025 08:59:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21635783
+- current block number: 21635783
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21635783 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x31B72D76FB666844C41EdF08dF0254875Dbb7edB) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+Generated with discovered.json: 0xd266ca8d8c162ce2daf529f20bbbaca8b0c69048
 
 # Diff at Mon, 10 Feb 2025 19:04:11 GMT:
 

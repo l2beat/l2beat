@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x56af9bd7b396951254067040869d545475cb5735
+
+# Diff at Wed, 19 Feb 2025 16:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db146cf0a2ae2ee66e75c589f22ad2e266fe95a9 block: 21872746
+- current block number: 21881526
+
+## Description
+
+give SECURITY_AGENT permission (can limit withdrawals) to the StarkgateSecurityAgentMultisig in some bridges.
+
+## Watched changes
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872746 (main branch discovery), not current.
+
+```diff
+    contract StarkgateSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      name:
+-        "StarkgateETHSecurityAgentMultisig"
++        "StarkgateSecurityAgentMultisig"
+    }
+```
+
 Generated with discovered.json: 0x29be27d9add222db7f9524fc4f59c2a719f8b786
 
 # Diff at Tue, 18 Feb 2025 10:46:27 GMT:

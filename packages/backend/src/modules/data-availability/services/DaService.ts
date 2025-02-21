@@ -13,11 +13,10 @@ import type {
 import type { DaTrackingConfig } from '../../../config/Config'
 
 export class DaService {
-  constructor(private configurations: DaTrackingConfig[]) {}
-
   generateRecords(
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
+    configurations: DaTrackingConfig[],
   ): DataAvailabilityRecord[] {
     const updatedRecords = [...previousRecords]
 
@@ -36,17 +35,20 @@ export class DaService {
     }
 
     for (const blob of blobs) {
-      const records = this.createRecordsFromBlob(blob)
+      const records = this.createRecordsFromBlob(blob, configurations)
       records.forEach((r) => addOrMerge(r))
     }
 
     return updatedRecords
   }
 
-  private createRecordsFromBlob(blob: DaBlob): DataAvailabilityRecord[] {
+  private createRecordsFromBlob(
+    blob: DaBlob,
+    configurations: DaTrackingConfig[],
+  ): DataAvailabilityRecord[] {
     const records: DataAvailabilityRecord[] = []
 
-    for (const c of this.configurations) {
+    for (const c of configurations) {
       switch (c.type) {
         case 'baseLayer': {
           if (blob.daLayer === c.daLayer) {

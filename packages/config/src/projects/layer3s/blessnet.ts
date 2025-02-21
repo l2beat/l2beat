@@ -51,9 +51,8 @@ export const blessnet: Layer3 = orbitStackL3({
   //     tokens: '*',
   //   }),
   // ],
-  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  // gasTokens: ['BLESS'], // not on CG
+  gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
   rpcUrl: 'https://blessnet.calderachain.xyz/http',
   discovery,

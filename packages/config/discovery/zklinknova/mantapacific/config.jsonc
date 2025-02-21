@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "mantapacific",
   "name": "zklinknova",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
     "0x44a65dc12865A1e5249b45b4868f32b0E37168FF"

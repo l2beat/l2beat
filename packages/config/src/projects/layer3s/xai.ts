@@ -39,7 +39,7 @@ export const xai: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
-  gasTokens: ['XAI'],
+  gasTokens: { tracked: ['XAI'] },
   rpcUrl: 'https://xai-chain.net/rpc',
   nonTemplateTechnology: {
     stateCorrectness: {

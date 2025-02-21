@@ -111,7 +111,7 @@ export const zklinknova: Layer3 = {
       socialMedia: [
         'https://blog.zk.link',
         'https://x.com/zkLink_Official',
-        'http://discord.gg/zklink',
+        'https://discord.gg/zklink',
         'https://t.me/zkLinkorg',
       ],
     },

@@ -4,6 +4,10 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import {
+  formatBpsToMbps,
+  formatBytes,
+} from '~/utils/number-format/format-bytes'
 
 const columnHelper = createColumnHelper<DaThroughputEntry>()
 
@@ -30,9 +34,11 @@ export const publicSystemsColumns = [
             <TableValueCell
               emptyMode="no-data"
               value={
-                ctx.row.original.pastDayAvgThroughput
+                ctx.row.original.pastDayAvgThroughputPerSecond
                   ? {
-                      value: `${ctx.row.original.pastDayAvgThroughput} MB/s`,
+                      value: formatBpsToMbps(
+                        ctx.row.original.pastDayAvgThroughputPerSecond,
+                      ),
                     }
                   : undefined
               }
@@ -45,20 +51,23 @@ export const publicSystemsColumns = [
         },
       }),
       columnHelper.display({
-        header: 'MAX',
+        header: 'SUSTAINED MAX',
         cell: (ctx) => (
           <TableValueCell
             value={
-              ctx.row.original.maxThroughput
+              ctx.row.original.maxThroughputPerSecond
                 ? {
-                    value: `${ctx.row.original.maxThroughput} MB/s`,
+                    value: formatBpsToMbps(
+                      ctx.row.original.maxThroughputPerSecond,
+                    ),
                   }
                 : undefined
             }
           />
         ),
         meta: {
-          tooltip: 'The maximum amount of data that can be posted per second.',
+          tooltip:
+            'The maximum data throughput that can be maintained over time. For Ethereum, it refers to the target blob throughput, as the blob base fee increases exponentially when blob usage exceeds the target.',
         },
       }),
     ],
@@ -95,7 +104,9 @@ export const publicSystemsColumns = [
             ctx.row.original.largestPoster
               ? {
                   value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
-                  secondLine: ctx.row.original.largestPoster.totalPosted,
+                  secondLine: formatBytes(
+                    ctx.row.original.largestPoster.totalPosted,
+                  ),
                 }
               : undefined
           }
@@ -111,7 +122,13 @@ export const publicSystemsColumns = [
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell value={{ value: ctx.row.original.totalPosted ?? '' }} />
+        <TableValueCell
+          value={{
+            value: ctx.row.original.totalPosted
+              ? formatBytes(ctx.row.original.totalPosted)
+              : '',
+          }}
+        />
       </SyncStatusWrapper>
     ),
     meta: {
@@ -126,7 +143,7 @@ export const publicSystemsColumns = [
     ),
     meta: {
       tooltip:
-        'The time required for a data batch to achieve consensus finality, reducing the risk of reorgs or rollbacks. Faster finality means users can trust that data is available sooner, minimizing the wait time before proceeding with subsequent operations.',
+        'The time required for a data batch to achieve consensus finality, reducing the risk of reorgs or rollbacks. It represents the most optimistic case (normal network conditions). Faster finality means users can trust that data is available sooner, minimizing the wait time before proceeding with subsequent operations.',
     },
   }),
 ]

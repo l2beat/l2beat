@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "aptos",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907",
 

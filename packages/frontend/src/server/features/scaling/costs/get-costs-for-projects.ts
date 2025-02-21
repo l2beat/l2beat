@@ -1,4 +1,4 @@
-import type { Layer2 } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { groupBy } from 'lodash'
 import { getDb } from '~/server/database'
@@ -9,7 +9,7 @@ import type { CostsTimeRange } from './utils/range'
 import { getFullySyncedCostsRange } from './utils/range'
 
 export async function getCostsForProjects(
-  projects: Layer2[],
+  projects: Project<'trackedTxsConfig'>[],
   timeRange: CostsTimeRange,
 ) {
   const db = getDb()
