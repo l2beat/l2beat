@@ -1,15 +1,6 @@
 import { EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
 import type { ProjectContracts, ScalingProjectRisk } from '../types'
 
-const UNVERIFIED_DESCRIPTION =
-  'The source code of this contract is not verified on Etherscan.'
-
-const UNVERIFIED_DESCRIPTION_SOME =
-  'The source code of some of these contracts is not verified on Etherscan.'
-
-const UNVERIFIED_DESCRIPTION_ALL =
-  'The source code of these contracts is not verified on Etherscan.'
-
 const UNVERIFIED_RISK: ScalingProjectRisk = {
   category: 'Funds can be stolen if',
   text: 'the source code of unverified contracts contains malicious code.',
@@ -70,9 +61,6 @@ const UNDER_REVIEW = {
 export const CONTRACTS = {
   EMPTY,
   UNDER_REVIEW,
-  UNVERIFIED_DESCRIPTION,
-  UNVERIFIED_DESCRIPTION_SOME,
-  UNVERIFIED_DESCRIPTION_ALL,
   UNVERIFIED_RISK,
   UPGRADE_NO_DELAY_RISK,
   UPGRADE_WITH_DELAY_RISK,

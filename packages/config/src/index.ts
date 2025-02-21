@@ -16,7 +16,8 @@
  * DO NOT ADD NEW NON-TYPE EXPORTS to @l2beat/config. Thanks!
  */
 
-export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
+export { HOMEPAGE_MILESTONES } from './global/milestones'
+export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
 export {
   badges,

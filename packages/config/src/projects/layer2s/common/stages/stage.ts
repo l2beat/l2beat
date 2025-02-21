@@ -1,5 +1,5 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../../../common'
+import { PROJECT_COUNTDOWNS } from '../../../../global/countdowns'
 import type {
   MissingStageDetails,
   Stage,

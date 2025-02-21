@@ -1,10 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
+import { CONTRACTS } from './common'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
 import { layer3s } from './projects/layer3s'
 import { refactored } from './projects/refactored'
 import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
-import { isProjectVerified } from './verification/isVerified'
+import { isProjectVerified, isVerified } from './verification/isVerified'
 
 /**
  * Some things can only be computed once all projects have been configured.
@@ -65,6 +66,11 @@ function adjustContracts(
         assert(chain.explorerUrl, `Missing explorer url: ${chain.name}`)
         contract.url = `${chain.explorerUrl}/address/${contract.address}#code`
       }
+    }
+    const verified =
+      'type' in project ? isVerified(project) : isProjectVerified(project)
+    if (!verified) {
+      project.contracts.risks.push(CONTRACTS.UNVERIFIED_RISK)
     }
   }
 }

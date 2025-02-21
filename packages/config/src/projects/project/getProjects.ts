@@ -4,7 +4,7 @@ import {
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../common'
+import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   BaseProject,
   Bridge,
