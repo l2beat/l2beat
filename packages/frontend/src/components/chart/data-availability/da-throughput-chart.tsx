@@ -61,7 +61,8 @@ export function DaThroughputChart() {
               )
             }
           >
-            Include scaling projects only
+            <span className="max-md:hidden">Include scaling projects only</span>
+            <span className="md:hidden">Scaling project only</span>
           </Checkbox>
         </div>
         <ChartTimeRangeControls

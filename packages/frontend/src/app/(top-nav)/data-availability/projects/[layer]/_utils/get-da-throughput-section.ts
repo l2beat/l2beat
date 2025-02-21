@@ -15,7 +15,7 @@ export async function getDaThroughputSection(
   if (throughputChart.length === 0) return undefined
 
   const throughputData = await getDaThroughputTable([project.id])
-  const projectData = throughputData[project.id]
+  const projectData = throughputData.data[project.id]
 
   if (!projectData) return undefined
 
