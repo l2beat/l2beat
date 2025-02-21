@@ -37,6 +37,29 @@
     "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow"
   },
   "overrides": {
+    "Outbox": {
+      // description override as long as permissions are stuck on L1 and Outbox is an actor
+      "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
+    },
+    "Bridge": {
+      // manual override to inherit perms to the Outbox
+      "fields": {
+        "mainOutboxAddress": {
+          "handler": {
+            "type": "call",
+            "method": "function allowedOutboxList(uint256) view returns (address)",
+            "args": [0]
+          },
+          "target": {
+            "permissions": [
+              {
+                "type": "act"
+              }
+            ]
+          }
+        }
+      }
+    },
     "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
       // pre-nitro rollup contract
       "ignoreDiscovery": true
