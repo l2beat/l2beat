@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x2dfcfa18e5b21e8cb4329186e5b23617694e8a37
+Generated with discovered.json: 0x5967c5297aa7455f9c5b87116ef08cfb2c515ced
 
-# Diff at Fri, 21 Feb 2025 11:25:41 GMT:
+# Diff at Fri, 21 Feb 2025 12:11:27 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@ce1c041bd14ba7d12811fd26d9c04ce8a544b543 block: 21635740
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21635740
 - current block number: 21635740
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related: Set orbit stack contract categories.
 
 ## Config/verification related changes
 
@@ -17,32 +17,40 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21635740 (main branch discovery), not current.
 
 ```diff
-    contract OneStepProverHostIo (0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract L1ERC20Gateway (0x149e3df73d9D48cb6573555De9256cc1456F50B5) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
       category:
 +        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
 ```diff
-    contract OneStepProverMemory (0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract Outbox (0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
       category:
 +        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
 ```diff
-    contract OneStepProver0 (0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract Bridge (0x4eb4fB614e1aa3634513319F4Ec7334bC4321356) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
       category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
 ```diff
-    contract OneStepProofEntry (0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract SequencerInbox (0x7B0517E0104dB60198f9d573C0aB8d480207827E) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Inbox (0x97FdC935c5E25613AA13a054C7Aa71cf751DB495) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       category:
 +        {"name":"Canonical Bridges","priority":2}
     }
@@ -57,18 +65,26 @@ discovery. Values are for block 21635740 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OneStepProverMath (0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract UpgradeExecutor (0xb0d7A2d1eBA69dbcff839037D060E4f8B5c4431B) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"name":"Governance","priority":3}
     }
 ```
 
 ```diff
-    contract RollupEventInbox (0xdE3fdE71a026236b6b5C35505643FF4155EAb20D) {
-    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+    contract RollupProxy (0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
       category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ChallengeManager (0xCdA94226d0BAFA963D6011fb2A06dEc7333646e8) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 

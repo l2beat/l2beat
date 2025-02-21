@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 21892618,
-  "configHash": "0x61d8b0691ea6dd6270c025a8a34e2b0eb5a94f20270331c6427d2cef27e0582e",
+  "configHash": "0x6c008fc37764cc7ad24c25ac36bea8b0725238cd8d88c3d72900134e9c51e3bf",
   "contracts": [
     {
       "name": "Outbox",
@@ -298,7 +298,8 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
       },
-      "derivedName": "Outbox"
+      "derivedName": "Outbox",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "wstETHEscrow",
@@ -533,8 +534,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397379,
-      "values": { "$immutable": true },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "values": { "$immutable": true }
     },
     {
       "name": "UpgradeExecutor",
@@ -638,7 +638,8 @@
           "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
           "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
         ]
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ParentToChildRewardRouter",
@@ -657,8 +658,7 @@
         "minGasPrice": 100000000,
         "NATIVE_CURRENCY": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "parentChainGatewayRouter": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      }
     },
     {
       "name": "OneStepProofEntry",
@@ -675,8 +675,7 @@
         "proverHostIo": "0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf",
         "proverMath": "0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921",
         "proverMem": "0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      }
     },
     {
       "name": "Inbox",
@@ -776,7 +775,7 @@
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
       },
       "derivedName": "Inbox",
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "RollupProxy",
@@ -1057,8 +1056,7 @@
         "$upgradeCount": 2,
         "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      }
     },
     {
       "name": "OutboxV0",
@@ -1120,8 +1118,7 @@
         "outboxesLength": 30,
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
-      "derivedName": "OldOutbox",
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "derivedName": "OldOutbox"
     },
     {
       "name": "LPTL1Escrow",
@@ -1282,8 +1279,7 @@
         "OUTBOX_VERSION": 1,
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
-      "derivedName": "Outbox",
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "derivedName": "Outbox"
     },
     {
       "name": "Bridge",
@@ -1375,7 +1371,7 @@
         "sequencerReportedSubMessageCount": 286067940
       },
       "derivedName": "Bridge",
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GatewaysAdmin",
@@ -1416,8 +1412,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397775,
-      "values": { "$immutable": true },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "values": { "$immutable": true }
     },
     {
       "name": "L1Escrow",
@@ -1584,8 +1579,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397631,
-      "values": { "$immutable": true },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "values": { "$immutable": true }
     },
     {
       "name": "OutboxEntry",
@@ -1763,8 +1757,7 @@
       ],
       "description": "One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.",
       "sinceTimestamp": 1734397511,
-      "values": { "$immutable": true },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "values": { "$immutable": true }
     },
     {
       "name": "L1Timelock",
@@ -4931,25 +4924,25 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
+    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
     "orbitstack/CustomGateway2": "0x7550ee1c0d2705680fa69a70d484659b59ce3cd21b3b4ba9caa296c331ee1618",
-    "orbitstack/EdgeChallengeManager": "0x1a0b647e3f4003c47de8163247b7df10f05f34df567acaa7239140e60067d0f4",
+    "orbitstack/EdgeChallengeManager": "0xc5afdfa99694cf973cda74f39febe3e32d24b5d30c2b22f9d475a8a8d3d6e89c",
     "orbitstack/ERC20Gateway2": "0xf15e12992ee81c6b09134178d6a1b4b28eca7d8ceef6c31cde98b60d793a280d",
     "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
-    "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/L1DaiGateway": "0x37fdbcbcb2926f409cdef49a3e7a88f014ae6fb622123caa7656ad514c9d29d0",
-    "orbitstack/OneStepProofEntry": "0xa9e0a44534dd6470c9e4983b809e72ae05099a5d8a7226914647381516197234",
-    "orbitstack/OneStepProver0": "0xcc6f3461eda3b8d3cf889385abf0cc43bf8588626ba712642f7853aad822342c",
-    "orbitstack/OneStepProverHostIo": "0x2576b34dfbc2bd4b4148dc0df3b720416a09e9e5b0459dc1da0a85a26cd8ead0",
-    "orbitstack/OneStepProverMath": "0x15144e860924290ab2e2b1800b8016c75bc5d1cd15f2c4575748533b2e26a483",
-    "orbitstack/OneStepProverMemory": "0x0364688f869d4593ba4412001367c0fba7385dac057862d342d73b1c7a0affc3",
-    "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
-    "orbitstack/ParentToChildRewardRouter": "0x1adca5ec5734817af2cdcf762b79611e8d7697a928df0dd3bfa9d0cd8bd73b37",
-    "orbitstack/RollupEventInbox": "0xd88d2603baae6441b40e16750ba1922a7749739ffbdc9547293d3480e5ff5574",
-    "orbitstack/RollupProxyBoLD": "0x2967121897fe7a95a5191f6510aee7f8fe7b8768a6b09168511622c60db20d89",
+    "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
+    "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
+    "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
+    "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
+    "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
+    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
+    "orbitstack/ParentToChildRewardRouter": "0x6dc8b188b923e4d062919c1b8d1658eb4d65863c8ebbc7304a00b3f92688ef1f",
+    "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
+    "orbitstack/RollupProxyBoLD": "0xa3a864b1d3f2e11ba4ede1a3dc84af5767d2a68710787e9b4a39c71d0754c5cb",
     "orbitstack/SecurityCouncil": "0x5fd23279b0affcfd4d4a8e3c3df22ea5e85f5e5e72b2f6c99d65923ac9e0b1fa",
-    "orbitstack/SequencerInbox": "0xd3e39037ef9e2fbff2690d1f59e38e2319a5f12e8f836cc72c83ae2c0c41a83b",
-    "orbitstack/Timelock": "0xbd26aa5431e31d66834dbb9dd25c35e8327c1f44c2e202c914a0f522b276c296",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
+    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
+    "orbitstack/Timelock": "0x7028f0a00afeef513c2691c06a88473e30470dcb4f24a3f5e34f49848574f850",
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757"
   }
 }

@@ -1,20 +1,28 @@
-Generated with discovered.json: 0xf4ad1f3a7839229e01144c387e43a1cebeff2726
+Generated with discovered.json: 0x9de1eb4e15bb4859bc595fe7c1a116ec1c292006
 
-# Diff at Fri, 21 Feb 2025 11:25:31 GMT:
+# Diff at Fri, 21 Feb 2025 12:11:24 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@ce1c041bd14ba7d12811fd26d9c04ce8a544b543 block: 21892618
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21892618
 - current block number: 21892618
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related: Set orbit stack contract categories.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 21892618 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
 
 ```diff
     contract wstETHEscrow (0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) {
@@ -41,26 +49,10 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OneStepProver0 (0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
       category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract ParentToChildRewardRouter (0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999) {
-    +++ description: Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract OneStepProofEntry (0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"name":"Governance","priority":3}
     }
 ```
 
@@ -68,7 +60,7 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
     contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
     +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
       category:
-+        {"name":"Local Infrastructure","priority":5}
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -97,22 +89,6 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
 ```
 
 ```diff
-    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
-    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract OutboxV0 (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
     contract LPTL1Escrow (0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) {
     +++ description: None
       category:
@@ -129,18 +105,10 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OutboxV1 (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
-    +++ description: None
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
     contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
     +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
       category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -149,14 +117,6 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
     +++ description: None
       category:
 +        {"name":"Spam","priority":-1}
-    }
-```
-
-```diff
-    contract OneStepProverHostIo (0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -185,14 +145,6 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
 ```
 
 ```diff
-    contract OneStepProverMath (0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
     contract OutboxEntry (0xc4940069140142236D4065b866018f7b2BeC77fD) {
     +++ description: None
       category:
@@ -213,14 +165,6 @@ discovery. Values are for block 21892618 (main branch discovery), not current.
     +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
       category:
 +        {"name":"External Bridges","priority":1}
-    }
-```
-
-```diff
-    contract OneStepProverMemory (0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b) {
-    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
-      category:
-+        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
