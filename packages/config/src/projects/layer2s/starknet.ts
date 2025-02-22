@@ -239,18 +239,28 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 
 const finalizationPeriod = 0
 
-const proxyAdmin = discovery.getContractValue<EthereumAddress>(
+const starknetUpgrader = discovery.getContractValue<EthereumAddress>(
   'Starknet',
   '$admin',
 )
+const ethEscrowUpgrader = discovery.getContractValue<EthereumAddress>(
+  'ETHBridge',
+  '$admin',
+)
 const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
+const operators = discovery.getPermissionedAccounts('Starknet', 'operators')
 
 assert(
-  proxyAdmin === discovery.getContract('StarknetSecurityCouncil').address &&
+  starknetUpgrader ===
+    discovery.getContract('StarknetSecurityCouncil').address &&
     governors[0].address ===
       discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 1,
-  `gov has changed, review non-discodriven perms and gov section.`,
+    governors.length === 1 &&
+    operators[1].address ===
+      discovery.getContract('StarknetSCMinorityMultisig').address &&
+    ethEscrowUpgrader ===
+      discovery.getContract('StarkgateBridgeMultisig').address,
+  `gov has changed, review non-discodriven perms, gov diagram and gov section.`,
 )
 
 const scThreshold = discovery.getMultisigStats('StarknetSecurityCouncil')
@@ -1169,7 +1179,7 @@ export const starknet: Layer2 = {
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
-          'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
+          'Can upgrade most of the Starkgate bridge escrows including ETHBridge and the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
         discovery.getPermissionDetails(
           'Operators',
