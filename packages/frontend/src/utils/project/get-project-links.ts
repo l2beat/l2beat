@@ -3,13 +3,13 @@ import { compact } from 'lodash'
 import type { ProjectLink } from '~/components/projects/links/types'
 
 export function getProjectLinks(...links: ProjectLinks[]): ProjectLink[] {
-  const websites = links.flatMap((links) => links.websites ?? [])
-  const apps = links.flatMap((links) => links.apps ?? [])
-  const docs = links.flatMap((links) => links.documentation ?? [])
-  const explorers = links.flatMap((links) => links.explorers ?? [])
-  const repositories = links.flatMap((links) => links.repositories ?? [])
-  const social = links.flatMap((links) => links.socialMedia ?? [])
-  const rollupCodes = links.flatMap((links) => links.rollupCodes ?? [])
+  const websites = [...new Set(links.flatMap((links) => links.websites ?? []))]
+  const apps = [...new Set(links.flatMap((links) => links.apps ?? []))]
+  const docs = [...new Set(links.flatMap((links) => links.documentation ?? []))]
+  const explorers = [...new Set(links.flatMap((links) => links.explorers ?? []))]
+  const repositories = [...new Set(links.flatMap((links) => links.repositories ?? []))]
+  const social = [...new Set(links.flatMap((links) => links.socialMedia ?? []))]
+  const rollupCodes = [...new Set(links.flatMap((links) => links.rollupCodes ?? []))]
 
   return compact([
     websites.length !== 0 && { name: 'Website', links: websites },
