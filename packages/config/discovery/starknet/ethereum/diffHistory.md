@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xca3f71aedc23e164f4c8a078051ffea5c1925273
+Generated with discovered.json: 0xb00adc775b67339f61d62d4f964757b0246fe6ab
 
 # Diff at Fri, 21 Feb 2025 13:28:06 GMT:
 
@@ -11,8 +11,8 @@ Generated with discovered.json: 0xca3f71aedc23e164f4c8a078051ffea5c1925273
 Governance updates:
 - all starknet bridge escrows including ETH are upgradable by the 2/4 StarkgateBridgeMultisig
 - sharp is still governed by a 2/4 MS
-- SC is governor
-- EOA + MS are operators
+- SC is single governor and Starknet proxy admin
+- EOA + SC minority are current operators
 
 ## Watched changes
 
