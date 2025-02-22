@@ -1160,7 +1160,7 @@ export const starknet: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   upgradesAndGovernance: `
-  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the overall rollup system is currently split between a Security Council for the Starknet rollup contract and a ${sharpMsThreshold} Multisig for the SHARP verifier proxy with instant upgrade capability. Other Multisigs are governing the bridge escrows and permissioned for operations (posting state updates with proofs).
+  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the overall rollup system is currently split between a Security Council for the Starknet rollup contract and a ${sharpMsThreshold} Multisig for the SHARP verifier proxy with instant upgrade capability. Other Multisigs are governing the bridge escrows or permissioned for operations (posting state updates with proofs).
   
   
   The ${scThreshold} StarknetSecurityCouncil can upgrade the Starknet contract, force state finalization, change central configurations and manage the Operator role. Starkgate bridge contracts can be upgraded (and configured) by the ${discovery.getMultisigStats('StarkgateBridgeMultisig')} StarkgateBridgeMultisig without delay, allowing the potential theft of all bridged funds.
