@@ -13,6 +13,7 @@ Governance updates:
 - sharp is still governed by a 2/4 MS
 - SC is single governor and Starknet proxy admin
 - EOA + SC minority are current operators
+- SC members are not public
 
 ## Watched changes
 
