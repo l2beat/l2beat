@@ -20,7 +20,9 @@ export function getCirculatingSupplyEntry(
   const assetId = AssetId.create(chain.name, address)
   const dataSource = 'coingecko'
   const includeInTotal = !token.excludeFromTotal
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
     token.sinceTimestamp,
@@ -36,7 +38,7 @@ export function getCirculatingSupplyEntry(
     decimals: token.decimals,
     includeInTotal: includeInTotal,
     isAssociated: isAssociated,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: token.source,
     symbol: token.symbol,

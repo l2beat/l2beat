@@ -38,7 +38,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   return {
     assetId: assetId,
     category: category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: decimals,
     escrowAddress: escrow.address,
@@ -46,7 +46,7 @@ export function getAggLayerNativeEtherPremintedEntry(
     isAssociated: isAssociated,
     l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
     premintedAmount: premintedAmount,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: symbol,

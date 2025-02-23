@@ -28,7 +28,7 @@ export function mapConfig(
   const tokens: Token[] = []
 
   // map escrows to tokens
-  for (const escrow of project.escrows) {
+  for (const escrow of project.tvlConfig.escrows) {
     // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
       continue
@@ -57,7 +57,7 @@ export function mapConfig(
   }
 
   return {
-    projectId: project.projectId,
+    projectId: project.id,
     tokens,
   }
 }
@@ -152,8 +152,9 @@ function createToken(
     untilTimestamp,
     category: legacyToken.category,
     source: source,
-    isAssociated:
-      project.associatedTokens?.includes(legacyToken.symbol) ?? false,
+    isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+      legacyToken.symbol,
+    ),
   }
 }
 

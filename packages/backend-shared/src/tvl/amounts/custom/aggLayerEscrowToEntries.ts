@@ -23,15 +23,15 @@ export function aggLayerEscrowToEntries(
     ) {
       continue
     }
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     const configEntry = getAggLayerL2TokenEntry(chain, token, escrow, project)
 
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
     const configEntry = getAggLayerNativeEtherPremintedEntry(
@@ -43,8 +43,8 @@ export function aggLayerEscrowToEntries(
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
     const l1Weth = tokenList.find(
       (t) => AssetId.create('ethereum', t.address) === AssetId.WETH,

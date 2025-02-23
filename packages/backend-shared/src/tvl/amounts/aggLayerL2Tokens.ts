@@ -31,7 +31,9 @@ export function getAggLayerL2TokenEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
 
   // We are hardcoding assetId because aggLayerL2Token is a canonical token
   const assetId = AssetId.create('ethereum', token.address)
@@ -42,7 +44,7 @@ export function getAggLayerL2TokenEntry(
   return {
     assetId: assetId,
     category: token.category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: token.decimals,
     escrowAddress: escrow.address,
@@ -50,7 +52,7 @@ export function getAggLayerL2TokenEntry(
     isAssociated,
     l1Address: token.address,
     originNetwork: originNetwork,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

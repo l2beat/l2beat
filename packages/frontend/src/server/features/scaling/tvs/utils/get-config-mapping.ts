@@ -13,5 +13,5 @@ export function getConfigMapping(
   const amountsConfigs = getTvlAmountsConfigForProject(project, chains)
   const priceConfigs = getTvlPricesConfig(chains)
 
-  return new ConfigMapping(priceConfigs, amountsConfigs, [project.projectId])
+  return new ConfigMapping(priceConfigs, amountsConfigs, [project.id])
 }

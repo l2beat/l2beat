@@ -25,7 +25,9 @@ export function getPremintedEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
   const sinceTimestamp = UnixTime.max(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
@@ -49,7 +51,7 @@ export function getPremintedEntry(
     escrowAddress: escrow.address,
     includeInTotal: includeInTotal,
     isAssociated: isAssociated,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

@@ -31,24 +31,26 @@ export function getElasticChainEtherEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
 
   // We are hardcoding assetId because elasticChainEther is a canonical token
   const assetId = AssetId.create('ethereum', 'native')
   const type = 'elasticChainEther'
-  const dataSource = `${project.projectId}_elastic_chain`
+  const dataSource = `${project.id}_elastic_chain`
 
   return {
     address: token.address,
     assetId: assetId,
     category: token.category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: token.decimals,
     escrowAddress: escrow.address,
     includeInTotal,
     isAssociated,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

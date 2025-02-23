@@ -37,7 +37,7 @@ export const getCachedTvsBreakdownForProjectData = cache(
     const backendProject = toBackendProject(project)
     const configMapping = getConfigMapping(backendProject, chains)
 
-    return getTvsBreakdown(configMapping, chains)(backendProject.projectId)
+    return getTvsBreakdown(configMapping, chains)(backendProject.id)
   },
   ['getCachedTvsBreakdownForProject'],
   {

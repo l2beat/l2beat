@@ -31,17 +31,19 @@ export function getElasticChainL2TokenEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
 
   // We are hardcoding assetId because elasticChainL2Token is a canonical token
   const assetId = AssetId.create('ethereum', token.address)
   const type = 'elasticChainL2Token'
-  const dataSource = `${project.projectId}_elastic_chain`
+  const dataSource = `${project.id}_elastic_chain`
 
   return {
     assetId: assetId,
     category: token.category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: token.decimals,
     escrowAddress: escrow.address,
@@ -49,7 +51,7 @@ export function getElasticChainL2TokenEntry(
     isAssociated,
     l1Address: token.address,
     l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

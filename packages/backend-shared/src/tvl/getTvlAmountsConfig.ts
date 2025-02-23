@@ -28,7 +28,7 @@ export function getTvlAmountsConfig(
   }
 
   const aggLayerIncludedL1Tokens = projects.flatMap((p) =>
-    p.escrows.flatMap(
+    p.tvlConfig.escrows.flatMap(
       (e) =>
         (e.sharedEscrow?.type === 'AggLayer' &&
           e.sharedEscrow?.tokensToAssignFromL1) ||
@@ -37,7 +37,7 @@ export function getTvlAmountsConfig(
   )
 
   const elasticChainIncludedL1Tokens = projects.flatMap((p) =>
-    p.escrows.flatMap(
+    p.tvlConfig.escrows.flatMap(
       (e) =>
         (e.sharedEscrow?.type === 'ElasticChain' &&
           e.sharedEscrow?.tokensToAssignFromL1) ||
@@ -46,7 +46,7 @@ export function getTvlAmountsConfig(
   )
 
   for (const project of projects) {
-    for (const escrow of project.escrows) {
+    for (const escrow of project.tvlConfig.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
           const aggLayerEntries = aggLayerEscrowToEntries(
@@ -103,7 +103,7 @@ export function getTvlAmountsConfigForProject(
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
 
   const projectTokens = nonZeroSupplyTokens.filter(
-    (t) => t.chainId === project.chain?.chainId,
+    (t) => t.chainId === project.chainConfig?.chainId,
   )
 
   for (const token of projectTokens) {
@@ -117,7 +117,7 @@ export function getTvlAmountsConfigForProject(
 
   const chainMap = keyBy(chains, (e) => e.chainId)
 
-  for (const escrow of project.escrows) {
+  for (const escrow of project.tvlConfig.escrows) {
     switch (escrow.sharedEscrow?.type) {
       case 'AggLayer': {
         const aggLayerEntries = aggLayerEscrowToEntries(
@@ -194,9 +194,9 @@ function projectEscrowToConfigEntry(
 }
 
 function findProjectAndChain(token: Token, projects: BackendProject[]) {
-  const project = projects.find((x) => x.chain?.chainId === token.chainId)
+  const project = projects.find((x) => x.chainConfig?.chainId === token.chainId)
   assert(project, `Project not found for token ${token.symbol}`)
-  const chain = project.chain
+  const chain = project.chainConfig
   assert(chain, `Chain not found for token ${token.symbol}`)
   return { chain, project }
 }

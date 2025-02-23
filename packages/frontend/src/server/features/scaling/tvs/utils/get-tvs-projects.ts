@@ -47,7 +47,7 @@ export function toTvsProject(
   }
 
   return {
-    projectId: backendProject.projectId,
+    projectId: backendProject.id,
     minTimestamp,
     sources,
   }
@@ -64,9 +64,7 @@ export function getTvsProjects(
   const filteredProjects = projects
     .filter((p) => filter(p))
     .map(toBackendProject)
-    .filter(
-      (project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.projectId),
-    )
+    .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
 
   const tvsAmounts = getTvlAmountsConfig(backendProjects, chains)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
@@ -74,13 +72,13 @@ export function getTvsProjects(
     (e) => e.project,
   )
 
-  const result = filteredProjects.flatMap(({ projectId }) => {
-    const amounts = tvsAmountsMap[projectId]
+  const result = filteredProjects.flatMap(({ id }) => {
+    const amounts = tvsAmountsMap[id]
     if (!amounts) {
       return []
     }
-    const project = projects.find((p) => p.id === projectId)
-    assert(project, `Project not found: ${projectId}`)
+    const project = projects.find((p) => p.id === id)
+    assert(project, `Project not found: ${id}`)
 
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
@@ -97,7 +95,7 @@ export function getTvsProjects(
       }
     }
     return {
-      projectId,
+      projectId: id,
       minTimestamp,
       sources,
       category: getCategory(project, previewRecategorisation),
