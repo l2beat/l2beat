@@ -1,4 +1,4 @@
-import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -6,14 +6,13 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getElasticChainEtherEntry(
   chain: ChainConfig,
   token: Token,
   escrow: ProjectTvlEscrow,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): ElasticChainEther {
   assert(escrow.sharedEscrow?.type === 'ElasticChain')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')

@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
   Bridge,
@@ -27,7 +28,6 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
-import { tokenList } from '../../tokens/tokens'
 
 export function getProjects(): BaseProject[] {
   return refactored

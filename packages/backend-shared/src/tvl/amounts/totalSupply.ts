@@ -1,4 +1,4 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, Project } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -6,12 +6,11 @@ import {
   type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject } from '../../BackendProject'
 
 export function getTotalSupplyEntry(
   chain: ChainConfig,
   token: Token,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): TotalSupplyEntry {
   assert(token.supply === 'totalSupply' && token.address)
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')

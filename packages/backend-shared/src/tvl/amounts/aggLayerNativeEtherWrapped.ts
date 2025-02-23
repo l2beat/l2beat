@@ -1,4 +1,4 @@
-import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerNativeEtherWrapped,
@@ -6,13 +6,12 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject } from '../../BackendProject'
 
 export function getAggLayerNativeEtherWrappedEntry(
   chain: ChainConfig,
   l1WETH: Token,
   escrow: ProjectTvlEscrow,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerNativeEtherWrapped {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')

@@ -1,11 +1,11 @@
 import {
   type ChainConfig,
+  type Project,
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
 import { assert, type AmountConfigEntry, type Token } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
-import type { BackendProject } from '../BackendProject'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'
@@ -15,7 +15,7 @@ import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
-  projects: BackendProject[],
+  projects: Project<'tvlConfig', 'chainConfig'>[],
   chains: ChainConfig[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
@@ -99,7 +99,7 @@ export function getTvlAmountsConfig(
 
 /** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
 export function getTvlAmountsConfigForProject(
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chains: ChainConfig[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
@@ -170,7 +170,7 @@ export function getTvlAmountsConfigForProject(
 function projectTokenToConfigEntry(
   chain: ChainConfig,
   token: Token,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AmountConfigEntry {
   if (token.supply === 'totalSupply') {
     assert(token.address, 'Token address is required for total supply')
@@ -189,7 +189,7 @@ function projectEscrowToConfigEntry(
   chain: ChainConfig,
   token: Token & { isPreminted: boolean },
   escrow: ProjectTvlEscrow,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AmountConfigEntry {
   if (token.isPreminted) {
     return getPremintedEntry(chain, token, escrow, project)
@@ -197,7 +197,10 @@ function projectEscrowToConfigEntry(
   return getEscrowEntry(chain, token, escrow, project)
 }
 
-function findProjectAndChain(token: Token, projects: BackendProject[]) {
+function findProjectAndChain(
+  token: Token,
+  projects: Project<'tvlConfig', 'chainConfig'>[],
+) {
   const project = projects.find((x) => x.chainConfig?.chainId === token.chainId)
   assert(project, `Project not found for token ${token.symbol}`)
   const chain = project.chainConfig

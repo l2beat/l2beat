@@ -1,4 +1,4 @@
-import type { BackendProject } from '@l2beat/backend-shared'
+import type { Project } from '@l2beat/config'
 import {
   AssetId,
   ChainId,
@@ -15,7 +15,9 @@ export type ProjectTvsBreakdown = Awaited<
   ReturnType<ReturnType<typeof getTvsBreakdown>>
 >
 
-export async function getTvsBreakdownForProject(project: BackendProject) {
+export async function getTvsBreakdownForProject(
+  project: Project<'tvlConfig', 'chainConfig'>,
+) {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData()
   }
@@ -26,7 +28,7 @@ type TvsBreakdownForProject = Awaited<
   ReturnType<typeof getCachedTvsBreakdownForProjectData>
 >
 export const getCachedTvsBreakdownForProjectData = cache(
-  async (project: BackendProject) => {
+  async (project: Project<'tvlConfig', 'chainConfig'>) => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )

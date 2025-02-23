@@ -1,17 +1,16 @@
-import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerNativeEtherPreminted,
   AssetId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject } from '../../BackendProject'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
 export function getAggLayerNativeEtherPremintedEntry(
   chain: ChainConfig,
   escrow: ProjectTvlEscrow,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerNativeEtherPreminted {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')

@@ -1,7 +1,7 @@
 import { createHash } from 'crypto'
-import type { BackendProject } from '@l2beat/backend-shared'
 import {
   type ChainConfig,
+  type Project,
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
@@ -23,7 +23,7 @@ import {
 } from './types'
 
 export function mapConfig(
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
 ): TvsConfig {
   const tokens: Token[] = []
@@ -65,7 +65,7 @@ export function mapConfig(
 
 function createToken(
   legacyToken: LegacyToken,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
   escrow?: ProjectTvlEscrow,
 ): Token {

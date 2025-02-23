@@ -1,9 +1,14 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import {
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
 } from '@l2beat/backend-shared'
-import type { Bridge, ChainConfig, Layer2, Layer3 } from '@l2beat/config'
+import type {
+  Bridge,
+  ChainConfig,
+  Layer2,
+  Layer3,
+  Project,
+} from '@l2beat/config'
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -59,7 +64,7 @@ export async function toTvsProject(
   }
 }
 
-let backendProjects: BackendProject[] | undefined
+let backendProjects: Project<'tvlConfig', 'chainConfig'>[] | undefined
 async function getBackendProjects() {
   if (!backendProjects) {
     backendProjects = await ps.getProjects({
