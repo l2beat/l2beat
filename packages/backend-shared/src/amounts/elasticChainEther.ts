@@ -1,22 +1,22 @@
 import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
-  type AggLayerL2Token,
   AssetId,
+  type ElasticChainEther,
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
-export function getAggLayerL2TokenEntry(
+export function getElasticChainEtherEntry(
   chain: ChainConfig,
   token: Token,
   escrow: ProjectTvlEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
-): AggLayerL2Token {
-  assert(escrow.sharedEscrow?.type === 'AggLayer')
+): ElasticChainEther {
+  assert(escrow.sharedEscrow?.type === 'ElasticChain')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  assert(token.address, 'Token address is required for AggLayer escrow')
+  assert(token.address, 'Token address is required for ElasticChain escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
@@ -34,13 +34,13 @@ export function getAggLayerL2TokenEntry(
     token.symbol,
   )
 
-  // We are hardcoding assetId because aggLayerL2Token is a canonical token
-  const assetId = AssetId.create('ethereum', token.address)
-  const type = 'aggLayerL2Token'
-  const originNetwork = 0
-  const dataSource = `${chain.name}_agglayer`
+  // We are hardcoding assetId because elasticChainEther is a canonical token
+  const assetId = AssetId.create('ethereum', 'native')
+  const type = 'elasticChainEther'
+  const dataSource = `${project.id}_elastic_chain`
 
   return {
+    address: token.address,
     assetId: assetId,
     category: token.category,
     chain: project.id,
@@ -49,8 +49,6 @@ export function getAggLayerL2TokenEntry(
     escrowAddress: escrow.address,
     includeInTotal,
     isAssociated,
-    l1Address: token.address,
-    originNetwork: originNetwork,
     project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,

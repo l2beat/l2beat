@@ -2,24 +2,22 @@ import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   AssetId,
-  type PremintedEntry,
+  type EscrowEntry,
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
-export function getPremintedEntry(
+export function getEscrowEntry(
   chain: ChainConfig,
-  token: Token & { isPreminted: boolean },
+  token: Token,
   escrow: ProjectTvlEscrow,
   project: Project<'tvlConfig', 'chainConfig'>,
-): PremintedEntry {
-  assert(token.isPreminted)
+): EscrowEntry {
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
   const address = token.address ?? 'native'
   const assetId = AssetId.create(chain.name, address)
-  const dataSource = `${chain.name}_preminted_${token.address}`
   const bridgedUsing = escrow.bridgedUsing
   const includeInTotal = token.excludeFromTotal
     ? false
@@ -32,7 +30,7 @@ export function getPremintedEntry(
     escrow.sinceTimestamp,
   )
   const source = escrow.source ?? 'canonical'
-  const type = 'preminted'
+  const type = 'escrow'
   const untilTimestamp = getEscrowUntilTimestamp(
     token.untilTimestamp,
     escrow.untilTimestamp,
@@ -44,8 +42,7 @@ export function getPremintedEntry(
     bridgedUsing: bridgedUsing,
     category: token.category,
     chain: chain.name,
-    coingeckoId: token.coingeckoId,
-    dataSource: dataSource,
+    dataSource: chain.name,
     decimals: token.decimals,
     escrowAddress: escrow.address,
     includeInTotal: includeInTotal,

@@ -6,7 +6,7 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
 export function getElasticChainL2TokenEntry(
   chain: ChainConfig,
