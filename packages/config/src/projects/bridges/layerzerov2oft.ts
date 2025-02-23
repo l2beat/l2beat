@@ -139,7 +139,7 @@ export const layerzerov2oft: Bridge = {
       These can be set by the Oapp / OFT owner or a delegate that they can define in the EndpointV2 contract.
       Additionally, the OFT owner can often use other admin functions on the OFT contract that are specific to the ERC-20 implementation (similar to other ERC-20 tokens, like arbitrary minting or pausing functions) and not related to LayerZero.
       
-      In the case of the Executor failing to deliver the bridge message, the user can try to deliver the message to the destination themselves, either if it was already verified or if the user has access to the signed verifier message (e.g. through layerzeroscan.com).
+      In the case of the Executor failing to deliver the bridge message, the user can try to deliver the message to the destination themselves, either if it was already verified and committed onchain or if the user has access to the signed verifier message (e.g. through the layerzeroscan API).
       
       OFTs can either be natively multichain or they can use an adapter. Native OFTs are burned at their origin and minted at their destination when bridging. 
       Adapter OFTs have a main chain, where they are locked in an adapter escrow. This mints a 'native' OFT version of the locked token that can then be bridged on all chains by burn-minting. 
