@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import {
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
@@ -12,14 +11,9 @@ import { groupBy } from 'lodash'
 import { env } from '~/env'
 import { isProjectOther } from '../../utils/is-project-other'
 
-export interface BaseProject {
+export interface TvsProject {
   projectId: ProjectId
-  type: BackendProject['type']
-}
-
-export interface TvsProject extends BaseProject {
   minTimestamp: UnixTime
-  slug: string
   sources: Map<
     string,
     {
@@ -55,8 +49,6 @@ export function toTvsProject(
   return {
     projectId: backendProject.projectId,
     minTimestamp,
-    type: backendProject.type,
-    slug: backendProject.slug,
     sources,
   }
 }
@@ -82,7 +74,7 @@ export function getTvsProjects(
     (e) => e.project,
   )
 
-  const result = filteredProjects.flatMap(({ projectId, type, slug }) => {
+  const result = filteredProjects.flatMap(({ projectId }) => {
     const amounts = tvsAmountsMap[projectId]
     if (!amounts) {
       return []
@@ -107,8 +99,6 @@ export function getTvsProjects(
     return {
       projectId,
       minTimestamp,
-      type,
-      slug,
       sources,
       category: getCategory(project, previewRecategorisation),
     }
