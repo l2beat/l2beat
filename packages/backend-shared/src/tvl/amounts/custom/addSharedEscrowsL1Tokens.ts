@@ -1,9 +1,6 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
 import { assert, type AmountConfigEntry, ChainId } from '@l2beat/shared-pure'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '../../../BackendProject'
+import type { BackendProject } from '../../../BackendProject'
 import { getEscrowEntry } from '../escrow'
 
 export function addSharedEscrowsL1Tokens(
@@ -40,7 +37,7 @@ function projectHasL1Tokens(project: BackendProject): boolean {
   return project.tvlConfig.escrows.some(escrowHasL1Tokens)
 }
 
-function escrowHasL1Tokens(escrow: BackendProjectEscrow): boolean {
+function escrowHasL1Tokens(escrow: ProjectTvlEscrow): boolean {
   const { sharedEscrow } = escrow
   return (
     ['AggLayer', 'ElasticChain'].includes(sharedEscrow?.type as string) &&

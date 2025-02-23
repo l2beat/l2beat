@@ -1,4 +1,4 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerL2Token,
@@ -6,13 +6,13 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getAggLayerL2TokenEntry(
   chain: ChainConfig,
   token: Token,
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
 ): AggLayerL2Token {
   assert(escrow.sharedEscrow?.type === 'AggLayer')

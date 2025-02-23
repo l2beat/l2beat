@@ -1,4 +1,4 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerNativeEtherWrapped,
@@ -6,12 +6,12 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject } from '../../BackendProject'
 
 export function getAggLayerNativeEtherWrappedEntry(
   chain: ChainConfig,
   l1WETH: Token,
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
 ): AggLayerNativeEtherWrapped {
   assert(escrow.sharedEscrow?.type === 'AggLayer')

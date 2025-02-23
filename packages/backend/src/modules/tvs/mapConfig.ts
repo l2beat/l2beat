@@ -1,9 +1,10 @@
 import { createHash } from 'crypto'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '@l2beat/backend-shared'
-import { type ChainConfig, tokenList } from '@l2beat/config'
+import type { BackendProject } from '@l2beat/backend-shared'
+import {
+  type ChainConfig,
+  type ProjectTvlEscrow,
+  tokenList,
+} from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { tokenToTicker } from './providers/tickers'
@@ -66,7 +67,7 @@ function createToken(
   legacyToken: LegacyToken,
   project: BackendProject,
   chain: ChainConfig,
-  escrow?: BackendProjectEscrow,
+  escrow?: ProjectTvlEscrow,
 ): Token {
   let amountFormula: AmountFormula
   let sinceTimestamp: UnixTime

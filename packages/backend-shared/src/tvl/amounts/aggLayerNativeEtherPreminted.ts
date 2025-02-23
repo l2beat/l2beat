@@ -1,16 +1,16 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerNativeEtherPreminted,
   AssetId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject } from '../../BackendProject'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
 export function getAggLayerNativeEtherPremintedEntry(
   chain: ChainConfig,
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
 ): AggLayerNativeEtherPreminted {
   assert(escrow.sharedEscrow?.type === 'AggLayer')

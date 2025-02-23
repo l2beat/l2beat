@@ -1,7 +1,11 @@
-import { type ChainConfig, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type ProjectTvlEscrow,
+  tokenList,
+} from '@l2beat/config'
 import { assert, type AmountConfigEntry, type Token } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
-import type { BackendProject, BackendProjectEscrow } from '../BackendProject'
+import type { BackendProject } from '../BackendProject'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'
@@ -184,7 +188,7 @@ function projectTokenToConfigEntry(
 function projectEscrowToConfigEntry(
   chain: ChainConfig,
   token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
 ): AmountConfigEntry {
   if (token.isPreminted) {

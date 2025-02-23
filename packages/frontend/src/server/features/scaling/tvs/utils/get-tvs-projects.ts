@@ -1,7 +1,7 @@
+import type { BackendProject } from '@l2beat/backend-shared'
 import {
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
-  toBackendProject,
 } from '@l2beat/backend-shared'
 import type { Bridge, ChainConfig, Layer2, Layer3 } from '@l2beat/config'
 import { bridges, layer2s, layer3s } from '@l2beat/config'
@@ -9,6 +9,7 @@ import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/is-project-other'
 
 export interface TvsProject {
@@ -24,11 +25,16 @@ export interface TvsProject {
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
-export function toTvsProject(
+export async function toTvsProject(
   project: Layer2 | Layer3 | Bridge,
   chains: ChainConfig[],
-): TvsProject {
-  const backendProject = toBackendProject(project)
+): Promise<TvsProject> {
+  const backendProject = await ps.getProject({
+    id: project.id,
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
+  assert(backendProject !== undefined)
   const amounts = getTvlAmountsConfigForProject(backendProject, chains)
 
   const minTimestamp = amounts
@@ -53,26 +59,36 @@ export function toTvsProject(
   }
 }
 
-const projects = [...layer2s, ...layer3s, ...bridges]
-const backendProjects = projects.map(toBackendProject)
+let backendProjects: BackendProject[] | undefined
+async function getBackendProjects() {
+  if (!backendProjects) {
+    backendProjects = await ps.getProjects({
+      select: ['tvlConfig'],
+      optional: ['chainConfig'],
+    })
+  }
+  return backendProjects
+}
 
-export function getTvsProjects(
+const projects = [...layer2s, ...layer3s, ...bridges]
+
+export async function getTvsProjects(
   filter: (p: Layer2 | Layer3 | Bridge) => boolean,
   chains: ChainConfig[],
   previewRecategorisation?: boolean,
-): TvsProject[] {
+): Promise<TvsProject[]> {
   const filteredProjects = projects
     .filter((p) => filter(p))
-    .map(toBackendProject)
     .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
 
+  const backendProjects = await getBackendProjects()
   const tvsAmounts = getTvlAmountsConfig(backendProjects, chains)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvsAmounts,
     (e) => e.project,
   )
 
-  const result = filteredProjects.flatMap(({ id }) => {
+  return filteredProjects.flatMap(({ id }) => {
     const amounts = tvsAmountsMap[id]
     if (!amounts) {
       return []
@@ -101,8 +117,6 @@ export function getTvsProjects(
       category: getCategory(project, previewRecategorisation),
     }
   })
-
-  return result
 }
 
 function getCategory(

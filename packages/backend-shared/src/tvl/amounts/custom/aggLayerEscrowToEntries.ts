@@ -1,15 +1,12 @@
-import { tokenList } from '@l2beat/config'
+import { type ProjectTvlEscrow, tokenList } from '@l2beat/config'
 import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '../../../BackendProject'
+import type { BackendProject } from '../../../BackendProject'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrapped'
 
 export function aggLayerEscrowToEntries(
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
   aggLayerIncludedL1Tokens: string[],
 ) {

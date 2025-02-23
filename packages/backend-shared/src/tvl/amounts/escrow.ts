@@ -1,4 +1,4 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -6,13 +6,13 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
+import type { BackendProject } from '../../BackendProject'
 import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
 
 export function getEscrowEntry(
   chain: ChainConfig,
   token: Token,
-  escrow: BackendProjectEscrow,
+  escrow: ProjectTvlEscrow,
   project: BackendProject,
 ): EscrowEntry {
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
