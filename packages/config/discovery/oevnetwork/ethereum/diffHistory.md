@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xbd6d68723431410a08bddcd2525d5a5601ecc450
+
+# Diff at Mon, 24 Feb 2025 15:18:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 21465199
+- current block number: 21917027
+
+## Description
+
+renamed MS (shared with form network).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21465199 (main branch discovery), not current.
+
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      name:
+-        "OevNetworkMultisig"
++        "Caldera Multisig 3"
+    }
+```
+
 Generated with discovered.json: 0xd6c69a3365cd3663635a5b16282b262477eed477
 
 # Diff at Fri, 21 Feb 2025 14:09:24 GMT:

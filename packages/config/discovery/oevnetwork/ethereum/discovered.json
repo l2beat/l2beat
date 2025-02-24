@@ -1,8 +1,8 @@
 {
   "name": "oevnetwork",
   "chain": "ethereum",
-  "blockNumber": 21465199,
-  "configHash": "0xb823f7726787ca8bd30892aea35120a66e31866f26b1eb0cf77d37ef377cb6c1",
+  "blockNumber": 21917027,
+  "configHash": "0x39d99f93849d629676f18261ff2b93bfc4357f9e94bb6216d8140404b9a1b101",
   "contracts": [
     {
       "name": "OneStepProverHostIo",
@@ -58,11 +58,11 @@
           "0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
         ],
         "allowedOutboxList": ["0xe4F99a0734C87C298d73C161F54874225E416997"],
-        "delayedMessageCount": 1328,
+        "delayedMessageCount": 1719,
         "rollup": "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerInbox": "0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7",
-        "sequencerMessageCount": 1281,
-        "sequencerReportedSubMessageCount": 24656
+        "sequencerMessageCount": 1658,
+        "sequencerReportedSubMessageCount": 30172
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -78,7 +78,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "OevNetworkMultisig",
+      "name": "Caldera Multisig 3",
       "address": "0x2bf43034b9559643e986A2fE3cE015a18247b904",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -283,13 +283,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 552,
+        "firstUnresolvedNode": 678,
         "inbox": "0x7EF9d2fe20307165599101e93Ea05b04d46Af159",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19882033,
-        "latestConfirmed": 551,
-        "latestNodeCreated": 564,
+        "latestConfirmed": 677,
+        "latestNodeCreated": 690,
         "loserStakeEscrow": "0xAe2032b4bfB56B70d48B314A71e0462346c122b0",
         "minimumAssertionPeriod": 75,
         "outbox": "0xe4F99a0734C87C298d73C161F54874225E416997",
@@ -644,7 +644,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 1281,
+        "batchCount": 1658,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x23b6bFACe63BFa288783b8344574c75b78FaEd59"],
         "bridge": "0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd",
@@ -674,7 +674,7 @@
         "rollup": "0x3AAfe635FCfA0E5C19C9368ab5eb384277836006",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1327,
+        "totalDelayedMessagesRead": 1718,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
