@@ -73,11 +73,11 @@ function SummaryTvsBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col gap-6 pb-0 pt-6 md:w-1/2">
-      <span className="text-base font-bold md:text-xl">
+    <PrimaryCard className="flex w-full flex-col pb-0 pt-6 md:w-1/2">
+      <span className="text-base font-bold leading-[normal] md:text-xl">
         Total Value Secured
       </span>
-      <div className="grid grid-cols-2 ">
+      <div className="mt-2.5 grid grid-cols-2 md:my-6">
         <ValueWithChange
           label="By Ethereum"
           value={formatCurrency(ethereumValue, 'usd')}
@@ -90,12 +90,12 @@ function SummaryTvsBox({
         />
       </div>
       <BreakdownWithTooltip items={breakdown} />
-      <div className="-mt-4 flex gap-4">
+      <div className="mt-1 flex gap-4 md:mt-2">
         {breakdown.map(({ label, className }) => (
           <BreakdownElement key={label} label={label} color={className} />
         ))}
       </div>
-      <div className="h-px w-full bg-divider md:hidden" />
+      <div className="mt-4 h-px w-full bg-divider md:hidden" />
     </PrimaryCard>
   )
 }
@@ -141,9 +141,9 @@ function SummaryThroughputBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col gap-6 py-6 md:w-1/2">
+    <PrimaryCard className="flex w-full flex-col  pb-6 pt-4 md:w-1/2">
       <div className="flex items-center gap-2">
-        <span className="text-base font-bold md:text-xl">
+        <span className="text-base font-bold leading-[normal] md:text-xl">
           Past Day Data Size
         </span>
         <Link
@@ -155,13 +155,15 @@ function SummaryThroughputBox({
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
         </Link>
       </div>
-      <ValueWithChange
-        label="Past day data posted to projects with public APIs"
-        value={formatBytes(totalPosted)}
-        change={calculatePercentageChange(totalPosted, totalPosted7d)}
-      />
+      <div className="mt-2.5 md:my-6">
+        <ValueWithChange
+          label="Past day data posted to projects with public APIs"
+          value={formatBytes(totalPosted)}
+          change={calculatePercentageChange(totalPosted, totalPosted7d)}
+        />
+      </div>
       <BreakdownWithTooltip items={breakdown} />
-      <div className="-mt-4 flex gap-4">
+      <div className="mt-1 flex gap-4 md:mt-2">
         {breakdown.map(({ label, className }) => (
           <BreakdownElement key={label} label={label} color={className} />
         ))}
@@ -181,7 +183,7 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <Breakdown className="h-1 w-full md:h-2" gap={0} values={items} />
+        <Breakdown className="mt-1 h-1 w-full md:h-2" gap={0} values={items} />
       </TooltipTrigger>
       <TooltipContent className="flex flex-col">
         {items.map((s) => (
@@ -216,16 +218,17 @@ function ValueWithChange({
   change,
 }: { label: string; value: string; change: number }) {
   return (
-    <div className="flex flex-col gap-2.5">
-      <span className="text-[13px] font-medium text-secondary md:text-xs">
+    <div className="flex flex-col gap-1.5 md:gap-2.5">
+      <span className="text-[13px] font-medium leading-[normal] text-secondary md:text-xs">
         {label}
       </span>
-      <div className="flex items-end gap-1.5">
+      <div className="flex items-end gap-0.5 md:gap-1.5">
         <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl">
           {value}
         </span>
         <PercentChange
           value={change}
+          className="mt-1"
           textClassName="text-xs md:text-base font-semibold"
         />
       </div>
