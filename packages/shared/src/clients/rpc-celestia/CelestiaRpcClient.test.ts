@@ -5,6 +5,135 @@ import type { HttpClient } from '../http/HttpClient'
 import { CelestiaRpcClient } from './CelestiaRpcClient'
 
 describe(CelestiaRpcClient.name, () => {
+  describe(CelestiaRpcClient.prototype.getLatestBlockNumber.name, () => {
+    it('returns the latest block number', async () => {
+      const mockBlockHeight = '12345'
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: {
+            height: mockBlockHeight,
+            txs_results: [],
+          },
+        }),
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getLatestBlockNumber()
+
+      expect(result).toEqual(Number(mockBlockHeight))
+      expect(http.fetch).toHaveBeenOnlyCalledWith('API_URL/block_results', {
+        method: 'GET',
+        redirect: 'follow',
+      })
+    })
+  })
+
+  describe(CelestiaRpcClient.prototype.getBlockWithTransactions.name, () => {
+    it('returns block with transactions for a specific block number', async () => {
+      const mockBlockHeight = '12345'
+      const mockTimestamp = '2024-02-07T10:00:00Z'
+
+      const http = mockObject<HttpClient>({
+        fetch: async (url: string) => {
+          if (url.includes('block_results')) {
+            return {
+              result: {
+                height: mockBlockHeight,
+                txs_results: [],
+              },
+            }
+          } else {
+            return {
+              result: {
+                block: {
+                  header: {
+                    time: mockTimestamp,
+                  },
+                },
+              },
+            }
+          }
+        },
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getBlockWithTransactions(Number(mockBlockHeight))
+
+      expect(result).toEqual({
+        number: Number(mockBlockHeight),
+        hash: 'UNSUPPORTED',
+        timestamp: UnixTime.fromDate(new Date(mockTimestamp)).toNumber(),
+        transactions: [],
+      })
+
+      expect(http.fetch).toHaveBeenCalledTimes(2)
+      expect(http.fetch).toHaveBeenNthCalledWith(
+        1,
+        'API_URL/block_results?height=12345',
+        {
+          method: 'GET',
+          redirect: 'follow',
+        },
+      )
+      expect(http.fetch).toHaveBeenNthCalledWith(
+        2,
+        'API_URL/block?height=12345',
+        {
+          method: 'GET',
+          redirect: 'follow',
+        },
+      )
+    })
+
+    it('returns block with transactions for latest block', async () => {
+      const mockBlockHeight = '12345'
+      const mockTimestamp = '2024-02-07T10:00:00Z'
+
+      const http = mockObject<HttpClient>({
+        fetch: async (url: string) => {
+          if (url.includes('block_results')) {
+            return {
+              result: {
+                height: mockBlockHeight,
+                txs_results: [],
+              },
+            }
+          } else {
+            return {
+              result: {
+                block: {
+                  header: {
+                    time: mockTimestamp,
+                  },
+                },
+              },
+            }
+          }
+        },
+      })
+      const rpc = mockClient({ http })
+
+      const result = await rpc.getBlockWithTransactions('latest')
+
+      expect(result).toEqual({
+        number: Number(mockBlockHeight),
+        hash: 'UNSUPPORTED',
+        timestamp: UnixTime.fromDate(new Date(mockTimestamp)).toNumber(),
+        transactions: [],
+      })
+
+      expect(http.fetch).toHaveBeenCalledTimes(2)
+      expect(http.fetch).toHaveBeenNthCalledWith(1, 'API_URL/block_results', {
+        method: 'GET',
+        redirect: 'follow',
+      })
+      expect(http.fetch).toHaveBeenNthCalledWith(2, 'API_URL/block', {
+        method: 'GET',
+        redirect: 'follow',
+      })
+    })
+  })
+
   describe(CelestiaRpcClient.prototype.getBlockTimestamp.name, () => {
     it('returns block timestamp', async () => {
       const mockTimestamp = '2024-02-06T12:00:00Z'

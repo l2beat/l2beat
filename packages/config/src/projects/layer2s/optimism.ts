@@ -27,7 +27,7 @@ import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailab
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import {
@@ -129,12 +129,12 @@ export const optimism: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.Other.L3HostChain,
-    Badge.Other.Governance,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
+    BADGES.Other.L3HostChain,
+    BADGES.Other.Governance,
   ],
   display: {
     name: 'OP Mainnet',
@@ -238,13 +238,15 @@ export const optimism: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xFF00000000000000000000000000000000000010',
-      sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xFF00000000000000000000000000000000000010',
+        sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
+      },
+    ],
     finality: {
       type: 'OPStack',
       // timestamp of the first blob tx

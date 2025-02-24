@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "polygon-pos",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE", // StateSender
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77" // RootChainManager"

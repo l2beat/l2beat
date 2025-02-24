@@ -1,4 +1,5 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database/dist/da-beat/data-availability/entity'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
@@ -17,6 +18,7 @@ export type DaThroughputDataPoint = [
 
 export const DaThroughputChartParams = z.object({
   range: DaThroughputTimeRange,
+  includeScalingOnly: z.boolean(),
 })
 export type DaThroughputChartParams = z.infer<typeof DaThroughputChartParams>
 
@@ -31,17 +33,28 @@ export function getDaThroughputChart(params: DaThroughputChartParams) {
 const getCachedDaThroughputChartData = cache(
   async ({
     range,
+    includeScalingOnly,
   }: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> => {
     const db = getDb()
     const days = rangeToDays(range)
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = days ? to.add(-days, 'days') : null
-    const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
-      ['ethereum', 'celestia', 'avail'],
-      [from, to],
-    )
+    const daLayerIds = ['ethereum', 'celestia', 'avail']
+    const throughput = includeScalingOnly
+      ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+          daLayerIds,
+          [from, to],
+        )
+      : await db.dataAvailability.getByProjectIdsAndTimeRange(daLayerIds, [
+          from,
+          to,
+        ])
+
+    if (throughput.length === 0) {
+      return []
+    }
     const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput)
+      groupByTimestampAndDaLayerId(throughput)
 
     const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
     return timestamps.map((timestamp) => {
@@ -58,23 +71,26 @@ const getCachedDaThroughputChartData = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
-function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
+function groupByTimestampAndDaLayerId(
+  records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
+) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
     const timestamp = record.timestamp.toNumber()
-    const projectId = record.projectId
+    const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = {}
     }
-    if (!result[timestamp][projectId]) {
-      result[timestamp][projectId] = Number(value)
+    if (!result[timestamp][daLayerId]) {
+      result[timestamp][daLayerId] = Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
+
   return {
     grouped: result,
     minTimestamp: new UnixTime(minTimestamp),

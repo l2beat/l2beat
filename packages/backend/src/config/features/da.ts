@@ -2,7 +2,7 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
 import { createHash } from 'crypto'
-import { assert, ProjectId, assertUnreachable } from '@l2beat/shared-pure'
+import { ProjectId, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import type { DataAvailabilityTrackingConfig } from '../Config'
 
 export async function getDaTrackingConfig(
@@ -49,7 +49,7 @@ export async function getDaTrackingConfig(
         20_000,
       ),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
-      startingBlock: 1,
+      startingBlock: 983042,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
@@ -58,7 +58,7 @@ export async function getDaTrackingConfig(
         type: 'baseLayer' as const,
         daLayer: 'celestia',
         projectId: ProjectId('celestia'),
-        sinceBlock: 1,
+        sinceBlock: 983042,
       },
     })
   }
@@ -97,35 +97,32 @@ async function getDaTrackingProjects(
   ps: ProjectService,
   enabledLayers: { name: string; startingBlock: number }[],
 ) {
-  const projects = (
-    await ps.getProjects({
-      select: ['daTrackingConfig'],
-      whereNot: ['isUpcoming'],
-    })
-  ).filter((p) =>
-    enabledLayers.find((l) => l.name === p.daTrackingConfig.daLayer),
-  )
-
-  return projects.map((project) => {
-    const layer = enabledLayers.find(
-      (l) => l.name === project.daTrackingConfig.daLayer,
-    )
-    assert(layer, `No layer found for ${project.daTrackingConfig.daLayer}`)
-
-    const sinceBlock =
-      layer.startingBlock > project.daTrackingConfig.sinceBlock
-        ? layer.startingBlock
-        : project.daTrackingConfig.sinceBlock
-
-    return {
-      configurationId: createDaTrackingId(project.daTrackingConfig),
-      config: {
-        ...project.daTrackingConfig,
-        projectId: project.id,
-        sinceBlock,
-      },
-    }
+  const projects = await ps.getProjects({
+    select: ['daTrackingConfig'],
+    whereNot: ['isUpcoming'],
   })
+
+  return projects
+    .flatMap((project) => {
+      return project.daTrackingConfig.map((config) => {
+        const layer = enabledLayers.find((l) => l.name === config.daLayer)
+        if (layer === undefined) {
+          return undefined // Layer disabled, do not create config
+        }
+
+        const sinceBlock = Math.max(layer.startingBlock, config.sinceBlock)
+
+        return {
+          configurationId: createDaTrackingId(config),
+          config: {
+            ...config,
+            projectId: project.id,
+            sinceBlock,
+          },
+        }
+      })
+    })
+    .filter(notUndefined)
 }
 
 function createDaTrackingId(config: ProjectDaTrackingConfig): string {

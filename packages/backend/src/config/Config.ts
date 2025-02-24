@@ -1,10 +1,11 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   ChainConfig,
   OnchainVerifier,
+  Project,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
   ChainId,
@@ -22,7 +23,6 @@ import type { FinalityProjectConfig } from './features/finality'
 export interface Config {
   readonly name: string
   readonly isReadonly: boolean
-  readonly projects: BackendProject[]
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
@@ -90,14 +90,21 @@ export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
-  readonly projects: BackendProject[]
+  readonly projects: Project<'tvlConfig', 'chainConfig'>[]
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly tvlCleanerEnabled: boolean
 }
 
+export interface TrackedTxProject {
+  readonly id: ProjectId
+  readonly isArchived: boolean
+  readonly configurations: TrackedTxConfigEntry[]
+}
+
 export interface TrackedTxsConfig {
+  readonly projects: TrackedTxProject[]
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string
@@ -176,6 +183,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
+  readonly updateMessagesRetentionPeriodDays: number
 }
 
 export interface VerifiersConfig {

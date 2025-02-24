@@ -19,7 +19,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuel')
@@ -75,7 +75,7 @@ export const fuel: Layer2 = {
       ],
     },
   },
-  badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.FuelVM, BADGES.DA.EthereumBlobs],
   type: 'layer2',
   config: {
     associatedTokens: ['FUEL'],
@@ -95,13 +95,15 @@ export const fuel: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
-      sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
+        sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+      },
+    ],
     trackedTxs: [
       {
         uses: [

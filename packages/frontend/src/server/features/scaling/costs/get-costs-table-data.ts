@@ -1,4 +1,4 @@
-import type { Layer2, Layer3 } from '@l2beat/config'
+import type { ProjectId } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
@@ -23,10 +23,10 @@ export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
 
 export const getCachedCostsTableData = cache(
   async (timeRange: CostsTimeRange) => {
-    const projects = getCostsProjects().filter((p) => !p.isArchived)
+    const projects = (await getCostsProjects()).filter((p) => !p.isArchived)
     const projectsCosts = await getCostsForProjects(projects, timeRange)
     const projectsActivity = await getLatestActivityForProjects(
-      projects,
+      projects.map((p) => p.id),
       timeRange,
     )
 
@@ -52,16 +52,13 @@ export const getCachedCostsTableData = cache(
 )
 
 async function getLatestActivityForProjects(
-  projects: (Layer2 | Layer3)[],
+  projects: ProjectId[],
   timeRange: CostsTimeRange,
 ) {
   const db = getDb()
   const range = getFullySyncedCostsRange(timeRange)
   const summedCounts =
-    await db.activity.getSummedUopsCountForProjectsAndTimeRange(
-      projects.map((p) => p.id),
-      range,
-    )
+    await db.activity.getSummedUopsCountForProjectsAndTimeRange(projects, range)
 
   return Object.fromEntries(
     summedCounts.map((record) => [record.projectId, record.uopsCount]),
@@ -97,8 +94,8 @@ function withTotal(data: LatestCostsProjectResponse) {
   }
 }
 
-function getMockCostsTableData(): CostsTableData {
-  const projects = getCostsProjects()
+async function getMockCostsTableData(): Promise<CostsTableData> {
+  const projects = await getCostsProjects()
 
   return Object.fromEntries(
     projects.map((p) => {

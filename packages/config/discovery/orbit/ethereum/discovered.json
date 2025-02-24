@@ -2,7 +2,7 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0xe15833534ee482fd3660328edbfc162efa539d0c39a7a108dc7ac78635b2b064",
+  "configHash": "0xe8f4f2cb39d366cb4628583df421eff5e5cb613f5ffbc0a8e06e29e797e046eb",
   "contracts": [
     {
       "name": "",

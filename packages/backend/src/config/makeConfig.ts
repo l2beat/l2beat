@@ -1,14 +1,8 @@
 import { join } from 'path'
-import { toBackendProject } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
-import {
-  type ChainConfig,
-  ProjectService,
-  bridges,
-  layer2s,
-} from '@l2beat/config'
+import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, type UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
@@ -20,6 +14,7 @@ import {
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfigurations } from './features/finality'
+import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getVerifiersConfig } from './features/verifiers'
@@ -44,8 +39,6 @@ export async function makeConfig(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const tvlConfig = getTvlConfig(flags, env, chains, minTimestampOverride)
-
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
@@ -55,8 +48,6 @@ export async function makeConfig(
   return {
     name,
     isReadonly,
-    // (sz-piotr) why are layer3s omitted here?
-    projects: [...layer2s, ...bridges].map(toBackendProject),
     clock: {
       minBlockTimestamp:
         minTimestampOverride ?? getEthereumMinTimestamp(chains),
@@ -117,26 +108,12 @@ export async function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl: flags.isEnabled('tvl') && tvlConfig,
-    trackedTxsConfig: flags.isEnabled('tracked-txs') && {
-      bigQuery: {
-        clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
-        privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
-        projectId: env.string('BIGQUERY_PROJECT_ID'),
-      },
-      // TODO: figure out how to set it for local development
-      minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
-      uses: {
-        liveness: flags.isEnabled('tracked-txs', 'liveness'),
-        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
-          aggregatorEnabled: flags.isEnabled(
-            'tracked-txs',
-            'l2costs',
-            'aggregator',
-          ),
-        },
-      },
-    },
+    tvl:
+      flags.isEnabled('tvl') &&
+      (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
+    trackedTxsConfig:
+      flags.isEnabled('tracked-txs') &&
+      (await getTrackedTxsConfig(ps, env, flags)),
     finality: flags.isEnabled('finality') && {
       configurations: getFinalityConfigurations(flags, env),
     },
@@ -174,13 +151,16 @@ export async function makeConfig(
         .map((chain) => getChainDiscoveryConfig(env, chain, chains)),
       cacheEnabled: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
       cacheUri: env.string(['DISCOVERY_CACHE_URI'], 'postgres'),
+      updateMessagesRetentionPeriodDays: env.integer(
+        ['UPDATE_MESSAGES_RETENTION_PERIOD_DAYS'],
+        30,
+      ),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',
     ),
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
     chainConfig: getChainConfig(env, chains),
     beaconApi: {

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zkfair",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861"],
   "names": {
     "0x9cb4706e20A18E59a48ffa7616d700A3891e1861": "Bridge",

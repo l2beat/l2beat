@@ -2,7 +2,7 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
-import { ActivityChart } from '~/components/chart/activity/activity-chart'
+import { ScalingActivityChart } from '~/components/chart/activity/scaling-activity-chart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -87,7 +87,7 @@ export function ScalingActivityTabs(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-5">
-            <ActivityChart
+            <ScalingActivityChart
               entries={entries.rollups}
               milestones={props.milestones}
               type="Rollups"
@@ -99,7 +99,7 @@ export function ScalingActivityTabs(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
-            <ActivityChart
+            <ScalingActivityChart
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
               hideScalingFactor
@@ -112,7 +112,7 @@ export function ScalingActivityTabs(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others" className="pt-5">
-            <ActivityChart
+            <ScalingActivityChart
               entries={entries.others}
               milestones={props.milestones}
               hideScalingFactor

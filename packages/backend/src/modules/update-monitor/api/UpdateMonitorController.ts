@@ -1,4 +1,3 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type { Database } from '@l2beat/database'
 import type {
   ConfigReader,
@@ -21,7 +20,6 @@ export class UpdateMonitorController {
 
   constructor(
     private readonly db: Database,
-    private readonly projects: BackendProject[],
     private readonly chains: DiscoveryChainConfig[],
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
@@ -38,9 +36,7 @@ export class UpdateMonitorController {
 
     const projects: Record<string, DashboardProject[]> = {}
     for (const chain of this.chains) {
-      const projectsToFill = chain.name === 'ethereum' ? this.projects : []
       projects[chain.name] = await getDashboardProjects(
-        projectsToFill,
         this.onDiskConfigs[chain.name],
         this.configReader,
         this.db,
@@ -73,5 +69,14 @@ export class UpdateMonitorController {
       diff,
       config,
     })
+  }
+
+  async getUpdates() {
+    const entries = await this.db.updateMessage.getAll()
+
+    return entries.map((entry) => ({
+      ...entry,
+      timestamp: entry.timestamp.toNumber(),
+    }))
   }
 }

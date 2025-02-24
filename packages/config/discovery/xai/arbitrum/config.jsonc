@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "xai",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9", // Inbox
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77", // L1ERC20Gateway

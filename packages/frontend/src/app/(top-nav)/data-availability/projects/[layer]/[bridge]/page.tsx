@@ -12,6 +12,7 @@ import {
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { ps } from '~/server/projects'
+import { HydrateClient } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
@@ -89,7 +90,7 @@ export default async function Page(props: Props) {
   const isNavigationEmpty = navigationSections.length === 0
 
   return (
-    <>
+    <HydrateClient>
       {!isNavigationEmpty && (
         <div className="sticky top-0 z-100 md:hidden">
           <MobileProjectNavigation sections={navigationSections} />
@@ -120,7 +121,7 @@ export default async function Page(props: Props) {
           </div>
         )}
       </ContentWrapper>
-    </>
+    </HydrateClient>
   )
 }
 

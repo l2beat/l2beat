@@ -1,3 +1,1078 @@
+Generated with discovered.json: 0x9de1eb4e15bb4859bc595fe7c1a116ec1c292006
+
+# Diff at Fri, 21 Feb 2025 12:11:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21892618
+- current block number: 21892618
+
+## Description
+
+Config related: Set orbit stack contract categories.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21892618 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract wstETHEscrow (0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a) {
+    +++ description: None
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x14797f5432f699Cb4d4dB04DF599B74952d78d7b) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract UpgradeExecutorAdmin (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract LPTL1Escrow (0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A) {
+    +++ description: None
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract GatewaysAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract L1Escrow (0xA10c7CE4b876998858b1a9E12b10092229539400) {
+    +++ description: None
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OutboxEntry (0xc4940069140142236D4065b866018f7b2BeC77fD) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1DaiGateway (0xD3B5b60020504bc3489D6949d545893982BA3011) {
+    +++ description: Counterpart of the L2DaiGateway. Allows for bridging DAI from L1 to L2.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+Generated with discovered.json: 0x54903cdfb5b0dbabfa14e0e80e389547805489b9
+
+# Diff at Fri, 21 Feb 2025 05:52:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@72fe705e53307d22cfc60842c4313d545aee913e block: 21887731
+- current block number: 21892618
+
+## Description
+
+Config related: All permissions from the Bridge are moved to the Outbox and a description is added to explain why the permissions are stuck there (and not on L2).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21887731 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions.
+      description:
+-        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1."
++        "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+      receivedPermissions:
++        [{"permission":"interact","from":"0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"propose transactions.","via":[{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x57Bd336d579A51938619271a7Cc137a46D0501B1","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0xa3A7B6F88361F48403514059F1F16C8E78d60EeC","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0xcEe284F754E854890e311e3280b767F80797180d","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200},{"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]}]
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}]
+    }
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.3.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.3.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.3.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.3.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.3.via.1.delay:
++        259200
+      issuedPermissions.3.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.3.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FundRetriever (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.0.via.2.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      issuedPermissions.2.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.2.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.2.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.2.via.1.delay:
++        259200
+      issuedPermissions.2.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.2.via.0.delay:
+-        259200
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract OutboxV0 (0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}
+      issuedPermissions.0.via.2.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract OutboxV1 (0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40) {
+    +++ description: None
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+      receivedPermissions:
+-        [{"permission":"interact","from":"0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0","description":"Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"cancel queued transactions.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"propose transactions."},{"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"update the minimum delay of the timelock.","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0","via":[{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x57Bd336d579A51938619271a7Cc137a46D0501B1","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xa3A7B6F88361F48403514059F1F16C8E78d60EeC","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0","via":[{"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xcEe284F754E854890e311e3280b767F80797180d","via":[{"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]},{"permission":"upgrade","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","via":[{"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"},{"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"},{"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}]}]
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","description":"propose transactions."}
+      values.mainOutboxAddress:
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9F43ab02cACc8e709b05936a92dC85b76D1523c4)
+    +++ description: None
+```
+
+```diff
+    contract L1ERC20Gateway (0xa3A7B6F88361F48403514059F1F16C8E78d60EeC) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}
+      issuedPermissions.0.via.2.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0) {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"}
+      issuedPermissions.0.via.2.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract L1CustomGateway (0xcEe284F754E854890e311e3280b767F80797180d) {
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.3:
++        {"address":"0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"}
+      issuedPermissions.0.via.2.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      issuedPermissions.5.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.5.via.3:
++        {"address":"0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"}
+      issuedPermissions.5.via.2.address:
+-        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      issuedPermissions.5.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.5.via.1.delay:
++        259200
+      issuedPermissions.5.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.5.via.0.delay:
+-        259200
+      issuedPermissions.2.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.2.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.2.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.2.via.1.delay:
++        259200
+      issuedPermissions.2.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.2.via.0.delay:
+-        259200
+      issuedPermissions.1.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.1.via.0:
++        {"address":"0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"}
+      issuedPermissions.0.to:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      issuedPermissions.0.via.2:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      issuedPermissions.0.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      issuedPermissions.0.via.1.delay:
++        259200
+      issuedPermissions.0.via.0.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      issuedPermissions.0.via.0.delay:
+-        259200
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xf716C9Ee355d7684Ef41d61388ed9C7B3673Bd9C)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x0599209835b4077475f0422fe398ff56ac0b4079
+
+# Diff at Thu, 20 Feb 2025 12:37:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 21815910
+- current block number: 21887612
+
+## Description
+
+Config related: Bold templates added
+
+## Watched changes
+
+```diff
+    contract Outbox (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      sourceHashes.1:
+-        "0xc90d60d6db95e55c93637eee14d0d8f4034a14d5f50fc0e8561e389073c9816a"
++        "0x9e054d18af00f58f7fa36e7a0fd5b04b9dacfb8c411d84c3591e57aa72faff9d"
+      values.$implementation:
+-        "0x0eA7372338a589e7f0b00E463a53AA464ef04e17"
++        "0x3FFf9BdC3ce99d3D587b0d06Aa7C4a10075193b4"
+      values.$pastUpgrades.1:
++        ["2025-02-12T14:00:11.000Z","0xe9788a104f8443b5900e54f8c887f0522d121487fc343a1ff90e1e6ed987967e",["0x3FFf9BdC3ce99d3D587b0d06Aa7C4a10075193b4"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.l2ToL1OutputId:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00000000000000000000000000000000ffffffffffffffffffffffffffffffff"
+      values.rollup:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x0bb7cd360bb26d8a487130df151eb05ce4afe4fd3452fcdbdd3cfa432e17cbb5"
++        "0x2ed1d03b24d3bd002e3beedd7f0891a044867ed42912798e50803900c26fd0b8"
+      values.$implementation:
+-        "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"
++        "0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7"
+      values.$pastUpgrades.5:
++        ["2025-02-12T14:00:11.000Z","0xe9788a104f8443b5900e54f8c887f0522d121487fc343a1ff90e1e6ed987967e",["0x98a58ADAb0f8A66A1BF4544d804bc0475dff32c7"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        7200
+      values.reader4844:
+-        "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097"
++        "0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca"
+      values.rollup:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      values.buffer:
++        {"bufferBlocks":14400,"max":14400,"threshold":150,"prevBlockNumber":21887498,"replenishRateInBasis":500,"prevSequencedBlockNumber":21887553}
+      values.isDelayBufferable:
++        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x2c785E954c376be0CEfF4a7Db92E053B0830F7c9)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6)
+    +++ description: None
+```
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.6.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      directlyReceivedPermissions.3.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3)
+    +++ description: None
+```
+
+```diff
+    contract Inbox (0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x6014bf86ee4c408054ad942b00365111c902b30d650ad8ed97b0cd56ca1d1e20"
++        "0x421aa98d340c2ad3e475ce29bb1e72660c213f0997591e567c0fd3d3ae2365a8"
+      values.$implementation:
+-        "0x5aED5f8A1e3607476F1f81c3d8fe126deB0aFE94"
++        "0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"
+      values.$pastUpgrades.9:
++        ["2025-02-12T14:00:11.000Z","0xe9788a104f8443b5900e54f8c887f0522d121487fc343a1ff90e1e6ed987967e",["0x7C058ad1D0Ee415f7e7f30e62DB1BCf568470a10"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.getProxyAdmin:
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      values.maxDataSize:
++        117964
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061)
+    +++ description: None
+```
+
+```diff
+    contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      directlyReceivedPermissions.7.from:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78)
+    +++ description: None
+```
+
+```diff
+    contract RollupEventInbox (0x57Bd336d579A51938619271a7Cc137a46D0501B1) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      sourceHashes.1:
+-        "0xcb5aa9193bb40ce04bdf027377926cf735cd52ee9823923cb55fce302ad76513"
++        "0x6ce471861570d55dc6e9a09337d990c13efb0c7abb47f36a5de48a9a7086f6e8"
+      values.$implementation:
+-        "0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
++        "0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5"
+      values.$pastUpgrades.1:
++        ["2025-02-12T14:00:11.000Z","0xe9788a104f8443b5900e54f8c887f0522d121487fc343a1ff90e1e6ed987967e",["0x6D576E220Cb44C3E8eF75D0EfBeb1Ff041e2E4A5"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.rollup:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x5C9F8663583Ad0A1c0009c871f8253DBF4767A18)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0)
+    +++ description: None
+```
+
+```diff
+    contract Bridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      template:
+-        "orbitstack/ArbitrumBridge"
++        "orbitstack/Bridge"
+      sourceHashes.1:
+-        "0x5dbde25ce90571f7dd8e189ec68615bd76cab9ddb0ba7690b721e9e03c70b6ed"
++        "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1"
+      description:
+-        "Contract used to relay governance action messages from Arbitrum One to Ethereum. It is also an escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
++        "Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging."
+      receivedPermissions.16.from:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      receivedPermissions.16.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.15.from:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
+      receivedPermissions.15.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.9.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.9.via.2:
++        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.9.via.1.address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.9.via.1.delay:
+-        259200
+      receivedPermissions.9.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.8.from:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      receivedPermissions.8.via.2:
+-        {"address":"0xE6841D92B0C345144506576eC13ECf5103aC7f49","delay":259200}
+      receivedPermissions.8.via.1.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      receivedPermissions.8.via.1.delay:
++        259200
+      receivedPermissions.8.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.0.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      values.$implementation:
+-        "0x1066CEcC8880948FE55e427E94F1FF221d626591"
++        "0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898"
+      values.$pastUpgrades.2:
++        ["2025-02-12T14:00:11.000Z","0xe9788a104f8443b5900e54f8c887f0522d121487fc343a1ff90e1e6ed987967e",["0x93e8f92327bFa8096F5F6ee5f2a49183D3B3b898"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.rollup:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x8D78382913467Cd25374C75BA918b0A723Bc2544)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (0x9E40625F52829Cf04bC4839F186D621ee33b0E67)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0xa328BAF257A937b7934429a5d8458d98693C6FC7)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xD0465e3356213869f1Fae38b3E67CBF4E873c5B6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      receivedPermissions.15.from:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      receivedPermissions.15.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
+      receivedPermissions.14.from:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0"
+      receivedPermissions.14.via.0.address:
+-        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.8.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
+      receivedPermissions.8.via.1:
++        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.8.via.0.address:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
++        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
+      receivedPermissions.7.from:
+-        "0x57Bd336d579A51938619271a7Cc137a46D0501B1"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+      receivedPermissions.7.via.1:
+-        {"address":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      receivedPermissions.7.via.0.address:
+-        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD"
++        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      receivedPermissions.0.from:
+-        "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"
++        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ParentToChildRewardRouter (0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999)
+    +++ description: Collects the excess stake when rival nodes are created and allows to send them to the L2 treasury.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract EdgeChallengeManager (0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0)
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@21815910 => .flat}/Bridge/Bridge.sol    |  579 ++-
+ .../ChallengeManager.sol => /dev/null              |  994 -----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../EdgeChallengeManager/EdgeChallengeManager.sol  | 3193 ++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |   18 +-
+ .../{.flat@21815910 => .flat}/Inbox/Inbox.sol      | 1450 +++---
+ .../OneStepProofEntry.sol                          |  656 +--
+ .../{.flat@21815910 => .flat}/OneStepProver0.sol   |  502 ++-
+ .../OneStepProverHostIo.sol                        |  643 +--
+ .../OneStepProverMath.sol                          |  101 +-
+ .../OneStepProverMemory.sol                        |  421 +-
+ .../{.flat@21815910 => .flat}/Outbox/Outbox.sol    |  332 +-
+ .../ethereum/.flat/ParentToChildRewardRouter.sol   |  514 +++
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  140 -
+ .../dev/null                                       |  132 -
+ .../dev/null                                       |  140 -
+ .../RollupEventInbox/RollupEventInbox.sol          |  115 +-
+ .../RollupProxy/RollupAdminLogic.1.sol             | 2739 ++++++------
+ .../RollupProxy/RollupProxy.p.sol                  |  106 +-
+ .../RollupProxy/RollupUserLogic.2.sol              | 4620 ++++++++++----------
+ .../SequencerInbox/SequencerInbox.sol              | 1008 +++--
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  443 --
+ .../Validator/Validator.sol => /dev/null           |  554 ---
+ .../GnosisSafe.sol => /dev/null                    |  953 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../.flat@21815910/ValidatorUtils.sol => /dev/null |  323 --
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  629 ---
+ .../ValidatorWallet.sol => /dev/null               |  769 ----
+ 38 files changed, 11011 insertions(+), 17110 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21815910 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
 Generated with discovered.json: 0x199f45c208ed1e8e6ec0d90b461838a057d5fa5e
 
 # Diff at Wed, 12 Feb 2025 18:43:34 GMT:

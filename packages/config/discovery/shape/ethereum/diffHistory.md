@@ -1,4 +1,131 @@
-Generated with discovered.json: 0x51798b9eb85602e8ec20abaa7b4b98c2029640e9
+Generated with discovered.json: 0x1e7c41824d9f593876bd286dded52cd2e5d86ba4
+
+# Diff at Fri, 21 Feb 2025 13:26:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829672
+- current block number: 21895001
+
+## Description
+
+PermissionedDisputeGame upgraded to known version.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) {
+    +++ description: None
+      directlyReceivedPermissions.5.from:
+-        "0x753355FE25E5592345Ac426DF2F6325E658575D1"
++        "0x846d9469BAaF481f8516f7c1d03990672B68CB09"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract DisputeGameFactory (0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0xeFcb9D8FD3e21346a26791359a015c2304582238"
++        "0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x753355FE25E5592345Ac426DF2F6325E658575D1)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.5.from:
+-        "0x753355FE25E5592345Ac426DF2F6325E658575D1"
++        "0x846d9469BAaF481f8516f7c1d03990672B68CB09"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xeFcb9D8FD3e21346a26791359a015c2304582238)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x846d9469BAaF481f8516f7c1d03990672B68CB09)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@21829672 => .flat}/MIPS.sol    | 444 +++++++++++++++------
+ .../PermissionedDisputeGame.sol                    | 408 +++++++++----------
+ 2 files changed, 507 insertions(+), 345 deletions(-)
+```
+
+Generated with discovered.json: 0x71b7102e0ff332a1aa972b3b99d8693931ea21bd
+
+# Diff at Fri, 21 Feb 2025 09:00:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829672
+- current block number: 21829672
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829672 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x2b18602877181C3cB72C687E2A771E123A3788E3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0xda0183afeacdd52205d42f7b68fd6531164f5729
 
 # Diff at Wed, 12 Feb 2025 10:00:21 GMT:
 

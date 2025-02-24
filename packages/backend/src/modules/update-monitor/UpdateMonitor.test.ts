@@ -296,6 +296,7 @@ describe(UpdateMonitor.name, () => {
         ChainId.ETHEREUM,
         [],
         [],
+        TIMESTAMP,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenNthCalledWith(
         2,
@@ -305,6 +306,7 @@ describe(UpdateMonitor.name, () => {
         ChainId.ETHEREUM,
         [],
         [],
+        TIMESTAMP,
       )
     })
 

@@ -1,14 +1,16 @@
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   ChainId,
   EthereumAddress,
   ProjectId,
   StringWithAutocomplete,
+  Token,
+  TokenBridgedUsing,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -112,7 +114,7 @@ export interface ScalingProject {
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
-  badges?: BadgeId[]
+  badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -137,7 +139,7 @@ export interface ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
-  daTracking?: ProjectDaTrackingConfig
+  daTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface ScalingProjectUpgradeability {
@@ -483,7 +485,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
-  liveness?: Layer2LivenessConfig
+  liveness?: ProjectLivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
 }
@@ -543,7 +545,7 @@ interface SharedBridge {
   untilTimestamp?: UnixTime
 }
 
-export interface Layer2LivenessConfig {
+export interface ProjectLivenessConfig {
   duplicateData: {
     from: TrackedTxsConfigSubtype
     to: TrackedTxsConfigSubtype
@@ -813,17 +815,18 @@ export interface BaseProject {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
-  // tvlConfig
+  tvlConfig?: ProjectTvlConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
+  livenessConfig?: ProjectLivenessConfig
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
-  // trackedTxsConfig
+  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
-  daTrackingConfig?: ProjectDaTrackingConfig
+  daTrackingConfig?: ProjectDaTrackingConfig[]
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
@@ -895,10 +898,15 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
-  badges: ScalingProjectBadge[] | undefined
+  badges: Badge[] | undefined
 }
 
-export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
+export interface Badge {
+  id: string
+  type: string
+  name: string
+  description: string
+}
 
 export type ScalingProjectStage =
   | 'Not applicable'
@@ -973,12 +981,12 @@ export interface DaConsensusAlgorithm {
 export interface DaLayerThroughput {
   /**
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   size: number
   /**
    * Desired size of blob data per block. Should be less than or equal to size.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   target?: number
   /**
@@ -1118,4 +1126,23 @@ export interface ProjectContract {
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlConfig {
+  escrows: ProjectTvlEscrow[]
+  associatedTokens: string[]
+}
+
+/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlEscrow {
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  tokens: (Token & { isPreminted: boolean })[]
+  chain: string
+  includeInTotal?: boolean
+  source?: ProjectEscrow['source']
+  bridgedUsing?: TokenBridgedUsing
+  sharedEscrow?: SharedEscrow
 }

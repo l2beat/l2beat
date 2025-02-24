@@ -3,7 +3,7 @@ import { NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
@@ -94,11 +94,11 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 export const nova: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
-    Badge.VM.WasmVM,
-    Badge.DA.DAC,
-    Badge.Stack.Nitro,
-    Badge.Other.Governance,
-    Badge.Other.L3HostChain,
+    BADGES.VM.WasmVM,
+    BADGES.DA.DAC,
+    BADGES.Stack.Nitro,
+    BADGES.Other.Governance,
+    BADGES.Other.L3HostChain,
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,

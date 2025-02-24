@@ -26,7 +26,7 @@ import { formatChallengePeriod, formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import {
@@ -127,11 +127,11 @@ export const base: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.Other.L3HostChain,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
+    BADGES.Other.L3HostChain,
   ],
   display: {
     name: 'Base',
@@ -207,13 +207,15 @@ export const base: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1 },
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+        sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+      },
+    ],
     finality: {
       type: 'OPStack',
       minTimestamp: new UnixTime(1710375515),

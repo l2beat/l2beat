@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('bob')
@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: Layer2 = opStackL2({
   addedAt: new UnixTime(1704267653), // 2024-01-03T07:40:53Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

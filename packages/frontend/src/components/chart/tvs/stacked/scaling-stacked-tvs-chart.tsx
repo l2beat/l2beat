@@ -4,8 +4,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { useScalingFilterValues } from '~/app/(side-nav)/scaling/_components/scaling-filter-context'
-import { Chart } from '~/components/chart/core/chart'
-import { ChartProvider } from '~/components/chart/core/chart-provider'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
@@ -15,15 +13,12 @@ import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/project-filter-utils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import { formatCurrency } from '~/utils/number-format/format-currency'
-import { ChartControlsWrapper } from '../../core/chart-controls-wrapper'
+import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
+import { getChartRange } from '../../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../tvs-chart-header'
 import { TvsChartTimeRangeControls } from '../tvs-chart-time-range-controls'
-import { StackedTvsChartHover } from './stacked-tvs-chart-hover'
-import { StackedTvsChartLegend } from './stacked-tvs-chart-legend'
-import { useStackedTvsChartRenderParams } from './use-stacked-tvs-chart-render-params'
-
+import { StackedTvsChart } from './stacked-tvs-chart'
 interface Props {
   milestones: Milestone[]
   entries: ScalingTvsEntry[]
@@ -59,52 +54,86 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     previewRecategorisation: checked,
   })
 
-  const { columns, chartRange, valuesStyle, change, total } =
-    useStackedTvsChartRenderParams({
-      milestones,
-      unit,
-      data,
-    })
+  const chartData = useMemo(
+    () =>
+      data?.map(([timestamp, native, canonical, external, ethPrice]) => {
+        const divider = unit === 'usd' ? 100 : ethPrice
+        return {
+          timestamp,
+          native: native / divider,
+          canonical: canonical / divider,
+          external: external / divider,
+        }
+      }),
+    [data, unit],
+  )
+
+  const chartRange = getChartRange(chartData)
+  const stats = getStats(chartData)
 
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={valuesStyle}
-      formatYAxisLabel={(value: number) => formatCurrency(value, unit)}
-      range={timeRange}
-      isLoading={isLoading}
-      renderHoverContents={(data) => (
-        <StackedTvsChartHover {...data} unit={unit} />
-      )}
-    >
-      <section className="flex flex-col gap-2">
-        <TvsChartHeader
-          unit={unit}
-          value={total?.[unit]}
-          change={change}
-          range={timeRange}
-          timeRange={chartRange}
+    <section>
+      <TvsChartHeader
+        unit={unit}
+        value={stats?.total}
+        change={stats?.change}
+        range={timeRange}
+        timeRange={chartRange}
+      />
+      <StackedTvsChart
+        className="mb-2 mt-4"
+        data={chartData}
+        milestones={milestones}
+        unit={unit}
+        isLoading={isLoading}
+      />
+      <ChartControlsWrapper>
+        <TvsChartUnitControls unit={unit} setUnit={setUnit}>
+          <Checkbox
+            name="excludeAssociatedTokens"
+            checked={excludeAssociatedTokens}
+            onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
+          >
+            Exclude associated tokens
+          </Checkbox>
+        </TvsChartUnitControls>
+        <TvsChartTimeRangeControls
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
         />
-        <Chart className="mt-2" />
-        <StackedTvsChartLegend />
-        <ChartControlsWrapper>
-          <TvsChartUnitControls unit={unit} setUnit={setUnit}>
-            <Checkbox
-              name="excludeAssociatedTokens"
-              checked={excludeAssociatedTokens}
-              onCheckedChange={(checked) =>
-                setExcludeAssociatedTokens(!!checked)
-              }
-            >
-              Exclude associated tokens
-            </Checkbox>
-          </TvsChartUnitControls>
-          <TvsChartTimeRangeControls
-            timeRange={timeRange}
-            setTimeRange={setTimeRange}
-          />
-        </ChartControlsWrapper>
-      </section>
-    </ChartProvider>
+      </ChartControlsWrapper>
+    </section>
   )
+}
+
+function getStats(
+  data:
+    | {
+        timestamp: number
+        native: number
+        canonical: number
+        external: number
+      }[]
+    | undefined,
+) {
+  const oldestDataPoint = data?.at(0)
+  const newestDataPoint = data?.at(-1)
+  if (!oldestDataPoint || !newestDataPoint) {
+    return undefined
+  }
+
+  const total =
+    newestDataPoint.native +
+    newestDataPoint.canonical +
+    newestDataPoint.external
+  const oldestTotal =
+    oldestDataPoint.native +
+    oldestDataPoint.canonical +
+    oldestDataPoint.external
+  const change = total / oldestTotal - 1
+
+  return {
+    total,
+    change,
+  }
 }

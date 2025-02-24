@@ -30,7 +30,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('paradex')
@@ -71,10 +71,10 @@ export const paradex: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
   ],
   display: {
     name: 'Paradex',
@@ -119,13 +119,15 @@ export const paradex: Layer2 = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
-      sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+        sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
+      },
+    ],
     trackedTxs: [
       {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
