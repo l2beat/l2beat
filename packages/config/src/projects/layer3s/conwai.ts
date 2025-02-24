@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const conwai: Layer3 = underReviewL3({
@@ -8,10 +8,10 @@ export const conwai: Layer3 = underReviewL3({
   capability: 'universal',
   addedAt: new UnixTime(1739364151),
   badges: [
-    Badge.L3ParentChain.Arbitrum,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
-    Badge.RaaS.Caldera,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+    BADGES.RaaS.Caldera,
   ],
   hostChain: ProjectId('arbitrum'),
   display: {

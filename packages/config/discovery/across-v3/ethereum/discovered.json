@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 21802758,
-  "configHash": "0xd511b6cf2b02d9f15d169dddc8a81598aefd1d73bd59664384ca9fa80718c8bf",
+  "configHash": "0x3450905e72ba8134c04e10a61b428272ced78d5adce09a5d24f965b4c9110317",
   "contracts": [
     {
       "name": "Zora_Adapter",

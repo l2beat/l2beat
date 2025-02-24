@@ -21,7 +21,7 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -55,7 +55,7 @@ export const morph: Layer2 = {
   id: ProjectId('morph'),
   capability: 'universal',
   addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Morph',

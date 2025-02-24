@@ -15,7 +15,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -33,7 +33,7 @@ export const immutablezkevm: Layer2 = {
   id: ProjectId('immutablezkevm'),
   capability: 'universal',
   addedAt: new UnixTime(1707318380), // 2024-02-07T15:06:20Z
-  badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

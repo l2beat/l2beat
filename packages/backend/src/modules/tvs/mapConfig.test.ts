@@ -1,5 +1,4 @@
-import { toBackendProject } from '@l2beat/backend-shared'
-import { layer2s } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
@@ -12,14 +11,14 @@ import { type Token, TokenId, type TvsConfig } from './types'
 
 describe(mapConfig.name, () => {
   it("should map arbitrum's escrows to tokens", async () => {
-    const arbitrum = layer2s.find((l) => l.id === ProjectId('arbitrum'))
-
+    const ps = new ProjectService()
+    const arbitrum = await ps.getProject({
+      id: ProjectId('arbitrum'),
+      select: ['tvlConfig', 'chainConfig'],
+    })
     assert(arbitrum, 'Arbitrum not found')
-    assert(arbitrum.chainConfig, 'Arbitrum chain config not defined')
 
-    const backendProject = toBackendProject(arbitrum)
-
-    const result = mapConfig(backendProject, arbitrum.chainConfig)
+    const result = mapConfig(arbitrum, arbitrum.chainConfig)
 
     expect(result.projectId).toEqual(ProjectId('arbitrum'))
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)

@@ -1,10 +1,12 @@
 import type { Project } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { featureFlags } from '~/consts/feature-flags'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/get-da-throughput-table'
+import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/is-throughput-synced'
 import { api } from '~/trpc/server'
 
 export async function getDaThroughputSection(
-  project: Project<'daLayer' | 'statuses' | 'display'>,
+  project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
   if (!featureFlags.daThroughput) return undefined
 
@@ -19,6 +21,11 @@ export async function getDaThroughputSection(
 
   if (!projectData) return undefined
 
+  const notSyncedStatus = getThroughputSyncWarning(
+    new UnixTime(projectData.syncedUntil),
+    { shorter: true },
+  )
+
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
@@ -31,5 +38,10 @@ export async function getDaThroughputSection(
         }
       : undefined,
     totalPosted: projectData.totalPosted,
+    syncStatus: {
+      warning: notSyncedStatus,
+      isSynced: !notSyncedStatus,
+    },
+    milestones: project.milestones ?? [],
   }
 }

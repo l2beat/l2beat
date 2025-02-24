@@ -4,7 +4,7 @@ import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('rss3')
@@ -51,7 +51,7 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
     bridge: DA_BRIDGES.NONE,
-    badge: Badge.DA.NearDA,
+    badge: BADGES.DA.NearDA,
   },
   associatedTokens: ['RSS3'],
   discovery,

@@ -2,13 +2,6 @@ import { z } from 'zod'
 import type { EthereumAddress } from './EthereumAddress'
 import type { Hash256 } from './Hash256'
 
-export type StackCategory = z.infer<typeof StackCategory>
-export const StackCategory = z.enum([
-  'Core',
-  'Gateways&Escrows',
-  'Upgrades&Governance',
-])
-
 export type ContractValueType = z.infer<typeof ContractValueType>
 export const ContractValueType = z.enum([
   'CODE_CHANGE',
@@ -91,17 +84,22 @@ export interface Meta {
   issuedPermissions?: IssuedPermission[]
   receivedPermissions?: ReceivedPermission[]
   directlyReceivedPermissions?: ReceivedPermission[]
-  categories?: StackCategory[]
   types?: ContractValueType[]
   description?: string
   severity?: ContractFieldSeverity
   references?: ExternalReference[]
+  category?: ContractCategory
 }
 
 export type EoaParameters = {
   name?: string
   address: EthereumAddress
 } & Meta
+
+export interface ContractCategory {
+  name: string
+  priority: number
+}
 
 export type ContractParameters = {
   name: string

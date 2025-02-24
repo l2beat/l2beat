@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
+import type { Milestone } from '@l2beat/config'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -42,11 +43,16 @@ interface Props {
     | undefined
   projectId: ProjectId
   isLoading: boolean
+  showMax: boolean
+  milestones: Milestone[]
 }
+
 export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   isLoading,
   projectId,
+  showMax,
+  milestones,
 }: Props) {
   const { denominator, unit } = getDaDataParams(dataWithConfiguredThroughputs)
 
@@ -71,6 +77,7 @@ export function ProjectDaAbsoluteThroughputChart({
       data={chartData}
       className="mb-2"
       isLoading={isLoading}
+      milestones={milestones}
     >
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
@@ -88,7 +95,6 @@ export function ProjectDaAbsoluteThroughputChart({
           )}
           {projectId === 'avail' && <EmeraldFillGradientDef id="avail-fill" />}
         </defs>
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
@@ -103,28 +109,35 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           dot={false}
         />
-        <Area
-          dataKey="projectTarget"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectTarget?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-          }
-          dot={false}
-        />
-        <Area
-          dataKey="projectMax"
-          isAnimationActive={false}
-          fillOpacity={0}
-          stroke={projectChartMeta.projectMax?.color}
-          strokeWidth={2}
-          strokeDasharray={
-            projectChartMeta.projectMax?.indicatorType.strokeDasharray
-          }
-          dot={false}
-        />
+        {showMax && (
+          <Area
+            dataKey="projectTarget"
+            isAnimationActive={false}
+            fillOpacity={0}
+            stroke={projectChartMeta.projectTarget?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+            }
+            type="stepAfter"
+            dot={false}
+          />
+        )}
+        {showMax && (
+          <Area
+            dataKey="projectMax"
+            isAnimationActive={false}
+            fillOpacity={0}
+            stroke={projectChartMeta.projectMax?.color}
+            strokeWidth={2}
+            strokeDasharray={
+              projectChartMeta.projectMax?.indicatorType.strokeDasharray
+            }
+            type="stepAfter"
+            dot={false}
+          />
+        )}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
         {getCommonChartComponents({
           data: chartData,
           isLoading,
@@ -188,17 +201,17 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'ethereum':
       return {
         project: {
-          label: 'Ethereum',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-ethereum))',
           indicatorType: { shape: 'line' },
         },
         projectTarget: {
-          label: 'Ethereum Target',
+          label: 'Target capacity',
           color: 'hsl(var(--chart-ethereum-secondary))',
           indicatorType: { shape: 'line', strokeDasharray: '9 3' },
         },
         projectMax: {
-          label: 'Ethereum Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-ethereum))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
@@ -206,12 +219,12 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'celestia':
       return {
         project: {
-          label: 'Celestia',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-da-celestia))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
-          label: 'Celestia Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-da-celestia))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
@@ -219,12 +232,12 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'avail':
       return {
         project: {
-          label: 'Avail',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-da-avail))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
-          label: 'Avail Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-da-avail))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },

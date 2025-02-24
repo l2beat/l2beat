@@ -1,9 +1,9 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import { Logger } from '@l2beat/backend-tools'
 import type { AnomalyRecord, Database, LivenessRecord } from '@l2beat/database'
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
@@ -15,11 +15,11 @@ const MIN = NOW.add(-100, 'days')
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
-const MOCK_PROJECTS = [
-  mockObject<BackendProject>({
-    projectId: ProjectId('mocked-project'),
+const MOCK_PROJECTS: TrackedTxProject[] = [
+  {
+    id: ProjectId('mocked-project'),
     isArchived: false,
-    trackedTxsConfig: [
+    configurations: [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
@@ -27,7 +27,7 @@ const MOCK_PROJECTS = [
         untilTimestamp: UnixTime.now(),
       }),
     ],
-  }),
+  },
 ]
 
 const MOCK_CONFIGURATIONS = [
@@ -72,7 +72,7 @@ describe(AnomaliesIndexer.name, () => {
       const mockAnomalies: AnomalyRecord[] = [
         {
           timestamp: NOW.add(-1, 'days'),
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           duration: 100,
         },
@@ -111,7 +111,7 @@ describe(AnomaliesIndexer.name, () => {
       const mockAnomalies: AnomalyRecord[] = [
         {
           timestamp: NOW.add(-1, 'days'),
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           duration: 100,
         },
@@ -192,19 +192,19 @@ describe(AnomaliesIndexer.name, () => {
 
       const mockAnomalies: AnomalyRecord[] = [
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           timestamp: NOW,
           duration: 3600,
         },
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'proofSubmissions',
           timestamp: NOW,
           duration: 3600,
         },
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'stateUpdates',
           timestamp: NOW,
           duration: 3600,
@@ -229,18 +229,18 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockDetectAnomalies).toHaveBeenNthCalledWith(
         1,
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         mockLivenessRecords.map((r) => ({
           ...r,
-          ...MOCK_PROJECTS[0].trackedTxsConfig![0],
+          ...MOCK_PROJECTS[0].configurations[0],
         })),
         NOW,
       )
 
       expect(mockDetectAnomalies).toHaveBeenNthCalledWith(
         2,
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'stateUpdates',
         [],
         NOW,
@@ -248,7 +248,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockDetectAnomalies).toHaveBeenNthCalledWith(
         3,
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'proofSubmissions',
         [],
         NOW,
@@ -263,7 +263,7 @@ describe(AnomaliesIndexer.name, () => {
       const indexer = createIndexer({ tag: 'no-data' })
 
       const result = indexer.detectAnomalies(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         [],
         NOW,
@@ -286,7 +286,7 @@ describe(AnomaliesIndexer.name, () => {
       )
 
       const result = indexer.detectAnomalies(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         records,
         NOW,
@@ -309,7 +309,7 @@ describe(AnomaliesIndexer.name, () => {
       )
 
       const result = indexer.detectAnomalies(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         records,
         lastHour,
@@ -333,7 +333,7 @@ describe(AnomaliesIndexer.name, () => {
       )
 
       const result = indexer.detectAnomalies(
-        MOCK_PROJECTS[0].projectId,
+        MOCK_PROJECTS[0].id,
         'batchSubmissions',
         records,
         lastHour,
@@ -341,7 +341,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(result).toEqual([
         {
-          projectId: MOCK_PROJECTS[0].projectId,
+          projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
           timestamp: lastHour.add(-1 * anomalyDuration, 'hours'),
           duration: anomalyDuration * 3600,

@@ -21,7 +21,7 @@ import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
 
-const TEMPLATES_PATH = path.join('discovery', '_templates')
+export const TEMPLATES_PATH = path.join('discovery', '_templates')
 const TEMPLATE_SHAPE_FOLDER = 'shape'
 
 interface ShapeCriteria {

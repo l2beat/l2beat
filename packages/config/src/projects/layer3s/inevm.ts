@@ -3,7 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('inevm', 'arbitrum')
 export const inevm: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1730991877), // 2024-11-07T15:04:37+00:00
   additionalPurposes: ['Interoperability'],
-  additionalBadges: [Badge.RaaS.Caldera, Badge.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.DA.DAC],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -47,7 +47,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  // gasTokens: ['INJ'],
+  gasTokens: { untracked: ['INJ'] },
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   rpcUrl: 'https://inevm.calderachain.xyz/http',
   discovery,

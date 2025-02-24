@@ -1,22 +1,32 @@
 'use client'
 
-import type { DaLayerThroughput } from '@l2beat/config'
+import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
-import { ChartTimeRange } from '~/components/core/chart/chart-time-range'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
+import { Checkbox } from '~/components/core/checkbox'
 import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import type { ProjectChartDataWithConfiguredThroughput } from './project-da-absolute-throughput-chart'
 import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughput-chart'
 
+interface Props {
+  projectId: ProjectId
+  configuredThroughputs: DaLayerThroughput[]
+  milestones: Milestone[]
+}
+
 export function ProjectDaThroughputChart({
   projectId,
   configuredThroughputs,
-}: { projectId: ProjectId; configuredThroughputs: DaLayerThroughput[] }) {
+  milestones,
+}: Props) {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
+  const [showMax, setShowMax] = useState(false)
+
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
     projectId,
@@ -34,22 +44,33 @@ export function ProjectDaThroughputChart({
 
   return (
     <div>
-      <div className="mt-4 flex justify-between">
-        <ChartTimeRange range={chartRange} />
-        <ChartTimeRangeControls
-          name="Range"
-          value={range}
-          setValue={setRange}
-          options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
-            value: v,
-            label: v.toUpperCase(),
-          }))}
-        />
+      <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
+        <ProjectChartTimeRange range={chartRange} />
+        <div className="flex justify-between gap-1">
+          <Checkbox
+            name="showMainnetActivity"
+            checked={showMax}
+            onCheckedChange={(state) => setShowMax(!!state)}
+          >
+            Show maximum
+          </Checkbox>
+          <ChartTimeRangeControls
+            name="Range"
+            value={range}
+            setValue={setRange}
+            options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+              value: v,
+              label: v.toUpperCase(),
+            }))}
+          />
+        </div>
       </div>
       <ProjectDaAbsoluteThroughputChart
         projectId={projectId}
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
+        showMax={showMax}
+        milestones={milestones}
       />
     </div>
   )

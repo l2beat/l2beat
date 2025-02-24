@@ -1,6 +1,6 @@
 'use client'
 
-import { assertUnreachable, notUndefined } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import { groupBy } from 'lodash'
 import Image from 'next/image'
@@ -29,13 +29,6 @@ interface Props {
   recentlyAdded: SearchBarProject[]
 }
 
-function normalizeTVS(tvs: number, minTVS: number, maxTVS: number): number {
-  if (maxTVS === minTVS) {
-    return 1
-  }
-  return (tvs - minTVS) / (maxTVS - minTVS)
-}
-
 export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const { track } = useTracking()
@@ -55,10 +48,6 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [setOpen])
 
-  const tvsValues = allProjects.map((p) => p.tvs).filter(notUndefined)
-  const minTVS = Math.min(...tvsValues)
-  const maxTVS = Math.max(...tvsValues)
-
   const filteredProjects = useMemo(
     () =>
       value === ''
@@ -67,30 +56,11 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
             .go(value, allProjects, {
               limit: 15,
               keys: ['name', (e) => e.tags?.join() ?? ''],
-              scoreFn: (match) => {
-                const score =
-                  match.score *
-                  (match.obj.category === 'zkCatalog' || match.obj.isUpcoming
-                    ? 0.9
-                    : 1)
-
-                const normalizedTVS = normalizeTVS(
-                  match.obj.tvs ?? 0,
-                  minTVS,
-                  maxTVS,
-                )
-
-                const tvsWeight = 0.65
-                const fuzzysortWeight = 1 - tvsWeight
-
-                const finalScore =
-                  score * fuzzysortWeight + normalizedTVS * tvsWeight
-
-                return finalScore
-              },
+              scoreFn: (match) =>
+                match.score * (match.obj.category === 'zkCatalog' ? 0.9 : 1),
             })
             .map((match) => match.obj),
-    [value, recentlyAdded, allProjects, minTVS, maxTVS],
+    [value, recentlyAdded, allProjects],
   )
 
   const filteredPages = useMemo(

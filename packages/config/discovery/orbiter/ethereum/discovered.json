@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0x3f94bc27e9ae812983bc87dfa91fc8099550e1529fdeb624fc240f7ea34a9f00",
+  "configHash": "0x4742a5e06fe0729cc697249415d36495ea280f44abe23f02118c4e0581d37c35",
   "contracts": [
     {
       "name": "OBSource",
