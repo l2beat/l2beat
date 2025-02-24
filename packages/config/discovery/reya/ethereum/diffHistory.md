@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7cde74a6f84ce04638362c5334ed5a8969cbc5bc
 
 ## Description
 
-late addition to the gelato validator and sequencer adding operation (see other gelato chains).
+Validator and sequencer removed.
 
 ## Watched changes
 
