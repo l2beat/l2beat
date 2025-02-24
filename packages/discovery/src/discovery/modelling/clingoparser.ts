@@ -16,6 +16,7 @@ const clingoFactGrammar = grammar(String.raw`
   }
 `)
 
+// Cast properly formed `cons lists` to arrays, and `nil` to `undefined`.
 const semantics = clingoFactGrammar.createSemantics().addOperation('toValue', {
   Fact(atom, _open, paramList, _close) {
     return {
