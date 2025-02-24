@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const xrone: Layer3 = underReviewL3({
@@ -9,11 +9,11 @@ export const xrone: Layer3 = underReviewL3({
   addedAt: new UnixTime(1737469445), // 2025-01-21T14:24:03+00:00
   hostChain: ProjectId('arbitrum'),
   badges: [
-    Badge.RaaS.Caldera,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.DA.DAC,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
+    BADGES.RaaS.Caldera,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
   ],
   display: {
     name: 'XR One',

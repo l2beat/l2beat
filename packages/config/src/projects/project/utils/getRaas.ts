@@ -1,9 +1,9 @@
-import { type BadgeId, badges } from '../../badges'
+import type { Badge } from '../../../types'
 
-export function getRaas(projectBadges: BadgeId[] | undefined) {
-  const badge = projectBadges?.find((id) => badges[id].type === 'RaaS')
+export function getRaas(badges: Badge[] | undefined) {
+  const badge = badges?.find((b) => b.type === 'RaaS')
   if (!badge) {
     return undefined
   }
-  return badges[badge].display.name
+  return badge.name
 }

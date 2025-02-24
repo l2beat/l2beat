@@ -1,13 +1,13 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 
 export const shibarium: Layer2 = underReviewL2({
   id: 'shibarium',
   capability: 'universal',
   addedAt: new UnixTime(1738081310), // 2025-01-28T16:21:50+00:00
-  badges: [Badge.VM.EVM, Badge.DA.CustomDA],
+  badges: [BADGES.VM.EVM, BADGES.DA.CustomDA],
   display: {
     name: 'Shibarium',
     slug: 'shibarium',

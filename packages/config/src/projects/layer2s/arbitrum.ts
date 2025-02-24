@@ -3,7 +3,7 @@ import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -81,10 +81,10 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 export const arbitrum: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
-    Badge.VM.WasmVM,
-    Badge.Stack.Nitro,
-    Badge.Other.Governance,
-    Badge.Other.L3HostChain,
+    BADGES.VM.WasmVM,
+    BADGES.Stack.Nitro,
+    BADGES.Other.Governance,
+    BADGES.Other.L3HostChain,
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,

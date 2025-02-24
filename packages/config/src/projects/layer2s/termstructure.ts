@@ -9,7 +9,7 @@ import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('termstructure')
@@ -51,9 +51,9 @@ export const termstructure: Layer2 = {
     mode: DA_MODES.STATE_DIFFS,
   },
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.ZKsyncLiteFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.ZKsyncLiteFork,
   ],
   display: {
     name: 'Term Structure',

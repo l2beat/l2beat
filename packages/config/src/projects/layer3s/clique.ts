@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const clique: Layer3 = underReviewL3({
@@ -9,11 +9,11 @@ export const clique: Layer3 = underReviewL3({
   addedAt: new UnixTime(1726595996), // 2024-09-17T17:59:56Z
   hostChain: ProjectId('base'),
   badges: [
-    Badge.L3ParentChain.Base,
-    Badge.DA.Celestia,
-    Badge.Stack.OPStack,
-    Badge.VM.EVM,
-    Badge.RaaS.Conduit,
+    BADGES.L3ParentChain.Base,
+    BADGES.DA.Celestia,
+    BADGES.Stack.OPStack,
+    BADGES.VM.EVM,
+    BADGES.RaaS.Conduit,
   ],
   display: {
     name: 'Clique',
