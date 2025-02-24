@@ -1,13 +1,17 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 
 export const snaxchain: Layer2 = underReviewL2({
   id: 'snaxchain',
   capability: 'universal',
   addedAt: new UnixTime(1740099913),
-  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.RaaS.Conduit],
+  badges: [
+    BADGES.Stack.OPStack,
+    BADGES.VM.EVM,
+    BADGES.RaaS.Conduit
+  ],
   display: {
     name: 'SNAXchain',
     slug: 'snaxchain',
