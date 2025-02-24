@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xe9efecb80c9ecce0fdb5508a701aae9c3e273e9f
+
+# Diff at Mon, 24 Feb 2025 11:32:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 752779
+- current block number: 758248
+
+## Description
+
+Bridged Kinto upgraded for their token sale.
+Config related: Hide relatives that are not interesting from discovery.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x4f5f7229da06877c8ec759071cd3d1999f9680fa1d5a7e5d5381558383c25b22"
++        "0xe15912dcb541011cee29f6046afcf500542e3763f530012c1ce71e54abd96545"
+      values.$implementation:
+-        "0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"
++        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
+      values.$pastUpgrades.5:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.SALE:
++        "0x5a1E00884e35bF2dC39Af51712D08bEF24b1817f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@752779 => .flat}/BridgedKinto/BridgedKinto.sol | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 752779 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SignatureVerifier (0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TransmitManager (0x6332e56A423480A211E301Cb85be12814e9238Bb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Hasher (0x9652Dd5e1388CA80712470122F27be0d1c33B48b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionManagerDF (0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8cb093dd270747aeddf39826bc0b3b5f771e86e4
 
 # Diff at Fri, 21 Feb 2025 13:25:34 GMT:
