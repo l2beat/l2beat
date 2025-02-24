@@ -67,7 +67,7 @@ function SummaryTvsBox({
     {
       label: 'Alt-DAs',
       value: othersValue,
-      className: 'bg-[#FF8933]',
+      className: 'bg-orange-400',
       percentage: round((othersValue / total) * 100, 2),
     },
   ]
