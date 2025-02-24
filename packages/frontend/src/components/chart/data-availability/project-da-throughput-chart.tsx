@@ -102,7 +102,6 @@ function getDataWithConfiguredThroughputs(
     const config = processedConfigs.find(
       (c) => timestamp >= c.sinceTimestamp && timestamp < c.untilTimestamp,
     )
-    console.log(new UnixTime(timestamp).toDate().toISOString(), config)
 
     return [
       timestamp,
