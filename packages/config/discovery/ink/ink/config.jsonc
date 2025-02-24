@@ -1,8 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "chain": "optimism",
-  "name": "optimism",
-  "import": ["../../globalConfig.jsonc"],
+  "name": "ink",
+  "chain": "ink",
   "initialAddresses": [
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000016",
@@ -12,11 +11,9 @@
     "0x4200000000000000000000000000000000000017",
     "0x4200000000000000000000000000000000000015",
     "0x420000000000000000000000000000000000000F",
-    "0x4200000000000000000000000000000000000002",
     "0x4200000000000000000000000000000000000013",
     "0x4200000000000000000000000000000000000019",
     "0x420000000000000000000000000000000000001A",
-    "0x4200000000000000000000000000000000000042",
     "0x4200000000000000000000000000000000000020",
     "0x4200000000000000000000000000000000000021"
   ],
@@ -24,45 +21,21 @@
     "0x4200000000000000000000000000000000000010": "L2StandardBridge",
     "0x4200000000000000000000000000000000000011": "SequencerFeeVault",
     "0x420000000000000000000000000000000000000F": "GasPriceOracle",
-    "0x4200000000000000000000000000000000000042": "OPToken",
     "0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger",
-    "0x7871d1187A97cbbE40710aC119AA3d412944e4Fe": "L2ProxyAdminOwner",
-    "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
-    "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
     "0x4200000000000000000000000000000000000013": "L1BlockNumber",
     "0x4200000000000000000000000000000000000015": "L1Block",
     "0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
     "0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
-    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
     "0x4200000000000000000000000000000000000019": "BaseFeeVault",
     "0x420000000000000000000000000000000000001A": "L1FeeVault",
     "0x4200000000000000000000000000000000000012": "OptimismMintableERC20Factory",
     "0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory",
-    "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
     "0x4200000000000000000000000000000000000014": "L2ERC721Bridge",
     "0x4200000000000000000000000000000000000020": "SchemaRegistry",
     "0x4200000000000000000000000000000000000021": "EAS",
-    "0x4200000000000000000000000000000000000002": "DeployerWhitelist"
+    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias"
   },
   "overrides": {
-    "DeployerWhitelist": {
-      "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
-    },
-    "MintManager": {
-      "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
-      "fields": {
-        "owner": {
-          "target": {
-            "permissions": [
-              {
-                "type": "interact",
-                "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
-              }
-            ]
-          }
-        }
-      }
-    },
     "L1FeeVault": {
       "description": "Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.",
       "ignoreMethods": ["totalProcessed"]
@@ -79,11 +52,6 @@
       "description": "Provides the current gas price for L2 transactions.",
       "ignoreMethods": ["overhead", "scalar", "getL1FeeUpperBound"],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
-    },
-    "OPToken": {
-      "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
-      "ignoreMethods": ["getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply"]
     },
     "L2CrossDomainMessenger": {
       "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
