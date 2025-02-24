@@ -1,17 +1,16 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   type AggLayerNativeEtherPreminted,
   AssetId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
 import { AGGLAYER_L2BRIDGE_ADDRESS } from '../aggLayer'
 
 export function getAggLayerNativeEtherPremintedEntry(
   chain: ChainConfig,
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AggLayerNativeEtherPreminted {
   assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
@@ -38,7 +37,7 @@ export function getAggLayerNativeEtherPremintedEntry(
   return {
     assetId: assetId,
     category: category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: decimals,
     escrowAddress: escrow.address,
@@ -46,7 +45,7 @@ export function getAggLayerNativeEtherPremintedEntry(
     isAssociated: isAssociated,
     l2BridgeAddress: AGGLAYER_L2BRIDGE_ADDRESS,
     premintedAmount: premintedAmount,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: symbol,

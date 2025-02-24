@@ -5,6 +5,7 @@ import {
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
   Bridge,
@@ -12,7 +13,10 @@ import type {
   Layer2TxConfig,
   Layer3,
   ProjectCostsInfo,
+  ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectTvlConfig,
+  ProjectTvlEscrow,
 } from '../../types'
 import { isVerified } from '../../verification/isVerified'
 import { badgesCompareFn } from '../badges'
@@ -94,6 +98,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
+    tvlConfig: getTvlConfig(p),
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
@@ -182,6 +187,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    tvlConfig: getTvlConfig(p),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
@@ -256,4 +262,35 @@ function toBackendTrackedTxsConfig(
       }
     }),
   )
+}
+
+function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+  return {
+    escrows: project.config.escrows.map(toProjectEscrow),
+    associatedTokens: project.config.associatedTokens ?? [],
+  }
+}
+
+function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
+  return {
+    address: escrow.address,
+    sinceTimestamp: escrow.sinceTimestamp,
+    chain: escrow.chain,
+    includeInTotal: escrow.includeInTotal,
+    source: escrow.source,
+    bridgedUsing: escrow.bridgedUsing,
+    sharedEscrow: escrow.sharedEscrow,
+    tokens: tokenList
+      .filter(
+        (token) =>
+          token.chainId === escrow.chainId &&
+          (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
+          !escrow.excludedTokens?.includes(token.symbol) &&
+          !token.untilTimestamp?.lt(escrow.sinceTimestamp),
+      )
+      .map((token) => ({
+        ...token,
+        isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
+      })),
+  }
 }

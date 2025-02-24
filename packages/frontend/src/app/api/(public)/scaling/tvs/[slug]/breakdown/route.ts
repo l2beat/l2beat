@@ -1,10 +1,8 @@
-import { layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
-
-const projects = [...layer2s, ...layer3s]
+import { ps } from '~/server/projects'
 
 export async function GET(
   _: Request,
@@ -18,19 +16,18 @@ export async function GET(
 
 const getCachedResponse = cache(
   async (slug: string) => {
-    const project = projects.find((p) => p.display.slug === slug)
+    const project = await ps.getProject({
+      slug,
+      select: ['tvlConfig'],
+      optional: ['chainConfig'],
+    })
 
     if (!project) {
-      return {
-        success: false,
-        error: 'Project not found.',
-      } as const
+      return { success: false, error: 'Project not found.' }
     }
 
-    return {
-      success: true,
-      data: await getTvsBreakdownForProject(project),
-    } as const
+    const data = await getTvsBreakdownForProject(project)
+    return { success: true, data }
   },
   ['scaling-tvs-project-breakdown-route'],
   {

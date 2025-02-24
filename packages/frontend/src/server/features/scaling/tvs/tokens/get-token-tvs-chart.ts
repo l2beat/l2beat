@@ -1,8 +1,7 @@
-import { toBackendProject } from '@l2beat/backend-shared'
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
+  ProjectId,
   UnixTime,
   asNumber,
   branded,
@@ -52,16 +51,18 @@ export const getCachedTokenTvsChartData = cache(
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
     const resolution = rangeToResolution(range)
 
-    const project = [...layer2s, ...layer3s, ...bridges].find(
-      (p) => p.id === token.projectId,
-    )
+    const project = await ps.getProject({
+      id: ProjectId(token.projectId),
+      select: ['tvlConfig'],
+      optional: ['chainConfig'],
+    })
+
     assert(project, 'Project not found')
-    const backendProject = toBackendProject(project)
 
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
-    const configMapping = getConfigMapping(backendProject, chains)
+    const configMapping = getConfigMapping(project, chains)
 
     const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
       project.id,

@@ -4,6 +4,8 @@ import type {
   EthereumAddress,
   ProjectId,
   StringWithAutocomplete,
+  Token,
+  TokenBridgedUsing,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
@@ -813,7 +815,7 @@ export interface BaseProject {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
-  // tvlConfig
+  tvlConfig?: ProjectTvlConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
@@ -1124,4 +1126,23 @@ export interface ProjectContract {
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlConfig {
+  escrows: ProjectTvlEscrow[]
+  associatedTokens: string[]
+}
+
+/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlEscrow {
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  tokens: (Token & { isPreminted: boolean })[]
+  chain: string
+  includeInTotal?: boolean
+  source?: ProjectEscrow['source']
+  bridgedUsing?: TokenBridgedUsing
+  sharedEscrow?: SharedEscrow
 }

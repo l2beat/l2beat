@@ -1,14 +1,9 @@
-import {
-  getTvlAmountsConfig,
-  getTvlPricesConfig,
-  toBackendProject,
-} from '@l2beat/backend-shared'
+import { getTvlAmountsConfig, getTvlPricesConfig } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
-  bridges,
+  type ProjectService,
   layer2s,
-  layer3s,
   tokenList,
 } from '@l2beat/config'
 import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
@@ -17,13 +12,17 @@ import type { TvlConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
-export function getTvlConfig(
+export async function getTvlConfig(
+  ps: ProjectService,
   flags: FeatureFlags,
   env: Env,
   chains: ChainConfig[],
   minTimestampOverride?: UnixTime,
-): TvlConfig {
-  const projects = [...layer2s, ...layer3s, ...bridges].map(toBackendProject)
+): Promise<TvlConfig> {
+  const projects = await ps.getProjects({
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
 
   const sharedEscrowsChains = layer2s
     .filter((c) =>
