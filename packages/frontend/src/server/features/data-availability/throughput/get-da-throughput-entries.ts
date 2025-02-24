@@ -81,8 +81,8 @@ interface DaThroughputEntryData {
 
 export interface DaThroughputEntry extends CommonProjectEntry {
   isPublic: boolean
-  data: DaThroughputEntryData | undefined
-  scalingOnlyData: DaThroughputEntryData | undefined
+  data: DaThroughputEntryData
+  scalingOnlyData: DaThroughputEntryData
   finality: string | undefined
   isSynced: boolean
 }
@@ -93,7 +93,7 @@ function getDaThroughputEntry(
   data: ThroughputTableData['data'][string] | undefined,
   scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
-  if (!data) return undefined
+  if (!data || !scalingOnlyData) return undefined
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const notSyncedStatus = data
