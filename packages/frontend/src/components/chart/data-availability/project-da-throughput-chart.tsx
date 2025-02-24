@@ -84,10 +84,15 @@ function getDataWithConfiguredThroughputs(
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .map((config, i, arr) => {
       const batchesPerDay = UnixTime.DAY / config.frequency
-
+      const nextConfig = arr[i + 1]
       return {
         ...config,
-        untilTimestamp: arr[i + 1]?.sinceTimestamp ?? Infinity,
+        sinceTimestamp: new UnixTime(config.sinceTimestamp)
+          .toStartOf('day')
+          .toNumber(),
+        untilTimestamp: nextConfig
+          ? new UnixTime(nextConfig.sinceTimestamp).toStartOf('day').toNumber()
+          : Infinity,
         maxDaily: config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,
       }
@@ -97,6 +102,7 @@ function getDataWithConfiguredThroughputs(
     const config = processedConfigs.find(
       (c) => timestamp >= c.sinceTimestamp && timestamp < c.untilTimestamp,
     )
+    console.log(new UnixTime(timestamp).toDate().toISOString(), config)
 
     return [
       timestamp,
