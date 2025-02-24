@@ -199,17 +199,17 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'ethereum':
       return {
         project: {
-          label: 'Ethereum',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-ethereum))',
           indicatorType: { shape: 'line' },
         },
         projectTarget: {
-          label: 'Ethereum Target',
+          label: 'Target capacity',
           color: 'hsl(var(--chart-ethereum-secondary))',
           indicatorType: { shape: 'line', strokeDasharray: '9 3' },
         },
         projectMax: {
-          label: 'Ethereum Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-ethereum))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
@@ -217,12 +217,12 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'celestia':
       return {
         project: {
-          label: 'Celestia',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-da-celestia))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
-          label: 'Celestia Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-da-celestia))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
@@ -230,12 +230,12 @@ function getProjectChartMeta(projectId: ProjectId) {
     case 'avail':
       return {
         project: {
-          label: 'Avail',
+          label: 'Actual data size',
           color: 'hsl(var(--chart-da-avail))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
-          label: 'Avail Max',
+          label: 'Max capacity',
           color: 'hsl(var(--chart-da-avail))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
