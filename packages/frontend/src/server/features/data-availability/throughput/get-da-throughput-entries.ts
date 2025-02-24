@@ -50,6 +50,11 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
       ),
     )
     .filter(notUndefined)
+    .sort(
+      (a, b) =>
+        (b.data?.pastDayAvgThroughputPerSecond ?? 0) -
+        (a.data?.pastDayAvgThroughputPerSecond ?? 0),
+    )
   return entries
 }
 
