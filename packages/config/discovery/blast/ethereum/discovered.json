@@ -2,7 +2,7 @@
   "name": "blast",
   "chain": "ethereum",
   "blockNumber": 21084957,
-  "configHash": "0x074b93b00ae9c9aae7037b66cc5fccbd404e30000a188f16260b41cd561e6706",
+  "configHash": "0x2c7166e5bbba89e5e36893ce3c211455e6da1421552d5928e3fcf10b072096df",
   "contracts": [
     {
       "name": "DSRYieldProvider",

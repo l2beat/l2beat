@@ -2,7 +2,7 @@
   "name": "fraxferry",
   "chain": "ethereum",
   "blockNumber": 21880952,
-  "configHash": "0xc802f176f354af176eefef9e559800019fb00e6074e1bbb4ce03c492c1e864eb",
+  "configHash": "0x722d3089b2a48934da5e00b2de20a2ae0fbcfe2fa938aaa1c86fa007092a1779",
   "contracts": [
     {
       "name": "sfrxETH Ferry Bridge (Optimism)",

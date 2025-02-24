@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 21829679,
-  "configHash": "0x10016bc76cb0ed16458a9e96398d9f6c3670d194f3daa2a773f03b67d2134ad5",
+  "configHash": "0x4294f3d9f47d6feb469bd8d52f313ef0e0a293bcd210c6bb2bbc0d75703c4106",
   "contracts": [
     {
       "name": "LivenessModule",

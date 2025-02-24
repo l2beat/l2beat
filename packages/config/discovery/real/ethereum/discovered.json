@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 21915819,
-  "configHash": "0xe8555905ffb827ac35748ee3a3e8cbde3572eaf5cace482f22c7e99b1ee71f73",
+  "configHash": "0x676d301a93f25ef57a66b73b23b45f11893c4e8e830666698e583966ad181b23",
   "contracts": [
     {
       "name": "OneStepProverHostIo",

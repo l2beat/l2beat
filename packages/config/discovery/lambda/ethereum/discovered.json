@@ -2,7 +2,7 @@
   "name": "lambda",
   "chain": "ethereum",
   "blockNumber": 20914730,
-  "configHash": "0xf8668d1afd342d45007c1bff344d13600ca364bb282448577400e790c22026cb",
+  "configHash": "0x621515af349a6c3e7cc040f0abec0677823fe285c9a0e9860651831fad8b4400",
   "contracts": [
     {
       "name": "SuperchainConfig",

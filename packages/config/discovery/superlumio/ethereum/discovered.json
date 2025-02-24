@@ -2,7 +2,7 @@
   "name": "superlumio",
   "chain": "ethereum",
   "blockNumber": 21637088,
-  "configHash": "0xdf7a9c8d62facf47b90247a9c6624732afd94dc04ee9feed4e30d3bb522e9143",
+  "configHash": "0x961caabf42d972baa04e0c1ba4624a863d4907fd53d1731aa553f78231ac58b0",
   "contracts": [
     {
       "name": "ConduitMultisig",

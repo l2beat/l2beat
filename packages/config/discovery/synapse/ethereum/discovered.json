@@ -2,7 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x9ac22a1c732f166833ecedefff755eca00e9d9111f2938120b3849ed47d48970",
+  "configHash": "0x5f7fbe1fb246360c808be233899e5e76eea6aa2a6302f2582b8a01fd807a2c08",
   "contracts": [
     {
       "name": "Liquidity Pool",

@@ -2,7 +2,7 @@
   "name": "b3",
   "chain": "base",
   "blockNumber": 23224422,
-  "configHash": "0x65134a0ce7139a8a44fcdd166870ea84992572f3b32690f5efbebf4828358938",
+  "configHash": "0x1d48fd0a11f7bd2b68c3acb6e9f85e0cbf0cda65bf3bc30d81730fcc8c32f205",
   "contracts": [
     {
       "name": "ProxyAdmin",

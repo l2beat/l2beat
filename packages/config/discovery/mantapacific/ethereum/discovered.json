@@ -2,7 +2,7 @@
   "name": "mantapacific",
   "chain": "ethereum",
   "blockNumber": 20927642,
-  "configHash": "0x26d046e4a69dc6045c1bc22d83a111262796966efe4813f7bf15607b4fc01c97",
+  "configHash": "0xe15aec9b7aeb5a41c94ae26d4833742afd9662370d5b74afc362a9bab8960306",
   "contracts": [
     {
       "name": "L2OutputOracle",

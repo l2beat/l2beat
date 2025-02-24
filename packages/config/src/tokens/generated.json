@@ -7085,7 +7085,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane Nexus"
+            "name": "Hyperlane Nexus",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -7693,6 +7694,50 @@
         "bridges": [
           {
             "name": "Veno.finance"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1734703173,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 478,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1734726123,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 478,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8416,7 +8461,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8437,7 +8483,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
