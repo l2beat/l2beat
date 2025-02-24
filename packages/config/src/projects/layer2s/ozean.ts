@@ -10,7 +10,7 @@ export const ozean: Layer2 = upcomingL2({
     name: 'Ozean',
     slug: 'ozean',
     description:
-      'Ozean is Clearpool\'s new Layer 2 blockchain focused on integrating RWAs into DeFi. Built on the OP Stack',
+      "Ozean is Clearpool's new Layer 2 blockchain focused on integrating RWAs into DeFi. Built on the OP Stack",
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
