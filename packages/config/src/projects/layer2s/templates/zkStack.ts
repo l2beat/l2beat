@@ -15,7 +15,6 @@ import {
   type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -23,17 +22,19 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
   ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectPurpose,
@@ -43,7 +44,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -81,7 +82,6 @@ export interface ZkStackConfigCommon {
   l2OutputOracle?: ContractParameters
   portal?: ContractParameters
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
@@ -93,19 +93,37 @@ export interface ZkStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export type Upgradeability = {
-  upgradeDelay?: string
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
@@ -113,8 +131,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge missing',
     )
   }
@@ -214,10 +231,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const guardiansThresholdString = `${guardiansMainThreshold} / ${guardiansMemberCount}`
 
   const upgrades: Upgradeability = {
-    upgradableBy: ['ProtocolUpgradeHandler'],
-    upgradeDelay: `${formatSeconds(
-      upgradeDelayWithScApprovalS,
-    )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+    upgradableBy: [
+      {
+        name: 'ProtocolUpgradeHandler',
+        delay: `${formatSeconds(
+          upgradeDelayWithScApprovalS,
+        )} via the standard upgrade path, but immediate through the EmergencyUpgradeBoard.`,
+      },
+    ],
   }
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
@@ -228,10 +249,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
-        Badge.Stack.ZKStack,
-        Badge.Infra.ElasticChain,
-        Badge.VM.EVM,
-        Badge.DA.EthereumBlobs,
+        BADGES.Stack.ZKStack,
+        BADGES.Infra.ElasticChain,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumBlobs,
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -267,7 +288,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -283,6 +307,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
               defaultCallsPerMinute: 1500,
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs:
         daProvider !== undefined
           ? undefined
@@ -553,14 +578,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
     },
     milestones: templateVars.milestones ?? [],
-    knowledgeNuggets: [
-      ...(templateVars.knowledgeNuggets ?? []),
-      {
-        title: 'State diffs vs raw tx data',
-        url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
-    ],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }
@@ -571,4 +588,55 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+}
+
+function getDaTracking(
+  templateVars: ZkStackConfigCommon,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  const validatorTimelock =
+    templateVars.discovery.getContractDetails('ValidatorTimelock').address
+
+  const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
+    'ValidatorTimelock',
+    'validatorsVTL',
+  )
+
+  // TODO: update to value from discovery
+  const inboxDeploymentBlockNumber = 0
+
+  return templateVars.usesBlobs
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: validatorTimelock,
+          sequencers: validatorsVTL,
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
+        : undefined
 }

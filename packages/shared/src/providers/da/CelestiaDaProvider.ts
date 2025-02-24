@@ -3,17 +3,18 @@ import type { CelestiaRpcClient } from '../../clients/rpc-celestia/CelestiaRpcCl
 import type { CelestiaBlob, DaProvider } from './DaProvider'
 
 export class CelestiaDaProvider implements DaProvider {
-  constructor(private readonly rpcClient: CelestiaRpcClient) {}
+  constructor(
+    private readonly rpcClient: CelestiaRpcClient,
+    private readonly daLayer: string,
+  ) {}
 
   async getBlobs(from: number, to: number): Promise<CelestiaBlob[]> {
-    const blobs: CelestiaBlob[] = []
-
+    const promises = []
     for (let i = from; i <= to; i++) {
-      const blobsFromBlock = await this.getBlobsFromBlock(i)
-      blobs.push(...blobsFromBlock)
+      promises.push(this.getBlobsFromBlock(i))
     }
-
-    return blobs
+    const blobArrays = await Promise.all(promises)
+    return blobArrays.flat()
   }
 
   private async getBlobsFromBlock(
@@ -38,11 +39,12 @@ export class CelestiaDaProvider implements DaProvider {
 
       assert(
         namespaces.length === sizes.length,
-        'Namespaces and sizes should be equal length',
+        `[${blockNumber}] Namespaces and sizes should be equal length`,
       )
 
       return namespaces.map((namespace, i) => ({
         type: 'celestia',
+        daLayer: this.daLayer,
         namespace,
         blockTimestamp,
         size: BigInt(sizes[i]),

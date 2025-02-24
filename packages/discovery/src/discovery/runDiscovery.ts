@@ -1,3 +1,4 @@
+import path from 'path'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
@@ -9,6 +10,7 @@ import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
+import { TEMPLATES_PATH } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
@@ -48,11 +50,15 @@ export async function runDiscovery(
     config.overwriteCache,
   )
 
+  const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
+
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
+    buildModels: config.buildModels,
+    templatesFolder,
   })
 
   if (config.project.startsWith('shared-')) {

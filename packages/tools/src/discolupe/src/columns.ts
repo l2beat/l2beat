@@ -194,14 +194,6 @@ const AVAILABLE_COLUMNS_RAW = [
       project.upgradesAndGovernanceConfigured ? 'Yes' : 'No',
     displayFn: IndicatorContainer,
   },
-  {
-    header: 'Knowledge Nuggets Configured',
-    id: 'k7',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      project.knowledgeNuggetsConfigured ? 'Yes' : 'No',
-    displayFn: IndicatorContainer,
-  },
 ] as const
 
 export const DEFAULT_COLUMN_IDS: ColumnId[] = ['qx', 'ig', 'zz', 'm5']

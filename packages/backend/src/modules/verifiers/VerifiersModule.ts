@@ -1,5 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { chains } from '@l2beat/config'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Clock } from '../../tools/Clock'
@@ -25,7 +24,7 @@ export function createVerifiersModule(
     clock,
     logger,
     verifiers: config.verifiers.verifiers,
-    chains: chains,
+    chains: config.verifiers.chains,
   })
 
   const start = () => {

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "arbitrum",
   "name": "arbitrum",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4", // TreasuryGovernor
     "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9", // CoreGovernor
@@ -39,123 +40,12 @@
     "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
     "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
     "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
-    "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock"
+    "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias"
   },
   "overrides": {
-    "L2SurplusFee": {
-      "fields": {
-        "recipientsData": {
-          "description": "Lists recipients and weights using events, while the latest represents the current state.",
-          "handler": {
-            "type": "event",
-            "select": ["recipients", "weights"],
-            "add": { "event": "RecipientsUpdated" }
-          }
-        }
-      }
-    },
-    "L2BaseFee": {
-      "fields": {
-        "recipientsData": {
-          "description": "Lists recipients and weights using events, while the latest represents the current state.",
-          "handler": {
-            "type": "event",
-            "select": ["recipients", "weights"],
-            "add": { "event": "RecipientsUpdated" }
-          }
-        }
-      }
-    },
-    "KeyValueStore": {
-      "ignoreMethods": ["get", "store"]
-    },
-    "L2LPTGateway": {
-      "ignoreRelatives": ["l1Lpt", "l2Lpt"],
-      "ignoreMethods": ["l2LPTDataCache"]
-    },
-    "L2DAIGateway": {
-      "ignoreRelatives": ["l1Dai", "l2Dai"]
-    },
-    "L2WethGateway": {
-      "ignoreRelatives": ["l1Weth", "l2Weth"],
-      "ignoreMethods": ["exitNum"]
-    },
-    "L2ARBGateway": {
-      "ignoreRelatives": ["counterpartGateway"],
-      "ignoreInWatchMode": ["exitNum"]
-    },
-    "L2ERC20Gateway": {
-      "ignoreRelatives": ["counterpartGateway"],
-      "ignoreInWatchMode": ["exitNum"]
-    },
-    "L2GatewayRouter": {
-      "ignoreRelatives": ["counterpartGateway"]
-    },
-    "L2UpgradeExecutor": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "L2Timelock": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "TreasuryTimelock": {
-      "fields": {
-        "accessControl": {
-          "handler": {
-            "type": "accessControl"
-          }
-        }
-      }
-    },
-    "UpgradeExecRouteBuilder": {
-      "ignoreMethods": ["upExecLocationExists", "upExecLocations"]
-    },
-    "L2ArbitrumToken": {
-      "ignoreMethods": ["getPastTotalSupply"]
-    },
-    "SecurityCouncilMemberSyncAction": {
-      "ignoreMethods": ["computeKey"],
-      "ignoreRelatives": ["store"]
-    },
-    "CoreGovernor": {
-      "ignoreMethods": [
-        "getPastCirculatingSupply",
-        "proposalDeadline",
-        "proposalEta",
-        "proposalSnapshot",
-        "proposalVotes",
-        "quorum"
-      ]
-    },
-    "TreasuryGovernor": {
-      "ignoreMethods": [
-        "getPastCirculatingSupply",
-        "proposalDeadline",
-        "proposalEta",
-        "proposalSnapshot",
-        "proposalVotes",
-        "quorum"
-      ]
-    },
-    "SecurityCouncilManager": {
-      "ignoreMethods": ["getScheduleUpdateInnerData"],
-      "fields": {
-        "getBothCohorts": {
-          "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
-          "severity": "MEDIUM"
-        }
-      }
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
+      // unused security council on L2 with the same address on L1. we speculate that its purpose was to prevent address sniping
+      "ignoreDiscovery": true
     }
   }
 }

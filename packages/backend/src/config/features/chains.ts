@@ -1,5 +1,5 @@
 import type { Env } from '@l2beat/backend-tools'
-import { type ChainConfig, chains, layer2s, layer3s } from '@l2beat/config'
+import { type ChainConfig, layer2s, layer3s } from '@l2beat/config'
 import {
   ChainId,
   ProjectId,
@@ -10,13 +10,10 @@ import {
 import { toMulticallConfigEntry } from '../../peripherals/multicall/MulticallConfig'
 import type { ChainTvlConfig } from '../Config'
 
-export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
+export function getChainsWithTokens(tokenList: Token[]) {
   const results = new Set<string>()
-  for (const { chainId } of tokenList) {
-    const chain = chains.find((x) => x.chainId === +chainId)
-    if (chain) {
-      results.add(chain.name)
-    }
+  for (const { chainName } of tokenList) {
+    results.add(chainName)
   }
   return Array.from(results)
 }
@@ -27,6 +24,7 @@ export function getChainTvlConfig(
   isEnabled: boolean,
   env: Env,
   chain: string,
+  chains: ChainConfig[],
   options?: {
     minTimestamp?: UnixTime
   },

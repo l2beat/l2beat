@@ -26,7 +26,6 @@ export const DiscoLupeProject = z.object({
   stateDerivationConfigured: z.boolean(),
   stateValidationConfigured: z.boolean(),
   upgradesAndGovernanceConfigured: z.boolean(),
-  knowledgeNuggetsConfigured: z.boolean(),
 })
 export type DiscoLupeProject = z.infer<typeof DiscoLupeProject>
 

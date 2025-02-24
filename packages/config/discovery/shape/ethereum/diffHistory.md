@@ -1,3 +1,182 @@
+Generated with discovered.json: 0xa53323b7d4c67a47cf8b70119e74cf05b2872bdf
+
+# Diff at Fri, 21 Feb 2025 13:26:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829672
+- current block number: 21895001
+
+## Description
+
+PermissionedDisputeGame upgraded to known version.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x11B190Ae661c6d6884dFEE48E215691E0DdB842e) {
+    +++ description: None
+      directlyReceivedPermissions.5.from:
+-        "0x753355FE25E5592345Ac426DF2F6325E658575D1"
++        "0x846d9469BAaF481f8516f7c1d03990672B68CB09"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x16e83cE5Ce29BF90AD9Da06D2fE6a15d5f344ce4)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+    contract DisputeGameFactory (0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.1:
+-        "0xeFcb9D8FD3e21346a26791359a015c2304582238"
++        "0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x753355FE25E5592345Ac426DF2F6325E658575D1)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract AlchemyMultisig1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      receivedPermissions.5.from:
+-        "0x753355FE25E5592345Ac426DF2F6325E658575D1"
++        "0x846d9469BAaF481f8516f7c1d03990672B68CB09"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xeFcb9D8FD3e21346a26791359a015c2304582238)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x846d9469BAaF481f8516f7c1d03990672B68CB09)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@21829672 => .flat}/MIPS.sol    | 444 +++++++++++++++------
+ .../PermissionedDisputeGame.sol                    | 408 +++++++++----------
+ 2 files changed, 507 insertions(+), 345 deletions(-)
+```
+
+Generated with discovered.json: 0x71b7102e0ff332a1aa972b3b99d8693931ea21bd
+
+# Diff at Fri, 21 Feb 2025 09:00:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829672
+- current block number: 21829672
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829672 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x2b18602877181C3cB72C687E2A771E123A3788E3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0xda0183afeacdd52205d42f7b68fd6531164f5729
+
+# Diff at Wed, 12 Feb 2025 10:00:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21802837
+- current block number: 21829672
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.7:
+-        "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
++        "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90"
+      values.$members.5:
+-        "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
++        "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c"
+    }
+```
+
+Generated with discovered.json: 0x90601f582bb25fab38b63365fc407644ec211cb2
+
+# Diff at Mon, 10 Feb 2025 19:04:34 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21802837
+- current block number: 21802837
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802837 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xfF11e41D5C4F522E423Ff6C064Ff8D55AF8f7355) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x88bd372ba5847bacf9e04869a98b13e04f97295b
 
 # Diff at Sat, 08 Feb 2025 15:58:10 GMT:

@@ -14,13 +14,15 @@ export const fluent: Layer2 = upcomingL2({
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://fluentlabs.xyz/'],
-      documentation: ['https://docs.fluentlabs.xyz/learn'],
+      websites: ['https://fluent.xyz/'],
+      documentation: ['https://docs.fluent.xyz/'],
       repositories: ['https://github.com/fluentlabs-xyz'],
+      apps: ['https://faucet.dev.gblend.xyz/'],
+      explorers: ['https://blockscout.dev.gblend.xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',
         'https://linkedin.com/company/fluentxyz',
-        'https://discord.com/invite/fluentlabs',
+        'https://discord.com/invite/fluentxyz',
       ],
     },
   },

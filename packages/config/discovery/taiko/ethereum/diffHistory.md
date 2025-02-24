@@ -1,3 +1,140 @@
+Generated with discovered.json: 0xda5cba7130c3b689c9358371f2d5d13f14e6e2e3
+
+# Diff at Fri, 14 Feb 2025 13:24:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@166dc249bfa78df836dc8592e4a420bb82432150 block: 21630233
+- current block number: 21844977
+
+## Description
+
+TaikoL1 upgrade:
+- old proposeBlock() removed
+- formatting, comments, small fixes
+
+TierRouter:
+- RISC0 from 1/200 to 1/1000
+- SP1 from 1/40 to 1/10
+...of daofallback proposer batches
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      sourceHashes.1:
+-        "0x5ced94c638514ff09ace408fda7efb4bd52077a7e9ce2f20e154419454ac3869"
++        "0xb0f9a7fd86a26f933460b09bf9ddb6f3fcb1926850109b97c24801d6230186e3"
+      values.$implementation:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
+      values.$pastUpgrades.22:
++        ["2025-02-13T06:57:47.000Z","0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c",["0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]]
+      values.$upgradeCount:
+-        22
++        23
+      values.impl:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
+      values.prover_set:
+-        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
++        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.tier_router:
+-        "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0"
++        "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetTierRouter (0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0)
+    +++ description: None
+```
+
+```diff
+    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TKO. There are several instances of this contract operated by different entities.
+      sourceHashes.1:
+-        "0x62ec48ec56b8eb6e604ca35e87dca2922adb6e914b1922139a0ae932750abd61"
++        "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
+      values.$implementation:
+-        "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"
++        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.$pastUpgrades.10:
++        ["2025-02-13T06:57:47.000Z","0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c",["0x280eAbfd252f017B78e15b69580F249F45FB55Fa"]]
+      values.$upgradeCount:
+-        10
++        11
+      values.impl:
+-        "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"
++        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetProverSet (0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetTierRouter (0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DAOFallbackProposer/MainnetProverSet.sol       |    2 +-
+ .../{.flat@21630233 => .flat}/MainnetProverSet.sol | 1060 ++++---
+ .../MainnetTierRouter.sol                          |    4 +-
+ .../TaikoL1Contract/MainnetTaikoL1.sol             | 3306 +++++++++++++-------
+ 4 files changed, 2733 insertions(+), 1639 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630233 (main branch discovery), not current.
+
+```diff
+    contract MainnetTierRouter (0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0) {
+    +++ description: None
+      values.active_tiers:
+-        [["0x746965725f736778000000000000000000000000000000000000000000000000"],["0x746965725f7a6b766d5f72697363300000000000000000000000000000000000"],["0x746965725f7a6b766d5f73703100000000000000000000000000000000000000"],["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"],["0x746965725f677561726469616e00000000000000000000000000000000000000"]]
+      values.TIER_GUARDIAN:
+-        {"verifierName":"0x746965725f677561726469616e00000000000000000000000000000000000000","validityBond":0,"contestBond":0,"cooldownWindow":240,"provingWindow":240,"maxBlocksToVerifyPerProof":0}
+      values.TIER_GUARDIAN_MINORITY:
+-        {"verifierName":"0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":240,"maxBlocksToVerifyPerProof":0}
+      values.TIER_OPTIMISTIC:
+-        {"verifierName":"0x0000000000000000000000000000000000000000000000000000000000000000","validityBond":"75000000000000000000","contestBond":"492187500000000000000","cooldownWindow":1440,"provingWindow":255,"maxBlocksToVerifyPerProof":0}
+      values.tier_provider:
+-        "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0"
+      values.TIER_RISC0:
+-        {"verifierName":"0x746965725f7a6b766d5f72697363300000000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX:
+-        {"verifierName":"0x746965725f736778000000000000000000000000000000000000000000000000","validityBond":"150000000000000000000","contestBond":"984375000000000000000","cooldownWindow":240,"provingWindow":300,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SGX_ZKVM:
+-        {"verifierName":"0x746965725f7a6b766d5f616e645f746565000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.TIER_SP1:
+-        {"verifierName":"0x746965725f7a6b766d5f73703100000000000000000000000000000000000000","validityBond":"225000000000000000000","contestBond":"1476562500000000000000","cooldownWindow":240,"provingWindow":420,"maxBlocksToVerifyPerProof":0}
+      values.getProvider:
++        ["0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0","0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0","0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0","0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0","0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0"]
+      fieldMeta:
+-        {"TIER_SGX":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_RISC0":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SP1":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN_MINORITY":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_OPTIMISTIC":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SGX_ZKVM":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}}
+      errors:
++        {"getProvider":"Processing error occurred."}
+    }
+```
+
 Generated with discovered.json: 0x8a1c79501de149df651427ca05a7b5a7261674a2
 
 # Diff at Mon, 20 Jan 2025 11:10:16 GMT:

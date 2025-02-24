@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xa8c9d4f6ed2ffd3264f3870473c5ceffd77edb6b
+
+# Diff at Fri, 21 Feb 2025 08:59:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21680579
+- current block number: 21680579
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680579 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x2171E6d3B7964fA9654Ce41dA8a8fFAff2Cc70be) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x899F07862D3A03F70E07b7f01183934b485d2e97) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x06541c5713224e8b06ea82aab98c41ea7965f092
+
+# Diff at Mon, 10 Feb 2025 19:04:01 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21680579
+- current block number: 21680579
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21680579 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x43F8DeFe3E9286D152E91BB16a248808E7247198) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x4d1332455915e582e5fae4777f33f92bd21a2f4c
 
 # Diff at Tue, 04 Feb 2025 12:31:32 GMT:

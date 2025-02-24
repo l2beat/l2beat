@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 20922333,
-  "configHash": "0x46abdb77172f5b0a0566d7fbf0af0a5e89e7f4c421290ceb14c67c3f0a864621",
+  "blockNumber": 21845003,
+  "configHash": "0xc58864b28f22112369a870a2cf6be9fb2161ff963fc995652f4df4cf2f482d87",
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -110,14 +110,14 @@
       "issuedPermissions": [
         {
           "permission": "upgrade",
-          "to": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+          "to": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
           "via": []
         }
       ],
       "ignoreInWatchMode": ["latestRoot"],
       "sinceTimestamp": 1688671151,
       "values": {
-        "$admin": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+        "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
         "$implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
         "$pastUpgrades": [
           [
@@ -143,13 +143,13 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0xE2DA046340e00264C4F0443243a0565007AE08AC",
-        "latestRoot": "160254392996319828854350308227682425228451637541199389183618642341600107355",
+        "latestRoot": "18576567285759346071475722844302870938476489940686080730592521711179091842425",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
           "isValid": false
         },
-        "owner": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
@@ -172,9 +172,8 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA" },
     {
-      "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "receivedPermissions": [
         {
           "permission": "upgrade",

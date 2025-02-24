@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x10b022360b9f50e573aad891bd60b9aaa27ffb74
+
+# Diff at Tue, 18 Feb 2025 09:12:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21736735
+- current block number: 21872281
+
+## Description
+
+Minor upgrade to the StarkExchangeUSDC contract which is an implementation of StarkEx Perpetual.
+
+Two new asset IDs are added:
+- NON_UNIQUE_MINTABLE_ASSET_ID_FLAG (ERC-1155)
+- MINTABLE_ERC20_ASSET_ID_FLAG (ERC-20)
+
+## Watched changes
+
+```diff
+    contract StarkExchangeUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: None
+      sourceHashes.5:
+-        "0x0c38b010717f86413abfb52412e5eb50b689b8d172e8c39ef81fc428fe5a1e52"
++        "0xe29824efd6d907d93d9b4b2b0737630ab974bce5e0017cb1459975c66a798280"
+      sourceHashes.4:
+-        "0xb8c0122f24ea2e559e908278def38aa80b6cd27b39b2d74402dbf5ba2585c7c5"
++        "0xdfa7b8bf4884e9f9933980cec5bcf744d2e522c291ed2a383c140cfb8c795f29"
+      sourceHashes.3:
+-        "0x473fc9765112e835124640cb91a4642354e09e94f92462929139d9ab5b6ddcf4"
++        "0xb5161e812087e15dd53a4c29ab296ade613b540445f7d1eb470de4f81a9c555c"
+      sourceHashes.2:
+-        "0x5ebd3f192c54b3d36f0d57e1cb14f418ae69a1694f7dc7d19d006883fc89e525"
++        "0xf6d00f2bc5db71a79b854049b38819f78c8fbbd98dcc2e4555f70946f6e58069"
+      sourceHashes.1:
+-        "0x758db67adde840068b01898c25f007a0d0549aaf9d431c2e0ae77ae4c2c56b33"
++        "0xc8c9c0e9c5171cb82b707e7e4b4ea80d427ba6f1dc21fc604efdce0ffa40323d"
+      values.$implementation.4:
+-        "0x34E7cfedF99995A47B3e3D0AB88ba67072B55035"
++        "0x31e2d974BaC547101413c24C23443AD488423f64"
+      values.$implementation.3:
+-        "0xdD5f42B087C1D2F73a2b443249b7D3DbE148a859"
++        "0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175"
+      values.$implementation.2:
+-        "0x564EA75a26Dc0Bb5c5033B4752f88953A25AD058"
++        "0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310"
+      values.$implementation.1:
+-        "0x533a7f4bE5453513049EB94A2b115F2CcE161dce"
++        "0x540Ad8576d2F90f28994ab001622F964945854A8"
+      values.$implementation.0:
+-        "0xdD813397b79f8df581eEb0c4B8aB72304c528396"
++        "0x8C43C9bec15d82D153C52518030e0a9590ABD35d"
+      values.$pastUpgrades.4:
++        ["2025-02-17T09:39:23.000Z","0x7c6ca54630321bc1f0e2ad0b68972ec3f6efaab449f09839ef612f90d4292bdd",["0x8C43C9bec15d82D153C52518030e0a9590ABD35d","0x540Ad8576d2F90f28994ab001622F964945854A8","0x1BC9C618B7FA6b5EfAAD31DC801eB55c608B9310","0x45de249eEa8f9CDB70943B17CceDeb42F5BA0175","0x31e2d974BaC547101413c24C23443AD488423f64"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.implementation:
+-        "0xdD813397b79f8df581eEb0c4B8aB72304c528396"
++        "0x8C43C9bec15d82D153C52518030e0a9590ABD35d"
+      values.VERSION:
+-        "3.1.0"
++        "3.2.0"
+    }
+```
+
+## Source code changes
+
+```diff
+.../StarkExchangeUSDC/AllVerifiers.2.sol           | 10 +++-
+ .../StarkExchangeUSDC/PerpetualForcedActions.5.sol | 10 +++-
+ .../StarkExchangeUSDC/PerpetualState.4.sol         | 19 +++++--
+ .../PerpetualTokensAndRamping.3.sol                | 60 +++++++++++++++++-----
+ .../StarkExchangeUSDC/StarkPerpetual.1.sol         |  4 +-
+ 5 files changed, 84 insertions(+), 19 deletions(-)
+```
+
 Generated with discovered.json: 0x60aa51d35bfba3889065a02bfb6a3aa5df5a52fa
 
 # Diff at Thu, 30 Jan 2025 10:24:49 GMT:

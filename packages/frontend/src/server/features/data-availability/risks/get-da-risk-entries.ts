@@ -50,11 +50,8 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 function getDaRiskEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
-  getTvs: (projects: ProjectId[]) => number,
+  getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry {
-  console.log(layer.id)
-  console.log(bridges.map((x) => x.id))
-
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
       name: b.daBridge.name,
@@ -68,7 +65,7 @@ function getDaRiskEntry(
             : undefined,
       },
       risks: b.daBridge.risks,
-      tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
+      tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latest,
     }),
   )
 
@@ -81,7 +78,7 @@ function getDaRiskEntry(
       risks: { isNoBridge: true },
       tvs: getTvs(
         layer.daLayer.usedWithoutBridgeIn.map((project) => project.id),
-      ),
+      ).latest,
     })
   }
 
@@ -99,7 +96,7 @@ function getDaRiskEntry(
       layer.daLayer.usedWithoutBridgeIn
         .concat(bridges.flatMap((p) => p.daBridge.usedIn))
         .map((x) => x.id),
-    ),
+    ).latest,
     risks: {
       economicSecurity: layer.daLayer.risks.economicSecurity,
       fraudDetection: layer.daLayer.risks.fraudDetection,
@@ -109,7 +106,7 @@ function getDaRiskEntry(
 }
 
 function getDacEntries(
-  getTvs: (projectIds: ProjectId[]) => number,
+  getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry[] {
   const projects = [...layer2s, ...layer3s]
     .filter((project) => project.customDa)
@@ -131,7 +128,7 @@ function getDacEntries(
         slug: parentProject.display.slug,
         href: `/scaling/projects/${parentProject.display.slug}`,
         statuses: {},
-        tvs,
+        tvs: tvs.latest,
         risks: daLayer.risks,
       }
 
@@ -144,7 +141,7 @@ function getDacEntries(
         statuses: {},
         risks: daLayer.risks,
         isPublic: false,
-        tvs,
+        tvs: tvs.latest,
         bridges: [bridgeEntry],
       }
 

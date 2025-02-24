@@ -1,28 +1,25 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import {
-  bridgeToBackendProject,
   getTvlAmountsConfig,
   getTvlAmountsConfigForProject,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
-  toBackendProject,
 } from '@l2beat/backend-shared'
-import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
+import type {
+  Bridge,
+  ChainConfig,
+  Layer2,
+  Layer3,
+  Project,
+} from '@l2beat/config'
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import type { AmountConfigEntry, ProjectId } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/is-project-other'
 
-export interface BaseProject {
+export interface TvsProject {
   projectId: ProjectId
-  type: BackendProject['type']
-}
-
-export interface TvsProject extends BaseProject {
   minTimestamp: UnixTime
-  slug: string
   sources: Map<
     string,
     {
@@ -33,9 +30,17 @@ export interface TvsProject extends BaseProject {
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }
 
-export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
-  const backendProject = toBackendProject(project)
-  const amounts = getTvlAmountsConfigForProject(backendProject)
+export async function toTvsProject(
+  project: Layer2 | Layer3 | Bridge,
+  chains: ChainConfig[],
+): Promise<TvsProject> {
+  const backendProject = await ps.getProject({
+    id: project.id,
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
+  assert(backendProject !== undefined)
+  const amounts = getTvlAmountsConfigForProject(backendProject, chains)
 
   const minTimestamp = amounts
     .map((x) => x.sinceTimestamp)
@@ -53,45 +58,48 @@ export function toTvsProject(project: Layer2 | Layer3 | Bridge): TvsProject {
   }
 
   return {
-    projectId: backendProject.projectId,
+    projectId: backendProject.id,
     minTimestamp,
-    type: backendProject.type,
-    slug: backendProject.slug,
     sources,
   }
 }
 
-const projects = [...layer2s, ...layer3s, ...bridges]
-const backendProjects = [
-  ...layer2s.map(layer2ToBackendProject),
-  ...layer3s.map(layer3ToBackendProject),
-  ...bridges.map(bridgeToBackendProject),
-]
+let backendProjects: Project<'tvlConfig', 'chainConfig'>[] | undefined
+async function getBackendProjects() {
+  if (!backendProjects) {
+    backendProjects = await ps.getProjects({
+      select: ['tvlConfig'],
+      optional: ['chainConfig'],
+    })
+  }
+  return backendProjects
+}
 
-export function getTvsProjects(
+const projects = [...layer2s, ...layer3s, ...bridges]
+
+export async function getTvsProjects(
   filter: (p: Layer2 | Layer3 | Bridge) => boolean,
+  chains: ChainConfig[],
   previewRecategorisation?: boolean,
-): TvsProject[] {
+): Promise<TvsProject[]> {
   const filteredProjects = projects
     .filter((p) => filter(p))
-    .map(toBackendProject)
-    .filter(
-      (project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.projectId),
-    )
+    .filter((project) => !env.EXCLUDED_TVS_PROJECTS?.includes(project.id))
 
-  const tvsAmounts = getTvlAmountsConfig(backendProjects)
+  const backendProjects = await getBackendProjects()
+  const tvsAmounts = getTvlAmountsConfig(backendProjects, chains)
   const tvsAmountsMap: Record<string, AmountConfigEntry[]> = groupBy(
     tvsAmounts,
     (e) => e.project,
   )
 
-  const result = filteredProjects.flatMap(({ projectId, type, slug }) => {
-    const amounts = tvsAmountsMap[projectId]
+  return filteredProjects.flatMap(({ id }) => {
+    const amounts = tvsAmountsMap[id]
     if (!amounts) {
       return []
     }
-    const project = projects.find((p) => p.id === projectId)
-    assert(project, `Project not found: ${projectId}`)
+    const project = projects.find((p) => p.id === id)
+    assert(project, `Project not found: ${id}`)
 
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
@@ -108,16 +116,12 @@ export function getTvsProjects(
       }
     }
     return {
-      projectId,
+      projectId: id,
       minTimestamp,
-      type,
-      slug,
       sources,
       category: getCategory(project, previewRecategorisation),
     }
   })
-
-  return result
 }
 
 function getCategory(

@@ -1,10 +1,9 @@
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { chains } from '../../chains'
-import { NUGGETS } from '../../common'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
 import type { BridgeTechnology, ProjectTechnologyChoice } from '../../types'
+import { chains } from '../chains'
 import { bridges } from './index'
 
 describe('bridges', () => {
@@ -186,31 +185,6 @@ describe('bridges', () => {
           })
         }
       }
-    })
-
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = bridges.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 })

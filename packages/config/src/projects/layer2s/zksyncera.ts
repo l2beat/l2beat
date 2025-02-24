@@ -3,7 +3,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -50,7 +50,7 @@ export const zksyncera: Layer2 = zkStackL2({
   addedAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.Other.L3HostChain],
+  additionalBadges: [BADGES.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -82,7 +82,7 @@ export const zksyncera: Layer2 = zkStackL2({
   chainConfig: {
     name: 'zksync2',
     chainId: 324,
-    explorerUrl: 'https://era.zksync.network/',
+    explorerUrl: 'https://era.zksync.network',
     explorerApi: {
       url: 'https://api-era.zksync.network/api',
       type: 'etherscan',
@@ -123,8 +123,7 @@ export const zksyncera: Layer2 = zkStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the new shared BridgeHub.',
-      upgradableBy: ['Lido (Lido Agent)'],
-      upgradeDelay: 'No delay',
+      upgradableBy: [{ name: 'Lido (Lido Agent)', delay: 'no' }],
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
@@ -145,7 +144,6 @@ export const zksyncera: Layer2 = zkStackL2({
     }),
   ],
   rpcUrl: 'https://mainnet.era.zksync.io',
-
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -406,5 +404,4 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

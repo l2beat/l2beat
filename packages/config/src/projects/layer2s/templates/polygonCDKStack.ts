@@ -6,7 +6,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -24,9 +23,9 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -44,7 +43,8 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -76,14 +76,13 @@ export interface PolygonCDKStackConfig {
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
   upgradesAndGovernance?: string
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
@@ -93,14 +92,13 @@ export interface PolygonCDKStackConfig {
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
-  const explorerUrl = ethereum.explorerUrl
+  const explorerUrl = EXPLORER_URLS['ethereum']
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
   if (daProvider !== undefined) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
@@ -154,8 +152,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
-          ? 'polygon-zkevm-validium'
-          : 'polygon-zkevm-rollup',
+          ? 'polygon-cdk-validium'
+          : 'polygon-cdk-rollup',
       stack: 'Polygon',
       tvlWarning: templateVars.display.tvlWarning,
       finality: templateVars.display.finality ?? {
@@ -447,13 +445,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
     Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
-    knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
-        Badge.Stack.PolygonCDK,
-        Badge.VM.EVM,
-        Badge.DA.EthereumCalldata,
-        Badge.Infra.AggLayer,
+        BADGES.Stack.PolygonCDK,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumCalldata,
+        BADGES.Infra.AggLayer,
       ],
       templateVars.additionalBadges ?? [],
     ),

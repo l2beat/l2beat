@@ -16,20 +16,12 @@
  * DO NOT ADD NEW NON-TYPE EXPORTS to @l2beat/config. Thanks!
  */
 
-export { chains } from './chains'
-export { CONTRACTS, HOMEPAGE_MILESTONES, PROJECT_COUNTDOWNS } from './common'
+export { HOMEPAGE_MILESTONES } from './global/milestones'
+export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export { ProjectDiscovery } from './discovery/ProjectDiscovery'
-export {
-  badges,
-  badgesCompareFn,
-  BadgeType,
-  type Badge,
-  type BadgeId,
-} from './projects/badges'
 export { bridges } from './projects/bridges'
 export { layer2s } from './projects/layer2s'
 export { layer3s } from './projects/layer3s'
-export { onChainProjects } from './projects/onChainProjects'
 export { ProjectService, type Project } from './projects/project/ProjectService'
 export { isUnderReview } from './projects/project/utils/isUnderReview'
 export {
@@ -44,3 +36,7 @@ export {
   isDiscoveryDriven,
 } from './utils/discoveryDriven'
 export { isVerified } from './verification/isVerified'
+
+import { runConfigAdjustments } from './adjustments'
+
+runConfigAdjustments()

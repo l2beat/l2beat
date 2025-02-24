@@ -1,4 +1,3 @@
-import { chainConverter, toBackendProject } from '@l2beat/backend-shared'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -12,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { uniqBy } from 'lodash'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { getLatestAmountForConfigurations } from '../breakdown/get-latest-amount-for-configurations'
 import { getLatestPriceForConfigurations } from '../breakdown/get-latest-price-for-configurations'
 import { getConfigMapping } from '../utils/get-config-mapping'
@@ -39,11 +39,20 @@ export async function getTokensForProject(
   return toDisplayableTokens(project.id, cachedTokens)
 }
 
-async function getTokensDataForProject(
-  project: Layer2 | Layer3 | Bridge,
-): Promise<Record<ProjectTokenSource, AssetId[]>> {
-  const backendProject = toBackendProject(project)
-  const configMapping = getConfigMapping(backendProject)
+async function getTokensDataForProject({
+  id,
+}: Layer2 | Layer3 | Bridge): Promise<Record<ProjectTokenSource, AssetId[]>> {
+  const project = await ps.getProject({
+    id,
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
+  assert(project !== undefined)
+
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const configMapping = getConfigMapping(project, chains)
   const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
   const [priceConfigs, amountConfigs] = await Promise.all([
@@ -182,7 +191,7 @@ function toDisplayableToken(
     iconUrl,
     name,
     symbol,
-    chain: chainConverter.toName(token.chainId),
+    chain: token.chainName,
     source,
   }
 }

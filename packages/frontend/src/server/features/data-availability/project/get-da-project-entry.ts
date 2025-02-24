@@ -1,9 +1,4 @@
-import type {
-  DaLayer,
-  DaLayerThroughput,
-  Project,
-  UsedInProject,
-} from '@l2beat/config'
+import type { DaLayer, Project, UsedInProject } from '@l2beat/config'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -16,6 +11,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import { ps } from '~/server/projects'
+import { api } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getDaLayerRisks } from '../utils/get-da-layer-risks'
@@ -61,7 +57,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     links: ProjectLink[]
     economicSecurity: number | undefined
     durationStorage: number | undefined
-    throughput: DaLayerThroughput | undefined
+    maxThroughputPerSecond: number | undefined
     usedIn: UsedInProject[]
   }
   sections: ProjectDetailsSection[]
@@ -73,7 +69,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
     tvs: number
     economicSecurity: number | undefined
     durationStorage: number
-    throughput: DaLayerThroughput | undefined
+    maxThroughputPerSecond: number | undefined
     usedIn: UsedInProject[]
     bridgeName: string
     callout: {
@@ -116,6 +112,10 @@ export async function getDaProjectEntry(
       getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
       getDaProjectsTvs(allUsedIn.map((x) => x.id)),
       getProjectsChangeReport(),
+      api.da.projectChart.prefetch({
+        range: 'max',
+        projectId: layer.id,
+      }),
     ])
 
   const layerTvs =
@@ -130,7 +130,7 @@ export async function getDaProjectEntry(
     selected?.daBridge.risks ?? { isNoBridge: true },
   )
 
-  const sections = getRegularDaProjectSections({
+  const sections = await getRegularDaProjectSections({
     layer: layer,
     bridge: selected,
     isVerified: true,
@@ -138,6 +138,10 @@ export async function getDaProjectEntry(
     layerGrissiniValues,
     bridgeGrissiniValues,
   })
+
+  const latestThroughput = layer.daLayer.throughput
+    ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
+    .at(-1)
 
   const result: DaProjectPageEntry = {
     name: layer.name,
@@ -158,9 +162,9 @@ export async function getDaProjectEntry(
       slug: bridge.slug,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
-      tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
+      tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,
       usedIn: bridge.daBridge.usedIn.sort(
-        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
       ),
     })),
     header: {
@@ -173,8 +177,12 @@ export async function getDaProjectEntry(
       tvs: layerTvs,
       economicSecurity,
       durationStorage: layer.daLayer.pruningWindow,
-      throughput: layer.daLayer.throughput,
-      usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
+      maxThroughputPerSecond: latestThroughput
+        ? latestThroughput.size / latestThroughput.frequency
+        : undefined,
+      usedIn: allUsedIn.sort(
+        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
+      ),
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
@@ -189,7 +197,7 @@ export async function getDaProjectEntry(
       isNoBridge: true,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
-      tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)),
+      tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
       usedIn: layer.daLayer.usedWithoutBridgeIn,
     })
     result.projectVariants?.unshift({
@@ -202,35 +210,41 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
-  layer: Project<'daLayer' | 'display' | 'statuses', 'isUpcoming'>,
+  layer: Project<
+    'daLayer' | 'display' | 'statuses',
+    'isUpcoming' | 'milestones'
+  >,
   bridge: Project<'daBridge' | 'display', 'contracts'>,
 ): Promise<EthereumDaProjectPageEntry> {
-  const [economicSecurity, tvsPerProject] = await Promise.all([
-    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
-    getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
-  ])
-
-  const layerTvs =
-    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
-
   const layerGrissiniValues = mapLayerRisksToRosetteValues(layer.daLayer.risks)
   const bridgeGrissiniValues = mapBridgeRisksToRosetteValues(
     bridge.daBridge.risks,
   )
 
+  const [economicSecurity, tvsPerProject, sections] = await Promise.all([
+    getDaProjectEconomicSecurity(layer.daLayer.economicSecurity),
+    getDaProjectsTvs(bridge.daBridge.usedIn.map((x) => x.id)),
+    getEthereumDaProjectSections({
+      layer,
+      bridge,
+      isVerified: true,
+      layerGrissiniValues,
+      bridgeGrissiniValues,
+    }),
+  ])
+
+  const layerTvs =
+    tvsPerProject.reduce((acc, value) => acc + value.tvs, 0) / 100
+
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
-  const sections = getEthereumDaProjectSections({
-    layer,
-    bridge,
-    isVerified: true,
-    layerGrissiniValues,
-    bridgeGrissiniValues,
-  })
-
   const usedInByTvsDesc = bridge.daBridge.usedIn.sort(
-    (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+    (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
   )
+
+  const latestThroughput = layer.daLayer.throughput
+    ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
+    .at(-1)
 
   return {
     name: layer.name,
@@ -245,7 +259,9 @@ export async function getEthereumDaProjectEntry(
       tvs: layerTvs,
       economicSecurity: economicSecurity,
       durationStorage: layer.daLayer.pruningWindow ?? 0,
-      throughput: layer.daLayer.throughput,
+      maxThroughputPerSecond: latestThroughput
+        ? latestThroughput.size / latestThroughput.frequency
+        : undefined,
       usedIn: usedInByTvsDesc,
       bridgeName: bridge.daBridge.name,
       callout: {

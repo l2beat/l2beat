@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 
@@ -79,6 +77,19 @@ export const avalanche: Bridge = {
           'MKR',
         ],
         chain: 'ethereum',
+      },
+    ],
+  },
+  chainConfig: {
+    name: 'avalanche',
+    chainId: 43114,
+    explorerUrl: 'https://snowtrace.io',
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 11907934,
+        version: '3',
       },
     ],
   },
@@ -161,11 +172,4 @@ export const avalanche: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Avalanche Bridge deep dive',
-      url: 'https://li.fi/knowledge-hub/avalanche-bridge-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

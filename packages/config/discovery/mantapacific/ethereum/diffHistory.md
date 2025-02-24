@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xfecd8814a8276ab87841d69673d8583fc83e8e19
+
+# Diff at Fri, 21 Feb 2025 14:08:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 20927642
+- current block number: 20927642
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x30c789674ad3B458886BBC9abf42EEe19EA05C1D) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x3dd8e98d82ed07b372e4b11a3232cd57362442f0
+
+# Diff at Fri, 21 Feb 2025 08:59:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 20927642
+- current block number: 20927642
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x635ba609680c55C3bDd0B3627b4c5dB21b13c310) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+Generated with discovered.json: 0xa55824a0dca8f95789eeaa3e90ee4099c58cdaa7
+
+# Diff at Mon, 10 Feb 2025 19:04:14 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 20927642
+- current block number: 20927642
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20927642 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x91eab5ce884fcb860fc86936902eb12c55d53e8c
 
 # Diff at Tue, 04 Feb 2025 12:31:41 GMT:

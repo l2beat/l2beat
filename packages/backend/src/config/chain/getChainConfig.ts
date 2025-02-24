@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import { type ChainConfig, layer2s, layer3s, tokenList } from '@l2beat/config'
 import { assert, notUndefined } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { getChainsWithTokens } from '../features/chains'
@@ -7,7 +7,7 @@ import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
 import type { IndexerApi } from './IndexerApi'
 
-export function getChainConfig(env: Env): ChainApi[] {
+export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
   const { configuredChains, projects } = getConfiguredChains()
 
   const rpcChains: ChainApi[] = []
@@ -103,7 +103,7 @@ function getConfiguredChains() {
     .map((l) => l.id)
 
   const tvlChains = uniq(
-    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
+    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
   )
 
   const projects = [

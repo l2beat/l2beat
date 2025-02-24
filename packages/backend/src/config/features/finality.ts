@@ -1,46 +1,41 @@
 import type { Env } from '@l2beat/backend-tools'
-import { type Layer2, type Layer2FinalityConfig, layer2s } from '@l2beat/config'
-import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
-
+import type { Project, ProjectService } from '@l2beat/config'
+import type { FinalityConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
-export type FinalityProjectConfig = Layer2FinalityConfig & {
-  projectId: ProjectId
-  url?: string
-  callsPerMinute?: number
-}
-
-export function getFinalityConfigurations(
-  flags: FeatureFlags,
+export async function getFinalityConfig(
+  ps: ProjectService,
   env: Env,
-): FinalityProjectConfig[] {
-  return layer2s
-    .map((layer2) => {
-      if (
-        !layer2.config.finality ||
-        !flags.isEnabled('finality', layer2.id.toString()) ||
-        layer2.isArchived
-      ) {
-        return
-      }
+  flags: FeatureFlags,
+): Promise<FinalityConfig> {
+  const projects = await ps.getProjects({
+    select: ['finalityConfig'],
+    optional: ['transactionApiConfig'],
+    whereNot: ['isArchived'],
+  })
 
-      return {
-        projectId: layer2.id,
-        ...layer2.config.finality,
-        ...getChainFinalityConfig(env, layer2),
-      }
-    })
-    .filter(notUndefined)
+  return {
+    configurations: projects
+      .filter((p) => flags.isEnabled('finality', p.id))
+      .map((p) => ({
+        projectId: p.id,
+        ...p.finalityConfig,
+        ...getChainFinalityConfig(env, p),
+      })),
+  }
 }
 
-function getChainFinalityConfig(env: Env, project: Layer2) {
+function getChainFinalityConfig(
+  env: Env,
+  project: Project<never, 'transactionApiConfig'>,
+) {
   if (
-    project.config.transactionApi?.type === 'loopring' ||
-    project.config.transactionApi?.type === 'degate3'
+    project.transactionApiConfig?.type === 'loopring' ||
+    project.transactionApiConfig?.type === 'degate3'
   ) {
     return {
-      url: project.config.transactionApi.defaultUrl,
-      callsPerMinute: project.config.transactionApi.defaultCallsPerMinute,
+      url: project.transactionApiConfig.defaultUrl,
+      callsPerMinute: project.transactionApiConfig.defaultCallsPerMinute,
     }
   }
 

@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { ActivityChartType } from '~/components/chart/activity/use-activity-chart-render-params'
+import type { ActivityChartType } from '~/components/chart/activity/activity-chart'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import type { ProjectChanges } from '../projects-change-report/get-projects-change-report'
 import type { CommonProjectEntry } from '../utils/get-common-project-entry'
@@ -32,7 +32,7 @@ export function getCommonScalingEntry({
   changes,
   syncWarning,
 }: {
-  project: Project<'scalingInfo' | 'statuses'>
+  project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
 }): CommonScalingEntry {
@@ -79,6 +79,8 @@ export function getCommonScalingEntry({
       daLayer: project.scalingInfo.daLayer,
       raas: project.scalingInfo.raas ?? 'No RaaS',
     },
+    description: project.display?.description,
+    badges: project.scalingInfo.badges,
   }
 }
 

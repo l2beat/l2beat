@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "taiko",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC", // shared
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab", // shared
@@ -13,7 +14,7 @@
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": "SharedERC20Vault",
     "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": "TaikoL1Contract",
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": "DAOFallbackProposer",
-    "0x394E30d83d020469a1F8b16E89D7fD5FdB1935b0": "MainnetTierRouter",
+    "0x8a4c692F12d3a9750E744A4CE24a1d351bE52E66": "MainnetTierRouter",
     "0x579f40D0BE111b823962043702cabe6Aaa290780": "L1RollupAddressManager",
     "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "TaikoAdmin",
     "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "L1SharedAddressManager",
@@ -77,6 +78,13 @@
     },
     "TaikoL1Contract": {
       "description": "This contract provides functionalities for proposing, proving, and verifying blocks.",
+      "ignoreInWatchMode": [
+        "getStateVariables",
+        "getLastSyncedBlock",
+        "getLastVerifiedBlock",
+        "state",
+        "lastProposedIn"
+      ],
       "fields": {
         "proxiableUUID": {
           "handler": {
@@ -479,13 +487,7 @@
             ] // bytes32("proposer_one");
           }
         }
-      },
-      "ignoreInWatchMode": [
-        "getStateVariables",
-        "getLastSyncedBlock",
-        "getLastVerifiedBlock",
-        "state"
-      ]
+      }
     },
     "MainnetTierRouter": {
       "ignoreMethods": ["getProvider"], // too many values

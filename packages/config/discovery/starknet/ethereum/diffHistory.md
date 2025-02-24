@@ -1,3 +1,243 @@
+Generated with discovered.json: 0xd7c5b556cb05a37319ff6e72b751ee6bd8a158eb
+
+# Diff at Fri, 21 Feb 2025 13:28:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21881526
+- current block number: 21895010
+
+## Description
+
+Governance updates:
+- all starknet bridge escrows including ETH are upgradable by the 2/4 StarkgateBridgeMultisig
+- sharp is still governed by a 2/4 MS
+- SC is governor
+- EOA + MS are operators
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarknetOpsMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd)
+    +++ description: None
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[]}
+      values.$admin:
+-        ["0x83C0A700114101D1283D1405E2c8f21D3F03e988","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.0:
+-        "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ .../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 4 files changed, 1976 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21881526 (main branch discovery), not current.
+
+```diff
+    contract StarknetSCMinorityMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      name:
+-        "StarknetOperatorMultisig"
++        "StarknetSCMinorityMultisig"
+    }
+```
+
+Generated with discovered.json: 0x3a5fa6a00cf12702beeb5b54ca836c421ea300b7
+
+# Diff at Wed, 19 Feb 2025 16:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db146cf0a2ae2ee66e75c589f22ad2e266fe95a9 block: 21872746
+- current block number: 21881526
+
+## Description
+
+give SECURITY_AGENT permission (can limit withdrawals) to the StarkgateSecurityAgentMultisig in some bridges.
+
+## Watched changes
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872746 (main branch discovery), not current.
+
+```diff
+    contract StarkgateSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      name:
+-        "StarkgateETHSecurityAgentMultisig"
++        "StarkgateSecurityAgentMultisig"
+    }
+```
+
+Generated with discovered.json: 0x29be27d9add222db7f9524fc4f59c2a719f8b786
+
+# Diff at Tue, 18 Feb 2025 10:46:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829283
+- current block number: 21872746
+
+## Description
+
+StarkgateETHSecurityAgentMultisig threshold = 1.
+
+## Watched changes
+
+```diff
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      values.$threshold:
+-        2
++        1
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "1 of 3 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x05d59101790c6bc4d07b88f4a179106d1bc46dab
+
+# Diff at Wed, 12 Feb 2025 08:41:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786555
+- current block number: 21829283
+
+## Description
+
+Grant some bridge roles to the StarkgateBridgeMultisig, who already had all admin roles (does not change permissions).
+Grant an EOA the permission to remove and blacklist tokens from the Starkgate bridge.
+
+## Watched changes
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: None
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.TOKEN_ADMIN.members.0:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: None
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.TOKEN_ADMIN.members.0:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      values.$members.5:
++        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.$members.4:
+-        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
++        "0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.3:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      values.$members.2:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      values.$members.1:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+      values.$members.0:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.$pastUpgrades.6:
++        ["2025-02-09T12:58:23.000Z","0xccb802ed2caee6856e9141983a642a0d4881cd64a209436d3fdeb4776c841175",["0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"]]
+      values.$upgradeCount:
+-        6
++        7
+      values.accessControl.SECURITY_ADMIN.members.0:
++        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+    }
+```
+
 Generated with discovered.json: 0xf1e5fed307b8635c5552bff67a9b591c1abb4c1d
 
 # Diff at Thu, 06 Feb 2025 09:33:05 GMT:

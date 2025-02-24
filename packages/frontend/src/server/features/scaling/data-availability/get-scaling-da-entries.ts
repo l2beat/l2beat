@@ -18,7 +18,7 @@ export async function getScalingDaEntries() {
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
     ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingDa'],
+      select: ['statuses', 'scalingInfo', 'scalingDa', 'display'],
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'isArchived'],
     }),
@@ -46,7 +46,7 @@ export interface ScalingDaEntry extends CommonScalingEntry {
 }
 
 function getScalingDaEntry(
-  project: Project<'scalingInfo' | 'statuses' | 'scalingDa'>,
+  project: Project<'scalingInfo' | 'statuses' | 'scalingDa' | 'display'>,
   changes: ProjectChanges,
   tvs: number | undefined,
 ): ScalingDaEntry {

@@ -20,7 +20,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -80,8 +80,7 @@ const exitWindowRisk = {
 } as const
 
 const timelockUpgrades = {
-  upgradableBy: ['ZKFairAdmin'],
-  upgradeDelay: exitWindowRisk.value,
+  upgradableBy: [{ name: 'ZKFairAdmin', delay: exitWindowRisk.value }],
   upgradeConsiderations: exitWindowRisk.description,
 }
 
@@ -110,7 +109,7 @@ export const zkfair: Layer2 = {
   id: ProjectId('zkfair'),
   capability: 'universal',
   addedAt: new UnixTime(1690815262), // 2023-07-31T14:54:22Z
-  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
+  badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.Stack.PolygonCDK],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -152,7 +151,7 @@ export const zkfair: Layer2 = {
   chainConfig: {
     name: 'zkfair',
     chainId: 42766,
-    explorerUrl: 'https://scan.zkfair.io/',
+    explorerUrl: 'https://scan.zkfair.io',
     explorerApi: {
       url: 'https://scan.zkfair.io/api/',
       type: 'blockscout',

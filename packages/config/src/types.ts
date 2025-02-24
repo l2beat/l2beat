@@ -1,14 +1,16 @@
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   ChainId,
   EthereumAddress,
   ProjectId,
   StringWithAutocomplete,
+  Token,
+  TokenBridgedUsing,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -54,12 +56,6 @@ export interface ChainConfig {
   minTimestampForTvl?: UnixTime
   multicallContracts?: MulticallContractConfig[]
   coingeckoPlatform?: string
-}
-
-export interface KnowledgeNugget {
-  title: string
-  url: string
-  thumbnail?: string
 }
 
 export interface Milestone {
@@ -109,10 +105,8 @@ export interface ScalingProject {
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
-  /** List of knowledge nuggets: useful articles worth reading */
-  knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
-  badges?: BadgeId[]
+  badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -137,7 +131,7 @@ export interface ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: TransactionApiConfig
   /** Data availability tracking config */
-  daTracking?: ProjectDaTrackingConfig
+  daTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface ScalingProjectUpgradeability {
@@ -186,6 +180,8 @@ export interface ScalingProjectDisplay {
 
 export interface ProjectEscrow {
   chain: string
+  /** Automatically set in config based on chain name. */
+  chainId?: number
   /** Address of the escrow. Use etherscan to verify its correctness. */
   address: EthereumAddress
   /** Should use name of the contract for escrow name */
@@ -481,7 +477,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
-  liveness?: Layer2LivenessConfig
+  liveness?: ProjectLivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
 }
@@ -541,7 +537,7 @@ interface SharedBridge {
   untilTimestamp?: UnixTime
 }
 
-export interface Layer2LivenessConfig {
+export interface ProjectLivenessConfig {
   duplicateData: {
     from: TrackedTxsConfigSubtype
     to: TrackedTxsConfigSubtype
@@ -601,6 +597,8 @@ export type OnchainVerifier = {
   name: string
   description: string
   contractAddress: EthereumAddress
+  /** Link to the smart contract code on an explorer. Automatically set. */
+  url?: string
   chainId: ChainId
   subVerifiers: SubVerifier[]
 } & (
@@ -648,12 +646,12 @@ export interface Bridge {
   isUnderReview?: boolean
   display: BridgeDisplay
   config: BridgeConfig
+  chainConfig?: ChainConfig
   riskView: BridgeRiskView
   technology: BridgeTechnology
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export interface BridgeDisplay {
@@ -702,26 +700,29 @@ export interface CustomDa {
 
 export type DaChallengeMechanism = 'DA Challenges' | 'None'
 
-// General da-layer tracking
-
-export type DaLayerTrackingConfig = 'ethereum' | 'celestia' | 'avail'
-// Per-project da-layer tracking
-
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
+  daLayer: ProjectId
   inbox: string
   sequencers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface CelestiaDaTrackingConfig {
   type: 'celestia'
+  daLayer: ProjectId
   namespace: string
-  signers?: string[]
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export interface AvailDaTrackingConfig {
   type: 'avail'
+  daLayer: ProjectId
   appId: string
+  sinceBlock: number
+  untilBlock?: number
 }
 
 export type ProjectDaTrackingConfig =
@@ -805,21 +806,25 @@ export interface BaseProject {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
-  // tvlConfig
+  tvlConfig?: ProjectTvlConfig
+  transactionApiConfig?: TransactionApiConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
+  livenessConfig?: ProjectLivenessConfig
   /** Display information for the costs feature. If present costs is enabled for this project. */
   costsInfo?: ProjectCostsInfo
-  // trackedTxsConfig
+  trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityInfo?: Layer2FinalityDisplay
   /** Configuration for the finality feature. If present finality is enabled for this project. */
   finalityConfig?: Layer2FinalityConfig
+  daTrackingConfig?: ProjectDaTrackingConfig[]
   proofVerification?: ProofVerification
   daLayer?: DaLayer
   daBridge?: DaBridge
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
+  chainConfig?: ChainConfig
   milestones?: Milestone[]
   // tags
   isBridge?: true
@@ -885,6 +890,14 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
+  badges: Badge[] | undefined
+}
+
+export interface Badge {
+  id: string
+  type: string
+  name: string
+  description: string
 }
 
 export type ScalingProjectStage =
@@ -921,12 +934,11 @@ export interface DaLayer {
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow?: number
   consensusAlgorithm?: DaConsensusAlgorithm
-  throughput?: DaLayerThroughput
+  throughput?: DaLayerThroughput[]
   /** The time it takes to finalize the data. @unit seconds */
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
-  daTracking?: DaLayerTrackingConfig
 }
 
 export interface DaBridge {
@@ -961,14 +973,24 @@ export interface DaConsensusAlgorithm {
 export interface DaLayerThroughput {
   /**
    * Batch size for data availability. Together with batchFrequency it determines max throughput.
-   * @unit KB - kilobytes
+   * @unit B - bytes
    */
   size: number
+  /**
+   * Desired size of blob data per block. Should be less than or equal to size.
+   * @unit B - bytes
+   */
+  target?: number
   /**
    * Batch frequency for data availability. Together with batchSize it determines max throughput.
    * @unit seconds
    */
   frequency: number
+  /**
+   * Inclusive timestamp of when this throughput was introduced.
+   * If more than one throughput is provided, it will be used as the end time of previous one
+   */
+  sinceTimestamp: number
 }
 
 export interface DaEconomicSecurity {
@@ -1059,6 +1081,13 @@ export interface ProjectContracts {
   risks: ScalingProjectRisk[]
 }
 
+export interface ProjectUpgradeableActor {
+  /** Actor from permissions that can upgrade */
+  name: string
+  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
+  delay: string
+}
+
 export interface ProjectContract {
   /** Address of the contract */
   address: EthereumAddress
@@ -1066,16 +1095,16 @@ export interface ProjectContract {
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
   chain: string
+  /** Explorer url for the code of that contract. Set automatically */
+  url?: string
   /** Solidity name of the contract */
   name: string
   /** Description of the contract's role in the system */
   description?: string
   /** Details about upgradeability */
   upgradeability?: ScalingProjectUpgradeability
-  /** Upgrade delay. Can be simple "21 days" or more complex "8 days shortened to 0 by security council" */
-  upgradeDelay?: string
   /** Which actors from permissions can upgrade */
-  upgradableBy?: string[]
+  upgradableBy?: ProjectUpgradeableActor[]
   /** Other considerations worth mentioning about the upgrade process */
   upgradeConsiderations?: string
   /** Pasuable contract */
@@ -1089,4 +1118,23 @@ export interface ProjectContract {
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlConfig {
+  escrows: ProjectTvlEscrow[]
+  associatedTokens: string[]
+}
+
+/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlEscrow {
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  tokens: (Token & { isPreminted: boolean })[]
+  chain: string
+  includeInTotal?: boolean
+  source?: ProjectEscrow['source']
+  bridgedUsing?: TokenBridgedUsing
+  sharedEscrow?: SharedEscrow
 }

@@ -6,7 +6,7 @@ import type { TvsConfig } from '../types'
 // const arbitrum = layer2s.find((l) => l.id === ProjectId('arbitrum'))
 // assert(arbitrum, 'Arbitrum not found')
 // assert(arbitrum.chainConfig, 'Arbitrum chain config not defined')
-// const backendProject = layer2ToBackendProject(arbitrum)
+// const backendProject = toBackendProject(arbitrum)
 
 // export const arbitrumConfig = mapConfig(backendProject, arbitrum.chainConfig)
 

@@ -1,8 +1,8 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { DaEconomicSecurityRisk } from '../da-beat/common'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -12,8 +12,7 @@ const discovery = new ProjectDiscovery('xai', 'arbitrum')
 export const xai: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1701958025), // 2023-12-07T14:07:05Z
   discovery,
-  hostChain: ProjectId('arbitrum'),
-  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [BADGES.DA.DAC, BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -40,7 +39,7 @@ export const xai: Layer3 = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
-  gasTokens: ['XAI'],
+  gasTokens: { tracked: ['XAI'] },
   rpcUrl: 'https://xai-chain.net/rpc',
   nonTemplateTechnology: {
     stateCorrectness: {
@@ -94,7 +93,6 @@ export const xai: Layer3 = orbitStackL3({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
   ],
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'XAI Mainnet Launch',

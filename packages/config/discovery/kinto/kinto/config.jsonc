@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "kinto",
   "name": "kinto",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": [
     "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b", // appRegistry
     "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a", // kintoadmin smartwallet
@@ -25,7 +26,8 @@
     "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket",
     "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": "AccessManager",
     "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": "NioGovernor",
-    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians"
+    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians",
+    "0x87f0eE85bF3198654900a422832157abBba30828": "BeaconKintoWallet"
   },
   "types": {
     "RoleName": {
@@ -39,6 +41,12 @@
     }
   },
   "overrides": {
+    // "0x88e03D41a6EAA9A0B93B0e2d6F1B34619cC4319b":{
+    //   "extends": "orbitstack/UpgradeExecutor"
+    // },
+    "BeaconKintoWallet": {
+      "ignoreRelatives": ["implementation"]
+    },
     "KintoAdminMultisig": {
       "ignoreMethods": ["owners"],
       "ignoreInWatchMode": ["getNonce"]
@@ -78,6 +86,11 @@
       // highly custom/manual event-based discovery here, should be automated
       "description": "Standard OpenZeppelin AccessManager: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.",
       "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "kintoAccessControl"
+          }
+        },
         "initialAdminRole": {
           "description": "From the constructor args. Has the ADMIN_ROLE (0).",
           "handler": {
@@ -126,7 +139,7 @@
           "handler": {
             "type": "event",
             "select": ["selector", "roleId"],
-            "set": { "event": "TargetFunctionRoleUpdated" },
+            "add": { "event": "TargetFunctionRoleUpdated" },
             "groupBy": "target"
           }
         },
@@ -146,12 +159,13 @@
             "add": { "event": "OperationScheduled" }
           }
         },
-        "AdditionalRoles": {
-          "description": "Roles (id : label) added apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.",
+        "AdditionalRoleLabels": {
+          "description": "Roles (id : label) labeled apart from the standard roles PUBLIC_ROLE and ADMIN_ROLE.",
           "handler": {
             "type": "event",
-            "select": ["roleId", "label"],
-            "add": { "event": "RoleLabel" }
+            "select": ["roleId"],
+            "add": { "event": "RoleLabel" },
+            "groupBy": "label"
           }
         },
         "RolesGranted": {
@@ -159,14 +173,29 @@
           "handler": {
             "type": "event",
             "select": ["account", "delay", "since", "newMember"],
-            "set": { "event": "RoleGranted" },
+            "add": { "event": "RoleGranted" },
+            "groupBy": "roleId"
+          }
+        },
+        "RolesRevoked": {
+          "description": "List of roles revoked from accounts.",
+          "handler": {
+            "type": "event",
+            "select": ["roleId", "account"],
+            "add": { "event": "RoleRevoked" },
             "groupBy": "roleId"
           }
         }
       }
     },
     "Socket": {
-      "ignoreInWatchMode": ["globalMessageCount"]
+      "ignoreInWatchMode": ["globalMessageCount"],
+      "ignoreRelatives": [
+        "capacitorFactory__",
+        "executionManager__",
+        "hasher__",
+        "transmitManager__"
+      ]
     },
     "Treasury": {
       "description": "Kinto Treasury.",
@@ -187,7 +216,8 @@
     "BridgedKinto": {
       "description": "KINTO token contract.",
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply", "clock"]
+      "ignoreInWatchMode": ["totalSupply", "clock"],
+      "ignoreRelatives": ["miningContract", "SALE"]
     },
     "RewardsDistributor": {
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
@@ -210,7 +240,6 @@
       "description": "Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.",
       "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": ["totalWallets"],
-      "ignoreRelatives": ["beacon"],
       "fields": {
         "owner": {
           "severity": "HIGH",
@@ -304,7 +333,8 @@
         "reservedContracts",
         "systemContracts",
         "tokenByIndex",
-        "tokenIdToApp"
+        "tokenIdToApp",
+        "ownerOf"
       ],
       "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
       "ignoreInWatchMode": ["totalSupply", "appCount"],
@@ -321,7 +351,7 @@
           }
         },
         "getSystemContracts": {
-          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts.",
+          "description": "Contracts that are exempt from the STF-enforced rule that EOAs cannot call contracts. Must include ArbSys `0x0000000000000000000000000000000000000064` for ETH withdrawals from an EOA.",
           "severity": "HIGH"
         }
       }

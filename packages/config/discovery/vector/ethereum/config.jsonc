@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "vector",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x02993cdC11213985b9B13224f3aF289F03bf298d"],
   "names": {
     "0x02993cdC11213985b9B13224f3aF289F03bf298d": "Vector",

@@ -22,7 +22,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('zksync')
@@ -46,8 +46,12 @@ const securityCouncilMembers = discovery.getContractValue<string[]>(
 const securityCouncil = `${securityCouncilThreshold} of ${securityCouncilMembers.length}`
 
 const upgrades = {
-  upgradableBy: ['ZkSync Multisig'],
-  upgradeDelay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
+  upgradableBy: [
+    {
+      name: 'ZkSync Multisig',
+      delay: `${upgradeDelayString} or 0 if overridden by ${securityCouncil} Security Council`,
+    },
+  ],
   upgradeConsiderations:
     'When the upgrade process starts only the address of the new implementation is given. The actual upgrade also requires implementation specific calldata which is only provided after the delay has elapsed. Changing the default upgrade delay or the Security Council requires a ZkSync contract upgrade.',
 }
@@ -60,7 +64,7 @@ export const zksynclite: Layer2 = {
   id: ProjectId('zksync'),
   capability: 'appchain',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
     slug: 'zksync-lite',
@@ -69,7 +73,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments', 'Exchange', 'NFT'],
     stack: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
@@ -363,8 +366,7 @@ export const zksynclite: Layer2 = {
         discovery.getContractDetails('TokenGovernance', {
           description:
             'Allows anyone to add new ERC20 tokens to ZKsync Lite given sufficient payment.',
-          upgradableBy: ['ZkSync Multisig'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [{ name: 'ZkSync Multisig', delay: 'no' }],
           references: [
             {
               title: 'Governance.sol#L93 - Etherscan source code',
@@ -374,8 +376,7 @@ export const zksynclite: Layer2 = {
         }),
         discovery.getContractDetails('NftFactory', {
           description: 'Allows for withdrawing NFTs minted on L2 to L1.',
-          upgradableBy: ['ZkSync Multisig'],
-          upgradeDelay: 'No delay',
+          upgradableBy: [{ name: 'ZkSync Multisig', delay: 'no' }],
           references: [
             {
               title: 'Governance.sol#L205 - Etherscan source code',

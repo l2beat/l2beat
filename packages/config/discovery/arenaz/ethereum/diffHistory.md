@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x1fc1b46a28447d2ef3d745959aec590828e6ea10
+
+# Diff at Fri, 21 Feb 2025 08:59:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829667
+- current block number: 21829667
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829667 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0BE364912219bC74760f1d1c25F4866b328eBfC6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x564Eb0CeFCcA86160649a8986C419693c82F3678) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x46b9a9dffd3ff8c80b31f272aa46e26bed7720a0
+
+# Diff at Wed, 12 Feb 2025 09:59:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21802830
+- current block number: 21829667
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.7:
+-        "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
++        "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90"
+      values.$members.5:
+-        "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
++        "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c"
+    }
+```
+
+Generated with discovered.json: 0xf2ec35f7ae251fd47e4a29c66e4877a0ad6ae0f9
+
+# Diff at Mon, 10 Feb 2025 19:03:40 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21802830
+- current block number: 21802830
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802830 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x1caddacaea60091808f088f39b79c67c06b3ce07
 
 # Diff at Sat, 08 Feb 2025 15:56:50 GMT:

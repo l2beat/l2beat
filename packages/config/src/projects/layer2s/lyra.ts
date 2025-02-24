@@ -1,11 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { NUGGETS } from '../../common'
-
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lyra')
@@ -13,7 +11,7 @@ const discovery = new ProjectDiscovery('lyra')
 export const lyra: Layer2 = opStackL2({
   addedAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,
@@ -41,6 +39,10 @@ export const lyra: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.lyra.finance',
   genesisTimestamp: new UnixTime(1700022479),
+  celestiaDa: {
+    sinceBlock: 0, // Edge Case: config added @ DA Module start
+    namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACLkdk+ILapw=',
+  },
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
@@ -63,13 +65,6 @@ export const lyra: Layer2 = opStackL2({
       url: 'https://x.com/lyrafinance/status/1750235026136965260',
       date: '2024-01-16T00:00:00.00Z',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
   nonTemplateEscrows: [

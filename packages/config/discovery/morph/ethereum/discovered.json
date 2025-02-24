@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 21716626,
-  "configHash": "0xb97d19431de1cdcef4f99ce492eefd1011b924e9ea6dff1fc95376b5ae4b2378",
+  "configHash": "0x3b02a293809961e5d63c14a5b40ca0eb305762a4ce4d20917593155c732e8ebd",
   "contracts": [
     {
       "name": "L1Staking",

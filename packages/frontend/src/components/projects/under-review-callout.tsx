@@ -25,7 +25,7 @@ export function UnderReviewCallout({ small, className }: Props) {
         <span
           className={cn('ml-2 inline-block font-medium', !small && 'text-2xl')}
         >
-          Project Under Review
+          Under Review
         </span>
       </div>
       {small ? (
@@ -34,9 +34,9 @@ export function UnderReviewCallout({ small, className }: Props) {
         </p>
       ) : (
         <p className="text-balance text-center text-sm">
-          Projects under review might present incomplete information & data.
+          The information in the section might be incomplete or outdated.
           <br />
-          L2BEAT Team is working to research & validate content before
+          The L2BEAT Team is working to research & validate the content before
           publishing.
         </p>
       )}

@@ -1,8 +1,8 @@
 {
   "name": "playblock",
   "chain": "nova",
-  "blockNumber": 81006902,
-  "configHash": "0xe1f15e4ed6e78c4f85bce8fd6f09d257454c2b159f27d5201951432d3874af4a",
+  "blockNumber": 82417913,
+  "configHash": "0xbf0f9a67c1fbe5ca76dc5d392c43e97b6a3f4e5949a85641038620d552f88cee",
   "contracts": [
     {
       "name": "RollupProxy",
@@ -25,7 +25,7 @@
         },
         {
           "permission": "validate",
-          "to": "0x76a197539eF9670c75F36997b8f1DeA593A1b827",
+          "to": "0xB246421622FB931BdAc20B4a26816F881771Db1e",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "via": []
         }
@@ -33,7 +33,8 @@
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
-        "latestNodeCreated"
+        "latestNodeCreated",
+        "lastStakeBlock"
       ],
       "sinceTimestamp": 1709904018,
       "values": {
@@ -71,12 +72,13 @@
         "confirmPeriodBlocks": 150,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 6643,
+        "firstUnresolvedNode": 7806,
         "inbox": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
         "isERC20Enabled": false,
-        "lastStakeBlock": 19391320,
-        "latestConfirmed": 6642,
-        "latestNodeCreated": 6642,
+        "isPostBoLD": false,
+        "lastStakeBlock": 21894395,
+        "latestConfirmed": 7805,
+        "latestNodeCreated": 7805,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
@@ -85,12 +87,12 @@
         "rollupDeploymentBlock": 19390708,
         "rollupEventInbox": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "setValidatorCount": 1,
-        "stakerCount": 1,
+        "setValidatorCount": 3,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0x76a197539eF9670c75F36997b8f1DeA593A1b827"],
+        "validators": ["0xB246421622FB931BdAc20B4a26816F881771Db1e"],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
@@ -148,7 +150,8 @@
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
-      ]
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "UpgradeExecutor",
@@ -209,7 +212,8 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a"]
       },
-      "derivedName": "UpgradeExecutor"
+      "derivedName": "UpgradeExecutor",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ERC20RollupEventInbox",
@@ -350,7 +354,8 @@
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
         "totalChallengesCreated": 0
       },
-      "derivedName": "ChallengeManager"
+      "derivedName": "ChallengeManager",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ValidatorUtils",
@@ -431,7 +436,8 @@
         "OUTBOX_VERSION": 2,
         "rollup": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
       },
-      "derivedName": "ERC20Outbox"
+      "derivedName": "ERC20Outbox",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Bridge",
@@ -477,10 +483,11 @@
         "nativeToken": "0x73C3cDd1418c3F17D54A81148387d93122802E72",
         "rollup": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
-        "sequencerMessageCount": 149226,
-        "sequencerReportedSubMessageCount": 82496660
+        "sequencerMessageCount": 155942,
+        "sequencerReportedSubMessageCount": 102154441
       },
-      "derivedName": "ERC20Bridge"
+      "derivedName": "ERC20Bridge",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SequencerInbox",
@@ -492,7 +499,7 @@
       "issuedPermissions": [
         {
           "permission": "sequence",
-          "to": "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b",
+          "to": "0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "via": []
         },
@@ -502,7 +509,7 @@
           "via": []
         }
       ],
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
       "sinceTimestamp": 1709904018,
       "values": {
         "$admin": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
@@ -520,7 +527,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchPosters": ["0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b"],
+        "batchPosters": ["0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"],
         "dacKeyset": {
           "requiredSignatures": 1,
           "membersCount": 2,
@@ -538,14 +545,15 @@
         },
         "postsBlobs": false,
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1
+        "setIsBatchPosterCount": 3
       },
       "fieldMeta": {
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
       },
-      "derivedName": ""
+      "derivedName": "",
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OneStepProverMemory",
@@ -594,7 +602,8 @@
         "paused": false,
         "sequencerInbox": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
       },
-      "derivedName": "ERC20Inbox"
+      "derivedName": "ERC20Inbox",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     }
   ],
   "eoas": [
@@ -622,22 +631,22 @@
       ]
     },
     {
-      "address": "0x76a197539eF9670c75F36997b8f1DeA593A1b827",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
-        }
-      ]
-    },
-    {
-      "address": "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b",
+      "address": "0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0",
       "receivedPermissions": [
         {
           "permission": "sequence",
           "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+        }
+      ]
+    },
+    {
+      "address": "0xB246421622FB931BdAc20B4a26816F881771Db1e",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
         }
       ]
     }
@@ -1112,19 +1121,19 @@
     ]
   },
   "usedTemplates": {
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
-    "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
-    "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
+    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
     "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
     "orbitstack/OneStepProverHostIo": "0x955eff837aa58501609b9a9738e1d5aeaad103ac2280ce87faabfb96dc3b1917",
     "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
+    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy": "0x349d6acd385f789c3568a84b26aecf2e64b154bf52b5874bbc9e979ef5f72230",
-    "orbitstack/SequencerInbox": "0xffc4669c98d6decc7bfb0c338a045ccd0d2e74106372de2960f2fff19a842cb0",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
+    "orbitstack/RollupProxy": "0x23008c1256ac001023fb7343b4740c018f305d7bf8596af189533f7cf7624f49",
+    "orbitstack/SequencerInbox": "0x585acad76f9fde6b4698ad27e253052208fc2887e5be409e531bb003f41753c1",
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }
 }

@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 21579626,
-  "configHash": "0xd4180f788c7ada267a9a04effab9e5b149a2eb772b6b0472bb5d1ff4e657421b",
+  "configHash": "0xc2be8825a3cbba8d84c86df91e98a54d8cf10ba5b4411189dd87acdedb5079cd",
   "contracts": [
     {
       "name": "WETH Vault Kinto",
@@ -1312,20 +1312,29 @@
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8" },
+    {
+      "name": "KintoFoundation",
+      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    },
     { "address": "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58" },
     { "address": "0x4cEa25e9c999E69F45765539783D149024f99F12" },
     { "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e" },
     { "address": "0x5ECfd6968593159e5b4f06832857943409122849" },
     { "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52" },
-    { "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E" },
+    {
+      "name": "MamoriLabs2",
+      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+    },
     { "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20" },
     { "address": "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8" },
     { "address": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332" },
     { "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836" },
     { "address": "0xb69F2341F008f673F757B49104c165C8022CD0df" },
     { "address": "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65" },
-    { "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B" },
+    {
+      "name": "MamoriLabs",
+      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+    },
     { "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC" },
     { "address": "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369" },
     { "address": "0xE328a0B1e0bE7043c9141c2073e408D1086E1175" }

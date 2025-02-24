@@ -2,6 +2,7 @@ import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTvsBreakdown } from './get-tvs-breakdown'
 import { getTvsProjects } from './get-tvs-projects'
@@ -37,9 +38,13 @@ export interface BreakdownSplit {
 
 const getCached7dTokenBreakdown = cache(
   async (): Promise<SevenDayTvsBreakdown> => {
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
     const tvsValues = await getTvsValuesForProjects(
-      getTvsProjects(
+      await getTvsProjects(
         (project) => project.type === 'layer2' || project.type === 'layer3',
+        chains,
       ),
       '7d',
     )
@@ -132,8 +137,8 @@ const getCached7dTokenBreakdown = cache(
   },
   ['getCached7dTokenBreakdown'],
   {
-    tags: ['tvs'],
-    revalidate: UnixTime.DAY,
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

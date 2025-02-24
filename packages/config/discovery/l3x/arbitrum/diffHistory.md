@@ -1,3 +1,119 @@
+Generated with discovered.json: 0x75587ce8f95a2689f1b8d0a5779fe62b8705905e
+
+# Diff at Fri, 21 Feb 2025 14:12:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 287771362
+- current block number: 287771362
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771362 (main branch discovery), not current.
+
+```diff
+    contract Outbox (0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x211C9893653Aea2088E34765e7039617E95fD8fD) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L1ERC20Gateway (0x4fF3E70f30f0394Ad62428751Fe3858740595908) {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Bridge (0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Inbox (0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf) {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract RollupProxy (0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0xfec3c8ce043cf738a435bb70c103282cd8debf6a
+
+# Diff at Thu, 20 Feb 2025 12:22:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2b8072d8f4ddd728fac7a5e6cf8717962af378f block: 287771362
+- current block number: 287771362
+
+## Description
+
+Config related: Bold templates added
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287771362 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.isPostBoLD:
++        false
+    }
+```
+
 Generated with discovered.json: 0xb2647e73af4196eb8d00d8911501d67ae3e58661
 
 # Diff at Tue, 04 Feb 2025 12:33:55 GMT:

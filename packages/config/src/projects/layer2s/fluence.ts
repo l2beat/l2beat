@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('fluence')
 export const fluence: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1730898278), // 2024-11-06T13:04:38+00:00
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -42,13 +42,12 @@ export const fluence: Layer2 = orbitStackL2({
       tokens: '*',
     }),
   ],
-  gasTokens: ['FLT'],
+  gasTokens: { tracked: ['FLT'] },
   associatedTokens: ['FLT'],
   rpcUrl: 'https://rpc.mainnet.fluence.dev',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

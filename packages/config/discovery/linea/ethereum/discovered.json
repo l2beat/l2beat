@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 21434844,
-  "configHash": "0x63924442fc0f6b8b2b81c582520b27da0d1be5e47576ab58c4091e8971a8c115",
+  "configHash": "0x8d1c6dcfc95119706a493d4350711586e584bd384e87da4756aca6612c84e12a",
   "contracts": [
     {
       "name": "TokenBridge",

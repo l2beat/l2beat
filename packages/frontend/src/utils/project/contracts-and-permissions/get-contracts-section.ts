@@ -4,14 +4,13 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import { CONTRACTS, layer2s } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-project-da-solution'
-import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import type { TechnologyContract } from '../../../components/projects/sections/contract-entry'
@@ -105,14 +104,6 @@ export function getContractsSection(
       }) ?? []
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
-
-  if (projectParams.isVerified === false) {
-    risks.push({
-      text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
-      isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
-    })
-  }
-
   const getL3HostChain = (hostChain: string) => {
     return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
   }
@@ -144,7 +135,12 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain
-  const etherscanUrl = getExplorerUrl(chain)
+  // TODO: sz-piotr: This here is just a stepping stone. Ideally none of this
+  // weird logic would exist here. Instead you'd already have the items you want
+  // to display already pre-processed in config
+  const explorerUrl = item.url
+    ? new URL(item.url).origin
+    : 'https://etherscan.io'
 
   const getAddress = (opts: {
     address: EthereumAddress
@@ -157,7 +153,7 @@ function makeTechnologyContract(
       name: name,
       address: opts.address.toString(),
       verificationStatus: toVerificationStatus(!isUnverified),
-      href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
+      href: `${explorerUrl}/address/${opts.address.toString()}#code`,
     }
   }
 
@@ -192,12 +188,12 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    const unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
-
+    const text =
+      'The source code of this contract is not verified on Etherscan.'
     if (!description) {
-      description = unverifiedText
+      description = text
     } else {
-      description += ' ' + unverifiedText
+      description += ' ' + text
     }
   }
 
@@ -260,7 +256,6 @@ function makeTechnologyContract(
     implementationChanged,
     highSeverityFieldChanged,
     upgradeableBy: item.upgradableBy,
-    upgradeDelay: item.upgradeDelay,
     upgradeConsiderations: item.upgradeConsiderations,
   }
 }

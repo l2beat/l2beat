@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "paradex",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
     "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"

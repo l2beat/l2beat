@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zeronetwork",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"],
   "names": {
     "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "ZeroNetworkZkEvm",

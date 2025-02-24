@@ -199,5 +199,4 @@ export const transporter: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [],
 }

@@ -1,3 +1,128 @@
+Generated with discovered.json: 0xcc9c6d755e302a060785f928d978ab3084e5e214
+
+# Diff at Fri, 21 Feb 2025 13:28:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829678
+- current block number: 21895014
+
+## Description
+
+Worldchain does what is assumed to be a switch to the latest config. gasLimit per block should be the same.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        2
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        150000000
++        30000000
+    }
+```
+
+Generated with discovered.json: 0xb6c5e61402f81b8a4f34779a58ad1b70eefcae62
+
+# Diff at Fri, 21 Feb 2025 09:00:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829678
+- current block number: 21829678
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829678 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x470458C91978D2d929704489Ad730DC3E3001113) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xf931a81D18B1766d15695ffc7c1920a62b7e710a) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+Generated with discovered.json: 0xd2c836c0be3a737d3ecb22d92e28a338813161a0
+
+# Diff at Wed, 12 Feb 2025 10:01:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21802840
+- current block number: 21829678
+
+## Description
+
+Optimism SecurityCouncil rotates signers.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      values.$members.7:
+-        "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310"
++        "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90"
+      values.$members.5:
+-        "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e"
++        "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c"
+    }
+```
+
+Generated with discovered.json: 0x7be98ec5f634cd241daa6a71804cd619908887c7
+
+# Diff at Mon, 10 Feb 2025 19:05:02 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3756adff7c1ac86d8af3374a90a75c1999aae2b3 block: 21802840
+- current block number: 21802840
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802840 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
++        false
+    }
+```
+
 Generated with discovered.json: 0x3399b030d045c64d4a8c7dbc625ae4c6d23a3115
 
 # Diff at Sat, 08 Feb 2025 15:58:48 GMT:

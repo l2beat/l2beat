@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Indexer, RootIndexer } from '@l2beat/uif'
 import type { Clock } from '../../../tools/Clock'
 import type { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
@@ -17,12 +17,12 @@ export class BlockTargetIndexer extends RootIndexer {
     logger: Logger,
     private readonly clock: Clock,
     private readonly blockTimestampProvider: BlockTimestampProvider,
-    projectId: ProjectId,
+    readonly daLayer: string,
   ) {
     super(
       logger.tag({
-        tag: projectId,
-        project: projectId,
+        tag: daLayer,
+        project: daLayer,
       }),
       {
         tickRetryStrategy: Indexer.getInfiniteRetryStrategy(),

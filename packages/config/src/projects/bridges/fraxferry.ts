@@ -522,275 +522,659 @@ export const fraxferry: Bridge = {
     addresses: {
       [discovery.chain]: [
         // ARBITRUM
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Arbitrum)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Arbitrum)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (Arbitrum)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (Arbitrum)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Arbitrum)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Arbitrum)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (Arbitrum)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Arbitrum)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Arbitrum)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (Arbitrum)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (Arbitrum)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Arbitrum)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Arbitrum)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (Arbitrum)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (Arbitrum)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // AURORA
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Aurora)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Aurora)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Aurora)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // AVALANCHE
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Avalanche)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Avalanche)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (Avalanche)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (Avalanche)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Avalanche)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Avalanche)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (Avalanche)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Avalanche)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Avalanche)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (Avalanche)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (Avalanche)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Avalanche)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Avalanche)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (Avalanche)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (Avalanche)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // BOBA
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Boba)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Boba)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Boba)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // BSC
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (bsc)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (bsc)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (bsc)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (bsc)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (bsc)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (bsc)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (bsc)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (bsc)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (bsc)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (bsc)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (bsc)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (bsc)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (bsc)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (bsc)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (bsc)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // EVMOS
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (evmos)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (evmos)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (evmos)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // FANTOM
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Fantom)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Fantom)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Fantom)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Fantom)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Fantom)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Fantom)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Fantom)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Fantom)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Fantom)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Fantom)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Fantom)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Fantom)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // FRAXTAL
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Fraxtal)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Fraxtal)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (Fraxtal)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (Fraxtal)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Fraxtal)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (Fraxtal)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Fraxtal)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Fraxtal)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (Fraxtal)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (Fraxtal)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Fraxtal)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (Fraxtal)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (Fraxtal)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // MOONBEAM
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Moonbeam)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Moonbeam)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Moonbeam)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Moonbeam)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Moonbeam)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Moonbeam)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Moonbeam)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Moonbeam)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Moonbeam)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Moonbeam)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Moonbeam)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Moonbeam)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // MOONRIVER
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Moonriver)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Moonriver)',
-          'FXS Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Moonriver)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Moonriver)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Moonriver)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Moonriver)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // OPTIMISM
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Optimism)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Optimism)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (Optimism)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (Optimism)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Optimism)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Optimism)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (Optimism)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Optimism)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Optimism)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (Optimism)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (Optimism)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Optimism)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Optimism)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (Optimism)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (Optimism)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // POLYGON PoS
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Polygon PoS)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (Polygon PoS)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Polygon PoS)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Polygon PoS)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Polygon PoS)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Polygon PoS)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (Polygon PoS)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (Polygon PoS)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Polygon PoS)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Polygon PoS)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Polygon PoS)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Polygon PoS)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // POLYGON zkEVM
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (Polygon zkEVM)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (polygonzkEVM)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (Polygon zkEVM)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (Polygon zkEVM)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (Polygon zkEVM)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (Polygon zkEVM)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sFRAX Ferry Bridge (Polygon zkEVM)',
-          'sFRAX Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (Polygon zkEVM)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (polygonzkEVM)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (polygonzkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (Polygon zkEVM)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (Polygon zkEVM)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (Polygon zkEVM)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (Polygon zkEVM)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sFRAX Ferry Bridge (Polygon zkEVM)', {
+          description: 'sFRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sFRAX Ferry Bridge (Polygon zkEVM)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
         // ZKSYNC
-        discovery.getContractDetails(
-          'FRAX Ferry Bridge (ZKsync)',
-          'FRAX Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FXS Ferry Bridge (ZKsync)',
-          'FXS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPI Ferry Bridge (ZKsync)',
-          'FPI Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'FPIS Ferry Bridge (ZKsync)',
-          'FPIS Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'frxETH Ferry Bridge (ZKsync)',
-          'frxETH Bridge Contract (Escrow).',
-        ),
-        discovery.getContractDetails(
-          'sfrxETH Ferry Bridge (ZKsync)',
-          'sfrxETH Bridge Contract (Escrow).',
-        ),
+        discovery.getContractDetails('FRAX Ferry Bridge (ZKsync)', {
+          description: 'FRAX Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FRAX Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FXS Ferry Bridge (ZKsync)', {
+          description: 'FXS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FXS Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPI Ferry Bridge (ZKsync)', {
+          description: 'FPI Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPI Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('FPIS Ferry Bridge (ZKsync)', {
+          description: 'FPIS Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'FPIS Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('frxETH Ferry Bridge (ZKsync)', {
+          description: 'frxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'frxETH Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
+        discovery.getContractDetails('sfrxETH Ferry Bridge (ZKsync)', {
+          description: 'sfrxETH Bridge Contract (Escrow).',
+          pausable: {
+            paused: discovery.getContractValue<boolean>(
+              'sfrxETH Ferry Bridge (ZKsync)',
+              'paused',
+            ),
+            pausableBy: ['Captain', 'First Officer', 'Bridge Owner'],
+          },
+        }),
       ],
     },
     risks: [],

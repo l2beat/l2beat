@@ -101,9 +101,14 @@ describe(ManagedMultiIndexer.name, () => {
 
       await indexer.updateSavedConfigurations({
         toAdd: [actual('a', 100, null)],
-        toUpdate: [saved('b', 100, 1000, 1000, 'props')],
-        toDelete: ['c', 'd'],
-        toRemoveData: [removal('b', 50, 99), removal('b', 1001, 1500)],
+        toUpdate: [
+          saved('b', 100, 1000, 1000, 'props'),
+          saved('c', 100, 1000, 1000, 'props'),
+        ],
+        toTrimDataAfterUpdate: [removal('b', 50, 99), removal('b', 1001, 1500)],
+        toWipeDataAfterUpdate: [removal('c', 200, 1000)],
+        toDelete: ['d'],
+        toWipeDataAfterDelete: [removal('d', 100, 1000)],
       })
 
       expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(
@@ -113,17 +118,27 @@ describe(ManagedMultiIndexer.name, () => {
       )
       expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
         INDEXER_ID,
-        [saved('b', 100, 1000, 1000, 'props')],
+        [
+          saved('b', 100, 1000, 1000, 'props'),
+          saved('c', 100, 1000, 1000, 'props'),
+        ],
         SERIALIZE,
       )
       expect(indexerService.deleteConfigurations).toHaveBeenOnlyCalledWith(
         INDEXER_ID,
-        ['c', 'd'],
+        ['d'],
       )
-      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.removeData).toHaveBeenNthCalledWith(1, [
         removal('b', 50, 99),
         removal('b', 1001, 1500),
       ])
+      expect(indexer.removeData).toHaveBeenNthCalledWith(2, [
+        removal('c', 200, 1000),
+      ])
+      expect(indexer.removeData).toHaveBeenNthCalledWith(3, [
+        removal('d', 100, 1000),
+      ])
+
       expect(db.transaction).toHaveBeenCalledTimes(1)
     })
   })
@@ -206,20 +221,6 @@ describe(ManagedMultiIndexer.name, () => {
         /Returned height must be between from and to/,
       )
     })
-
-    //   it('cannot return more than targetHeight', async () => {
-    //     const indexer = new TestIndexer(
-    //       [actual('a', 100, 300), actual('b', 100, 400)],
-    //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
-    //     )
-    //     await indexer.initialize()
-
-    //     indexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
-
-    //     await expect(indexer.update(200, 300)).toBeRejectedWith(
-    //       /returned height must be between from and to/,
-    //     )
-    //   })
   })
 
   describe(ManagedMultiIndexer.prototype.findRange.name, () => {

@@ -7,30 +7,34 @@ describe(CelestiaDaProvider.name, () => {
   describe(CelestiaDaProvider.prototype.getBlobs.name, () => {
     it('fetches blobs from multiple blocks with different timestamps', async () => {
       const rpcClientMock = createMockRpcClient()
-      const provider = new CelestiaDaProvider(rpcClientMock)
+      const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(1, 2)
 
       expect(blobs).toEqual([
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'namespace1',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
           size: BigInt(100),
         },
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'namespace2',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
           size: BigInt(200),
         },
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'namespace3',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
           size: BigInt(300),
         },
         {
           type: 'celestia',
+          daLayer: 'celestia',
           namespace: 'namespace4',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
           size: BigInt(400),
@@ -43,6 +47,7 @@ describe(CelestiaDaProvider.name, () => {
 function createMockRpcClient() {
   return mockObject<CelestiaRpcClient>({
     getBlockResult: async (blockNumber: number) => ({
+      height: '100',
       txs_results: [
         {
           log: [

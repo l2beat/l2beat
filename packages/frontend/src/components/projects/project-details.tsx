@@ -7,7 +7,6 @@ import { DaRiskSummarySection } from './sections/da-risk-summary-section'
 import { DetailedDescriptionSection } from './sections/detailed-description-section'
 import { GrissiniRiskAnalysisSection } from './sections/grissini-risk-analysis-section'
 import { GroupSection } from './sections/group-section'
-import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets-section'
 import { L3RiskAnalysisSection } from './sections/l3-risk-analysis-section'
 import { MarkdownSection } from './sections/markdown-section'
 import { MilestonesAndIncidentsSection } from './sections/milestones-and-incidents-section'
@@ -19,6 +18,7 @@ import { StageSection } from './sections/stage-section'
 import { StateDerivationSection } from './sections/state-derivation-section'
 import { StateValidationSection } from './sections/state-validation-section'
 import { TechnologySection } from './sections/technology-section'
+import { ThroughputSection } from './sections/throughput/throughput-section'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
@@ -50,6 +50,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'CostsSection':
             return (
               <CostsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'ThroughputSection':
+            return (
+              <ThroughputSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}
@@ -163,14 +171,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'ContractsSection':
             return (
               <ContractsSection
-                key={item.props.id}
-                {...{ nested, sectionOrder }}
-                {...item.props}
-              />
-            )
-          case 'KnowledgeNuggetsSection':
-            return (
-              <KnowledgeNuggetsSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

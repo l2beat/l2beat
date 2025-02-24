@@ -6,7 +6,6 @@ import {
   DA_MODES,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -268,23 +267,6 @@ export const aztecconnect: Layer2 = {
       description:
         'Noir - programming language for zero-knowledge proofs, has been introduced.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Explaining the Aztec Network',
-      url: 'https://medium.com/aztec-protocol/explaining-the-network-in-aztec-network-166862b3ef7d',
-      thumbnail: NUGGETS.THUMBNAILS.AZTEC_01,
-    },
-    {
-      title: 'Economics of Aztec ZK Rollup',
-      url: 'https://medium.com/aztec-protocol/privacy-for-pennies-scaling-aztecs-zkrollup-9f2b36615cc6',
-      thumbnail: NUGGETS.THUMBNAILS.AZTEC_02,
-    },
-    {
-      title: 'Understanding PLONK',
-      url: 'https://vitalik.eth.limo/general/2019/09/22/plonk.html',
-      thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],
 }

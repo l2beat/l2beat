@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -32,7 +32,7 @@ const daResolveWindow = formatSeconds(
 export const gmnetwork: Layer2 = opStackL2({
   addedAt: new UnixTime(1732028588), // 2024-11-19T15:03:08
   discovery,
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['AI'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,

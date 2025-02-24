@@ -23,7 +23,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -86,13 +86,15 @@ const upgradeDelay = Math.min(delay1, delay2)
 const finalizationPeriod = 0
 
 const timelockUpgrades1 = {
-  upgradableBy: ['Degate HomeDAO2 Multisig'],
-  upgradeDelay: formatSeconds(delay1),
+  upgradableBy: [
+    { name: 'Degate HomeDAO2 Multisig', delay: formatSeconds(delay1) },
+  ],
 }
 
 const timelockUpgrades2 = {
-  upgradableBy: ['Degate HomeDAO2 Multisig'],
-  upgradeDelay: formatSeconds(delay2),
+  upgradableBy: [
+    { name: 'Degate HomeDAO2 Multisig', delay: formatSeconds(delay2) },
+  ],
 }
 
 export const degate3: Layer2 = {
@@ -101,9 +103,9 @@ export const degate3: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.LoopringFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.LoopringFork,
   ],
   display: {
     name: 'DeGate V1',

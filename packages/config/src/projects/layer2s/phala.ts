@@ -23,7 +23,7 @@ import {
 import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -98,7 +98,7 @@ export const phala: Layer2 = {
   chainConfig: {
     name: 'phala',
     chainId: 2035,
-    explorerUrl: 'https://explorer.phala.network/',
+    explorerUrl: 'https://explorer.phala.network',
     explorerApi: {
       url: 'https://explorer.phala.network/api',
       type: 'blockscout',
@@ -152,7 +152,7 @@ export const phala: Layer2 = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.RaaS.Conduit],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs, BADGES.RaaS.Conduit],
   type: 'layer2',
   riskView: {
     stateValidation: {

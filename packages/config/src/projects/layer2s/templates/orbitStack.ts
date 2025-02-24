@@ -8,7 +8,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { unionBy } from 'lodash'
-import { ethereum } from '../../../chains/ethereum'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -28,20 +27,20 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
   Layer3,
   Milestone,
-  ProjectContract,
+  ProjectDaTrackingConfig,
   ProjectEscrow,
   ProjectPermission,
-  ProjectPermissions,
   ProjectTechnologyChoice,
+  ProjectUpgradeableActor,
   ReasonForBeingInOther,
   ScalingProjectCapability,
   ScalingProjectDisplay,
@@ -55,20 +54,15 @@ import type {
   StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
+import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
-import {
-  explorerReferences,
-  mergeBadges,
-  mergeContracts,
-  mergePermissions,
-  safeGetImplementation,
-} from './utils'
+import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -126,27 +120,23 @@ interface OrbitStackConfigCommon {
   nonTemplateEscrows?: ProjectEscrow[]
   overrideEscrows?: ProjectEscrow[]
   upgradeability?: {
-    upgradableBy: string[] | undefined
-    upgradeDelay: string | undefined
+    upgradableBy?: ProjectUpgradeableActor[]
   }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
-  nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   additiveConsiderations?: ProjectTechnologyChoice[]
-  nonTemplateContracts?: Record<string, ProjectContract[]>
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -154,12 +144,30 @@ interface OrbitStackConfigCommon {
   nonTemplateContractRisks?: ScalingProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  discoveryDrivenData?: boolean
   isArchived?: boolean
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Configure to enable DA metrics tracking for chain using Celestia DA */
+  celestiaDa?: {
+    namespace: string
+    /* IMPORTANT: Block number on Celestia Network */
+    sinceBlock: number
+  }
+  /** Configure to enable DA metrics tracking for chain using Avail DA */
+  availDa?: {
+    appId: string
+    /* IMPORTANT: Block number on Avail Network */
+    sinceBlock: number
+  }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -167,7 +175,6 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
     category?: ScalingProjectDisplay['category']
   }
   stackedRiskView?: Partial<ScalingProjectRiskView>
-  hostChain: ProjectId
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -212,16 +219,16 @@ export function getNitroGovernance(
   All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO)
   and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s.
   While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through
-  the Security Council smart contracts on all three chains. Although these multisigs are technically separate and connect to different target permissions,
-  their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One and crosschain transactions.
-
-
-  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One
+  multisigs on all three chains. Although they are technically separate and connect to different target permissions,
+  their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One sending crosschain transactions.
+  
+  
+  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (Proposer-) Security Council on Arbitrum One
   and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs
   (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts.
   These two general paths have the same destination: the respective UpgradeExecutor smart contract.
-
-
+  
+  
   Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a
   CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
     l2TimelockDelay,
@@ -231,19 +238,19 @@ export function getNitroGovernance(
   When that has passed, the L1 Timelock delays for additional ${formatSeconds(
     l1TimelockDelay,
   )}. Both timelocks serve as delays during which the transparent transaction contents can be audited,
-  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts
+  and, in the case of the final L1 timelock, cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner restricted functions of the respective destination smart contracts
   through the UpgradeExecutor on Ethereum. If the predefined  transaction destination is Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
-
-
+  
+  
   Operator roles like the Sequencers and Validators are managed using the same paths.
-  Sequencer changes can be delegated to a Batch Poster Manager.
-
-
+  Sequencer changes can be delegated to a Batch Poster Manager role.
+  
+  
   Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
   )}
   Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel
-  these transactions or schedule different ones but can overwrite them anyway by having full admin upgrade permissions for all the underlying smart contracts.`
+  these transactions or schedule different ones but can overwrite them anyway by having upgrade permissions for all the underlying smart contracts.`
 }
 
 function defaultStateValidation(
@@ -375,10 +382,6 @@ function orbitStackCommon(
       'espressoTEEVerifier',
     ) !== EthereumAddress.ZERO
 
-  const currentRequiredStake = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'currentRequiredStake',
-  )
   const minimumAssertionPeriod =
     templateVars.discovery.getContractValue<number>(
       'RollupProxy',
@@ -387,25 +390,13 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
-  const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
-
-  const validators: ProjectPermission =
-    templateVars.discovery.getPermissionDetails(
-      'Validators/Proposers',
-      templateVars.discovery.getPermissionsByRole('validate'), // Validators in Arbitrum are proposers and challengers
-      'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
-    )
-
-  if (validators.accounts.length === 0) {
-    throw new Error(
-      `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
-    )
-  }
+  const daBadge = usesBlobs
+    ? BADGES.DA.EthereumBlobs
+    : BADGES.DA.EthereumCalldata
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -434,26 +425,21 @@ function orbitStackCommon(
     ) ?? EthereumAddress.ZERO
   const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
 
+  // const validatorWhitelistDisabled =
+  //   templateVars.discovery.getContractValue<boolean>(
+  //     'RollupProxy',
+  //     'validatorWhitelistDisabled',
+  //   )
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
-    contracts: templateVars.discoveryDrivenData
-      ? {
-          addresses: generateDiscoveryDrivenContracts(allDiscoveries),
-          risks: nativeContractRisks,
-        }
-      : {
-          addresses: mergeContracts(
-            {
-              [templateVars.discovery.chain]:
-                templateVars.discovery.resolveOrbitStackTemplates().contracts,
-            },
-            templateVars.nonTemplateContracts ?? {},
-          ),
-          risks: nativeContractRisks,
-        },
+    contracts: {
+      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+      risks: nativeContractRisks,
+    },
     chainConfig: templateVars.chainConfig,
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
@@ -523,7 +509,7 @@ function orbitStackCommon(
             },
           ]),
           {
-            title: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
+            title: "Sequencer Isn't Doing Its Job - Arbitrum documentation",
             url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
           },
         ],
@@ -553,39 +539,31 @@ function orbitStackCommon(
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         EVM_OTHER_CONSIDERATIONS,
     },
-    permissions: templateVars.discoveryDrivenData
-      ? generateDiscoveryDrivenPermissions(allDiscoveries)
-      : mergePermissions(
-          {
-            [templateVars.discovery.chain]: {
-              actors: [
-                sequencers,
-                validators,
-                ...templateVars.discovery.resolveOrbitStackTemplates()
-                  .permissions,
-              ],
-            },
-          },
-          templateVars.nonTemplatePermissions ?? {},
-        ),
+    permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     stateDerivation: templateVars.stateDerivation,
     stateValidation:
       templateVars.stateValidation ??
-      defaultStateValidation(
-        minimumAssertionPeriod,
-        currentRequiredStake,
-        challengePeriodSeconds,
-        existFastConfirmer,
-      ),
+      (() => {
+        const currentRequiredStake =
+          templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'currentRequiredStake',
+          )
+        return defaultStateValidation(
+          minimumAssertionPeriod,
+          currentRequiredStake,
+          challengePeriodSeconds,
+          existFastConfirmer,
+        )
+      })(),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
-    milestones: templateVars.milestones,
-    knowledgeNuggets: templateVars.knowledgeNuggets,
+    milestones: templateVars.milestones ?? [],
     badges: mergeBadges(
       [
-        Badge.Stack.Orbit,
-        Badge.VM.EVM,
+        BADGES.Stack.Orbit,
+        BADGES.VM.EVM,
         daBadge,
-        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoSequencing] : []),
+        ...(isUsingEspressoSequencer ? [BADGES.Other.EspressoPreconfs] : []),
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -596,12 +574,10 @@ function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const layer2s = require('..').layer2s as Layer2[]
+  const hostChain = templateVars.discovery.chain
 
-  const baseChain = layer2s.find((l2) => l2.id === templateVars.hostChain)
-  assert(
-    baseChain,
-    `Could not find base chain ${templateVars.hostChain} in layer2s`,
-  )
+  const baseChain = layer2s.find((l2) => l2.id === hostChain)
+  assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
@@ -638,8 +614,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   ).length
 
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
@@ -651,7 +626,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
   const riskView = {
     stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-      ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
         nOfChallengers,
         templateVars.hasAtLeastFiveExternalChallengers ?? false,
         challengePeriodSeconds,
@@ -765,7 +740,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       baseChain.chainConfig?.explorerUrl,
       blockNumberOpcodeTimeSeconds,
     ),
-    hostChain: templateVars.hostChain,
+    hostChain: ProjectId(hostChain),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -852,9 +827,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             templateVars.discovery.getEscrowDetails({
               includeInTotal: false,
               address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens ?? ['ETH'],
+              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
               description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -872,8 +847,69 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
+}
+
+function getDaTracking(
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
+  const batchPosters = templateVars.discovery.getContractValue<string[]>(
+    'SequencerInbox',
+    'batchPosters',
+  )
+
+  // TODO: update to value from discovery
+  const inboxDeploymentBlockNumber = 0
+
+  return usesBlobs
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: templateVars.sequencerInbox.address,
+          sequencers: batchPosters,
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
+        : undefined
 }
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
@@ -884,12 +920,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     'confirmPeriodBlocks',
   )
   const challengePeriodSeconds = challengePeriodBlocks * assumedBlockTime
-
-  const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
-  )
-  const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -903,14 +933,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
-  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
-    'RollupProxy',
-    'validators',
-  ).length
-
   const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: ['ProxyAdmin'],
-    upgradeDelay: 'No delay',
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
   }
 
   const category =
@@ -960,9 +984,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     ) ??
     false
 
+  const validatorWhitelistDisabled =
+    templateVars.discovery.getContractValue<boolean>(
+      'RollupProxy',
+      'validatorWhitelistDisabled',
+    )
+
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, ethereum.explorerUrl, 12),
+    ...orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12),
     display: {
       architectureImage,
       stateValidationImage: 'orbit',
@@ -1059,14 +1089,26 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         },
     riskView: {
-      stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-        ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
-          nOfChallengers,
-          templateVars.hasAtLeastFiveExternalChallengers ?? false,
-          challengePeriodSeconds,
-        ),
-        secondLine: formatChallengePeriod(challengePeriodSeconds),
-      },
+      stateValidation:
+        templateVars.nonTemplateRiskView?.stateValidation ??
+        (() => {
+          if (validatorWhitelistDisabled) {
+            return RISK_VIEW.STATE_FP_INT
+          }
+
+          const nOfChallengers = templateVars.discovery.getContractValue<
+            string[]
+          >('RollupProxy', 'validators').length
+
+          return {
+            ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+              nOfChallengers,
+              templateVars.hasAtLeastFiveExternalChallengers ?? false,
+              challengePeriodSeconds,
+            ),
+            secondLine: formatChallengePeriod(challengePeriodSeconds),
+          }
+        })(),
       dataAvailability:
         (templateVars.nonTemplateRiskView?.dataAvailability ??
         postsToExternalDA)
@@ -1098,23 +1140,37 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
         secondLine: formatDelay(selfSequencingDelaySeconds),
       },
-      proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
-        ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-          challengePeriodSeconds + validatorAfkTimeSeconds,
-        ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-        secondLine: formatDelay(
-          challengePeriodSeconds + validatorAfkTimeSeconds,
-        ),
-      },
+      proposerFailure:
+        templateVars.nonTemplateRiskView?.proposerFailure ??
+        (() => {
+          if (validatorWhitelistDisabled) {
+            return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+          }
+          const validatorAfkBlocks =
+            templateVars.discovery.getContractValue<number>(
+              'RollupProxy',
+              'VALIDATOR_AFK_BLOCKS',
+            )
+          const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
+
+          return {
+            ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+              challengePeriodSeconds + validatorAfkTimeSeconds,
+            ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+            secondLine: formatDelay(
+              challengePeriodSeconds + validatorAfkTimeSeconds,
+            ),
+          }
+        })(),
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: templateVars.gasTokens ?? ['ETH'],
+          tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
           description: templateVars.gasTokens
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
           ...upgradeability,
         }),
@@ -1131,8 +1187,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               adjustCount: { type: 'SubtractOne' },
             }
           : undefined),
+      daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
 }

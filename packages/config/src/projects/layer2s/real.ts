@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('real')
 export const real: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
@@ -56,14 +56,13 @@ export const real: Layer2 = orbitStackL2({
     minTimestampForTvl: new UnixTime(1710580715),
     coingeckoPlatform: 're-al',
   },
-  discoveryDrivenData: true,
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   rpcUrl: 'https://real.drpc.org',
-  // gasTokens: ['reETH'], // not on coingecko yet
+  gasTokens: { untracked: ['reETH'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),

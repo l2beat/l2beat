@@ -1,9 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -13,12 +13,11 @@ export const educhain: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1720082709), // 2024-07-04T08:45:09Z
   discovery,
   additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Gelato,
+    BADGES.DA.DAC,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.RaaS.Gelato,
   ],
   additionalPurposes: ['Social'],
-  hostChain: ProjectId('arbitrum'),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -44,9 +43,8 @@ export const educhain: Layer3 = orbitStackL3({
     },
   },
   rpcUrl: 'https://rpc.edu-chain.raas.gelato.cloud',
-  discoveryDrivenData: true,
   associatedTokens: ['EDU'],
-  gasTokens: ['EDU'],
+  gasTokens: { tracked: ['EDU'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),

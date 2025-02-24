@@ -6,7 +6,7 @@ import type { TvsConfig } from '../types'
 // const kinto = layer2s.find((l) => l.id === ProjectId('kinto'))
 // assert(kinto, 'Kinto not found')
 // assert(kinto.chainConfig, 'Kinto chain config not defined')
-// const backendProject = layer2ToBackendProject(kinto)
+// const backendProject = toBackendProject(kinto)
 
 // export const kintoConfig = mapConfig(backendProject, kinto.chainConfig)
 

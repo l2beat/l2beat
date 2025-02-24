@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0xe953850a981b00c36111bdd24c7471747259e06fe892adffcfc41d77f3e1db86",
+  "configHash": "0xf03d1c96eee541dda06a1987b74f68bde01b171d54d3ba27425b644b14b08523",
   "contracts": [
     {
       "name": "History",

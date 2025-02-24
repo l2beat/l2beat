@@ -1,8 +1,7 @@
-import { toBackendProject } from '@l2beat/backend-shared'
-import { bridges, layer2s, layer3s } from '@l2beat/config'
 import {
   assert,
   EthereumAddress,
+  ProjectId,
   UnixTime,
   asNumber,
   branded,
@@ -11,6 +10,7 @@ import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
+import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getConfigMapping } from '../utils/get-config-mapping'
 import type { TvsChartResolution } from '../utils/range'
@@ -51,12 +51,18 @@ export const getCachedTokenTvsChartData = cache(
     const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
     const resolution = rangeToResolution(range)
 
-    const project = [...layer2s, ...layer3s, ...bridges].find(
-      (p) => p.id === token.projectId,
-    )
+    const project = await ps.getProject({
+      id: ProjectId(token.projectId),
+      select: ['tvlConfig'],
+      optional: ['chainConfig'],
+    })
+
     assert(project, 'Project not found')
-    const backendProject = toBackendProject(project)
-    const configMapping = getConfigMapping(backendProject)
+
+    const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+      (p) => p.chainConfig,
+    )
+    const configMapping = getConfigMapping(project, chains)
 
     const tokenAmountConfigs = configMapping.getAmountsByProjectAndToken(
       project.id,
@@ -108,7 +114,7 @@ export const getCachedTokenTvsChartData = cache(
   },
   ['token-tvs-chart'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

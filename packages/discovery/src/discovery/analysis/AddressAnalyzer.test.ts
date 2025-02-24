@@ -17,6 +17,7 @@ describe(AddressAnalyzer.name, () => {
   const config = createContractConfig(
     { address: EthereumAddress.random(), ...overrides },
     {},
+    {},
   )
 
   describe(AddressAnalyzer.prototype.analyze.name, () => {
@@ -44,6 +45,7 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         type: 'EOA',
         name: undefined,
+        category: undefined,
         address,
       })
     })
@@ -140,6 +142,7 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
+        category: undefined,
         name: 'Test',
         isVerified: true,
         deploymentTimestamp: new UnixTime(1234),
@@ -157,7 +160,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,
@@ -263,6 +265,7 @@ describe(AddressAnalyzer.name, () => {
         ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
         address,
+        category: undefined,
         isVerified: false,
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
@@ -279,7 +282,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,
@@ -380,6 +382,7 @@ describe(AddressAnalyzer.name, () => {
       expect(result).toEqual({
         ...EMPTY_ANALYZED_CONTRACT,
         address,
+        category: undefined,
         name: 'Test',
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
@@ -397,7 +400,6 @@ describe(AddressAnalyzer.name, () => {
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
-            categories: undefined,
             description: undefined,
             permissions: [{ type: 'upgrade', delay: 0, target: address }],
             severity: undefined,

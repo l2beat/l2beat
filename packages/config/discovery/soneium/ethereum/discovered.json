@@ -1,8 +1,8 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 21802838,
-  "configHash": "0xbe00624731d81cab9f3ff271b3c1705ac95ebf3133b207ef21d63aa5ea6ffeac",
+  "blockNumber": 21872714,
+  "configHash": "0xa47b22048aae3d301002d60c3e51e3def4a1304c5c74ff823f8e452c90c746bd",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -326,7 +326,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "derivedName": "Safe"
@@ -361,7 +361,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 851,
+        "gameCount": 968,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x42D15f045159Ce4adE9EDC7da5704eF36056c936",
@@ -371,7 +371,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 851,
+        "permissionedGamesTotal": 968,
         "version": "1.0.0"
       }
     },
@@ -624,7 +624,7 @@
         "batchInbox": "0x008dC74CecC9dedA8595B2Fe210cE5979F0BfA8e",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0",
-        "gasLimit": 60000000,
+        "gasLimit": 30000000,
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
@@ -635,7 +635,8 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": true
+          "isSequencerSendingBlobTx": true,
+          "isUsingEigenDA": false
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
@@ -760,7 +761,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21802837
+          "prevBlockNum": 21872712
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -849,7 +850,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -1040,7 +1040,6 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733134751,
       "values": {
@@ -1055,7 +1054,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638954",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292648355",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1157,9 +1156,9 @@
           "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
           "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
           "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
-          "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e",
+          "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
           "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
-          "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
+          "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90",
           "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
           "0x0aA384EB2fedD2741277A0f72909A0d7275575D7",
           "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
@@ -1171,7 +1170,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1274,7 +1273,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -1314,7 +1312,6 @@
     { "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     { "address": "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa" },
-    { "address": "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e" },
     { "address": "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865" },
     { "address": "0x652BC529E171847E2fFddCeA13567643C84ccB5f" },
     {
@@ -1326,7 +1323,6 @@
         }
       ]
     },
-    { "address": "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310" },
     { "address": "0x7c2Bd59ee2a2C7391c9A240132f26071e9546262" },
     { "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f" },
     { "address": "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39" },
@@ -1339,8 +1335,10 @@
     { "address": "0xba1a565d2bF6D27F451a459308f423219478c5cB" },
     { "address": "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8" },
     { "address": "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9" },
+    { "address": "0xd5b735b676A043a53946C3b6F6BE28c1ECE6aC90" },
     { "address": "0xD6db4b8aD9b8BD4665B968fab017ffEAb546F94a" },
-    { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" }
+    { "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e" },
+    { "address": "0xEF9A98511939eEe6Ec69af62082E3F2ff606877c" }
   ],
   "abis": {
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": [
@@ -2303,10 +2301,10 @@
     "opstack/DelayedWETH": "0xc8b5f9d249266af7ce4c098dfb30dd9861a2a456fc8f813f5fa87ccc04ecbf7f",
     "opstack/DisputeGameFactory": "0x931d104775ede2a7c3b384440bf1d16297b60b2b2bce84c5a41a77a64aaa0e58",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
+    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
-    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal2": "0xf06d5be76d03c0009852bba8f6c70050884122e1a128de56acdc5c14955e88f6",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",

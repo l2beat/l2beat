@@ -39,7 +39,7 @@ const getCachedProjectsLatestTvsUsd = cache(
   },
   ['latestTvsUsd-v2'],
   {
-    tags: ['tvs'],
+    tags: ['hourly-data'],
     revalidate: UnixTime.HOUR,
   },
 )

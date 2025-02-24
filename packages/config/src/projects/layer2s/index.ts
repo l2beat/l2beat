@@ -1,4 +1,4 @@
-import { HOMEPAGE_MILESTONES } from '../../common'
+import { HOMEPAGE_MILESTONES } from '../../global/milestones'
 import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
@@ -31,6 +31,7 @@ import { celo } from './celo'
 import { corn } from './corn'
 import { coti } from './coti'
 import { creator } from './creator'
+import { creatorchain } from './creatorchain'
 import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { dbk } from './dbk'
@@ -58,6 +59,7 @@ import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
 import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
+import { genlayer } from './genlayer'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
 import { gpt } from './gpt'
@@ -82,12 +84,14 @@ import { kinto } from './kinto'
 import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
+import { lachain } from './lachain'
 import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { layerai } from './layerai'
 import { leaf } from './leaf'
 import { lens } from './lens'
+import { liftchain } from './liftchain'
 import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -115,17 +119,19 @@ import { nova } from './nova'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
+import { openzk } from './openzk'
 import { optimism } from './optimism'
 import { optopia } from './optopia'
 import { orderly } from './orderly'
+import { ozean } from './ozean'
 import { palm } from './palm'
 import { pandasea } from './pandasea'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
 import { patex } from './patex'
 import { payy } from './payy'
+import { pepeunchained } from './pepeunchained'
 import { phala } from './phala'
-import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos } from './polygonpos'
@@ -134,6 +140,7 @@ import { polygonzkevm } from './polygonzkevm'
 import { polynomial } from './polynomial'
 import { publicgoodsnetwork } from './publicgoodsnetwork'
 import { puffer } from './puffer'
+import { r0ar } from './r0ar'
 import { race } from './race'
 import { real } from './real'
 import { reddioex } from './reddioex'
@@ -150,6 +157,7 @@ import { shape } from './shape'
 import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
+import { snaxchain } from './snaxchain'
 import { socialnetwork } from './socialnetwork'
 import { solo } from './solo'
 import { soneium } from './soneium'
@@ -169,6 +177,7 @@ import { sxt } from './sxt'
 import { t1 } from './t1'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
+import { tea } from './tea'
 import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
@@ -179,12 +188,15 @@ import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { tusima } from './tusima'
 import { unichain } from './unichain'
+import { union } from './union'
 import { wirex } from './wirex'
 import { witness } from './witness'
+import { wonderfi } from './wonderfi'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
 import { xpla } from './xpla'
+import { xsolla } from './xsolla'
 import { xterio } from './xterio'
 import { zentachain } from './zentachain'
 import { zeronetwork } from './zeronetwork'
@@ -232,6 +244,7 @@ export const layer2s: Layer2[] = [
   coti,
   corn,
   creator,
+  creatorchain,
   cronoszkevm,
   dbk,
   honeypot,
@@ -256,6 +269,7 @@ export const layer2s: Layer2[] = [
   fuelv1,
   funki,
   fuse,
+  genlayer,
   gluon,
   gmnetwork,
   gpt,
@@ -280,12 +294,14 @@ export const layer2s: Layer2[] = [
   koi,
   kontos,
   kroma,
+  lachain,
   lambda,
   layerai,
   leaf,
   layer2finance,
   layer2financezk,
   lens,
+  liftchain,
   lightlink,
   linea,
   lisk,
@@ -316,17 +332,19 @@ export const layer2s: Layer2[] = [
   oev,
   ola,
   omgnetwork,
+  openzk,
   optimism,
   optopia,
   orderly,
+  ozean,
   palm,
   pandasea,
   paradex,
   parallel,
   patex,
   payy,
+  pepeunchained,
   phala,
-  playchain,
   plumenetwork,
   polygonmiden,
   polygonzkevm,
@@ -343,11 +361,13 @@ export const layer2s: Layer2[] = [
   rhinofi,
   rise,
   river,
+  r0ar,
   rss3,
   rufus,
   scroll,
   silicon,
   singularityfinance,
+  snaxchain,
   sophon,
   soneium,
   socialnetwork,
@@ -369,6 +389,7 @@ export const layer2s: Layer2[] = [
   sxnetwork,
   taiko,
   tanx,
+  tea,
   telos,
   ten,
   termstructure,
@@ -379,12 +400,15 @@ export const layer2s: Layer2[] = [
   turboprotocol,
   tusima,
   unichain,
+  union,
   wirex,
   witness,
+  wonderfi,
   world,
   xchain,
   xlayer,
   xpla,
+  xsolla,
   xterio,
   zentachain,
   zeronetwork,

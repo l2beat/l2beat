@@ -29,8 +29,8 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
-    orderHint: 1
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
+    orderHint: 2
     secondLine: "1h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"
@@ -54,8 +54,8 @@
     value: "None"
   }
   proposerFailure: {
-    description: "Anyone can become a Proposer after 19d 3h of inactivity from the currently whitelisted Proposers."
-    orderHint: 1653048
+    description: "Anyone can become a Proposer after 6d 9h of inactivity from the currently whitelisted Proposers."
+    orderHint: 553416
     sentiment: "good"
     value: "Self propose"
   }
@@ -66,8 +66,8 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
-    orderHint: 1
+    description: "Fraud proofs only allow 2 WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks. There is a 1h challenge period."
+    orderHint: 2
     secondLine: "1h challenge period"
     sentiment: "bad"
     value: "Fraud proofs (INT)"

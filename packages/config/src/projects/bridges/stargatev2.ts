@@ -4,8 +4,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -81,7 +79,7 @@ export const stargatev2: Bridge = {
     validatedBy: {
       value: 'Third Party',
       description:
-        'The LayerZero message protocol is used. If all preconfigured DVNs agree on a message, it is considered verified and can be executed by a permissioned Executor at the destination.',
+        'The LayerZero message protocol is used. If all preconfigured DVNs agree on a message, it is considered verified and can be executed at the destination.',
       sentiment: 'bad',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
@@ -106,17 +104,18 @@ export const stargatev2: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations.
-
+      On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations since no assets can be burned or minted.
       While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
       Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
-
-      The Executor is a permissioned actor that withdraws the asset from the liquidity pool at the destination directly to the user.
-      They are only a relayer and depend on LayerZero DVNs (distributed validator networks) to verify the message coming from the source chain. These DVNs can be freely configured by the OApp owner (Stargate) for each pair of endpoints.
-      Stargatev2 currently has two DVNs configured: Stargate and Nethermind. From the viewpoint of the LayerZero message protocol, each DVN is a single signer and the current threshold for verification is 2.
-
-      Just like the assets themselves, so-called *credits* are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
-      These credits can be moved and rebalanced (but not minted) by a permissioned Planner.`,
+      
+      
+      While Stargate operates the local token pools on each supported chain, they are all connected through the LayerZero messaging protocol, which is responsible for verifying and delivering the crosschain messages.
+      Verification is done by Stargate-selected permissioned verifiers (called DVNs in LayerZero terminology), currently configured as a 2/2 of Stargate and Nethermind custom Multisigs. 
+      Crosschain message passing is done by professional relayers and executors but could technically be done by anyone (even the user themselves if they have access to the bridge message signed by the two verifiers e.g. in case they have committed the verification onchain).
+      
+      
+      Just like the assets themselves, so-called *credits* (also OFTs) are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
+      These credits can be moved and rebalanced (but not minted) by a permissioned role called Planner.`,
       references: [
         {
           title: 'Stargate Docs: Modes of transport',
@@ -136,19 +135,19 @@ export const stargatev2: Bridge = {
             '0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
           discoveredUlnConfig[4][1] ===
             '0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
-        'Update the verification and permissions section, the verification config of Stargate has changed.',
+        'Update the validation, poO and permissions sections, the security config of Stargatev2 has changed.',
       )
       assert(
         discoveredExecutorConfig[1] ===
           '0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
-        'The configured Executor for Stargate changed: Review the risk, PoO and permissions sections.',
+        'The configured Executor for Stargatev2 changed: Review the permissions section.',
       )
 
       return {
         name: 'LayerZero messaging',
         description:
           'The LayerZero message protocol is used: For validation of messages from Stargate over LayerZero, two DVNs are currently configured: Nethermind and Stargate.\
-        If both DVNs agree on a message, it is verified and can be executed by a permissioned Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
+        If both DVNs agree on a message, it is verified and can be executed by an Executor at the destination. This configuration can be changed at any time by the StargateMultisig.',
         references: [
           {
             title: 'LayerZero Docs: Security Stack',
@@ -158,7 +157,7 @@ export const stargatev2: Bridge = {
         risks: [
           {
             category: 'Users can be censored if',
-            text: 'both whitelisted DVNs or the LayerZero Executor fail to facilitate the transaction.',
+            text: 'any of the two whitelisted DVNs fail to approve the transaction.',
           },
           {
             category: 'Funds can be stolen if',
@@ -344,14 +343,14 @@ export const stargatev2: Bridge = {
         ),
         discovery.getContractDetails(
           'LayerZero Executor',
-          'Is trusted to execute verified messages at the destination for a fee. Jobs are assigned to this contract by the LayerZero Endpoint.',
+          'Is tasked to execute verified messages at the destination for a fee paid at the origin. Jobs are assigned to this contract by the LayerZero Endpoint.',
         ),
       ]
     })(),
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'the OApp owner changes the configuration of the OApp to malicious DVNs and executors.',
+        text: 'the OApp owner changes the configuration of the OApp to a malicious DVN.',
       },
       {
         category: 'Funds can be frozen if',
@@ -393,11 +392,4 @@ export const stargatev2: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Security models: isolated vs shared',
-      url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-  ],
 }

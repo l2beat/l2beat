@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 21141679,
-  "configHash": "0x6445ec835c161fc48d0350f2e6b2af2215545703e952c9e1363e98fc3e7fc51b",
+  "configHash": "0x57ed0e272af10a9cd178b5272029e2dab195d14040092d2af9ec542562a4b0fc",
   "contracts": [
     {
       "name": "ProxyAdminBridgeV2",

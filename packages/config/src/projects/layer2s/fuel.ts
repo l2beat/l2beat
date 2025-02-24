@@ -19,7 +19,7 @@ import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuel')
@@ -75,7 +75,7 @@ export const fuel: Layer2 = {
       ],
     },
   },
-  badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.FuelVM, BADGES.DA.EthereumBlobs],
   type: 'layer2',
   config: {
     associatedTokens: ['FUEL'],
@@ -93,6 +93,15 @@ export const fuel: Layer2 = {
         sinceTimestamp: new UnixTime(1725464663),
         tokens: '*',
         chain: 'ethereum',
+      },
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
+        sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
       },
     ],
     trackedTxs: [
@@ -287,19 +296,16 @@ export const fuel: Layer2 = {
       [discovery.chain]: [
         discovery.getContractDetails('FuelERC20Gateway', {
           description: `Standard gateway to deposit and withdraw ERC20 tokens. It implements rate limits and a whitelist for tokens. The whitelist is currently ${isErc20whitelistActive ? 'active' : 'inactive'}.`,
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelMessagePortal', {
           description: `Contract that allows to send and receive arbitrary messages to and from L2. It implements a max deposit limit for ETH, currently set to ${depositLimitGlobal} ETH, and rate limits withdrawals. Pausers are allowed to blacklist L2->L1 messages.`,
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
         discovery.getContractDetails('FuelChainState', {
           description:
             'Contract that allows state root submissions and settlement.',
-          upgradableBy: ['FuelSecurityCouncil'],
-          upgradeDelay: 'None',
+          upgradableBy: [{ name: 'FuelSecurityCouncil', delay: 'no' }],
         }),
       ],
     },

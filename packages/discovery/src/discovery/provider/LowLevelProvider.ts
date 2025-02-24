@@ -56,7 +56,7 @@ export class LowLevelProvider {
           return Bytes.fromHex(result)
         },
 
-        () => `call ${address.toString()} ${data.length} ${blockNumber}`,
+        `call ${address.toString()} ${data.length} ${blockNumber}`,
       )
     }, ProviderMeasurement.CALL)
   }
@@ -67,17 +67,14 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          const result = await this.provider.getStorageAt(
-            address.toString(),
-            slot instanceof Bytes ? slot.toString() : slot,
-            blockNumber,
-          )
-          return Bytes.fromHex(result)
-        },
-        () => `getStorage ${address.toString()} ${slot} ${blockNumber}`,
-      )
+      return rpcWithRetries(async () => {
+        const result = await this.provider.getStorageAt(
+          address.toString(),
+          slot instanceof Bytes ? slot.toString() : slot,
+          blockNumber,
+        )
+        return Bytes.fromHex(result)
+      }, `getStorage ${address.toString()} ${slot} ${blockNumber}`)
     }, ProviderMeasurement.GET_STORAGE)
   }
 
@@ -86,19 +83,16 @@ export class LowLevelProvider {
     topics: (string | string[] | null)[],
     fromBlock: number,
     toBlock: number,
-  ) {
+  ): Promise<providers.Log[]> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          return await this.eventProvider.getLogs({
-            address: address.toString(),
-            fromBlock,
-            toBlock,
-            topics,
-          })
-        },
-        () => `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
-      )
+      return rpcWithRetries(async () => {
+        return await this.eventProvider.getLogs({
+          address: address.toString(),
+          fromBlock,
+          toBlock,
+          topics,
+        })
+      }, `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`)
     }, ProviderMeasurement.GET_LOGS)
   }
 
@@ -106,15 +100,12 @@ export class LowLevelProvider {
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          return (
-            (await this.provider.getTransaction(transactionHash.toString())) ??
-            undefined
-          )
-        },
-        () => `getTransaction ${transactionHash.toString()}`,
-      )
+      return rpcWithRetries(async () => {
+        return (
+          (await this.provider.getTransaction(transactionHash.toString())) ??
+          undefined
+        )
+      }, `getTransaction ${transactionHash.toString()}`)
     }, ProviderMeasurement.GET_TRANSACTION)
   }
 
@@ -122,16 +113,13 @@ export class LowLevelProvider {
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          const response = await this.provider.send('debug_traceTransaction', [
-            transactionHash.toString(),
-            { tracer: 'callTracer' },
-          ])
-          return DebugTransactionCallResponse.parse(response)
-        },
-        () => `debug_traceTransaction ${transactionHash.toString()}`,
-      )
+      return rpcWithRetries(async () => {
+        const response = await this.provider.send('debug_traceTransaction', [
+          transactionHash.toString(),
+          { tracer: 'callTracer' },
+        ])
+        return DebugTransactionCallResponse.parse(response)
+      }, `debug_traceTransaction ${transactionHash.toString()}`)
     }, ProviderMeasurement.GET_DEBUG_TRACE)
   }
 
@@ -140,16 +128,13 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          const result = await this.provider.getCode(
-            address.toString(),
-            blockNumber,
-          )
-          return Bytes.fromHex(result)
-        },
-        () => `getCode ${address.toString()} ${blockNumber}`,
-      )
+      return rpcWithRetries(async () => {
+        const result = await this.provider.getCode(
+          address.toString(),
+          blockNumber,
+        )
+        return Bytes.fromHex(result)
+      }, `getCode ${address.toString()} ${blockNumber}`)
     }, ProviderMeasurement.GET_BYTECODE)
   }
 
@@ -202,23 +187,17 @@ export class LowLevelProvider {
 
   getBlock(blockNumber: number): Promise<providers.Block> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          return await this.provider.getBlock(blockNumber)
-        },
-        () => `getBlock ${blockNumber}`,
-      )
+      return rpcWithRetries(async () => {
+        return await this.provider.getBlock(blockNumber)
+      }, `getBlock ${blockNumber}`)
     }, ProviderMeasurement.GET_BLOCK)
   }
 
   getBlockNumber(): Promise<number> {
     return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          return await this.provider.getBlockNumber()
-        },
-        () => `getBlockNumber`,
-      )
+      return rpcWithRetries(async () => {
+        return await this.provider.getBlockNumber()
+      }, `getBlockNumber`)
     }, ProviderMeasurement.GET_BLOCKNUMBER)
   }
 
@@ -243,7 +222,7 @@ export class LowLevelProvider {
 
 export async function rpcWithRetries<T>(
   fn: () => Promise<T>,
-  description: () => string,
+  description: string,
 ): Promise<T> {
   let attempts = 0
   while (true) {
@@ -259,7 +238,7 @@ export async function rpcWithRetries<T>(
         throw e
       }
       // TODO: (sz-piotr) Why console and not logger :(
-      console.error('awaiting', description())
+      console.error('awaiting', description)
       console.error(e)
       await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
     }
@@ -267,25 +246,47 @@ export async function rpcWithRetries<T>(
 }
 
 function isServerError(e: unknown): boolean {
-  const parsed = ethersError.safeParse(e)
-  return (
-    parsed.success &&
-    ((parsed.data.error.status ?? 200) >= 400 ||
-      (parsed.data.error.code === 'SERVER_ERROR' &&
-        !parsed.data.error.error.message.includes('out of gas') &&
-        parsed.data.error.error.message !== 'execution reverted' &&
-        parsed.data.error.error.message !== 'gas uint64 overflow' &&
-        parsed.data.error.error.message !== 'invalid opcode: INVALID'))
-  )
+  const parsed = topLevelEthersError.safeParse(e)
+  if (parsed.success) {
+    const topError = parsed.data
+    let isServerError = false
+    if (topError.error !== undefined && 'code' in topError.error) {
+      isServerError ||= topError.error.status >= 400
+      isServerError ||= topError.error.code === 'TIMEOUT'
+      isServerError ||=
+        topError.error.code === 'SERVER_ERROR' &&
+        !(topError.error?.error?.message ?? '').includes('out of gas') &&
+        topError.error?.error?.message !== 'execution reverted' &&
+        topError.error?.error?.message !== 'gas uint64 overflow' &&
+        topError.error?.error?.message !== 'invalid opcode: INVALID'
+    } else {
+      isServerError ||= topError.status >= 400
+      isServerError ||=
+        topError.code === 'SERVER_ERROR' &&
+        !topError.message?.includes('Log response size exceeded')
+      isServerError ||= topError.code === 'TIMEOUT'
+    }
+
+    return isServerError
+  }
+
+  return false
 }
 
-const ethersError = z.object({
-  error: z.object({
-    code: z.string(),
-    status: z.number().optional(),
-    error: z.object({
-      code: z.number(),
-      message: z.string(),
-    }),
-  }),
+const ethersRPCError = z.object({
+  message: z.string().optional(),
+})
+
+const ethersLoggerError = z.object({
+  code: z.string(),
+  status: z.number().default(200),
+  error: ethersRPCError.optional(),
+  message: z.string().optional(),
+})
+
+const topLevelEthersError = z.object({
+  code: z.string(),
+  status: z.number().default(200),
+  error: z.union([ethersLoggerError, ethersRPCError]).optional(),
+  message: z.string().optional(),
 })

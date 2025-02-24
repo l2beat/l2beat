@@ -1,5 +1,5 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import type { UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
@@ -14,6 +14,8 @@ import {
 } from './utils/get-costs-projects'
 import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
+
+const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
@@ -44,7 +46,7 @@ export const getCachedCostsChartData = cache(
     previewRecategorisation,
   }: CostsChartParams) => {
     const db = getDb()
-    const projects = getCostsProjects(filter, previewRecategorisation)
+    const projects = await getCostsProjects(filter, previewRecategorisation)
     if (projects.length === 0) {
       return []
     }
@@ -78,6 +80,8 @@ export const getCachedCostsChartData = cache(
     )
     const result = timestamps.map((timestamp) => {
       const entry = summedByTimestamp.get(timestamp.toNumber())
+      const blobsFallback =
+        timestamp.toNumber() >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
       if (!entry) {
         return [
           timestamp.toNumber(),
@@ -90,9 +94,9 @@ export const getCachedCostsChartData = cache(
           0,
           0,
           0,
-          undefined,
-          undefined,
-          undefined,
+          blobsFallback,
+          blobsFallback,
+          blobsFallback,
         ] as const
       }
       return [
@@ -106,16 +110,17 @@ export const getCachedCostsChartData = cache(
         entry.computeGas,
         entry.computeGasEth,
         entry.computeGasUsd,
-        entry.blobsGas,
-        entry.blobsGasEth,
-        entry.blobsGasUsd,
+        entry.blobsGas ?? blobsFallback,
+        entry.blobsGasEth ?? blobsFallback,
+        entry.blobsGasUsd ?? blobsFallback,
       ] as const
     })
     return result
   },
   ['costs-chart-data'],
   {
-    tags: ['costs'],
+    tags: ['hourly-data'],
+    revalidate: UnixTime.HOUR,
   },
 )
 

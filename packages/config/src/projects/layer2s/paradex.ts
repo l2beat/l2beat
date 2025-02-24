@@ -13,7 +13,6 @@ import {
   DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -30,7 +29,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('paradex')
@@ -71,10 +70,10 @@ export const paradex: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1698756386), // 2023-10-31T12:46:26Z
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
   ],
   display: {
     name: 'Paradex',
@@ -109,11 +108,24 @@ export const paradex: Layer2 = {
         address: EthereumAddress('0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3'),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
-        upgradableBy: ['USDC Escrow owner'],
-        upgradeDelay: formatSeconds(escrowUSDCDelaySeconds),
+        upgradableBy: [
+          {
+            name: 'USDC Escrow owner',
+            delay: formatSeconds(escrowUSDCDelaySeconds),
+          },
+        ],
         description:
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
+    ],
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+        sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
+      },
     ],
     trackedTxs: [
       {
@@ -298,10 +310,14 @@ export const paradex: Layer2 = {
         discovery.getContractDetails('Paradex', {
           description:
             'Paradex contract received verified state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 messages.',
-          upgradeDelay: upgradeDelaySeconds
-            ? formatSeconds(upgradeDelaySeconds)
-            : 'No delay',
-          upgradableBy: ['Paradex owner'],
+          upgradableBy: [
+            {
+              name: 'Paradex owner',
+              delay: upgradeDelaySeconds
+                ? formatSeconds(upgradeDelaySeconds)
+                : 'no',
+            },
+          ],
         }),
         ...getSHARPVerifierContracts(discovery, verifierAddress),
       ],
@@ -353,5 +369,4 @@ export const paradex: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

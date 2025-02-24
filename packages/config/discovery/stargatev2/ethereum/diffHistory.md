@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x01b35fa1f0b63e778bcdb34d83274c3447d3486f
+
+# Diff at Wed, 12 Feb 2025 10:38:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786545
+- current block number: 21829862
+
+## Description
+
+BlockedMessageLib is now verified. A library that blocks any messages that specify it as required.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786545 (main branch discovery), not current.
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      name:
+-        ""
++        "BlockedMessageLib"
+      unverified:
+-        true
+      values.messageLibType:
++        2
+      values.version:
++        {"major":"18446744073709551615","minor":255,"endpointVersion":2}
+      sourceHashes:
++        ["0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"]
+    }
+```
+
 Generated with discovered.json: 0xc5bd6489e1cc55f36173cef53e3019acdfd0a3cb
 
 # Diff at Thu, 06 Feb 2025 09:24:35 GMT:

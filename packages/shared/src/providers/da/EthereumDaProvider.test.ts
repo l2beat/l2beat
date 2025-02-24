@@ -9,10 +9,11 @@ describe(EthereumDaProvider.name, () => {
     it('return blobs for given block range', async () => {
       const mockDate = new Date()
 
-      const mockCLient = mockObject<BlobScanClient>({
+      const mockClient = mockObject<BlobScanClient>({
         getBlobs: mockFn().resolvesTo([
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             blockTimestamp: mockDate.toISOString(),
             transaction: {
               to: '0xto1',
@@ -21,6 +22,7 @@ describe(EthereumDaProvider.name, () => {
           },
           {
             type: 'ethereum',
+            daLayer: 'ethereum',
             blockTimestamp: mockDate.toISOString(),
             transaction: {
               to: '0xto2',
@@ -30,13 +32,14 @@ describe(EthereumDaProvider.name, () => {
         ]),
       })
 
-      const provider = new EthereumDaProvider(mockCLient)
+      const provider = new EthereumDaProvider(mockClient, 'ethereum')
 
       const result = await provider.getBlobs(1, 2)
 
       expect(result).toEqual([
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
           blockTimestamp: UnixTime.fromDate(mockDate),
@@ -44,6 +47,7 @@ describe(EthereumDaProvider.name, () => {
         } as EthereumBlob,
         {
           type: 'ethereum',
+          daLayer: 'ethereum',
           inbox: '0xto2',
           sequencer: '0xfrom2',
           blockTimestamp: UnixTime.fromDate(mockDate),

@@ -8,7 +8,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
@@ -32,7 +32,7 @@ const isForcedBatchDisallowed =
 export const xlayer: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.Infra.AggLayer],
+  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -117,7 +117,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
   rpcUrl: 'https://rpc.xlayer.tech',

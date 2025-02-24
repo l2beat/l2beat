@@ -8,8 +8,9 @@
 // shared-modules better.
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "grvt",
   "chain": "zksync2",
+  "name": "grvt",
+  "import": ["../../globalConfig.jsonc"],
   "sharedModules": {
     "doesThisKeyDoAnything": "shared-zk-stack"
   },

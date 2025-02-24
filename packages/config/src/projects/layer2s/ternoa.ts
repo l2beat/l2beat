@@ -8,7 +8,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
@@ -31,7 +31,7 @@ const isForcedBatchDisallowed =
 
 export const ternoa: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1727455020), // 2024-09-27T17:09:00Z
-  additionalBadges: [Badge.DA.DAC], // TODO: add Badge.RaaS.Zeeve
+  additionalBadges: [BADGES.DA.DAC], // TODO: add Badge.RaaS.Zeeve
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Payments'],
   display: {
@@ -93,7 +93,7 @@ export const ternoa: Layer2 = polygonCDKStack({
   chainConfig: {
     name: 'ternoa',
     chainId: 752025,
-    explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network/',
+    explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
     minTimestampForTvl: new UnixTime(1735650935),
   },
   associatedTokens: ['CAPS'],
@@ -134,7 +134,6 @@ export const ternoa: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

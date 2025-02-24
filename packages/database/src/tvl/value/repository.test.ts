@@ -109,6 +109,99 @@ describeDatabase(ValueRepository.name, (database) => {
     })
   })
 
+  describe(ValueRepository.prototype.getValuesByProjectIdsAndTimeRange
+    .name, () => {
+    const to = UnixTime.now().toStartOf('hour')
+    const from = to.add(-7, 'days')
+    it('returns empty array when no projectIds', async () => {
+      const result = await repository.getValuesByProjectIdsAndTimeRange(
+        [],
+        [from, to],
+      )
+      expect(result).toEqual([])
+    })
+
+    it('returns values for single project within time range', async () => {
+      const projectId = ProjectId('project1')
+      await repository.insertMany([
+        // within range
+        saved(projectId, from, 'ds1', 100, 200, 300),
+        saved(projectId, to, 'ds2', 150, 250, 350),
+        // outside range
+        saved(projectId, from.add(-1, 'hours'), 'ds1', 150, 250, 350),
+        saved(projectId, to.add(1, 'hours'), 'ds2', 150, 250, 350),
+      ])
+
+      const result = await repository.getValuesByProjectIdsAndTimeRange(
+        [projectId],
+        [from, to],
+      )
+
+      // Assert
+      expect(result).toEqualUnsorted([
+        saved(projectId, from, 'ds1', 100, 200, 300),
+        saved(projectId, to, 'ds2', 150, 250, 350),
+      ])
+    })
+
+    it('filters multiple projects correctly', async () => {
+      const targetProject = ProjectId('target-project')
+      const otherProject = ProjectId('other-project')
+
+      const targetRecords = [
+        saved(targetProject, from.add(1, 'hours'), 'ds1', 100, 200, 300),
+        saved(targetProject, to.add(-1, 'hours'), 'ds2', 150, 250, 350),
+      ]
+      const otherRecords = [
+        saved(otherProject, from.add(1, 'hours'), 'ds1', 200, 300, 400),
+      ]
+
+      await repository.insertMany([...targetRecords, ...otherRecords])
+
+      const result = await repository.getValuesByProjectIdsAndTimeRange(
+        [targetProject],
+        [from, to],
+      )
+
+      expect(result).toEqualUnsorted(targetRecords)
+    })
+
+    it('respects time range boundaries', async () => {
+      const projectId = ProjectId('boundary-test')
+      const edgeCases = [
+        saved(projectId, from, 'ds1', 100, 200, 300),
+        saved(projectId, to, 'ds2', 200, 300, 400),
+      ]
+      const outsideCases = [
+        saved(projectId, from.add(-1, 'seconds'), 'ds1', 50, 150, 250),
+        saved(projectId, to.add(1, 'seconds'), 'ds1', 250, 350, 450),
+      ]
+
+      await repository.insertMany([...edgeCases, ...outsideCases])
+
+      const result = await repository.getValuesByProjectIdsAndTimeRange(
+        [projectId],
+        [from, to],
+      )
+
+      expect(result).toEqual(edgeCases)
+    })
+
+    it('returns empty array when no matching records', async () => {
+      const projectId = ProjectId('no-data-project')
+      await repository.insertMany([
+        saved(projectId, to.add(1, 'hours'), 'ds1', 100, 200, 300),
+      ])
+
+      const result = await repository.getValuesByProjectIdsAndTimeRange(
+        [projectId],
+        [from, to],
+      )
+
+      expect(result).toEqual([])
+    })
+  })
+
   it(ValueRepository.prototype.deleteAll.name, async () => {
     await repository.upsertMany([
       saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),

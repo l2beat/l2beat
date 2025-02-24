@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { CONTRACTS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -16,11 +16,7 @@ const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
-const validatorAfkBlocks = discovery.getContractValue<number>(
-  'RollupProxy',
-  'VALIDATOR_AFK_BLOCKS',
-)
-const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+
 const challengeWindow = discovery.getContractValue<number>(
   'RollupProxy',
   'confirmPeriodBlocks',
@@ -37,26 +33,24 @@ const l2TimelockDelay = l2Discovery.getContractValue<number>(
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
-  upgradeConsiderations:
-    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
-}
-const l2Upgradability = {
-  // same as on L1, but messages from L1 must be sent to L2
   upgradableBy: [
-    'L2SecurityCouncilEmergency',
-    'L2SecurityCouncilPropose',
-    'L1Timelock',
+    { name: 'SecurityCouncil', delay: 'no' },
+    { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
   ],
-  upgradeDelay: `${formatSeconds(
-    totalDelay,
-  )} or 0 if overridden by the Security Council`,
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
+
+// const l2Upgradability = {
+//   // same as on L1, but messages from L1 must be sent to L2
+//   upgradableBy: [
+//     { name: 'L2SecurityCouncilEmergency', delay: formatSeconds(totalDelay) },
+//     { name: 'L2SecurityCouncilPropose', delay: formatSeconds(totalDelay) },
+//     { name: 'L1Timelock', delay: formatSeconds(totalDelay) },
+//   ],
+//   upgradeConsiderations:
+//     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+// }
 
 const l2CoreQuorumPercent =
   (l2Discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
@@ -87,10 +81,10 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 export const arbitrum: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
-    Badge.VM.WasmVM,
-    Badge.Stack.Nitro,
-    Badge.Other.Governance,
-    Badge.Other.L3HostChain,
+    BADGES.VM.WasmVM,
+    BADGES.Stack.Nitro,
+    BADGES.Other.Governance,
+    BADGES.Other.L3HostChain,
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
@@ -101,8 +95,8 @@ export const arbitrum: Layer2 = orbitStackL2({
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',
-    warning:
-      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+    warning: undefined,
+    architectureImage: 'arbitrumwithbold',
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
@@ -193,6 +187,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1661457944),
+        untilTimestamp: new UnixTime(1739368811), // deprecated (reverts)
       },
     },
     {
@@ -207,6 +202,48 @@ export const arbitrum: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1710427823),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x6e620055',
+        functionSignature:
+          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x69cacded',
+        functionSignature:
+          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
       },
     },
     {
@@ -260,178 +297,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  nonTemplatePermissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getMultisigPermission(
-          'SecurityCouncil',
-          'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
-          [
-            {
-              title: 'Security Council members - Arbitrum Foundation Docs',
-              url: 'https://docs.arbitrum.foundation/security-council-members',
-            },
-          ],
-        ),
-        discovery.contractAsPermissioned(
-          discovery.getContract('L1Timelock'),
-          'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-        ),
-        discovery.getMultisigPermission(
-          'BatchPosterManagerMultisig',
-          'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-        ),
-      ],
-    },
-    [l2Discovery.chain]: {
-      actors: [
-        l2Discovery.getMultisigPermission(
-          'L2SecurityCouncilEmergency',
-          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
-        ),
-        l2Discovery.getMultisigPermission(
-          'L2SecurityCouncilPropose',
-          'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
-        ),
-        l2Discovery.eoaAsPermissioned(
-          l2Discovery.getEOA('L1Timelock'),
-          'Alias of the L1Timelock contract on L1.',
-        ),
-      ],
-    },
-  },
-  nonTemplateContracts: {
-    [discovery.chain]: [
-      discovery.getContractDetails('RollupProxy', {
-        description:
-          'Main contract implementing Arbitrum One Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('Bridge', {
-        description:
-          'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('SequencerInbox', {
-        description:
-          'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('Inbox', {
-        description:
-          'Entry point for users depositing ETH and sending L1 --> L2 messages. Deposited ETH is escrowed in a Bridge contract.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractFromValue('RollupProxy', 'outbox', {
-        description:
-          "Arbitrum's Outbox system allows for arbitrary L2 to L1 contract calls; i.e., messages initiated from L2 which eventually resolve in execution on L1.",
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('UpgradeExecutor', {
-        description:
-          "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('L1Timelock', {
-        description:
-          'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('L1GatewayRouter', {
-        description: 'Router managing token <--> gateway mapping.',
-        ...upgradeExecutorUpgradeability,
-      }),
-      discovery.getContractDetails('ChallengeManager', {
-        description:
-          'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
-        ...upgradeExecutorUpgradeability,
-      }),
-    ],
-    [l2Discovery.chain]: [
-      l2Discovery.getContractDetails('CoreGovernor', {
-        description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent}% quorum for proposals.`,
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2Timelock', {
-        description: `Delays constitutional AIPs from the CoreGovernor by ${formatSeconds(
-          l2TimelockDelay,
-        )}.`,
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('TreasuryGovernor', {
-        description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent}% quorum for proposals.`,
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('TreasuryTimelock', {
-        description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
-          treasuryTimelockDelay,
-        )}. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.`,
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2UpgradeExecutor', {
-        description:
-          "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('SecurityCouncilManager', {
-        description:
-          'This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('ConstitutionHash', {
-        description:
-          'Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.',
-      }),
-      l2Discovery.getContractDetails('L2ProxyAdmin', {
-        description:
-          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.",
-      }),
-      l2Discovery.getContractDetails('L2GatewaysProxyAdmin', {
-        description:
-          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 bridging gateway contracts through this contract.",
-      }),
-      l2Discovery.getContractDetails('L2BaseFee', {
-        description:
-          'This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.',
-      }),
-      l2Discovery.getContractDetails('L2SurplusFee', {
-        description:
-          'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
-      }),
-      l2Discovery.getContractDetails('L2ArbitrumToken', {
-        description:
-          'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2GatewayRouter', {
-        description: 'Router managing token <--> gateway mapping on L2.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2ERC20Gateway', {
-        description:
-          'Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2WethGateway', {
-        description:
-          'Counterpart to the Bridge on L1. Mints and burns WETH on L2.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2ARBGateway', {
-        description:
-          'ARB sent from L2 to L1 is escrowed in this contract and minted on L1.',
-        ...l2Upgradability,
-      }),
-      l2Discovery.getContractDetails('L2DAIGateway', {
-        description:
-          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.',
-      }),
-      l2Discovery.getContractDetails('L2LPTGateway', {
-        description:
-          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.',
-      }),
-    ],
-  },
+  additionalDiscoveries: { ['arbitrum']: l2Discovery },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
@@ -491,13 +357,12 @@ export const arbitrum: Layer2 = orbitStackL2({
     },
   ],
   nonTemplateRiskView: {
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
+    exitWindow: RISK_VIEW.EXIT_WINDOW_PERMISSIONLESS_BOLD(
       l2TimelockDelay,
       selfSequencingDelay,
-      challengeWindowSeconds,
-      validatorAfkTime,
       l1TimelockDelay,
     ),
+    stateValidation: RISK_VIEW.STATE_FP_INT,
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
@@ -510,7 +375,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         rollupNodeSourceAvailable: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
@@ -519,7 +384,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
+        fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: false,
       },
     },
@@ -544,7 +409,18 @@ export const arbitrum: Layer2 = orbitStackL2({
       ),
     ],
   },
+  stateValidation: {
+    isUnderReview: true,
+    description: '.',
+    categories: [],
+  },
   milestones: [
+    {
+      title: 'BoLD, permissionless proof system, deployed',
+      url: 'https://x.com/arbitrum/status/1889710151332245837',
+      date: '2025-02-15T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'Exit window extension to 7 days',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/27888300053486667232765715922683646778055572080881341292116987136155397805421?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
@@ -611,18 +487,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       url: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: '2021-08-31T00:00:00Z',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Arbitrum update boosts decentralization',
-      url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Arbitrum is down... or is it?',
-      url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
     },
   ],
 })

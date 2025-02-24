@@ -357,12 +357,15 @@ export async function getL3ProjectDetails({
   }
 
   if (permissionsSection) {
+    const permissionedEntities = project.customDa?.dac?.knownMembers
+
     items.push({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        permissionedEntities,
       },
     })
   }
@@ -374,17 +377,6 @@ export async function getL3ProjectDetails({
         ...contractsSection,
         id: 'contracts',
         title: 'Smart contracts',
-      },
-    })
-  }
-
-  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: project.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge nuggets',
       },
     })
   }

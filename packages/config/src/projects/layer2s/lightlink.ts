@@ -10,13 +10,12 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('lightlink')
 
 const upgradesLightLink = {
-  upgradableBy: ['LightLinkAdmin'],
-  upgradeDelay: 'No delay',
+  upgradableBy: [{ name: 'LightLinkAdmin', delay: 'no' }],
 }
 
 const validators = discovery.getContractValue<
@@ -62,7 +61,7 @@ export const lightlink: Layer2 = {
   id: ProjectId('lightlink'),
   capability: 'universal',
   addedAt: new UnixTime(1718443080), // 2024-06-15T09:18:00Z
-  badges: [Badge.VM.EVM, Badge.DA.Celestia],
+  badges: [BADGES.VM.EVM, BADGES.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

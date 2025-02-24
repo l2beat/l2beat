@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('xchain')
 
 export const xchain: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1690896554), // 2023-08-01T13:29:14Z
-  additionalBadges: [Badge.RaaS.Conduit, Badge.DA.DAC],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.DA.DAC],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -35,7 +35,7 @@ export const xchain: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'xchain',
     chainId: 94524,
-    explorerUrl: 'https://xchain-explorer.idex.io/',
+    explorerUrl: 'https://xchain-explorer.idex.io',
     explorerApi: {
       url: 'https://xchain-explorer.idex.io/api',
       type: 'blockscout',
@@ -49,7 +49,6 @@ export const xchain: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   milestones: [
     {
       title: 'Mainnet launch',

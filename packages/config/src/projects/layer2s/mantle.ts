@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { CustomDa, Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -117,7 +117,7 @@ export const mantle: Layer2 = opStackL2({
         },
       ],
     },
-    badge: Badge.DA.CustomDA,
+    badge: BADGES.DA.CustomDA,
   },
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],
@@ -151,7 +151,7 @@ export const mantle: Layer2 = opStackL2({
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
-    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerUrl: 'https://explorer.mantle.xyz',
     explorerApi: {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
       type: 'etherscan',

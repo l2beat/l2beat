@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -33,7 +33,7 @@ export const cyber: Layer2 = opStackL2({
   addedAt: new UnixTime(1713364684), // 2024-04-17T14:38:04Z
   associatedTokens: ['CYBER'],
   discovery,
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -71,7 +71,7 @@ export const cyber: Layer2 = opStackL2({
   chainConfig: {
     name: 'cyber',
     chainId: 7560,
-    explorerUrl: 'https://cyberscan.co/',
+    explorerUrl: 'https://cyberscan.co',
     coingeckoPlatform: 'cyber',
     explorerApi: {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',

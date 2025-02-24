@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "mantle",
-  "blockNumber": 65329557,
-  "configHash": "0xd6c0d2133d23057ed4eeebd1cfd9b09d7fee06ea3fbb52375591dc38bb176d2e",
+  "blockNumber": 75699152,
+  "configHash": "0xc608e5db640e6b75acd43154a094c77cfb19d2c54d35b8e9d0bcb882e0cda0f6",
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -88,14 +88,14 @@
         "lpToken": "0xc2c3Cc203FB607f2f93e6A15f45556bc83620644",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "30259308523113258",
-        "poolBalance": "1710010979000000000000",
+        "plannerFee": "107636709583178428",
+        "poolBalance": "1741961882000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "treasuryFee": 805342,
-        "tvl": "1245578571000000000000"
+        "treasuryFee": 10623043,
+        "tvl": "41153541000000000000"
       }
     },
     {
@@ -132,14 +132,14 @@
         "lpToken": "0x5D131cb99cE5642f3d539417A187a93EEae48177",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "346862827018495804",
-        "poolBalance": 12621142228200,
+        "plannerFee": "47247432332797757",
+        "poolBalance": 3230453143825,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "treasuryFee": 2585389512,
-        "tvl": 9572670439765
+        "treasuryFee": 21715931672,
+        "tvl": 2042394545218
       }
     },
     {
@@ -176,14 +176,14 @@
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
-        "plannerFee": "56087345876298471",
-        "poolBalance": 10967515157977,
+        "plannerFee": "238784433214785534",
+        "poolBalance": 2955628901535,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "treasuryFee": 1470829790,
-        "tvl": 9547683654710
+        "treasuryFee": 17832928452,
+        "tvl": 3009085305912
       }
     },
     {
@@ -219,13 +219,13 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": 0,
-        "poolBalance": "3070973294000000000000",
+        "poolBalance": "5475218257000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-        "treasuryFee": 45374,
-        "tvl": "3001565521000000000000"
+        "treasuryFee": 8059038,
+        "tvl": "110589208000000000000"
       }
     }
   ],

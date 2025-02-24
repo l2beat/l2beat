@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21786536,
-  "configHash": "0xbd0d7a87123446674c46a4d5106feeac4a1cbafb715070cfdc12a6e6c91b5e37",
+  "configHash": "0xcdc5a50a6951be4169972b7d1964d628101cd8e634c9a7a9ac133428a018c4d4",
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -655,7 +655,7 @@
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
       ],
-      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -1385,7 +1385,7 @@
       "sourceHashes": [
         "0x12390526d42e4274ef9e5135daddbb0595f5b9ace39b78e269965424334da88c"
       ],
-      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay",
+      "description": "A timelock that allows scheduling calls and executing or cancelling them with a delay.",
       "issuedPermissions": [
         {
           "permission": "interact",
@@ -2723,7 +2723,7 @@
     "eigenlayer/RewardAllStakersActionGenerator": "0xe7a628d04c304f1774fb445ab055daba3d45d29d884cea0cf653c452b8471bab",
     "eigenlayer/Strategy": "0x421f91e2b1f1a1ca56e8ee9e26d416ae472234abb80b6ee8fa801b0461569d25",
     "eigenlayer/StrategyManager": "0x91dbd29e4171ae9cef07eed3c492622e98c1f91baf2bee399a0e72331296ac91",
-    "eigenlayer/TimelockControllerOwning": "0x089a48c5958746053b46c7f052ae879ff1a8891d5c9c48e6dfe25a36ac021448",
+    "eigenlayer/TimelockControllerOwning": "0x643e781b544b6eaf45615bc664d49d425ed521f4c7699ae130efab4630f7edc4",
     "eigenlayer/TokenHopper": "0xa7a1dc2a0b6dd2dcf17c48f0556e05791098c11aadc69900499911a228765efd",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2"

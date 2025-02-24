@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 21686332,
-  "configHash": "0xf7279a74e50acb483760e304d032f6ec3a43c811d7d0e7a8917bef8720eb8e6c",
+  "configHash": "0xed6459cb228c71975cf921e606e29b05cbdec475fe74656273b8d99385d584f8",
   "contracts": [
     {
       "name": "NextHeaderVerifier",
@@ -37,12 +37,12 @@
       "sourceHashes": [
         "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
       ],
-      "description": "This contract is the router for the bridge proofs verification. It stores the mapping between the identifier of the bridge circuit and the address of the onchain verifier contract.",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
       "issuedPermissions": [
         {
           "permission": "interact",
           "to": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes.",
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "via": []
         },
         {
@@ -291,7 +291,7 @@
         {
           "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the bridge - can transfer ownership, add and freeze verifier routes."
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -681,7 +681,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "succinct/SP1Blobstream": "0x594e33b67e9567cb684ee6e5145bf328d6a21adde6d56019482a7de9241c460b",
-    "succinct/SP1SuccinctGateway": "0xddf7c5c632f3cb0a4055a574c75ebf95a7599c66d18d65a94e314628b9681708",
+    "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151",
     "succinct/SuccinctGateway": "0xee3e679e5e4af6a88d7c2bf61aa7e3b2d955ef5e35994c84d082522365c545db"
   }
 }

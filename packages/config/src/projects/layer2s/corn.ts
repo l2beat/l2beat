@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('corn')
 export const corn: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1733880840),
   additionalPurposes: ['Bitcoin DApps'],
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Conduit],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -73,17 +73,18 @@ export const corn: Layer2 = orbitStackL2({
         "This vault escrows the cbBTC backing BTCN, Corn's gastoken. Users can directly bridge via LayerZero when minting BTCN in this contract.",
     }),
   ],
-  // gasTokens: ['BTCN'],
+  gasTokens: {
+    untracked: ['BTCN'],
+  },
   // associatedTokens: ['BTCN'],
   discovery,
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  discoveryDrivenData: true,
   chainConfig: {
     name: 'corn',
     chainId: 21000000,
-    explorerUrl: 'https://maizenet-explorer.usecorn.com/',
+    explorerUrl: 'https://maizenet-explorer.usecorn.com',
     explorerApi: {
       url: 'https://maizenet-explorer.usecorn.com/api',
       type: 'blockscout',

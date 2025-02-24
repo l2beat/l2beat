@@ -10,11 +10,10 @@ import { layer3s } from '../projects/layer3s'
 import type { Layer2, Layer3 } from '../types'
 import { isDiscoveryDriven } from '../utils/discoveryDriven'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from './constants'
-import { checkRisk } from './helpers'
 
 describe('projects', () => {
   describe('every slug is valid', () => {
-    for (const project of [...layer2s, ...bridges]) {
+    for (const project of [...layer2s, ...layer3s, ...bridges]) {
       it(project.display.slug, () => {
         expect(project.display.slug).toMatchRegex(/^[a-z\-\d]+$/)
       })
@@ -24,7 +23,7 @@ describe('projects', () => {
   describe('every slug is unique', () => {
     const slugs = new Set<string>()
 
-    for (const project of [...layer2s, ...bridges]) {
+    for (const project of [...layer2s, ...layer3s, ...bridges]) {
       it(project.display.name, () => {
         expect(slugs.has(project.display.slug)).toEqual(false)
         slugs.add(project.display.slug)
@@ -35,7 +34,7 @@ describe('projects', () => {
   describe('every id is unique', () => {
     const ids = new Set<ProjectId>()
 
-    for (const project of [...layer2s, ...bridges]) {
+    for (const project of [...layer2s, ...layer3s, ...bridges]) {
       it(project.display.name, () => {
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
@@ -50,6 +49,22 @@ describe('projects', () => {
       const addresses = new Set<string>()
 
       for (const project of layer2s) {
+        for (const { address, chain } of project.config.escrows) {
+          it(address.toString(), () => {
+            const key = addressToKey(address, chain ?? 'ethereum')
+            expect(addresses.has(key)).toEqual(false)
+            addresses.add(key)
+          })
+        }
+      }
+    })
+
+    it('layer3s', () => {
+      const addressToKey = (address: EthereumAddress, chain: string) =>
+        `${address.toString()} (${chain})`
+      const addresses = new Set<string>()
+
+      for (const project of layer3s) {
         for (const { address, chain } of project.config.escrows) {
           it(address.toString(), () => {
             const key = addressToKey(address, chain ?? 'ethereum')
@@ -77,53 +92,9 @@ describe('projects', () => {
     })
   })
 
-  describe('contracts', () => {
-    for (const project of [...layer2s, ...bridges]) {
-      describe(project.display.name, () => {
-        const contracts = project.contracts?.addresses ?? {}
-        for (const [chain, perChain] of Object.entries(contracts)) {
-          for (const [i, contract] of perChain.entries()) {
-            const description = contract.description
-            if (description) {
-              it(`contracts[${i}].description - each line ends with a dot`, () => {
-                for (const descLine of description.trimEnd().split('\n')) {
-                  expect(descLine.trimEnd().endsWith('.')).toEqual(true)
-                }
-              })
-            }
-
-            const upgradableBy = contract.upgradableBy
-            const permissionsForChain = (project.permissions ?? {})[chain]
-            const all = [
-              ...(permissionsForChain?.roles ?? []),
-              ...(permissionsForChain?.actors ?? []),
-            ]
-            const actors = all.map((x) => {
-              if (x.name === 'EOA') {
-                assert(x.accounts[0].type === 'EOA')
-                return x.accounts[0].address
-              }
-              return x.name
-            })
-
-            if (upgradableBy) {
-              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
-                expect(actors).toInclude(...upgradableBy)
-              })
-            }
-          }
-        }
-
-        for (const [i, risk] of project.contracts?.risks.entries() ?? []) {
-          checkRisk(risk, `contracts.risks[${i}]`)
-        }
-      })
-    }
-  })
-
   describe('links', () => {
     describe('every project has at least one website link', () => {
-      for (const project of [...layer2s, ...bridges]) {
+      for (const project of [...layer2s, ...layer3s, ...bridges]) {
         if (project.display.links.websites) {
           it(project.display.name, () => {
             expect(project.display.links.websites?.length ?? 0).toBeGreaterThan(
@@ -135,7 +106,7 @@ describe('projects', () => {
     })
 
     describe('every link is https', () => {
-      const links = [...layer2s, ...bridges].flatMap((x) =>
+      const links = [...layer2s, ...layer3s, ...bridges].flatMap((x) =>
         (Object.values(x.display.links) as string[]).flat(),
       )
       for (const link of links) {
@@ -146,7 +117,7 @@ describe('projects', () => {
     })
 
     describe('social media links are properly formatted', () => {
-      const links = [...layer2s, ...bridges].flatMap(
+      const links = [...layer2s, ...layer3s, ...bridges].flatMap(
         (x) => x.display.links.socialMedia ?? [],
       )
       for (const link of links) {
@@ -209,5 +180,59 @@ describe('projects', () => {
         )
       })
     }
+  })
+
+  // TODO: refactor config so there are no more zeroes, resync data
+  describe('daTracking', () => {
+    // Some of the projects have sinceBlock set to zero because they were added at DA Module start
+    const excluded = new Set([
+      'aevo',
+      'ancient',
+      'arbitrum',
+      'base',
+      'bob',
+      'fuel',
+      'hypr',
+      'ink',
+      'karak',
+      'kinto',
+      'kroma',
+      'linea',
+      'loopring',
+      'lyra',
+      'eclipse',
+      'mantapacific',
+      'mint',
+      'morph',
+      'optimism',
+      'orderly',
+      'paradex',
+      'polynomial',
+      'scroll',
+      'sophon',
+      'starknet',
+      'superlumio',
+      'taiko',
+      'b3',
+      'deri',
+      'ham',
+      'rari',
+      'stack',
+    ])
+    // All new projects should have non-zero sinceBlock - it will make sync more efficient
+    describe('every project has non-zero sinceBlock', () => {
+      for (const project of [...layer2s, ...layer3s, ...layer3s]) {
+        if (project.config.daTracking) {
+          if (!excluded.has(project.id)) {
+            it(project.id, () => {
+              assert(project.config.daTracking) // type issue
+              for (const config of project.config.daTracking) {
+                expect(config.sinceBlock).toBeGreaterThan(0)
+              }
+            })
+          }
+        }
+      }
+    })
   })
 })

@@ -1,5 +1,6 @@
 import { bridges, layer2s, layer3s } from '@l2beat/config'
 import { env } from '~/env'
+import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { getTokenBreakdown } from './get-token-breakdown'
 import { getTvsProjects } from './get-tvs-projects'
@@ -17,11 +18,18 @@ export function get7dTokenBreakdown(
 export type LatestTvs = Awaited<ReturnType<typeof get7dTokenBreakdownData>>
 export async function get7dTokenBreakdownData({
   type,
-}: { type: 'layer2' | 'bridge' }) {
-  const projectsToQuery = getTvsProjects((project) =>
-    type === 'layer2'
-      ? project.type === 'layer2' || project.type === 'layer3'
-      : project.type === 'bridge',
+}: { type: 'layer2' | 'bridge' | 'all' }) {
+  const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
+    (p) => p.chainConfig,
+  )
+  const projectsToQuery = await getTvsProjects(
+    (project) =>
+      type === 'all'
+        ? true
+        : type === 'layer2'
+          ? project.type === 'layer2' || project.type === 'layer3'
+          : project.type === 'bridge',
+    chains,
   )
 
   const tvsValues = await getTvsValuesForProjects(projectsToQuery, '7d')

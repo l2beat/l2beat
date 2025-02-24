@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -11,9 +11,9 @@ const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
 export const galxegravity: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1719415787), // 2024-06-26T15:29:47Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Conduit],
   associatedTokens: ['G'],
-  gasTokens: ['G'],
+  gasTokens: { tracked: ['G'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -52,7 +52,7 @@ export const galxegravity: Layer2 = orbitStackL2({
     name: 'galxegravity',
     coingeckoPlatform: 'gravity-alpha',
     chainId: 1625,
-    explorerUrl: 'https://gscan.xyz/',
+    explorerUrl: 'https://gscan.xyz',
     explorerApi: {
       url: 'https://explorer.gravity.xyz/api',
       type: 'blockscout',
@@ -68,6 +68,5 @@ export const galxegravity: Layer2 = orbitStackL2({
       },
     ],
   },
-  discoveryDrivenData: true,
   customDa: AnytrustDAC({ discovery }),
 })

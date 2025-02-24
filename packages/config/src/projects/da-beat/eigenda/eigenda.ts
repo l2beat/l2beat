@@ -1,7 +1,6 @@
 import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type { BaseProject } from '../../../types'
-import { isProjectVerified } from '../../../verification/isVerified'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -245,11 +244,11 @@ export const eigenda: BaseProject = {
       },
       {
         category: 'Funds can be lost if',
-        text: 'EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
+        text: 'the EigenLayer core contracts (DelegationManager, StrategyManager) receive a malicious code upgrade. There is no delay on code upgrades.',
       },
       {
         category: 'Funds can be lost if',
-        text: `EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
+        text: `the EigenLayer EIGEN token contract receives a malicious code upgrade. There is a ${formatSeconds(EIGENUpgradeDelay)} delay on code upgrades.`,
       },
       {
         category: 'Funds can be lost if',
@@ -280,9 +279,4 @@ export const eigenda: BaseProject = {
       type: 'general',
     },
   ],
-}
-
-// TODO: different solution for this
-if (eigenda.statuses) {
-  eigenda.statuses.isUnverified = !isProjectVerified(eigenda)
 }

@@ -44,4 +44,16 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   updateRetryStrategy?: RetryStrategy
   /** Used for saving data in transaction */
   db: Database
+  /** Some indexers calculate aggregated sums
+      which make configurations trimming non-trivial
+      and would require re-fetching the data.
+      In this case we just wipe all the data that we have
+      and move the configuration state to minHeight
+  */
+  configurationsTrimmingDisabled?: boolean
+  /** For indexers that e.g. calculate aggregate sums we want to know
+      whether invalidation has been triggered - cause it will most likely
+      result in corruption of data, so we will have to handle it manually.
+  */
+  logErrorgOnInvalidation?: boolean
 }

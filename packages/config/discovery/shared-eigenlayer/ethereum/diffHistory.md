@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x8fd50a68aaf0c30b853ff5eb3cb7397d068e4874
+
+# Diff at Wed, 12 Feb 2025 08:54:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@554a6f0e6aa688c758b37653d0be7eb446f9152e block: 21786536
+- current block number: 21786536
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21786536 (main branch discovery), not current.
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      description:
+-        "A timelock that allows scheduling calls and executing or cancelling them with a delay"
++        "A timelock that allows scheduling calls and executing or cancelling them with a delay."
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      description:
+-        "A timelock that allows scheduling calls and executing or cancelling them with a delay"
++        "A timelock that allows scheduling calls and executing or cancelling them with a delay."
+    }
+```
+
 Generated with discovered.json: 0x0c2731cccbb0da7240b867401f22bd684005e35b
 
 # Diff at Thu, 06 Feb 2025 09:22:48 GMT:

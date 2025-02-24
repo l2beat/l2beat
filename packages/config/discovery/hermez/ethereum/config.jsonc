@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "hermez",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     // NOTE(radomski): All addresses below this comment were added into the
     // initialAddresses automatically during the process of removing the
