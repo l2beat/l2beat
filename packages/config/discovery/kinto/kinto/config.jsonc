@@ -326,7 +326,8 @@
         "reservedContracts",
         "systemContracts",
         "tokenByIndex",
-        "tokenIdToApp"
+        "tokenIdToApp",
+        "ownerOf"
       ],
       "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
       "ignoreInWatchMode": ["totalSupply", "appCount"],

@@ -13,6 +13,7 @@ export const openzk: Layer2 = upcomingL2({
       'OpenZK is the first Layer 2 solution on ZK rollup technology to unite native ETH staking, liquid restaking, and stablecoin staking in one seamless platform.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
+    stack: 'ZK Stack',
     links: {
       websites: ['https://openzk.net/'],
       apps: ['https://portal.openzk.net/bridge'],

@@ -1,13 +1,18 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL2 } from '../layer2s/templates/underReview'
 
 export const rufus: Layer2 = underReviewL2({
   id: 'rufus',
   capability: 'universal',
   addedAt: new UnixTime(1737636288), // 2025-01-23T12:44:48+00:00
-  badges: [Badge.RaaS.Caldera, Badge.DA.DAC, Badge.Stack.Orbit, Badge.VM.EVM],
+  badges: [
+    BADGES.RaaS.Caldera,
+    BADGES.DA.DAC,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+  ],
   display: {
     name: 'Rufus',
     slug: 'rufus',

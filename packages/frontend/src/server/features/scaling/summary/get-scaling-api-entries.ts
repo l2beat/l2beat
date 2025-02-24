@@ -1,5 +1,5 @@
 import type { Layer2, Layer3, StageConfig } from '@l2beat/config'
-import { badges, isUnderReview, layer2s, layer3s } from '@l2beat/config'
+import { isUnderReview, layer2s, layer3s } from '@l2beat/config'
 import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -81,9 +81,9 @@ function getScalingApiEntry(
       highSeverityFieldChanged: changes.highSeverityFieldChanged,
     }),
     badges:
-      project.badges?.map((x) => ({
-        category: badges[x].type,
-        name: badges[x].display.name,
+      project.badges?.map((b) => ({
+        category: b.type,
+        name: b.name,
       })) ?? [],
     stage: getStage(project.stage),
     risks: getL2Risks(project.riskView),

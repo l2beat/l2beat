@@ -42,7 +42,7 @@ const getCached7dTokenBreakdown = cache(
       (p) => p.chainConfig,
     )
     const tvsValues = await getTvsValuesForProjects(
-      getTvsProjects(
+      await getTvsProjects(
         (project) => project.type === 'layer2' || project.type === 'layer3',
         chains,
       ),

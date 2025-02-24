@@ -25,7 +25,7 @@ export function ProjectDaThroughputChart({
   milestones,
 }: Props) {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
-  const [showMax, setShowMax] = useState(false)
+  const [showMax, setShowMax] = useState(true)
 
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,

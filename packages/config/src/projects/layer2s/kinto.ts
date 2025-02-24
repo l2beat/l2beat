@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -15,7 +15,7 @@ export const kinto: Layer2 = orbitStackL2({
   capability: 'appchain',
   addedAt: new UnixTime(1695735468), // 2023-09-26T13:37:48Z
   discovery,
-  additionalBadges: [Badge.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera],
   overridingPurposes: ['KYC-ed DeFi'],
   // additionalDiscoveries: {['kinto']: l2discovery}, // not yet ready mainly due to AccessManager not being disco-driveable
   display: {

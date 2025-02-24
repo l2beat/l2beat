@@ -85,8 +85,6 @@ function mockProject(sources: string[]): TvsProject {
   return {
     projectId: ProjectId('project'),
     minTimestamp: UnixTime.ZERO,
-    type: 'layer2', // does not matter here
-    slug: 'slug', // does not matter here
     sources: new Map(
       sources.map((s) => [s, { name: 's', minTimestamp: UnixTime.ZERO }]),
     ),
