@@ -73,7 +73,7 @@ export function pickTvsForProjects(
     const sum7d = included.reduce((acc, curr) => acc + curr.tvs7d, 0)
 
     // Fiat denomination to cents
-    return { latest: sum / 100, last7Days: sum7d / 100 }
+    return { latest: sum / 100, sevenDaysAgo: sum7d / 100 }
   }
 }
 

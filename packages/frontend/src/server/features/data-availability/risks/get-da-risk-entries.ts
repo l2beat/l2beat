@@ -50,7 +50,7 @@ export interface DaBridgeRiskEntry extends Omit<CommonProjectEntry, 'id'> {
 function getDaRiskEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
-  getTvs: (projects: ProjectId[]) => { latest: number; last7Days: number },
+  getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry {
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
@@ -106,7 +106,7 @@ function getDaRiskEntry(
 }
 
 function getDacEntries(
-  getTvs: (projectIds: ProjectId[]) => { latest: number; last7Days: number },
+  getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaRiskEntry[] {
   const projects = [...layer2s, ...layer3s]
     .filter((project) => project.customDa)

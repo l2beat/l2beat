@@ -62,7 +62,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   challengeMechanism: DaChallengeMechanism | undefined
   tvs: {
     latest: number
-    last7Days: number
+    sevenDaysAgo: number
   }
   bridges: DaBridgeSummaryEntry[]
 }
@@ -70,7 +70,7 @@ export interface DaSummaryEntry extends CommonProjectEntry {
 export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
   tvs: {
     latest: number
-    last7Days: number
+    sevenDaysAgo: number
   }
   risks: {
     values: RosetteValue[]
@@ -92,7 +92,7 @@ function getDaSummaryEntry(
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
-    last7Days: number
+    sevenDaysAgo: number
   },
 ): DaSummaryEntry {
   const daBridges = bridges.map(
@@ -171,7 +171,7 @@ function getDaSummaryEntry(
 function getDacEntries(
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
-    last7Days: number
+    sevenDaysAgo: number
   },
 ): DaSummaryEntry[] {
   const projects = [...layer2s, ...layer3s]
@@ -246,7 +246,7 @@ function getEthereumEntry(
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
     latest: number
-    last7Days: number
+    sevenDaysAgo: number
   },
 ): DaSummaryEntry {
   const bridge = bridges[0]

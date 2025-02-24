@@ -49,9 +49,9 @@ function SummaryTvsBox({
   const ethereumValue = ethereum?.tvs.latest ?? 0
   const othersValue = others.reduce((acc, entry) => acc + entry.tvs.latest, 0)
 
-  const ethereum7dAgo = ethereum?.tvs.last7Days ?? 0
+  const ethereum7dAgo = ethereum?.tvs.sevenDaysAgo ?? 0
   const others7dAgo = others.reduce(
-    (acc, entry) => acc + entry.tvs.last7Days,
+    (acc, entry) => acc + entry.tvs.sevenDaysAgo,
     0,
   )
 
