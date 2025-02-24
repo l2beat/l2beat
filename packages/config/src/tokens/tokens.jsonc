@@ -3800,7 +3800,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane Nexus"
+            "name": "Hyperlane Nexus",
+            "slug": "hyperlane"
           }
         ]
       },
@@ -5736,7 +5737,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -5751,7 +5753,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -6047,6 +6050,40 @@
           {
             "name": "Layer Zero v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
+  "form": [
+    {
+      "symbol": "USDT",
+      "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "source": "external", // potential doublecount for the scaling total
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "external", // potential doublecount for the scaling total
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }

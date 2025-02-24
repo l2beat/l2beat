@@ -1,8 +1,8 @@
 {
   "name": "syndicateframe",
   "chain": "base",
-  "blockNumber": 22580417,
-  "configHash": "0x0882bed378919dc64a93efef84c71a8d11abaf2fe76a3277c309674f311a4c74",
+  "blockNumber": 26809248,
+  "configHash": "0xeccad77d90b63012dbc212e7594fa383aef7f7a9c13f0012b589f769e108577c",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -33,7 +33,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620353",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620597",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -97,10 +97,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 12289680,
-        "latestOutputIndex": 17068,
-        "nextBlockNumber": 12290400,
-        "nextOutputIndex": 17069,
+        "latestBlockNumber": 16518960,
+        "latestOutputIndex": 22942,
+        "nextBlockNumber": 16519680,
+        "nextOutputIndex": 22943,
         "PROPOSER": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1707367873,
@@ -157,7 +157,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 21423821
+          "prevBlockNum": 26807052
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
