@@ -13,7 +13,6 @@ export const FaqSideNavItem = ({ ref, entry, selected }: Props) => {
     <li ref={ref}>
       <a
         href={`#${entry.id}`}
-        data-role="faq-side-nav-item"
         className={cn(
           'inline-block text-base font-medium !leading-[112%] text-primary transition hover:text-brand dark:opacity-80 dark:hover:opacity-100',
           selected &&
