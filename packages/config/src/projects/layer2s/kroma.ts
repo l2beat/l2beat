@@ -198,7 +198,7 @@ export const kroma: Layer2 = {
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1714032407),
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1693880389),
+      genesisTimestamp: new UnixTime(1693880387),
       lag: 0,
       stateUpdate: 'disabled',
     },
