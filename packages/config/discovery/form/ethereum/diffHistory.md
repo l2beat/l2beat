@@ -7,7 +7,7 @@ Generated with discovered.json: 0xb3a795411023998accc5fb931a30edd019a7aef2
 
 ## Description
 
-Initial discovery of a standard op stack rollup with unused DisputeGameFactory (uses L2OutputOracle).
+Initial discovery of an op stack optimium with unused DisputeGameFactory (uses L2OutputOracle).
 
 ## Initial discovery
 
