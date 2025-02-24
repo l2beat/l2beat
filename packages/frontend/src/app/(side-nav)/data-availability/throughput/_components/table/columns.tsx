@@ -45,6 +45,7 @@ export const publicSystemsColumns = [
           </SyncStatusWrapper>
         ),
         meta: {
+          align: 'right',
           tooltip:
             'The total size of the data posted over the past day, divided by the number of seconds in a day.',
         },
@@ -61,6 +62,7 @@ export const publicSystemsColumns = [
           />
         ),
         meta: {
+          align: 'right',
           tooltip:
             'The maximum data throughput that can be maintained over time. For Ethereum, it refers to the target blob throughput, as the blob base fee increases exponentially when blob usage exceeds the target.',
         },
@@ -79,6 +81,7 @@ export const publicSystemsColumns = [
       </SyncStatusWrapper>
     ),
     meta: {
+      align: 'right',
       headClassName: 'pl-2',
       cellClassName: 'pl-2',
       tooltip:
@@ -121,6 +124,7 @@ export const publicSystemsColumns = [
       </SyncStatusWrapper>
     ),
     meta: {
+      align: 'right',
       tooltip:
         'The total amount of data posted to the layer over the past day.',
     },
