@@ -6,7 +6,22 @@ import { expect } from 'earl'
 import { bridges } from '../../projects/bridges'
 import { layer2s } from '../../projects/layer2s'
 import { layer3s } from '../../projects/layer3s'
-import { onChainProjects } from '../../projects/onChainProjects'
+
+// A list of onchain projects that are not L2s (or prelaunch) or bridges
+// (so we don't show them on the frontend), but we still
+// want to monitor using discovery.
+export const onChainProjects: string[] = [
+  'blobstream',
+  'eigenda',
+  'shared-eigenlayer',
+  'swell',
+  'worldcoin',
+  'cronoszkevm',
+  'nebraupa',
+  'vector',
+  'espresso',
+  'dydx',
+]
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader(join(process.cwd(), '../config'))
@@ -57,7 +72,7 @@ describe('discovery config.jsonc', () => {
     expect(notEqual).toBeEmpty()
     notEqual.forEach((p) => {
       console.log(
-        `Following projects do not have the same name in config and discovery.json. Run "pnpm discover <config.name>" - ${p}`,
+        `Following projects do not have the same name in config and discovery.json. Run "l2b discover <config.name>" - ${p}`,
       )
     })
   })
@@ -97,7 +112,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           reason === undefined,
-          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "pnpm refresh-discovery"`,
+          `${c.chain}/${c.name} project is outdated: ${reason}.\n Run "l2b refresh-discovery"`,
         )
       }
     }
@@ -115,7 +130,7 @@ describe('discovery config.jsonc', () => {
 
         assert(
           discovery.contracts.every((c) => c.errors === undefined),
-          `${c.name} discovery.json includes errors. Run "pnpm discover ${c.name}".`,
+          `${c.name} discovery.json includes errors. Run "l2b discover ${c.name}".`,
         )
       }
     }

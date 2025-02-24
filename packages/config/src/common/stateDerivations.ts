@@ -14,6 +14,7 @@ type SupportedOPStackChains =
   | 'WORLD'
   | 'SHAPE'
   | 'UNICHAIN'
+  | 'INK'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -68,6 +69,10 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   UNICHAIN: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/unichain.toml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/unichain.json.zst',
+  ],
+  INK: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/ink.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/ink.json.zst',
   ],
 }
 

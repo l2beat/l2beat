@@ -27,6 +27,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
   KnowledgeNugget,
@@ -54,7 +55,7 @@ import type {
   StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -137,7 +138,7 @@ interface OrbitStackConfigCommon {
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -146,7 +147,12 @@ interface OrbitStackConfigCommon {
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   isArchived?: boolean
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc - will be listed under the escrow */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   customDa?: CustomDa
   hasAtLeastFiveExternalChallengers?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -386,12 +392,13 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
-  const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
+  const daBadge = usesBlobs
+    ? BADGES.DA.EthereumBlobs
+    : BADGES.DA.EthereumCalldata
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -556,10 +563,10 @@ function orbitStackCommon(
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
-        Badge.Stack.Orbit,
-        Badge.VM.EVM,
+        BADGES.Stack.Orbit,
+        BADGES.VM.EVM,
         daBadge,
-        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoPreconfs] : []),
+        ...(isUsingEspressoSequencer ? [BADGES.Other.EspressoPreconfs] : []),
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -823,9 +830,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             templateVars.discovery.getEscrowDetails({
               includeInTotal: false,
               address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens ?? ['ETH'],
+              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
               description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
                 : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
               ...upgradeability,
             }),
@@ -844,6 +851,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
             }
           : undefined),
       daTracking: getDaTracking(templateVars),
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
 }
@@ -1160,9 +1171,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       escrows: templateVars.overrideEscrows ?? [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: templateVars.gasTokens ?? ['ETH'],
+          tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
           description: templateVars.gasTokens
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.join(', ')} sent to L2.`
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
             : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
           ...upgradeability,
         }),
@@ -1182,6 +1193,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
     },
   }
 }

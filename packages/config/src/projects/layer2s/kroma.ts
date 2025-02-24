@@ -23,7 +23,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -54,10 +54,10 @@ export const kroma: Layer2 = {
   addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
   capability: 'universal',
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

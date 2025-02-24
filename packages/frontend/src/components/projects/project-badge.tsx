@@ -1,4 +1,4 @@
-import type { ScalingProjectBadge } from '@l2beat/config'
+import type { Badge } from '@l2beat/config'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import {
@@ -11,7 +11,7 @@ export function ProjectBadge({
   hideTooltip,
   className,
 }: {
-  badge: ScalingProjectBadge
+  badge: Badge
   hideTooltip?: boolean
   className?: ClassNameValue
 }) {
@@ -20,7 +20,7 @@ export function ProjectBadge({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`/images/badges/${badge.id}.png`}
-        alt={`${badge.display.name} badge`}
+        alt={`${badge.name} badge`}
         className={cn('h-16 w-auto lg:h-[4.5rem]', className)}
       />
     </>
@@ -32,8 +32,8 @@ export function ProjectBadge({
     <Tooltip>
       <TooltipTrigger className="shrink-0">{badgeImg}</TooltipTrigger>
       <TooltipContent>
-        <span className="mb-2 block font-medium">{badge.display.name}</span>
-        <span className="text-xs">{badge.display.description}</span>
+        <span className="mb-2 block font-medium">{badge.name}</span>
+        <span className="text-xs">{badge.description}</span>
       </TooltipContent>
     </Tooltip>
   )

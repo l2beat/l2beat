@@ -1,3 +1,59 @@
+Generated with discovered.json: 0xf056543c4a3204058c432be1ed06a836552512a1
+
+# Diff at Fri, 21 Feb 2025 14:11:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21637088
+- current block number: 21637088
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637088 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xffB004874CbBF8692B5f397B602f4B8a630aeD59) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0xe964a47d63720176060d373b4ae58a9600e38f36
+
+# Diff at Fri, 21 Feb 2025 09:00:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21637088
+- current block number: 21637088
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21637088 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x6c10d7e5750b21729Eb863Cf89E5b48850E6d97D) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
 Generated with discovered.json: 0x1e5e1146485d75fe9df95976bbb559c4957e3b71
 
 # Diff at Mon, 10 Feb 2025 19:04:52 GMT:

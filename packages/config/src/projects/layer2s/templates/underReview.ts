@@ -1,6 +1,7 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS, TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../../common'
 import type {
+  Badge,
   ChainConfig,
   Layer2,
   Layer2Display,
@@ -10,7 +11,6 @@ import type {
   ScalingProjectDisplay,
   TransactionApiConfig,
 } from '../../../types'
-import type { BadgeId } from '../../badges'
 
 interface UnderReviewConfigCommon {
   id: string
@@ -20,7 +20,7 @@ interface UnderReviewConfigCommon {
   escrows?: ProjectEscrow[]
   chainConfig?: ChainConfig
   transactionApi?: TransactionApiConfig
-  badges?: BadgeId[]
+  badges?: Badge[]
   isArchived?: boolean
 }
 

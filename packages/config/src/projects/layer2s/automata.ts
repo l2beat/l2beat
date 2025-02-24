@@ -3,7 +3,7 @@ import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -31,7 +31,7 @@ const daResolveWindow = formatSeconds(
 
 export const automata: Layer2 = opStackL2({
   addedAt: new UnixTime(1729359609), // 2024-10-19T17:40:09Z
-  additionalBadges: [Badge.RaaS.AltLayer],
+  additionalBadges: [BADGES.RaaS.AltLayer],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

@@ -15,9 +15,7 @@ export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<DaTrackingConfig>, 'name'> {
   daService: DaService
   daProvider: DaProvider
-  /** Used only for tagging a logger */
   daLayer: string
-  // TODO: rethink
   batchSize: number
 }
 
@@ -31,7 +29,13 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
       tags: { tag: $.daLayer },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configurationsTrimmingDisabled: true,
+      logErrorgOnInvalidation: true,
     })
+
+    assert(
+      $.configurations.every((c) => c.properties.daLayer === $.daLayer),
+      `DaLayer mismatch detected in configurations`,
+    )
 
     this.configMapping = new Map(
       $.configurations.map((c) => [c.id, c.properties]),
@@ -53,17 +57,31 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
 
     const blobs = await this.$.daProvider.getBlobs(from, adjustedTo)
 
+    if (blobs.length === 0) {
+      this.logger.info('Empty blobs response received', {
+        from,
+        to: adjustedTo,
+      })
+      return () => {
+        return Promise.resolve(adjustedTo)
+      }
+    }
+
     this.logger.info('Fetched blobs', {
       blobs: blobs.length,
     })
 
     const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
 
-    this.logger.info('Fetched previous records', {
+    this.logger.info('Loaded previous records', {
       previousRecords: previousRecords.length,
     })
 
-    const records = this.$.daService.generateRecords(blobs, previousRecords)
+    const records = this.$.daService.generateRecords(
+      blobs,
+      previousRecords,
+      configurations.map((c) => c.properties),
+    )
 
     return async () => {
       await this.$.db.dataAvailability.upsertMany(records)
@@ -79,8 +97,6 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
   }
 
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
-    if (blobs.length === 0) return []
-
     const from = new UnixTime(
       Math.min(...blobs.map((b) => b.blockTimestamp.toNumber())),
     ).toStartOf('day')
@@ -115,12 +131,10 @@ export class DaIndexer extends ManagedMultiIndexer<DaTrackingConfig> {
         configuration.daLayer,
       )
 
-      this.logger.info('Deleted DA records for configuration', {
+      this.logger.info('Wiped DA records for configuration', {
         id: c.id,
         project: configuration.projectId.toString(),
         daLayer: configuration.daLayer,
-        from: c.from,
-        to: c.to,
         deletedRecords,
       })
     }

@@ -48,6 +48,7 @@ export class DiscoveryConfig {
     return createContractConfig(
       overrides,
       structuredClone(this.config.types ?? {}),
+      structuredClone(this.config.categories ?? {}),
     )
   }
 
