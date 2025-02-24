@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 21895121,
+  "blockNumber": 21915821,
   "configHash": "0x243c5733defa4a929552c21c2c682bc770847c3857e2c63e7aafc9d1b0876ae0",
   "contracts": [
     {
@@ -156,12 +156,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 492,
+        "firstUnresolvedNode": 498,
         "inbox": "0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
-        "lastStakeBlock": 20269009,
-        "latestConfirmed": 491,
-        "latestNodeCreated": 491,
+        "lastStakeBlock": 21895273,
+        "latestConfirmed": 497,
+        "latestNodeCreated": 497,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -171,7 +171,7 @@
         "rollupEventInbox": "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
         "setValidatorCount": 4,
-        "stakerCount": 1,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -453,12 +453,12 @@
           "0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 255,
+        "delayedMessageCount": 259,
         "nativeToken": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 608,
-        "sequencerReportedSubMessageCount": 2858001
+        "sequencerMessageCount": 614,
+        "sequencerReportedSubMessageCount": 2889225
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
@@ -614,7 +614,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 27,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -693,7 +693,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 608,
+        "batchCount": 614,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -730,7 +730,7 @@
         "rollup": "0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 255,
+        "totalDelayedMessagesRead": 259,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -773,7 +773,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 225,
+        "nonce": 231,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

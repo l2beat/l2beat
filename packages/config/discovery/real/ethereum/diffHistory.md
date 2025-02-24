@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x35684e800ad7aa3214ce61213a634d697c867252
+
+# Diff at Mon, 24 Feb 2025 11:15:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 21895114
+- current block number: 21915819
+
+## Description
+
+staker count 1->2 (staker count != validator count, in orbit validators often just watch and stake as soon as they want to challenge). onchain the activity here just looks like gelato is rotating the proposing (staking) validator.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.stakerCount:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x5223b2f00175d1c1b9d960e53148a5b581bdc794
 
 # Diff at Fri, 21 Feb 2025 13:49:02 GMT:
