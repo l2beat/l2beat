@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21829713,
+  "blockNumber": 21895028,
   "configHash": "0x2586d39f1f2143fbdcbe4c9f5e3f336cf642a082ec2bec1731151b88ac9d3d68",
   "contracts": [
     {
@@ -10,19 +10,19 @@
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3703a67e457793b9a26cf1ac8548b5ea17dd768da63011587bb1af5c1f7c1d99"
+        "0xc308d0e8c98d070154567f6e8fc7c99c648506f9d557f38c98fea53c9c11a499"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.",
       "issuedPermissions": [
         {
           "permission": "challenge",
-          "to": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
           "via": []
         },
         {
           "permission": "propose",
-          "to": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
+          "to": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
           "via": []
         },
         {
@@ -40,28 +40,33 @@
       "sinceTimestamp": 1735877387,
       "values": {
         "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE",
+        "$implementation": "0x3131933F07dC5822ced67416F3744B2C0D0D22B2",
         "$pastUpgrades": [
           [
             "2025-01-03T04:15:23.000Z",
             "0xe4431d061b75e4acc45b425b8f5ccfb214f723db5d79bea73f4fd4fac6529e42",
             ["0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE"]
+          ],
+          [
+            "2025-02-21T11:11:23.000Z",
+            "0x85ae39c842797b6560c6dc220ef962770829eae91b47fd766f02c9b6e5e5c7bd",
+            ["0x3131933F07dC5822ced67416F3744B2C0D0D22B2"]
           ]
         ],
-        "$upgradeCount": 1,
-        "challenger": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
-        "CHALLENGER": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
+        "$upgradeCount": 2,
+        "challenger": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
+        "CHALLENGER": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 390000,
-        "latestOutputIndex": 77,
-        "nextBlockNumber": 395000,
-        "nextOutputIndex": 78,
-        "proposer": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
-        "PROPOSER": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
+        "latestBlockNumber": 665000,
+        "latestOutputIndex": 132,
+        "nextBlockNumber": 670000,
+        "nextOutputIndex": 133,
+        "proposer": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
+        "PROPOSER": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "startingBlockNumber": 0,
         "startingTimestamp": 0,
         "SUBMISSION_INTERVAL": 5000,
@@ -71,12 +76,16 @@
       "fieldMeta": {
         "FINALIZATION_PERIOD_SECONDS": {
           "description": "Challenge period (Number of seconds until a state root is finalized)."
-        }
+        },
+        "proposer": { "severity": "HIGH" },
+        "challenger": { "severity": "HIGH" },
+        "deletedOutputs": { "severity": "HIGH" }
       }
     },
     {
       "name": "SystemConfig",
       "address": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+      "template": "opstack/SystemConfig",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0xe25c80e0504b1ab9202b66f81f2f479e695d2440a0b5fe1ad31a300a75e64f2a"
@@ -86,13 +95,13 @@
       "issuedPermissions": [
         {
           "permission": "interact",
-          "to": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1",
+          "to": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "via": []
         },
         {
           "permission": "sequence",
-          "to": "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95",
+          "to": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
           "via": []
         },
         {
@@ -116,7 +125,7 @@
         "$upgradeCount": 1,
         "basefeeScalar": 1368,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95",
+        "batcherHash": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
         "batchInbox": "0xfF000000000000000000000000000000000000FF",
         "blobbasefeeScalar": 810949,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
@@ -147,7 +156,7 @@
         "optimismMintableERC20Factory": "0xa41694e4f8bb50f10A5eb3ea3CB04aC187F19326",
         "optimismPortal": "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07",
         "overhead": 0,
-        "owner": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1",
+        "owner": "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -220,8 +229,7 @@
         ],
         "$upgradeCount": 2,
         "frozenWithdrawals": [
-          "0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba",
-          "0x77c7fcaac9f6db1aaa8dabe8e1cd1b1c6969c556ad076c5d1f05b22f8d95cb2b"
+          "0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba"
         ],
         "guardian": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
         "l2Oracle": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
@@ -246,11 +254,13 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
+      "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x24cb1546f4d13c900c36748855b85910c515856750676e6d425b2cd42204ff9f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Used to bridge ERC-721 tokens from host chain to this chain.",
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -372,7 +382,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292627589",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641786",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -398,7 +408,7 @@
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
+        "0x280407852e66d748a811537f910566851115897f01a3de6b9cc11aebe341b900"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
@@ -417,15 +427,20 @@
       "sinceTimestamp": 1735877231,
       "values": {
         "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
-        "$implementation": "0xB64160864b3b092a5F482e606A17453f90d0c965",
+        "$implementation": "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be",
         "$pastUpgrades": [
           [
             "2025-01-03T04:07:35.000Z",
             "0x0c818f277cbb54bc47628a7644b5a4e420393ba35fd831ad2fbd7b9ffd54d144",
             ["0xB64160864b3b092a5F482e606A17453f90d0c965"]
+          ],
+          [
+            "2025-02-21T11:14:23.000Z",
+            "0xa6c23125cba636f52bf3aeef46e6567b9862fbcb82157c92af4f1c35321804ce",
+            ["0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "guardian": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
@@ -442,7 +457,17 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "severity": "HIGH",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+        },
+        {
+          "permission": "interact",
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
+          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+        },
         {
           "permission": "interact",
           "from": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
@@ -503,7 +528,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 22,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -546,16 +571,17 @@
     }
   ],
   "eoas": [
+    { "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643" },
     {
-      "address": "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95",
+      "address": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
+      "severity": "HIGH",
       "receivedPermissions": [
         {
-          "permission": "sequence",
-          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+          "permission": "propose",
+          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
         }
       ]
     },
-    { "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643" },
     { "address": "0x7b4d0e4d7C961CF967e88f600399d610736DeE51" },
     {
       "address": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
@@ -575,36 +601,17 @@
         }
       ]
     },
-    {
-      "address": "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D",
-      "receivedPermissions": [
-        {
-          "permission": "challenge",
-          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
-        }
-      ]
-    },
     { "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B" },
     {
-      "address": "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1",
+      "address": "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6",
       "receivedPermissions": [
         {
-          "permission": "interact",
-          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8",
-          "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+          "permission": "sequence",
+          "from": "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
         }
       ]
     },
     { "address": "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8" },
-    {
-      "address": "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A",
-      "receivedPermissions": [
-        {
-          "permission": "propose",
-          "from": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
-        }
-      ]
-    },
     { "address": "0xfF000000000000000000000000000000000000FF" }
   ],
   "abis": {
@@ -676,11 +683,13 @@
       "function updateWithdrawalFrozenState(bytes32 withdrawalHash, bool isFrozen)",
       "function version() pure returns (string)"
     ],
-    "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE": [
+    "0x3131933F07dC5822ced67416F3744B2C0D0D22B2": [
       "constructor()",
+      "event ChallengerUpdated(address indexed oldChallenger, address indexed newChallenger)",
       "event Initialized(uint8 version)",
       "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
       "event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex)",
+      "event ProposerUpdated(address indexed oldProposer, address indexed newProposer)",
       "function CHALLENGER() view returns (address)",
       "function FINALIZATION_PERIOD_SECONDS() view returns (uint256)",
       "function L2_BLOCK_TIME() view returns (uint256)",
@@ -704,6 +713,8 @@
       "function startingBlockNumber() view returns (uint256)",
       "function startingTimestamp() view returns (uint256)",
       "function submissionInterval() view returns (uint256)",
+      "function updateChallenger(address newChallenger)",
+      "function updateProposer(address newProposer)",
       "function version() view returns (string)"
     ],
     "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07": [
@@ -855,21 +866,6 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xB64160864b3b092a5F482e606A17453f90d0c965": [
-      "constructor()",
-      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
-      "event Initialized(uint8 version)",
-      "event Paused(string identifier)",
-      "event Unpaused()",
-      "function GUARDIAN_SLOT() view returns (bytes32)",
-      "function PAUSED_SLOT() view returns (bytes32)",
-      "function guardian() view returns (address guardian_)",
-      "function initialize(address _guardian, bool _paused)",
-      "function pause(string _identifier)",
-      "function paused() view returns (bool paused_)",
-      "function unpause()",
-      "function version() view returns (string)"
-    ],
     "0xbB138cE37870443d5b2B02a36619D3478738E0f6": [
       "constructor(address _addressManager, string _implementationName)"
     ],
@@ -935,6 +931,22 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be": [
+      "constructor()",
+      "event ConfigUpdate(uint8 indexed updateType, bytes data)",
+      "event Initialized(uint8 version)",
+      "event Paused(string identifier)",
+      "event Unpaused()",
+      "function GUARDIAN_SLOT() view returns (bytes32)",
+      "function PAUSED_SLOT() view returns (bytes32)",
+      "function guardian() view returns (address guardian_)",
+      "function initialize(address _guardian, bool _paused)",
+      "function pause(string _identifier)",
+      "function paused() view returns (bool paused_)",
+      "function unpause()",
+      "function updateGuardian(address _guardian)",
+      "function version() view returns (string)"
+    ],
     "0xE6874d09046173911A5e2bD4B4e6148dBB1B4f8A": [
       "constructor()",
       "event ERC20BridgeFinalized(address indexed localToken, bytes32 indexed remoteToken, bytes32 indexed from, address to, uint256 amount, bytes extraData)",
@@ -985,9 +997,11 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
     "opstack/L1StandardBridge_soon": "0x5a2f05e7471e501e6379b71a07e18805ecf80c1971d04da901c01bd72e21aca4",
-    "opstack/L2OutputOracle": "0x136241a2d57a18fdbb36acdcffbdef462ec78d2e278454fdbf62f7aaf88ce113",
+    "opstack/L2OutputOracle": "0xd91f271978defba509ad5603ecad2d9fcb73dd6dd253bf85bbbdad58bf27cf9e",
     "opstack/OptimismPortal_soon": "0x9cfb2d44d8bb45742e371246df8436a65bb7d88705c9589f1dd5bc5d6eb9feee",
-    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15"
+    "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
+    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
   }
 }

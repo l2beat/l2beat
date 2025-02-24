@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xce9e91f4b7c6e7b97cbcc461b434210fb98058cd
+Generated with discovered.json: 0x0b892d80cc7fc5e3066fa7ea15177d5ab7ca50b3
+
+# Diff at Fri, 21 Feb 2025 14:06:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21802884
+- current block number: 21802884
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802884 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x0eB331B615030819464225Ecd373e5FFBE502DC4) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      severity:
++        "HIGH"
+    }
+```
+
+Generated with discovered.json: 0x40557f3c27f8635b7058333392727d19df8b4999
 
 # Diff at Fri, 21 Feb 2025 08:59:26 GMT:
 

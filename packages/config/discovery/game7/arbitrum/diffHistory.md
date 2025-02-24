@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xcd31717720f1cb4e39edc3c3e30770e9b295dc7f
+Generated with discovered.json: 0xb9f08ac94d933314f860f622fb7e1a1f442477e7
 
-# Diff at Fri, 21 Feb 2025 12:11:37 GMT:
+# Diff at Fri, 21 Feb 2025 14:12:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 307386152
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xcd31717720f1cb4e39edc3c3e30770e9b295dc7f
 
 ## Description
 
-Config related: Set orbit stack contract categories.
+Config related: Change some severities and add templates.
 
 ## Config/verification related changes
 
