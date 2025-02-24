@@ -81,6 +81,5 @@ function toResponseProject(
     stateValidationConfigured: project.stateValidation !== undefined,
     upgradesAndGovernanceConfigured:
       project.type === 'layer2' && project.upgradesAndGovernance !== undefined,
-    knowledgeNuggetsConfigured: project.knowledgeNuggets !== undefined,
   }
 }

@@ -117,7 +117,6 @@ export const xlayer: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
   rpcUrl: 'https://rpc.xlayer.tech',

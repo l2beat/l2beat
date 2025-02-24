@@ -5,7 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { CONTRACTS, DA_MODES, NUGGETS } from '../../common'
+import { CONTRACTS, DA_MODES } from '../../common'
 import { DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -280,11 +280,4 @@ export const polygonpos: Layer2 = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Is Polygon a side-chain?',
-      url: 'https://twitter.com/bkiepuszewski/status/1380404149888675840',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

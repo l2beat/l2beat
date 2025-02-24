@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -255,13 +255,6 @@ export const nova: Layer2 = orbitStackL2({
       date: '2022-08-09T00:00:00Z',
       url: 'https://medium.com/offchainlabs/its-time-for-a-new-dawn-nova-is-open-to-the-public-a081df1e4ad2',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Data availability on Arbitrum Nova',
-      url: 'https://twitter.com/bkiepuszewski/status/1555180043525128200',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
   customDa: DAC({

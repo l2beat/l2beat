@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -159,21 +157,4 @@ export const hop: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Hop protocol deep dive',
-      url: 'https://li.fi/knowledge-hub/hop-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-    {
-      title: 'How Hop protocol works?',
-      url: 'https://twitter.com/bkiepuszewski/status/1437320613358673922',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'How HTLC bridge works?',
-      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
-    },
-  ],
 }

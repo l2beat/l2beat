@@ -113,7 +113,6 @@ export const witness: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,

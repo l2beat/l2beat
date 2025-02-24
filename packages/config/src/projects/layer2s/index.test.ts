@@ -10,7 +10,6 @@ import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith, uniq } from 'lodash'
 import { describe } from 'mocha'
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
@@ -501,31 +500,6 @@ describe('layer2s', () => {
           ).toEqual(true)
         })
       }
-    })
-
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = layer2s.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 

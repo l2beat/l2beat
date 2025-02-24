@@ -1,7 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { NUGGETS } from '../../common'
-
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -67,13 +65,6 @@ export const lyra: Layer2 = opStackL2({
       url: 'https://x.com/lyrafinance/status/1750235026136965260',
       date: '2024-01-16T00:00:00.00Z',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
   nonTemplateEscrows: [

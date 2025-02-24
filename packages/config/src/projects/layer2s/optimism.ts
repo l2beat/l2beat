@@ -16,7 +16,6 @@ import {
   DA_MODES,
   DERIVATION,
   EXITS,
-  NUGGETS,
   RISK_VIEW,
 } from '../../common'
 import { ESCROW } from '../../common'
@@ -649,13 +648,6 @@ export const optimism: Layer2 = {
       date: '2021-08-19T00:00:00Z',
       description: 'All smart contracts allowed after prior approval.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'The Optimistic Vision',
-      url: 'https://www.optimism.io/vision',
-      thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_VISION,
     },
   ],
 }

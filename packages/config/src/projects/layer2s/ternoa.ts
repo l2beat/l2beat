@@ -134,7 +134,6 @@ export const ternoa: Layer2 = polygonCDKStack({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
   customDa: PolygoncdkDAC({
     dac: {
       requiredMembers: requiredSignaturesDAC,

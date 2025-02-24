@@ -15,7 +15,6 @@ import {
   type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -32,7 +31,6 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
@@ -140,7 +138,6 @@ interface OpStackConfigCommon {
   stateDerivation?: ScalingProjectStateDerivation
   stateValidation?: ScalingProjectStateValidation
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   nonTemplateEscrows?: ProjectEscrow[]
   nonTemplateExcludedTokens?: string[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
@@ -356,24 +353,6 @@ function opStackCommon(
       risks: nativeContractRisks,
     },
     milestones: templateVars.milestones ?? [],
-    knowledgeNuggets: [
-      ...(templateVars.knowledgeNuggets ?? []),
-      {
-        title: 'How Optimism compresses data',
-        url: 'https://twitter.com/bkiepuszewski/status/1508740414492323840?s=20&t=vMgR4jW1ssap-A-MBsO4Jw',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
-      {
-        title: 'Superchain Explainer',
-        url: 'https://docs.optimism.io/stack/explainer',
-        thumbnail: NUGGETS.THUMBNAILS.OPTIMISM_03,
-      },
-      {
-        title: 'Modular Rollup Theory',
-        url: 'https://www.youtube.com/watch?v=jnVjhp41pcc',
-        thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-      },
-    ],
     badges: mergeBadges(automaticBadges, templateVars.additionalBadges ?? []),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,

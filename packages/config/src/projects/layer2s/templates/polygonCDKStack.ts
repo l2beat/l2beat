@@ -26,7 +26,6 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2TxConfig,
@@ -77,7 +76,6 @@ export interface PolygonCDKStackConfig {
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
-  knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
@@ -447,7 +445,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 
     Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
     milestones: templateVars.milestones,
-    knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
         BADGES.Stack.PolygonCDK,

@@ -16,7 +16,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -311,7 +310,7 @@ export const starknet: Layer2 = {
     costsWarning: {
       sentiment: 'warning',
       value:
-        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs represent a rough estimate, and we are working to provide more accurate values.',
+        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
     },
   },
   config: {
@@ -856,7 +855,7 @@ export const starknet: Layer2 = {
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }], //same config as above but different multiplier
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -1254,5 +1253,4 @@ export const starknet: Layer2 = {
     BADGES.Infra.SHARP,
     BADGES.Other.Governance,
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

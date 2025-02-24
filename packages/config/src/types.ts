@@ -58,12 +58,6 @@ export interface ChainConfig {
   coingeckoPlatform?: string
 }
 
-export interface KnowledgeNugget {
-  title: string
-  url: string
-  thumbnail?: string
-}
-
 export interface Milestone {
   title: string
   url: string
@@ -111,8 +105,6 @@ export interface ScalingProject {
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
-  /** List of knowledge nuggets: useful articles worth reading */
-  knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
@@ -660,7 +652,6 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
 }
 
 export interface BridgeDisplay {
