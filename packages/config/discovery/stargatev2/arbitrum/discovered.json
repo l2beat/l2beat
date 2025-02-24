@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "arbitrum",
   "blockNumber": 305943129,
-  "configHash": "0xbb1bf00959079f95cbef3c76628e92088766e5d57782c3f17896d1f39e81b2c6",
+  "configHash": "0xd5aba46f4420f2cc7c8aa0d1edcff5da1d7af7b6318470814f162d2437f2493b",
   "contracts": [
     {
       "name": "TokenMessaging",

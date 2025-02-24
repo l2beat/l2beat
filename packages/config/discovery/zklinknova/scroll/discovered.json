@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "scroll",
   "blockNumber": 8983528,
-  "configHash": "0xf4ddb19c0fdae140df8fbed237e89e95a862c8d1f256c0a5b927674122290324",
+  "configHash": "0x60f1a398033a7b937fdcf812768cf22f9754343c6f072bcacbb828f617271565",
   "contracts": [
     {
       "name": "zkLink",

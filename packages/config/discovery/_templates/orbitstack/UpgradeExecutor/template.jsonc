@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UpgradeExecutor",
+  "category": "gov",
   "description": "Central contract defining the access control permissions for upgrading the system contract implementations.",
   "fields": {
     "accessControl": {

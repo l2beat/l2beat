@@ -1,4 +1,30 @@
 {
+  "categories": {
+    "core": {
+      "name": "Local Infrastructure",
+      "priority": 5
+    },
+    "shared": {
+      "name": "Shared Infrastructure",
+      "priority": 4
+    },
+    "gov": {
+      "name": "Governance",
+      "priority": 3
+    },
+    "bridge-canonical": {
+      "name": "Canonical Bridges",
+      "priority": 2
+    },
+    "bridge-external": {
+      "name": "External Bridges",
+      "priority": 1
+    },
+    "spam": {
+      "name": "Spam",
+      "priority": -1
+    }
+  },
   "names": {
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ConduitMultisig",
     "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "ConduitMultisig2",

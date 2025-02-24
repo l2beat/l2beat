@@ -39,7 +39,7 @@ export const popapex: Layer3 = orbitStackL3({
       explorers: ['https://explorer.apex.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [
-        'https://twitter.com/ProofOfPlay/',
+        'https://twitter.com/ProofOfPlay',
         'https://discord.com/invite/piratenation',
         'https://piratenation.medium.com/',
       ],

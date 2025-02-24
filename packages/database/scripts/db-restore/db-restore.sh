@@ -2,10 +2,11 @@
 
 source .env
 
-FEATURES_NAMES=("da" "tvl")
+FEATURES_NAMES=("da" "tvl" "finality")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability"
     "IndexerState IndexerConfiguration BlockTimestamp Amount Price Value"
+    "IndexerState IndexerConfiguration Liveness Finality"
 )
 
 clear_tables() {
@@ -48,12 +49,12 @@ dump_tables() {
   done
 
   echo "Dumping TVL tables from remote: ${tables[*]} (this may take a while)..."
-  pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" $table_args -a -F c -f "./tvl.pgdump"
+  pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" $table_args -a -F c -f "./db.pgdump"
 }
 
 restore_tables() {
   echo "Restoring TVL tables (this may take a while)..."
-  pg_restore -d "$DEV_LOCAL_DB_URL" "./tvl.pgdump"
+  pg_restore -d "$DEV_LOCAL_DB_URL" "./db.pgdump"
 }
 
 if [ -z "$1" ]; then
@@ -83,13 +84,13 @@ TABLES=(${FEATURES_TABLES[$FEATURE_INDEX]})
 clear_tables "${TABLES[@]}"
 
 echo "Migrating DB to latest"
-PRISMA_DB_URL="$PRISMA_DB_URL" pnpm prisma migrate deploy
+PRISMA_DB_URL="$DEV_LOCAL_DB_URL" pnpm prisma migrate deploy
 
 dump_tables "${TABLES[@]}"
 
 restore_tables
 
 echo "Removing dump"
-rm tvl.pgdump
+rm db.pgdump
 
 echo "✅ TVL data restored for feature '$FEATURE'"

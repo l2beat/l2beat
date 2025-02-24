@@ -47,7 +47,7 @@ export const inevm: Layer3 = orbitStackL3({
       tokens: '*',
     }),
   ],
-  // gasTokens: ['INJ'],
+  gasTokens: { untracked: ['INJ'] },
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
   rpcUrl: 'https://inevm.calderachain.xyz/http',
   discovery,

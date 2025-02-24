@@ -20,6 +20,8 @@ export const blessnet: Layer3 = orbitStackL3({
   display: {
     name: 'Blessnet',
     slug: 'blessnet',
+    headerWarning:
+      'The operator has stopped servicing this Optimium (the last state update was posted on 2025-01-24).',
     description:
       'Blessnet is an Orbit stack Optimium aiming to create a more interconnected and efficient Ethereum ecosystem, where users can interact safely across multiple chains while keeping their valuable assets secure on established networks.',
     links: {
@@ -51,9 +53,8 @@ export const blessnet: Layer3 = orbitStackL3({
   //     tokens: '*',
   //   }),
   // ],
-  // gasTokens: ['INJ'],
   // associatedTokens: ['INJ'] // not adding it because it seems to be minted randomly on arbitrum
-  // gasTokens: ['BLESS'], // not on CG
+  gasTokens: { untracked: ['BLESS'] },
   // associatedTokens: ['BLESS'],
   rpcUrl: 'https://blessnet.calderachain.xyz/http',
   discovery,

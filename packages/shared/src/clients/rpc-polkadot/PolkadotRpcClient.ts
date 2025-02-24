@@ -36,7 +36,7 @@ export class PolkadotRpcClient extends ClientCore {
     return {
       number: bn,
       hash: 'UNSUPPORTED',
-      timestamp: this.calculateAvailTimestamp(bn),
+      timestamp: PolkadotRpcClient.calculateAvailTimestamp(bn),
       transactions: [], // UNSUPPORTED
     }
   }
@@ -110,7 +110,7 @@ export class PolkadotRpcClient extends ClientCore {
     return this.$.sourceName
   }
 
-  private calculateAvailTimestamp(blockNumber: number) {
+  static calculateAvailTimestamp(blockNumber: number) {
     const referenceBlock = 1
     const referenceTimestamp = 1720082320
 
