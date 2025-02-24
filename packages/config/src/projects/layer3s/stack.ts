@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 
 const discovery = new ProjectDiscovery('stack', 'base')
@@ -11,9 +11,9 @@ export const stack: Layer3 = opStackL3({
   addedAt: new UnixTime(1710853988), // 2024-03-19T13:13:08Z
   discovery,
   additionalBadges: [
-    Badge.DA.Celestia,
-    Badge.L3ParentChain.Base,
-    Badge.RaaS.Conduit,
+    BADGES.DA.Celestia,
+    BADGES.L3ParentChain.Base,
+    BADGES.RaaS.Conduit,
   ],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [

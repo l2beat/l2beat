@@ -29,7 +29,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('reddioex')
 
@@ -61,10 +61,10 @@ export const reddioex: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.DAC,
-    Badge.Stack.StarkEx,
-    Badge.Infra.SHARP,
+    BADGES.VM.AppChain,
+    BADGES.DA.DAC,
+    BADGES.Stack.StarkEx,
+    BADGES.Infra.SHARP,
   ],
   display: {
     name: 'RedSonic',

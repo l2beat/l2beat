@@ -8,7 +8,7 @@ import { DA_LAYERS, DA_MODES, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { generateDiscoveryDrivenContracts } from '../layer2s/templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
@@ -51,7 +51,7 @@ export const hyperliquid: Layer3 = {
   capability: 'appchain',
   hostChain: ProjectId('arbitrum'),
   addedAt: new UnixTime(1734956888), // 2024-12-23T13:28:48Z
-  badges: [Badge.VM.AppChain, Badge.DA.CustomDA],
+  badges: [BADGES.VM.AppChain, BADGES.DA.CustomDA],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

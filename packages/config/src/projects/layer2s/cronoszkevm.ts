@@ -3,7 +3,7 @@ import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('cronoszkevm')
@@ -18,7 +18,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
   addedAt: new UnixTime(1722430938), // 2024-07-31T13:02:18Z
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.DA.CustomDA],
+  additionalBadges: [BADGES.DA.CustomDA],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Cronos zkEVM',

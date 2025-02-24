@@ -139,7 +139,7 @@ export const lzOmnichain: Bridge = {
         discovery.getContractDetails('NonceContract'),
       ],
     },
-    risks: [CONTRACTS.UNVERIFIED_RISK, CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
     [discovery.chain]: {

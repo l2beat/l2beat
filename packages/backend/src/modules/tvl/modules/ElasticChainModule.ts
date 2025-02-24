@@ -83,8 +83,8 @@ function createIndexers(
     const rpcClient = dependencies.clients.getRpcClient(chain)
 
     const sharedEscrow = config.projects
-      .find((p) => p.projectId === chain)
-      ?.escrows.find(
+      .find((p) => p.id === chain)
+      ?.tvlConfig.escrows.find(
         (e) => e.sharedEscrow && e.sharedEscrow.type === 'ElasticChain',
       )
     assert(

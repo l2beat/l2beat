@@ -1,4 +1,35 @@
-Generated with discovered.json: 0x26fd0bcae7767bff9488b3001f9bcbdc7e1934cf
+Generated with discovered.json: 0x8acb631b253d339e7f19c4c2272b74fc572e4b6f
+
+# Diff at Fri, 21 Feb 2025 13:28:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829678
+- current block number: 21895014
+
+## Description
+
+Worldchain does what is assumed to be a switch to the latest config. gasLimit per block should be the same.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        2
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        150000000
++        30000000
+    }
+```
+
+Generated with discovered.json: 0xb6c5e61402f81b8a4f34779a58ad1b70eefcae62
 
 # Diff at Fri, 21 Feb 2025 09:00:27 GMT:
 

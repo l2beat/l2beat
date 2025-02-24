@@ -27,4 +27,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   scroll: 'https://scrollscan.com',
   blast: 'https://blastscan.io',
   unichain: 'https://uniscan.xyz',
+  ink: 'https://explorer.inkonchain.com',
 }

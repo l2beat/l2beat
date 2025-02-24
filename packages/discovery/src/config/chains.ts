@@ -270,4 +270,17 @@ export const chains: ChainConfig[] = [
       url: 'https://api.uniscan.xyz/api',
     },
   },
+  {
+    name: 'ink',
+    chainId: 57073,
+    shortName: 'ink',
+    multicall: getMulticall3Config(
+      1,
+      EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+    ),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.inkonchain.com/api',
+    },
+  },
 ] as const satisfies ChainConfig[]

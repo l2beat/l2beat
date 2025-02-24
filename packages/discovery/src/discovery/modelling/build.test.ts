@@ -11,7 +11,7 @@ describe(buildAddressToNameMap.name, () => {
         name: 'ContractA',
       },
       {
-        address: EthereumAddress('0xdeadbeef00000000000000000000000000000000'),
+        address: EthereumAddress('0xdead00000000000000000000000000000000beef'),
         name: 'ContractB',
       },
     ]
@@ -27,10 +27,14 @@ describe(buildAddressToNameMap.name, () => {
 
     const addressToNameMap = buildAddressToNameMap(contracts, eoas)
     expect(addressToNameMap).toEqual({
-      '0x1230000000000000000000000000000000000000': 'ContractA_0x1230',
-      '0x7890000000000000000000000000000000000000': 'EoaName_0x7890',
-      '0xabc0000000000000000000000000000000000000': 'eoa_0xabc0',
-      '0xdeadbeef00000000000000000000000000000000': 'ContractB_0xdead',
+      '0x1230000000000000000000000000000000000000':
+        'ContractA_0x1230000000000000000000000000000000000000',
+      '0x7890000000000000000000000000000000000000':
+        'EoaName_0x7890000000000000000000000000000000000000',
+      '0xabc0000000000000000000000000000000000000':
+        'eoa_0xabc0000000000000000000000000000000000000',
+      '0xdead00000000000000000000000000000000beef':
+        'ContractB_0xdead00000000000000000000000000000000beef',
     })
   })
 })

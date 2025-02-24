@@ -9,7 +9,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('sophon')
@@ -22,7 +22,7 @@ const bridge = discovery.getContract('L1SharedBridge')
 export const sophon: Layer2 = zkStackL2({
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.DA.Avail],
+  additionalBadges: [BADGES.DA.Avail],
   addedAt: new UnixTime(1716536140), // 2024-05-24T07:35:40Z
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {

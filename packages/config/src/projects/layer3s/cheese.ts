@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const cheese: Layer3 = underReviewL3({
@@ -9,11 +9,11 @@ export const cheese: Layer3 = underReviewL3({
   capability: 'universal',
   addedAt: new UnixTime(1722512887), // 2024-08-01T11:48:07Z
   badges: [
-    Badge.L3ParentChain.Arbitrum,
-    Badge.DA.Celestia,
-    Badge.Stack.Orbit,
-    Badge.VM.EVM,
-    Badge.RaaS.Caldera,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.DA.Celestia,
+    BADGES.Stack.Orbit,
+    BADGES.VM.EVM,
+    BADGES.RaaS.Caldera,
   ],
   display: {
     category: 'Optimium',

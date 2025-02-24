@@ -1,4 +1,4 @@
-import { HOMEPAGE_MILESTONES } from '../../common'
+import { HOMEPAGE_MILESTONES } from '../../global/milestones'
 import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'
@@ -58,6 +58,7 @@ import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
 import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
+import { genlayer } from './genlayer'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
 import { gpt } from './gpt'
@@ -82,12 +83,14 @@ import { kinto } from './kinto'
 import { koi } from './koi'
 import { kontos } from './kontos'
 import { kroma } from './kroma'
+import { lachain } from './lachain'
 import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
 import { layerai } from './layerai'
 import { leaf } from './leaf'
 import { lens } from './lens'
+import { liftchain } from './liftchain'
 import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -127,7 +130,6 @@ import { patex } from './patex'
 import { payy } from './payy'
 import { pepeunchained } from './pepeunchained'
 import { phala } from './phala'
-import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
 import { polygonmiden } from './polygonmiden'
 import { polygonpos } from './polygonpos'
@@ -183,12 +185,15 @@ import { treasure } from './treasure'
 import { turboprotocol } from './turboprotocol'
 import { tusima } from './tusima'
 import { unichain } from './unichain'
+import { union } from './union'
 import { wirex } from './wirex'
 import { witness } from './witness'
+import { wonderfi } from './wonderfi'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
 import { xpla } from './xpla'
+import { xsolla } from './xsolla'
 import { xterio } from './xterio'
 import { zentachain } from './zentachain'
 import { zeronetwork } from './zeronetwork'
@@ -260,6 +265,7 @@ export const layer2s: Layer2[] = [
   fuelv1,
   funki,
   fuse,
+  genlayer,
   gluon,
   gmnetwork,
   gpt,
@@ -284,12 +290,14 @@ export const layer2s: Layer2[] = [
   koi,
   kontos,
   kroma,
+  lachain,
   lambda,
   layerai,
   leaf,
   layer2finance,
   layer2financezk,
   lens,
+  liftchain,
   lightlink,
   linea,
   lisk,
@@ -332,7 +340,6 @@ export const layer2s: Layer2[] = [
   payy,
   pepeunchained,
   phala,
-  playchain,
   plumenetwork,
   polygonmiden,
   polygonzkevm,
@@ -387,12 +394,15 @@ export const layer2s: Layer2[] = [
   turboprotocol,
   tusima,
   unichain,
+  union,
   wirex,
   witness,
+  wonderfi,
   world,
   xchain,
   xlayer,
   xpla,
+  xsolla,
   xterio,
   zentachain,
   zeronetwork,

@@ -27,6 +27,7 @@ import {
 } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
   KnowledgeNugget,
@@ -54,7 +55,7 @@ import type {
   StageConfig,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -137,7 +138,7 @@ interface OrbitStackConfigCommon {
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
@@ -391,12 +392,13 @@ function orbitStackCommon(
   const postsToExternalDA = sequencerVersion !== '0x00'
   if (postsToExternalDA) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
-  const daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
+  const daBadge = usesBlobs
+    ? BADGES.DA.EthereumBlobs
+    : BADGES.DA.EthereumCalldata
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -561,10 +563,10 @@ function orbitStackCommon(
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
-        Badge.Stack.Orbit,
-        Badge.VM.EVM,
+        BADGES.Stack.Orbit,
+        BADGES.VM.EVM,
         daBadge,
-        ...(isUsingEspressoSequencer ? [Badge.Other.EspressoPreconfs] : []),
+        ...(isUsingEspressoSequencer ? [BADGES.Other.EspressoPreconfs] : []),
       ],
       templateVars.additionalBadges ?? [],
     ),

@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL2 } from './templates/orbitStack'
 
@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('real')
 export const real: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1717598702), // 2024-06-05T14:45:02Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gelato],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
