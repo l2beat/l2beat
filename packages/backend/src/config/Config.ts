@@ -14,7 +14,6 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ChainConverter } from '@l2beat/shared-pure'
 import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
@@ -91,7 +90,6 @@ export interface TvlConfig {
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
   readonly projects: Project<'tvlConfig', 'chainConfig'>[]
-  readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly tvlCleanerEnabled: boolean
@@ -165,16 +163,12 @@ export interface HealthConfig {
 }
 
 export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexCallsPerMinute: number
-  readonly allowedProjectIds?: string[]
   readonly projects: ActivityConfigProject[]
 }
 
 export interface ActivityConfigProject {
   id: ProjectId
   config: ActivityTransactionConfig
-  blockExplorerConfig: EtherscanChainConfig | BlockscoutChainConfig | undefined
 }
 
 export interface MetricsAuthConfig {

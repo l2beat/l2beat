@@ -1,16 +1,8 @@
 import { Env } from '@l2beat/backend-tools'
-import type {
-  ChainConfig,
-  ProjectService,
-  TransactionApiConfig,
-} from '@l2beat/config'
+import type { ProjectService, TransactionApiConfig } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
-import type {
-  ActivityConfig,
-  BlockscoutChainConfig,
-  EtherscanChainConfig,
-} from '../Config'
+import type { ActivityConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
@@ -28,23 +20,11 @@ export async function getActivityConfig(
   })
 
   return {
-    starkexApiKey: env.string([
-      'STARKEX_API_KEY_FOR_ACTIVITY',
-      'STARKEX_API_KEY',
-    ]),
-    starkexCallsPerMinute: env.integer(
-      [
-        'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
-        'STARKEX_API_CALLS_PER_MINUTE',
-      ],
-      600,
-    ),
     projects: projects
       .filter((x) => flags.isEnabled('activity', x.id.toString()))
       .map((x) => ({
         id: x.id,
         config: getActivityTransactionConfig(env, x.id, x.transactionApiConfig),
-        blockExplorerConfig: getActivityExplorerConfig(env, x.chainConfig),
       })),
   }
 }
@@ -100,26 +80,4 @@ function getActivityTransactionConfig(
       ),
     }
   }
-}
-
-function getActivityExplorerConfig(
-  env: Env,
-  chainConfig: ChainConfig | undefined,
-): EtherscanChainConfig | BlockscoutChainConfig | undefined {
-  if (!chainConfig?.explorerApi) {
-    return undefined
-  }
-  return chainConfig.explorerApi.type === 'etherscan'
-    ? {
-        type: chainConfig.explorerApi.type,
-        apiKey: env.string([
-          Env.key(chainConfig.name, 'ETHERSCAN_API_KEY_FOR_ACTIVITY'),
-          Env.key(chainConfig.name, 'ETHERSCAN_API_KEY'),
-        ]),
-        url: chainConfig.explorerApi.url,
-      }
-    : {
-        type: chainConfig.explorerApi.type,
-        url: chainConfig.explorerApi.url,
-      }
 }
