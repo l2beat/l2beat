@@ -7,11 +7,7 @@ export const snaxchain: Layer2 = underReviewL2({
   id: 'snaxchain',
   capability: 'universal',
   addedAt: new UnixTime(1740099913),
-  badges: [
-    BADGES.Stack.OPStack,
-    BADGES.VM.EVM,
-    BADGES.RaaS.Conduit
-  ],
+  badges: [BADGES.Stack.OPStack, BADGES.VM.EVM, BADGES.RaaS.Conduit],
   display: {
     name: 'SNAXchain',
     slug: 'snaxchain',
