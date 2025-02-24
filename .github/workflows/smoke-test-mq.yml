@@ -78,7 +78,7 @@ jobs:
         working-directory: packages/backend
 
       - name: Pull production update monitor configuration
-        run: heroku config -a l2beat-update-monitor-production --shell > .env
+        run: heroku config -a l2beat-update-monitor-prod --shell > .env
         working-directory: packages/backend
 
       - name: Fill PORT variable
