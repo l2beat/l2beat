@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 130896600,
-  "configHash": "0xb701da61a0e9e386ec64ebd512fe98053b894bb5a322efc9c2bc96b7652d7886",
+  "blockNumber": 132390328,
+  "configHash": "0xa131caba18884bd1a4e8a60dce67d44ff103bd777441429349bee640e9a22d00",
   "contracts": [
     {
       "name": "MintManagerOwner",
@@ -94,7 +94,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292643380",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292644280",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -143,14 +143,14 @@
         "$upgradeCount": 2,
         "baseFee": 0,
         "baseFeeScalar": 5227,
-        "blobBaseFee": 59721762216,
+        "blobBaseFee": 1322064,
         "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 37531625291,
+        "l1BaseFee": 683646119,
         "version": "1.3.0"
       },
       "derivedName": "GasPriceOracle"
@@ -339,18 +339,18 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 37531625291,
+        "basefee": 683646119,
         "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 59721762216,
+        "blobBaseFee": 1322064,
         "blobBaseFeeScalar": 1014213,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x03281dda970d4c4e4e2977974b07a06e31a2518eb81084652b4d8757714ea9a5",
+        "hash": "0xe23f776d42386a1b75c4e041b4e2baeefe1e4688f386a1ad5fbb4ebaeab1992b",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 21667013,
-        "sequenceNumber": 5,
-        "timestamp": 1737391895,
+        "number": 21914469,
+        "sequenceNumber": 1,
+        "timestamp": 1740379355,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -684,7 +684,6 @@
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15" },
     {
-      "name": "SuperchainProxyAdminOwner_L2Alias",
       "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
       "receivedPermissions": [
         {

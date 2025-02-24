@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x304319ceab5cd7988b275433b38bb6449075f1b3
+Generated with discovered.json: 0xbb141768a70a5b7ec813eda5ad3ac9df22d76ebb
 
-# Diff at Fri, 21 Feb 2025 13:22:19 GMT:
+# Diff at Fri, 21 Feb 2025 19:02:13 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 21894981
 
 ## Description

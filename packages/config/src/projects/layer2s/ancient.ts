@@ -4,7 +4,7 @@ import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('ancient')
@@ -16,7 +16,7 @@ const upgradeability = {
 export const ancient: Layer2 = opStackL2({
   addedAt: new UnixTime(1695904849), // 2023-09-28T12:40:49Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
   discovery,
   associatedTokens: ['A8'],

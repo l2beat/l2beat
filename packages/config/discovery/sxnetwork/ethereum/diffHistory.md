@@ -1,14 +1,110 @@
-Generated with discovered.json: 0xbaede7c731c295e4c42a1df65f056c8aaacaebbb
+Generated with discovered.json: 0xda03eea4bba55d665b5671c0fbca8556ded421ef
 
-# Diff at Fri, 21 Feb 2025 12:11:33 GMT:
+# Diff at Fri, 21 Feb 2025 13:50:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21628404
-- current block number: 21628404
+- current block number: 21895121
 
 ## Description
 
+Add operator addresses.
 Config related: Set orbit stack contract categories.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.8:
++        {"permission":"validate","to":"0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.7:
++        {"permission":"validate","to":"0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.6:
++        {"permission":"validate","to":"0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.5:
++        {"permission":"validate","to":"0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.4.to:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
+      issuedPermissions.3.to:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
+      issuedPermissions.0.to:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        4
+      values.validators.5:
++        "0xe778F5Bf5dDB8614a1ab6321Cc557EDbC90e615f"
+      values.validators.4:
++        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
+      values.validators.3:
++        "0xD19ee3f6Bf22A3A23eCd25B5ED0C655a2a56F65E"
+      values.validators.2:
++        "0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1"
+      values.validators.1:
+-        "0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa"
++        "0x3648e2c562F00DeEA11B0b335Cf55C5EB2Df3A5F"
+      values.validators.0:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xD80a805c86C14c879420eC6acb366D04D318fC0C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.5:
++        {"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"},{"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"}]}
+      issuedPermissions.4:
++        {"permission":"sequence","to":"0xf244224843657bb59A6456754992Ea973655D918","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]}
+      issuedPermissions.3:
++        {"permission":"sequence","to":"0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]}
+      issuedPermissions.2:
++        {"permission":"sequence","to":"0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e","description":"Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.","via":[]}
+      issuedPermissions.1.permission:
+-        "upgrade"
++        "sequence"
+      issuedPermissions.1.to:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "0x7D9A25f61865D5A211a8be80a4Ef6bd201112717"
+      issuedPermissions.1.via.1:
+-        {"address":"0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"}
+      issuedPermissions.1.via.0:
+-        {"address":"0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a"}
+      issuedPermissions.1.description:
++        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+      issuedPermissions.0.to:
+-        "0x90906eA9eb38B6afC104bB761F493b2a78c85024"
++        "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715"
+      values.batchPosters.4:
++        "0xf244224843657bb59A6456754992Ea973655D918"
+      values.batchPosters.3:
++        "0xCD795E6003Da105f4a1E11F73fb64b58B5C0f325"
+      values.batchPosters.2:
++        "0xC410B8657FBB2CdbF0c5c5d5128576974467ba5e"
+      values.batchPosters.1:
++        "0x7D9A25f61865D5A211a8be80a4Ef6bd201112717"
+      values.batchPosters.0:
+-        "0x90906eA9eb38B6afC104bB761F493b2a78c85024"
++        "0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715"
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract SxNetworkMultisig (0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa) {
+    +++ description: None
+      values.$members.0:
+-        "0x9C56265ef2989138d264b30fBbA2043902daBdf8"
++        "0x262711cA4DA6409Da795D8af9E18DDaF47397f80"
+    }
+```
 
 ## Config/verification related changes
 

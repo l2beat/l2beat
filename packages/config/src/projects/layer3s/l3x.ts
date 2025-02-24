@@ -4,7 +4,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('l3x', 'arbitrum')
 export const l3x: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1718370384), // 2024-06-14T13:06:24Z
   discovery,
-  additionalBadges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
+  additionalBadges: [BADGES.DA.DAC, BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

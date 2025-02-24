@@ -29,6 +29,7 @@ import {
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
   KnowledgeNugget,
@@ -60,7 +61,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId } from '../../badges'
+import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -75,7 +76,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
-  badge: Badge.DA.Celestia,
+  badge: BADGES.DA.Celestia,
 }
 
 export const EIGENDA_DA_PROVIDER: DAProvider = {
@@ -83,7 +84,7 @@ export const EIGENDA_DA_PROVIDER: DAProvider = {
   riskView: RISK_VIEW.DATA_EIGENDA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.EIGENDA_OFF_CHAIN(false),
   bridge: DA_BRIDGES.NONE,
-  badge: Badge.DA.EigenDA,
+  badge: BADGES.DA.EigenDA,
 }
 
 export function DACHALLENGES_DA_PROVIDER(
@@ -101,7 +102,7 @@ export function DACHALLENGES_DA_PROVIDER(
       nodeSourceLink,
     ),
     bridge: DA_BRIDGES.NONE_WITH_DA_CHALLENGES,
-    badge: Badge.DA.DAC,
+    badge: BADGES.DA.DAC,
   }
 }
 
@@ -110,7 +111,7 @@ interface DAProvider {
   riskView: TableReadyValue
   technology: ProjectTechnologyChoice
   bridge: TableReadyValue
-  badge: BadgeId
+  badge: Badge
 }
 
 interface OpStackConfigCommon {
@@ -153,7 +154,7 @@ interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   riskView?: ScalingProjectRiskView
@@ -225,16 +226,16 @@ function opStackCommon(
       isSequencerSendingBlobTx: boolean
     }>('SystemConfig', 'opStackDA').isSequencerSendingBlobTx
 
-  let daBadge: BadgeId | undefined = daProvider?.badge
+  let daBadge: Badge | undefined = daProvider?.badge
   if (postsToEthereum) {
-    daBadge = usesBlobs ? Badge.DA.EthereumBlobs : Badge.DA.EthereumCalldata
+    daBadge = usesBlobs ? BADGES.DA.EthereumBlobs : BADGES.DA.EthereumCalldata
   }
 
   assert(daBadge !== undefined, 'DA badge must be defined')
 
   const automaticBadges = templateVars.usingAltVm
-    ? [Badge.Stack.OPStack, daBadge]
-    : [Badge.Stack.OPStack, Badge.VM.EVM, daBadge]
+    ? [BADGES.Stack.OPStack, daBadge]
+    : [BADGES.Stack.OPStack, BADGES.VM.EVM, daBadge]
 
   const nativeDA = incomingNativeDA ?? {
     layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
@@ -257,7 +258,7 @@ function opStackCommon(
   const partOfSuperchain = isPartOfSuperchain(templateVars)
   if (partOfSuperchain) {
     architectureImage.push('superchain')
-    automaticBadges.push(Badge.Infra.Superchain)
+    automaticBadges.push(BADGES.Infra.Superchain)
   }
   if (fraudProofType !== 'None') {
     architectureImage.push('opfp')

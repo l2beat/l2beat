@@ -1,4 +1,47 @@
-Generated with discovered.json: 0x019e4a78af542bbee21e02bab8642892708bb330
+Generated with discovered.json: 0x8cb093dd270747aeddf39826bc0b3b5f771e86e4
+
+# Diff at Fri, 21 Feb 2025 13:25:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 748108
+- current block number: 752779
+
+## Description
+
+Removed unnecessary NFT tracking from disco.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 748108 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c)
+    +++ description: None
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      values.ownerOf:
+-        ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x25EA8c663BA8cCd79284B8c4001e7A245071885c"]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}
+      receivedPermissions.0.from:
+-        "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+    }
+```
+
+Generated with discovered.json: 0xd31287d41663554657fb31f66d2acb6db967628f
 
 # Diff at Wed, 19 Feb 2025 13:59:28 GMT:
 

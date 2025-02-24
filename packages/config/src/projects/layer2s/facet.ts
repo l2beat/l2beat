@@ -4,7 +4,7 @@ import { FORCE_TRANSACTIONS, OPERATOR, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('facet')
@@ -16,7 +16,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 export const facet: Layer2 = opStackL2({
   addedAt: new UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
-  additionalBadges: [Badge.Other.BasedSequencing],
+  additionalBadges: [BADGES.Other.BasedSequencing],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Facet',

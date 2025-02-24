@@ -19,7 +19,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -89,7 +89,7 @@ export const zklinknova: Layer3 = {
   capability: 'universal',
   addedAt: new UnixTime(1705330478), // 2024-01-15T14:54:38Z
   hostChain: ProjectId('linea'),
-  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
+  badges: [BADGES.VM.EVM, BADGES.DA.DAC, BADGES.L3ParentChain.Linea],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'zkLink Nova',
