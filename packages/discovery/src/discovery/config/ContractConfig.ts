@@ -1,7 +1,7 @@
 import type { DiscoveryCustomType } from '@l2beat/discovery-types'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { DiscoveryContract } from './RawDiscoveryConfig'
+import { type DiscoveryCategory, DiscoveryContract } from './RawDiscoveryConfig'
 
 export type ContractOverrides = DiscoveryContract & {
   name?: string
@@ -15,10 +15,12 @@ export type ContractConfig = ContractOverrides & {
 export function createContractConfig(
   overrides: ContractOverrides,
   configTypes: Record<string, DiscoveryCustomType>,
+  categories: Record<string, DiscoveryCategory>,
 ): ContractConfig {
   const config = {
     ...overrides,
     types: merge(configTypes, overrides.types),
+    categories: merge(categories, overrides.categories),
     pushValues: function (values: DiscoveryContract) {
       const newState = {
         name: this.name,

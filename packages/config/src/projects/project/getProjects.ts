@@ -1,15 +1,25 @@
+import {
+  SHARP_SUBMISSION_ADDRESS,
+  SHARP_SUBMISSION_SELECTOR,
+  type TrackedTxConfigEntry,
+} from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PROJECT_COUNTDOWNS } from '../../common'
+import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
+import { tokenList } from '../../tokens/tokens'
 import type {
   BaseProject,
   Bridge,
   Layer2,
+  Layer2TxConfig,
   Layer3,
   ProjectCostsInfo,
+  ProjectEscrow,
   ProjectLivenessInfo,
+  ProjectTvlConfig,
+  ProjectTvlEscrow,
 } from '../../types'
 import { isVerified } from '../../verification/isVerified'
-import { badges } from '../badges'
+import { badgesCompareFn } from '../badges'
 import { bridges } from '../bridges'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
@@ -72,7 +82,10 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       daLayer: p.dataAvailability?.layer.value ?? 'Unknown',
       stage: getStage(p.stage),
       purposes: p.display.purposes,
-      badges: p.badges?.map((id) => ({ ...badges[id], id })),
+      badges:
+        p.badges && p.badges.length > 0
+          ? p.badges.sort(badgesCompareFn)
+          : undefined,
     },
     scalingStage: p.stage,
     scalingRisks: {
@@ -85,9 +98,16 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
+    tvlConfig: getTvlConfig(p),
+    transactionApiConfig: p.config.transactionApi,
     livenessInfo: getLivenessInfo(p),
+    livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
     ...getFinality(p),
+    trackedTxsConfig: toBackendTrackedTxsConfig(
+      p.id,
+      p.type === 'layer2' ? p.config.trackedTxs : undefined,
+    ),
     proofVerification: p.stateValidation?.proofVerification,
     chainConfig: p.chainConfig,
     milestones: p.milestones,
@@ -168,11 +188,110 @@ function bridgeToProject(p: Bridge): BaseProject {
       associatedTokens: p.config.associatedTokens ?? [],
       warnings: [],
     },
+    tvlConfig: getTvlConfig(p),
     chainConfig: p.chainConfig,
     milestones: p.milestones,
     // tags
     isBridge: true,
     isArchived: p.isArchived ? true : undefined,
     isUpcoming: p.isUpcoming ? true : undefined,
+  }
+}
+
+function toBackendTrackedTxsConfig(
+  projectId: ProjectId,
+  configs: Layer2TxConfig[] | undefined,
+): Omit<TrackedTxConfigEntry, 'id'>[] | undefined {
+  if (configs === undefined) return
+
+  return configs.flatMap((config) =>
+    config.uses.map((use) => {
+      const base = {
+        projectId,
+        sinceTimestamp: config.query.sinceTimestamp,
+        untilTimestamp: config.query.untilTimestamp,
+        type: use.type,
+        subtype: use.subtype,
+        costMultiplier:
+          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
+      }
+
+      switch (config.query.formula) {
+        case 'functionCall': {
+          return {
+            ...base,
+            params: {
+              formula: 'functionCall',
+              address: config.query.address,
+              selector: config.query.selector,
+            },
+          }
+        }
+        case 'transfer': {
+          return {
+            ...base,
+            params: {
+              formula: 'transfer',
+              from: config.query.from,
+              to: config.query.to,
+            },
+          }
+        }
+        case 'sharpSubmission': {
+          return {
+            ...base,
+            params: {
+              formula: 'sharpSubmission',
+              address: SHARP_SUBMISSION_ADDRESS,
+              selector: SHARP_SUBMISSION_SELECTOR,
+              programHashes: config.query.programHashes,
+            },
+          }
+        }
+        case 'sharedBridge': {
+          return {
+            ...base,
+            params: {
+              formula: 'sharedBridge',
+              address: config.query.address,
+              signature: config.query.functionSignature,
+              selector: config.query.selector,
+              chainId: config.query.chainId,
+            },
+          }
+        }
+      }
+    }),
+  )
+}
+
+function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
+  return {
+    escrows: project.config.escrows.map(toProjectEscrow),
+    associatedTokens: project.config.associatedTokens ?? [],
+  }
+}
+
+function toProjectEscrow(escrow: ProjectEscrow): ProjectTvlEscrow {
+  return {
+    address: escrow.address,
+    sinceTimestamp: escrow.sinceTimestamp,
+    chain: escrow.chain,
+    includeInTotal: escrow.includeInTotal,
+    source: escrow.source,
+    bridgedUsing: escrow.bridgedUsing,
+    sharedEscrow: escrow.sharedEscrow,
+    tokens: tokenList
+      .filter(
+        (token) =>
+          token.chainId === escrow.chainId &&
+          (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
+          !escrow.excludedTokens?.includes(token.symbol) &&
+          !token.untilTimestamp?.lt(escrow.sinceTimestamp),
+      )
+      .map((token) => ({
+        ...token,
+        isPreminted: !!escrow.premintedTokens?.includes(token.symbol),
+      })),
   }
 }

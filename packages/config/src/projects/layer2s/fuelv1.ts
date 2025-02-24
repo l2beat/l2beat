@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('fuelv1')
@@ -24,7 +24,7 @@ export const fuelv1: Layer2 = {
   id: ProjectId('fuelv1'),
   capability: 'appchain',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Fuel v1',
     slug: 'fuelv1',

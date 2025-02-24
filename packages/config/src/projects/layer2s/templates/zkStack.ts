@@ -23,6 +23,7 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   KnowledgeNugget,
   Layer2,
@@ -45,7 +46,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -95,11 +96,16 @@ export interface ZkStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -115,6 +121,8 @@ export interface ZkStackConfigCommon {
     /* IMPORTANT: Block number on Avail Network */
     sinceBlock: number
   }
+  /** Configure to enable custom DA tracking e.g. project that switched DA */
+  nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export type Upgradeability = {
@@ -126,8 +134,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge missing',
     )
   }
@@ -245,10 +252,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
-        Badge.Stack.ZKStack,
-        Badge.Infra.ElasticChain,
-        Badge.VM.EVM,
-        Badge.DA.EthereumBlobs,
+        BADGES.Stack.ZKStack,
+        BADGES.Infra.ElasticChain,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumBlobs,
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -284,7 +291,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -593,7 +603,11 @@ function technologyDA(DA: DAProvider | undefined): ProjectTechnologyChoice {
 
 function getDaTracking(
   templateVars: ZkStackConfigCommon,
-): ProjectDaTrackingConfig | undefined {
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
   const validatorTimelock =
     templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
@@ -606,28 +620,34 @@ function getDaTracking(
   const inboxDeploymentBlockNumber = 0
 
   return templateVars.usesBlobs
-    ? {
-        type: 'ethereum',
-        daLayer: ProjectId('ethereum'),
-        sinceBlock: inboxDeploymentBlockNumber,
-        inbox: validatorTimelock,
-        sequencers: validatorsVTL,
-      }
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: validatorTimelock,
+          sequencers: validatorsVTL,
+        },
+      ]
     : templateVars.celestiaDa
-      ? {
-          type: 'celestia',
-          daLayer: ProjectId('celestia'),
-          // TODO: update to value from discovery
-          sinceBlock: templateVars.celestiaDa.sinceBlock,
-          namespace: templateVars.celestiaDa.namespace,
-        }
-      : templateVars.availDa
-        ? {
-            type: 'avail',
-            daLayer: ProjectId('avail'),
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
             // TODO: update to value from discovery
-            sinceBlock: templateVars.availDa.sinceBlock,
-            appId: templateVars.availDa.appId,
-          }
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
         : undefined
 }

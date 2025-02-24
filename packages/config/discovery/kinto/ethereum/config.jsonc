@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "kinto",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB", // Bridge
     "0x0f1b7bd7762662B23486320AA91F30312184f70C", // Bridger
@@ -16,7 +17,7 @@
   },
   "overrides": {
     "Bridger": {
-      "description": "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
+      "description": "Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default.",
       "ignoreRelatives": [
         "DAI",
         "ETH",

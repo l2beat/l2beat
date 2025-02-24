@@ -1,10 +1,12 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   ChainConfig,
+  Layer2FinalityConfig,
   OnchainVerifier,
+  Project,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
+import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
   ChainId,
@@ -12,17 +14,14 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ChainConverter } from '@l2beat/shared-pure'
 import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
-import type { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
   readonly isReadonly: boolean
-  readonly projects: BackendProject[]
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
@@ -90,14 +89,20 @@ export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
-  readonly projects: BackendProject[]
-  readonly chainConverter: ChainConverter
+  readonly projects: Project<'tvlConfig', 'chainConfig'>[]
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly tvlCleanerEnabled: boolean
 }
 
+export interface TrackedTxProject {
+  readonly id: ProjectId
+  readonly isArchived: boolean
+  readonly configurations: TrackedTxConfigEntry[]
+}
+
 export interface TrackedTxsConfig {
+  readonly projects: TrackedTxProject[]
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string
@@ -115,7 +120,13 @@ export interface TrackedTxsConfig {
 }
 
 export interface FinalityConfig {
-  readonly configurations: FinalityProjectConfig[]
+  readonly configurations: FinalityConfigProject[]
+}
+
+export type FinalityConfigProject = Layer2FinalityConfig & {
+  projectId: ProjectId
+  url?: string
+  callsPerMinute?: number
 }
 
 export interface BlockscoutChainConfig {
@@ -152,17 +163,12 @@ export interface HealthConfig {
 }
 
 export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexCallsPerMinute: number
-  readonly allowedProjectIds?: string[]
-  readonly projects: {
-    id: ProjectId
-    config: ActivityTransactionConfig
-    blockExplorerConfig:
-      | EtherscanChainConfig
-      | BlockscoutChainConfig
-      | undefined
-  }[]
+  readonly projects: ActivityConfigProject[]
+}
+
+export interface ActivityConfigProject {
+  id: ProjectId
+  config: ActivityTransactionConfig
 }
 
 export interface MetricsAuthConfig {
@@ -176,6 +182,7 @@ export interface UpdateMonitorConfig {
   readonly cacheUri: string
   readonly chains: DiscoveryChainConfig[]
   readonly discord: DiscordConfig | false
+  readonly updateMessagesRetentionPeriodDays: number
 }
 
 export interface VerifiersConfig {

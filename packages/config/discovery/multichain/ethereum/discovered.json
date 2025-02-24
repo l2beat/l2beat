@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0xa4b175788cdf6a4e93d17efb1e40d9323bd3151a51d4f4a66a868aa0624432e9",
+  "configHash": "0x5f9b2b4cde011899792bcddddb7bc2d3968a6cd0087ec69d2ba92abfe5a38ac8",
   "contracts": [
     {
       "name": "AnyswapV4Router",

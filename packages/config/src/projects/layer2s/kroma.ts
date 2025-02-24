@@ -23,7 +23,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -54,10 +54,10 @@ export const kroma: Layer2 = {
   addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
   capability: 'universal',
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -150,13 +150,15 @@ export const kroma: Layer2 = {
       startBlock: 1,
       adjustCount: { type: 'SubtractOne' },
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xfF00000000000000000000000000000000000255',
-      sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xfF00000000000000000000000000000000000255',
+        sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
+      },
+    ],
     trackedTxs: [
       {
         uses: [
@@ -196,7 +198,7 @@ export const kroma: Layer2 = {
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1714032407),
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1693880389),
+      genesisTimestamp: new UnixTime(1693880387),
       lag: 0,
       stateUpdate: 'disabled',
     },

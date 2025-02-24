@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x546de616c7d85f88b8c2c8865fa5a08877cfd70f
+
+# Diff at Fri, 21 Feb 2025 09:00:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21872714
+- current block number: 21872714
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872714 (main branch discovery), not current.
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xeb9bf100225c214Efc3E7C651ebbaDcF85177607) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+Generated with discovered.json: 0x1b7ca641ef17503af5c39100ef0b004c8bf955fa
+
+# Diff at Tue, 18 Feb 2025 10:39:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829673
+- current block number: 21872714
+
+## Description
+
+Soneium gas limit halved (checked on l2 block explorer since some op stacks have weird custom gas config).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        60000000
++        30000000
+    }
+```
+
 Generated with discovered.json: 0xb822487d0854a6da7090c4fd28a46b32d8a59a58
 
 # Diff at Wed, 12 Feb 2025 10:00:33 GMT:

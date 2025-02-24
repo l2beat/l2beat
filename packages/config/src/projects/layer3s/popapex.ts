@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -11,9 +11,9 @@ const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 export const popapex: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1710836229), // 2024-03-19T08:17:09Z
   additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Conduit,
+    BADGES.DA.DAC,
+    BADGES.L3ParentChain.Arbitrum,
+    BADGES.RaaS.Conduit,
   ],
   additionalPurposes: ['Gaming'],
   discovery,
@@ -39,7 +39,7 @@ export const popapex: Layer3 = orbitStackL3({
       explorers: ['https://explorer.apex.proofofplay.com'],
       repositories: ['https://github.com/proofofplay'],
       socialMedia: [
-        'https://twitter.com/ProofOfPlay/',
+        'https://twitter.com/ProofOfPlay',
         'https://discord.com/invite/piratenation',
         'https://piratenation.medium.com/',
       ],

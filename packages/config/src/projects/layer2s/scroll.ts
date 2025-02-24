@@ -23,7 +23,7 @@ import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -63,7 +63,7 @@ export const scroll: Layer2 = {
   id: ProjectId('scroll'),
   capability: 'universal',
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
     slug: 'scroll',
@@ -212,16 +212,18 @@ export const scroll: Layer2 = {
       defaultCallsPerMinute: 120,
       startBlock: 1,
     },
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
-      sequencers: [
-        '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
-        '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
-      ],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+        sequencers: [
+          '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
+          '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
+        ],
+      },
+    ],
     trackedTxs: [
       {
         uses: [

@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 21845212,
-  "configHash": "0x4439bec25117875094944dfd82567793264d0beb675c27704afd44909d8c7b78",
+  "blockNumber": 21872538,
+  "configHash": "0xd62dcaf4ada50039ae795f558c7bdb77c28c29307666ef4a96e034c4639faad8",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -14,7 +14,6 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1734387299,
       "values": {
@@ -276,7 +275,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 81,
+        "nonce": 82,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -313,7 +312,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -517,7 +515,7 @@
         ],
         "$upgradeCount": 2,
         "additionalProposers": ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"],
-        "aggregationVkey": "0x008deea30a17c13a2fa7200fa0609b668b1673a3401a3eb7121c2a4692409736",
+        "aggregationVkey": "0x004f113a89b4e8d162197047643c9d710b42a30e7da7052703855d5c4716a81d",
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -525,15 +523,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 512580,
-        "latestOutputIndex": 164,
-        "nextBlockNumber": 516900,
-        "nextOutputIndex": 165,
+        "latestBlockNumber": 547140,
+        "latestOutputIndex": 172,
+        "nextBlockNumber": 551460,
+        "nextOutputIndex": 173,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x72f2aa2345210ed43468b3084102ca212311b456482025bd0fed05294d3d6138",
+        "rangeVkeyCommitment": "0x1dfce47807a22e50513d7a9a130af9de3d1844625b54c4815e46ca5437eb9ba9",
         "rollupConfigHash": "0xb687221eb250467cf026eaaeef39f33ca2af3ebea6c8eaabc7c7a2634d111ccd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
@@ -721,7 +719,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -1339,9 +1336,9 @@
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
-    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
+    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
+    "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
     "opstack/SuperchainConfigFake": "0x50de70c50a5bcc1b9ae8f3e9e9742294a6c3dd75674f92afcb34101a6aeffb15",
     "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15",

@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 15810734,
-  "configHash": "0x279bc1637f9774e24800f528dd221b4a9e748b88ebb3d7c4cec5ca583604751c",
+  "configHash": "0x81f1601645b75b4c007837555be23c9542dcdf599faf2c28057a69ce46b40fa1",
   "contracts": [
     {
       "name": "TokenMessaging",

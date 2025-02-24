@@ -10,7 +10,6 @@ import { getDiscoveryConfigEntries } from './getDiscoveryConfigEntries'
 
 const ADDRESS_A = EthereumAddress.random()
 const ADDRESS_B = EthereumAddress.random()
-const ADDRESS_C = EthereumAddress.random()
 
 const OVERRIDE_A = {
   ignoreInWatchMode: ['b', 'a'],
@@ -20,29 +19,21 @@ const OVERRIDE_A = {
 const OVERRIDE_B = {
   ignoreDiscovery: true,
 }
-const CONFIG = new DiscoveryConfig(
-  {
-    name: 'a',
-    chain: 'ethereum',
-    initialAddresses: [ADDRESS_A],
-    maxAddresses: 1,
-    maxDepth: 1,
-    names: {
-      [ADDRESS_A.toString()]: 'A',
-      [ADDRESS_B.toString()]: 'B',
-    },
-    overrides: {
-      A: DiscoveryContract.parse(OVERRIDE_A),
-      [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
-    },
+const CONFIG = new DiscoveryConfig({
+  name: 'a',
+  chain: 'ethereum',
+  initialAddresses: [ADDRESS_A],
+  maxAddresses: 1,
+  maxDepth: 1,
+  names: {
+    [ADDRESS_A.toString()]: 'A',
+    [ADDRESS_B.toString()]: 'B',
   },
-  {
-    all: {
-      [ADDRESS_B.toString()]: 'B Common Name',
-      [ADDRESS_C.toString()]: 'C Common Name',
-    },
+  overrides: {
+    A: DiscoveryContract.parse(OVERRIDE_A),
+    [ADDRESS_B.toString()]: DiscoveryContract.parse(OVERRIDE_B),
   },
-)
+})
 
 describe(DiscoveryConfig.name, () => {
   describe('overrides', () => {
@@ -50,11 +41,6 @@ describe(DiscoveryConfig.name, () => {
       const result = CONFIG.for(ADDRESS_B)
       expect(result.name).toEqual('B')
       expect(result.address).toEqual(ADDRESS_B)
-    })
-    it('gets name from commonAddressNames if exists and not already named', () => {
-      const result = CONFIG.for(ADDRESS_C)
-      expect(result.name).toEqual('C Common Name')
-      expect(result.address).toEqual(ADDRESS_C)
     })
     it('gets override for given name', () => {
       const result = CONFIG.for('A')

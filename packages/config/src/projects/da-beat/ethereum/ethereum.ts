@@ -128,7 +128,8 @@ This method allows ZK rollups to prove that the data used in their validity proo
     },
     throughput: [
       {
-        size: 750, // 0.75 MB
+        size: 786432, // 0.75 MiB
+        target: 393216, // 0.375 MiB
         frequency: 12, // 12 seconds
         sinceTimestamp: 1710288000, // 2024-03-13
       },
@@ -172,6 +173,11 @@ This method allows ZK rollups to prove that the data used in their validity proo
           block, discarding blocks with unavailable data. The rollup state
           validating bridge has access to all the data, as it is posted on chain.`,
     },
+  },
+  transactionApiConfig: {
+    type: 'rpc',
+    defaultUrl: 'https://eth-mainnet.alchemyapi.io/v2/demo',
+    startBlock: 8929324,
   },
   chainConfig: {
     name: 'ethereum',

@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "celo",
   "name": "opticsV2",
+  "import": ["../../globalConfig.jsonc"],
   "initialAddresses": ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"],
   "names": {
     "0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE": "BeaconProxy",

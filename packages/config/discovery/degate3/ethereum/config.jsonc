@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "degate3",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x54D7aE423Edb07282645e740C046B9373970a168"],
   "names": {
     "0x9C07A72177c5A05410cA338823e790876E79D73B": "ExchangeV3",

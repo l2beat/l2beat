@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x7cf4ad87e7b28461f5c575a0f2c50a5aaec4c134
+
+# Diff at Fri, 21 Feb 2025 08:59:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21880945
+- current block number: 21880945
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21880945 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      categories:
+-        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x54d9309ea58e6ec90411c849fbe182b737495f41
+
+# Diff at Wed, 19 Feb 2025 14:15:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@90e939c93581cd5b2e00d23bb3ba08dde38932e8 block: 21844112
+- current block number: 21880945
+
+## Description
+
+BaseMultisig2 signer changes.
+
+## Watched changes
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.13:
++        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.$members.12:
+-        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
++        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
+      values.$members.11:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
+      values.$members.10:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+      values.$members.9:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.8:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
+      values.$members.7:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.$members.6:
+-        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
++        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+      values.$members.5:
+-        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
++        "0x26c72586FB396325F58718152FEFA94E93Cf177b"
+      values.$members.4:
+-        "0x26c72586FB396325F58718152FEFA94E93Cf177b"
++        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
+      values.$members.3:
+-        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
++        "0xe32868ec7762650DdE723e945D638A05900974F4"
+      values.$members.2:
+-        "0xe32868ec7762650DdE723e945D638A05900974F4"
++        "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E"
+      values.$members.1:
+-        "0x7Ad8E6B7B1f6D66F49559f20053Cef8a7b6c488E"
++        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
+      values.$members.0:
+-        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
++        "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
+      values.multisigThreshold:
+-        "3 of 13 (23%)"
++        "3 of 14 (21%)"
+    }
+```
+
 Generated with discovered.json: 0xbda530e21d16477ac36c4d9f00ff83fde0d09985
 
 # Diff at Fri, 14 Feb 2025 10:30:28 GMT:

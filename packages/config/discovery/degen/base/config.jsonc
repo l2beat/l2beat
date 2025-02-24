@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "base",
   "name": "degen",
+  "import": ["../../baseConfig.jsonc"],
   "initialAddresses": [
     "0xD34F3a11F10DB069173b32d84F02eDA578709143", // rollup proxy
     "0x43019F8BE1F192587883b67dEA2994999f5a2de2", // main bridge (stargate/layerzero?)

@@ -21,7 +21,7 @@ import { ESCROW } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import {
   generateDiscoveryDrivenContracts,
@@ -55,7 +55,7 @@ export const morph: Layer2 = {
   id: ProjectId('morph'),
   capability: 'universal',
   addedAt: new UnixTime(1702295992), // 2023-12-11T11:59:52Z
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Morph',
@@ -143,21 +143,23 @@ export const morph: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    daTracking: {
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
-      sequencers: [
-        '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',
-        '0x61F2945d4bc9E40B66a6376d1094a50438f613e2',
-        '0x6aB0E960911b50f6d14f249782ac12EC3E7584A0',
-        '0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65',
-        '0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7',
-        '0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80',
-        '0xC412B4e6399F694CfF21D038d225373Fd6596811',
-      ],
-    },
+    daTracking: [
+      {
+        type: 'ethereum',
+        daLayer: ProjectId('ethereum'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        inbox: '0x759894Ced0e6af42c26668076Ffa84d02E3CeF60',
+        sequencers: [
+          '0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796',
+          '0x61F2945d4bc9E40B66a6376d1094a50438f613e2',
+          '0x6aB0E960911b50f6d14f249782ac12EC3E7584A0',
+          '0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65',
+          '0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7',
+          '0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80',
+          '0xC412B4e6399F694CfF21D038d225373Fd6596811',
+        ],
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -177,6 +179,21 @@ export const morph: Layer2 = {
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_NO_MECHANISM(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  },
+  chainConfig: {
+    name: 'morph',
+    chainId: 2818,
+    // explorerUrl: 'https://explorer.morphl2.io/', // needed?
+    coingeckoPlatform: 'morph-l2',
+    minTimestampForTvl: new UnixTime(1729490400), // morph block 0
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 3654913,
+        version: '3',
+      },
+    ],
   },
   technology: {
     newCryptography: {

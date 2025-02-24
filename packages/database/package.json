@@ -15,8 +15,7 @@
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
     "test": "./scripts/run_tests.sh",
-    "typecheck": "tsc --noEmit",
-    "restore-tvl": "cd ./scripts/tvl-restore && ./tvl-restore.sh && cd -"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",

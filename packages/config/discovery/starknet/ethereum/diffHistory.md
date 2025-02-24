@@ -1,3 +1,170 @@
+Generated with discovered.json: 0xb00adc775b67339f61d62d4f964757b0246fe6ab
+
+# Diff at Fri, 21 Feb 2025 13:28:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21881526
+- current block number: 21895010
+
+## Description
+
+Governance updates:
+- all starknet bridge escrows including ETH are upgradable by the 2/4 StarkgateBridgeMultisig
+- sharp is still governed by a 2/4 MS
+- SC is single governor and Starknet proxy admin
+- EOA + SC minority are current operators
+- SC members are not public
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract StarknetAdminMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarknetOpsMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd)
+    +++ description: None
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      issuedPermissions.1:
+-        {"permission":"upgrade","to":"0x83C0A700114101D1283D1405E2c8f21D3F03e988","via":[]}
+      values.$admin:
+-        ["0x83C0A700114101D1283D1405E2c8f21D3F03e988","0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"]
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.governors.0:
+-        "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd"
++        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ .../GnosisSafe.sol => /dev/null                    | 953 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  35 -
+ 4 files changed, 1976 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21881526 (main branch discovery), not current.
+
+```diff
+    contract StarknetSCMinorityMultisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      name:
+-        "StarknetOperatorMultisig"
++        "StarknetSCMinorityMultisig"
+    }
+```
+
+Generated with discovered.json: 0x3a5fa6a00cf12702beeb5b54ca836c421ea300b7
+
+# Diff at Wed, 19 Feb 2025 16:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@db146cf0a2ae2ee66e75c589f22ad2e266fe95a9 block: 21872746
+- current block number: 21881526
+
+## Description
+
+give SECURITY_AGENT permission (can limit withdrawals) to the StarkgateSecurityAgentMultisig in some bridges.
+
+## Watched changes
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: None
+      values.accessControl.SECURITY_AGENT.members.0:
++        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872746 (main branch discovery), not current.
+
+```diff
+    contract StarkgateSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      name:
+-        "StarkgateETHSecurityAgentMultisig"
++        "StarkgateSecurityAgentMultisig"
+    }
+```
+
+Generated with discovered.json: 0x29be27d9add222db7f9524fc4f59c2a719f8b786
+
+# Diff at Tue, 18 Feb 2025 10:46:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aff7e43e1c06f559de916763e04088cc23b3e08e block: 21829283
+- current block number: 21872746
+
+## Description
+
+StarkgateETHSecurityAgentMultisig threshold = 1.
+
+## Watched changes
+
+```diff
+    contract StarkgateETHSecurityAgentMultisig (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      values.$threshold:
+-        2
++        1
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x05d59101790c6bc4d07b88f4a179106d1bc46dab
 
 # Diff at Wed, 12 Feb 2025 08:41:35 GMT:

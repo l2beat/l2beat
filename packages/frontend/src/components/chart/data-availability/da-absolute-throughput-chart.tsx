@@ -1,82 +1,105 @@
 'use client'
 
 import { assert } from '@l2beat/shared-pure'
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts'
+import { useMemo } from 'react'
+import { Area, AreaChart } from 'recharts'
 import type { TooltipProps } from 'recharts'
 
-import type { ChartConfig } from '~/components/core/chart/chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/chart'
-import { getXAxisProps } from '~/components/core/chart/get-x-axis-props'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { EmeraldFillGradientDef } from '~/components/core/chart/defs/emerald-gradient-def'
+import {
+  EthereumFillGradientDef,
+  EthereumStrokeGradientDef,
+} from '~/components/core/chart/defs/ethereum-gradient-def'
+import {
+  PinkFillGradientDef,
+  PinkStrokeGradientDef,
+} from '~/components/core/chart/defs/pink-gradient-def'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
-
-interface DataPoint {
-  timestamp: number
-  ethereum: number
-  celestia: number
-  avail: number
-}
+import { getDaDataParams } from './get-da-data-params'
+import { getDaChartMeta } from './meta'
 
 interface Props {
-  data: DataPoint[] | undefined
+  data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
-  chartConfig: ChartConfig
 }
-export function DaAbsoluteThroughputChart({
-  data,
-  isLoading,
-  chartConfig,
-}: Props) {
+
+export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
+  const chartMeta = getDaChartMeta({ shape: 'line' })
+  const { denominator, unit } = getDaDataParams(data)
+  const chartData = useMemo(() => {
+    return data?.map(([timestamp, ethereum, celestia, avail]) => {
+      return {
+        timestamp,
+        ethereum: ethereum / denominator,
+        celestia: celestia / denominator,
+        avail: avail / denominator,
+      }
+    })
+  }, [data, denominator])
+
   return (
-    <ChartContainer config={chartConfig} className="mb-2" isLoading={isLoading}>
-      <LineChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartTooltip content={<CustomTooltip />} />
+    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+      <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <defs>
+          <EthereumFillGradientDef id="ethereum-fill" />
+          <EthereumStrokeGradientDef id="ethereum-stroke" />
+          <PinkFillGradientDef id="pink-fill" />
+          <PinkStrokeGradientDef id="pink-stroke" />
+          <EmeraldFillGradientDef id="emerald-fill" />
+        </defs>
         <ChartLegend content={<ChartLegendContent />} />
-        <Line
+        <Area
           dataKey="ethereum"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-ethereum)"
+          fill="url(#ethereum-fill)"
+          fillOpacity={1}
+          stroke="url(#ethereum-stroke)"
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <Line
+        <Area
           dataKey="celestia"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-celestia)"
+          fill="url(#pink-fill)"
+          fillOpacity={1}
+          stroke="url(#pink-stroke)"
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <Line
+        <Area
           dataKey="avail"
-          type="natural"
-          isAnimationActive={false}
-          stroke="var(--color-avail)"
+          fill="url(#emerald-fill)"
+          fillOpacity={1}
+          stroke={chartMeta.avail.color}
           strokeWidth={2}
+          isAnimationActive={false}
           dot={false}
         />
-        <CartesianGrid vertical={false} horizontal={true} />
-        <XAxis {...getXAxisProps(data)} />
-        <YAxis
-          tickLine={false}
-          axisLine={false}
-          mirror
-          tickCount={3}
-          tick={{
-            width: 100,
-            dy: -10,
-          }}
-          tickFormatter={formatBytes}
-        />
-      </LineChart>
+        {getCommonChartComponents({
+          data: chartData,
+          isLoading,
+          yAxis: {
+            unit: ` ${unit}`,
+            tickCount: 3,
+            tick: {
+              width: 100,
+            },
+          },
+        })}
+        <ChartTooltip content={<CustomTooltip unit={unit} />} />
+      </AreaChart>
     </ChartContainer>
   )
 }
@@ -85,52 +108,40 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
-  const { config } = useChart()
+  unit,
+}: TooltipProps<number, string> & { unit: string }) {
+  const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
-    <div className={tooltipContentVariants()}>
-      <div className="text-secondary">{formatTimestamp(label)}</div>
+    <ChartTooltipWrapper>
+      <div className="text-secondary">
+        {formatTimestamp(label, { longMonthName: true })}
+      </div>
       <HorizontalSeparator className="my-1" />
-      <div className="grid">
+      <div>
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
-
           return (
             <div
               key={index}
               className="flex items-center justify-between gap-x-6"
             >
               <div className="flex items-center gap-1">
-                <div
-                  className="size-3 shrink-0 rounded"
-                  style={{ backgroundColor: entry.color }}
+                <ChartDataIndicator
+                  backgroundColor={configEntry.color}
+                  type={configEntry.indicatorType}
                 />
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {formatBytes(entry.value ?? 0)}
+                {entry.value?.toFixed(2)} {unit}
               </span>
             </div>
           )
         })}
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
-}
-
-function formatBytes(bytes: number) {
-  if (bytes < 1024) {
-    return `${bytes} B`
-  }
-  if (bytes < 1024 * 1024) {
-    return `${(bytes / 1024).toFixed(2)} KB`
-  }
-  if (bytes < 1024 * 1024 * 1024) {
-    return `${(bytes / 1024 / 1024).toFixed(2)} MB`
-  }
-
-  return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`
 }

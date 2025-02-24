@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0xb953f14205152b48d5e7a496fedf1fa111919495ffc3c9d1aa141bbbd45bd33f",
+  "configHash": "0x3136e37bc1c0bc16bf1d86390c99799c5109c6d16e37b2b95eaf63b1028d4b04",
   "contracts": [
     {
       "name": "ZKProofVerifier",
@@ -2645,8 +2645,8 @@
     "global/Timelock": "0xe09ef3053ce20980b4ff0f3bb1bf2a3add4269cfcd5921748fe06a7f6a4e9db1",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
+    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
     "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15",
     "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151"
   }

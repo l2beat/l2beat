@@ -45,6 +45,7 @@ import { pmon } from './pmon'
 import { popapex } from './popapex'
 import { popboss } from './popboss'
 import { rari } from './rari'
+import { rivalz } from './rivalz'
 import { sanko } from './sanko'
 import { skynet } from './skynet'
 import { songprotocol } from './songprotocol'
@@ -53,7 +54,6 @@ import { stack } from './stack'
 import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
-import { teva } from './teva'
 import { ungaii } from './ungaii'
 import { unite } from './unite'
 import { winr } from './winr'
@@ -93,8 +93,8 @@ export const layer3s: Layer3[] = [
   hyperliquid,
   hook,
   rari,
+  rivalz,
   zklinknova,
-  teva,
   ungaii,
   xai,
   onchain,

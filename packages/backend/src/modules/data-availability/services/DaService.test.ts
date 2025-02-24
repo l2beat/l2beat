@@ -2,73 +2,11 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { DaTrackingConfig } from '../../../config/Config'
 import { DaService } from './DaService'
 
-const MOCK_ETHEREUM_CONFIGS = [
-  {
-    type: 'baseLayer' as const,
-    daLayer: ProjectId('ethereum'),
-    projectId: ProjectId('ethereum'),
-    sinceBlock: 0,
-  },
-  {
-    type: 'ethereum' as const,
-    daLayer: ProjectId('ethereum'),
-    projectId: ProjectId('project-ethereum-1'),
-    inbox: 'ethereum-1-inbox',
-    sequencers: ['Ethereum-1-seq1', 'ethereum-1-seq1'],
-    sinceBlock: 0,
-  },
-  {
-    type: 'ethereum' as const,
-    daLayer: ProjectId('ethereum'),
-    projectId: ProjectId('project-ethereum-2'),
-    inbox: 'Ethereum-2-inbox',
-    sequencers: [],
-    sinceBlock: 0,
-  },
-]
-
-const MOCK_CELESTIA_CONFIGS = [
-  {
-    type: 'baseLayer' as const,
-    projectId: ProjectId('celestia'),
-    daLayer: ProjectId('celestia'),
-    sinceBlock: 0,
-  },
-  {
-    type: 'celestia' as const,
-    daLayer: ProjectId('celestia'),
-    projectId: ProjectId('project-celestia-1'),
-    namespace: 'celestia-1',
-    sinceBlock: 0,
-  },
-]
-
-const MOCK_AVAIL_CONFIGS = [
-  {
-    type: 'baseLayer' as const,
-    projectId: ProjectId('avail'),
-    daLayer: ProjectId('avail'),
-    sinceBlock: 0,
-  },
-  {
-    type: 'avail' as const,
-    daLayer: ProjectId('avail'),
-    projectId: ProjectId('project-avail-1'),
-    appId: 'avail-1',
-    sinceBlock: 0,
-  },
-]
-
-const MOCK_CONFIGURATIONS: DaTrackingConfig[] = [
-  ...MOCK_ETHEREUM_CONFIGS,
-  ...MOCK_CELESTIA_CONFIGS,
-  ...MOCK_AVAIL_CONFIGS,
-]
-
 describe(DaService.name, () => {
+  const service = new DaService()
+
   describe(DaService.prototype.generateRecords.name, () => {
     it('should match ethereum blobs', async () => {
       const TIME = UnixTime.now()
@@ -114,8 +52,11 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_CONFIGURATIONS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
+      const result = service.generateRecords(
+        mockBlobs,
+        mockRecords,
+        MOCK_ETHEREUM_CONFIGS,
+      )
 
       expect(result).toEqual([
         {
@@ -135,49 +76,6 @@ describe(DaService.name, () => {
           daLayer: 'ethereum',
           timestamp: TIME.toStartOf('day'),
           totalSize: 300n,
-        },
-      ])
-    })
-
-    it('should match avail blobs', async () => {
-      const TIME = UnixTime.now()
-
-      const mockBlobs = [
-        // blob matching avail project-avail-1
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'avail-1',
-          blockTimestamp: TIME,
-          size: BigInt(100),
-        } as AvailBlob,
-        // blob not matching any project
-        {
-          type: 'avail',
-          daLayer: 'avail',
-          appId: 'any',
-          size: BigInt(200),
-          blockTimestamp: TIME,
-        } as AvailBlob,
-      ]
-
-      const mockRecords: DataAvailabilityRecord[] = []
-
-      const service = new DaService(MOCK_CONFIGURATIONS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
-
-      expect(result).toEqual([
-        {
-          projectId: 'avail',
-          daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
-          totalSize: 300n,
-        },
-        {
-          projectId: 'project-avail-1',
-          daLayer: 'avail',
-          timestamp: TIME.toStartOf('day'),
-          totalSize: 100n,
         },
       ])
     })
@@ -206,8 +104,11 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_CONFIGURATIONS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
+      const result = service.generateRecords(
+        mockBlobs,
+        mockRecords,
+        MOCK_CELESTIA_CONFIGS,
+      )
 
       expect(result).toEqual([
         {
@@ -249,8 +150,11 @@ describe(DaService.name, () => {
 
       const mockRecords: DataAvailabilityRecord[] = []
 
-      const service = new DaService(MOCK_CONFIGURATIONS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
+      const result = service.generateRecords(
+        mockBlobs,
+        mockRecords,
+        MOCK_AVAIL_CONFIGS,
+      )
 
       expect(result).toEqual([
         {
@@ -341,8 +245,11 @@ describe(DaService.name, () => {
         },
       ]
 
-      const service = new DaService(MOCK_CONFIGURATIONS)
-      const result = service.generateRecords(mockBlobs, mockRecords)
+      const result = service.generateRecords(
+        mockBlobs,
+        mockRecords,
+        MOCK_ETHEREUM_CONFIGS,
+      )
 
       expect(result).toEqual([
         {
@@ -390,3 +297,60 @@ describe(DaService.name, () => {
     })
   })
 })
+
+const MOCK_ETHEREUM_CONFIGS = [
+  {
+    type: 'baseLayer' as const,
+    daLayer: ProjectId('ethereum'),
+    projectId: ProjectId('ethereum'),
+    sinceBlock: 0,
+  },
+  {
+    type: 'ethereum' as const,
+    daLayer: ProjectId('ethereum'),
+    projectId: ProjectId('project-ethereum-1'),
+    inbox: 'ethereum-1-inbox',
+    sequencers: ['Ethereum-1-seq1', 'ethereum-1-seq1'],
+    sinceBlock: 0,
+  },
+  {
+    type: 'ethereum' as const,
+    daLayer: ProjectId('ethereum'),
+    projectId: ProjectId('project-ethereum-2'),
+    inbox: 'Ethereum-2-inbox',
+    sequencers: [],
+    sinceBlock: 0,
+  },
+]
+
+const MOCK_CELESTIA_CONFIGS = [
+  {
+    type: 'baseLayer' as const,
+    projectId: ProjectId('celestia'),
+    daLayer: ProjectId('celestia'),
+    sinceBlock: 0,
+  },
+  {
+    type: 'celestia' as const,
+    daLayer: ProjectId('celestia'),
+    projectId: ProjectId('project-celestia-1'),
+    namespace: 'celestia-1',
+    sinceBlock: 0,
+  },
+]
+
+const MOCK_AVAIL_CONFIGS = [
+  {
+    type: 'baseLayer' as const,
+    projectId: ProjectId('avail'),
+    daLayer: ProjectId('avail'),
+    sinceBlock: 0,
+  },
+  {
+    type: 'avail' as const,
+    daLayer: ProjectId('avail'),
+    projectId: ProjectId('project-avail-1'),
+    appId: 'avail-1',
+    sinceBlock: 0,
+  },
+]

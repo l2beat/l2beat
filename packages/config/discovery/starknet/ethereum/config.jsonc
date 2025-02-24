@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "starknet",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
@@ -41,11 +42,11 @@
     "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb": "MultiBridge", // this is a multi-token bridge: We currently only track EKUBO in the .ts
     "0x0c5aE94f8939182F2D06097025324D1E537d5B60": "StarkgateManager",
     "0x1268cc171c54F2000402DfF20E93E60DF4c96812": "StarkgateRegistry",
-    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateETHSecurityAgentMultisig",
+    "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5": "StarkgateSecurityAgentMultisig",
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "StarknetAdminMultisig",
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": "StarknetOpsMultisig",
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": "StarkgateBridgeMultisig",
-    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "StarknetOperatorMultisig",
+    "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B": "StarknetSCMinorityMultisig",
     "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361": "StarknetSecurityCouncil"
   },
   "sharedModules": {

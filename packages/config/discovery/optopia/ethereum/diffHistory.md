@@ -1,4 +1,68 @@
-Generated with discovered.json: 0x2a6e1c38ff538c9f7ce7b5470e40f5081b9bce98
+Generated with discovered.json: 0x6aa601f32edf582941a079e988551da4c9627d27
+
+# Diff at Fri, 21 Feb 2025 14:09:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21184911
+- current block number: 21184911
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0xdd80E05004f40815EaEf12ffeE69c2a8A5112aA5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x3c4a443b2a78a309d64376df4836d94d0d9d60b7
+
+# Diff at Fri, 21 Feb 2025 08:59:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21184911
+- current block number: 21184911
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x5e8d351FD046Aa0b3DDA24096751996C0c397C61) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x9437f7bd2c883487abcf2b642b16dc6cf45805b1
 
 # Diff at Wed, 12 Feb 2025 08:36:50 GMT:
 

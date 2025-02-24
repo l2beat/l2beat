@@ -1,4 +1,231 @@
-Generated with discovered.json: 0x837b4c2b62ae3be2642843bd31ea31e85d9e4935
+Generated with discovered.json: 0xe49a543cfa9ec7e20c07800b3952f6236d740c56
+
+# Diff at Fri, 21 Feb 2025 13:37:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 21829713
+- current block number: 21895028
+
+## Description
+
+Minor upgrade to allow changing the proposer, challenger and guardian by the respective role itself.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      sourceHashes.1:
+-        "0x3703a67e457793b9a26cf1ac8548b5ea17dd768da63011587bb1af5c1f7c1d99"
++        "0xc308d0e8c98d070154567f6e8fc7c99c648506f9d557f38c98fea53c9c11a499"
+      issuedPermissions.1.to:
+-        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
++        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
+      issuedPermissions.0.to:
+-        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
+      values.$implementation:
+-        "0x2B11300E3A6eaBA8C7AF4Fae8A92589eA417D7eE"
++        "0x3131933F07dC5822ced67416F3744B2C0D0D22B2"
+      values.$pastUpgrades.1:
++        ["2025-02-21T11:11:23.000Z","0x85ae39c842797b6560c6dc220ef962770829eae91b47fd766f02c9b6e5e5c7bd",["0x3131933F07dC5822ced67416F3744B2C0D0D22B2"]]
+      values.$upgradeCount:
+-        1
++        2
++++ severity: HIGH
+      values.challenger:
+-        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
+      values.CHALLENGER:
+-        "0x854703cB4360ECe00a8C6010486997fa7d3cEF6D"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
++++ severity: HIGH
+      values.proposer:
+-        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
++        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
+      values.PROPOSER:
+-        "0xe5EB57C3AaedaDf90fC7924D1fb88b551039464A"
++        "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F"
+    }
+```
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      issuedPermissions.1.to:
+-        "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95"
++        "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6"
+      issuedPermissions.0.to:
+-        "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
+      values.batcherHash:
+-        "0x3fc806bAa8C15Ec8c3C9FA0c85a2B8d643053F95"
++        "0xae0Fbdd7CEC6036F3364000eE6d2a60BdAbb10c6"
+      values.owner:
+-        "0xa657C403b17eBB9b03fC93568b09bb7E4b7343d1"
++        "0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.1:
+-        "0x77c7fcaac9f6db1aaa8dabe8e1cd1b1c6969c556ad076c5d1f05b22f8d95cb2b"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      sourceHashes.1:
+-        "0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d"
++        "0x280407852e66d748a811537f910566851115897f01a3de6b9cc11aebe341b900"
+      values.$implementation:
+-        "0xB64160864b3b092a5F482e606A17453f90d0c965"
++        "0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be"
+      values.$pastUpgrades.1:
++        ["2025-02-21T11:14:23.000Z","0xa6c23125cba636f52bf3aeef46e6567b9862fbcb82157c92af4f1c35321804ce",["0xDA90C58e1BE0d55eA246C33CDF5Fd2Ed379c02be"]]
+      values.$upgradeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0xD02631b334FfDCD5674217e57fe524c44B341DD4","via":[{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]}
+      receivedPermissions.6.from:
+-        "0xe822c3d76ac133f7d9f12c39c1BF28a797624AA9"
++        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
+      receivedPermissions.6.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.5.from:
+-        "0xD02631b334FfDCD5674217e57fe524c44B341DD4"
++        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
+      receivedPermissions.4.from:
+-        "0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2"
++        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+      receivedPermissions.3.from:
+-        "0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07"
++        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
++        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd"
+      receivedPermissions.2.description:
++        "set and change address mappings."
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
++        "0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8"
+      receivedPermissions.1.via:
+-        [{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]
+      receivedPermissions.1.description:
++        "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      receivedPermissions.0.permission:
+-        "interact"
++        "challenge"
+      receivedPermissions.0.from:
+-        "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd"
++        "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448"
+      receivedPermissions.0.description:
+-        "set and change address mappings."
+      receivedPermissions.0.via:
+-        [{"address":"0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d"}]
+      severity:
++        "HIGH"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L2OutputOracle/L2OutputOracle.sol              | 30 ++++++++++++++++++++++
+ .../SuperchainConfig/SuperchainConfig.sol          |  5 ++++
+ 2 files changed, 35 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829713 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      fieldMeta.proposer:
++        {"severity":"HIGH"}
+      fieldMeta.challenger:
++        {"severity":"HIGH"}
+      fieldMeta.deletedOutputs:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      template:
++        "opstack/SystemConfig"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      template:
++        "opstack/L1ERC721Bridge"
+      description:
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+Generated with discovered.json: 0xa3607f0b7cb7ddd27383a47d9140b246a690633c
+
+# Diff at Fri, 21 Feb 2025 09:00:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1cf9ec35847912163c4b663a633e258a434c0bca block: 21829713
+- current block number: 21829713
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21829713 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0xbB138cE37870443d5b2B02a36619D3478738E0f6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      categories:
+-        ["Core"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xD02631b334FfDCD5674217e57fe524c44B341DD4) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      categories:
+-        ["Upgrades&Governance"]
+    }
+```
+
+Generated with discovered.json: 0x60bdddbca822d6bd327eb3c371358fba035c25fa
 
 # Diff at Wed, 12 Feb 2025 15:49:29 GMT:
 

@@ -2153,6 +2153,21 @@
   ],
   "arbitrum": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "category": "stablecoin",
@@ -2894,6 +2909,21 @@
   ],
   "optimism": [
     {
+      "symbol": "STONE",
+      "category": "ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "CTSI",
       "address": "0xec6adef5e1006bb305bb1975333e8fc4071295bf",
       "source": "canonical",
@@ -3234,6 +3264,30 @@
     }
   ],
   "base": [
+    {
+      "symbol": "KAITO",
+      "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FAI",
+      "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "B3",
+      "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "VVV",
+      "address": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "GHST",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
@@ -5848,6 +5902,66 @@
   ],
   "soneium": [
     {
+      "symbol": "SolvBTC.BBN",
+      "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying solvBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
+      "coingeckoId": "solv-btc",
+      "source": "external",
+      "supply": "totalSupply", // doublecounting the underlying wBTC 25/02/19
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via interport.fi)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYAGETH",
+      "address": "0xda14b3b7aef494b8c37ed9710d14e44d490316fa",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "YAYSTONE",
+      "address": "0x54e86315c03217b76a7466c302245fd10ebef25a",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "ASTR",
       "address": "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441",
       "coingeckoId": "astar",
@@ -5902,6 +6016,40 @@
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply"
+    }
+  ],
+  "morph": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x7DCC39B4d1C53CB31e1aBc0e358b43987FEF80f7",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }

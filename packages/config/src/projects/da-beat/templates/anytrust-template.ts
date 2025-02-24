@@ -23,6 +23,9 @@ export function AnytrustDAC(template: TemplateVars): CustomDa {
     requiredSignatures: number
   }>('SequencerInbox', 'dacKeyset')
 
+  const isL2 = template.discovery.chain === 'ethereum'
+  const diagramType = isL2 ? 'L2' : 'L3'
+
   const technology: DaTechnology = {
     description: `
 ## Architecture
@@ -46,7 +49,7 @@ L2 nodes reading from the sequencer inbox verify the certificate’s validity by
 If the DACert is valid, it provides a proof that the corresponding data is available from honest committee members.
 
 ## DA Bridge Architecture
-![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architectureL2.png#center)
+![Anytrust bridge architecture](/images/da-bridge-technology/anytrust/architecture${diagramType}.png#center)
 
 The DA commitments are posted to the destination chain through the sequencer inbox, using the inbox as a DA bridge.
 The DA commitment consists of Data Availability Certificate (DACert), including a hash of the data block, an expiration time, and a proof that the required threshold of Committee members have signed off on the data.

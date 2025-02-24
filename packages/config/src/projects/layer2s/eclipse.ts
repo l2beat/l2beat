@@ -14,7 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -28,7 +28,7 @@ export const eclipse: Layer2 = {
   id: ProjectId('eclipse'),
   capability: 'universal',
   addedAt: new UnixTime(1725359142), // 2024-09-03T10:25:42Z
-  badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
+  badges: [BADGES.VM.SolanaVM, BADGES.DA.Celestia],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
@@ -66,12 +66,14 @@ export const eclipse: Layer2 = {
         tokens: ['ETH'],
       },
     ],
-    daTracking: {
-      type: 'celestia',
-      daLayer: ProjectId('celestia'),
-      sinceBlock: 0, // Edge Case: config added @ DA Module start
-      namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
-    },
+    daTracking: [
+      {
+        type: 'celestia',
+        daLayer: ProjectId('celestia'),
+        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGVjbGlwc2U=',
+      },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.CELESTIA,

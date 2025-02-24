@@ -122,12 +122,17 @@ App-specific data can be reconstructed by app clients, which request and assembl
     },
     throughput: [
       {
-        size: 2000, // 2 MB
+        size: 4194304, // 4 MiB
+        frequency: 20, // 20 seconds
+        sinceTimestamp: 1739883920, // 2025-02-18
+      },
+      {
+        size: 2097152, // 2 MiB
         frequency: 20, // 20 seconds
         sinceTimestamp: 1721692800, // 2024-07-23
       },
     ],
-    finality: 60, // seconds
+    finality: 40, // best case is 2 blocks
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Validity proofs',
@@ -152,6 +157,13 @@ App-specific data can be reconstructed by app clients, which request and assembl
       url: 'https://blog.availproject.org/avail-da-mainnet-is-live/',
       date: '2024-07-23T00:00:00Z',
       description: 'Avail mainnet and the AVAIL token launch.',
+      type: 'general',
+    },
+    {
+      title: 'Block size increase',
+      url: 'https://avail.subscan.io/tech/27',
+      date: '2025-02-18T00:00:00Z',
+      description: 'Avail doubles the block size to 4 MB.',
       type: 'general',
     },
   ],

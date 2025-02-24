@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "taiko",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC", // shared
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab", // shared

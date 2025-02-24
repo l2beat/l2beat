@@ -17,8 +17,8 @@ import type {
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
+import { formatBpsToMbps } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { formatThroughputMBPS } from '~/utils/number-format/format-throughput-mbps'
 
 interface Props {
   stats: ProjectStat[]
@@ -158,13 +158,10 @@ export function getCommonDaProjectStats(
     ...durationOfStorage,
   })
 
-  if (project.header.throughput) {
+  if (project.header.maxThroughputPerSecond) {
     stats.push({
       title: 'Max throughput',
-      value: formatThroughputMBPS(
-        project.header.throughput.size,
-        project.header.throughput.frequency,
-      ),
+      value: formatBpsToMbps(project.header.maxThroughputPerSecond),
     })
   }
 

@@ -9,6 +9,10 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
   const START = UnixTime.now()
 
+  afterEach(async () => {
+    await repository.deleteAll()
+  })
+
   describe(DataAvailabilityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
@@ -149,39 +153,123 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
       ])
     })
-  })
 
-  describe(DataAvailabilityRepository.prototype
-    .getLargestPosterByProjectIdsAndTimestamp.name, () => {
-    it('should return the largest poster at a given timestamp', async () => {
+    it('allows to query for null from', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', START, 100n),
         record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
-        record('project-b', 'layer-a', START, 200n),
-        record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+      ])
+
+      const results = await repository.getByProjectIdsAndTimeRange(
+        ['project-a', 'project-b'],
+        [null, START.add(1, 'days')],
+      )
+
+      expect(results).toEqualUnsorted([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+      ])
+    })
+  })
+
+  describe(DataAvailabilityRepository.prototype.getByDaLayersAndTimeRange
+    .name, () => {
+    it('should return records for projects in given time range', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 10_000n),
+        record('project-b', 'layer-b', START, 200n),
+        record('project-b', 'layer-b', START.add(1, 'days'), 2_000n),
+        record('project-b', 'layer-b', START.add(2, 'days'), 2_000n),
         record('project-c', 'layer-a', START, 300n),
       ])
 
-      const results = await repository.getLargestPosterByProjectIdsAndTimestamp(
-        ['project-a', 'project-b'],
-        START,
+      const results = await repository.getByDaLayersAndTimeRange(
+        ['layer-b'],
+        [START, START.add(1, 'days')],
       )
 
-      expect(results).toEqual(record('project-b', 'layer-a', START, 200n))
+      expect(results).toEqual([
+        record('project-b', 'layer-b', START, 200n),
+        record('project-b', 'layer-b', START.add(1, 'days'), 2_000n),
+      ])
     })
 
-    it('should return undefined if no data is available', async () => {
+    it('allows to query for null from', async () => {
       await repository.upsertMany([
+        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
         record('project-a', 'layer-a', START, 100n),
-        record('project-b', 'layer-a', START, 200n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+        record('project-b', 'layer-b', START, 1_000n),
       ])
 
-      const results = await repository.getLargestPosterByProjectIdsAndTimestamp(
-        ['project-a', 'project-b'],
-        START.add(1, 'days'),
+      const results = await repository.getByDaLayersAndTimeRange(
+        ['layer-a'],
+        [null, START.add(1, 'days')],
       )
 
-      expect(results).toEqual(undefined)
+      expect(results).toEqual([
+        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+      ])
+    })
+  })
+
+  describe(DataAvailabilityRepository.prototype
+    .getSummedProjectsByDaLayersAndTimeRange.name, () => {
+    it('returns summed PROJECTS (not the daLayer itself)', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START.add(-1, 'days'), 100n),
+        record('project-a', 'layer-a', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 1_000n),
+        record('project-a', 'layer-a', START.add(2, 'days'), 1_000n),
+        record('project-c', 'layer-b', START, 1_000n),
+        record('project-b', 'layer-a', START, 10n),
+        record('project-b', 'layer-a', START.add(1, 'days'), 2_000n),
+        record('layer-a', 'layer-a', START.add(1, 'days'), 1_000_000n),
+      ])
+
+      const results = await repository.getSummedProjectsByDaLayersAndTimeRange(
+        ['layer-a'],
+        [START, START.add(1, 'days')],
+      )
+
+      expect(results).toEqual([
+        { daLayer: 'layer-a', timestamp: START, totalSize: 110n },
+        {
+          daLayer: 'layer-a',
+          timestamp: START.add(1, 'days'),
+          totalSize: 3_000n,
+        },
+      ])
+    })
+  })
+
+  describe(DataAvailabilityRepository.prototype.deleteByProject.name, () => {
+    it('should delete records within the specified time range', async () => {
+      await repository.upsertMany([
+        record('project-a', 'layer-a', START, 100n),
+        record('project-b', 'layer-a', START, 100n),
+        record('project-a', 'layer-b', START, 100n),
+        record('project-a', 'layer-a', START.add(1, 'days'), 200n),
+      ])
+
+      const deletedCount = await repository.deleteByProject(
+        'project-a',
+        'layer-a',
+      )
+
+      expect(deletedCount).toEqual(2)
+
+      const remainingRecords = await repository.getAll()
+      expect(remainingRecords).toEqualUnsorted([
+        record('project-b', 'layer-a', START, 100n),
+        record('project-a', 'layer-b', START, 100n),
+      ])
     })
   })
 
@@ -198,10 +286,6 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       expect(deleteResult).toEqual(2)
       expect(results).toEqual([])
     })
-  })
-
-  afterEach(async () => {
-    await repository.deleteAll()
   })
 })
 

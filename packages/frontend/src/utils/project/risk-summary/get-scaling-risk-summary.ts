@@ -1,5 +1,4 @@
 import type { Layer2, Layer3, ScalingProjectRisk } from '@l2beat/config'
-import { CONTRACTS } from '@l2beat/config'
 import isArray from 'lodash/isArray'
 
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
@@ -47,12 +46,6 @@ export function getScalingRiskSummarySection(
   }
   for (const risk of project.contracts?.risks ?? []) {
     risks.push({ ...risk, referencedId: 'contracts' })
-  }
-  // Explicit comparison to false because project might not exists in verification map at all.
-  if (!isVerified) {
-    if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
-      risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })
-    }
   }
 
   for (const risk of project.stateValidation?.categories.flatMap(

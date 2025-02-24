@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "zksync",
+  "import": ["../../ethereumConfig.jsonc"],
   "names": {
     "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF": "ZkSync",
     "0x38A43F4330f24fe920F943409709fc9A6084C939": "UpgradeGatekeeper",

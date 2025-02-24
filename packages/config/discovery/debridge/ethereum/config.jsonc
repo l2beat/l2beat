@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "debridge",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": ["0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"],
   "names": {
     "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": "SignatureVerifier",
