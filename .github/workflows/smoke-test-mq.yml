@@ -2,8 +2,6 @@ name: Smoke Test (MQ)
 
 on:
   merge_group:
-  # To be removed after the PR is merged
-  pull_request:
 
 jobs:
   config-smoke-test:
