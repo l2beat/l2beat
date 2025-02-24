@@ -183,11 +183,11 @@ model UpdateNotifier {
 }
 
 model UpdateMessage {
-  projectName String   @db.VarChar(255)
-  chain       String   @db.VarChar(255)
+  projectName String  @db.VarChar(255)
+  chain       String  @db.VarChar(255)
   blockNumber Int
   timestamp   DateTime @db.Timestamp(6)
-  message     String   @db.Text
+  message     String  @db.Text
 
   @@id([projectName, chain, blockNumber])
 }
