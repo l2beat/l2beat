@@ -9,7 +9,7 @@ import { getChainConfig } from './chain/getChainConfig'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
-import { getFinalityConfigurations } from './features/finality'
+import { getFinalityConfig } from './features/finality'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
@@ -110,9 +110,8 @@ export async function makeConfig(
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),
-    finality: flags.isEnabled('finality') && {
-      configurations: getFinalityConfigurations(flags, env),
-    },
+    finality:
+      flags.isEnabled('finality') && (await getFinalityConfig(ps, env, flags)),
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),

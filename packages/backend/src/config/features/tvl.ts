@@ -3,7 +3,6 @@ import type { Env } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
   type ProjectService,
-  layer2s,
   tokenList,
 } from '@l2beat/config'
 import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
@@ -24,9 +23,9 @@ export async function getTvlConfig(
     optional: ['chainConfig'],
   })
 
-  const sharedEscrowsChains = layer2s
+  const sharedEscrowsChains = projects
     .filter((c) =>
-      c.config.escrows.some(
+      c.tvlConfig.escrows.some(
         (e) =>
           e.sharedEscrow?.type === 'AggLayer' ||
           e.sharedEscrow?.type === 'ElasticChain',

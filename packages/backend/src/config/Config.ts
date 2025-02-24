@@ -1,5 +1,6 @@
 import type {
   ChainConfig,
+  Layer2FinalityConfig,
   OnchainVerifier,
   Project,
   ProjectDaTrackingConfig,
@@ -18,7 +19,6 @@ import type { ActivityTransactionConfig } from '../modules/activity/ActivityTran
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
-import type { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -122,7 +122,13 @@ export interface TrackedTxsConfig {
 }
 
 export interface FinalityConfig {
-  readonly configurations: FinalityProjectConfig[]
+  readonly configurations: FinalityConfigProject[]
+}
+
+export type FinalityConfigProject = Layer2FinalityConfig & {
+  projectId: ProjectId
+  url?: string
+  callsPerMinute?: number
 }
 
 export interface BlockscoutChainConfig {
