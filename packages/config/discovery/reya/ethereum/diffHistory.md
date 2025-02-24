@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7cde74a6f84ce04638362c5334ed5a8969cbc5bc
+Generated with discovered.json: 0x44b83796bfcd3b79b9ce409fa258c5f45f65f69a
 
-# Diff at Mon, 24 Feb 2025 11:12:59 GMT:
+# Diff at Mon, 24 Feb 2025 15:37:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 21895157
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7cde74a6f84ce04638362c5334ed5a8969cbc5bc
 
 ## Description
 
-Validator and sequencer removed.
+Config: added a single caldera multisig name.
 
 ## Watched changes
 

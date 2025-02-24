@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "blockNumber": 308389533,
-  "configHash": "0x4b432f7e964d8bca3854b1189ef97dd867f22df743ded4a794737deb6f555d1c",
+  "configHash": "0x1c4dde0eeb67c7c61f03374f23296a90a38a7d9485a831b70787fb9375ed078a",
   "contracts": [
     {
       "name": "GnosisSafeL2",

@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 21744158,
-  "configHash": "0x4fee27ba6719277827c5f1d343a258349ff25e8dacf255c9479f2fd1f69d1505",
+  "configHash": "0xa216057668ff91319e0b6551dfce86404e2ddb2010f50f64c6bd86940f74c658",
   "contracts": [
     {
       "name": "OmniBridgeGovernance",

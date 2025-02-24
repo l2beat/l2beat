@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 21635772,
-  "configHash": "0x757a37f7bb2656e5d3f268581f1df939d348c94ca4d67773eb9ea32317396d31",
+  "configHash": "0x39613d278859e94c77e632242c2ec5f0688a52b57180edd0e8eeab5f5070b113",
   "contracts": [
     {
       "name": "Challenge",
