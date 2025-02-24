@@ -34,7 +34,7 @@ export async function getTvlConfig(
     .map((l) => l.id)
 
   const chainConfigs = uniq(
-    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
+    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
   ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, chains, {
       minTimestamp: minTimestampOverride,

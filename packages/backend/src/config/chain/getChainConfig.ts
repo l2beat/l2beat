@@ -8,7 +8,7 @@ import type { ChainApi } from './ChainApi'
 import type { IndexerApi } from './IndexerApi'
 
 export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
-  const { configuredChains, projects } = getConfiguredChains(chains)
+  const { configuredChains, projects } = getConfiguredChains()
 
   const rpcChains: ChainApi[] = []
   for (const chain of configuredChains) {
@@ -91,7 +91,7 @@ function getRpcUrlsFromEnv(env: Env, chain: string) {
   ].filter(notUndefined)
 }
 
-function getConfiguredChains(chains: ChainConfig[]) {
+function getConfiguredChains() {
   const sharedEscrowsChains = layer2s
     .filter((c) =>
       c.config.escrows.some(
@@ -103,7 +103,7 @@ function getConfiguredChains(chains: ChainConfig[]) {
     .map((l) => l.id)
 
   const tvlChains = uniq(
-    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
+    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
   )
 
   const projects = [
