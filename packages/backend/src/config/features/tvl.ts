@@ -3,10 +3,9 @@ import type { Env } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
   type ProjectService,
-  layer2s,
   tokenList,
 } from '@l2beat/config'
-import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import type { TvlConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
@@ -24,9 +23,9 @@ export async function getTvlConfig(
     optional: ['chainConfig'],
   })
 
-  const sharedEscrowsChains = layer2s
+  const sharedEscrowsChains = projects
     .filter((c) =>
-      c.config.escrows.some(
+      c.tvlConfig.escrows.some(
         (e) =>
           e.sharedEscrow?.type === 'AggLayer' ||
           e.sharedEscrow?.type === 'ElasticChain',
@@ -35,7 +34,7 @@ export async function getTvlConfig(
     .map((l) => l.id)
 
   const chainConfigs = uniq(
-    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
+    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
   ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, chains, {
       minTimestamp: minTimestampOverride,
@@ -46,9 +45,6 @@ export async function getTvlConfig(
     amounts: getTvlAmountsConfig(projects, chains),
     prices: getTvlPricesConfig(chains, minTimestampOverride),
     chains: chainConfigs,
-    chainConverter: new ChainConverter(
-      chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-    ),
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
       100,

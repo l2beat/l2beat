@@ -174,6 +174,11 @@ This method allows ZK rollups to prove that the data used in their validity proo
           validating bridge has access to all the data, as it is posted on chain.`,
     },
   },
+  transactionApiConfig: {
+    type: 'rpc',
+    defaultUrl: 'https://eth-mainnet.alchemyapi.io/v2/demo',
+    startBlock: 8929324,
+  },
   chainConfig: {
     name: 'ethereum',
     chainId: 1,

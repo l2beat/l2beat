@@ -1,5 +1,6 @@
 import type {
   ChainConfig,
+  Layer2FinalityConfig,
   OnchainVerifier,
   Project,
   ProjectDaTrackingConfig,
@@ -13,12 +14,10 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ChainConverter } from '@l2beat/shared-pure'
 import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
-import type { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -91,7 +90,6 @@ export interface TvlConfig {
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
   readonly projects: Project<'tvlConfig', 'chainConfig'>[]
-  readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number
   readonly tvlCleanerEnabled: boolean
@@ -122,7 +120,13 @@ export interface TrackedTxsConfig {
 }
 
 export interface FinalityConfig {
-  readonly configurations: FinalityProjectConfig[]
+  readonly configurations: FinalityConfigProject[]
+}
+
+export type FinalityConfigProject = Layer2FinalityConfig & {
+  projectId: ProjectId
+  url?: string
+  callsPerMinute?: number
 }
 
 export interface BlockscoutChainConfig {
@@ -159,17 +163,12 @@ export interface HealthConfig {
 }
 
 export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexCallsPerMinute: number
-  readonly allowedProjectIds?: string[]
-  readonly projects: {
-    id: ProjectId
-    config: ActivityTransactionConfig
-    blockExplorerConfig:
-      | EtherscanChainConfig
-      | BlockscoutChainConfig
-      | undefined
-  }[]
+  readonly projects: ActivityConfigProject[]
+}
+
+export interface ActivityConfigProject {
+  id: ProjectId
+  config: ActivityTransactionConfig
 }
 
 export interface MetricsAuthConfig {
