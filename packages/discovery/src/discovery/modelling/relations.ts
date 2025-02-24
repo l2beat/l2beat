@@ -80,7 +80,7 @@ export function buildRelationsModels(
     ...discoveryOutput.eoas,
   ]) {
     const contractValues = contractValuesForInterpolation(contractOrEoa)
-    
+
     for (const template of [
       contractTemplate,
       contractDescriptionTemplate,
@@ -107,7 +107,7 @@ export function buildRelationsModels(
         'permission.description': permission.description,
         'permission.delay': permission.delay,
       }
-      
+
       for (const template of [
         permissionTemplate,
         permissionDescriptionTemplate,
