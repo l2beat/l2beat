@@ -2,7 +2,6 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   ESCROW,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -309,13 +308,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       date: '2023-03-27T00:00:00Z',
       description: 'Polygon zkEVM public beta launched.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'State diffs vs raw tx data',
-      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 })

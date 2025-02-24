@@ -1,6 +1,6 @@
 'use client'
 
-import type { DaLayerThroughput } from '@l2beat/config'
+import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
@@ -13,12 +13,19 @@ import { api } from '~/trpc/react'
 import type { ProjectChartDataWithConfiguredThroughput } from './project-da-absolute-throughput-chart'
 import { ProjectDaAbsoluteThroughputChart } from './project-da-absolute-throughput-chart'
 
+interface Props {
+  projectId: ProjectId
+  configuredThroughputs: DaLayerThroughput[]
+  milestones: Milestone[]
+}
+
 export function ProjectDaThroughputChart({
   projectId,
   configuredThroughputs,
-}: { projectId: ProjectId; configuredThroughputs: DaLayerThroughput[] }) {
+  milestones,
+}: Props) {
   const [range, setRange] = useState<DaThroughputTimeRange>('30d')
-  const [showMax, setShowMax] = useState(false)
+  const [showMax, setShowMax] = useState(true)
 
   const { data, isLoading } = api.da.projectChart.useQuery({
     range,
@@ -63,6 +70,7 @@ export function ProjectDaThroughputChart({
         dataWithConfiguredThroughputs={dataWithConfiguredThroughputs}
         isLoading={isLoading}
         showMax={showMax}
+        milestones={milestones}
       />
     </div>
   )
@@ -76,10 +84,15 @@ function getDataWithConfiguredThroughputs(
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .map((config, i, arr) => {
       const batchesPerDay = UnixTime.DAY / config.frequency
-
+      const nextConfig = arr[i + 1]
       return {
         ...config,
-        untilTimestamp: arr[i + 1]?.sinceTimestamp ?? Infinity,
+        sinceTimestamp: new UnixTime(config.sinceTimestamp)
+          .toStartOf('day')
+          .toNumber(),
+        untilTimestamp: nextConfig
+          ? new UnixTime(nextConfig.sinceTimestamp).toStartOf('day').toNumber()
+          : Infinity,
         maxDaily: config.size * batchesPerDay,
         targetDaily: config.target ? config.target * batchesPerDay : null,
       }

@@ -15,7 +15,6 @@ import {
   type DaProjectTableValue,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -23,8 +22,8 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
@@ -45,7 +44,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -83,7 +82,6 @@ export interface ZkStackConfigCommon {
   l2OutputOracle?: ContractParameters
   portal?: ContractParameters
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
   nonTemplateContracts?: (upgrades: Upgradeability) => ProjectContract[]
@@ -95,11 +93,16 @@ export interface ZkStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
-  gasTokens?: string[]
+  gasTokens?: {
+    /** Gas tokens that have been added to tokens.jsonc */
+    tracked?: string[]
+    /** Gas tokens that are applicable yet cannot be added to tokens.jsonc for some reason (e.g. lack of GC support) */
+    untracked?: string[]
+  }
   nonTemplateRiskView?: Partial<ScalingProjectRiskView>
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -128,8 +131,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge missing',
     )
   }
@@ -247,10 +249,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
-        Badge.Stack.ZKStack,
-        Badge.Infra.ElasticChain,
-        Badge.VM.EVM,
-        Badge.DA.EthereumBlobs,
+        BADGES.Stack.ZKStack,
+        BADGES.Infra.ElasticChain,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumBlobs,
       ],
       templateVars.additionalBadges ?? [],
     ),
@@ -286,7 +288,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
-      gasTokens: templateVars.gasTokens,
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
       escrows: [
         ...(templateVars.nonTemplateEscrows !== undefined
           ? templateVars.nonTemplateEscrows(upgrades)
@@ -573,14 +578,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
       },
     },
     milestones: templateVars.milestones ?? [],
-    knowledgeNuggets: [
-      ...(templateVars.knowledgeNuggets ?? []),
-      {
-        title: 'State diffs vs raw tx data',
-        url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
-    ],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
   }
 }

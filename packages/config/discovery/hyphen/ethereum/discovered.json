@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0x59ece5aa975655557c452bc50f47686a0d80d21bbdbc40a6135b73977fb1c9ae",
+  "configHash": "0x894dbd29788476c414244a8dc2ac92885706d179da640ba430a519bbb0d8bc0a",
   "contracts": [
     {
       "name": "ProxyAdmin",

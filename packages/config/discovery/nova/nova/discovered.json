@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 81620827,
-  "configHash": "0x50d9ebc8a41512d9692363b8ed850f335a339f5fa6cd7a5b33987868d96ae0af",
+  "configHash": "0x8e8c9d38cd94491fa2acc24eb2660b55b6ab79c51d4471a2bfd5331a3a5e663d",
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -246,7 +246,8 @@
           "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
         ]
       },
-      "derivedName": "UpgradeExecutor"
+      "derivedName": "UpgradeExecutor",
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "L2BaseFee",
@@ -1109,6 +1110,6 @@
     "orbitstack/layer2/L2SecurityCouncilEmergency": "0x7a0e4a9a7d2bd50291736baf2206ba391a78e3db0c5755533f3731c156cbe5b7",
     "orbitstack/layer2/L2SurplusFee": "0xc5ab7cd559b6a2c80f92fafb398291abf7be7ffd34761502080874871399f87d",
     "orbitstack/layer2/L2WethGateway": "0xeed18e098747d96a84c6fe33925fff76c3d56837797445be8be9ef60fe139699",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93"
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757"
   }
 }

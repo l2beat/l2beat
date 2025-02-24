@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { CONTRACTS, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import { CONTRACTS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -81,10 +81,10 @@ const selfSequencingDelay = maxTimeVariation.delaySeconds
 export const arbitrum: Layer2 = orbitStackL2({
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   additionalBadges: [
-    Badge.VM.WasmVM,
-    Badge.Stack.Nitro,
-    Badge.Other.Governance,
-    Badge.Other.L3HostChain,
+    BADGES.VM.WasmVM,
+    BADGES.Stack.Nitro,
+    BADGES.Other.Governance,
+    BADGES.Other.L3HostChain,
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
@@ -487,18 +487,6 @@ export const arbitrum: Layer2 = orbitStackL2({
       url: 'https://twitter.com/arbitrum/status/1432817424752128008',
       date: '2021-08-31T00:00:00Z',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Arbitrum update boosts decentralization',
-      url: 'https://twitter.com/bkiepuszewski/status/1594754717330309120',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Arbitrum is down... or is it?',
-      url: 'https://twitter.com/bkiepuszewski/status/1438445910191710211',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_04,
     },
   ],
 })

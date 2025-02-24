@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 21880791,
-  "configHash": "0xdeb1b2b3e68b2d1397d5baa445654279438d1c243342c4dbcf1dd7fd55d6a313",
+  "configHash": "0x0098a7fc06fbb5a9b7c1b701b682bf0b900eb77fd80b59e948c3199cbaf820ff",
   "contracts": [
     {
       "name": "ProxyAdmin",

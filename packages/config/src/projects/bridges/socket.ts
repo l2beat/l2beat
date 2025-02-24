@@ -467,5 +467,4 @@ export const socket: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [],
 }

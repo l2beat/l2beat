@@ -1,14 +1,9 @@
-import type { Layer2FinalityConfig, Project } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues } from 'lodash'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import type { FinalityData, FinalityDataPoint } from './schema'
-
-export type FinalityProjectConfig = {
-  projectId: ProjectId
-} & Layer2FinalityConfig
 
 export async function getFinality(projects: Project<'finalityConfig'>[]) {
   if (env.MOCK) {

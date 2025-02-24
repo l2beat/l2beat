@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "zksync2",
   "blockNumber": 54952372,
-  "configHash": "0x09bec816738a181798860235b47be1d80d7d4030978b9a2899bb197bb931e824",
+  "configHash": "0x6570e59cdc47d0492ba3656adb197f93289ce825f64aa5e2d9c11f2283832cad",
   "sharedModules": ["shared-zk-stack"],
   "contracts": [],
   "eoas": [],

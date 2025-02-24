@@ -1,4 +1,123 @@
-Generated with discovered.json: 0xb3bff152e898d6551819ef43c51bca48061218f2
+Generated with discovered.json: 0x9bef403f2da339fdac1f1b99bc2d9ef000fd5cae
+
+# Diff at Mon, 24 Feb 2025 15:41:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 752779
+- current block number: 758248
+
+## Description
+
+Config: added a single caldera multisig name.
+
+## Watched changes
+
+```diff
+    contract BridgedKinto (0x010700808D59d2bb92257fCafACfe8e5bFF7aB87) {
+    +++ description: KINTO token contract.
+      sourceHashes.1:
+-        "0x4f5f7229da06877c8ec759071cd3d1999f9680fa1d5a7e5d5381558383c25b22"
++        "0xe15912dcb541011cee29f6046afcf500542e3763f530012c1ce71e54abd96545"
+      values.$implementation:
+-        "0xAf968044D5DE68fE01B5a6517d0DbeE3caD8563a"
++        "0xd70052c77dC9E5291c79842420a6d51010Ed014c"
+      values.$pastUpgrades.5:
++        ["2025-02-21T21:13:41.000Z","0xd65d8a3e984c6df5eb9bda4baee108c063c153abc195fbb9656b1d4b8236a1cb",["0xd70052c77dC9E5291c79842420a6d51010Ed014c"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.SALE:
++        "0x5a1E00884e35bF2dC39Af51712D08bEF24b1817f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@752779 => .flat}/BridgedKinto/BridgedKinto.sol | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 752779 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x35B1Ca86D564e69FA38Ee456C12c78A62e78Aa4c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SignatureVerifier (0x56Ac0e336f0c3620dCaF8d361E8E14eA73C31f5d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TransmitManager (0x6332e56A423480A211E301Cb85be12814e9238Bb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Hasher (0x9652Dd5e1388CA80712470122F27be0d1c33B48b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionManagerDF (0xc8a4D2fd77c155fd52e65Ab07F337aBF84495Ead)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x8cb093dd270747aeddf39826bc0b3b5f771e86e4
+
+# Diff at Fri, 21 Feb 2025 13:25:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 748108
+- current block number: 752779
+
+## Description
+
+Removed unnecessary NFT tracking from disco.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 748108 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract KintoWallet (0x25EA8c663BA8cCd79284B8c4001e7A245071885c)
+    +++ description: None
+```
+
+```diff
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b) {
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). Accordingly, users can only transact from their smart wallets.
+      values.ownerOf:
+-        ["0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","0x25EA8c663BA8cCd79284B8c4001e7A245071885c"]
+    }
+```
+
+```diff
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75) {
+    +++ description: Deploys new KintoWallet beacon proxies when users create a wallet. Also manages the beacon implementation for all KintoWallets and their recovery logic.
+      receivedPermissions.1:
+-        {"permission":"upgrade","from":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"}
+      receivedPermissions.0.from:
+-        "0x25EA8c663BA8cCd79284B8c4001e7A245071885c"
++        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a"
+    }
+```
+
+Generated with discovered.json: 0xd31287d41663554657fb31f66d2acb6db967628f
 
 # Diff at Wed, 19 Feb 2025 13:59:28 GMT:
 

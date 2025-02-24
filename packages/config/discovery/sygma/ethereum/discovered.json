@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19532229,
-  "configHash": "0x770426358531a3db7ce7b7c6a13a9a0e92841b3d6592770bb4e35ce7bb3e528e",
+  "configHash": "0xdd48fbbb68f269746dbbdad39fd2d28cf0096da30fd383e8199a2dcaed8490c8",
   "contracts": [
     {
       "name": "FeeHandlerRouter",

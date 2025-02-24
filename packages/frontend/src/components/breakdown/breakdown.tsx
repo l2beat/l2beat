@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/shared-pure'
-import React from 'react'
 
 import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'

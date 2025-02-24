@@ -1,8 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import type { Config } from '../../config'
-import type { FinalityProjectConfig } from '../../config/features/finality'
+import type { Config, FinalityConfigProject } from '../../config/Config'
 import type { Providers } from '../../providers/Providers'
 import type { ApplicationModule } from '../ApplicationModule'
 import type { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
@@ -70,7 +69,7 @@ export function createFinalityModule(
 }
 
 function initializeConfigurations(
-  configs: FinalityProjectConfig[],
+  configs: FinalityConfigProject[],
   providers: Providers,
   database: Database,
   logger: Logger,

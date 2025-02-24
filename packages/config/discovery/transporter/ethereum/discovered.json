@@ -2,7 +2,7 @@
   "name": "transporter",
   "chain": "ethereum",
   "blockNumber": 21387870,
-  "configHash": "0x496e9b2e4f49c5eb286cb1beb93df881696ecda8ce68705ba36abd017791f524",
+  "configHash": "0xe60870aa4839b113e02334900b378350fa0222229f8c1a1e629cb51e5be81af0",
   "contracts": [
     {
       "name": "CommitStore",

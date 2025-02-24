@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { unionBy } from 'lodash'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -265,16 +263,4 @@ export const cBridge: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'How HTLC bridge works?',
-      url: 'https://twitter.com/bkiepuszewski/status/1437031523455229964',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'cBridge deep dive',
-      url: 'https://li.fi/knowledge-hub/cbridge-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

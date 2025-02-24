@@ -51,7 +51,7 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
         ),
   )
 
-  return [...dacEntries, ...entries].sort((a, b) => b.tvs - a.tvs)
+  return [...dacEntries, ...entries].sort((a, b) => b.tvs.latest - a.tvs.latest)
 }
 
 export interface DaSummaryEntry extends CommonProjectEntry {
@@ -60,12 +60,18 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   risks: RosetteValue[]
   fallback: TableReadyValue | undefined
   challengeMechanism: DaChallengeMechanism | undefined
-  tvs: number
+  tvs: {
+    latest: number
+    sevenDaysAgo: number
+  }
   bridges: DaBridgeSummaryEntry[]
 }
 
 export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
-  tvs: number
+  tvs: {
+    latest: number
+    sevenDaysAgo: number
+  }
   risks: {
     values: RosetteValue[]
     isNoBridge: boolean
@@ -84,7 +90,10 @@ function getDaSummaryEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
-  getTvs: (projectIds: ProjectId[]) => number,
+  getTvs: (projectIds: ProjectId[]) => {
+    latest: number
+    sevenDaysAgo: number
+  },
 ): DaSummaryEntry {
   const daBridges = bridges.map(
     (b): DaBridgeSummaryEntry => ({
@@ -103,7 +112,9 @@ function getDaSummaryEntry(
         isNoBridge: !!b.daBridge.risks.isNoBridge,
         values: mapBridgeRisksToRosetteValues(b.daBridge.risks),
       },
-      usedIn: b.daBridge.usedIn.sort((a, b) => getTvs([b.id]) - getTvs([a.id])),
+      usedIn: b.daBridge.usedIn.sort(
+        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
+      ),
       dacInfo: undefined,
     }),
   )
@@ -122,13 +133,13 @@ function getDaSummaryEntry(
         values: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       },
       usedIn: layer.daLayer.usedWithoutBridgeIn.sort(
-        (a, b) => getTvs([b.id]) - getTvs([a.id]),
+        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
       ),
       dacInfo: undefined,
     })
   }
 
-  daBridges.sort((a, b) => b.tvs - a.tvs)
+  daBridges.sort((a, b) => b.tvs.latest - a.tvs.latest)
 
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
@@ -148,7 +159,7 @@ function getDaSummaryEntry(
     isPublic: layer.daLayer.systemCategory === 'public',
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
-      getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
+      getDaLayerRisks(layer.daLayer, tvs.latest, economicSecurity),
     ),
     fallback: undefined,
     challengeMechanism: undefined,
@@ -158,7 +169,10 @@ function getDaSummaryEntry(
 }
 
 function getDacEntries(
-  getTvs: (projectIds: ProjectId[]) => number,
+  getTvs: (projectIds: ProjectId[]) => {
+    latest: number
+    sevenDaysAgo: number
+  },
 ): DaSummaryEntry[] {
   const projects = [...layer2s, ...layer3s]
     .filter((project) => project.customDa)
@@ -230,7 +244,10 @@ function getEthereumEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
-  getTvs: (projectIds: ProjectId[]) => number,
+  getTvs: (projectIds: ProjectId[]) => {
+    latest: number
+    sevenDaysAgo: number
+  },
 ): DaSummaryEntry {
   const bridge = bridges[0]
   assert(bridge, 'Ethereum DA layer has no bridges')

@@ -36,31 +36,38 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
   if (daLayersWithDaTracking.length === 0) {
     return []
   }
+  const daLayerIds = daLayersWithDaTracking.map((p) => p.id)
 
-  const latestData = await getDaThroughputTable(
-    daLayersWithDaTracking,
-    projectsWithDaTracking,
-  )
+  const latestData = await getDaThroughputTable(daLayerIds)
 
   const entries = daLayersWithDaTracking
     .map((project) =>
-      getDaThroughputEntry(project, daBridges, latestData[project.id]),
+      getDaThroughputEntry(
+        project,
+        daBridges,
+        latestData.data[project.id],
+        latestData.scalingOnlyData[project.id],
+      ),
     )
     .filter(notUndefined)
+    .sort(
+      (a, b) =>
+        (b.data?.pastDayAvgThroughputPerSecond ?? 0) -
+        (a.data?.pastDayAvgThroughputPerSecond ?? 0),
+    )
   return entries
 }
 
-export interface DaThroughputEntry extends CommonProjectEntry {
-  isPublic: boolean
+interface DaThroughputEntryData {
   /**
    * @unit B/s - bytes per second
    */
-  pastDayAvgThroughputPerSecond: number | undefined
+  pastDayAvgThroughputPerSecond: number
   /**
    * @unit B/s - bytes per second
    */
-  maxThroughputPerSecond: number | undefined
-  pastDayAvgCapacityUtilization: number | undefined
+  maxThroughputPerSecond: number
+  pastDayAvgCapacityUtilization: number
   largestPoster:
     | {
         name: string
@@ -68,7 +75,14 @@ export interface DaThroughputEntry extends CommonProjectEntry {
         totalPosted: number
       }
     | undefined
-  totalPosted: number | undefined
+
+  totalPosted: number
+}
+
+export interface DaThroughputEntry extends CommonProjectEntry {
+  isPublic: boolean
+  data: DaThroughputEntryData
+  scalingOnlyData: DaThroughputEntryData
   finality: string | undefined
   isSynced: boolean
 }
@@ -76,9 +90,10 @@ export interface DaThroughputEntry extends CommonProjectEntry {
 function getDaThroughputEntry(
   project: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge'>[],
-  data: ThroughputTableData[string] | undefined,
+  data: ThroughputTableData['data'][string] | undefined,
+  scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
-  if (!data) return undefined
+  if (!data || !scalingOnlyData) return undefined
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const notSyncedStatus = data
@@ -95,21 +110,13 @@ function getDaThroughputEntry(
       syncWarning: notSyncedStatus,
     },
     isPublic: project.daLayer.systemCategory === 'public',
-    pastDayAvgThroughputPerSecond: data.pastDayAvgThroughputPerSecond,
-    maxThroughputPerSecond: data.maxThroughputPerSecond,
-    pastDayAvgCapacityUtilization: data.pastDayAvgCapacityUtilization,
-    largestPoster: data.largestPoster
-      ? {
-          ...data.largestPoster,
-          totalPosted: Number(data.largestPoster.totalPosted),
-        }
-      : undefined,
-    totalPosted: Number(data.totalPosted),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,
         })
       : undefined,
+    data,
+    scalingOnlyData,
     isSynced: !notSyncedStatus,
   }
 }

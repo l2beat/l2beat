@@ -1,33 +1,31 @@
-import {
-  getTvlAmountsConfig,
-  getTvlPricesConfig,
-  toBackendProject,
-} from '@l2beat/backend-shared'
+import { getTvlAmountsConfig, getTvlPricesConfig } from '@l2beat/backend-shared'
 import type { Env } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
-  bridges,
-  layer2s,
-  layer3s,
+  type ProjectService,
   tokenList,
 } from '@l2beat/config'
-import { ChainConverter, ChainId, type UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import type { TvlConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
 
-export function getTvlConfig(
+export async function getTvlConfig(
+  ps: ProjectService,
   flags: FeatureFlags,
   env: Env,
   chains: ChainConfig[],
   minTimestampOverride?: UnixTime,
-): TvlConfig {
-  const projects = [...layer2s, ...layer3s, ...bridges].map(toBackendProject)
+): Promise<TvlConfig> {
+  const projects = await ps.getProjects({
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
 
-  const sharedEscrowsChains = layer2s
+  const sharedEscrowsChains = projects
     .filter((c) =>
-      c.config.escrows.some(
+      c.tvlConfig.escrows.some(
         (e) =>
           e.sharedEscrow?.type === 'AggLayer' ||
           e.sharedEscrow?.type === 'ElasticChain',
@@ -36,7 +34,7 @@ export function getTvlConfig(
     .map((l) => l.id)
 
   const chainConfigs = uniq(
-    getChainsWithTokens(tokenList, chains).concat(sharedEscrowsChains),
+    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
   ).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, chains, {
       minTimestamp: minTimestampOverride,
@@ -47,9 +45,6 @@ export function getTvlConfig(
     amounts: getTvlAmountsConfig(projects, chains),
     prices: getTvlPricesConfig(chains, minTimestampOverride),
     chains: chainConfigs,
-    chainConverter: new ChainConverter(
-      chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-    ),
     maxTimestampsToAggregateAtOnce: env.integer(
       'MAX_TIMESTAMPS_TO_AGGREGATE_AT_ONCE',
       100,

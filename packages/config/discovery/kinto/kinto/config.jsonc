@@ -189,7 +189,13 @@
       }
     },
     "Socket": {
-      "ignoreInWatchMode": ["globalMessageCount"]
+      "ignoreInWatchMode": ["globalMessageCount"],
+      "ignoreRelatives": [
+        "capacitorFactory__",
+        "executionManager__",
+        "hasher__",
+        "transmitManager__"
+      ]
     },
     "Treasury": {
       "description": "Kinto Treasury.",
@@ -210,7 +216,8 @@
     "BridgedKinto": {
       "description": "KINTO token contract.",
       "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
-      "ignoreInWatchMode": ["totalSupply", "clock"]
+      "ignoreInWatchMode": ["totalSupply", "clock"],
+      "ignoreRelatives": ["miningContract", "SALE"]
     },
     "RewardsDistributor": {
       "ignoreMethods": ["proxiableUUID", "getRewards", "rewardsPerQuarter"],
@@ -326,7 +333,8 @@
         "reservedContracts",
         "systemContracts",
         "tokenByIndex",
-        "tokenIdToApp"
+        "tokenIdToApp",
+        "ownerOf"
       ],
       "ignoreRelatives": ["getReservedContracts", "getSystemContracts"],
       "ignoreInWatchMode": ["totalSupply", "appCount"],

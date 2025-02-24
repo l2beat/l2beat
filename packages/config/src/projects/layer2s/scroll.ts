@@ -23,7 +23,7 @@ import { ESCROW } from '../../common'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -63,7 +63,7 @@ export const scroll: Layer2 = {
   id: ProjectId('scroll'),
   capability: 'universal',
   addedAt: new UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
     slug: 'scroll',

@@ -16,7 +16,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -33,7 +32,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -239,22 +238,33 @@ const escrowEKUBOMaxTotalBalanceString = formatMaxTotalBalanceString(
 
 const finalizationPeriod = 0
 
-const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+const starknetUpgrader = discovery.getContractValue<EthereumAddress>(
+  'Starknet',
+  '$admin',
+)
+const ethEscrowUpgrader = discovery.getContractValue<EthereumAddress>(
+  'ETHBridge',
+  '$admin',
+)
 const governors = discovery.getPermissionedAccounts('Starknet', 'governors')
+const operators = discovery.getPermissionedAccounts('Starknet', 'operators')
 
-// big governance assert
 assert(
-  proxyGovernors[0].address ===
-    discovery.getContract('StarknetAdminMultisig').address &&
-    proxyGovernors[1].address ===
-      discovery.getContract('StarknetSecurityCouncil').address &&
-    proxyGovernors.length === 2 &&
+  starknetUpgrader ===
+    discovery.getContract('StarknetSecurityCouncil').address &&
     governors[0].address ===
-      discovery.getContract('StarknetOpsMultisig').address &&
-    governors[1].address ===
       discovery.getContract('StarknetSecurityCouncil').address &&
-    governors.length === 2,
-  'gov has changed, review non-discodriven perms and gov section.',
+    governors.length === 1 &&
+    operators[1].address ===
+      discovery.getContract('StarknetSCMinorityMultisig').address &&
+    ethEscrowUpgrader ===
+      discovery.getContract('StarkgateBridgeMultisig').address,
+  `gov has changed, review non-discodriven perms, gov diagram and gov section.`,
+)
+
+const scThreshold = discovery.getMultisigStats('StarknetSecurityCouncil')
+const sharpMsThreshold = discovery.getMultisigStats(
+  'SHARPVerifierAdminMultisig',
 )
 
 export const starknet: Layer2 = {
@@ -300,7 +310,7 @@ export const starknet: Layer2 = {
     costsWarning: {
       sentiment: 'warning',
       value:
-        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs represent a rough estimate, and we are working to provide more accurate values.',
+        "The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet's costs represent a rough estimate, and we are working to provide more accurate values.",
     },
   },
   config: {
@@ -845,7 +855,7 @@ export const starknet: Layer2 = {
         _hackCostMultiplier: 0.65,
       },
       {
-        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }], //same config as above but different multiplier
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -1112,12 +1122,6 @@ export const starknet: Layer2 = {
             'Starknet contract receives (verified) state roots from the Sequencer, allows users to read L2 -> L1 messages and send L1 -> L2 message.',
           upgradableBy: [
             {
-              name: 'StarknetAdminMultisig',
-              delay: starknetDelaySeconds
-                ? formatSeconds(starknetDelaySeconds)
-                : 'No delay',
-            },
-            {
               name: 'StarknetSecurityCouncil',
               delay: starknetDelaySeconds
                 ? formatSeconds(starknetDelaySeconds)
@@ -1155,13 +1159,16 @@ export const starknet: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
   upgradesAndGovernance: `
-  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the system is currently split between three major Multisig admins with instant upgrade capability and one ops Multisig that can tweak central configurations.
-
-
-  The ${discovery.getMultisigStats('StarknetAdminMultisig')} StarknetAdminMultisig can upgrade the Starknet contract, while the ${discovery.getMultisigStats('StarknetOpsMultisig')} StarknetOpsMultisig is permissioned to tweak its configuration. Starkgate bridge contracts can be upgraded (and configured) by the StarknetEscrowMultisig without delay.
-
-
-  The shared SHARPVerifier contract is governed by the ${discovery.getMultisigStats('SHARPVerifierAdminMultisig')} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting all StarkEx and SN stack chains that are using it.
+  The Starknet ZK Rollup shares its SHARP verifier with other StarkEx and SN Stack Layer 2s. Governance of the overall rollup system is currently split between a Security Council for the Starknet rollup contract and a ${sharpMsThreshold} Multisig for the SHARP verifier proxy with instant upgrade capability. Other Multisigs are governing the bridge escrows or permissioned for operations (posting state updates with proofs).
+  
+  
+  The ${scThreshold} StarknetSecurityCouncil can upgrade the Starknet contract, force state finalization, change central configurations and manage the Operator role. Starkgate bridge contracts can be upgraded (and configured) by the ${discovery.getMultisigStats('StarkgateBridgeMultisig')} StarkgateBridgeMultisig without delay, allowing the potential theft of all bridged funds.
+  
+  
+  The Operator role in the Starknet contract is permissioned to update the state of the Starknet rollup by supplying valid (zk) state transition proofs. Since this role is not permissionless, Starknet implements a StarknetSCMinorityMultisig with the Operator role, which potentially allows a minority of the StarknetSecurityCouncil to enforce censorship resistance by including transactions that are not included by regular Operators.
+  
+  
+  The shared SHARPVerifier contract is governed by the ${sharpMsThreshold} SHARPVerifierAdminMultisig, who can upgrade it without delay, affecting state validity of all StarkEx and SN stack chains that are using it and potentially allowing this Multisig to finalize malicious state updates.
   `,
   permissions: {
     [discovery.chain]: {
@@ -1171,28 +1178,19 @@ export const starknet: Layer2 = {
           'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge. Can also appoint operators, change the programHash, configHash, or message cancellation delay without upgrading the contract.' +
             delayDescriptionFromSeconds(starknetDelaySeconds),
         ),
-        discovery.getMultisigPermission(
-          'StarknetAdminMultisig',
-          'Can upgrade the central Starknet constract, potentially potentially allowing fraudulent state to be posted and gaining access to all funds stored in the bridge.' +
-            delayDescriptionFromSeconds(starknetDelaySeconds),
-        ),
         ...getSHARPVerifierGovernors(discovery, verifierAddress),
         discovery.getMultisigPermission(
           'StarkgateBridgeMultisig',
-          'Can upgrade most of the Starkgate bridge escrows including the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
-        ),
-        discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+          'Can upgrade most of the Starkgate bridge escrows including ETHBridge and the Starkgate Multibridge. Can also configure the flowlimits of the existing Starkgate escrows or add new deployments.',
         ),
         discovery.getPermissionDetails(
           'Operators',
           discovery.getPermissionedAccounts('Starknet', 'operators'),
-          'Allowed to post state updates. When the operator is down the state cannot be updated.',
+          'Allowed to post state updates. When all operators are down the state cannot be updated.',
         ),
         discovery.getMultisigPermission(
-          'StarknetOpsMultisig',
-          'Can appoint operators, change the programHash, configHash, or message cancellation delay.',
+          'StarknetSCMinorityMultisig',
+          'An Operator. Allowed to post state updates. This minority multisig with the SecurityCouncil members is the only fallback in case of censorship by other operators.',
         ),
         discovery.getMultisigPermission(
           'StarkgateSecurityAgentMultisig',
@@ -1249,11 +1247,10 @@ export const starknet: Layer2 = {
     },
   ],
   badges: [
-    Badge.VM.CairoVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.SNStack,
-    Badge.Infra.SHARP,
-    Badge.Other.Governance,
+    BADGES.VM.CairoVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.SNStack,
+    BADGES.Infra.SHARP,
+    BADGES.Other.Governance,
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

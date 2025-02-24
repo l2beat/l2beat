@@ -4,4 +4,6 @@ export const EXPLORER_URLS: Record<string, string> = {
   oeth: 'https://optimistic.etherscan.io/address/',
   base: 'https://basescan.org/address/',
   kinto: 'https://explorer.kinto.xyz/address/',
+  ink: 'https://explorer.inkonchain.com/address/',
+  unichain: 'https://uniscan.xyz/address/',
 }

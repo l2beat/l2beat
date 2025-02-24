@@ -1,6 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { CONTRACTS, NUGGETS } from '../../common'
+import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -146,11 +146,4 @@ export const hyphen: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Hyphen deep dive',
-      url: 'https://li.fi/knowledge-hub/biconomys-hyphen-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

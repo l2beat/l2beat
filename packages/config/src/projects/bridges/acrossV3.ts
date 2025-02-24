@@ -5,8 +5,6 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -298,11 +296,4 @@ export const acrossV3: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Across deep dive',
-      url: 'https://li.fi/knowledge-hub/across-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

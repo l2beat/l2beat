@@ -27,8 +27,8 @@ export async function GET() {
 }
 
 async function getResponse() {
-  const tvs = await get7dTvsBreakdown({ type: 'layer2' })
-  const costs = getCostsProjects().map((c) => c.id.toString())
+  const tvs = await get7dTvsBreakdown()
+  const costs = (await getCostsProjects()).map((p) => p.id.toString())
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
@@ -81,6 +81,5 @@ function toResponseProject(
     stateValidationConfigured: project.stateValidation !== undefined,
     upgradesAndGovernanceConfigured:
       project.type === 'layer2' && project.upgradesAndGovernance !== undefined,
-    knowledgeNuggetsConfigured: project.knowledgeNuggets !== undefined,
   }
 }

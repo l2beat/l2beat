@@ -1,11 +1,12 @@
 import type { Project } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { featureFlags } from '~/consts/feature-flags'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/get-da-throughput-table'
-import { ps } from '~/server/projects'
+import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/is-throughput-synced'
 import { api } from '~/trpc/server'
 
 export async function getDaThroughputSection(
-  project: Project<'daLayer' | 'statuses' | 'display'>,
+  project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
   if (!featureFlags.daThroughput) return undefined
 
@@ -15,17 +16,15 @@ export async function getDaThroughputSection(
   })
   if (throughputChart.length === 0) return undefined
 
-  const projectsWithDaTracking = await ps.getProjects({
-    select: ['daTrackingConfig'],
-  })
-
-  const throughputData = await getDaThroughputTable(
-    [project],
-    projectsWithDaTracking,
-  )
-  const projectData = throughputData[project.id]
+  const throughputData = await getDaThroughputTable([project.id])
+  const projectData = throughputData.data[project.id]
 
   if (!projectData) return undefined
+
+  const notSyncedStatus = getThroughputSyncWarning(
+    new UnixTime(projectData.syncedUntil),
+    { shorter: true },
+  )
 
   return {
     projectId: project.id,
@@ -39,5 +38,10 @@ export async function getDaThroughputSection(
         }
       : undefined,
     totalPosted: projectData.totalPosted,
+    syncStatus: {
+      warning: notSyncedStatus,
+      isSynced: !notSyncedStatus,
+    },
+    milestones: project.milestones ?? [],
   }
 }

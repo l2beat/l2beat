@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 
@@ -174,11 +172,4 @@ export const avalanche: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Avalanche Bridge deep dive',
-      url: 'https://li.fi/knowledge-hub/avalanche-bridge-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

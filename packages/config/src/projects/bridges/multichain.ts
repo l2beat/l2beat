@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -180,18 +178,6 @@ export const multichain: Bridge = {
       date: '2023-07-07T00:00:00Z',
       url: 'https://blockworks.co/news/multichain-anyswap-exploit',
       type: 'incident',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Multichain deep dive',
-      url: 'https://li.fi/knowledge-hub/multichain-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-    {
-      title: 'Multichain escrow problem',
-      url: 'https://twitter.com/bkiepuszewski/status/1572537802512044034',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
 }

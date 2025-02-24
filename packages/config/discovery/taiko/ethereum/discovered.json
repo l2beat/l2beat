@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 21844977,
-  "configHash": "0x18e3d872c2cda06dd4251e82a0e2e91151cd6aec87d7ca797e56e960289559ea",
+  "configHash": "0x0bb1158eaf3c4aa1ed003c87bbc399aea8d3fb383f28990558769d3d2f8a33f7",
   "contracts": [
     {
       "name": "PEMCertChainLib",

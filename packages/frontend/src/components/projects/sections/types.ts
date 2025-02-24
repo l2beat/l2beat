@@ -5,7 +5,6 @@ import type { DaRiskSummarySectionProps } from './da-risk-summary-section'
 import type { DetailedDescriptionSectionProps } from './detailed-description-section'
 import type { GrissiniRiskAnalysisSectionProps } from './grissini-risk-analysis-section'
 import type { GroupSectionProps } from './group-section'
-import type { KnowledgeNuggetsSectionProps } from './knowledge-nuggets-section'
 import type { L3RiskAnalysisSectionProps } from './l3-risk-analysis-section'
 import type { MarkdownSectionProps } from './markdown-section'
 import type { MilestonesAndIncidentsSectionProps } from './milestones-and-incidents-section'
@@ -39,7 +38,6 @@ type SectionId =
   | 'upgrades-and-governance'
   | 'permissions'
   | 'contracts'
-  | 'knowledge-nuggets'
   | 'sequencing'
   | 'throughput'
 
@@ -139,11 +137,6 @@ interface ProjectDetailsContractsSection {
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
-interface ProjectDetailsKnowledgeNuggetsSection {
-  type: 'KnowledgeNuggetsSection'
-  props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
-}
-
 interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
@@ -179,7 +172,6 @@ export type ProjectDetailsSection = {
   | ProjectDetailsSequencingSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
-  | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection

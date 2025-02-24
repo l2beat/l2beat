@@ -162,9 +162,9 @@ export async function getDaProjectEntry(
       slug: bridge.slug,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
-      tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)),
+      tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,
       usedIn: bridge.daBridge.usedIn.sort(
-        (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
       ),
     })),
     header: {
@@ -180,7 +180,9 @@ export async function getDaProjectEntry(
       maxThroughputPerSecond: latestThroughput
         ? latestThroughput.size / latestThroughput.frequency
         : undefined,
-      usedIn: allUsedIn.sort((a, b) => getSumFor([b.id]) - getSumFor([a.id])),
+      usedIn: allUsedIn.sort(
+        (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
+      ),
     },
     sections,
     projectVariants: bridges.map((bridge) => ({
@@ -195,7 +197,7 @@ export async function getDaProjectEntry(
       isNoBridge: true,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
-      tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)),
+      tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,
       usedIn: layer.daLayer.usedWithoutBridgeIn,
     })
     result.projectVariants?.unshift({
@@ -208,7 +210,10 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
-  layer: Project<'daLayer' | 'display' | 'statuses', 'isUpcoming'>,
+  layer: Project<
+    'daLayer' | 'display' | 'statuses',
+    'isUpcoming' | 'milestones'
+  >,
   bridge: Project<'daBridge' | 'display', 'contracts'>,
 ): Promise<EthereumDaProjectPageEntry> {
   const layerGrissiniValues = mapLayerRisksToRosetteValues(layer.daLayer.risks)
@@ -234,7 +239,7 @@ export async function getEthereumDaProjectEntry(
   const getSumFor = pickTvsForProjects(tvsPerProject)
 
   const usedInByTvsDesc = bridge.daBridge.usedIn.sort(
-    (a, b) => getSumFor([b.id]) - getSumFor([a.id]),
+    (a, b) => getSumFor([b.id]).latest - getSumFor([a.id]).latest,
   )
 
   const latestThroughput = layer.daLayer.throughput

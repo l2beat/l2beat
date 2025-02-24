@@ -17,7 +17,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { zkswap } from './zkswap'
 
@@ -38,9 +38,9 @@ export const zkspace: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1629199654), // 2021-08-17T11:27:34Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.ZKsyncLiteFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.ZKsyncLiteFork,
   ],
   display: {
     name: 'ZKBase',

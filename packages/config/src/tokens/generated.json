@@ -7085,7 +7085,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane Nexus"
+            "name": "Hyperlane Nexus",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -7693,6 +7694,50 @@
         "bridges": [
           {
             "name": "Veno.finance"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tether USD",
+      "coingeckoId": "tether",
+      "address": "0xFA3198ecF05303a6d96E57a45E6c815055D255b1",
+      "symbol": "USDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1734703173,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 478,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1734726123,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 478,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8416,7 +8461,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8437,7 +8483,8 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (HypERC20)"
+            "name": "Hyperlane (HypERC20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -8931,6 +8978,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "B3",
+      "coingeckoId": "b3",
+      "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
+      "symbol": "B3",
+      "decimals": 18,
+      "deploymentTimestamp": 1738076807,
+      "coingeckoListingTimestamp": 1739145600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54287/large/B3.png?1739001374",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Base God",
       "coingeckoId": "base-god",
       "address": "0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE",
@@ -9028,6 +9089,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "FAI",
+      "coingeckoId": "freysa-ai",
+      "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
+      "symbol": "FAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1732322699,
+      "coingeckoListingTimestamp": 1733011200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52315/large/FAI.png?1733076295",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "FRIEND",
       "coingeckoId": "friend-tech",
       "address": "0x0bD4887f7D41B35CD75DFF9FfeE2856106f86670",
@@ -9054,6 +9129,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "KAITO",
+      "coingeckoId": "kaito",
+      "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
+      "symbol": "KAITO",
+      "decimals": 18,
+      "deploymentTimestamp": 1738926097,
+      "coingeckoListingTimestamp": 1740009600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54411/large/Qm4DW488_400x400.jpg?1739552780",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "KelpDao Restaked ETH",
@@ -9426,6 +9515,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Venice Token",
+      "coingeckoId": "venice-token",
+      "address": "0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf",
+      "symbol": "VVV",
+      "decimals": 18,
+      "deploymentTimestamp": 1737649711,
+      "coingeckoListingTimestamp": 1737936000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54023/large/Venice_Token_%281%29.png?1738017546",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Wrapped eETH",
@@ -11298,6 +11401,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1722503987,
       "coingeckoListingTimestamp": 1723075200,
+      "untilTimestamp": 1739145600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38090/large/2pNT21dw_400x400.jpg?1716483837",
       "chainId": 59144,

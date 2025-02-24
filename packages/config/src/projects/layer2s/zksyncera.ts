@@ -3,7 +3,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { type Upgradeability, zkStackL2 } from './templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
@@ -50,7 +50,7 @@ export const zksyncera: Layer2 = zkStackL2({
   addedAt: new UnixTime(1671115151), // 2022-12-15T14:39:11Z
   discovery,
   discovery_ZKstackGovL2,
-  additionalBadges: [Badge.Other.L3HostChain],
+  additionalBadges: [BADGES.Other.L3HostChain],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -404,5 +404,4 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

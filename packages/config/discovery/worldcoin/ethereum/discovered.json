@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 21845003,
-  "configHash": "0x9cbdefa6bcf591ae058a5f95acc4bedfca962c2a9ab821972a49f2ed82f06a28",
+  "configHash": "0xc58864b28f22112369a870a2cf6be9fb2161ff963fc995652f4df4cf2f482d87",
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",

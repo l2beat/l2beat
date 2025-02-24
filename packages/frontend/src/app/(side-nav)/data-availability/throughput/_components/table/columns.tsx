@@ -9,7 +9,9 @@ import {
   formatBytes,
 } from '~/utils/number-format/format-bytes'
 
-const columnHelper = createColumnHelper<DaThroughputEntry>()
+export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
+
+const columnHelper = createColumnHelper<DaThroughputTableData>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
@@ -27,21 +29,18 @@ export const publicSystemsColumns = [
   columnHelper.group({
     header: 'Throughput',
     columns: [
-      columnHelper.display({
+      columnHelper.accessor((e) => e.data.pastDayAvgThroughputPerSecond, {
+        id: 'pastDayAvgThroughputPerSecond',
         header: 'PAST DAY AVG',
         cell: (ctx) => (
           <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
             <TableValueCell
               emptyMode="no-data"
-              value={
-                ctx.row.original.pastDayAvgThroughputPerSecond
-                  ? {
-                      value: formatBpsToMbps(
-                        ctx.row.original.pastDayAvgThroughputPerSecond,
-                      ),
-                    }
-                  : undefined
-              }
+              value={{
+                value: formatBpsToMbps(
+                  ctx.row.original.data.pastDayAvgThroughputPerSecond,
+                ),
+              }}
             />
           </SyncStatusWrapper>
         ),
@@ -50,19 +49,15 @@ export const publicSystemsColumns = [
             'The total size of the data posted over the past day, divided by the number of seconds in a day.',
         },
       }),
-      columnHelper.display({
-        header: 'SUSTAINED MAX',
+      columnHelper.accessor((e) => e.data.maxThroughputPerSecond, {
+        header: 'MAX CAPACITY',
         cell: (ctx) => (
           <TableValueCell
-            value={
-              ctx.row.original.maxThroughputPerSecond
-                ? {
-                    value: formatBpsToMbps(
-                      ctx.row.original.maxThroughputPerSecond,
-                    ),
-                  }
-                : undefined
-            }
+            value={{
+              value: formatBpsToMbps(
+                ctx.row.original.data.maxThroughputPerSecond,
+              ),
+            }}
           />
         ),
         meta: {
@@ -72,18 +67,14 @@ export const publicSystemsColumns = [
       }),
     ],
   }),
-  columnHelper.display({
+  columnHelper.accessor((e) => e.data.pastDayAvgCapacityUtilization, {
     header: 'past day avg\ncapacity used',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
-          value={
-            ctx.row.original.pastDayAvgCapacityUtilization
-              ? {
-                  value: `${ctx.row.original.pastDayAvgCapacityUtilization}%`,
-                }
-              : undefined
-          }
+          value={{
+            value: `${ctx.row.original.data.pastDayAvgCapacityUtilization}%`,
+          }}
         />
       </SyncStatusWrapper>
     ),
@@ -101,11 +92,11 @@ export const publicSystemsColumns = [
         <TableValueCell
           emptyMode="no-data"
           value={
-            ctx.row.original.largestPoster
+            ctx.row.original.data.largestPoster
               ? {
-                  value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
+                  value: `${ctx.row.original.data.largestPoster.name} (${ctx.row.original.data.largestPoster.percentage}%)`,
                   secondLine: formatBytes(
-                    ctx.row.original.largestPoster.totalPosted,
+                    ctx.row.original.data.largestPoster.totalPosted,
                   ),
                 }
               : undefined
@@ -118,15 +109,13 @@ export const publicSystemsColumns = [
         'The project that has posted the largest amount of data over the past day.',
     },
   }),
-  columnHelper.display({
+  columnHelper.accessor((e) => e.data.totalPosted, {
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
           value={{
-            value: ctx.row.original.totalPosted
-              ? formatBytes(ctx.row.original.totalPosted)
-              : '',
+            value: formatBytes(ctx.row.original.data.totalPosted),
           }}
         />
       </SyncStatusWrapper>

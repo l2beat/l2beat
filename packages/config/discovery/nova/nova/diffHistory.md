@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x624ab5843bf4be26105e2717a7a737d01062136b
+Generated with discovered.json: 0xdce92d9028b5d49ebdf0546dae33a00b8cb9f454
+
+# Diff at Fri, 21 Feb 2025 12:11:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 81620827
+- current block number: 81620827
+
+## Description
+
+Config related: Set orbit stack contract categories.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81620827 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+Generated with discovered.json: 0xcf1f05fe7fcc28d3db0e3ebc677b61cd7893105f
 
 # Diff at Mon, 17 Feb 2025 15:27:29 GMT:
 

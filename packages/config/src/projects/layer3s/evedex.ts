@@ -16,7 +16,7 @@ export const evedex: Layer3 = upcomingL3({
     category: 'Optimium',
     stack: 'Arbitrum',
     links: {
-      websites: ['http://evedex.com/'],
+      websites: ['https://evedex.com/'],
       apps: ['https://demo-exchange.evedex.com/'],
       documentation: ['https://evedex.com/en-US/contracts/'],
       repositories: [],

@@ -4,7 +4,7 @@ import { DERIVATION } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('zora')
@@ -12,7 +12,7 @@ const discovery = new ProjectDiscovery('zora')
 export const zora: Layer2 = opStackL2({
   addedAt: new UnixTime(1687459278), // 2023-06-22T18:41:18Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -85,5 +85,4 @@ export const zora: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

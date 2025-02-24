@@ -196,14 +196,4 @@ export const portal: Bridge = {
       type: 'incident',
     },
   ],
-  knowledgeNuggets: [
-    {
-      title: 'Wormhole core architecture',
-      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0001_generic_message_passing.md',
-    },
-    {
-      title: 'How Wormhole Guardians work',
-      url: 'https://github.com/wormhole-foundation/wormhole/blob/main/whitepapers/0009_guardian_key.md',
-    },
-  ],
 }

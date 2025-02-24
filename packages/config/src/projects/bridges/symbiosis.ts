@@ -1,6 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -146,21 +144,4 @@ export const symbiosis: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Bridging contracts explained',
-      url: 'https://docs.symbiosis.finance/crosschain-liquidity-engine/bridge-contracts',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-    {
-      title: 'Relayers network explained',
-      url: 'https://docs.symbiosis.finance/relayers-network/pos-relayers-network',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Audits',
-      url: 'https://docs.symbiosis.finance/main-concepts/security-audits-of-symbiosis',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

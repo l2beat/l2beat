@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "metis",
   "blockNumber": 19714541,
-  "configHash": "0x563642cc4e21e8a27bb70479d94667f251328248728dd301493bff5f5f47139b",
+  "configHash": "0x1ba7c04c850626d8bde7e98cbaf01d37c414d3b31c46a9d29af993c72566822c",
   "contracts": [
     {
       "name": "StargatePool",

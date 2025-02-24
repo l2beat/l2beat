@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 21786536,
-  "configHash": "0x53b0d626459e1770cec1a010456f2352d92612db7cd844b340c0957809e1bc1a",
+  "configHash": "0xcdc5a50a6951be4169972b7d1964d628101cd8e634c9a7a9ac133428a018c4d4",
   "contracts": [
     {
       "name": "PauserRegistry",

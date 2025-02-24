@@ -12,7 +12,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -23,7 +22,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import {
@@ -54,10 +53,10 @@ export const kroma: Layer2 = {
   addedAt: new UnixTime(1686820004), // 2023-06-15T09:06:44Z
   capability: 'universal',
   badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Stack.OPStack,
+    BADGES.Infra.Superchain,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
@@ -198,7 +197,7 @@ export const kroma: Layer2 = {
       // timestamp of the first blob tx
       minTimestamp: new UnixTime(1714032407),
       l2BlockTimeSeconds: 2,
-      genesisTimestamp: new UnixTime(1693880389),
+      genesisTimestamp: new UnixTime(1693880387),
       lag: 0,
       stateUpdate: 'disabled',
     },
@@ -418,13 +417,6 @@ export const kroma: Layer2 = {
       date: '2023-09-06T00:00:00Z',
       description: 'Kroma is live on mainnet.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Kroma’s Road to Stage 2',
-      url: 'https://blog.kroma.network/kromas-road-to-stage-2-0c02e41d8c99',
-      thumbnail: NUGGETS.THUMBNAILS.KROMA_01,
     },
   ],
 }

@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21872281,
-  "configHash": "0xe6f8f87ffa45705ae8610c27a27dc172f97706a163d76bd9937f77d3025ff415",
+  "configHash": "0xab984bfdfecdac7514d539c9b0d259348789576849ee6081dd64d78fdfaa5129",
   "sharedModules": ["shared-sharp-verifier"],
   "contracts": [
     {
