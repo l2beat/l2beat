@@ -34,6 +34,7 @@
     "lru_map": "0.4.1",
     "mkdirp": "^3.0.0",
     "node-fetch": "^2.6.7",
+    "ohm-js": "^17.1.0",
     "prettier": "^3.0.3",
     "redis": "^4.7.0",
     "rimraf": "^5.0.0",
