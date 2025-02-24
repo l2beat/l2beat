@@ -99,6 +99,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     tvlConfig: getTvlConfig(p),
+    transactionApiConfig: p.config.transactionApi,
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),

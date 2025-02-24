@@ -162,14 +162,13 @@ export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
   readonly allowedProjectIds?: string[]
-  readonly projects: {
-    id: ProjectId
-    config: ActivityTransactionConfig
-    blockExplorerConfig:
-      | EtherscanChainConfig
-      | BlockscoutChainConfig
-      | undefined
-  }[]
+  readonly projects: ActivityConfigProject[]
+}
+
+export interface ActivityConfigProject {
+  id: ProjectId
+  config: ActivityTransactionConfig
+  blockExplorerConfig: EtherscanChainConfig | BlockscoutChainConfig | undefined
 }
 
 export interface MetricsAuthConfig {

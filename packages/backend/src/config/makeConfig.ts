@@ -6,11 +6,7 @@ import { ChainId, type UnixTime } from '@l2beat/shared-pure'
 import type { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
-import {
-  getChainActivityBlockExplorerConfig,
-  getChainActivityConfig,
-  getProjectsWithActivity,
-} from './features/activity'
+import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfigurations } from './features/finality'
@@ -117,26 +113,8 @@ export async function makeConfig(
     finality: flags.isEnabled('finality') && {
       configurations: getFinalityConfigurations(flags, env),
     },
-    activity: flags.isEnabled('activity') && {
-      starkexApiKey: env.string([
-        'STARKEX_API_KEY_FOR_ACTIVITY',
-        'STARKEX_API_KEY',
-      ]),
-      starkexCallsPerMinute: env.integer(
-        [
-          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
-          'STARKEX_API_CALLS_PER_MINUTE',
-        ],
-        600,
-      ),
-      projects: getProjectsWithActivity()
-        .filter((x) => flags.isEnabled('activity', x.id.toString()))
-        .map((x) => ({
-          id: x.id,
-          config: getChainActivityConfig(env, x),
-          blockExplorerConfig: getChainActivityBlockExplorerConfig(env, x),
-        })),
-    },
+    activity:
+      flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
