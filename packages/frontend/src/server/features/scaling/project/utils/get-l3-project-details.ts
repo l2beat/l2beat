@@ -357,12 +357,15 @@ export async function getL3ProjectDetails({
   }
 
   if (permissionsSection) {
+    const permissionedEntities = project.customDa?.dac?.knownMembers
+
     items.push({
       type: 'PermissionsSection',
       props: {
         ...permissionsSection,
         id: 'permissions',
         title: 'Permissions',
+        permissionedEntities,
       },
     })
   }
