@@ -116,7 +116,7 @@ const getCachedDaThroughputTableData = cache(
     }
   },
   ['da-throughput-table-data'],
-  { tags: ['hourly-data'], revalidate: 1 },
+  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
 function getMockDaThroughputTableData(
