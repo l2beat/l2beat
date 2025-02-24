@@ -1,6 +1,12 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type DataAvailabilityRecord, toRecord, toRow } from './entity'
+import {
+  type DataAvailabilityRecord,
+  type ProjectsSummedDataAvailabilityRecord,
+  toProjectsSummedRecord,
+  toRecord,
+  toRow,
+} from './entity'
 import { selectDataAvailability } from './select'
 
 export class DataAvailabilityRepository extends BaseRepository {
@@ -60,20 +66,58 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLargestPosterByProjectIdsAndTimestamp(
-    projectIds: string[],
-    timestamp: UnixTime,
-  ) {
-    const row = await this.db
+  async getSummedProjectsByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
+      .selectFrom('DataAvailability')
+      .select([
+        'daLayer',
+        'timestamp',
+        (eb) => eb.fn.sum('totalSize').as('totalSize'),
+      ])
+      .where('daLayer', 'in', daLayers)
+      // Exclude the daLayer itself because we only want to sum the projects
+      .whereRef('projectId', '!=', 'daLayer')
+      .groupBy(['timestamp', 'daLayer'])
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
+
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
+
+    return rows.map((row) =>
+      toProjectsSummedRecord({
+        ...row,
+        totalSize: row.totalSize.toString(),
+      }),
+    )
+  }
+
+  async getByDaLayersAndTimeRange(
+    daLayers: string[],
+    timeRange: [UnixTime | null, UnixTime],
+  ): Promise<DataAvailabilityRecord[]> {
+    const [from, to] = timeRange
+    let query = this.db
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
-      .where('projectId', 'in', projectIds)
-      .where('timestamp', '=', timestamp.toDate())
-      .orderBy('totalSize', 'desc')
-      .limit(1)
-      .executeTakeFirst()
+      .where('daLayer', 'in', daLayers)
+      .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
 
-    return row && toRecord(row)
+    if (from) {
+      query = query.where('timestamp', '>=', from.toDate())
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
   }
 
   async deleteByProject(projectId: string, daLayer: string): Promise<number> {

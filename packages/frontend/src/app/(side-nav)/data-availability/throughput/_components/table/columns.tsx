@@ -9,7 +9,9 @@ import {
   formatBytes,
 } from '~/utils/number-format/format-bytes'
 
-const columnHelper = createColumnHelper<DaThroughputEntry>()
+export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
+
+const columnHelper = createColumnHelper<DaThroughputTableData>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(columnHelper)
 
@@ -34,10 +36,10 @@ export const publicSystemsColumns = [
             <TableValueCell
               emptyMode="no-data"
               value={
-                ctx.row.original.pastDayAvgThroughputPerSecond
+                ctx.row.original.data?.pastDayAvgThroughputPerSecond
                   ? {
                       value: formatBpsToMbps(
-                        ctx.row.original.pastDayAvgThroughputPerSecond,
+                        ctx.row.original.data.pastDayAvgThroughputPerSecond,
                       ),
                     }
                   : undefined
@@ -51,14 +53,14 @@ export const publicSystemsColumns = [
         },
       }),
       columnHelper.display({
-        header: 'SUSTAINED MAX',
+        header: 'MAX CAPACITY',
         cell: (ctx) => (
           <TableValueCell
             value={
-              ctx.row.original.maxThroughputPerSecond
+              ctx.row.original.data?.maxThroughputPerSecond
                 ? {
                     value: formatBpsToMbps(
-                      ctx.row.original.maxThroughputPerSecond,
+                      ctx.row.original.data.maxThroughputPerSecond,
                     ),
                   }
                 : undefined
@@ -78,9 +80,9 @@ export const publicSystemsColumns = [
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
           value={
-            ctx.row.original.pastDayAvgCapacityUtilization
+            ctx.row.original.data?.pastDayAvgCapacityUtilization
               ? {
-                  value: `${ctx.row.original.pastDayAvgCapacityUtilization}%`,
+                  value: `${ctx.row.original.data.pastDayAvgCapacityUtilization}%`,
                 }
               : undefined
           }
@@ -101,11 +103,11 @@ export const publicSystemsColumns = [
         <TableValueCell
           emptyMode="no-data"
           value={
-            ctx.row.original.largestPoster
+            ctx.row.original.data?.largestPoster
               ? {
-                  value: `${ctx.row.original.largestPoster.name} (${ctx.row.original.largestPoster.percentage}%)`,
+                  value: `${ctx.row.original.data.largestPoster.name} (${ctx.row.original.data.largestPoster.percentage}%)`,
                   secondLine: formatBytes(
-                    ctx.row.original.largestPoster.totalPosted,
+                    ctx.row.original.data.largestPoster.totalPosted,
                   ),
                 }
               : undefined
@@ -124,8 +126,8 @@ export const publicSystemsColumns = [
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
           value={{
-            value: ctx.row.original.totalPosted
-              ? formatBytes(ctx.row.original.totalPosted)
+            value: ctx.row.original.data?.totalPosted
+              ? formatBytes(ctx.row.original.data.totalPosted)
               : '',
           }}
         />
