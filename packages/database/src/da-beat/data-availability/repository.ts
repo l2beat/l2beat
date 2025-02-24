@@ -79,6 +79,7 @@ export class DataAvailabilityRepository extends BaseRepository {
         (eb) => eb.fn.sum('totalSize').as('totalSize'),
       ])
       .where('daLayer', 'in', daLayers)
+      // Exclude the daLayer itself because we only want to sum the projects
       .whereRef('projectId', '!=', 'daLayer')
       .groupBy(['timestamp', 'daLayer'])
       .where('timestamp', '<=', to.toDate())
@@ -115,53 +116,6 @@ export class DataAvailabilityRepository extends BaseRepository {
     }
 
     const rows = await query.execute()
-
-    return rows.map(toRecord)
-  }
-
-  async getLargestPosterByProjectIdsAndTimestamp(
-    projectIds: string[],
-    timestamp: UnixTime,
-  ) {
-    const row = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('projectId', 'in', projectIds)
-      .where('timestamp', '=', timestamp.toDate())
-      .orderBy('totalSize', 'desc')
-      .limit(1)
-      .executeTakeFirst()
-
-    return row && toRecord(row)
-  }
-
-  async getLargestPosterByDaLayerAndTimestamp(
-    daLayer: string,
-    timestamp: UnixTime,
-  ) {
-    const row = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .where('daLayer', '=', daLayer)
-      .where('timestamp', '=', timestamp.toDate())
-      // exclude the daLayer itself
-      .where('projectId', '!=', daLayer)
-      .orderBy('totalSize', 'desc')
-      .limit(1)
-      .executeTakeFirst()
-
-    return row && toRecord(row)
-  }
-
-  async getLargestPostersByTimestamp(timestamp: UnixTime) {
-    const rows = await this.db
-      .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
-      .whereRef('projectId', '!=', 'daLayer')
-      .where('timestamp', '=', timestamp.toDate())
-      .distinctOn('daLayer')
-      .orderBy(['daLayer', 'totalSize desc'])
-      .execute()
 
     return rows.map(toRecord)
   }
