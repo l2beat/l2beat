@@ -227,7 +227,7 @@
   "playblock.png": "a0f927dc19c6d403b1023d57fee37ebd",
   "song-protocol.png": "904d5a6ad4e4b0480e8e3e4cabcf4478",
   "aie-chain.png": "eb7c4d14046b890b278ba0ad8f0f2545",
-  "fluent.png": "c536a5ae04e085c9504697c52914338a",
+  "fluent.png": "557ba55d5ad2fd2743a7c77b4da8a461",
   "zeronetwork.png": "bdb5af1ce69a399611cbabd2080ab990",
   "network3.png": "eea045b7d2e558c260e827c6e9584ec5",
   "gwyneth.png": "41c3fbca48cf466dc354e21ae77d28f0",
@@ -335,6 +335,7 @@
   "r0ar.png": "1f374165fe8139715fd85f3a2214f497",
   "blockfit.png": "06b6d2f3278788ba610fa4cd738ed99f",
   "skynet.png": "50c679e422dbf4f394ecc662f8b10259",
+  "obol.png": "5580eb07350844146e4b44246da7f14a",
   "ungaii.png": "0aa02628b93b79dbc0e5d718e93cc34f",
   "pepeunchained.png": "4f706422f68ed36dce069402fbc7d59b",
   "rivalz.png": "fbf01d9b42e27a585e1dd10951d279ab",
@@ -342,5 +343,12 @@
   "bsc.png": "028821a3884d9d25b96cd5c1d9b16764",
   "gnosis.png": "89d267e7e9f7b6df220ebe151c6be7ad",
   "openzk.png": "358d4146ab2f68b2c583b9eed256a6c1",
-  "creatorchain.png": "4e168fb12127ffafa5ba9dea277362b9"
+  "creatorchain.png": "4e168fb12127ffafa5ba9dea277362b9",
+  "ozean.png": "113e2f5e94fbb0d6320353e1e1a4ef3a",
+  "liftchain.png": "de464011b17ddebee8aa040ffc619085",
+  "xsolla.png": "465446a44eed6abd15b7be31622144ef",
+  "lachain.png": "3db99de8c4e274898e33d1c6ba1f26ba",
+  "union.png": "9519a26d04a3df119dbc9f1792f5dd5a",
+  "wonderfi.png": "7603a325ef05b5f6d4d2884c0814770d",
+  "genlayer.png": "b5154791191cdfeabdf9f02985440db4"
 }

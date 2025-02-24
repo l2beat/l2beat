@@ -14,7 +14,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -30,7 +30,7 @@ export const metis: Layer2 = {
   id: ProjectId('metis'),
   capability: 'universal',
   addedAt: new UnixTime(1637945259), // 2021-11-26T16:47:39Z
-  badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
+  badges: [BADGES.VM.EVM, BADGES.DA.CustomDA, BADGES.Fork.OVM],
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,

@@ -3,7 +3,7 @@ import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('mantapacific')
@@ -88,7 +88,7 @@ export const mantapacific: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  additionalBadges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
+  additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
   knowledgeNuggets: [
     {
       title: 'Blobstream and Celestia Architecture',

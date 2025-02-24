@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 303211044,
-  "configHash": "0xcce1e60022d87af4daa7b41fc51a3802892c916599ce35ad080af86affe2f0c9",
+  "configHash": "0x9058f88496512552be918bade3ac6b6c10971b695bc96ba1bd7e7dbef98907a0",
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -135,7 +135,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF"]
-      }
+      },
+      "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "OneStepProverMath",
@@ -196,7 +197,8 @@
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
         "sequencerMessageCount": 10322,
         "sequencerReportedSubMessageCount": 1505007
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1GatewayRouter",
@@ -237,7 +239,8 @@
         "owner": "0x139C5A235632EDdad741ff380112B3161d31a21C",
         "router": "0x0000000000000000000000000000000000000000",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "RollupProxy",
@@ -272,7 +275,8 @@
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
-        "latestNodeCreated"
+        "latestNodeCreated",
+        "lastStakeBlock"
       ],
       "sinceTimestamp": 1705716145,
       "values": {
@@ -394,7 +398,8 @@
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot"
           }
         }
-      ]
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Inbox",
@@ -434,7 +439,8 @@
         "maxDataSize": 104857,
         "paused": false,
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "RollupEventInbox",
@@ -546,7 +552,8 @@
         "l2BeaconProxyFactory": "0xaCB337daF123938A337B125f680C9A78F88e21E0",
         "router": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Caldera Multisig",
@@ -715,7 +722,8 @@
         "owner": "0x139C5A235632EDdad741ff380112B3161d31a21C",
         "router": "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
         "whitelist": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "OneStepProverMemory",
@@ -769,7 +777,8 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ValidatorUtils",
@@ -888,7 +897,8 @@
         "maxTimeVariation": {
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ChallengeManager",
@@ -942,7 +952,8 @@
         "resultReceiver": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
         "totalChallengesCreated": 0
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OneStepProverHostIo",
@@ -1798,22 +1809,22 @@
     "espresso/Sequencing/QuoteVerifier": "0xef7ab1615baea337f231b2d3ae609496b77f1c2d3959895f1133e867a6c020a0",
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "orbitstack/Bridge": "0x7779c40cd351b1bead34a4348a3d7fbed8977b75dfe450d0025c8a4588351e71",
-    "orbitstack/ChallengeManager": "0x682311052b07a04f685b8a184d7fd579a637249a9e1235bfb8e95712335f9a59",
-    "orbitstack/CustomGateway": "0x07d5a2445b8573be667a0001dad30fcb296a41acbeb368dac5bceb4fed45661c",
-    "orbitstack/ERC20Gateway": "0xe0a16d610d226558ac7f6fe1e8a4f752f31aa0939f378c8e4c1d10c6197832ec",
-    "orbitstack/GatewayRouter": "0x716365f0496eb5c6804067a5971d09346a726a1e4a8aa9930d6fd7d3e4410163",
-    "orbitstack/Inbox": "0x76c4be4a3bd6153fa5530bf9f42e610add9fe1ae32fef1b70778ccadcb143430",
+    "orbitstack/Bridge": "0xa4e2c59cf226d4689b67f706c31bcba41c8ade97edf3a06fde088aac17814776",
+    "orbitstack/ChallengeManager": "0x2f77177f35a8ca9f540e6d3b2b3e60c3bee105f95ff6e8f4a36ec0b35c96aecb",
+    "orbitstack/CustomGateway": "0xe610ed6acda2c607b2801da142ad354c7f16661baeaf0a026c2618b04da0f018",
+    "orbitstack/ERC20Gateway": "0x832f65bd4773f0f8ea84840011ce2369078e86626ae9b2a7de76780d87d947d3",
+    "orbitstack/GatewayRouter": "0xe837f2a222906711731a613a1d1aac3c907b45d87c99b651cd1caf19950d32ff",
+    "orbitstack/Inbox": "0x50b51cf63c3b2823c94ff050a8ee0410afef7b7c172fa8fcd35673471070373a",
     "orbitstack/OneStepProofEntry": "0x679a62e499a642df7caa3eb63843f72ce88969f430f0e350d78fb8e32fbd6885",
     "orbitstack/OneStepProver0": "0x554524cd5fc44783a29a25b6097c58c23064c18bbd4197949158e2e867be2b88",
     "orbitstack/OneStepProverHostIo_Celestia": "0x6fd84a7055c120d09fb60bd3817974331ec0405e204688de831fbc1d5a360222",
     "orbitstack/OneStepProverMath": "0x3d5fedebf247488f4bf4337e9731f944f170fd5265986bfccd40d745b4cdcf70",
     "orbitstack/OneStepProverMemory": "0x0e1b38cf86e86f91635bcdf5eb7a2157842a71d97a02ef104634c05a76e04ebd",
-    "orbitstack/Outbox": "0x9336e09705cdf0b7d9001f9024da71e695e2ace4fbaca14eb15ae2d54491b7f6",
+    "orbitstack/Outbox": "0x0acafe4751b72930e4271dfe73c71759b440185846e22e617b12804321be6b0b",
     "orbitstack/RollupEventInbox": "0xb32d5aa0eba3a6cfa4aa042854f92113800613efdbc90e293aaf56d238bc71a8",
-    "orbitstack/RollupProxy_fastConfirm": "0xee489bf7626a044e8dd932264f77763a50e2408f988f199c47d15cf8b7e88f3f",
-    "orbitstack/SequencerInbox_Celestia_Espresso": "0x05c4b118384308c97dfc9a7ab49212c7ca8567a0f7f2da74cf8c320e46ac3ee0",
-    "orbitstack/UpgradeExecutor": "0x1a6eb17dbe0e07e21b175348fe6b8c5ef42d8d542527ea0aa40e393f03d82d93",
+    "orbitstack/RollupProxy_fastConfirm": "0x3a9246a912d738821e12f469caa2b045470c35e714b11f5761fb5ed8944002af",
+    "orbitstack/SequencerInbox_Celestia_Espresso": "0x6eaefac2c35fa653a9c5f5c7dd9c2994c8cb38079412bc7708ee6d8727d64eb4",
+    "orbitstack/UpgradeExecutor": "0x9e187e4b42cdad30207a7c9af974d6b0e877e557e911f614443b9cfab10bf757",
     "orbitstack/ValidatorUtils": "0x099391d8bd8ec1de8f5a2a24f61ea3318b95e82c320678c558f1ebae6b42b2ac"
   }
 }

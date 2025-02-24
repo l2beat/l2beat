@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "galxegravity",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x7983403dDA368AA7d67145a9b81c5c517F364c42" //erc20bridge
   ],

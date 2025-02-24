@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "worldchain",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C", // L1StandardBridge
     "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB" // L1OpUSDCBridgeAdapter

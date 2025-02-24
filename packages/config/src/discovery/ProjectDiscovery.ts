@@ -889,6 +889,19 @@ export class ProjectDiscovery {
     return s
   }
 
+  getPermissionPriority(entry: ContractParameters | EoaParameters): number {
+    if (entry.receivedPermissions === undefined) {
+      return 0
+    }
+
+    const permissions = entry.receivedPermissions.map((p) => p.from)
+    const priority = permissions.reduce((acc, permission) => {
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+    }, 0)
+
+    return priority
+  }
+
   getDiscoveredPermissions(): ProjectPermissions {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
@@ -908,7 +921,17 @@ export class ProjectDiscovery {
           isMultisigLike(contract),
       ),
     ]
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
+
+    const eoas = this.discoveries
+      .flatMap((discovery) => discovery.eoas)
+      .filter((e) => (e.category?.priority ?? 0) >= 0)
+      .sort((a, b) => {
+        return this.getPermissionPriority(b) - this.getPermissionPriority(a)
+      })
 
     const allActors: ProjectPermission[] = []
     for (const contract of relevantContracts) {
@@ -1051,9 +1074,13 @@ export class ProjectDiscovery {
   }
 
   getDiscoveredContracts(): ProjectContract[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
+    const contracts = this.discoveries
+      .flatMap((discovery) => discovery.contracts)
+      .filter((contract) => contract.category?.priority !== -1)
+      .sort((a, b) => {
+        return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
+      })
+
     const gnosisModules = contracts.flatMap((contract) =>
       toAddressArray(contract.values?.GnosisSafe_modules),
     )

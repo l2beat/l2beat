@@ -1,7 +1,8 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
-  "name": "facet",
   "chain": "ethereum",
+  "name": "facet",
+  "import": ["../../ethereumConfig.jsonc"],
   "initialAddresses": [
     "0x8F75466D69a52EF53C7363F38834bEfC027A2909", // L1StandardBridge,
     "0x0000000000000b07ed001607f5263d85bf28ce4c" // OrbiterStyleBridge

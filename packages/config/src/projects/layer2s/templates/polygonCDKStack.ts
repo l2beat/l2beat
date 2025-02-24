@@ -23,6 +23,7 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   CustomDa,
   KnowledgeNugget,
@@ -43,7 +44,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -83,7 +84,7 @@ export interface PolygonCDKStackConfig {
   upgradesAndGovernance?: string
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
   gasTokens?: string[]
@@ -99,8 +100,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
   if (daProvider !== undefined) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge is required for external DA',
     )
   }
@@ -450,10 +450,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
       [
-        Badge.Stack.PolygonCDK,
-        Badge.VM.EVM,
-        Badge.DA.EthereumCalldata,
-        Badge.Infra.AggLayer,
+        BADGES.Stack.PolygonCDK,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumCalldata,
+        BADGES.Infra.AggLayer,
       ],
       templateVars.additionalBadges ?? [],
     ),

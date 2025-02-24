@@ -8,7 +8,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
@@ -31,7 +31,7 @@ const isForcedBatchDisallowed =
 
 export const wirex: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1720180654), // 2024-07-05T11:57:34Z
-  additionalBadges: [Badge.DA.DAC, Badge.RaaS.Gateway],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['Payments'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

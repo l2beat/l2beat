@@ -41,6 +41,11 @@
       "type": "array",
       "items": { "$ref": "#/$defs/address" }
     },
+    "imports": {
+      "description": "A list of discovery configs to import",
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "types": {
       "description": "A list of types used for type casting",
       "type": "object",

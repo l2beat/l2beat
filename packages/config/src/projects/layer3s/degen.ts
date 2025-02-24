@@ -3,7 +3,7 @@ import { CONTRACTS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { AnytrustDAC } from '../da-beat/templates/anytrust-template'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
@@ -13,12 +13,12 @@ export const degen: Layer3 = orbitStackL3({
   addedAt: new UnixTime(1712135735), // 2024-04-03T09:15:35Z
   discovery,
   additionalBadges: [
-    Badge.DA.DAC,
-    Badge.L3ParentChain.Base,
-    Badge.RaaS.Alchemy,
+    BADGES.DA.DAC,
+    BADGES.L3ParentChain.Base,
+    BADGES.RaaS.Alchemy,
   ],
   additionalPurposes: ['Social'],
-  gasTokens: ['DEGEN'],
+  gasTokens: { tracked: ['DEGEN'] },
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,

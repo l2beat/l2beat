@@ -8,10 +8,6 @@
     "build": "./scripts/build.sh",
     "build:dependencies": "cd ../.. && pnpm build:dependencies",
     "clean": "rm -rf build",
-    "discover": "ts-node --transpile-only scripts/discoveryWrapperCli.ts",
-    "discover:raw": "discovery discover",
-    "discover:dev": "cd ../discovery && pnpm build && cd - && pnpm discover --dev",
-    "discover:single": "discovery single-discovery",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "invert": "discovery invert",
@@ -29,7 +25,6 @@
     "starkware-multiplier": "ts-node --transpile-only scripts/starkwareMultiplier.ts",
     "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts",
     "discover-tokens": "node -r esbuild-register scripts/discover-tokens",
-    "restore-tvl": "pnpm --filter ../database restore-tvl",
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev"
   },

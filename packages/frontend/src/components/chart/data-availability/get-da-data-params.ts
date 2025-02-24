@@ -1,15 +1,11 @@
-import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
-
-export function getDaDataParams(data: DaThroughputDataPoint[] | undefined) {
+export function getDaDataParams(data: (number | null)[][] | undefined) {
   if (!data)
     return {
       denominator: 1,
       unit: 'B',
     }
   const max = Math.max(
-    ...data.map(([_, ethereum, celestia, avail]) =>
-      Math.max(ethereum, celestia, avail),
-    ),
+    ...data.map(([_, ...rest]) => Math.max(...rest.filter((x) => x !== null))),
   )
   if (max < 1024)
     return {

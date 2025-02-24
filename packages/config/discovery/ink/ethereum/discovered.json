@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 21829669,
-  "configHash": "0x6fa4baa4a860d602d3504cbf18a5315518f04b40d0eef7ebea07b2790e4478f9",
+  "configHash": "0x4532072467245f5eeccb6be8a812aa58f8192ab1c7580428b658d044fdc65f9e",
   "contracts": [
     {
       "name": "LivenessModule",
@@ -677,7 +677,6 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
-      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1733498411,
       "values": {
@@ -859,7 +858,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
-      "categories": ["Gateways&Escrows"],
       "issuedPermissions": [
         {
           "permission": "upgrade",
@@ -894,7 +892,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
-      "categories": ["Upgrades&Governance"],
       "issuedPermissions": [
         {
           "permission": "guard",
@@ -2215,10 +2212,10 @@
     "opstack/DisputeGameFactory": "0x931d104775ede2a7c3b384440bf1d16297b60b2b2bce84c5a41a77a64aaa0e58",
     "opstack/FaultDisputeGame": "0x57d768d0dd6fc21301d9fcb21579f79b9cfad8fc0a92327ae034cd8102d946b9",
     "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0x5b4973550a43d9a63cdeffdbe0549bf29e23b3965d6f03d34b8f95fdc321d5fd",
-    "opstack/L1StandardBridge": "0x5826a3a0ba5e43fd93a6beee27289f26666573ebb9f363aebbc69a302ed8266b",
+    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
+    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
     "opstack/MIPS": "0x87237d61aaccfc1cef4813935eed342780ac845da86ce7825ae8a7ebe54dc32f",
-    "opstack/OptimismMintableERC20Factory": "0xb03fe0d9d069237a0ef719cc9b1171ee097c49c42df18bdd5670d41d03263a34",
+    "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
     "opstack/OptimismPortal2": "0xf06d5be76d03c0009852bba8f6c70050884122e1a128de56acdc5c14955e88f6",
     "opstack/PermissionedDisputeGame": "0x18bb4b766e9c3426f72e5589d0e996290f05948bab973fec4fad669550cc2510",
     "opstack/PreimageOracle": "0xf28a6442c7f76d76429f8693b7763c000602fda5faf2096254ce5a29d0ee0729",

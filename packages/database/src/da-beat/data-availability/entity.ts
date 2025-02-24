@@ -9,6 +9,12 @@ export interface DataAvailabilityRecord {
   totalSize: bigint
 }
 
+export interface ProjectsSummedDataAvailabilityRecord {
+  daLayer: string
+  timestamp: UnixTime
+  totalSize: bigint
+}
+
 export function toRecord(
   row: Selectable<DataAvailability>,
 ): DataAvailabilityRecord {
@@ -20,6 +26,15 @@ export function toRecord(
   }
 }
 
+export function toProjectsSummedRecord(
+  row: Omit<Selectable<DataAvailability>, 'projectId'>,
+): ProjectsSummedDataAvailabilityRecord {
+  return {
+    daLayer: row.daLayer,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    totalSize: BigInt(row.totalSize),
+  }
+}
 export function toRow(
   record: DataAvailabilityRecord,
 ): Insertable<DataAvailability> {

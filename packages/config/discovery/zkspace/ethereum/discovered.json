@@ -2,7 +2,7 @@
   "name": "zkspace",
   "chain": "ethereum",
   "blockNumber": 20432700,
-  "configHash": "0x957ef63bc6bd2c798f9910ec43d19206271b8c5bc3a7b4c49c903632a56a84dc",
+  "configHash": "0x2bb41d8d1aec252cfbecc8843d420b3a72916f91b17ee3436cda2dc294044018",
   "contracts": [
     {
       "name": "VerifierExit",

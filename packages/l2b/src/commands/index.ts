@@ -15,6 +15,7 @@ import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
 import { MatchFlat } from './MatchFlat'
+import { OPConfigs } from './OPConfigs'
 import { Powerdiff } from './Powerdiff'
 import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
@@ -40,6 +41,7 @@ export function getSubcommands() {
     FlattenAndDiff,
     GetTokenMinters,
     MatchFlat,
+    OPConfigs,
     Powerdiff,
     RefreshDiscovery,
     SolFmt,

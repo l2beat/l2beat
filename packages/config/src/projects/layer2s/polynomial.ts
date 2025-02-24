@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('polynomial')
@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('polynomial')
 export const polynomial: Layer2 = opStackL2({
   addedAt: new UnixTime(1726570826), // 2024-09-17T11:00:26Z
   discovery,
-  additionalBadges: [Badge.RaaS.Conduit, Badge.Infra.Superchain],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

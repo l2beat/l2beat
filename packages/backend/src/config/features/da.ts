@@ -49,7 +49,7 @@ export async function getDaTrackingConfig(
         20_000,
       ),
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
-      startingBlock: 1,
+      startingBlock: 983042,
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
@@ -58,7 +58,7 @@ export async function getDaTrackingConfig(
         type: 'baseLayer' as const,
         daLayer: 'celestia',
         projectId: ProjectId('celestia'),
-        sinceBlock: 1,
+        sinceBlock: 983042,
       },
     })
   }

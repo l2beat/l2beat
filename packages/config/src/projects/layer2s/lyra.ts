@@ -5,7 +5,7 @@ import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('lyra')
@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('lyra')
 export const lyra: Layer2 = opStackL2({
   addedAt: new UnixTime(1702978961), // 2023-12-19T09:42:41Z
   daProvider: CELESTIA_DA_PROVIDER,
-  additionalBadges: [Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   additionalPurposes: ['Exchange'],
   discovery,
