@@ -38,7 +38,7 @@ export const form: Layer2 = opStackL2({
   chainConfig: {
     name: 'form',
     chainId: 478,
-    explorerUrl: 'https://explorer.form.network/',
+    explorerUrl: 'https://explorer.form.network',
     minTimestampForTvl: genesisTimestamp,
   },
   discovery,
