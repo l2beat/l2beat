@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { faqSectionThreshold } from '~/components/nav/consts'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function FaqSideNav(props: Props) {
-  const selectedItem = useRef<HTMLLIElement>(null)
   const overflowContainer = useRef<HTMLUListElement>(null)
   const currentSection = useCurrentSection(faqSectionThreshold)
 
@@ -20,11 +19,6 @@ export function FaqSideNav(props: Props) {
       scrollVerticallyToItem({ item, overflowingContainer }),
     [],
   )
-
-  useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
-    scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [currentSection, scrollToItem])
 
   return (
     <div className="custom-scrollbar sticky top-6 hidden h-[calc(100vh-230px)] lg:block">
@@ -40,7 +34,11 @@ export function FaqSideNav(props: Props) {
               key={entry.id}
               entry={entry}
               selected={selected}
-              ref={selected ? selectedItem : undefined}
+              ref={(node) => {
+                if (node && selected && overflowContainer.current) {
+                  scrollToItem(node, overflowContainer.current)
+                }
+              }}
             />
           )
         })}

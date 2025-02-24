@@ -5,7 +5,7 @@ import type { FaqItemWithId } from '../page'
 interface Props {
   entry: FaqItemWithId
   selected: boolean
-  ref?: React.RefObject<HTMLLIElement | null>
+  ref?: React.RefCallback<HTMLLIElement | null>
 }
 
 export const FaqSideNavItem = ({ ref, entry, selected }: Props) => {
