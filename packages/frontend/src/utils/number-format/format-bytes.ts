@@ -31,15 +31,26 @@ export function formatBytes(bytes: number, opts?: FormatBytesOptions) {
   return `${(bytes / 1024 / 1024 / 1024).toFixed(decimals)} GiB`
 }
 
-export function formatBpsToMbps(bps: number): string {
+export function formatBpsToMbps(
+  bps: number,
+  opts?: { decimals?: number },
+): string {
+  const decimals = opts?.decimals ?? 5
+
   if (bps === 0) {
     return '0 MiB/s'
   }
 
   const mib = bps / 1024 ** 2
-  if (mib < 0.0001) {
-    return '<0.0001 MiB/s'
+  const minimumValue = 10 ** -decimals
+  if (mib < minimumValue) {
+    return `<${minimumValue} MiB/s`
   }
 
-  return `${mib.toFixed(4)} MiB/s`
+  const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: decimals,
+  })
+
+  return `${formatter.format(mib)} MiB/s`
 }

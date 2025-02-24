@@ -57,7 +57,7 @@ export const publicSystemsColumns = [
             value={
               ctx.row.original.maxThroughputPerSecond
                 ? {
-                    value: formatMaxCapacity(
+                    value: formatBpsToMbps(
                       ctx.row.original.maxThroughputPerSecond,
                     ),
                   }
@@ -147,14 +147,3 @@ export const publicSystemsColumns = [
     },
   }),
 ]
-
-function formatMaxCapacity(maxThroughputPerSecond: number) {
-  const mib = maxThroughputPerSecond / 1024 ** 2
-
-  const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 5,
-  })
-
-  return `${formatter.format(mib)} MiB/s`
-}
