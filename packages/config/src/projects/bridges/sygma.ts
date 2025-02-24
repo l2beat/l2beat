@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -173,21 +171,4 @@ export const sygma: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Architecture overview',
-      url: 'https://docs.buildwithsygma.com/protocol',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
-    },
-    {
-      title: 'Audits',
-      url: 'https://docs.buildwithsygma.com/resources/audits',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-    {
-      title: 'Sygma governance',
-      url: 'https://docs.buildwithsygma.com/readme/governance/govintroduction',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 }

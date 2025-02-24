@@ -12,7 +12,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -183,6 +182,5 @@ export const tanx: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
   customDa: StarkexDAC({ discovery }),
 }

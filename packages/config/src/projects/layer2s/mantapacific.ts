@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -89,11 +88,4 @@ export const mantapacific: Layer2 = opStackL2({
     },
   ],
   additionalBadges: [BADGES.DA.Celestia, BADGES.RaaS.Caldera],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
-    },
-  ],
 })

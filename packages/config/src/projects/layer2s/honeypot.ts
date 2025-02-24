@@ -240,10 +240,4 @@ export const honeypot: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [
-    {
-      title: 'Application-Specific Rollups',
-      url: 'https://medium.com/cartesi/application-specific-rollups-e12ed5d9de01',
-    },
-  ],
 }

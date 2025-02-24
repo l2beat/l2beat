@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../types'
 import { RISK_VIEW } from './common'
@@ -118,11 +116,4 @@ export const connext: Bridge = {
       ],
     },
   },
-  knowledgeNuggets: [
-    {
-      title: 'Connext deep dive',
-      url: 'https://li.fi/knowledge-hub/connext-network-a-deep-dive/',
-      thumbnail: NUGGETS.THUMBNAILS.LIFI_01,
-    },
-  ],
 }

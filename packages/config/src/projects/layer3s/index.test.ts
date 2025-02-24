@@ -2,7 +2,6 @@ import { expect } from 'earl'
 
 import { assert, ChainId } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
-import { NUGGETS } from '../../common'
 import { tokenList } from '../../tokens/tokens'
 import { chains } from '../chains'
 import { layer2s } from '../layer2s'
@@ -97,33 +96,6 @@ describe('layer3s', () => {
           expect(layer3.display.description.endsWith('.')).toEqual(true)
         })
       }
-    })
-  })
-
-  describe('milestones', () => {
-    describe('knowledgeNuggets', () => {
-      const knowledgeNuggets = layer3s.flatMap(
-        (nugget) => nugget.knowledgeNuggets ?? [],
-      )
-
-      describe('title fits character limit', () => {
-        knowledgeNuggets.forEach((nugget) => {
-          it(nugget.title, () => {
-            expect(nugget.title.length).toBeLessThanOrEqual(40)
-          })
-        })
-      })
-
-      describe('uses static thumbnail', () => {
-        const staticThumbnails = Object.values(NUGGETS.THUMBNAILS)
-        knowledgeNuggets
-          .filter((x) => x.thumbnail !== undefined)
-          .forEach((nugget) => {
-            it(nugget.title, () => {
-              expect(staticThumbnails).toInclude(nugget.thumbnail!)
-            })
-          })
-      })
     })
   })
 

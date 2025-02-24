@@ -30,7 +30,6 @@ import type {
   Badge,
   ChainConfig,
   CustomDa,
-  KnowledgeNugget,
   Layer2,
   Layer2Display,
   Layer2FinalityConfig,
@@ -134,7 +133,6 @@ interface OrbitStackConfigCommon {
   rpcUrl?: string
   transactionApi?: TransactionApiConfig
   milestones?: Milestone[]
-  knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
   chainConfig?: ChainConfig
   usesBlobs?: boolean
@@ -511,7 +509,7 @@ function orbitStackCommon(
             },
           ]),
           {
-            title: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
+            title: "Sequencer Isn't Doing Its Job - Arbitrum documentation",
             url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
           },
         ],
@@ -559,8 +557,7 @@ function orbitStackCommon(
         )
       })(),
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
-    milestones: templateVars.milestones,
-    knowledgeNuggets: templateVars.knowledgeNuggets,
+    milestones: templateVars.milestones ?? [],
     badges: mergeBadges(
       [
         BADGES.Stack.Orbit,

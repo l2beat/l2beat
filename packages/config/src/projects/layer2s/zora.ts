@@ -85,5 +85,4 @@ export const zora: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

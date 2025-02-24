@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -152,7 +151,7 @@ export const bobanetwork: Layer2 = opStackL2({
       date: '2022-03-18T00:00:00Z',
       url: 'https://boba.network/education/boba-basics/hybrid-compute/',
       description:
-        'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
+        "Boba's proprietary technology enables dApps that trigger code executed on web-scale infrastructure.",
       type: 'general',
     },
     {
@@ -191,11 +190,4 @@ export const bobanetwork: Layer2 = opStackL2({
     // ~ Timestamp of block number 1
     minTimestampForTvl: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
   },
-  knowledgeNuggets: [
-    {
-      title: 'What is Hybrid Compute?',
-      url: 'https://twitter.com/bkiepuszewski/status/1521849011594010624',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
 })

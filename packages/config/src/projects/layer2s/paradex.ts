@@ -13,7 +13,6 @@ import {
   DA_MODES,
   EXITS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -370,5 +369,4 @@ export const paradex: Layer2 = {
       type: 'general',
     },
   ],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

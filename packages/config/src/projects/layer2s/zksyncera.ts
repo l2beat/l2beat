@@ -404,5 +404,4 @@ export const zksyncera: Layer2 = zkStackL2({
       type: 'general',
     },
   ],
-  knowledgeNuggets: [],
 })

@@ -6,7 +6,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -178,13 +177,6 @@ export const fuelv1: Layer2 = {
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Fuel security stress test by L2BEAT team',
-      url: 'https://twitter.com/krzKaczor/status/1524753284434587649',
-      thumbnail: NUGGETS.THUMBNAILS.FUEL_01,
     },
   ],
 }

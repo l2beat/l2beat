@@ -12,7 +12,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
-  NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -158,5 +157,4 @@ export const canvasconnect: Layer2 = {
     },
   },
   milestones: [],
-  knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

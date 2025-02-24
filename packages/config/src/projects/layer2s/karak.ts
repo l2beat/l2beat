@@ -1,6 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-
-import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
@@ -47,13 +45,6 @@ export const karak: Layer2 = opStackL2({
       date: '2024-02-27T00:00:00Z',
       description: 'K2 Network is live on mainnet.',
       type: 'general',
-    },
-  ],
-  knowledgeNuggets: [
-    {
-      title: 'Blobstream and Celestia Architecture',
-      url: 'https://www.youtube.com/watch?v=cn_fN6pkakQ',
-      thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
     },
   ],
 })
