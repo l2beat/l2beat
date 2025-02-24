@@ -1,4 +1,3 @@
-import { toBackendProject } from '@l2beat/backend-shared'
 import type { Bridge, Layer2, Layer3 } from '@l2beat/config'
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
@@ -40,15 +39,20 @@ export async function getTokensForProject(
   return toDisplayableTokens(project.id, cachedTokens)
 }
 
-async function getTokensDataForProject(
-  project: Layer2 | Layer3 | Bridge,
-): Promise<Record<ProjectTokenSource, AssetId[]>> {
-  const backendProject = toBackendProject(project)
+async function getTokensDataForProject({
+  id,
+}: Layer2 | Layer3 | Bridge): Promise<Record<ProjectTokenSource, AssetId[]>> {
+  const project = await ps.getProject({
+    id,
+    select: ['tvlConfig'],
+    optional: ['chainConfig'],
+  })
+  assert(project !== undefined)
 
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const configMapping = getConfigMapping(backendProject, chains)
+  const configMapping = getConfigMapping(project, chains)
   const targetTimestamp = UnixTime.now().toStartOf('hour').add(-2, 'hours')
 
   const [priceConfigs, amountConfigs] = await Promise.all([

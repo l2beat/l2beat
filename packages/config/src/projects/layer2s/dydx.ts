@@ -22,7 +22,7 @@ import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('dydx')
@@ -84,10 +84,10 @@ export const dydx: Layer2 = {
   capability: 'universal',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.Stack.StarkEx,
-    Badge.DA.EthereumCalldata,
-    Badge.Other.Governance,
+    BADGES.VM.AppChain,
+    BADGES.Stack.StarkEx,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Other.Governance,
   ],
   display: {
     name: 'dYdX v3',

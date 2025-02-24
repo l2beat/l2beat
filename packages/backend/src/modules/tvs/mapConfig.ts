@@ -1,9 +1,10 @@
 import { createHash } from 'crypto'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '@l2beat/backend-shared'
-import { type ChainConfig, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type Project,
+  type ProjectTvlEscrow,
+  tokenList,
+} from '@l2beat/config'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { Token as LegacyToken } from '@l2beat/shared-pure'
 import { tokenToTicker } from './providers/tickers'
@@ -22,13 +23,13 @@ import {
 } from './types'
 
 export function mapConfig(
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
 ): TvsConfig {
   const tokens: Token[] = []
 
   // map escrows to tokens
-  for (const escrow of project.escrows) {
+  for (const escrow of project.tvlConfig.escrows) {
     // TODO - implement support for shared escrows
     if (escrow.sharedEscrow) {
       continue
@@ -57,16 +58,16 @@ export function mapConfig(
   }
 
   return {
-    projectId: project.projectId,
+    projectId: project.id,
     tokens,
   }
 }
 
 function createToken(
   legacyToken: LegacyToken,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chain: ChainConfig,
-  escrow?: BackendProjectEscrow,
+  escrow?: ProjectTvlEscrow,
 ): Token {
   let amountFormula: AmountFormula
   let sinceTimestamp: UnixTime
@@ -152,8 +153,9 @@ function createToken(
     untilTimestamp,
     category: legacyToken.category,
     source: source,
-    isAssociated:
-      project.associatedTokens?.includes(legacyToken.symbol) ?? false,
+    isAssociated: !!project.tvlConfig.associatedTokens?.includes(
+      legacyToken.symbol,
+    ),
   }
 }
 

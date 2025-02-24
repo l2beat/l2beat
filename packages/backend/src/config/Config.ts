@@ -1,7 +1,7 @@
-import type { BackendProject } from '@l2beat/backend-shared'
 import type {
   ChainConfig,
   OnchainVerifier,
+  Project,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
@@ -90,7 +90,7 @@ export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
-  readonly projects: BackendProject[]
+  readonly projects: Project<'tvlConfig', 'chainConfig'>[]
   readonly chainConverter: ChainConverter
   // used by value indexer
   readonly maxTimestampsToAggregateAtOnce: number

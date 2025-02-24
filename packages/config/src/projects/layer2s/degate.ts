@@ -20,7 +20,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('degate')
@@ -65,9 +65,9 @@ export const degate: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.LoopringFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.LoopringFork,
   ],
   display: {
     name: 'DeGate Legacy',

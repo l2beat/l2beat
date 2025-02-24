@@ -8,7 +8,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PolygoncdkDAC } from '../da-beat/templates/polygoncdk-template'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 
@@ -31,7 +31,7 @@ const isForcedBatchDisallowed =
 
 export const lumia: Layer2 = polygonCDKStack({
   addedAt: new UnixTime(1718181773), // 2024-06-12T08:42:53Z
-  additionalBadges: [Badge.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   additionalPurposes: ['Restaking', 'RWA'],
   display: {

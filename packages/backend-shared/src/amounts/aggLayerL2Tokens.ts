@@ -1,23 +1,22 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
+  type AggLayerL2Token,
   AssetId,
-  type ElasticChainL2Token,
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
-import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
-export function getElasticChainL2TokenEntry(
+export function getAggLayerL2TokenEntry(
   chain: ChainConfig,
   token: Token,
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
-): ElasticChainL2Token {
-  assert(escrow.sharedEscrow?.type === 'ElasticChain')
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
+): AggLayerL2Token {
+  assert(escrow.sharedEscrow?.type === 'AggLayer')
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
-  assert(token.address, 'Token address is required for ElasticChain escrow')
+  assert(token.address, 'Token address is required for AggLayer escrow')
 
   const source = escrow.source ?? 'canonical'
   const sinceTimestamp = UnixTime.max(
@@ -31,25 +30,28 @@ export function getElasticChainL2TokenEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
 
-  // We are hardcoding assetId because elasticChainL2Token is a canonical token
+  // We are hardcoding assetId because aggLayerL2Token is a canonical token
   const assetId = AssetId.create('ethereum', token.address)
-  const type = 'elasticChainL2Token'
-  const dataSource = `${project.projectId}_elastic_chain`
+  const type = 'aggLayerL2Token'
+  const originNetwork = 0
+  const dataSource = `${chain.name}_agglayer`
 
   return {
     assetId: assetId,
     category: token.category,
-    chain: project.projectId,
+    chain: project.id,
     dataSource: dataSource,
     decimals: token.decimals,
     escrowAddress: escrow.address,
     includeInTotal,
     isAssociated,
     l1Address: token.address,
-    l2BridgeAddress: escrow.sharedEscrow.l2BridgeAddress,
-    project: project.projectId,
+    originNetwork: originNetwork,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

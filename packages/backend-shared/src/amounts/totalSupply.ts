@@ -1,46 +1,45 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, Project } from '@l2beat/config'
 import {
   assert,
   AssetId,
-  type CirculatingSupplyEntry,
   type Token,
+  type TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject } from '../../BackendProject'
 
-export function getCirculatingSupplyEntry(
+export function getTotalSupplyEntry(
   chain: ChainConfig,
   token: Token,
-  project: BackendProject,
-): CirculatingSupplyEntry {
-  assert(token.supply === 'circulatingSupply')
+  project: Project<'tvlConfig', 'chainConfig'>,
+): TotalSupplyEntry {
+  assert(token.supply === 'totalSupply' && token.address)
   assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
 
-  const address = token.address ?? 'native'
-  const assetId = AssetId.create(chain.name, address)
-  const dataSource = 'coingecko'
+  const assetId = AssetId.create(chain.name, token.address)
   const includeInTotal = !token.excludeFromTotal
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
   const sinceTimestamp = UnixTime.max(
     chain.minTimestampForTvl,
     token.sinceTimestamp,
   )
+  const type = 'totalSupply'
 
   return {
-    address: address,
+    address: token.address,
     assetId: assetId,
     category: token.category,
     chain: chain.name,
-    coingeckoId: token.coingeckoId,
-    dataSource: dataSource,
+    dataSource: chain.name,
     decimals: token.decimals,
     includeInTotal: includeInTotal,
     isAssociated: isAssociated,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: token.source,
     symbol: token.symbol,
-    type: token.supply,
+    type: type,
     untilTimestamp: token.untilTimestamp,
   }
 }
