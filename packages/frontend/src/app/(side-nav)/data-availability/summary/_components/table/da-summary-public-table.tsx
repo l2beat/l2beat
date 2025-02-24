@@ -89,7 +89,7 @@ function BridgeCells({
         className="justify-end pr-[30px]  text-sm font-medium md:pr-[42px]"
         href={bridge.href}
       >
-        {formatDollarValueNumber(bridge.tvs.latestTvs)}
+        {formatDollarValueNumber(bridge.tvs.latest)}
       </TableCell>
       <TableCell className="text-sm font-medium">
         <ProjectsUsedIn usedIn={bridge.usedIn} />

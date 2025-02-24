@@ -46,14 +46,14 @@ function SummaryTvsBox({
   ethereum: DaSummaryEntry | undefined
   others: DaSummaryEntry[]
 }) {
-  const ethereumValue = ethereum?.tvs.latestTvs ?? 0
-  const othersValue = others.reduce(
-    (acc, entry) => acc + entry.tvs.latestTvs,
+  const ethereumValue = ethereum?.tvs.latest ?? 0
+  const othersValue = others.reduce((acc, entry) => acc + entry.tvs.latest, 0)
+
+  const ethereum7dAgo = ethereum?.tvs.last7Days ?? 0
+  const others7dAgo = others.reduce(
+    (acc, entry) => acc + entry.tvs.last7Days,
     0,
   )
-
-  const ethereum7dAgo = ethereum?.tvs.tvs7d ?? 0
-  const others7dAgo = others.reduce((acc, entry) => acc + entry.tvs.tvs7d, 0)
 
   const total = ethereumValue + othersValue
 

@@ -58,7 +58,7 @@ const tvsColumn = columnHelper.accessor('tvs', {
   header: 'TVS',
   cell: (ctx) => (
     <div className="w-full pr-5 text-right text-sm font-medium">
-      {formatDollarValueNumber(ctx.row.original.tvs.latestTvs)}
+      {formatDollarValueNumber(ctx.row.original.tvs.latest)}
     </div>
   ),
   meta: {

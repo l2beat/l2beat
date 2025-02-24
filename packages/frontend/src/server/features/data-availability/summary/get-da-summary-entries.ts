@@ -51,9 +51,7 @@ export async function getDaSummaryEntries(): Promise<DaSummaryEntry[]> {
         ),
   )
 
-  return [...dacEntries, ...entries].sort(
-    (a, b) => b.tvs.latestTvs - a.tvs.latestTvs,
-  )
+  return [...dacEntries, ...entries].sort((a, b) => b.tvs.latest - a.tvs.latest)
 }
 
 export interface DaSummaryEntry extends CommonProjectEntry {
@@ -63,16 +61,16 @@ export interface DaSummaryEntry extends CommonProjectEntry {
   fallback: TableReadyValue | undefined
   challengeMechanism: DaChallengeMechanism | undefined
   tvs: {
-    latestTvs: number
-    tvs7d: number
+    latest: number
+    last7Days: number
   }
   bridges: DaBridgeSummaryEntry[]
 }
 
 export interface DaBridgeSummaryEntry extends Omit<CommonProjectEntry, 'id'> {
   tvs: {
-    latestTvs: number
-    tvs7d: number
+    latest: number
+    last7Days: number
   }
   risks: {
     values: RosetteValue[]
@@ -93,8 +91,8 @@ function getDaSummaryEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
-    latestTvs: number
-    tvs7d: number
+    latest: number
+    last7Days: number
   },
 ): DaSummaryEntry {
   const daBridges = bridges.map(
@@ -115,7 +113,7 @@ function getDaSummaryEntry(
         values: mapBridgeRisksToRosetteValues(b.daBridge.risks),
       },
       usedIn: b.daBridge.usedIn.sort(
-        (a, b) => getTvs([b.id]).latestTvs - getTvs([a.id]).latestTvs,
+        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
       ),
       dacInfo: undefined,
     }),
@@ -135,13 +133,13 @@ function getDaSummaryEntry(
         values: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       },
       usedIn: layer.daLayer.usedWithoutBridgeIn.sort(
-        (a, b) => getTvs([b.id]).latestTvs - getTvs([a.id]).latestTvs,
+        (a, b) => getTvs([b.id]).latest - getTvs([a.id]).latest,
       ),
       dacInfo: undefined,
     })
   }
 
-  daBridges.sort((a, b) => b.tvs.latestTvs - a.tvs.latestTvs)
+  daBridges.sort((a, b) => b.tvs.latest - a.tvs.latest)
 
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
@@ -161,7 +159,7 @@ function getDaSummaryEntry(
     isPublic: layer.daLayer.systemCategory === 'public',
     economicSecurity,
     risks: mapLayerRisksToRosetteValues(
-      getDaLayerRisks(layer.daLayer, tvs.latestTvs, economicSecurity),
+      getDaLayerRisks(layer.daLayer, tvs.latest, economicSecurity),
     ),
     fallback: undefined,
     challengeMechanism: undefined,
@@ -172,8 +170,8 @@ function getDaSummaryEntry(
 
 function getDacEntries(
   getTvs: (projectIds: ProjectId[]) => {
-    latestTvs: number
-    tvs7d: number
+    latest: number
+    last7Days: number
   },
 ): DaSummaryEntry[] {
   const projects = [...layer2s, ...layer3s]
@@ -247,8 +245,8 @@ function getEthereumEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   economicSecurity: number | undefined,
   getTvs: (projectIds: ProjectId[]) => {
-    latestTvs: number
-    tvs7d: number
+    latest: number
+    last7Days: number
   },
 ): DaSummaryEntry {
   const bridge = bridges[0]
