@@ -157,6 +157,7 @@ import { shape } from './shape'
 import { shibarium } from './shibarium'
 import { silicon } from './silicon'
 import { singularityfinance } from './singularityfinance'
+import { snaxchain } from './snaxchain'
 import { socialnetwork } from './socialnetwork'
 import { solo } from './solo'
 import { soneium } from './soneium'
@@ -366,6 +367,7 @@ export const layer2s: Layer2[] = [
   scroll,
   silicon,
   singularityfinance,
+  snaxchain,
   sophon,
   soneium,
   socialnetwork,
