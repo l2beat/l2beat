@@ -3271,12 +3271,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "ZEEBU",
-      "address": "0x2C8C89C442436CC6C0a77943E09c8Daf49Da3161",
-      "source": "native",
-      "supply": "circulatingSupply"
-    },
-    {
       "symbol": "FAI",
       "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
       "source": "native",

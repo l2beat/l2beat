@@ -9534,20 +9534,6 @@
       "supply": "zero"
     },
     {
-      "name": "ZEEBU",
-      "coingeckoId": "zeebu",
-      "address": "0x2C8C89C442436CC6C0a77943E09c8Daf49Da3161",
-      "symbol": "ZEEBU",
-      "decimals": 18,
-      "deploymentTimestamp": 1725475957,
-      "coingeckoListingTimestamp": 1691020800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31145/large/200x200_Front_token.png?1696529974",
-      "chainId": 8453,
-      "source": "native",
-      "supply": "circulatingSupply"
-    },
-    {
       "name": "aBTC",
       "coingeckoId": "xlink-bridged-btc-stacks",
       "address": "0x7A087e75807F2E5143C161a817E64dF6dC5EAFe0",
