@@ -36,12 +36,6 @@ const BLOB_TX_TYPE = 3
 /**
  * https://specs.optimism.io/experimental/alt-da.html#input-commitment-submission
  * These versioning prefixes are super weird.
- *
- * aevo: 		  0x01 01 00  	(EIGEN)
- * soma: 		  0x01 00 00 		(EIGEN)
- * donatuz: 	0x01 01 00		(EIGEN)
- * automata: 	0x01 00 a5 		(challenges)
- * syndicate: 0x01 00 9c		(keccak256)
  */
 const EIGEN_DA_CONSTANTS = {
   COMMITMENT_PREFIX: '0x01',
@@ -109,7 +103,7 @@ export class OpStackDAHandler implements Handler {
     const isSequencerSendingBlobTx =
       hasTxs && rpcTxs.some((tx) => tx?.type === BLOB_TX_TYPE)
 
-    const isUsingEigenDA = await this.checkForEigenDA(provider, lastTxs)
+    const isUsingEigenDA = await checkForEigenDA(provider, lastTxs)
 
     return {
       field: this.field,
@@ -120,43 +114,48 @@ export class OpStackDAHandler implements Handler {
       },
     }
   }
+}
 
-  private async checkForEigenDA(
-    provider: IProvider,
-    sequencerTxs: Transaction[],
-  ) {
-    const isUsingEigenLikeCommitments =
-      sequencerTxs.length > 0 &&
-      sequencerTxs.some((tx) => {
-        const thirdByte = tx.input.slice(6, 8)
+export async function checkForEigenDA(
+  provider: IProvider,
+  sequencerTxs: Transaction[],
+) {
+  // Byte-check step - filter out non-Eigen-like transactions
+  const eigenLikeTxs =
+    sequencerTxs.length > 0 &&
+    sequencerTxs.filter((tx) => {
+      const thirdByte = tx.input.slice(6, 8)
 
-        const prefixMatch = tx.input.startsWith(
-          EIGEN_DA_CONSTANTS.COMMITMENT_PREFIX,
-        )
-        const thirdByteMatch =
-          thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
+      const prefixMatch = tx.input.startsWith(
+        EIGEN_DA_CONSTANTS.COMMITMENT_PREFIX,
+      )
+      const thirdByteMatch =
+        thirdByte === EIGEN_DA_CONSTANTS.COMMITMENT_THIRD_BYTE
 
-        return prefixMatch && thirdByteMatch
-      })
+      return prefixMatch && thirdByteMatch
+    })
 
-    if (!isUsingEigenLikeCommitments) {
-      return false
-    }
-
-    const outgoingBatchHeaderHashes = sequencerTxs.map((tx) =>
-      decodeCommitmentRLP(tx.input),
-    )
-
-    const confirmedBatchHeaderHashes =
-      await getConfirmedBatchHeaderHashes(provider)
-
-    const successfulVerificationsCount = outgoingBatchHeaderHashes.filter(
-      (hash) => confirmedBatchHeaderHashes.includes(hash),
-    ).length
-
-    // require 100% success rate
-    return successfulVerificationsCount === sequencerTxs.length
+  // If we have no Eigen-like transactions, we can return false immediately
+  if (!eigenLikeTxs || eigenLikeTxs.length === 0) {
+    return false
   }
+
+  // Decode step - decode the commitment from the transaction input
+  const outgoingBatchHeaderHashes = eigenLikeTxs.map((tx) =>
+    decodeCommitmentRLP(tx.input),
+  )
+
+  // Get step - get the confirmed batch header hashes from ethereum
+  const confirmedBatchHeaderHashes =
+    await getConfirmedBatchHeaderHashes(provider)
+
+  // Filter step - filter out the confirmed batch header hashes that are not in the list of outgoing batch header hashes
+  const successfulVerificationsCount = outgoingBatchHeaderHashes.filter(
+    (hash) => confirmedBatchHeaderHashes.includes(hash),
+  ).length
+
+  // require 100% success rate
+  return successfulVerificationsCount === eigenLikeTxs.length
 }
 
 async function getConfirmedBatchHeaderHashes(
@@ -199,6 +198,7 @@ async function getEthereumBlock(provider: IProvider) {
 
   return correspondingEthereumBlock
 }
+
 function decodeCommitmentRLP(inputData: string): string {
   // strip three commitment type bytes + 0x
   const eigenCommitment = inputData.slice(4 * 2)
