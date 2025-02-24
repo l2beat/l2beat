@@ -11302,7 +11302,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38090/large/2pNT21dw_400x400.jpg?1716483837",
       "chainId": 59144,
       "source": "native",
-      "supply": "circulatingSupply"
+      "supply": "circulatingSupply",
+      "untilTimestamp": 1739152800
     },
     {
       "name": "CROAK",
