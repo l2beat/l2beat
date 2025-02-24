@@ -5,6 +5,7 @@
   "ignoreMethods": ["inboxAccs"],
   "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead", "buffer"],
   "ignoreRelatives": ["reader4844"],
+  "category": "core",
   "fields": {
     "maxTimeVariation": {
       "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",

@@ -37,7 +37,7 @@ export function initTvlModule(
   const configMapping = new ConfigMapping(
     config.tvl.prices,
     config.tvl.amounts,
-    config.tvl.projects.map((p) => p.projectId),
+    config.tvl.projects.map((p) => p.id),
   )
 
   const tvlCleaner = new TvlCleaner(

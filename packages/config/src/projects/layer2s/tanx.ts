@@ -30,7 +30,7 @@ import {
 } from '../../discovery/starkware'
 import type { Layer2 } from '../../types'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { StarkexDAC } from '../da-beat/templates/starkex-template'
 
 const discovery = new ProjectDiscovery('brine')
@@ -63,10 +63,10 @@ export const tanx: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1690545663), // 2023-07-28T12:01:03Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.DAC,
-    Badge.Stack.StarkEx,
-    Badge.Infra.SHARP,
+    BADGES.VM.AppChain,
+    BADGES.DA.DAC,
+    BADGES.Stack.StarkEx,
+    BADGES.Infra.SHARP,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {

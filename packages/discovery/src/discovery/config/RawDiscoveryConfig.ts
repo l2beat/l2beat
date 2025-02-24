@@ -2,7 +2,6 @@ import {
   ContractFieldSeverity,
   ContractValueType,
   ManualProxyType,
-  StackCategory,
 } from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
@@ -62,7 +61,6 @@ export const DiscoveryContractField = z.object({
   target: z
     .object({
       template: z.string().optional(),
-      category: z.union([StackCategory, z.array(StackCategory)]).optional(),
       permissions: z.array(RawPermissionConfiguration).optional(),
     })
     .optional(),
@@ -88,6 +86,12 @@ export const ExternalReference = z.object({
   href: z.string(),
 })
 
+export type DiscoveryCategory = z.infer<typeof DiscoveryCategory>
+export const DiscoveryCategory = z.object({
+  name: z.string(),
+  priority: z.number(),
+})
+
 export type DiscoveryContract = z.infer<typeof DiscoveryContract>
 export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
@@ -105,12 +109,15 @@ export const DiscoveryContract = z.object({
   // TODO: in fields?
   methods: z.record(z.string(), z.string()).default({}),
   types: z.record(z.string(), DiscoveryCustomType).default({}),
+  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   manualSourcePaths: z.record(z.string()).default({}),
   references: z.optional(z.array(ExternalReference)),
+  category: z.optional(z.string()),
 })
 
 export type CommonDiscoveryConfig = z.infer<typeof CommonDiscoveryConfig>
 export const CommonDiscoveryConfig = z.object({
+  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
   maxAddresses: z.optional(z.number().positive()),
   maxDepth: z.optional(z.number()),
   overrides: z.optional(z.record(z.string(), DiscoveryContract)),

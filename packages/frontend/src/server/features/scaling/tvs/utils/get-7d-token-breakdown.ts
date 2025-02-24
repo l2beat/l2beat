@@ -22,7 +22,7 @@ export async function get7dTokenBreakdownData({
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const projectsToQuery = getTvsProjects(
+  const projectsToQuery = await getTvsProjects(
     (project) =>
       type === 'all'
         ? true

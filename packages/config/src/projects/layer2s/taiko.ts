@@ -16,7 +16,7 @@ import {
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { getStage } from './common/stages/getStage'
 
 const discovery = new ProjectDiscovery('taiko')
@@ -133,7 +133,11 @@ export const taiko: Layer2 = {
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
+  badges: [
+    BADGES.VM.EVM,
+    BADGES.DA.EthereumBlobs,
+    BADGES.Other.BasedSequencing,
+  ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Taiko',

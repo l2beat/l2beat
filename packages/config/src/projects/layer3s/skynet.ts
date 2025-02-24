@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { Layer3 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { underReviewL3 } from '../layer2s/templates/underReview'
 
 export const skynet: Layer3 = underReviewL3({
@@ -8,7 +8,7 @@ export const skynet: Layer3 = underReviewL3({
   capability: 'universal',
   addedAt: new UnixTime(1739372930), // 2025-02-12T15:08:50Z
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.Stack.Orbit, Badge.VM.EVM, Badge.RaaS.Zeeve],
+  badges: [BADGES.Stack.Orbit, BADGES.VM.EVM, BADGES.RaaS.Zeeve],
   display: {
     name: 'Skynet',
     slug: 'skynet',

@@ -221,20 +221,6 @@ describe(ManagedMultiIndexer.name, () => {
         /Returned height must be between from and to/,
       )
     })
-
-    //   it('cannot return more than targetHeight', async () => {
-    //     const indexer = new TestIndexer(
-    //       [actual('a', 100, 300), actual('b', 100, 400)],
-    //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
-    //     )
-    //     await indexer.initialize()
-
-    //     indexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
-
-    //     await expect(indexer.update(200, 300)).toBeRejectedWith(
-    //       /returned height must be between from and to/,
-    //     )
-    //   })
   })
 
   describe(ManagedMultiIndexer.prototype.findRange.name, () => {

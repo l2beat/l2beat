@@ -8,5 +8,6 @@
     "sequencerMessageCount",
     "sequencerReportedSubMessageCount"
   ],
-  "ignoreRelatives": ["nativeToken"]
+  "ignoreRelatives": ["nativeToken"],
+  "category": "core"
 }

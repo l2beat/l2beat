@@ -1,5 +1,4 @@
 import type { Bridge, ScalingProjectRisk } from '@l2beat/config'
-import { CONTRACTS } from '@l2beat/config'
 import type { RiskSummarySectionProps } from '../../../components/projects/sections/risk-summary-section'
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import { groupRisks } from './group-risks'
@@ -25,12 +24,6 @@ export function getBridgesRiskSummarySection(
   }
   for (const risk of project.contracts?.risks ?? []) {
     risks.push({ ...risk, referencedId: 'contracts' })
-  }
-  // Explicit comparison to false because project might not exists in verification map at all.
-  if (!isVerified) {
-    if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
-      risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })
-    }
   }
 
   return {

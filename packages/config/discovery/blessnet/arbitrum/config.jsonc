@@ -15,10 +15,15 @@
     "0xF9327276c0E0d255543C095AC6D243B555e645D9": {
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
-        "latestConfirmed",
         "latestNodeCreated",
         "currentRequiredStake" // spammy
-      ]
+      ],
+      "fields": {
+        "latestConfirmed": {
+          "description": "Was dead, now alive? Remove headerWarn if yes.",
+          "severity": "HIGH"
+        }
+      }
     }
   }
 }

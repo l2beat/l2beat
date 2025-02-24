@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x9ca58e54343c4a1762086054c38f051c7d125c9a
+Generated with discovered.json: 0x2b773c016d09e2616dbc0d2c466e613433046fcc
+
+# Diff at Fri, 21 Feb 2025 14:12:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 305988230
+- current block number: 305988230
+
+## Description
+
+Config related: Change some severities and add templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 305988230 (main branch discovery), not current.
+
+```diff
+    contract ChallengeManager (0x0E40E41E6095A4f0607144a52d31C2F11a3FF1a1) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract RollupProxy (0x2633ea91d15BeE85105C9b27E068f406F2F36a4a) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC20Inbox (0x4FeBaEF286Ca477402dafCEeB17C64de481aFB42) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8AeDdE55Cb361e73a0B0c0cF2A5bB35E97a20456) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract ERC20Outbox (0xBA99217992620b76aae0D574c70bD313B30D3D1d) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xc5d17f6e0025a23c0AAFf7832Cc531B3034602DA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ERC20Bridge (0xF3f01622Ac969156760c32190995F9dC5b3eb7FA) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x39f8a3a7cb98d17221e8745782206be915c2219f
 
 # Diff at Fri, 14 Feb 2025 13:33:36 GMT:
 

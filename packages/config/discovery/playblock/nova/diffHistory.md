@@ -1,4 +1,115 @@
-Generated with discovered.json: 0xa6d279b5fc177559313d77ce5cbafb63916a0515
+Generated with discovered.json: 0x05dcb4270e88d92390a5024f75ac13d5caa875ae
+
+# Diff at Fri, 21 Feb 2025 13:53:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d219f271711b2cf7a164e3443bead5e4957d13a8 block: 81006902
+- current block number: 82417913
+
+## Description
+
+Add operator addresses.
+Config related: Set orbit stack contract categories.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.2.to:
+-        "0x76a197539eF9670c75F36997b8f1DeA593A1b827"
++        "0xB246421622FB931BdAc20B4a26816F881771Db1e"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        3
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "0x76a197539eF9670c75F36997b8f1DeA593A1b827"
++        "0xB246421622FB931BdAc20B4a26816F881771Db1e"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.0.to:
+-        "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b"
++        "0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"
+      values.batchPosters.0:
+-        "0xe603d3FcB75b0Af72F0e616d002091109d7ECc5b"
++        "0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0"
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 81006902 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract ChallengeManager (0x383eFE8D410285c5CbE1B4F296022640759aA834) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Outbox (0xA597e0212971e65f53f288Ff1fFd26A6C8201f83) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract Bridge (0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Inbox (0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+Generated with discovered.json: 0x9b67dca724ba42ed33b52c118f4320dd48043840
 
 # Diff at Thu, 20 Feb 2025 12:23:05 GMT:
 

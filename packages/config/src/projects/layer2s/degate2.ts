@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 
 import {
   DA_BRIDGES,
@@ -65,9 +65,9 @@ export const degate2: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1684838286), // 2023-05-23T10:38:06Z
   badges: [
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Fork.LoopringFork,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Fork.LoopringFork,
   ],
   display: {
     name: 'DeGate V1 Legacy',

@@ -6,6 +6,7 @@ import { useIsMobile } from '~/hooks/use-breakpoint'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
+import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
 import { DialogTitle } from '../dialog'
 import {
@@ -78,15 +79,13 @@ function ChartMilestone({
   const isMobile = useIsMobile()
 
   const Icon = milestone.type === 'general' ? MilestoneIcon : IncidentIcon
-
+  const common =
+    'absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-8'
   if (isMobile) {
     return (
       <Drawer>
         <DrawerTrigger asChild>
-          <Icon
-            className="absolute bottom-5 scale-75 cursor-pointer group-has-[.recharts-legend-wrapper]:bottom-9"
-            style={{ left }}
-          />
+          <Icon className={cn(common, 'scale-75')} style={{ left }} />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
@@ -111,7 +110,7 @@ function ChartMilestone({
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
         <a
-          className="absolute bottom-5 group-has-[.recharts-legend-wrapper]:bottom-9"
+          className={common}
           href={milestone.url}
           style={{ left }}
           target="_blank"

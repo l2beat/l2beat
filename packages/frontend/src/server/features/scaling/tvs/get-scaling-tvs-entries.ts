@@ -12,7 +12,7 @@ import { get7dTvsBreakdown } from './utils/get-7d-tvs-breakdown'
 export async function getScalingTvsEntries() {
   const [projectsChangeReport, tvs, projects] = await Promise.all([
     getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
+    get7dTvsBreakdown(),
     ps.getProjects({
       select: ['statuses', 'scalingInfo', 'tvlInfo', 'display'],
       where: ['isScaling'],
