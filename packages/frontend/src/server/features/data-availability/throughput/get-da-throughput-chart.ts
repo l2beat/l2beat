@@ -71,7 +71,7 @@ const getCachedDaThroughputChartData = cache(
   { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
 )
 
-function groupByTimestampAndDaLayerId(
+export function groupByTimestampAndDaLayerId(
   records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
 ) {
   let minTimestamp = Infinity

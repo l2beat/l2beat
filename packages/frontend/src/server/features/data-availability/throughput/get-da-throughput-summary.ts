@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { groupByTimestampAndProjectId } from './get-da-throughput-chart'
+import { groupByTimestampAndDaLayerId } from './get-da-throughput-chart'
 
 export async function getDaThroughputSummary() {
   if (env.MOCK) {
@@ -27,7 +27,7 @@ const getCachedDaThroughputSummaryData = cache(
       return undefined
     }
     const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput)
+      groupByTimestampAndDaLayerId(throughput)
 
     return {
       latest: {
