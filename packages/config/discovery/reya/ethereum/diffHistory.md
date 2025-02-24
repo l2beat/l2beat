@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x7cde74a6f84ce04638362c5334ed5a8969cbc5bc
+
+# Diff at Mon, 24 Feb 2025 11:12:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 21895157
+- current block number: 21915807
+
+## Description
+
+Validator and sequencer removed.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      issuedPermissions.3:
+-        {"permission":"validate","to":"0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","via":[]}
+      issuedPermissions.2.to:
+-        "0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122"
++        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        3
+      values.validators.1:
+-        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
+      values.validators.0:
+-        "0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122"
++        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      issuedPermissions.2:
+-        {"permission":"upgrade","to":"0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb","via":[{"address":"0x07390626b8Bc2C04b1D93c7D246A0629198D7868"},{"address":"0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"}]}
+      issuedPermissions.1.permission:
+-        "sequence"
++        "upgrade"
+      issuedPermissions.1.to:
+-        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      issuedPermissions.1.description:
+-        "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+      issuedPermissions.1.via.1:
++        {"address":"0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"}
+      issuedPermissions.1.via.0:
++        {"address":"0x07390626b8Bc2C04b1D93c7D246A0629198D7868"}
+      values.batchPosters.1:
+-        "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
+      values.setIsBatchPosterCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x145661ca18c1238c9dfd611fe18e1a6967e80761
 
 # Diff at Fri, 21 Feb 2025 13:57:28 GMT:
