@@ -37,7 +37,9 @@ export function formatBpsToMbps(bps: number): string {
   }
 
   const mib = bps / 1024 ** 2
-  const formattedThroughput = Number(mib.toPrecision(4))
+  if (mib < 0.0001) {
+    return '<0.0001 MiB/s'
+  }
 
-  return `${formattedThroughput} MiB/s`
+  return `${mib.toFixed(4)} MiB/s`
 }
