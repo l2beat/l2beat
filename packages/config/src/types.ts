@@ -105,7 +105,6 @@ export interface ScalingProject {
   permissions?: Record<string, ProjectPermissions>
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
-  /** List of knowledge nuggets: useful articles worth reading */
   /** List of badges */
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */

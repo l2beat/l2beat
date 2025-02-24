@@ -38,7 +38,6 @@ type SectionId =
   | 'upgrades-and-governance'
   | 'permissions'
   | 'contracts'
-  | 'knowledge-nuggets'
   | 'sequencing'
   | 'throughput'
 
