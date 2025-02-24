@@ -10,7 +10,7 @@
  * Order of types is determined by the order in the BadgeType object.
  */
 
-import type { Badge as IBadge } from '../../types'
+import type { Badge } from '../../types'
 
 export const BadgeType = {
   VM: 'VM',
@@ -400,13 +400,13 @@ export const badges = [
     description:
       'This project has migrated from being a standalone L1 blockchain to an Ethereum L2',
   },
-] as const satisfies IBadge[]
+] as const satisfies Badge[]
 
 type AnyBadge = (typeof badges)[number]
 
 export const BADGES: {
   [T in keyof typeof BadgeType]: {
-    [K in Extract<AnyBadge, { type: T }>['id']]: IBadge
+    [K in Extract<AnyBadge, { type: T }>['id']]: Badge
   }
 } = badges.reduce((acc, badge) => {
   if (!acc[badge.type]) acc[badge.type] = {}
@@ -416,7 +416,7 @@ export const BADGES: {
 }, {} as any)
 
 export const badgeTypeOrder = Object.values<string>(BadgeType)
-export const badgesCompareFn = (a: IBadge, b: IBadge) => {
+export const badgesCompareFn = (a: Badge, b: Badge) => {
   const typeOrder =
     badgeTypeOrder.indexOf(a.type) - badgeTypeOrder.indexOf(b.type)
   if (typeOrder !== 0) return typeOrder
