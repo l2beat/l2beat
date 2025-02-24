@@ -18,11 +18,11 @@ export function CodePanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const selected = usePanelStore((state) => state.selected)
   const codeResponse = useQuery({
-    queryKey: ['projects', project, 'code', selectedAddress],
-    enabled: selectedAddress !== undefined,
-    queryFn: () => getCode(project, selectedAddress),
+    queryKey: ['projects', project, 'code', selected],
+    enabled: selected !== undefined,
+    queryFn: () => getCode(selected?.project, selected?.address),
   })
   const [current, setCurrent] = useState(0)
   useEffect(() => {
@@ -40,9 +40,7 @@ export function CodePanel() {
     response.length === 0
       ? [
           {
-            name: selectedAddress
-              ? toShortenedAddress(selectedAddress)
-              : 'Loading',
+            name: selected ? toShortenedAddress(selected.address) : 'Loading',
             code: codeResponse.isPending ? '// Loading' : '// No code',
           },
         ]

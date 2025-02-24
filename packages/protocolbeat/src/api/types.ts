@@ -36,6 +36,7 @@ export interface ApiPreviewContract {
 
 export interface ApiProjectChain {
   name: string
+  project: string
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]

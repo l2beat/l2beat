@@ -24,10 +24,10 @@ export async function getProject(project: string): Promise<ApiProjectResponse> {
 }
 
 export async function getCode(
-  project: string,
-  address: string | undefined,
+  project?: string,
+  address?: string,
 ): Promise<ApiCodeResponse> {
-  if (!address) {
+  if (!project || !address) {
     return { sources: [] }
   }
   const res = await fetch(`/api/projects/${project}/code/${address}`)

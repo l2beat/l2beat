@@ -53,24 +53,27 @@ function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}
-        {props.chain.name}
+        {props.chain.name} chain ({props.chain.project})
       </button>
       {open && (
         <>
           <ListItemContracts
             title="Initial"
             onFocus={onFocus}
+            project={props.chain.project}
             entries={props.chain.initialContracts}
           />
           <ListItemContracts
             title="Discovered"
             onFocus={onFocus}
+            project={props.chain.project}
             entries={props.chain.discoveredContracts}
           />
           <ListItemContracts
             startClosed
             title="EOAs"
             onFocus={onFocus}
+            project={props.chain.project}
             entries={props.chain.eoas}
           />
         </>
@@ -81,6 +84,7 @@ function ListItemChain(props: { chain: ApiProjectChain; first: boolean }) {
 
 function ListItemContracts(props: {
   title: string
+  project: string
   entries: ApiAddressEntry[]
   onFocus?: () => void
   startClosed?: boolean
@@ -88,12 +92,13 @@ function ListItemContracts(props: {
   const [open, setOpen] = useState(!props.startClosed)
   const selected = usePanelStore((state) => state.selected)
   useEffect(() => {
-    const selectedSet = new Set<string>(selected)
-    for (const { address } of props.entries) {
-      if (selectedSet.has(address)) {
-        setOpen(true)
-        props.onFocus?.()
-        break
+    if (selected !== undefined) {
+      for (const { address } of props.entries) {
+        if (selected.address === address) {
+          setOpen(true)
+          props.onFocus?.()
+          break
+        }
       }
     }
   }, [props.entries, selected, props.onFocus])
@@ -124,7 +129,11 @@ function ListItemContracts(props: {
       {open && (
         <ol>
           {props.entries.map((entry) => (
-            <AddressEntry key={entry.address} entry={entry} />
+            <AddressEntry
+              key={entry.address}
+              entry={entry}
+              project={props.project}
+            />
           ))}
         </ol>
       )}
@@ -132,8 +141,13 @@ function ListItemContracts(props: {
   )
 }
 
-function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
-  const isSelected = usePanelStore((state) => state.selected === entry.address)
+function AddressEntry({
+  entry,
+  project,
+}: { entry: ApiAddressEntry; project: string }) {
+  const isSelected = usePanelStore(
+    (state) => state.selected?.address === entry.address,
+  )
   const select = usePanelStore((state) => state.select)
   return (
     <li
@@ -142,7 +156,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-autumn-600',
       )}
-      onClick={() => select(entry.address)}
+      onClick={() => select({ address: entry.address, project })}
     >
       <div className="mr-[7px] h-[22px] border-coffee-600 border-l" />
       <AddressIcon type={entry.type} />
