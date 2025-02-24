@@ -45,7 +45,7 @@ export default async function Page() {
       <div
         className={cn(
           'flex flex-col gap-6',
-          featureFlags.daThroughput ? 'mt-4' : 'lg:-mt-4',
+          featureFlags.daThroughput ? 'mt-0 md:mt-2' : 'lg:-mt-4',
         )}
       >
         <DirectoryTabs defaultValue="public">

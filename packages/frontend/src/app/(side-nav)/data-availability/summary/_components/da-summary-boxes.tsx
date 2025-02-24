@@ -73,8 +73,8 @@ function SummaryTvsBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pb-0 pt-6 md:w-1/2">
-      <span className="text-base font-bold leading-[normal] md:text-xl">
+    <PrimaryCard className="flex w-full flex-col pb-0 pt-6 md:w-1/2 md:pb-[29px] md:pt-[21px]">
+      <span className="text-base font-bold !leading-6 md:text-xl">
         Total Value Secured
       </span>
       <div className="mt-2.5 grid grid-cols-2 md:my-6">
@@ -141,9 +141,9 @@ function SummaryThroughputBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col  pb-6 pt-4 md:w-1/2">
-      <div className="flex items-center gap-2">
-        <span className="text-base font-bold leading-[normal] md:text-xl">
+    <PrimaryCard className="flex w-full flex-col pb-6 pt-4 md:w-1/2 md:pt-4">
+      <div className="flex items-end gap-2">
+        <span className="text-base font-bold !leading-6 md:text-xl">
           Past Day Data Size
         </span>
         <Link
@@ -155,7 +155,7 @@ function SummaryThroughputBox({
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
         </Link>
       </div>
-      <div className="mt-2.5 md:my-6">
+      <div className="mt-2.5 md:mb-6 md:mt-[25px]">
         <ValueWithChange
           label="Past day data posted to projects with public APIs"
           value={formatBytes(totalPosted)}
@@ -207,7 +207,9 @@ function BreakdownElement({ label, color }: { label: string; color: string }) {
   return (
     <div className="flex items-baseline gap-1">
       <div className={cn('size-2 rounded-sm', color)} />
-      <span className="text-[11px] font-medium text-secondary">{label}</span>
+      <span className="text-[11px] font-medium leading-[11px] text-secondary">
+        {label}
+      </span>
     </div>
   )
 }
@@ -219,11 +221,11 @@ function ValueWithChange({
 }: { label: string; value: string; change: number }) {
   return (
     <div className="flex flex-col gap-1.5 md:gap-2.5">
-      <span className="text-[13px] font-medium leading-[normal] text-secondary md:text-xs">
+      <span className="text-[13px] font-medium !leading-[normal] text-secondary md:text-xs">
         {label}
       </span>
       <div className="flex items-end gap-0.5 md:gap-1.5">
-        <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl">
+        <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
           {value}
         </span>
         <PercentChange
