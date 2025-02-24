@@ -15,12 +15,12 @@ export const FaqSideNavItem = ({ ref, entry, selected }: Props) => {
         href={`#${entry.id}`}
         data-role="faq-side-nav-item"
         className={cn(
-          'text-base font-medium text-gray-850 transition hover:text-brand dark:text-white dark:opacity-80 dark:hover:opacity-100',
+          'inline-block text-base font-medium !leading-[112%] text-primary transition hover:text-brand dark:opacity-80 dark:hover:opacity-100',
           selected &&
             'text-brand hover:text-fuchsia-700 dark:hover:text-purple-450',
         )}
       >
-        <span>{entry.question}</span>
+        {entry.question}
       </a>
     </li>
   )
