@@ -2,6 +2,8 @@ name: Smoke Test (MQ)
 
 on:
   merge_group:
+  # To be removed after the PR is merged
+  pull_request:
 
 jobs:
   config-smoke-test:
@@ -23,7 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -36,7 +38,8 @@ jobs:
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Pull staging configuration
+      # Backend
+      - name: Pull staging backend configuration
         run: heroku config -a l2beat-staging --shell > .env
         working-directory: packages/backend
 
@@ -45,19 +48,43 @@ jobs:
         run: echo "PORT=3000" >> .env
         working-directory: packages/backend
 
-      - name: Run staging smoke test
+      - name: Run staging backend smoke test
         run: pnpm test:config
         working-directory: packages/backend
 
-      - name: Pull production configuration
+      - name: Pull production backend configuration
         run: heroku config -a l2beat-production --shell > .env
         working-directory: packages/backend
 
-      # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
         run: echo "PORT=3000" >> .env
         working-directory: packages/backend
 
-      - name: Run production smoke test
+      - name: Run production backend smoke test
+        run: pnpm test:config
+        working-directory: packages/backend
+
+      # Update Monitor
+      - name: Pull staging update monitor configuration
+        run: heroku config -a l2beat-update-monitor-staging --shell > .env
+        working-directory: packages/backend
+
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run staging update monitor smoke test
+        run: pnpm test:config
+        working-directory: packages/backend
+
+      - name: Pull production update monitor configuration
+        run: heroku config -a l2beat-update-monitor-production --shell > .env
+        working-directory: packages/backend
+
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run production update monitor smoke test
         run: pnpm test:config
         working-directory: packages/backend
