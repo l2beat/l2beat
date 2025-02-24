@@ -132,7 +132,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
         sinceTimestamp: 1721692800, // 2024-07-23
       },
     ],
-    finality: 60, // seconds
+    finality: 40, // best case is 2 blocks
     dataAvailabilitySampling: {
       erasureCodingScheme: '2D Reed-Solomon',
       erasureCodingProof: 'Validity proofs',
