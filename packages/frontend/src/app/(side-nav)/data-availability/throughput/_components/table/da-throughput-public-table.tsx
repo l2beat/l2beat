@@ -23,6 +23,9 @@ export function DaThroughputPublicTable({ items }: Props) {
   const table = useTable({
     columns: publicSystemsColumns,
     data: tableEntries,
+    initialState: {
+      sorting: [{ id: 'pastDayAvgThroughputPerSecond', desc: true }],
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })

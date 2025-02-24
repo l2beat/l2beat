@@ -50,6 +50,11 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
       ),
     )
     .filter(notUndefined)
+    .sort(
+      (a, b) =>
+        (b.data?.pastDayAvgThroughputPerSecond ?? 0) -
+        (a.data?.pastDayAvgThroughputPerSecond ?? 0),
+    )
   return entries
 }
 
@@ -76,8 +81,8 @@ interface DaThroughputEntryData {
 
 export interface DaThroughputEntry extends CommonProjectEntry {
   isPublic: boolean
-  data: DaThroughputEntryData | undefined
-  scalingOnlyData: DaThroughputEntryData | undefined
+  data: DaThroughputEntryData
+  scalingOnlyData: DaThroughputEntryData
   finality: string | undefined
   isSynced: boolean
 }
@@ -88,7 +93,7 @@ function getDaThroughputEntry(
   data: ThroughputTableData['data'][string] | undefined,
   scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
-  if (!data) return undefined
+  if (!data || !scalingOnlyData) return undefined
 
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
   const notSyncedStatus = data
