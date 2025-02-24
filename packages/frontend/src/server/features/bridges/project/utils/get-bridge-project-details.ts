@@ -139,16 +139,5 @@ export async function getBridgeProjectDetails(
       },
     })
 
-  if (bridge.knowledgeNuggets && bridge.knowledgeNuggets.length > 0) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: bridge.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge Nuggets',
-      },
-    })
-  }
-
   return items
 }

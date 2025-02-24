@@ -381,16 +381,5 @@ export async function getL3ProjectDetails({
     })
   }
 
-  if (project.knowledgeNuggets && project.knowledgeNuggets.length > 0) {
-    items.push({
-      type: 'KnowledgeNuggetsSection',
-      props: {
-        knowledgeNuggets: project.knowledgeNuggets,
-        id: 'knowledge-nuggets',
-        title: 'Knowledge nuggets',
-      },
-    })
-  }
-
   return items
 }
