@@ -39,8 +39,6 @@ export async function makeConfig(
   const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
     (p) => p.chainConfig,
   )
-  const tvlConfig = getTvlConfig(flags, env, chains, minTimestampOverride)
-
   const isReadonly = env.boolean(
     'READONLY',
     // if we connect locally to production db, we want to be readonly!
@@ -110,7 +108,9 @@ export async function makeConfig(
           user: env.string('METRICS_AUTH_USER'),
           pass: env.string('METRICS_AUTH_PASS'),
         },
-    tvl: flags.isEnabled('tvl') && tvlConfig,
+    tvl:
+      flags.isEnabled('tvl') &&
+      (await getTvlConfig(ps, flags, env, chains, minTimestampOverride)),
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),

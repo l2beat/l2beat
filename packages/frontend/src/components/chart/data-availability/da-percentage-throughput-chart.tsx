@@ -102,10 +102,10 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="text-secondary">
-        {formatTimestamp(label, { mode: 'datetime' })}
+        {formatTimestamp(label, { longMonthName: true })}
       </div>
       <HorizontalSeparator className="my-1" />
-      <div className="grid">
+      <div>
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           assert(configEntry, 'Config entry not found')
@@ -123,7 +123,7 @@ function CustomTooltip({
                 <span className="text-secondary">{configEntry.label}</span>
               </div>
               <span className="font-medium tabular-nums text-primary">
-                {entry.value?.toFixed(1)}%
+                {entry.value?.toFixed(2)}%
               </span>
             </div>
           )

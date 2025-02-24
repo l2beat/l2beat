@@ -3265,6 +3265,30 @@
   ],
   "base": [
     {
+      "symbol": "KAITO",
+      "address": "0x98d0baa52b2D063E780DE12F615f963Fe8537553",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "FAI",
+      "address": "0xb33Ff54b9F7242EF1593d2C9Bcd8f9df46c77935",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "B3",
+      "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "VVV",
+      "address": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "GHST",
       "address": "0xcD2F22236DD9Dfe2356D7C543161D4d260FD9BcB",
       "source": "canonical",
