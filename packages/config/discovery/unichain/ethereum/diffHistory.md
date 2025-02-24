@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x07137a9987bab232e326c46c46a7c48d8a868146
+Generated with discovered.json: 0x72062077fe5b13e366c77247b3ed0eecacc1d67e
 
 # Diff at Fri, 21 Feb 2025 09:00:26 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x07137a9987bab232e326c46c46a7c48d8a868146
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related: Add categories.
 
 ## Config/verification related changes
 

@@ -1,16 +1,12 @@
-import { tokenList } from '@l2beat/config'
+import { type Project, type ProjectTvlEscrow, tokenList } from '@l2beat/config'
 import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '../../../BackendProject'
 import { getAggLayerL2TokenEntry } from '../aggLayerL2Tokens'
 import { getAggLayerNativeEtherPremintedEntry } from '../aggLayerNativeEtherPreminted'
 import { getAggLayerNativeEtherWrappedEntry } from '../aggLayerNativeEtherWrapped'
 
 export function aggLayerEscrowToEntries(
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
   aggLayerIncludedL1Tokens: string[],
 ) {
   assert(escrow.sharedEscrow?.type === 'AggLayer', 'AggLayer escrow expected')
@@ -23,15 +19,15 @@ export function aggLayerEscrowToEntries(
     ) {
       continue
     }
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     const configEntry = getAggLayerL2TokenEntry(chain, token, escrow, project)
 
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherPreminted') {
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
 
     const configEntry = getAggLayerNativeEtherPremintedEntry(
@@ -43,8 +39,8 @@ export function aggLayerEscrowToEntries(
     entries.push(configEntry)
   }
   if (escrow.sharedEscrow.nativeAsset === 'etherWrapped') {
-    const chain = project.chain
-    assert(chain, `Missing chain for: ${project.projectId}`)
+    const chain = project.chainConfig
+    assert(chain, `Missing chain for: ${project.id}`)
     assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
     const l1Weth = tokenList.find(
       (t) => AssetId.create('ethereum', t.address) === AssetId.WETH,

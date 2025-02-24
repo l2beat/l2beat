@@ -4,7 +4,7 @@ import type {
   ProjectEscrow,
   ReferenceLink,
 } from '@l2beat/config'
-import { CONTRACTS, layer2s } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import { assert } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
@@ -104,14 +104,6 @@ export function getContractsSection(
       }) ?? []
 
   const risks = projectParams.contracts.risks.map(toTechnologyRisk)
-
-  if (projectParams.isVerified === false) {
-    risks.push({
-      text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
-      isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
-    })
-  }
-
   const getL3HostChain = (hostChain: string) => {
     return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
   }
@@ -196,12 +188,12 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    const unverifiedText = CONTRACTS.UNVERIFIED_DESCRIPTION
-
+    const text =
+      'The source code of this contract is not verified on Etherscan.'
     if (!description) {
-      description = unverifiedText
+      description = text
     } else {
-      description += ' ' + unverifiedText
+      description += ' ' + text
     }
   }
 

@@ -4,12 +4,13 @@ import type {
   EthereumAddress,
   ProjectId,
   StringWithAutocomplete,
+  Token,
+  TokenBridgedUsing,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { REASON_FOR_BEING_OTHER } from './common'
-import type { BadgeId, BadgeInfo } from './projects/badges'
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
@@ -113,7 +114,7 @@ export interface ScalingProject {
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
   /** List of badges */
-  badges?: BadgeId[]
+  badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
 }
@@ -814,7 +815,7 @@ export interface BaseProject {
   scalingRisks?: ProjectScalingRisks
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
-  // tvlConfig
+  tvlConfig?: ProjectTvlConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig
@@ -897,10 +898,15 @@ export interface ProjectScalingInfo {
   daLayer: string
   stage: ScalingProjectStage
   purposes: ScalingProjectPurpose[]
-  badges: ScalingProjectBadge[] | undefined
+  badges: Badge[] | undefined
 }
 
-export type ScalingProjectBadge = BadgeInfo & { id: BadgeId }
+export interface Badge {
+  id: string
+  type: string
+  name: string
+  description: string
+}
 
 export type ScalingProjectStage =
   | 'Not applicable'
@@ -1120,4 +1126,23 @@ export interface ProjectContract {
   references?: ReferenceLink[]
   /** Indicates whether the generation of contained data was driven by discovery */
   discoveryDrivenData?: boolean
+}
+
+/** This is the config used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlConfig {
+  escrows: ProjectTvlEscrow[]
+  associatedTokens: string[]
+}
+
+/** This is the escrow used for the old (current) version of TVL. Don't use it for the new tvs implementation. */
+export interface ProjectTvlEscrow {
+  address: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  tokens: (Token & { isPreminted: boolean })[]
+  chain: string
+  includeInTotal?: boolean
+  source?: ProjectEscrow['source']
+  bridgedUsing?: TokenBridgedUsing
+  sharedEscrow?: SharedEscrow
 }

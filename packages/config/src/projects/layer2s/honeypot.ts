@@ -13,7 +13,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 
@@ -25,10 +25,10 @@ export const honeypot: Layer2 = {
   capability: 'appchain',
   addedAt: new UnixTime(1683905088), // 2023-05-12T15:24:48Z
   badges: [
-    Badge.VM.CartesiVM,
-    Badge.VM.AppChain,
-    Badge.DA.EthereumCalldata,
-    Badge.Stack.Cartesi,
+    BADGES.VM.CartesiVM,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Stack.Cartesi,
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {

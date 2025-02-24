@@ -3,7 +3,7 @@ import { BigNumber, utils } from 'ethers'
 import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { CustomDa, Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -117,7 +117,7 @@ export const mantle: Layer2 = opStackL2({
         },
       ],
     },
-    badge: Badge.DA.CustomDA,
+    badge: BADGES.DA.CustomDA,
   },
   associatedTokens: ['MNT'],
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'FBTC'],

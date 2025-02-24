@@ -1,4 +1,4 @@
-import { HOMEPAGE_MILESTONES } from '../../common'
+import { HOMEPAGE_MILESTONES } from '../../global/milestones'
 import type { Layer2 } from '../../types'
 import { abstract } from './abstract'
 import { aevo } from './aevo'

@@ -1,7 +1,11 @@
-import { type ChainConfig, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type Project,
+  type ProjectTvlEscrow,
+  tokenList,
+} from '@l2beat/config'
 import { assert, type AmountConfigEntry, type Token } from '@l2beat/shared-pure'
 import { keyBy } from 'lodash'
-import type { BackendProject, BackendProjectEscrow } from '../BackendProject'
 import { getCirculatingSupplyEntry } from './amounts/circulatingSupply'
 import { addSharedEscrowsL1Tokens } from './amounts/custom/addSharedEscrowsL1Tokens'
 import { aggLayerEscrowToEntries } from './amounts/custom/aggLayerEscrowToEntries'
@@ -11,7 +15,7 @@ import { getPremintedEntry } from './amounts/preminted'
 import { getTotalSupplyEntry } from './amounts/totalSupply'
 
 export function getTvlAmountsConfig(
-  projects: BackendProject[],
+  projects: Project<'tvlConfig', 'chainConfig'>[],
   chains: ChainConfig[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
@@ -28,7 +32,7 @@ export function getTvlAmountsConfig(
   }
 
   const aggLayerIncludedL1Tokens = projects.flatMap((p) =>
-    p.escrows.flatMap(
+    p.tvlConfig.escrows.flatMap(
       (e) =>
         (e.sharedEscrow?.type === 'AggLayer' &&
           e.sharedEscrow?.tokensToAssignFromL1) ||
@@ -37,7 +41,7 @@ export function getTvlAmountsConfig(
   )
 
   const elasticChainIncludedL1Tokens = projects.flatMap((p) =>
-    p.escrows.flatMap(
+    p.tvlConfig.escrows.flatMap(
       (e) =>
         (e.sharedEscrow?.type === 'ElasticChain' &&
           e.sharedEscrow?.tokensToAssignFromL1) ||
@@ -46,7 +50,7 @@ export function getTvlAmountsConfig(
   )
 
   for (const project of projects) {
-    for (const escrow of project.escrows) {
+    for (const escrow of project.tvlConfig.escrows) {
       switch (escrow.sharedEscrow?.type) {
         case 'AggLayer': {
           const aggLayerEntries = aggLayerEscrowToEntries(
@@ -95,7 +99,7 @@ export function getTvlAmountsConfig(
 
 /** Lighter version of `getTvlAmountsConfig`, does not that much nor enforces full configuration compatibility  */
 export function getTvlAmountsConfigForProject(
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
   chains: ChainConfig[],
 ): AmountConfigEntry[] {
   const entries: AmountConfigEntry[] = []
@@ -103,7 +107,7 @@ export function getTvlAmountsConfigForProject(
   const nonZeroSupplyTokens = tokenList.filter((t) => t.supply !== 'zero')
 
   const projectTokens = nonZeroSupplyTokens.filter(
-    (t) => t.chainId === project.chain?.chainId,
+    (t) => t.chainId === project.chainConfig?.chainId,
   )
 
   for (const token of projectTokens) {
@@ -117,7 +121,7 @@ export function getTvlAmountsConfigForProject(
 
   const chainMap = keyBy(chains, (e) => e.chainId)
 
-  for (const escrow of project.escrows) {
+  for (const escrow of project.tvlConfig.escrows) {
     switch (escrow.sharedEscrow?.type) {
       case 'AggLayer': {
         const aggLayerEntries = aggLayerEscrowToEntries(
@@ -166,7 +170,7 @@ export function getTvlAmountsConfigForProject(
 function projectTokenToConfigEntry(
   chain: ChainConfig,
   token: Token,
-  project: BackendProject,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AmountConfigEntry {
   if (token.supply === 'totalSupply') {
     assert(token.address, 'Token address is required for total supply')
@@ -184,8 +188,8 @@ function projectTokenToConfigEntry(
 function projectEscrowToConfigEntry(
   chain: ChainConfig,
   token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): AmountConfigEntry {
   if (token.isPreminted) {
     return getPremintedEntry(chain, token, escrow, project)
@@ -193,10 +197,13 @@ function projectEscrowToConfigEntry(
   return getEscrowEntry(chain, token, escrow, project)
 }
 
-function findProjectAndChain(token: Token, projects: BackendProject[]) {
-  const project = projects.find((x) => x.chain?.chainId === token.chainId)
+function findProjectAndChain(
+  token: Token,
+  projects: Project<'tvlConfig', 'chainConfig'>[],
+) {
+  const project = projects.find((x) => x.chainConfig?.chainId === token.chainId)
   assert(project, `Project not found for token ${token.symbol}`)
-  const chain = project.chain
+  const chain = project.chainConfig
   assert(chain, `Chain not found for token ${token.symbol}`)
   return { chain, project }
 }

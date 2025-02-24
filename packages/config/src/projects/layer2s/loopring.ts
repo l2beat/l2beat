@@ -21,7 +21,7 @@ import {
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { PROOFS } from '../zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 
@@ -50,7 +50,7 @@ export const loopring: Layer2 = {
   id: ProjectId('loopring'),
   capability: 'appchain',
   addedAt: new UnixTime(1623153328), // 2021-06-08T11:55:28Z
-  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
+  badges: [BADGES.VM.AppChain, BADGES.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
     slug: 'loopring',

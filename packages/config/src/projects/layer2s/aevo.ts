@@ -3,14 +3,14 @@ import { NUGGETS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Layer2 } from '../../types'
-import { Badge } from '../badges'
+import { BADGES } from '../badges'
 import { EIGENDA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
   addedAt: new UnixTime(1694090052), // 2023-09-07T12:34:12Z
-  additionalBadges: [Badge.DA.EigenDA, Badge.RaaS.Conduit],
+  additionalBadges: [BADGES.DA.EigenDA, BADGES.RaaS.Conduit],
   daProvider: EIGENDA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,

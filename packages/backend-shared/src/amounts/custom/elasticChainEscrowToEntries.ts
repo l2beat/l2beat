@@ -1,20 +1,21 @@
-import { type ChainConfig, tokenList } from '@l2beat/config'
+import {
+  type ChainConfig,
+  type Project,
+  type ProjectTvlEscrow,
+  tokenList,
+} from '@l2beat/config'
 import {
   assert,
   type AmountConfigEntry,
   AssetId,
   ChainId,
 } from '@l2beat/shared-pure'
-import type {
-  BackendProject,
-  BackendProjectEscrow,
-} from '../../../BackendProject'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
 import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 
 export function elasticChainEscrowToEntries(
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
   elasticChainIncludedL1Tokens: string[],
   chains: ChainConfig[],
 ) {

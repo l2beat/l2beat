@@ -1,4 +1,4 @@
-import type { ChainConfig } from '@l2beat/config'
+import type { ChainConfig, Project, ProjectTvlEscrow } from '@l2beat/config'
 import {
   assert,
   AssetId,
@@ -6,14 +6,13 @@ import {
   type Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { BackendProject, BackendProjectEscrow } from '../../BackendProject'
-import { getEscrowUntilTimestamp } from '../../utils/getEscrowUntilTimestamp'
+import { getEscrowUntilTimestamp } from '../getEscrowUntilTimestamp'
 
 export function getPremintedEntry(
   chain: ChainConfig,
   token: Token & { isPreminted: boolean },
-  escrow: BackendProjectEscrow,
-  project: BackendProject,
+  escrow: ProjectTvlEscrow,
+  project: Project<'tvlConfig', 'chainConfig'>,
 ): PremintedEntry {
   assert(token.isPreminted)
   assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
@@ -25,7 +24,9 @@ export function getPremintedEntry(
   const includeInTotal = token.excludeFromTotal
     ? false
     : (escrow.includeInTotal ?? true)
-  const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+  const isAssociated = !!project.tvlConfig.associatedTokens?.includes(
+    token.symbol,
+  )
   const sinceTimestamp = UnixTime.max(
     UnixTime.max(chain.minTimestampForTvl, token.sinceTimestamp),
     escrow.sinceTimestamp,
@@ -49,7 +50,7 @@ export function getPremintedEntry(
     escrowAddress: escrow.address,
     includeInTotal: includeInTotal,
     isAssociated: isAssociated,
-    project: project.projectId,
+    project: project.id,
     sinceTimestamp: sinceTimestamp,
     source: source,
     symbol: token.symbol,

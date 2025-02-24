@@ -23,6 +23,7 @@ import {
 import { formatExecutionDelay } from '../../../common/formatDelays'
 import type { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import type {
+  Badge,
   ChainConfig,
   KnowledgeNugget,
   Layer2,
@@ -45,7 +46,7 @@ import type {
   TableReadyValue,
   TransactionApiConfig,
 } from '../../../types'
-import { Badge, type BadgeId, badges } from '../../badges'
+import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
 import {
@@ -95,7 +96,7 @@ export interface ZkStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
-  additionalBadges?: BadgeId[]
+  additionalBadges?: Badge[]
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
@@ -133,8 +134,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
-      templateVars.additionalBadges?.find((b) => badges[b].type === 'DA') !==
-        undefined,
+      templateVars.additionalBadges?.find((b) => b.type === 'DA') !== undefined,
       'DA badge missing',
     )
   }
@@ -252,10 +252,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
     capability: templateVars.capability ?? 'universal',
     badges: mergeBadges(
       [
-        Badge.Stack.ZKStack,
-        Badge.Infra.ElasticChain,
-        Badge.VM.EVM,
-        Badge.DA.EthereumBlobs,
+        BADGES.Stack.ZKStack,
+        BADGES.Infra.ElasticChain,
+        BADGES.VM.EVM,
+        BADGES.DA.EthereumBlobs,
       ],
       templateVars.additionalBadges ?? [],
     ),
