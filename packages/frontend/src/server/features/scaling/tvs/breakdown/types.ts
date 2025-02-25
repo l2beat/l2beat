@@ -21,6 +21,7 @@ export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
     escrowAddress: EthereumAddress
     isPreminted?: boolean
     isSharedEscrow?: boolean
+    url?: string
   }[]
 }
 
