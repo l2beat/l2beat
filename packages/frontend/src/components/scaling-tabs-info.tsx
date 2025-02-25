@@ -43,12 +43,12 @@ export function OthersInfo() {
   )
 }
 
-function InfoWithMobileDrawer({
+export function InfoWithMobileDrawer({
   title,
   content,
 }: { title: string; content: string }) {
   return (
-    <div className="flex flex-row sm:mb-2">
+    <div className="mb-3 flex flex-row sm:mb-3">
       <div className="text-[11px] leading-snug text-zinc-500 dark:text-secondary md:text-[13px] md:leading-tight">
         <p className="max-sm:hidden">{content}</p>
         <Drawer>

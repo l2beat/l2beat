@@ -38,10 +38,10 @@ export default async function Page() {
                 Public <CountBadge>{publicSystems.length}</CountBadge>
               </DirectoryTabsTrigger>
             </DirectoryTabsList>
-            <DirectoryTabsContent value="public">
+            <DirectoryTabsContent value="public" className="pt-4 sm:pt-3">
+              <PublicSystemInfo />
               <DaThroughputChart />
               <HorizontalSeparator className="my-5" />
-              <PublicSystemInfo />
               <DaThroughputPublicTable items={publicSystems} />
             </DirectoryTabsContent>
           </DirectoryTabs>
