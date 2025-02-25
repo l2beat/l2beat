@@ -40,22 +40,34 @@ export interface ChainConfig {
   name: string
   chainId: number
   explorerUrl?: string
-  explorerApi?: {
-    url: string
-    type: 'etherscan' | 'blockscout'
-    missingFeatures?: {
-      getContractCreation?: boolean
-    }
-  }
-  blockscoutV2ApiUrl?: string
+  multicallContracts?: MulticallContractConfig[]
+  coingeckoPlatform?: string
   /**
    * Setting this value for a chain does not always equal to grabbing the
    * timestamp of the first block. For example Optimism had block 0 on
    * January 2021 but the block 1 on November 2021.
    */
   sinceTimestamp?: UnixTime
-  multicallContracts?: MulticallContractConfig[]
-  coingeckoPlatform?: string
+  apis: ChainApiConfig[]
+}
+
+export type ChainApiConfig = ChainBasicApi | ChainExplorerApi | ChainStarkexApi
+
+export interface ChainBasicApi {
+  type: 'rpc' | 'starknet' | 'zksync' | 'loopring' | 'degate3' | 'fuel'
+  url: string
+  callsPerMinute?: number
+}
+
+export interface ChainExplorerApi {
+  type: 'etherscan' | 'blockscout' | 'blockscoutV2'
+  url: string
+  contractCreationUnsupported?: boolean
+}
+
+export interface ChainStarkexApi {
+  type: 'starkex'
+  product: string[]
 }
 
 export interface Milestone {
@@ -129,7 +141,7 @@ export interface ScalingProjectConfig {
   /** List of contracts in which L1 funds are locked */
   escrows: ProjectEscrow[]
   /** API parameters used to get transaction count */
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   /** Data availability tracking config */
   daTracking?: ProjectDaTrackingConfig[]
 }
@@ -398,19 +410,10 @@ export interface ProjectTechnologyChoice {
   isUnderReview?: boolean
 }
 
-export type TransactionApiConfig =
-  | RpcTransactionApi
-  | StarkexTransactionApi
-  | CustomTransactionApi<'starknet'>
-  | CustomTransactionApi<'zksync'>
-  | CustomTransactionApi<'loopring'>
-  | CustomTransactionApi<'degate3'>
-  | CustomTransactionApi<'fuel'>
+export type ProjectActivityConfig = BlockActivityConfig | DayActivityConfig
 
-export interface RpcTransactionApi {
-  type: 'rpc'
-  defaultUrl: string
-  defaultCallsPerMinute?: number
+export interface BlockActivityConfig {
+  type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
 }
@@ -419,9 +422,7 @@ export type AdjustCount =
   | { type: 'SubtractOne' }
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
 
-export interface StarkexTransactionApi {
-  type: 'starkex'
-  product: string[]
+export interface DayActivityConfig {
   sinceTimestamp: UnixTime
   resyncLastDays?: number
 }
@@ -807,7 +808,7 @@ export interface BaseProject {
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
-  transactionApiConfig?: TransactionApiConfig
+  acitivityConfig?: ProjectActivityConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig

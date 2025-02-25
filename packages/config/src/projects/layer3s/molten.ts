@@ -44,7 +44,17 @@ export const molten: Layer3 = orbitStackL3({
   },
   gasTokens: { tracked: ['MOLTEN'] },
   associatedTokens: ['MOLTEN'],
-  rpcUrl: 'https://molten.calderachain.xyz/http',
+  chainConfig: {
+    name: 'molten',
+    chainId: 360,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://molten.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

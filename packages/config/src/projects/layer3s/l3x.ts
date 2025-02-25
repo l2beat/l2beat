@@ -39,13 +39,15 @@ export const l3x: Layer3 = orbitStackL3({
     name: 'l3x',
     chainId: 12324,
     explorerUrl: 'https://explorer.l3x.com',
-    explorerApi: {
-      url: 'https://explorer.l3x.com/api',
-      type: 'blockscout',
-    },
     multicallContracts: [],
     sinceTimestamp: new UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
+    apis: [
+      {
+        type: 'blockscout',
+        url: 'https://explorer.l3x.com/api',
+      },
+    ],
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

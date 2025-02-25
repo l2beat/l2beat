@@ -3,6 +3,7 @@ import type { BaseProject } from '../../../types'
 import { EthereumDaBridgeRisks, EthereumDaLayerRisks } from '../common'
 import { linkByDA } from '../common/linkByDA'
 
+// Deployment of the first L2
 export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
   new Date('2019-11-14T00:00:00Z'),
 )
@@ -174,21 +175,11 @@ This method allows ZK rollups to prove that the data used in their validity proo
           validating bridge has access to all the data, as it is posted on chain.`,
     },
   },
-  transactionApiConfig: {
-    type: 'rpc',
-    defaultUrl: 'https://eth-mainnet.alchemyapi.io/v2/demo',
-    startBlock: 8929324,
-  },
   chainConfig: {
     name: 'ethereum',
     chainId: 1,
     explorerUrl: 'https://etherscan.io',
-    explorerApi: {
-      url: 'https://api.etherscan.io/api',
-      type: 'etherscan',
-    },
-    blockscoutV2ApiUrl: 'https://eth.blockscout.com/api/v2',
-    // Deployment of the first L2
+    coingeckoPlatform: 'ethereum',
     sinceTimestamp: MIN_TIMESTAMP_FOR_TVL,
     multicallContracts: [
       {
@@ -210,6 +201,11 @@ This method allows ZK rollups to prove that the data used in their validity proo
         version: '1',
       },
     ],
-    coingeckoPlatform: 'ethereum',
+    apis: [
+      { type: 'etherscan', url: 'https://api.etherscan.io/api' },
+      { type: 'blockscoutV2', url: 'https://eth.blockscout.com/api/v2' },
+      { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
+    ],
   },
+  acitivityConfig: { type: 'block', startBlock: 8929324 },
 }

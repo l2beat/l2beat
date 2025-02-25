@@ -46,10 +46,8 @@ export const sanko: Layer3 = orbitStackL3({
     name: 'sanko',
     chainId: 1996,
     explorerUrl: 'https://explorer.sanko.xyz',
-    explorerApi: {
-      url: 'https://explorer.sanko.xyz/api',
-      type: 'blockscout',
-    },
+    sinceTimestamp: new UnixTime(1712970000),
+    coingeckoPlatform: 'sanko',
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -58,12 +56,13 @@ export const sanko: Layer3 = orbitStackL3({
         version: '3',
       },
     ],
-    sinceTimestamp: new UnixTime(1712970000),
-    coingeckoPlatform: 'sanko',
+    apis: [
+      { type: 'blockscout', url: 'https://explorer.sanko.xyz/api' },
+      { type: 'rpc', url: 'https://mainnet.sanko.xyz', callsPerMinute: 1500 },
+    ],
   },
   gasTokens: { tracked: ['DMT'] },
   associatedTokens: ['DMT'],
-  rpcUrl: 'https://mainnet.sanko.xyz',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

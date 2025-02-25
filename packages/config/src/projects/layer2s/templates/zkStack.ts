@@ -29,6 +29,7 @@ import type {
   Layer2FinalityConfig,
   Layer2TxConfig,
   Milestone,
+  ProjectActivityConfig,
   ProjectContract,
   ProjectDaTrackingConfig,
   ProjectEscrow,
@@ -42,11 +43,11 @@ import type {
   ScalingProjectTechnology,
   StageConfig,
   TableReadyValue,
-  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { PROOFS } from '../../zk-catalog/common/proofSystems'
 import { getStage } from '../common/stages/getStage'
+import { getActivityConfig } from './activity'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
@@ -75,8 +76,7 @@ export interface ZkStackConfigCommon {
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   diamondContract: ContractParameters
-  rpcUrl?: string
-  transactionApi?: TransactionApiConfig
+  activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   finality?: Layer2FinalityConfig
   l2OutputOracle?: ContractParameters
@@ -297,16 +297,14 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): Layer2 {
           ? templateVars.nonTemplateEscrows(upgrades)
           : []),
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-            }
-          : undefined),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+        },
+      ),
       daTracking: getDaTracking(templateVars),
       trackedTxs:
         daProvider !== undefined

@@ -33,7 +33,6 @@ export const rari: Layer3 = orbitStackL3({
       socialMedia: ['https://twitter.com/RariChain'],
     },
   },
-  rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
   celestiaDa: {
     sinceBlock: 0, // Edge Case: config added @ DA Module start  },
     namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMod4SqHjry4i0U=',
@@ -61,12 +60,16 @@ export const rari: Layer3 = orbitStackL3({
     name: 'rari',
     chainId: 1380012617,
     explorerUrl: 'https://mainnet.explorer.rarichain.org',
-    explorerApi: {
-      url: 'https://rari.calderaexplorer.xyz/api',
-      type: 'blockscout',
-    },
-    blockscoutV2ApiUrl: 'https://rari.calderaexplorer.xyz/api/v2',
     sinceTimestamp: new UnixTime(1705716145),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.rpc.rarichain.org/http',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://rari.calderaexplorer.xyz/api' },
+      { type: 'blockscoutV2', url: 'https://rari.calderaexplorer.xyz/api/v2' },
+    ],
   },
   nonTemplateTechnology: {
     sequencing: {

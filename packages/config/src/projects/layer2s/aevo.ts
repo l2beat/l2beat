@@ -40,10 +40,7 @@ export const aevo: Layer2 = opStackL2({
     name: 'aevo',
     chainId: 2999,
     explorerUrl: 'https://explorer.aevo.xyz',
-    explorerApi: {
-      url: 'https://explorer.aevo.xyz/api',
-      type: 'blockscout',
-    },
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
     multicallContracts: [
       {
         sinceBlock: 2790111,
@@ -52,13 +49,18 @@ export const aevo: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
+        callsPerMinute: 800,
+      },
+      { type: 'blockscout', url: 'https://explorer.aevo.xyz/api' },
+    ],
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc-aevo-mainnet-prod-0.t.conduit.xyz',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
   celestiaDa: {

@@ -38,7 +38,17 @@ export const xrone: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://xr-one.calderachain.xyz/http',
+  chainConfig: {
+    name: 'xrone',
+    chainId: 273,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://xr-one.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0xcf28946c814356A2A9df19c57937917f7Ef9D3Cf'), // bridge (native token: XR)

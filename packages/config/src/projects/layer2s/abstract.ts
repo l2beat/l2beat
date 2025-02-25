@@ -36,17 +36,16 @@ export const abstract: Layer2 = zkStackL2({
       ],
     },
   },
-  rpcUrl: 'https://api.mainnet.abs.xyz',
   chainConfig: {
     name: 'abstract',
     chainId,
     explorerUrl: 'https://abscan.org',
-    explorerApi: {
-      url: 'https://api.abscan.org/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: genesisTimestamp,
     coingeckoPlatform: 'abstract',
+    apis: [
+      { type: 'etherscan', url: 'https://api.abscan.org/api' },
+      { type: 'rpc', url: 'https://api.mainnet.abs.xyz', callsPerMinute: 1500 },
+    ],
   },
   discovery,
   discovery_ZKstackGovL2,

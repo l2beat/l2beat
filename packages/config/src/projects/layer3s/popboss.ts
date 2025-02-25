@@ -45,11 +45,20 @@ export const popboss: Layer3 = orbitStackL3({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
+  chainConfig: {
+    name: 'popboss',
+    chainId: 70701,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.boss.proofofplay.com',
+        callsPerMinute: 3000,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultUrl: 'https://rpc.boss.proofofplay.com',
-    defaultCallsPerMinute: 3000,
     adjustCount: { type: 'SubtractOne' },
   },
   customDa: AnytrustDAC({ discovery }),
