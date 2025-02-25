@@ -44,7 +44,7 @@
       "escrows": [
         {
           "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-          "balance": 769696491.1419002,
+          "balance": 769435055.7223847,
           "project": "polygon-pos"
         },
         {
@@ -88,12 +88,12 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 870740599.5654355,
+          "balance": 871322689.9025712,
           "project": "polygon-pos"
         },
         {
           "address": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
-          "balance": 100239.00000000124,
+          "balance": 102752.72686759643,
           "project": "soneium"
         }
       ],
@@ -110,7 +110,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 956014.7500194652,
+          "balance": 956020.4570482564,
           "project": "polygon-pos"
         }
       ],
@@ -144,7 +144,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 26433937.70799565,
+          "balance": 26525901.513273932,
           "project": "base"
         },
         {
@@ -228,7 +228,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 100867061.09655179,
+          "balance": 100842045.97536258,
           "project": "polygon-pos"
         }
       ],
@@ -252,7 +252,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 672493467.3777745,
+          "balance": 672624890.0237299,
           "project": "base"
         }
       ],
@@ -264,7 +264,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 3574712571.437674,
+          "balance": 3579579744.389246,
           "project": "polygon-pos"
         }
       ],
@@ -310,7 +310,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 160972724.3212441,
+          "balance": 161616730.6180676,
           "project": "polygon-pos"
         }
       ],
@@ -322,7 +322,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 41828722.37580333,
+          "balance": 41831318.03023891,
           "project": "polygon-pos"
         },
         {
@@ -344,7 +344,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 159256838.3133328,
+          "balance": 159280138.96796602,
           "project": "polygon-pos"
         }
       ],
@@ -368,7 +368,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 1800285.83876081,
+          "balance": 1800388.16849554,
           "project": "base"
         },
         {
@@ -385,7 +385,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 1057770939.704861,
+          "balance": 1060446814.0282611,
           "project": "base"
         },
         {
@@ -414,7 +414,7 @@
       "escrows": [
         {
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "balance": 23973690.694023132,
+          "balance": 23949890.946185607,
           "project": "immutablex"
         },
         {
@@ -458,18 +458,28 @@
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "balance": 6414.116393458728,
+          "balance": 1145.3100000004838,
           "project": "astarzkevm"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 973614.9498443386,
+          "balance": 987697.5490677916,
           "project": "base"
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 19319305.07513754,
+          "balance": 19239412.066030007,
           "project": "polygon-pos"
+        },
+        {
+          "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "balance": 10,
+          "project": "linea"
+        },
+        {
+          "address": "0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
+          "balance": 10,
+          "project": "scroll"
         }
       ],
       "coingeckoId": "swarm-markets",
@@ -539,7 +549,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 74366718.68672915,
+          "balance": 74523626.8512383,
           "project": "base"
         },
         {
@@ -583,7 +593,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 11475221.955705212,
+          "balance": 11511328.227256598,
           "project": "polygon-pos"
         },
         {
@@ -600,7 +610,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 549729.1110697062,
+          "balance": 540833.2988332168,
           "project": "polygon-pos"
         },
         {
@@ -656,7 +666,7 @@
       "escrows": [
         {
           "address": "0xcEe284F754E854890e311e3280b767F80797180d",
-          "balance": 25503124.761274993,
+          "balance": 25624737.325132787,
           "project": "arbitrum"
         },
         {
@@ -926,7 +936,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 27396596.390291773,
+          "balance": 27414493.14920115,
           "project": "polygon-pos"
         }
       ],
@@ -950,7 +960,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 4445418.544130089,
+          "balance": 4545376.437695839,
           "project": "base"
         }
       ],
@@ -1094,7 +1104,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 10563772.515725132,
+          "balance": 10532308.808265116,
           "project": "polygon-pos"
         }
       ],
@@ -1289,7 +1299,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 654161.1777096549,
+          "balance": 654212.5387526549,
           "project": "polygon-pos"
         },
         {
@@ -1328,7 +1338,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 10370982.644066231,
+          "balance": 10503063.537675243,
           "project": "polygon-pos"
         }
       ],
@@ -1340,7 +1350,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 4998063138818.265,
+          "balance": 5422272490122.576,
           "project": "base"
         }
       ],
@@ -1396,7 +1406,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 48788669.0349439,
+          "balance": 48829092.28168407,
           "project": "polygon-pos"
         }
       ],
@@ -1577,7 +1587,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1627633.5754979975,
+          "balance": 1649410.610422383,
           "project": "polygon-pos"
         },
         {
@@ -1621,7 +1631,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 289517.4872788391,
+          "balance": 289882.1909033037,
           "project": "polygon-pos"
         }
       ],
@@ -1793,7 +1803,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 3100386.330836739,
+          "balance": 2982283.0302815293,
           "project": "base"
         },
         {
@@ -1839,7 +1849,7 @@
       "escrows": [
         {
           "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "balance": 185840833.22647008,
+          "balance": 188947352.37330708,
           "project": "fraxtal"
         },
         {
@@ -1895,7 +1905,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 345775.10442280304,
+          "balance": 344524.2832426313,
           "project": "polygon-pos"
         }
       ],
@@ -1907,7 +1917,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 6638532.554836706,
+          "balance": 6688508.667923204,
           "project": "base"
         },
         {
@@ -1956,7 +1966,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 20058.0922422373,
+          "balance": 20095.873689715718,
           "project": "arbitrum"
         },
         {
@@ -2053,7 +2063,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 297913099.4616419,
+          "balance": 300242864.3147729,
           "project": "base"
         },
         {
@@ -2145,7 +2155,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 908774132837.0054,
+          "balance": 945566596193.722,
           "project": "base"
         }
       ],
@@ -2466,12 +2476,12 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 17619.28477026441,
+          "balance": 17917.949836856125,
           "project": "base"
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1022868.8337529241,
+          "balance": 1027069.8922303343,
           "project": "polygon-pos"
         }
       ],
@@ -2570,7 +2580,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 19761.448302,
+          "balance": 22173.211995,
           "project": "arbitrum"
         },
         {
@@ -2726,7 +2736,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 48832.507763344875,
+          "balance": 48672.95359961486,
           "project": "arbitrum"
         }
       ],
@@ -2980,13 +2990,18 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 20.508733881984078,
+          "balance": 20.520519581984075,
           "project": "polygon-pos"
         },
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "balance": 1e-7,
           "project": "astarzkevm"
+        },
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 0.37218617118850406,
+          "project": "arbitrum"
         }
       ],
       "coingeckoId": "binancecoin",
@@ -3103,7 +3118,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 4591.438030333119,
+          "balance": 4594.476669333183,
           "project": "arbitrum"
         }
       ],
@@ -3115,7 +3130,7 @@
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "balance": 942.3977518816343,
+          "balance": 940.9131848385832,
           "project": "abstract"
         }
       ],
@@ -3151,7 +3166,7 @@
       "escrows": [
         {
           "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-          "balance": 1854962.160834834,
+          "balance": 1885931.160834834,
           "project": "abstract"
         }
       ],
@@ -3216,7 +3231,7 @@
         },
         {
           "address": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
-          "balance": 15323911.571354985,
+          "balance": 15415482.028124986,
           "project": "blast"
         }
       ],
@@ -3288,7 +3303,7 @@
       "escrows": [
         {
           "address": "0xcEe284F754E854890e311e3280b767F80797180d",
-          "balance": 3426090.601589774,
+          "balance": 3183165.7239998784,
           "project": "arbitrum"
         }
       ],
@@ -3348,7 +3363,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 446981427.074362,
+          "balance": 447069172.6394595,
           "project": "arbitrum"
         }
       ],
@@ -3382,7 +3397,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 54947855.38644074,
+          "balance": 54962855.38644074,
           "project": "base"
         }
       ],
@@ -3399,7 +3414,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 1415924618.3898811,
+          "balance": 1434216609.545795,
           "project": "base"
         },
         {
@@ -3460,7 +3475,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 182.5983841504459,
+          "balance": 194.5264604231916,
           "project": "base"
         },
         {
@@ -3506,7 +3521,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 159528629.9565336,
+          "balance": 159813878.2126359,
           "project": "arbitrum"
         },
         {
@@ -3535,7 +3550,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 21138199.379881974,
+          "balance": 21156265.997103896,
           "project": "arbitrum"
         }
       ],
@@ -3552,12 +3567,12 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 39476045.16010112,
+          "balance": 38152431.66277089,
           "project": "base"
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 720521148.7999908,
+          "balance": 737490435.9420257,
           "project": "polygon-pos"
         }
       ],
@@ -3722,7 +3737,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 29201058.03058498,
+          "balance": 30096535.286467537,
           "project": "arbitrum"
         }
       ],
@@ -3734,12 +3749,12 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 72430.36580629864,
+          "balance": 73344.62129332895,
           "project": "arbitrum"
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 851470.3260669654,
+          "balance": 848225.5563788421,
           "project": "base"
         },
         {
@@ -3749,7 +3764,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 102328.16400133765,
+          "balance": 102383.8813417659,
           "project": "polygon-pos"
         },
         {
@@ -3778,7 +3793,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 232805155.0957566,
+          "balance": 212517690.5887334,
           "project": "arbitrum"
         }
       ],
@@ -3826,7 +3841,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 282198431645.8108,
+          "balance": 286472447551.7899,
           "project": "arbitrum"
         }
       ],
@@ -3838,7 +3853,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 77989796.93752989,
+          "balance": 78161045.30384506,
           "project": "arbitrum"
         },
         {
@@ -3908,7 +3923,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 12150023.934556805,
+          "balance": 12457122.886799805,
           "project": "base"
         }
       ],
@@ -3944,7 +3959,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 174153864.38449174,
+          "balance": 174164532.38449174,
           "project": "arbitrum"
         },
         {
@@ -4002,12 +4017,12 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 856546.5429271755,
+          "balance": 856796.5849335447,
           "project": "base"
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 32701.373215060263,
+          "balance": 32691.99790971963,
           "project": "polygon-pos"
         }
       ],
@@ -4019,7 +4034,7 @@
       "escrows": [
         {
           "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "balance": 11577.305888022796,
+          "balance": 10157.636898391245,
           "project": "arbitrum"
         }
       ],
@@ -4094,7 +4109,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 6435101.125233727,
+          "balance": 6471109.421878939,
           "project": "polygon-pos"
         }
       ],
@@ -4272,12 +4287,12 @@
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "balance": 27880346.17129003,
+          "balance": 27989669.4095982,
           "project": "astarzkevm"
         },
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 183211294.2040661,
+          "balance": 183277078.9903157,
           "project": "optimism"
         }
       ],
@@ -4301,7 +4316,7 @@
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "balance": 323047297.6816137,
+          "balance": 324610093.0952406,
           "project": "astarzkevm"
         },
         {
@@ -4318,7 +4333,7 @@
       "escrows": [
         {
           "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-          "balance": 24687570.770061765,
+          "balance": 25237058.259003706,
           "project": "astarzkevm"
         }
       ],
@@ -4414,7 +4429,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 4897083.65555229,
+          "balance": 5118612.405830905,
           "project": "base"
         },
         {
@@ -4443,7 +4458,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 840248.8679390573,
+          "balance": 749705.3176026313,
           "project": "base"
         }
       ],
@@ -4467,7 +4482,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 13660761.891637962,
+          "balance": 14019794.803245815,
           "project": "base"
         }
       ],
@@ -4491,7 +4506,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 8082496.496254752,
+          "balance": 8009600.309207581,
           "project": "base"
         }
       ],
@@ -4515,7 +4530,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 3592980.389424647,
+          "balance": 3581331.5197377475,
           "project": "base"
         },
         {
@@ -4532,7 +4547,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 31217996.7971533,
+          "balance": 31419357.918428883,
           "project": "base"
         }
       ],
@@ -4633,7 +4648,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 16799288.016508687,
+          "balance": 16822297.324819446,
           "project": "base"
         }
       ],
@@ -4645,7 +4660,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 782105.1069194903,
+          "balance": 812871.8951495964,
           "project": "base"
         },
         {
@@ -4662,7 +4677,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 97318739.40972532,
+          "balance": 97313919.04842816,
           "project": "base"
         }
       ],
@@ -4686,7 +4701,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 1087951378.831348,
+          "balance": 1104118276.7859678,
           "project": "base"
         }
       ],
@@ -4746,7 +4761,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 6142583.399180473,
+          "balance": 6119475.667052755,
           "project": "base"
         }
       ],
@@ -4782,7 +4797,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 547329.2609627686,
+          "balance": 560354.8341845548,
           "project": "base"
         },
         {
@@ -4874,7 +4889,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 16612311.882215489,
+          "balance": 17487446.72858941,
           "project": "base"
         }
       ],
@@ -4927,7 +4942,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 18892250087.580166,
+          "balance": 21121970158.559166,
           "project": "base"
         }
       ],
@@ -4987,7 +5002,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 98714182860,
+          "balance": 98714661234,
           "project": "base"
         }
       ],
@@ -5023,12 +5038,12 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 8379885.81327115,
+          "balance": 8404885.81327115,
           "project": "base"
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 2512293.073650335,
+          "balance": 2537293.073650335,
           "project": "polygon-pos"
         }
       ],
@@ -5040,8 +5055,18 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 0.0001,
+          "balance": 0.00026,
           "project": "base"
+        },
+        {
+          "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "balance": 0.00003,
+          "project": "abstract"
+        },
+        {
+          "address": "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8",
+          "balance": 0.00003,
+          "project": "kinto"
         }
       ],
       "coingeckoId": "brk690k",
@@ -5052,7 +5077,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 81525617.48218232,
+          "balance": 79217874.77621414,
           "project": "base"
         }
       ],
@@ -5081,7 +5106,7 @@
         },
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 97692344.4704504,
+          "balance": 97422496.2129564,
           "project": "polygon-pos"
         }
       ],
@@ -5122,7 +5147,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 21828393.02224493,
+          "balance": 21845121.02224493,
           "project": "base"
         }
       ],
@@ -5187,7 +5212,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 8463.10601965076,
+          "balance": 4601.995979650761,
           "project": "base"
         }
       ],
@@ -5245,7 +5270,7 @@
       "escrows": [
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 60005,
+          "balance": 10261203,
           "project": "base"
         }
       ],
@@ -5382,7 +5407,7 @@
       "escrows": [
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
-          "balance": 290474.895755544,
+          "balance": 304453.895755544,
           "project": "degate3"
         }
       ],
@@ -5423,7 +5448,7 @@
       "escrows": [
         {
           "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
-          "balance": 4488.958981871967,
+          "balance": 40.152981871967114,
           "project": "degate3"
         }
       ],
@@ -5459,7 +5484,7 @@
       "escrows": [
         {
           "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "balance": 3035661.7349425554,
+          "balance": 5026431.295388585,
           "project": "fraxtal"
         }
       ],
@@ -5471,7 +5496,7 @@
       "escrows": [
         {
           "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "balance": 1310752.3206288428,
+          "balance": 1337727.6708288428,
           "project": "fraxtal"
         }
       ],
@@ -5495,7 +5520,7 @@
       "escrows": [
         {
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "balance": 37022241.91512584,
+          "balance": 37364395.32512584,
           "project": "immutablex"
         }
       ],
@@ -5507,7 +5532,7 @@
       "escrows": [
         {
           "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "balance": 106738.01247476644,
+          "balance": 107044.49684897444,
           "project": "immutablex"
         }
       ],
@@ -5531,7 +5556,7 @@
       "escrows": [
         {
           "address": "0xc08a7164F9E9d8aB66CcB67D49d6FB116b5808dD",
-          "balance": 27.75653057920751,
+          "balance": 29.231949210823863,
           "project": "kontos"
         }
       ],
@@ -5543,7 +5568,7 @@
       "escrows": [
         {
           "address": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
-          "balance": 43351054.32671037,
+          "balance": 43683264.94671038,
           "project": "linea"
         }
       ],
@@ -5579,7 +5604,7 @@
       "escrows": [
         {
           "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-          "balance": 153605.08323002,
+          "balance": 254605.08323002,
           "project": "metis"
         }
       ],
@@ -5627,7 +5652,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 28432.00049256009,
+          "balance": 29581.092208680773,
           "project": "optimism"
         }
       ],
@@ -5639,7 +5664,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 10017887.716750845,
+          "balance": 10017970.272334179,
           "project": "optimism"
         }
       ],
@@ -5675,7 +5700,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 7800809.372189046,
+          "balance": 8152837.516404648,
           "project": "optimism"
         }
       ],
@@ -5757,7 +5782,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 0.03664950504025341,
+          "balance": 0.038728505040253415,
           "project": "optimism"
         }
       ],
@@ -5769,7 +5794,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 13378683.907038001,
+          "balance": 13436278.986566283,
           "project": "optimism"
         },
         {
@@ -5786,7 +5811,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 13,
+          "balance": 22,
           "project": "optimism"
         }
       ],
@@ -5798,7 +5823,7 @@
       "escrows": [
         {
           "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-          "balance": 17187159.46133817,
+          "balance": 19504275.753627215,
           "project": "optimism"
         }
       ],
@@ -5882,7 +5907,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 10993142.43612924,
+          "balance": 10984750.167476516,
           "project": "polygon-pos"
         }
       ],
@@ -5918,7 +5943,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 54603830.35440644,
+          "balance": 54503830.620260365,
           "project": "polygon-pos"
         }
       ],
@@ -5930,7 +5955,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 4732078.154045006,
+          "balance": 4991443.951958897,
           "project": "polygon-pos"
         }
       ],
@@ -5978,7 +6003,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1923008.1526488527,
+          "balance": 1932658.3696348527,
           "project": "polygon-pos"
         }
       ],
@@ -6002,7 +6027,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 166871139.61141112,
+          "balance": 166537756.84958863,
           "project": "polygon-pos"
         }
       ],
@@ -6038,7 +6063,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 12524214.49186918,
+          "balance": 12543488.28837064,
           "project": "polygon-pos"
         }
       ],
@@ -6050,7 +6075,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 8150509.078508589,
+          "balance": 8151858.896191911,
           "project": "polygon-pos"
         }
       ],
@@ -6062,7 +6087,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 49647554.599057615,
+          "balance": 49586434.17664321,
           "project": "polygon-pos"
         }
       ],
@@ -6074,7 +6099,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 53908751.74749978,
+          "balance": 53969850.1083916,
           "project": "polygon-pos"
         }
       ],
@@ -6134,7 +6159,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 130614836.80927403,
+          "balance": 130915846.12154403,
           "project": "polygon-pos"
         }
       ],
@@ -6146,7 +6171,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 8841099.525914371,
+          "balance": 8882482.65240637,
           "project": "polygon-pos"
         }
       ],
@@ -6158,7 +6183,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 7342805.485061028,
+          "balance": 7383750.008622028,
           "project": "polygon-pos"
         }
       ],
@@ -6182,7 +6207,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 283427512.75776815,
+          "balance": 283426780.63546693,
           "project": "polygon-pos"
         }
       ],
@@ -6254,7 +6279,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 4007015.25853656,
+          "balance": 4145045.86480968,
           "project": "polygon-pos"
         }
       ],
@@ -6266,7 +6291,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 9911618.309187,
+          "balance": 9924835.346707,
           "project": "polygon-pos"
         }
       ],
@@ -6302,7 +6327,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 60385.37619324785,
+          "balance": 60555.77061124785,
           "project": "polygon-pos"
         }
       ],
@@ -6326,7 +6351,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1555427.1671,
+          "balance": 1557427.1671,
           "project": "polygon-pos"
         }
       ],
@@ -6374,7 +6399,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 539991.9612957851,
+          "balance": 544044.7801907852,
           "project": "polygon-pos"
         }
       ],
@@ -6458,7 +6483,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1107810146.6823444,
+          "balance": 1151624809.1492307,
           "project": "polygon-pos"
         }
       ],
@@ -6482,7 +6507,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 3742255.1608878537,
+          "balance": 3812275.3889023885,
           "project": "polygon-pos"
         }
       ],
@@ -6506,7 +6531,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 1542706.1667515899,
+          "balance": 1551246.9101646096,
           "project": "polygon-pos"
         }
       ],
@@ -6518,7 +6543,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 138783899.17462063,
+          "balance": 138906787.3255859,
           "project": "polygon-pos"
         }
       ],
@@ -6650,7 +6675,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 123128871.852675,
+          "balance": 123557782.33369105,
           "project": "polygon-pos"
         }
       ],
@@ -6679,7 +6704,7 @@
         },
         {
           "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-          "balance": 2010000,
+          "balance": 2392041.265714,
           "project": "base"
         }
       ],
@@ -6703,7 +6728,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 933.6897670807847,
+          "balance": 963.452860155449,
           "project": "polygon-pos"
         }
       ],
@@ -6727,7 +6752,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 248006.70994373068,
+          "balance": 252295.65868473068,
           "project": "polygon-pos"
         }
       ],
@@ -6751,7 +6776,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 17453982.316319603,
+          "balance": 17546968.22058937,
           "project": "polygon-pos"
         }
       ],
@@ -7063,7 +7088,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 22695593.958254896,
+          "balance": 23061769.901474897,
           "project": "polygon-pos"
         }
       ],
@@ -7099,7 +7124,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 35377283.62293599,
+          "balance": 35508456.29502999,
           "project": "polygon-pos"
         }
       ],
@@ -7183,7 +7208,7 @@
       "escrows": [
         {
           "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-          "balance": 77378.25436872292,
+          "balance": 78045.7170500564,
           "project": "polygon-pos"
         }
       ],
@@ -7315,7 +7340,7 @@
       "escrows": [
         {
           "address": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
-          "balance": 64893198.5030618,
+          "balance": 65138092.50409332,
           "project": "polygon-pos"
         }
       ],
@@ -7375,7 +7400,7 @@
       "escrows": [
         {
           "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "balance": 1479875763098.8865,
+          "balance": 1509610268153.6733,
           "project": "shibarium"
         }
       ],
@@ -7447,7 +7472,7 @@
       "escrows": [
         {
           "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "balance": 3087284927.168642,
+          "balance": 3379025970.2307773,
           "project": "shibarium"
         }
       ],
@@ -7471,7 +7496,7 @@
       "escrows": [
         {
           "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "balance": 12393065.660784116,
+          "balance": 12675560.123916889,
           "project": "shibarium"
         }
       ],
@@ -7603,7 +7628,7 @@
       "escrows": [
         {
           "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
-          "balance": 2578005.710490124,
+          "balance": 15907916.134812713,
           "project": "shibarium"
         }
       ],
@@ -7645,6 +7670,119 @@
       ],
       "coingeckoId": "estee",
       "symbol": "estee"
+    },
+    {
+      "address": "ethereum:0xcb69b067d9d8d6dd1209fe4557c43586e54f9045",
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 2743467379.0173535,
+          "project": "arbitrum"
+        }
+      ],
+      "coingeckoId": "possum",
+      "symbol": "psm"
+    },
+    {
+      "address": "ethereum:0x6c3fe25a4de7fa243c653cfe1f165bf11d99704e",
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 1000,
+          "project": "arbitrum"
+        }
+      ],
+      "coingeckoId": "hilo-2",
+      "symbol": "hilo"
+    },
+    {
+      "address": "ethereum:0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4",
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 138.1657974676754,
+          "project": "arbitrum"
+        },
+        {
+          "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "balance": 6.21,
+          "project": "fraxtal"
+        }
+      ],
+      "coingeckoId": "near",
+      "symbol": "near"
+    },
+    {
+      "address": "ethereum:0x3010ccb5419f1ef26d40a7cd3f0d707a0fa127dc",
+      "escrows": [
+        {
+          "address": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "balance": 13500.52,
+          "project": "arbitrum"
+        }
+      ],
+      "coingeckoId": "gems-vip",
+      "symbol": "gems"
+    },
+    {
+      "address": "ethereum:0x88800092ff476844f74dc2fc427974bbee2794ae",
+      "escrows": [
+        {
+          "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+          "balance": 10981425.363882657,
+          "project": "base"
+        }
+      ],
+      "coingeckoId": "ambire-wallet",
+      "symbol": "wallet"
+    },
+    {
+      "address": "ethereum:0x3e9bc21c9b189c09df3ef1b824798658d5011937",
+      "escrows": [
+        {
+          "address": "0x54D7aE423Edb07282645e740C046B9373970a168",
+          "balance": 6597.19446760503,
+          "project": "degate3"
+        }
+      ],
+      "coingeckoId": "linear",
+      "symbol": "lina"
+    },
+    {
+      "address": "ethereum:0x3c917054e03485808137eb306eafa8da0ab695cd",
+      "escrows": [
+        {
+          "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+          "balance": 232435359.47909817,
+          "project": "polygon-pos"
+        }
+      ],
+      "coingeckoId": "klaycity-orb",
+      "symbol": "orb"
+    },
+    {
+      "address": "ethereum:0x85e0b9d3e7e4dba7e59090c533906d0e9211d8b6",
+      "escrows": [
+        {
+          "address": "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa",
+          "balance": 8e-8,
+          "project": "shibarium"
+        }
+      ],
+      "coingeckoId": "ishi",
+      "symbol": "ishi"
+    },
+    {
+      "address": "arbitrum:0x13ad3f1150db0e1e05fd32bdeeb7c110ee023de6",
+      "escrows": [
+        {
+          "address": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+          "balance": 160,
+          "project": "xai"
+        }
+      ],
+      "coingeckoId": "aisweatshop",
+      "symbol": "defai"
     }
   ]
 }
