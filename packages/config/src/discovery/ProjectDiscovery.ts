@@ -780,9 +780,13 @@ export class ProjectDiscovery {
         'act',
       ]
       const showTargets = permissionsRequiringTarget.includes(permission)
+
       const addressesString = showTargets
         ? entries
-            .map((entry) => this.getContract(entry.from.toString()).name)
+            .map((entry) => {
+              const contract = this.getContract(entry.from.toString())
+              return contract.displayName ?? contract.name
+            })
             .join(', ')
         : ''
 
@@ -847,7 +851,10 @@ export class ProjectDiscovery {
       const showTargets = permissionsRequiringTarget.includes(permission)
       const addressesString = showTargets
         ? entries
-            .map((entry) => this.getContract(entry.from.toString()).name)
+            .map((entry) => {
+              const contract = this.getContract(entry.from.toString())
+              return contract.displayName ?? contract.name
+            })
             .join(', ')
         : ''
 
@@ -885,7 +892,7 @@ export class ProjectDiscovery {
     for (const address of addresses) {
       const contract = this.getContractByAddress(address)
       if (contract !== undefined) {
-        s = s.replace(address, contract.name)
+        s = s.replace(address, contract.displayName ?? contract.name)
       }
     }
     return s
