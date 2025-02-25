@@ -38,7 +38,8 @@ export interface ChainConfig {
    * chain in configuration.
    */
   name: string
-  chainId: number
+  /** undefined is reserved for non-evm chains that don't have a notion of chain id! */
+  chainId: number | undefined
   explorerUrl?: string
   multicallContracts?: MulticallContractConfig[]
   coingeckoPlatform?: string
@@ -423,6 +424,7 @@ export type AdjustCount =
   | { type: 'SubtractOneSinceBlock'; blockNumber: number }
 
 export interface DayActivityConfig {
+  type: 'day'
   sinceTimestamp: UnixTime
   resyncLastDays?: number
 }

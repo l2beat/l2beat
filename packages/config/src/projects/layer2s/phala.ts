@@ -99,11 +99,13 @@ export const phala: Layer2 = {
     name: 'phala',
     chainId: 2035,
     explorerUrl: 'https://explorer.phala.network',
-    explorerApi: {
-      url: 'https://explorer.phala.network/api',
-      type: 'blockscout',
-    },
     sinceTimestamp: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
+    apis: [
+      {
+        type: 'blockscout',
+        url: 'https://explorer.phala.network/api',
+      },
+    ],
   },
   config: {
     escrows: [

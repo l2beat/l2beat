@@ -87,6 +87,17 @@ export const loopring: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'loopring',
+    chainId: undefined,
+    apis: [
+      {
+        type: 'loopring',
+        url: 'https://api3.loopring.io/api/v3',
+        callsPerMinute: 240,
+      },
+    ],
+  },
   config: {
     associatedTokens: ['LRC'],
     escrows: [
@@ -113,10 +124,8 @@ export const loopring: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'loopring',
-      defaultUrl: 'https://api3.loopring.io/api/v3',
-      defaultCallsPerMinute: 240,
+    activityConfig: {
+      type: 'block',
     },
     daTracking: [
       {

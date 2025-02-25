@@ -56,9 +56,16 @@ export const wirex: Layer2 = polygonCDKStack({
     chainId: 31415,
     explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
     sinceTimestamp: new UnixTime(1720093223),
+    apis: [
+      {
+        type: 'rpc',
+        // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
+        url: 'https://pay-chain-rpc.wirexpaychain.com',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   // associatedTokens: ['WPAY'], // not launched yet
-  rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
