@@ -80,7 +80,17 @@ export const facet: Layer2 = opStackL2({
     ],
   },
   architectureImage: 'facet',
-  rpcUrl: 'https://mainnet.facet.org/',
+  chainConfig: {
+    name: 'facet',
+    chainId: 1027303,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.facet.org/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1733855495),
   milestones: [
     {

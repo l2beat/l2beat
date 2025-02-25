@@ -34,7 +34,17 @@ export const edgeless: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.edgeless.network/http',
+  chainConfig: {
+    name: 'edgeless',
+    chainId: 2026,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.edgeless.network/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   additionalBadges: [BADGES.DA.CustomDA, BADGES.RaaS.Caldera],
   nonTemplateEscrows: [
     // this is not the bridge escrow itself but the strategy contract that holds all funds backing the ewETH in the canonical bridge escrow. The normal escrow can be used as soon as we track the ewETH token

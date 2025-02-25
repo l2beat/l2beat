@@ -40,6 +40,16 @@ export const hychain: Layer2 = orbitStackL2({
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://rpc.hychain.com/http',
+  chainConfig: {
+    name: 'hychain',
+    chainId: 2911,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.hychain.com/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   customDa: AnytrustDAC({ discovery }),
 })

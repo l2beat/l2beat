@@ -37,7 +37,17 @@ export const oev: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://oev.rpc.api3.org/http',
+  chainConfig: {
+    name: 'oev',
+    chainId: 4913,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://oev.rpc.api3.org/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

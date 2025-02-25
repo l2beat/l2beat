@@ -35,7 +35,17 @@ export const henez: Layer3 = underReviewL3({
       ],
     },
   },
-  rpcUrl: 'https://henez.calderachain.xyz/http',
+  chainConfig: {
+    name: 'henez',
+    chainId: 91111,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://henez.calderachain.xyz/http',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   escrows: [
     {
       address: EthereumAddress('0x66CDC656D5ACf342B2E4dC5a399Ba258Cd3f74c9'), // bridge

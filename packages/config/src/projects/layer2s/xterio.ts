@@ -65,7 +65,17 @@ export const xterio: Layer2 = opStackL2({
     DA_LAYERS.OP_ALT_DA,
   ), // source: altlayer on telegram
   genesisTimestamp: new UnixTime(1716537433),
-  rpcUrl: 'https://xterio-eth.alt.technology/',
+  chainConfig: {
+    name: 'xterio',
+    chainId: 2702128,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://xterio-eth.alt.technology/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   customDa: {
     type: 'DA Challenges',
     name: 'XterioDA',

@@ -39,7 +39,17 @@ export const shape: Layer2 = opStackL2({
     stateUpdate: 'disabled',
   },
   isNodeAvailable: true,
-  rpcUrl: 'https://mainnet.shape.network',
+  chainConfig: {
+    name: 'shape',
+    chainId: 360,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.shape.network',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   genesisTimestamp: new UnixTime(1721744473),
   stateDerivation: DERIVATION.OPSTACK('SHAPE'),
 })

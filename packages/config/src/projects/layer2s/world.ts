@@ -41,7 +41,17 @@ export const world = opStackL2({
     },
   },
   associatedTokens: ['WLD'],
-  rpcUrl: 'https://worldchain-mainnet.g.alchemy.com/public',
+  chainConfig: {
+    name: 'world',
+    chainId: 480,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://worldchain-mainnet.g.alchemy.com/public',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
   finality: {
     type: 'OPStack',
     minTimestamp: genesisTimestamp,
