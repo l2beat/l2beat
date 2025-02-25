@@ -44,7 +44,7 @@ const chartMeta = {
   posted: {
     label: 'Data posted',
     color: 'hsl(var(--chart-da-avail))',
-    indicatorType: { shape: 'line', strokeDasharray: '9 3' },
+    indicatorType: { shape: 'line' },
   },
 } satisfies ChartMeta
 
@@ -137,7 +137,6 @@ export function CostsChart({
             stroke={chartMeta.posted.color}
             dot={false}
             isAnimationActive={false}
-            strokeDasharray={chartMeta.posted.indicatorType.strokeDasharray}
             type={resolution === 'hourly' ? 'stepAfter' : undefined}
           />
         )}
