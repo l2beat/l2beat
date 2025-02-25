@@ -21,7 +21,7 @@ export const onChainProjects: string[] = [
   'vector',
   'espresso',
   'dydx',
-  'tokens'
+  'tokens',
 ]
 
 describe('discovery config.jsonc', () => {
