@@ -1,6 +1,5 @@
 import {
   assert,
-  ChainId,
   EthereumAddress,
   UnixTime,
   assertUnreachable,
@@ -8,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
-import { startsWith, uniq } from 'lodash'
+import { uniq } from 'lodash'
 import { describe } from 'mocha'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
@@ -115,8 +114,8 @@ describe('layer2s', () => {
     })
 
     describe('every escrow can resolve all of its tokens', () => {
-      const chainsMap = new Map<string, ChainId>(
-        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      const chainsMap = new Map<string, number | undefined>(
+        chains.map((c) => [c.name, c.chainId]),
       )
       for (const layer2 of layer2s) {
         for (const escrow of layer2.config.escrows) {
@@ -234,31 +233,6 @@ describe('layer2s', () => {
   })
 
   describe('activity', () => {
-    describe('custom URL starts with https', () => {
-      const layers2WithUrls = layer2s.flatMap((layer2) => {
-        const { transactionApi } = layer2.config
-
-        if (
-          transactionApi &&
-          'defaultUrl' in transactionApi &&
-          transactionApi.defaultUrl
-        ) {
-          return {
-            id: layer2.id,
-            url: transactionApi.defaultUrl,
-          }
-        }
-
-        return []
-      })
-
-      for (const { id, url } of layers2WithUrls) {
-        it(`${id.toString()} : ${url}`, () => {
-          expect(url).toSatisfy((url: string) => startsWith(url, 'https://'))
-        })
-      }
-    })
-
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
@@ -266,12 +240,12 @@ describe('layer2s', () => {
           return stack === 'Arbitrum' || stack === 'OP Stack'
         })
         .flatMap((layer2) => {
-          const { transactionApi } = layer2.config
+          const { activityConfig } = layer2.config
 
-          if (transactionApi && transactionApi.type === 'rpc') {
+          if (activityConfig && activityConfig.type === 'block') {
             return {
               id: layer2.id,
-              assessCount: transactionApi.adjustCount,
+              assessCount: activityConfig.adjustCount,
             }
           }
 

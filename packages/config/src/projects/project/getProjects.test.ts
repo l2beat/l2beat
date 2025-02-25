@@ -179,6 +179,16 @@ describe('getProjects', () => {
       }
     })
 
+    it('every api url uses https', () => {
+      for (const chain of chains) {
+        for (const api of chain.apis) {
+          if ('url' in api) {
+            expect(api.url).toMatchRegex(/^https:\/\//)
+          }
+        }
+      }
+    })
+
     describe('every multicall3 contract has the same address', () => {
       const address = EthereumAddress(
         '0xcA11bde05977b3631167028862bE2a173976CA11',

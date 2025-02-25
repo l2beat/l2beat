@@ -1,4 +1,4 @@
-import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens/tokens'
@@ -32,8 +32,8 @@ describe('bridges', () => {
 
   describe('escrows', () => {
     describe('every escrow can resolve all of its tokens', () => {
-      const chainsMap = new Map<string, ChainId>(
-        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      const chainsMap = new Map<string, number | undefined>(
+        chains.map((c) => [c.name, c.chainId]),
       )
       for (const bridge of bridges) {
         for (const escrow of bridge.config.escrows) {

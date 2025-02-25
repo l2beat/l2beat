@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { assert, ChainId } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { tokenList } from '../../tokens/tokens'
 import { chains } from '../chains'
@@ -40,8 +40,8 @@ describe('layer3s', () => {
   })
 
   describe('every escrow can resolve all of its tokens', () => {
-    const chainsMap = new Map<string, ChainId>(
-      chains.map((c) => [c.name, ChainId(c.chainId)]),
+    const chainsMap = new Map<string, number | undefined>(
+      chains.map((c) => [c.name, c.chainId]),
     )
     for (const layer3 of layer3s) {
       for (const escrow of layer3.config.escrows) {

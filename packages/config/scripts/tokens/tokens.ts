@@ -51,7 +51,10 @@ async function main() {
   )
 
   const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    chains
+      .filter((x) => x.chainId !== undefined)
+      // biome-ignore lint/style/noNonNullAssertion: we just checked
+      .map((x) => ({ name: x.name, chainId: ChainId(x.chainId!) })),
   )
 
   function saveToken(token: GeneratedToken) {
@@ -200,13 +203,10 @@ function getCoingeckoClient() {
 }
 
 function getChainId(logger: ScriptLogger, chain: ChainConfig) {
-  let chainId: ChainId | undefined = undefined
-  try {
-    chainId = ChainId(chain.chainId)
-  } catch {
+  if (!chain.chainId) {
     logger.assert(false, `ChainId not found for`)
   }
-  return chainId
+  return ChainId(chain.chainId)
 }
 
 function getSource(
