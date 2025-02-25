@@ -1,19 +1,18 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
+import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { Skeleton } from '~/components/core/skeleton'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import {
-  type CostsTimeRange,
-  rangeToResolution,
-} from '~/server/features/scaling/costs/utils/range'
+import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
-import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { CostsChart } from './costs-chart'
+import { CostsChart, costUnitToPostedScale } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
 interface Props {
@@ -24,13 +23,27 @@ interface Props {
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const { data, isLoading } = api.costs.chart.useQuery({
-    range,
-    filter: { type: 'projects', projectIds: [projectId] },
-  })
+  const [showPosted, setShowPosted] = useState(false)
 
+  const resolution = rangeToResolution(range)
+
+  const { data: costsData, isLoading: isCostsLoading } =
+    api.costs.chart.useQuery({
+      range,
+      filter: { type: 'projects', projectIds: [projectId] },
+    })
+  const { data: daData, isLoading: isDaLoading } = api.da.projectChart.useQuery(
+    {
+      range,
+      projectId,
+    },
+  )
+  const timestampedDaData = Object.fromEntries(daData ?? [])
   const chartData = useMemo(() => {
-    return data?.map(
+    if (!costsData || !timestampedDaData) {
+      return undefined
+    }
+    return costsData?.map(
       ([
         timestamp,
         overheadGas,
@@ -46,50 +59,70 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         blobsEth,
         blobsUsd,
       ]) => {
-        const calldata =
-          unit === 'usd'
-            ? calldataUsd
-            : unit === 'eth'
-              ? calldataEth
-              : calldataGas
-        const blobs =
-          unit === 'usd' ? blobsUsd : unit === 'eth' ? blobsEth : blobsGas
-        const compute =
-          unit === 'usd' ? computeUsd : unit === 'eth' ? computeEth : computeGas
-        const overhead =
-          unit === 'usd'
-            ? overheadUsd
-            : unit === 'eth'
-              ? overheadEth
-              : overheadGas
+        const dailyTimestamp = new UnixTime(timestamp).toStartOf('day')
+        const posted = timestampedDaData[dailyTimestamp.toNumber()]
+        const postedScale = costUnitToPostedScale[unit][resolution]
         return {
           timestamp,
-          calldata,
-          blobs,
-          compute,
-          overhead,
+          calldata:
+            unit === 'usd'
+              ? calldataUsd
+              : unit === 'eth'
+                ? calldataEth
+                : calldataGas,
+          blobs:
+            unit === 'usd' ? blobsUsd : unit === 'eth' ? blobsEth : blobsGas,
+          compute:
+            unit === 'usd'
+              ? computeUsd
+              : unit === 'eth'
+                ? computeEth
+                : computeGas,
+          overhead:
+            unit === 'usd'
+              ? overheadUsd
+              : unit === 'eth'
+                ? overheadEth
+                : overheadGas,
+          posted: posted
+            ? resolution === 'daily'
+              ? posted / postedScale
+              : posted / postedScale / 24
+            : null,
         }
       },
     )
-  }, [data, unit])
+  }, [costsData, resolution, timestampedDaData, unit])
+
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const isLoading = isCostsLoading || isDaLoading
 
   return (
     <div>
-      <ChartControlsWrapper>
+      <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
-        <CostsChartTimeRangeControls
-          projectSection
-          timeRange={range}
-          setTimeRange={setRange}
-        />
-      </ChartControlsWrapper>
+        <div className="flex justify-between gap-1">
+          <Checkbox
+            name="showMainnetActivity"
+            checked={showPosted}
+            onCheckedChange={(state) => setShowPosted(!!state)}
+          >
+            Show maximum
+          </Checkbox>
+          <CostsChartTimeRangeControls
+            projectSection
+            timeRange={range}
+            setTimeRange={setRange}
+          />
+        </div>
+      </div>
       <CostsChart
         data={chartData}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
-        resolution={rangeToResolution(range)}
+        resolution={resolution}
+        showPosted={showPosted}
         className="mb-2 mt-4"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />

@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, ComposedChart, Line } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
@@ -16,6 +16,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 import { formatNumber } from '~/utils/number-format/format-number'
 
@@ -40,7 +41,30 @@ const chartMeta = {
     color: 'hsl(var(--chart-costs-overhead))',
     indicatorType: { shape: 'square' },
   },
+  posted: {
+    label: 'Posted',
+    color: 'red',
+    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+  },
 } satisfies ChartMeta
+
+export const costUnitToPostedScale: Record<
+  CostsUnit,
+  Record<CostsResolution, number>
+> = {
+  gas: {
+    hourly: 1,
+    daily: 1,
+  },
+  eth: {
+    hourly: 30000000,
+    daily: 100000000,
+  },
+  usd: {
+    hourly: 10000,
+    daily: 25000,
+  },
+}
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -48,6 +72,7 @@ interface CostsChartDataPoint {
   blobs: number | undefined
   compute: number
   overhead: number
+  posted: number | null
 }
 
 interface Props {
@@ -56,6 +81,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   resolution: CostsResolution
+  showPosted: boolean
   className?: string
 }
 
@@ -66,6 +92,7 @@ export function CostsChart({
   milestones,
   className,
   resolution,
+  showPosted,
 }: Props) {
   return (
     <ChartContainer
@@ -75,7 +102,7 @@ export function CostsChart({
       milestones={milestones}
       className={className}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
           dataKey="overhead"
@@ -117,6 +144,19 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
+        {showPosted && (
+          <Line
+            dataKey="posted"
+            stroke={chartMeta.posted.color}
+            strokeWidth={2}
+            dot={false}
+            activeDot={false}
+            isAnimationActive={false}
+            strokeDasharray={chartMeta.posted.indicatorType.strokeDasharray}
+            type={resolution === 'hourly' ? 'stepAfter' : undefined}
+          />
+        )}
+
         {getCommonChartComponents({
           data,
           isLoading,
@@ -130,7 +170,7 @@ export function CostsChart({
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
         />
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -147,7 +187,12 @@ function CustomTooltip({
 }) {
   if (!active || !payload || typeof label !== 'number') return null
   const reversedPayload = [...payload].reverse()
-  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const total = payload.reduce((acc, curr) => {
+    if (curr.name === 'posted') {
+      return acc
+    }
+    return acc + (curr?.value ?? 0)
+  }, 0)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-40 flex-col gap-1">
@@ -183,7 +228,11 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {formatCostValue(entry.value, unit, 'total')}
+                  {entry.name === 'posted'
+                    ? formatBytes(
+                        entry.value * costUnitToPostedScale[unit][resolution],
+                      )
+                    : formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>
             )

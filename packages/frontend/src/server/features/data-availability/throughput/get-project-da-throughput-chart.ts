@@ -8,8 +8,7 @@ import { rangeToDays } from '~/utils/range/range-to-days'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
 
-// [timestamp, value]
-export type ProjectDaThroughputDataPoint = [number, number]
+export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
 export const ProjectDaThroughputChartParams = z.object({
   range: DaThroughputTimeRange,
