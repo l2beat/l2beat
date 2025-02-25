@@ -119,7 +119,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         isLoading={isLoading}
         milestones={milestones}
         resolution={resolution}
-        showThroughput={false}
+        showDataPosted={false}
         className="mb-2 mt-4"
       />
       <ChartControlsWrapper>

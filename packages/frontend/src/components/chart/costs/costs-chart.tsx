@@ -42,8 +42,8 @@ const chartMeta = {
     indicatorType: { shape: 'square' },
   },
   posted: {
-    label: 'Posted',
-    color: 'red',
+    label: 'Data posted',
+    color: 'green',
     indicatorType: { shape: 'line', strokeDasharray: '9 3' },
   },
 } satisfies ChartMeta
@@ -63,7 +63,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   resolution: CostsResolution
-  showThroughput: boolean
+  showDataPosted: boolean
   className?: string
   daScale?: number
 }
@@ -75,7 +75,7 @@ export function CostsChart({
   milestones,
   className,
   resolution,
-  showThroughput,
+  showDataPosted,
   daScale,
 }: Props) {
   return (
@@ -128,7 +128,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showThroughput && (
+        {showDataPosted && (
           <Line
             dataKey="posted"
             stroke={chartMeta.posted.color}
