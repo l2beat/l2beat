@@ -10,6 +10,7 @@ import {
 import { PercentChange } from '~/components/percent-change'
 import { PrimaryCard } from '~/components/primary-card'
 import { ChevronIcon } from '~/icons/chevron'
+import { InfoIcon } from '~/icons/info'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
@@ -82,11 +83,13 @@ function SummaryTvsBox({
           label="By Ethereum"
           value={formatCurrency(ethereumValue, 'usd')}
           change={calculatePercentageChange(ethereumValue, ethereum7dAgo)}
+          tooltip="The sum of the Total Value Secured of all rollups listed on L2BEAT, displayed along with the percentage change compared to 7D ago."
         />
         <ValueWithChange
           label="By Alt-DAs"
           value={formatCurrency(othersValue, 'usd')}
           change={calculatePercentageChange(othersValue, others7dAgo)}
+          tooltip="The sum of the Total Value Secured of all scaling solutions listed on L2BEAT that use an alternative solution for DA (other than Ethereum), displayed along with the percentage change compared to 7D ago."
         />
       </div>
       <BreakdownWithTooltip items={breakdown} />
@@ -160,6 +163,7 @@ function SummaryThroughputBox({
           label="Past day data posted to projects with public APIs"
           value={formatBytes(totalPosted)}
           change={calculatePercentageChange(totalPosted, totalPosted7d)}
+          tooltip="The total size of the data posted over the past day to DA solutions that have provided public APIs, displayed along with the percentage change compared to 7D ago."
         />
       </div>
       <BreakdownWithTooltip items={breakdown} />
@@ -218,12 +222,16 @@ function ValueWithChange({
   label,
   value,
   change,
-}: { label: string; value: string; change: number }) {
+  tooltip,
+}: { label: string; value: string; change: number; tooltip: string }) {
   return (
     <div className="flex flex-col gap-1.5 md:gap-2.5">
-      <span className="text-[13px] font-medium !leading-[normal] text-secondary md:text-xs">
-        {label}
-      </span>
+      <div className="flex items-center gap-1">
+        <span className="text-[13px] font-medium !leading-[normal] text-secondary md:text-xs">
+          {label}
+        </span>
+        <InfoTooltip text={tooltip} />
+      </div>
       <div className="flex items-end gap-0.5 md:gap-1.5">
         <span className="text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
           {value}
@@ -235,5 +243,16 @@ function ValueWithChange({
         />
       </div>
     </div>
+  )
+}
+
+function InfoTooltip({ text }: { text: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger className="mb-px">
+        <InfoIcon className="size-3 fill-secondary" />
+      </TooltipTrigger>
+      <TooltipContent>{text}</TooltipContent>
+    </Tooltip>
   )
 }
