@@ -74,7 +74,7 @@ export class CirculatingSupplyService {
       {
         coingeckoId: configuration.coingeckoId,
         latestHour: latestHour.toNumber(),
-        fallbackSupply: JSON.stringify(fallbackSupply),
+        fallbackSupply: fallbackSupply.amount,
       },
     )
 

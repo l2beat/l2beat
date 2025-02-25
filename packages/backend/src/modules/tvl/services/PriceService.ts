@@ -102,7 +102,7 @@ export class PriceService {
       {
         coingeckoId,
         latestHour: latestHour.toNumber(),
-        fallbackPrice: JSON.stringify(fallbackPrice),
+        fallbackPrice: fallbackPrice.priceUsd,
       },
     )
 
