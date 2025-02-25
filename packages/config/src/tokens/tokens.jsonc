@@ -1,6 +1,38 @@
 {
   "ethereum": [
     {
+      "symbol": "DOG",
+      "address": "0xbaac2b4491727d78d2b78815144570b9f2fe8899"
+    },
+    {
+      "symbol": "imgnAI",
+      "address": "0xa735a3af76cc30791c61c10d585833829d36cbe0"
+    },
+    {
+      "symbol": "HEU",
+      "address": "0xec463d00aa4da76fb112cd2e4ac1c6bef02da6ea"
+    },
+    {
+      "symbol": "TRADE",
+      "address": "0x6e5970dbd6fc7eb1f29c6d2edf2bc4c36124c0c1"
+    },
+    {
+      "symbol": "WXM",
+      "address": "0xde654f497a563dd7a121c176a125dd2f11f13a83"
+    },
+    {
+      "symbol": "RSC",
+      "address": "0xd101dcc414f310268c37eeb4cd376ccfa507f571"
+    },
+    {
+      "symbol": "GHST",
+      "address": "0x3f382dbd960e3a9bbceae22651e88158d2791550"
+    },
+    {
+      "symbol": "OM",
+      "address": "0x3593d125a4f7849a1b059e64f4517a86dd60c95d"
+    },
+    {
       "symbol": "LUMIA",
       "address": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
       "coingeckoId": "lumia"
@@ -5904,6 +5936,21 @@
     }
   ],
   "soneium": [
+    {
+      "symbol": "WBTC",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "source": "external",
+      "coingeckoId": "wrapped-bitcoin",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "SolvBTC.BBN",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
