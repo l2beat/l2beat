@@ -22,7 +22,7 @@ export const gameswift: Layer2 = upcomingL2({
       repositories: [],
       socialMedia: [
         'https://twitter.com/GameSwift_io',
-        'https://discord.gameswift.io/',
+        'https://discord.com/invite/gameswift',
         'https://youtube.com/@gameswiftofficial',
         'https://t.me/gameswift_io',
       ],
