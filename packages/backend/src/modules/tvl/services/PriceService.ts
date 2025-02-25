@@ -74,7 +74,7 @@ export class PriceService {
         to,
       )
     } catch (error) {
-      assertLatestHour(from, to, error, coingeckoId)
+      assertLatestHour(from, to, error, coingeckoId, this.logger)
 
       const priceFromDb = await this.getLatestPriceFromDb(
         to,
@@ -95,10 +95,7 @@ export class PriceService {
       configurations.map((c) => c.id),
     )
 
-    assert(
-      fallbackPrice,
-      `Latest price not found for ${coingeckoId} @ ${latestHour.toNumber()}`,
-    )
+    assert(fallbackPrice, `No price not found for ${coingeckoId}`)
 
     this.logger.warn(
       `${coingeckoId}: DB fallback triggered: failed to fetch price from Coingecko`,
@@ -110,8 +107,8 @@ export class PriceService {
     )
 
     return {
+      timestamp: latestHour,
       value: fallbackPrice.priceUsd,
-      timestamp: fallbackPrice.timestamp,
     }
   }
 
@@ -128,9 +125,13 @@ function assertLatestHour(
   to: UnixTime,
   error: unknown,
   coingeckoId: CoingeckoId,
+  logger: Logger,
 ) {
   const diff = to.toNumber() - from.toNumber()
-  if (diff >= 3600) throw error
+  if (diff >= 3600) {
+    logger.error(`Timestamps diff to large to perform fallback`, { diff })
+    throw error
+  }
   assert(
     to.isFull('hour'),
     `Latest hour assert failed for ${coingeckoId} <${from.toNumber()},${to.toNumber()}>`,
