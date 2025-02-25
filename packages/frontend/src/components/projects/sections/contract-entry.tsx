@@ -22,6 +22,7 @@ import { ReferenceList } from './reference-list'
 
 export interface TechnologyContract {
   name: string
+  displayName?: string
   addresses: TechnologyContractAddress[]
   admins: TechnologyContractAddress[]
   chain: string
@@ -67,6 +68,8 @@ export function ContractEntry({
   const { color, icon } = getCalloutProps(contract, type)
 
   const entries = [...contract.addresses, ...contract.admins]
+
+  const name = contract.displayName ?? contract.name
   return (
     <Callout
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
@@ -75,7 +78,7 @@ export function ContractEntry({
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
-            <strong id={contract.name}>{contract.name}</strong>{' '}
+            <strong id={name}>{name}</strong>{' '}
             {entries.map((address, i) => (
               <HighlightableLink
                 key={i}

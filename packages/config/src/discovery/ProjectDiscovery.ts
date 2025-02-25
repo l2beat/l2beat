@@ -81,7 +81,8 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.displayName ?? contract.name,
+      name: contract.name,
+      displayName: contract.displayName,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -586,16 +587,6 @@ export class ProjectDiscovery {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
-    const byDisplayName = contracts.filter(
-      (contract) => contract.displayName === name,
-    )
-
-    if (byDisplayName.length > 0) {
-      return byDisplayName.map((c) => ({
-        ...c,
-        name: c.displayName ?? c.name,
-      }))
-    }
 
     return contracts.filter((contract) => contract.name === name)
   }

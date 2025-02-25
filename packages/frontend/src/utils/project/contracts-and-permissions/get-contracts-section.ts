@@ -247,6 +247,7 @@ function makeTechnologyContract(
 
   return {
     name: item.name,
+    displayName: item.displayName,
     addresses,
     admins,
     description,
