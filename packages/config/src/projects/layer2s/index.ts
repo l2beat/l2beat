@@ -116,6 +116,7 @@ import { network3 } from './network3'
 import { neva } from './neva'
 import { nil } from './nil'
 import { nova } from './nova'
+import { novastro } from './novastro'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
@@ -329,6 +330,7 @@ export const layer2s: Layer2[] = [
   network3,
   neva,
   nova,
+  novastro,
   oev,
   ola,
   omgnetwork,
