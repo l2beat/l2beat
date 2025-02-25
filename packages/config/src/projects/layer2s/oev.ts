@@ -38,7 +38,7 @@ export const oev: Layer2 = orbitStackL2({
     },
   },
   chainConfig: {
-    name: 'oev',
+    name: 'oevnetwork',
     chainId: 4913,
     apis: [
       {

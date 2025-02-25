@@ -99,7 +99,7 @@ export const rhinofi: Layer2 = {
     stage: 'NotApplicable',
   },
   chainConfig: {
-    name: 'rhinofi',
+    name: 'deversifi',
     chainId: undefined,
     apis: [{ type: 'starkex', product: ['rhinofi'] }],
   },

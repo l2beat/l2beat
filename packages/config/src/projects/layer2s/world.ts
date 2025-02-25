@@ -42,7 +42,7 @@ export const world = opStackL2({
   },
   associatedTokens: ['WLD'],
   chainConfig: {
-    name: 'world',
+    name: 'worldchain',
     chainId: 480,
     apis: [
       {

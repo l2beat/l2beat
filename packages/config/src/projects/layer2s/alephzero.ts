@@ -34,7 +34,7 @@ export const alephzero: Layer2 = orbitStackL2({
   associatedTokens: ['AZERO'],
   gasTokens: { tracked: ['AZERO'] },
   chainConfig: {
-    name: 'aleph-zero',
+    name: 'alephzero',
     chainId: 41455,
     apis: [
       {

@@ -5,15 +5,12 @@ export function getActivityConfig(
   chainConfig: ChainConfig | undefined,
   fallback: ProjectActivityConfig,
 ) {
-  if (!chainConfig) {
+  const hasRpc = chainConfig?.apis.some((x) => x.type === 'rpc')
+  if (!hasRpc) {
     if (activityConfig) {
-      throw new Error('Missing chainConfig!')
+      throw new Error('Missing chainConfig or rpc api!')
     }
     return undefined
-  }
-  const hasRpc = chainConfig.apis.some((x) => x.type === 'rpc')
-  if (!hasRpc) {
-    throw new Error('chainConfig is missing an rpc api!')
   }
   return activityConfig ?? fallback
 }
