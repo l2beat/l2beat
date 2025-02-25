@@ -16,12 +16,15 @@ export function FaqSideNav(props: Props) {
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>
-      scrollVerticallyToItem({ item, overflowingContainer }),
+      scrollVerticallyToItem({
+        item,
+        overflowingContainer,
+      }),
     [],
   )
 
   return (
-    <div className="custom-scrollbar sticky top-6 hidden h-[calc(100vh-230px)] lg:block">
+    <div className="custom-scrollbar sticky top-6 mt-5 hidden h-[calc(100vh-230px)] lg:block">
       <ul
         className="relative flex h-full w-72 shrink-0 flex-col gap-4 overflow-y-auto pr-4"
         ref={overflowContainer}
