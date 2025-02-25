@@ -134,10 +134,11 @@ export function CostsChart({
           <Line
             yAxisId="right"
             dataKey="posted"
+            strokeWidth={2}
             stroke={chartMeta.posted.color}
+            type={resolution === 'hourly' ? 'stepAfter' : undefined}
             dot={false}
             isAnimationActive={false}
-            type={resolution === 'hourly' ? 'stepAfter' : undefined}
           />
         )}
         {showDataPosted && (
