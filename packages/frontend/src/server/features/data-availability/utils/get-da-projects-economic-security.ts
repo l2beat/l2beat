@@ -14,7 +14,7 @@ type ProjectsEconomicSecurity = Record<string, number | undefined>
 
 async function getProjectsEconomicSecurityData(): Promise<ProjectsEconomicSecurity> {
   // TODO: It's probably better to not fetch all data at once
-  const db = getDb()
+  await using db = getDb()
   const stakes = Object.fromEntries(
     (await db.stake.getAll()).map((s) => [s.id, s.thresholdStake]),
   )

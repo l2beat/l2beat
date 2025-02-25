@@ -13,7 +13,7 @@ export async function getDaProjectEconomicSecurity(
   if (env.MOCK) {
     return 100
   }
-  const db = getDb()
+  await using db = getDb()
 
   const stake = await db.stake.findById(economicSecurity.name)
   if (!stake) {

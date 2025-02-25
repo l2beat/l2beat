@@ -28,8 +28,7 @@ const getCachedResponse = cache(
     from: UnixTime,
     to: UnixTime,
   ) => {
-    const db = getDb()
-
+    await using db = getDb()
     const configurationIds = await db.indexerConfiguration.getByIndexerId(
       'tracked_txs_indexer',
     )

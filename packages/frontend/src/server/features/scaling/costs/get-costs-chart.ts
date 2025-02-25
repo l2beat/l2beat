@@ -45,7 +45,7 @@ export const getCachedCostsChartData = cache(
     filter,
     previewRecategorisation,
   }: CostsChartParams) => {
-    const db = getDb()
+    await using db = getDb()
     const projects = await getCostsProjects(filter, previewRecategorisation)
     if (projects.length === 0) {
       return []

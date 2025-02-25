@@ -12,7 +12,7 @@ export async function getCostsForProjects(
   projects: Project<'trackedTxsConfig'>[],
   timeRange: CostsTimeRange,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const response: LatestCostsResponse = {}
   const range = getFullySyncedCostsRange(timeRange)
 

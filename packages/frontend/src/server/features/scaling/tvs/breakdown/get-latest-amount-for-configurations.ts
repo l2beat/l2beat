@@ -8,7 +8,7 @@ export async function getLatestAmountForConfigurations(
   configurations: (AmountConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const amounts = await db.amount.getByIdsAndTimestamp(
     configurations.map((c) => c.configId),
     targetTimestamp,

@@ -36,7 +36,7 @@ const getCachedProjectDaThroughputChartData = cache(
   }: ProjectDaThroughputChartParams): Promise<
     ProjectDaThroughputDataPoint[]
   > => {
-    const db = getDb()
+    await using db = getDb()
     const days = rangeToDays(range)
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = days ? to.add(-days, 'days') : null

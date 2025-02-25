@@ -37,7 +37,7 @@ export const getCachedRecategorisedActivityChartData = cache(
     range: ActivityTimeRange,
     previewRecategorisation: boolean,
   ) => {
-    const db = getDb()
+    await using db = getDb()
     const projects = getActivityProjects().filter(
       createActivityProjectsFilter(filter, previewRecategorisation),
     )

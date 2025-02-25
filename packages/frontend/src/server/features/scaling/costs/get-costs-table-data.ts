@@ -55,7 +55,7 @@ async function getLatestActivityForProjects(
   projects: ProjectId[],
   timeRange: CostsTimeRange,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const range = getFullySyncedCostsRange(timeRange)
   const summedCounts =
     await db.activity.getSummedUopsCountForProjectsAndTimeRange(projects, range)

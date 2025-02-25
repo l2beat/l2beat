@@ -73,7 +73,7 @@ const getCachedProjectsChangeReport = cache(
   async () => {
     const result: Record<string, ProjectChangeReport> = {}
 
-    const db = getDb()
+    await using db = getDb()
     const onDisk = getOnDiskData()
     const newDiscoveries = await db.updateMonitor.getAll()
 

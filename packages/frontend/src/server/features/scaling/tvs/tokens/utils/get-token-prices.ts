@@ -10,7 +10,7 @@ export async function getTokenPrices(
   range: [UnixTime, UnixTime],
   resolution: TvsChartResolution,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const [from, to] = range
   const priceRecords = await db.price.getByConfigIdsInRange(
     [configuration.configId],

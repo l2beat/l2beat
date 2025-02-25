@@ -7,7 +7,7 @@ export async function getLatestPriceForConfigurations(
   configurations: (PriceConfigEntry & { configId: string })[],
   targetTimestamp: UnixTime,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const [prices, status] = await Promise.all([
     db.price.getByTimestamp(targetTimestamp),
     getConfigurationsStatus(configurations, targetTimestamp),

@@ -25,7 +25,7 @@ export type ActivityProjectTableData = NonNullable<ActivityTableData[string]>
 type ActivityTableData = Awaited<ReturnType<typeof getActivityTableData>>
 
 async function getActivityTableData(projects: Project[]) {
-  const db = getDb()
+  await using db = getDb()
   const range = getFullySyncedActivityRange('max')
   const records = await db.activity.getByProjectsAndTimeRange(
     [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],

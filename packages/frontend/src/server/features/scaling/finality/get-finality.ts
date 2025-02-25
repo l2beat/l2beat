@@ -14,7 +14,7 @@ export async function getFinality(projects: Project<'finalityConfig'>[]) {
 }
 
 async function getFinalityData(projects: Project<'finalityConfig'>[]) {
-  const db = getDb()
+  await using db = getDb()
   const projectIds = projects.map((p) => p.id)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
 

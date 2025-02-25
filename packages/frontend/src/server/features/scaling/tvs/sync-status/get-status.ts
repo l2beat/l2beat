@@ -12,7 +12,7 @@ export async function getStatus<
   getIndexerId: (entry: T) => string,
   findConfig: (indexer: IndexerStateRecord, entries: T[]) => T | undefined,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const processed = new Set<string>()
   const lagging: { id: string; latestTimestamp: UnixTime }[] = []
   const excluded = new Set<string>()

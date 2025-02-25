@@ -16,7 +16,7 @@ export async function getTokenAmounts({
   range,
   timestamps,
 }: Params) {
-  const db = getDb()
+  await using db = getDb()
   const [from, to] = range
   const amountRecords = await db.amount.getByConfigIdsInRange(
     configurations.map((c) => c.configId),

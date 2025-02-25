@@ -9,7 +9,7 @@ export async function getVerifiers() {
     return getMockVerifiers()
   }
 
-  const db = getDb()
+  await using db = getDb()
   const projects = await ps.getProjects({
     select: ['proofVerification'],
     whereNot: ['isArchived'],

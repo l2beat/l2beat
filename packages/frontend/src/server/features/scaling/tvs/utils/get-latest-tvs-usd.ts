@@ -22,7 +22,7 @@ export async function getProjectsLatestTvsUsd() {
 export type ProjectsLatestTvsUsd = Record<ProjectId, number>
 const getCachedProjectsLatestTvsUsd = cache(
   async (): Promise<Record<ProjectId, number>> => {
-    const db = getDb()
+    await using db = getDb()
     const values = await db.value.getLatestValues()
     const groupedByProject = groupBy(values, (e) => e.projectId)
 

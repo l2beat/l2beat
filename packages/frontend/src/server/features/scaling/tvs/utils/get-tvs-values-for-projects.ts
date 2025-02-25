@@ -14,7 +14,7 @@ export async function getTvsValuesForProjects(
   projects: TvsProject[],
   range: TvsChartRange,
 ) {
-  const db = getDb()
+  await using db = getDb()
   const { days, resolution } = getRangeConfig(range)
   const target = getTvsTargetTimestamp()
 

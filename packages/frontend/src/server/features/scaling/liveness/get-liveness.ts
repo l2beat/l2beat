@@ -29,7 +29,7 @@ export async function getLiveness() {
 }
 
 async function getLivenessData() {
-  const db = getDb()
+  await using db = getDb()
   const projects: LivenessResponse = {}
 
   const configurations = await db.indexerConfiguration.getByIndexerId(

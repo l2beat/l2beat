@@ -16,7 +16,12 @@ export function getDb() {
       : createThrowingProxy()
   }
 
-  return db
+  return {
+    ...db,
+    [Symbol.asyncDispose]: async () => {
+      await db?.close()
+    },
+  }
 }
 
 function createThrowingProxy() {

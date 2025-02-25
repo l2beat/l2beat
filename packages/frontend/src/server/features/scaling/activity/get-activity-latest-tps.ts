@@ -18,7 +18,7 @@ export type ActivityLatestUopsData = Awaited<
   ReturnType<typeof getActivityLatestUopsData>
 >
 async function getActivityLatestUopsData(projects: Project[]) {
-  const db = getDb()
+  await using db = getDb()
   // Range here is 1y because we want to match the range of the
   // activity chart on summary page to show relevant data
   const range = getFullySyncedActivityRange('1y')

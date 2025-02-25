@@ -7,7 +7,7 @@ const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 1000
 export async function getConfigurations(
   entries: (MultiIndexerEntry & { configId: string })[],
 ) {
-  const db = getDb()
+  await using db = getDb()
   if (entries.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
     return db.indexerConfiguration.getByConfigurationIds(
       entries.map((c) => c.configId),

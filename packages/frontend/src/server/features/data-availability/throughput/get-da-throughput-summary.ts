@@ -16,7 +16,7 @@ export type ThroughputSummaryData = Awaited<
 >
 const getCachedDaThroughputSummaryData = cache(
   async () => {
-    const db = getDb()
+    await using db = getDb()
     const to = UnixTime.now().toStartOf('day').add(-1, 'days')
     const from = to.add(-7, 'days')
     const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(

@@ -12,7 +12,7 @@ const ethPriceId = createPriceId({
 })
 
 export async function getEthPrices() {
-  const db = getDb()
+  await using db = getDb()
   const prices = await db.price.getByConfigIdsInRange(
     [ethPriceId],
     UnixTime.ZERO,
