@@ -8160,6 +8160,28 @@
       }
     },
     {
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1737044211,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Yay Kelp DAO’s Airdrop Gain ETH",
       "coingeckoId": "yay-kelp-dao-s-airdrop-gain-eth",
       "address": "0xda14b3B7aEF494b8c37ed9710d14e44D490316fa",
