@@ -59,6 +59,21 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getLatestAmount(
+    configIds: string[],
+  ): Promise<AmountRecord | undefined> {
+    if (configIds.length === 0) return undefined
+
+    const row = await this.db
+      .selectFrom('Amount')
+      .select(selectAmount)
+      .where('configurationId', 'in', configIds)
+      .orderBy('timestamp', 'desc')
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async insertMany(records: AmountRecord[]): Promise<number> {
     if (records.length === 0) return 0
 

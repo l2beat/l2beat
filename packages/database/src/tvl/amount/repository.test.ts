@@ -82,6 +82,31 @@ describeDatabase(AmountRepository.name, (db) => {
     })
   })
 
+  describe(AmountRepository.prototype.getLatestAmount.name, () => {
+    it('finds latest price for configurations', async () => {
+      await repository.insertMany([
+        amount('a', new UnixTime(100), 100n),
+        amount('a', new UnixTime(200), 200n),
+
+        amount('b', new UnixTime(100), 100n),
+        amount('b', new UnixTime(200), 200n),
+        amount('b', new UnixTime(300), 300n),
+
+        amount('c', new UnixTime(100), 100n),
+        amount('c', new UnixTime(200), 200n),
+        amount('c', new UnixTime(300), 300n),
+        amount('c', new UnixTime(400), 300n),
+      ])
+
+      const result = await repository.getLatestAmount([
+        'a'.repeat(12),
+        'b'.repeat(12),
+      ])
+
+      expect(result).toEqual(amount('b', new UnixTime(300), 300n))
+    })
+  })
+
   describe(AmountRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       await repository.insertMany([
