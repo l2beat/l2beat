@@ -23,7 +23,7 @@ interface Props {
 export function ProjectCostsChart({ milestones, projectId }: Props) {
   const [range, setRange] = useState<CostsTimeRange>('1y')
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showPosted, setShowPosted] = useState(false)
+  const [showThroughput, setShowThroughput] = useState(false)
 
   const resolution = rangeToResolution(range)
 
@@ -135,11 +135,11 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
           <Checkbox
-            name="showMainnetActivity"
-            checked={showPosted}
-            onCheckedChange={(state) => setShowPosted(!!state)}
+            name="showThroughput"
+            checked={showThroughput}
+            onCheckedChange={(state) => setShowThroughput(!!state)}
           >
-            Show maximum
+            Show throughput
           </Checkbox>
           <CostsChartTimeRangeControls
             projectSection
@@ -154,7 +154,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         isLoading={isLoading}
         milestones={milestones}
         resolution={resolution}
-        showPosted={showPosted}
+        showThroughput={showThroughput}
         className="mb-2 mt-4"
         daScale={scale}
       />

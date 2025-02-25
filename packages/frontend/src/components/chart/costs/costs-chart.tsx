@@ -54,7 +54,7 @@ interface CostsChartDataPoint {
   blobs: number | undefined
   compute: number
   overhead: number
-  posted: number | null
+  posted?: number | null
 }
 
 interface Props {
@@ -63,7 +63,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   resolution: CostsResolution
-  showPosted: boolean
+  showThroughput: boolean
   className?: string
   daScale?: number
 }
@@ -75,7 +75,7 @@ export function CostsChart({
   milestones,
   className,
   resolution,
-  showPosted,
+  showThroughput,
   daScale,
 }: Props) {
   return (
@@ -128,7 +128,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showPosted && (
+        {showThroughput && (
           <Line
             dataKey="posted"
             stroke={chartMeta.posted.color}
