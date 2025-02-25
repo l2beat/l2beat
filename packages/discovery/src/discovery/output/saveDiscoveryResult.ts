@@ -8,7 +8,7 @@ import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { buildAndSaveModels } from '../modelling/build'
-import { createProjectPageFacts } from '../modelling/projectPageFacts'
+import { buildProjectPageFacts } from '../modelling/projectPageFacts'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
@@ -22,6 +22,7 @@ export interface SaveDiscoveryResultOptions {
   metaFilename?: string
   saveSources?: boolean
   buildModels?: boolean
+  buildProjectPageFacts?: boolean
   templatesFolder: string
 }
 
@@ -52,7 +53,9 @@ export async function saveDiscoveryResult(
       options.templatesFolder,
       projectDiscoveryFolder,
     )
-    await createProjectPageFacts(config.name, options.rootFolder)
+  }
+  if (options.buildProjectPageFacts) {
+    await buildProjectPageFacts(config.name, options.rootFolder)
   }
 }
 

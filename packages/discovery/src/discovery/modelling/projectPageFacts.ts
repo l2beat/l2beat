@@ -10,10 +10,7 @@ export async function runClingo(program: string) {
   return clingoResult
 }
 
-export async function createProjectPageFacts(
-  project: string,
-  rootPath: string,
-) {
+export async function buildProjectPageFacts(project: string, rootPath: string) {
   const configReader = new ConfigReader(rootPath)
   const model = readAllModelsAndRelationsOfProject(project, configReader)
   const projectPageClingoFile = readProjectPageClingoFile(rootPath)

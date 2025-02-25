@@ -59,6 +59,7 @@ export async function runDiscovery(
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
     buildModels: config.buildModels,
+    buildProjectPageFacts: config.buildProjectPageFacts,
     templatesFolder,
   })
 
