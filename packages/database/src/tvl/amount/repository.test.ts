@@ -98,10 +98,7 @@ describeDatabase(AmountRepository.name, (db) => {
         amount('c', new UnixTime(400), 300n),
       ])
 
-      const result = await repository.getLatestAmount([
-        'a'.repeat(12),
-        'b'.repeat(12),
-      ])
+      const result = await repository.getLatestAmount('b'.repeat(12))
 
       expect(result).toEqual(amount('b', new UnixTime(300), 300n))
     })

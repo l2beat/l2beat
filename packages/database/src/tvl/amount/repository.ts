@@ -60,14 +60,12 @@ export class AmountRepository extends BaseRepository {
   }
 
   async getLatestAmount(
-    configIds: string[],
+    configurationId: string,
   ): Promise<AmountRecord | undefined> {
-    if (configIds.length === 0) return undefined
-
     const row = await this.db
       .selectFrom('Amount')
       .select(selectAmount)
-      .where('configurationId', 'in', configIds)
+      .where('configurationId', '=', configurationId)
       .orderBy('timestamp', 'desc')
       .executeTakeFirst()
 
