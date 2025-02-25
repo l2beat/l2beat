@@ -591,7 +591,10 @@ export class ProjectDiscovery {
     )
 
     if (byDisplayName.length > 0) {
-      return byDisplayName
+      return byDisplayName.map((c) => ({
+        ...c,
+        name: c.displayName ?? c.name,
+      }))
     }
 
     return contracts.filter((contract) => contract.name === name)
