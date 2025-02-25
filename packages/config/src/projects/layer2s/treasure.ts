@@ -45,12 +45,18 @@ export const treasure: Layer2 = zkStackL2({
     },
   },
   associatedTokens: ['MAGIC'],
-  rpcUrl: 'https://rpc.treasure.lol',
   chainConfig: {
     name: 'treasure',
     chainId: 61166,
     explorerUrl: 'https://treasurescan.io',
     sinceTimestamp: new UnixTime(1732617294),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.treasure.lol',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [

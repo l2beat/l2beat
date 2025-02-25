@@ -96,8 +96,14 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.startale.com/astar-zkevm',
+        callsPerMinute: 1500,
+      },
+    ],
   },
-  rpcUrl: 'https://rpc.startale.com/astar-zkevm',
   discovery,
   isForcedBatchDisallowed,
   nonTemplateEscrows: [

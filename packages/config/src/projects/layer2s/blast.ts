@@ -71,16 +71,11 @@ export const blast: Layer2 = opStackL2({
       },
     ],
   },
-  rpcUrl: 'https://rpc.blast.io/',
   chainConfig: {
     name: 'blast',
     coingeckoPlatform: 'blast',
     chainId: 81457,
     explorerUrl: 'https://blastscan.io',
-    explorerApi: {
-      url: 'https://api.blastscan.io/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
     multicallContracts: [
       {
@@ -89,6 +84,10 @@ export const blast: Layer2 = opStackL2({
         sinceBlock: 88189,
         version: '3',
       },
+    ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
+      { type: 'etherscan', url: 'https://api.blastscan.io/api' },
     ],
   },
   finality: {

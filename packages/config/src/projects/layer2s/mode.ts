@@ -34,7 +34,6 @@ export const mode: Layer2 = opStackL2({
     },
   },
   associatedTokens: ['MODE'],
-  rpcUrl: 'https://mainnet.mode.network/',
   genesisTimestamp: new UnixTime(1700125343),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
@@ -81,10 +80,6 @@ export const mode: Layer2 = opStackL2({
     name: 'mode',
     chainId: 34443,
     explorerUrl: 'https://explorer.mode.network',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
-      type: 'etherscan',
-    },
     // ~ Timestamp of block number 0 on Mode
     // The first full hour timestamp that will return the block number
     // https://explorer.mode.network/block/0
@@ -98,6 +93,17 @@ export const mode: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'mode',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.mode.network/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+      },
+    ],
   },
   nonTemplateExcludedTokens: ['rsETH'],
 })

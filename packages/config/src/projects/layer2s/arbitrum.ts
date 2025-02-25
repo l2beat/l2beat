@@ -264,12 +264,8 @@ export const arbitrum: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'arbitrum',
     chainId: 42161,
-    blockscoutV2ApiUrl: 'https://arbitrum.blockscout.com/api/v2',
     explorerUrl: 'https://arbiscan.io',
-    explorerApi: {
-      url: 'https://api.arbiscan.io/api',
-      type: 'etherscan',
-    },
+    coingeckoPlatform: 'arbitrum-one',
     // ~ Timestamp of block number 0 on Arbitrum
     sinceTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
     multicallContracts: [
@@ -286,9 +282,16 @@ export const arbitrum: Layer2 = orbitStackL2({
         version: '2',
       },
     ],
-    coingeckoPlatform: 'arbitrum-one',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://arb1.arbitrum.io/rpc',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api.arbiscan.io/api' },
+      { type: 'blockscoutV2', url: 'https://arbitrum.blockscout.com/api/v2' },
+    ],
   },
-  rpcUrl: 'https://arb1.arbitrum.io/rpc',
   upgradesAndGovernance: getNitroGovernance(
     l2CoreQuorumPercent,
     l2TimelockDelay,

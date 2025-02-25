@@ -76,6 +76,13 @@ export const xlayer: Layer2 = polygonCDKStack({
         version: '3',
       },
     ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.xlayer.tech',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.SMALL_DAC],
   display: {
@@ -119,7 +126,6 @@ export const xlayer: Layer2 = polygonCDKStack({
   ],
   rollupModuleContract: discovery.getContract('Validium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier_13'),
-  rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
     newCryptography: {

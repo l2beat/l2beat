@@ -38,7 +38,6 @@ export const corn: Layer2 = orbitStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.corn-rpc.com',
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // wbtc vault backing the BTCN in the canonical bridge
@@ -85,10 +84,6 @@ export const corn: Layer2 = orbitStackL2({
     name: 'corn',
     chainId: 21000000,
     explorerUrl: 'https://maizenet-explorer.usecorn.com',
-    explorerApi: {
-      url: 'https://maizenet-explorer.usecorn.com/api',
-      type: 'blockscout',
-    },
     sinceTimestamp: new UnixTime(1732012151),
     multicallContracts: [
       {
@@ -97,6 +92,14 @@ export const corn: Layer2 = orbitStackL2({
         sinceBlock: 3228,
         version: '3',
       },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.corn-rpc.com',
+        callsPerMinute: 1500,
+      },
+      { type: 'blockscout', url: 'https://maizenet-explorer.usecorn.com/api' },
     ],
   },
   milestones: [

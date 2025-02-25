@@ -40,12 +40,18 @@ export const zeronetwork: Layer2 = zkStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.zerion.io/v1/zero',
   chainConfig: {
     name: 'zeronetwork',
     chainId: 543210,
     explorerUrl: 'https://explorer.zero.network',
     sinceTimestamp: new UnixTime(1729616414),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.zerion.io/v1/zero',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   diamondContract: discovery.getContract('ZeroNetworkZkEvm'),
   nonTemplateTrackedTxs: [

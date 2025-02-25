@@ -41,10 +41,6 @@ export const real: Layer2 = orbitStackL2({
     name: 'real',
     chainId: 111188,
     explorerUrl: 'https://explorer.re.al',
-    explorerApi: {
-      url: 'https://explorer.re.al/api',
-      type: 'blockscout',
-    },
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -55,13 +51,16 @@ export const real: Layer2 = orbitStackL2({
     ],
     sinceTimestamp: new UnixTime(1710580715),
     coingeckoPlatform: 're-al',
+    apis: [
+      { type: 'rpc', url: 'https://real.drpc.org', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.re.al/api' },
+    ],
   },
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('ERC20Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://real.drpc.org',
   gasTokens: { untracked: ['reETH'] },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

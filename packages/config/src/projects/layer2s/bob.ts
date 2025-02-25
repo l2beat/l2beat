@@ -58,16 +58,15 @@ export const bob: Layer2 = opStackL2({
       type: 'general',
     },
   ],
-  rpcUrl: 'https://rpc.gobob.xyz/',
   chainConfig: {
     name: 'bob',
     chainId: 60808,
     coingeckoPlatform: 'bob-network',
     explorerUrl: 'https://explorer.gobob.xyz',
-    explorerApi: {
-      url: 'https://explorer.gobob.xyz/api',
-      type: 'blockscout',
-    },
     sinceTimestamp: new UnixTime(1712861989),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.gobob.xyz/', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.gobob.xyz/api' },
+    ],
   },
 })

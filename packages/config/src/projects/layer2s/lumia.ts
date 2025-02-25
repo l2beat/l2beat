@@ -54,7 +54,6 @@ export const lumia: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rpcUrl: 'https://mainnet-rpc.lumia.org',
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -94,6 +93,13 @@ export const lumia: Layer2 = polygonCDKStack({
     chainId: 994873017,
     explorerUrl: 'https://explorer.lumia.org',
     sinceTimestamp: new UnixTime(1719499031),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet-rpc.lumia.org',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [

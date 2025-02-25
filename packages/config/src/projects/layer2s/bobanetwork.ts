@@ -31,10 +31,8 @@ export const bobanetwork: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://mainnet.boba.network/',
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet.boba.network/',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
@@ -182,12 +180,19 @@ export const bobanetwork: Layer2 = opStackL2({
     name: 'bobanetwork',
     chainId: 288,
     explorerUrl: 'https://eth.bobascan.com',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
-      type: 'etherscan',
-    },
     coingeckoPlatform: 'boba',
     // ~ Timestamp of block number 1
     sinceTimestamp: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.boba.network/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api/',
+      },
+    ],
   },
 })

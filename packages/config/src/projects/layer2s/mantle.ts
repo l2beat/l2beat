@@ -146,16 +146,11 @@ export const mantle: Layer2 = opStackL2({
       ],
     },
   },
-  rpcUrl: 'https://rpc.mantle.xyz',
   genesisTimestamp: new UnixTime(1688428800),
   chainConfig: {
     name: 'mantle',
     chainId: 5000,
     explorerUrl: 'https://explorer.mantle.xyz',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: new UnixTime(1688314886),
     multicallContracts: [
       {
@@ -166,6 +161,17 @@ export const mantle: Layer2 = opStackL2({
       },
     ],
     coingeckoPlatform: 'mantle',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mantle.xyz',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+      },
+    ],
   },
   milestones: [
     {

@@ -42,12 +42,12 @@ export const reya: Layer2 = orbitStackL2({
     name: 'reya',
     chainId: 1729,
     explorerUrl: 'https://explorer.reya.network',
-    explorerApi: {
-      url: 'https://explorer.reya.network/api',
-      type: 'blockscout',
-    },
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.reya.network', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://explorer.reya.network/api' },
+    ],
   },
   // trackedTxs: [
   //   {
@@ -84,7 +84,6 @@ export const reya: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  rpcUrl: 'https://rpc.reya.network',
   milestones: [
     {
       title: 'Reya DEX launch',

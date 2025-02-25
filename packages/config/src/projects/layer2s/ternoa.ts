@@ -55,7 +55,6 @@ export const ternoa: Layer2 = polygonCDKStack({
       ],
     },
   },
-  rpcUrl: 'https://rpc-mainnet.zkevm.ternoa.network', // successfully tested at 5k/min
   discovery,
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -95,6 +94,14 @@ export const ternoa: Layer2 = polygonCDKStack({
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
     sinceTimestamp: new UnixTime(1735650935),
+    apis: [
+      {
+        type: 'rpc',
+        // successfully tested at 5k/min
+        url: 'https://rpc-mainnet.zkevm.ternoa.network',
+        callsPerMinute: 1500,
+      },
+    ],
   },
   associatedTokens: ['CAPS'],
   nonTemplateEscrows: [
