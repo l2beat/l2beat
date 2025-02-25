@@ -37,13 +37,20 @@ export interface BreakdownSplit {
 }
 
 const getCached7dTokenBreakdown = cache(
-  async (): Promise<SevenDayTvsBreakdown> => {
+  async ({
+    type,
+  }: { type: 'layer2' | 'bridge' | 'all' }): Promise<SevenDayTvsBreakdown> => {
     const chains = (await ps.getProjects({ select: ['chainConfig'] })).map(
       (p) => p.chainConfig,
     )
     const tvsValues = await getTvsValuesForProjects(
       await getTvsProjects(
-        (project) => project.type === 'layer2' || project.type === 'layer3',
+        (project) =>
+          type === 'all'
+            ? true
+            : type === 'layer2'
+              ? project.type === 'layer2' || project.type === 'layer3'
+              : project.type === 'bridge',
         chains,
       ),
       '7d',
