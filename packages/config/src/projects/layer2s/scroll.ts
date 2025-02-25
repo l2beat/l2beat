@@ -124,7 +124,7 @@ export const scroll: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: false,
+      rollupNodeSourceAvailable: true,
     },
     stage1: {
       principle: false,
@@ -132,7 +132,7 @@ export const scroll: Layer2 = {
       fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: false,
+      securityCouncilProperlySetUp: true,
     },
     stage2: {
       proofSystemOverriddenOnlyInCaseOfABug: false,
