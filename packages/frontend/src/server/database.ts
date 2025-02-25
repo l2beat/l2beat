@@ -2,19 +2,15 @@ import type { Database } from '@l2beat/database'
 import { createDatabase } from '@l2beat/database'
 import { env } from '~/env'
 
-let db: Database | undefined
-
 export function getDb() {
-  if (!db) {
-    db = !env.MOCK
-      ? createDatabase({
-          application_name: createConnectionTag(),
-          connectionString: env.DATABASE_URL,
-          ssl: ssl(),
-          ...pool(),
-        })
-      : createThrowingProxy()
-  }
+  const db = !env.MOCK
+    ? createDatabase({
+        application_name: createConnectionTag(),
+        connectionString: env.DATABASE_URL,
+        ssl: ssl(),
+        ...pool(),
+      })
+    : createThrowingProxy()
 
   return {
     ...db,
