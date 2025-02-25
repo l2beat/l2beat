@@ -102,11 +102,9 @@ export const morph: Layer2 = {
     },
   }),
   config: {
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.morphl2.io',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
-      defaultCallsPerMinute: 300,
     },
     escrows: [
       {
@@ -192,6 +190,13 @@ export const morph: Layer2 = {
         batchSize: 150,
         sinceBlock: 3654913,
         version: '3',
+      },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.morphl2.io',
+        callsPerMinute: 300,
       },
     ],
   },

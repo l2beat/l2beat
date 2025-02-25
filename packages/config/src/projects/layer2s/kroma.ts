@@ -111,12 +111,12 @@ export const kroma: Layer2 = {
     chainId: 255,
     coingeckoPlatform: 'kroma',
     explorerUrl: 'https://kromascan.com',
-    explorerApi: {
-      url: 'https://api.kromascan.com/api',
-      type: 'etherscan',
-    },
     multicallContracts: [],
     sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+    apis: [
+      { type: 'rpc', url: 'https://api.kroma.network', callsPerMinute: 1500 },
+      { type: 'etherscan', url: 'https://api.kromascan.com/api' },
+    ],
   },
   config: {
     associatedTokens: ['KRO'],
@@ -142,10 +142,8 @@ export const kroma: Layer2 = {
         description: 'Main entry point for users depositing USDC.',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://api.kroma.network',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
       adjustCount: { type: 'SubtractOne' },
     },

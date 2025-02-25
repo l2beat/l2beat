@@ -23,12 +23,15 @@ export const r0ar: Layer2 = underReviewL2({
       socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc-r0ar.io/',
-    defaultCallsPerMinute: 1500,
-    adjustCount: { type: 'SubtractOne' },
+  chainConfig: {
+    name: 'r0ar',
+    chainId: 193939,
+    apis: [{ type: 'rpc', url: 'https://rpc-r0ar.io/', callsPerMinute: 1500 }],
+  },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   escrows: [
     {

@@ -231,9 +231,8 @@ export const optimism: Layer2 = {
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://mainnet.optimism.io/',
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
       adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 105235064 },
     },
@@ -305,11 +304,6 @@ export const optimism: Layer2 = {
     name: 'optimism',
     chainId: 10,
     explorerUrl: 'https://optimistic.etherscan.io',
-    explorerApi: {
-      url: 'https://api-optimistic.etherscan.io/api',
-      type: 'etherscan',
-    },
-    blockscoutV2ApiUrl: 'https://optimism.blockscout.com/api/v2',
     // ~ Timestamp of block number 138 on Optimism
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138
@@ -329,6 +323,15 @@ export const optimism: Layer2 = {
       },
     ],
     coingeckoPlatform: 'optimistic-ethereum',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.optimism.io/',
+        callsPerMinute: 1500,
+      },
+      { type: 'etherscan', url: 'https://api-optimistic.etherscan.io/api' },
+      { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

@@ -41,10 +41,6 @@ export const kinto: Layer2 = orbitStackL2({
     name: 'kinto',
     chainId: 7887,
     explorerUrl: 'https://explorer.kinto.xyz',
-    explorerApi: {
-      url: 'https://explorer.kinto.xyz/api',
-      type: 'blockscout',
-    },
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
     sinceTimestamp: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
     multicallContracts: [
@@ -55,18 +51,20 @@ export const kinto: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
+    apis: [
+      { type: 'rpc', url: 'https://rpc.kinto-rpc.com', callsPerMinute: 600 },
+      { type: 'blockscout', url: 'https://explorer.kinto.xyz/api' },
+    ],
   },
   hasAtLeastFiveExternalChallengers: true,
   isNodeAvailable: true,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.kinto-rpc.com',
-    defaultCallsPerMinute: 600,
-    adjustCount: { type: 'SubtractOne' },
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
+    adjustCount: { type: 'SubtractOne' },
   },
   stage: getStage(
     {

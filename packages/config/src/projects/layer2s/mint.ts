@@ -36,10 +36,6 @@ export const mint: Layer2 = opStackL2({
     name: 'mint',
     chainId: 185,
     explorerUrl: 'https://explorer.mintchain.io',
-    explorerApi: {
-      url: 'https://explorer.mintchain.io/api',
-      type: 'blockscout',
-    },
     multicallContracts: [
       {
         sinceBlock: 19861572,
@@ -49,12 +45,14 @@ export const mint: Layer2 = opStackL2({
       },
     ],
     sinceTimestamp: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    apis: [
+      { type: 'rpc', url: 'https://rpc.mintchain.io', callsPerMinute: 800 },
+      { type: 'blockscout', url: 'https://explorer.mintchain.io/api' },
+    ],
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://rpc.mintchain.io',
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
-    defaultCallsPerMinute: 800,
     adjustCount: { type: 'SubtractOne' },
   },
   isNodeAvailable: true,

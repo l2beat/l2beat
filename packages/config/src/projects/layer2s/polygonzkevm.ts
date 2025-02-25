@@ -51,21 +51,14 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
   },
   associatedTokens: ['POL', 'MATIC'],
   discovery,
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://polygon-rpc.com/zkevm',
-    defaultCallsPerMinute: 500,
+  activityConfig: {
+    type: 'block',
     startBlock: 1,
   },
   chainConfig: {
     name: 'polygonzkevm',
     chainId: 1101,
-    blockscoutV2ApiUrl: 'https://zkevm.blockscout.com/api/v2',
     explorerUrl: 'https://zkevm.polygonscan.com',
-    explorerApi: {
-      url: 'https://api-zkevm.polygonscan.com/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: new UnixTime(1679679015),
     multicallContracts: [
       {
@@ -74,6 +67,15 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         sinceBlock: 57746,
         version: '3',
       },
+    ],
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://polygon-rpc.com/zkevm',
+        callsPerMinute: 500,
+      },
+      { type: 'etherscan', url: 'https://api-zkevm.polygonscan.com/api' },
+      { type: 'blockscoutV2', url: 'https://zkevm.blockscout.com/api/v2' },
     ],
   },
   nonTemplateTrackedTxs: [

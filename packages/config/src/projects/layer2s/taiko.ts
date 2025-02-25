@@ -188,10 +188,8 @@ export const taiko: Layer2 = {
         chain: 'ethereum',
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.mainnet.taiko.xyz',
-      defaultCallsPerMinute: 500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
     daTracking: [
@@ -280,11 +278,15 @@ export const taiko: Layer2 = {
     name: 'taiko',
     chainId: 167000,
     explorerUrl: 'https://taikoscan.io',
-    explorerApi: {
-      url: 'https://api.taikoscan.io/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: new UnixTime(1716620627),
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.mainnet.taiko.xyz',
+        callsPerMinute: 500,
+      },
+      { type: 'etherscan', url: 'https://api.taikoscan.io/api' },
+    ],
   },
   type: 'layer2',
   riskView: {

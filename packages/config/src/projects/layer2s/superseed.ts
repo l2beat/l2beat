@@ -33,10 +33,19 @@ export const superseed: Layer2 = underReviewL2({
       ],
     },
   },
-  transactionApi: {
-    type: 'rpc',
-    defaultUrl: 'https://mainnet.superseed.xyz/',
-    defaultCallsPerMinute: 1500,
+  chainConfig: {
+    name: 'superseed',
+    chainId: 5330,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://mainnet.superseed.xyz/',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  activityConfig: {
+    type: 'block',
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },

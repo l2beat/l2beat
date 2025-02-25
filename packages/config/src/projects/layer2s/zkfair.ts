@@ -141,10 +141,8 @@ export const zkfair: Layer2 = {
       }),
     ],
     associatedTokens: ['ZKF'],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://rpc.zkfair.io',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
   },
@@ -152,10 +150,6 @@ export const zkfair: Layer2 = {
     name: 'zkfair',
     chainId: 42766,
     explorerUrl: 'https://scan.zkfair.io',
-    explorerApi: {
-      url: 'https://scan.zkfair.io/api/',
-      type: 'blockscout',
-    },
     // ~ Timestamp of block number 0 on zkFair
     // https://scan.zkfair.io/block/0
     sinceTimestamp: UnixTime.fromDate(new Date('2023-12-19T20:00:00Z')),
@@ -168,6 +162,10 @@ export const zkfair: Layer2 = {
       },
     ],
     coingeckoPlatform: 'zkfair',
+    apis: [
+      { type: 'rpc', url: 'https://rpc.zkfair.io', callsPerMinute: 1500 },
+      { type: 'blockscout', url: 'https://scan.zkfair.io/api/' },
+    ],
   },
   dataAvailability: {
     layer: DA_LAYERS.DAC,

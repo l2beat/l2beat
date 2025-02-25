@@ -70,10 +70,6 @@ export const metis: Layer2 = {
     name: 'metis',
     chainId: 1088,
     explorerUrl: 'https://explorer.metis.io',
-    explorerApi: {
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
-      type: 'etherscan',
-    },
     sinceTimestamp: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
     multicallContracts: [
       {
@@ -86,6 +82,17 @@ export const metis: Layer2 = {
       },
     ],
     coingeckoPlatform: 'metis',
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://andromeda.metis.io/',
+        callsPerMinute: 1500,
+      },
+      {
+        type: 'etherscan',
+        url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
+      },
+    ],
   },
   config: {
     associatedTokens: ['Metis'],
@@ -98,10 +105,8 @@ export const metis: Layer2 = {
         premintedTokens: ['Metis'],
       },
     ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://andromeda.metis.io/',
-      defaultCallsPerMinute: 1500,
+    activityConfig: {
+      type: 'block',
       startBlock: 1,
     },
   },
