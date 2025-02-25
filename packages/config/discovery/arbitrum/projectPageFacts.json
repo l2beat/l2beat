@@ -1,0 +1,6126 @@
+{
+  "facts": [
+    {
+      "atom": "contract",
+      "params": [
+        "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        "0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        "L2ERC20Gateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "constitutionHash_0x1d62ffeb72e4c360ccbbacf7c965153b00260417",
+        "0x1d62ffeb72e4c360ccbbacf7c965153b00260417",
+        "ConstitutionHash"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2SurplusFee_0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d",
+        "0x32e7af5a8151934f3787d0cd59eb6edd0a736b1d",
+        "L2SurplusFee"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        "0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        "L2Timelock"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "standardArbERC20_0x3f770ac673856f105b586bb393d122721265ad46",
+        "0x3f770ac673856f105b586bb393d122721265ad46",
+        "StandardArbERC20"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "beaconProxyFactory_0x3fe38087a94903a9d946fa1915e1772fe611000f",
+        "0x3fe38087a94903a9d946fa1915e1772fe611000f",
+        "BeaconProxyFactory"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "L2SecurityCouncilEmergency"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2DAIGateway_0x467194771dae2967aef3ecbedd3bf9a310c76c65",
+        "0x467194771dae2967aef3ecbedd3bf9a310c76c65",
+        "L2DAIGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        "0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        "L2GatewayRouter"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        "0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        "L2WethGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2LPTGateway_0x6d2457a4ad276000a615295f7a80f79e48ccd318",
+        "0x6d2457a4ad276000a615295f7a80f79e48ccd318",
+        "L2LPTGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "upgradeExecRouteBuilder_0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a",
+        "0x7481716f05e315fc4c4a64e56dcd9bc1d6f24c0a",
+        "UpgradeExecRouteBuilder"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        "0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        "TreasuryGovernor"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+        "0x912ce59144191c1204e64559fe8253a0e49e6548",
+        "L2ArbitrumToken"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "securityCouncilMemberSyncAction_0x9bf7b8884fa381a45f8cb2525905fb36c996297a",
+        "0x9bf7b8884fa381a45f8cb2525905fb36c996297a",
+        "SecurityCouncilMemberSyncAction"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2SecurityCouncilPropose_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
+        "0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
+        "L2SecurityCouncilPropose"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2BaseFee_0xbf5041fc07e1c866d15c749156657b8eed0fb649",
+        "0xbf5041fc07e1c866d15c749156657b8eed0fb649",
+        "L2BaseFee"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        "0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        "TreasuryTimelock"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        "0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        "L2ARBGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "L2UpgradeExecutor"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        "0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        "SecurityCouncilManager"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        "0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        "L2GatewaysProxyAdmin"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "0xdb216562328215e010f819b5abe947bad4ca961e",
+        "L2ProxyAdmin"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "upgradeableBeacon_0xe72ba9418b5f2ce0a6a40501fe77c6839aa37333",
+        "0xe72ba9418b5f2ce0a6a40501fe77c6839aa37333",
+        "UpgradeableBeacon"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        "0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        "CoreGovernor"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "Outbox"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "wstETHEscrow_0x0f25c1dc2a9922304f2eac71dca9b07e310e8e5a",
+        "0x0f25c1dc2a9922304f2eac71dca9b07e310e8e5a",
+        "wstETHEscrow"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "upgradeableBeacon_0x14797f5432f699cb4d4db04df599b74952d78d7b",
+        "0x14797f5432f699cb4d4db04df599b74952d78d7b",
+        "UpgradeableBeacon"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        "0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        "SequencerInbox"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "oneStepProver0_0x35fbc5f03d86e88973b06fb9c5a913d54abdf731",
+        "0x35fbc5f03d86e88973b06fb9c5a913d54abdf731",
+        "OneStepProver0"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "UpgradeExecutor"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "parentToChildRewardRouter_0x40cd7d713d7ae463f95ce5d342ea6e7f5cf7c999",
+        "0x40cd7d713d7ae463f95ce5d342ea6e7f5cf7c999",
+        "ParentToChildRewardRouter"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "oneStepProofEntry_0x4397fe1e959ba81b9d5f1a9679ddd891955a42d6",
+        "0x4397fe1e959ba81b9d5f1a9679ddd891955a42d6",
+        "OneStepProofEntry"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        "0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        "Inbox"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        "0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        "RollupProxy"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "ArbitrumProxyAdmin"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        "0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        "UpgradeExecutorAdmin"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        "0x57bd336d579a51938619271a7cc137a46d0501b1",
+        "RollupEventInbox"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        "0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        "OutboxV0"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "lPTL1Escrow_0x6a23f4940bd5ba117da261f98aae51a8bffa210a",
+        "0x6a23f4940bd5ba117da261f98aae51a8bffa210a",
+        "LPTL1Escrow"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        "0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        "L1GatewayRouter"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        "0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        "OutboxV1"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "Bridge"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        "0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        "GatewaysAdmin"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "oneStepProverHostIo_0xa07cd154340cc74ecf156ffb9fb378ee29ca71cf",
+        "0xa07cd154340cc74ecf156ffb9fb378ee29ca71cf",
+        "OneStepProverHostIo"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1Escrow_0xa10c7ce4b876998858b1a9e12b10092229539400",
+        "0xa10c7ce4b876998858b1a9e12b10092229539400",
+        "L1Escrow"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        "0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        "L1ERC20Gateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        "0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        "EdgeChallengeManager"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "oneStepProverMath_0xab9596a0aaf28bc798c453434ec2dc0f8f0bf921",
+        "0xab9596a0aaf28bc798c453434ec2dc0f8f0bf921",
+        "OneStepProverMath"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "outboxEntry_0xc4940069140142236d4065b866018f7b2bec77fd",
+        "0xc4940069140142236d4065b866018f7b2bec77fd",
+        "OutboxEntry"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        "0xcee284f754e854890e311e3280b767f80797180d",
+        "L1CustomGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "batchPosterManagerMultisig_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "BatchPosterManagerMultisig"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1DaiGateway_0xd3b5b60020504bc3489d6949d545893982ba3011",
+        "0xd3b5b60020504bc3489d6949d545893982ba3011",
+        "L1DaiGateway"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "oneStepProverMemory_0xe0ba77e0e24de5369e3b268ea79fde716e2ec48b",
+        "0xe0ba77e0e24de5369e3b268ea79fde716e2ec48b",
+        "OneStepProverMemory"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "L1Timelock"
+      ]
+    },
+    {
+      "atom": "contract",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "SecurityCouncil"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x0000000000000000000000000000000000000000",
+        "0x0000000000000000000000000000000000000000",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x0000000000000000000000000000000000000001",
+        "0x0000000000000000000000000000000000000001",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x00000000000000000000000000000000000a4b86",
+        "0x00000000000000000000000000000000000a4b86",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "bartek_eth_L2BEAT_0x0275b3d54a5ddbf8205a75984796efe8b7357bae",
+        "0x0275b3d54a5ddbf8205a75984796efe8b7357bae",
+        "bartek.eth-L2BEAT"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "emilianoBonassi_Conduit_0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93",
+        "0x33ddb82e68940f0e4c1050885bce8faf5ddd1b93",
+        "EmilianoBonassi-Conduit"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "aleksanderKryukov_Certora_0x444edf8b90763be7015f1f099a0da0ef10250c71",
+        "0x444edf8b90763be7015f1f099a0da0ef10250c71",
+        "AleksanderKryukov-Certora"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "yoav_eth_EF_0x475816ca2a31d601b4e336f5c2418a67978abf09",
+        "0x475816ca2a31d601b4e336f5c2418a67978abf09",
+        "yoav.eth-EF"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "dennisonBertram_Tally_0x59c8535419bbcb8adffdb3c835435e907e3b183b",
+        "0x59c8535419bbcb8adffdb3c835435e907e3b183b",
+        "DennisonBertram-Tally"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "cts_Zellic_0x5a09a94ee8198d3c474d723337aa58023810022c",
+        "0x5a09a94ee8198d3c474d723337aa58023810022c",
+        "cts-Zellic"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "fred_Arbitrum_0x5dd2205c3aac13e592f0a3d85188c948d1781df1",
+        "0x5dd2205c3aac13e592f0a3d85188c948d1781df1",
+        "fred-Arbitrum"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x6142f1c8bbf02e6a6bd074e8d564c9a5420a0676",
+        "0x6142f1c8bbf02e6a6bd074e8d564c9a5420a0676",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "johnMorrow_Gauntlet_0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67",
+        "0x78bb97d2f3811256d7f0041e81aaf4b426ef3b67",
+        "JohnMorrow-Gauntlet"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "griffGreen_Giveth_0x882c6fcb3d358b9d70b97c6999159cea64168b6f",
+        "0x882c6fcb3d358b9d70b97c6999159cea64168b6f",
+        "GriffGreen-Giveth"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "stevenThornton_OpenZeppelin_0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc",
+        "0x9316ca66f5f936e3239e4fd2aaaea5c7b6f3c4cc",
+        "StevenThornton-OpenZeppelin"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "goncaloMagalhaes_Immunefi_0x9a301de96b15db3ab778e2969bf6caa909ca56e8",
+        "0x9a301de96b15db3ab778e2969bf6caa909ca56e8",
+        "GoncaloMagalhaes-Immunefi"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xa723c008e76e379c55599d2e4d93879beafda79c",
+        "0xa723c008e76e379c55599d2e4d93879beafda79c",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
+        "0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xc232ee726e3c51b86778bb4dbe61c52cc07a60f3",
+        "0xc232ee726e3c51b86778bb4dbe61c52cc07a60f3",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xd3b5b60020504bc3489d6949d545893982ba3011",
+        "0xd3b5b60020504bc3489d6949d545893982ba3011",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xd92023e9d9911199a6711321d1277285e6d4e2db",
+        "0xd92023e9d9911199a6711321d1277285e6d4e2db",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "gzeon_OffchainLabs_0xe2e9d5b97d8c0457b1cf80bc93802bce4df03e33",
+        "0xe2e9d5b97d8c0457b1cf80bc93802bce4df03e33",
+        "gzeon-OffchainLabs"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "L1Timelock_l2alias"
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x07d4692291b9e30e326fd31706f686f83f331b82",
+        "0x07d4692291b9e30e326fd31706f686f83f331b82",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x096760f208390250649e3e8763348e783aef5562",
+        "0x096760f208390250649e3e8763348e783aef5562",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        "0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d",
+        "0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x290aa3e7533c873b3326dabfe7579e86ed951428",
+        "0x290aa3e7533c873b3326dabfe7579e86ed951428",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x375906adfd34d93236084f462bb2db0d92129fe1",
+        "0x375906adfd34d93236084f462bb2db0d92129fe1",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x3fe38087a94903a9d946fa1915e1772fe611000f",
+        "0x3fe38087a94903a9d946fa1915e1772fe611000f",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x4d9a23bd4dbbdc04a88b99d8d2ac450eb6b8f49c",
+        "0x4d9a23bd4dbbdc04a88b99d8d2ac450eb6b8f49c",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        "0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x64379dee676ab442b48925ed603771f386510ee7",
+        "0x64379dee676ab442b48925ed603771f386510ee7",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0x79d3bb67ea7ab77e015af3da885e8ed9c48a9fce",
+        "0x79d3bb67ea7ab77e015af3da885e8ed9c48a9fce",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        "0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xc1b634853cb333d3ad8663715b08f41a3aec47cc",
+        "0xc1b634853cb333d3ad8663715b08f41a3aec47cc",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        ""
+      ]
+    },
+    {
+      "atom": "eoa",
+      "params": [
+        "eoa_0xfe2bf40f2a9183774bf8e871d634a4e50255158b",
+        "0xfe2bf40f2a9183774bf8e871d634a4e50255158b",
+        ""
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "act",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilPropose_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "act",
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "act",
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        "upgrade",
+        "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        "upgrade",
+        "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        "upgrade",
+        "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        "upgrade",
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "act",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "act",
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "act",
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "act",
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "interact",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "batchPosterManagerMultisig_0xd0fda6925f502a3a94986dfe7c92fe19ebbd679b",
+        "interact",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "act",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "act",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "eoa_0x0c5911d57b24fcf1dc8b2608efbae57c7098e32d",
+        "sequence",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "sequence",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "eoa_0xc1b634853cb333d3ad8663715b08f41a3aec47cc",
+        "sequence",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "sequence",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilPropose_0xadd68bcb0f66878ab9d37a447c7b9067c5dfa941",
+        "act",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        "act",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        "act",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "act",
+              691200
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "act",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "act",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "interact",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "interact",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "act",
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "act",
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "act",
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "act",
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "act",
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "act",
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        "upgrade",
+        "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "interact",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "act",
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "act",
+        "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "act",
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "act",
+        "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ERC20Gateway_0x09e9222e96e7b4ae2a407b98d48e330053351eee",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewayRouter_0x5288c571fd7ad117bea99bf60fe0846c4e84f933",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2GatewaysProxyAdmin_0xd570ace65c43af47101fc6250fd6fc63d1c22a86",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2WethGateway_0x6c411ad3e74de3e7bd422b94a27770f5b86c623b",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2Timelock_0x34d45e99f7d8c45ed05b5ca72d54bbd1fb3f98f0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryGovernor_0x789fc99093b09ad01c34dc7251d0c89ce743e5a4",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ArbitrumToken_0x912ce59144191c1204e64559fe8253a0e49e6548",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "treasuryTimelock_0xbfc1feca8b09a5c5d3effe7429ebe24b9c09ef58",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ARBGateway_0xcad7828a19b363a2b44717afb1786b5196974d8e",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "securityCouncilManager_0xd509e5f5aee2a205f554f36e8a7d56094494edfc",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l2SecurityCouncilEmergency_0x423552c0f05baccac5bfa91c6dcf1dc53a0a1641",
+        "upgrade",
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_l2alias_0xf7951d92b0c345144506576ec13ecf5103ac905a",
+        "upgrade",
+        "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l2UpgradeExecutor_0xcf57572261c7c2bcf21ffd220ea7d1a27d40a827",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l2ProxyAdmin_0xdb216562328215e010f819b5abe947bad4ca961e",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "coreGovernor_0xf07ded9dc292157749b6fd268e37df6ea38395b9",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "act",
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "act",
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "act",
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "interact",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "securityCouncil_0xf06e95ef589d9c38af242a8aaee8375f14023f85",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "interact",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "interact",
+        "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupProxy_0x4dceb440657f21083db8add07665f8ddbe1dcfc0",
+              "interact",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "act",
+        "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "sequencerInbox_0x1c479675ad559dc151f6ec7ed3fbf8cee79582b6",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "inbox_0x4dbd4fc535ac27206064b68ffcf827b0a60bab3f",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "rollupEventInbox_0x57bd336d579a51938619271a7cc137a46d0501b1",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV0_0x667e23abd27e623c11d4cc00ca3ec4d0bd63337a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "outboxV1_0x760723cd2e632826c38fef8cd438a4cc7e7e1a40",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "arbitrumProxyAdmin_0x554723262467f125ac9e1cdfa9ce15cc53822dbd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "edgeChallengeManager_0xa5565d266c3c3ee90b16be8a5b13d587ef559fb0",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutorAdmin_0x5613af0474eb9c528a34701a5b1662e3c8fa0678",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1GatewayRouter_0x72ce9c846789fdb6fc1f34ac4ad25dd9ef7031ef",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1ERC20Gateway_0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "atom": "transitivePermission",
+      "params": [
+        "outbox_0x0b9857ae2d4a3dbe74ffe1d7df045bb7f96e4840",
+        "upgrade",
+        "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+        [
+          {
+            "atom": "tuple",
+            "params": [
+              "bridge_0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1Timelock_0xe6841d92b0c345144506576ec13ecf5103ac7f49",
+              "act",
+              259200
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "upgradeExecutor_0x3fffbadaf827559da092217e474760e2b2c3cedd",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "gatewaysAdmin_0x9ad46fac0cf7f790e5be05a0f15223935a0c0ada",
+              "act",
+              0
+            ]
+          },
+          {
+            "atom": "tuple",
+            "params": [
+              "l1CustomGateway_0xcee284f754e854890e311e3280b767f80797180d",
+              "upgrade",
+              0
+            ]
+          }
+        ]
+      ]
+    }
+  ]
+}

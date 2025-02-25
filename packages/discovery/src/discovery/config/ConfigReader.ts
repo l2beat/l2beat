@@ -202,6 +202,14 @@ export class ConfigReader {
       return Hash160(hashString)
     }
   }
+
+  getProjectPath(project: string): string {
+    return path.join(this.rootPath, 'discovery', project)
+  }
+
+  getProjectChainPath(project: string, chain: string): string {
+    return path.join(this.getProjectPath(project), chain)
+  }
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {
