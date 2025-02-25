@@ -23,6 +23,8 @@ export const amarok: Bridge = {
   display: {
     name: 'Connext',
     slug: 'connext',
+    warning:
+      'This project [is winding down](https://bridge.connext.network/) and operations are migrating to [the Everclear Hub](https://l2beat.com/scaling/projects/everclear).',
     description:
       'Connext is a multilayered system that aggregates various native AMBs in a Hub-and-Spoke architecture with Ethereum being the Hub receiving\
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
