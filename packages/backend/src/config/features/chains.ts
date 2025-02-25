@@ -43,8 +43,8 @@ export function getChainTvlConfig(
     throw new Error('Missing project for chain: ' + chain)
   }
 
-  if (!chainConfig.minTimestampForTvl) {
-    throw new Error('Missing minTimestampForTvl for chain: ' + chain)
+  if (!chainConfig.sinceTimestamp) {
+    throw new Error('Missing sinceTimestamp for chain: ' + chain)
   }
 
   if (!isEnabled) {
@@ -89,8 +89,7 @@ export function getChainTvlConfig(
               url: chainConfig.explorerApi.url,
             }
         : undefined,
-      minBlockTimestamp:
-        options?.minTimestamp ?? chainConfig.minTimestampForTvl,
+      minBlockTimestamp: options?.minTimestamp ?? chainConfig.sinceTimestamp,
       multicallConfig: (chainConfig.multicallContracts ?? []).map(
         toMulticallConfigEntry,
       ),

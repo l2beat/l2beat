@@ -284,7 +284,7 @@ export const taiko: Layer2 = {
       url: 'https://api.taikoscan.io/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1716620627),
+    sinceTimestamp: new UnixTime(1716620627),
   },
   type: 'layer2',
   riskView: {

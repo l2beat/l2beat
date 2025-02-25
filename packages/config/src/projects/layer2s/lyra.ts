@@ -823,7 +823,7 @@ export const lyra: Layer2 = opStackL2({
     },
     // ~ Timestamp of block number 0 on Lyra
     // https://explorer.lyra.finance/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-11-15T04:13:35Z')),
     multicallContracts: [
       {
         sinceBlock: 1935198,

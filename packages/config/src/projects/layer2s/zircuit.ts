@@ -68,7 +68,7 @@ export const zircuit: Layer2 = opStackL2({
     name: 'zircuit',
     chainId: 48900,
     coingeckoPlatform: 'zircuit',
-    minTimestampForTvl: new UnixTime(1719936217),
+    sinceTimestamp: new UnixTime(1719936217),
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],

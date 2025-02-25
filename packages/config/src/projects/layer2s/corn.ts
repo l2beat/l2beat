@@ -89,7 +89,7 @@ export const corn: Layer2 = orbitStackL2({
       url: 'https://maizenet-explorer.usecorn.com/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: new UnixTime(1732012151),
+    sinceTimestamp: new UnixTime(1732012151),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

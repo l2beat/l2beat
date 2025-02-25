@@ -93,7 +93,7 @@ export const gpt: Layer2 = polygonCDKStack({
   },
   chainConfig: {
     chainId: 1511670449,
-    minTimestampForTvl: new UnixTime(1716807971),
+    sinceTimestamp: new UnixTime(1716807971),
     name: 'gpt',
   },
   rollupModuleContract: discovery.getContract('Validium'),

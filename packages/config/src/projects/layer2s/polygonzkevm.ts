@@ -66,7 +66,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       url: 'https://api-zkevm.polygonscan.com/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1679679015),
+    sinceTimestamp: new UnixTime(1679679015),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

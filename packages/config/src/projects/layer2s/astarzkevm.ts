@@ -87,7 +87,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     name: 'astarzkevm',
     chainId: 3776,
     explorerUrl: 'https://astar-zkevm.explorer.startale.com',
-    minTimestampForTvl: new UnixTime(1708632059),
+    sinceTimestamp: new UnixTime(1708632059),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

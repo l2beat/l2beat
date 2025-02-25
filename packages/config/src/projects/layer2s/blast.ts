@@ -81,7 +81,7 @@ export const blast: Layer2 = opStackL2({
       url: 'https://api.blastscan.io/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

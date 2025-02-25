@@ -85,7 +85,7 @@ export const ink: Layer2 = opStackL2({
       url: 'https://explorer.inkonchain.com/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -94,7 +94,7 @@ export const ternoa: Layer2 = polygonCDKStack({
     name: 'ternoa',
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
-    minTimestampForTvl: new UnixTime(1735650935),
+    sinceTimestamp: new UnixTime(1735650935),
   },
   associatedTokens: ['CAPS'],
   nonTemplateEscrows: [

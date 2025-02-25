@@ -124,7 +124,7 @@ export const zklinknova: Layer3 = {
       url: 'https://explorer-api.zklink.io/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1709273393),
+    sinceTimestamp: new UnixTime(1709273393),
   },
   config: {
     transactionApi: {

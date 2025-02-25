@@ -15,9 +15,9 @@ export function getTvlPricesConfig(
 
     assert(prices.get(key) === undefined, 'Every price should be unique')
 
-    assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
+    assert(chain.sinceTimestamp, 'Chain should have sinceTimestamp')
     const chainMinTimestamp = UnixTime.max(
-      chain.minTimestampForTvl,
+      chain.sinceTimestamp,
       minTimestampOverride ?? new UnixTime(0),
     )
     const sinceTimestamp = UnixTime.max(chainMinTimestamp, token.sinceTimestamp)

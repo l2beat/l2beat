@@ -66,7 +66,7 @@ export const rari: Layer3 = orbitStackL3({
       type: 'blockscout',
     },
     blockscoutV2ApiUrl: 'https://rari.calderaexplorer.xyz/api/v2',
-    minTimestampForTvl: new UnixTime(1705716145),
+    sinceTimestamp: new UnixTime(1705716145),
   },
   nonTemplateTechnology: {
     sequencing: {

@@ -48,7 +48,7 @@ export const mint: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-05-13T14:02:11Z')),
   },
   transactionApi: {
     type: 'rpc',

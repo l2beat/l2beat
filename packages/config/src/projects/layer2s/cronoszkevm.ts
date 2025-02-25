@@ -43,7 +43,7 @@ export const cronoszkevm: Layer2 = zkStackL2({
     chainId: 388,
     coingeckoPlatform: 'cronos-zkevm',
     explorerUrl: 'https://explorer.zkevm.cronos.org',
-    minTimestampForTvl: new UnixTime(1722394995),
+    sinceTimestamp: new UnixTime(1722394995),
   },
   diamondContract: discovery.getContract('CronosZkEvm'),
   daProvider: {

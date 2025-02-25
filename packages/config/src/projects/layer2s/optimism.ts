@@ -313,7 +313,7 @@ export const optimism: Layer2 = {
     // ~ Timestamp of block number 138 on Optimism
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

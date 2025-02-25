@@ -189,7 +189,7 @@ This method allows ZK rollups to prove that the data used in their validity proo
     },
     blockscoutV2ApiUrl: 'https://eth.blockscout.com/api/v2',
     // Deployment of the first L2
-    minTimestampForTvl: MIN_TIMESTAMP_FOR_TVL,
+    sinceTimestamp: MIN_TIMESTAMP_FOR_TVL,
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

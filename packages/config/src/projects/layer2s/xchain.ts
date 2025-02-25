@@ -41,7 +41,7 @@ export const xchain: Layer2 = orbitStackL2({
       type: 'blockscout',
     },
     multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-08-21T00:00:00Z')),
   },
   rpcUrl: 'https://xchain-rpc.idex.io/',
 

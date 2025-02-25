@@ -53,7 +53,7 @@ export const real: Layer2 = orbitStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: new UnixTime(1710580715),
+    sinceTimestamp: new UnixTime(1710580715),
     coingeckoPlatform: 're-al',
   },
   associatedTokens: ['RWA'], // native token reETH not on coingecko yet

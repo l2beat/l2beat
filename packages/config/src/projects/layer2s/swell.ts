@@ -48,7 +48,7 @@ export const swell = opStackL2({
     name: 'swell',
     chainId: 1923,
     // coingeckoPlatform: '',
-    minTimestampForTvl: new UnixTime(1732696703),
+    sinceTimestamp: new UnixTime(1732696703),
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

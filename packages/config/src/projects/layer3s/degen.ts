@@ -55,7 +55,7 @@ export const degen: Layer3 = orbitStackL3({
       url: 'https://explorer.degen.tips/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: new UnixTime(1710087539),
+    sinceTimestamp: new UnixTime(1710087539),
     multicallContracts: [
       {
         address: EthereumAddress('0x79035Dc4436bA9C95016D3bF6304e5bA78B1066A'),

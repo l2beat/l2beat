@@ -51,7 +51,7 @@ export const sophon: Layer2 = zkStackL2({
     name: 'sophon',
     chainId: 50104,
     explorerUrl: 'https://explorer.sophon.xyz',
-    minTimestampForTvl: new UnixTime(1729531437),
+    sinceTimestamp: new UnixTime(1729531437),
   },
   diamondContract: discovery.getContract('SophonZkEvm'),
   daProvider: {

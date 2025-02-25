@@ -44,7 +44,7 @@ export const l3x: Layer3 = orbitStackL3({
       type: 'blockscout',
     },
     multicallContracts: [],
-    minTimestampForTvl: new UnixTime(1714618907),
+    sinceTimestamp: new UnixTime(1714618907),
     coingeckoPlatform: 'l3x',
   },
   bridge: discovery.getContract('Bridge'),

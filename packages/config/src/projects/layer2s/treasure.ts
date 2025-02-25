@@ -50,7 +50,7 @@ export const treasure: Layer2 = zkStackL2({
     name: 'treasure',
     chainId: 61166,
     explorerUrl: 'https://treasurescan.io',
-    minTimestampForTvl: new UnixTime(1732617294),
+    sinceTimestamp: new UnixTime(1732617294),
   },
   diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: (zkStackUpgrades: Upgradeability) => [

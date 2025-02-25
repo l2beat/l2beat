@@ -185,7 +185,7 @@ export const morph: Layer2 = {
     chainId: 2818,
     // explorerUrl: 'https://explorer.morphl2.io/', // needed?
     coingeckoPlatform: 'morph-l2',
-    minTimestampForTvl: new UnixTime(1729490400), // morph block 0
+    sinceTimestamp: new UnixTime(1729490400), // morph block 0
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

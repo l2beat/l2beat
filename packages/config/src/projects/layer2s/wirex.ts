@@ -55,7 +55,7 @@ export const wirex: Layer2 = polygonCDKStack({
     name: 'wirex',
     chainId: 31415,
     explorerUrl: 'https://pay-chain-blockscout.wirexpaychain.com',
-    minTimestampForTvl: new UnixTime(1720093223),
+    sinceTimestamp: new UnixTime(1720093223),
   },
   // associatedTokens: ['WPAY'], // not launched yet
   rpcUrl: 'https://pay-chain-rpc.wirexpaychain.com', // tested at over 10k requests per minute with no ratelimit (we default to 1500/min)

@@ -124,7 +124,7 @@ export const lightlink: Layer2 = {
   //     url: 'https://phoenix.lightlink.io/api',
   //     type: 'blockscout',
   //   },
-  //   minTimestampForTvl: new UnixTime(1692181067),
+  //   sinceTimestamp: new UnixTime(1692181067),
   // },
   riskView: {
     stateValidation: {

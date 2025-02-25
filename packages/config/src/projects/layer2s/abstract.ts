@@ -45,7 +45,7 @@ export const abstract: Layer2 = zkStackL2({
       url: 'https://api.abscan.org/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
     coingeckoPlatform: 'abstract',
   },
   discovery,

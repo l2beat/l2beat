@@ -58,7 +58,7 @@ export const galxegravity: Layer2 = orbitStackL2({
       type: 'blockscout',
     },
     blockscoutV2ApiUrl: 'https://explorer.gravity.xyz/api/v2',
-    minTimestampForTvl: new UnixTime(1716054191), // block 1 TS
+    sinceTimestamp: new UnixTime(1716054191), // block 1 TS
     multicallContracts: [
       {
         sinceBlock: 52682,

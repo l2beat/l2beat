@@ -86,7 +86,7 @@ export const fraxtal: Layer2 = opStackL2({
       type: 'etherscan',
     },
     // ~ Timestamp of block number 1
-    minTimestampForTvl: new UnixTime(1706810713),
+    sinceTimestamp: new UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
   },
   nonTemplateEscrows: [],

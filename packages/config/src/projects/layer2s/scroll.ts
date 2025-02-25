@@ -155,7 +155,7 @@ export const scroll: Layer2 = {
       url: 'https://api.scrollscan.com/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1696917600),
+    sinceTimestamp: new UnixTime(1696917600),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

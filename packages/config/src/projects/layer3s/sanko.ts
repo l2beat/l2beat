@@ -58,7 +58,7 @@ export const sanko: Layer3 = orbitStackL3({
         version: '3',
       },
     ],
-    minTimestampForTvl: new UnixTime(1712970000),
+    sinceTimestamp: new UnixTime(1712970000),
     coingeckoPlatform: 'sanko',
   },
   gasTokens: { tracked: ['DMT'] },

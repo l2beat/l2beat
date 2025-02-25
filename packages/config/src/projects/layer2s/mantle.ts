@@ -156,7 +156,7 @@ export const mantle: Layer2 = opStackL2({
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1688314886),
+    sinceTimestamp: new UnixTime(1688314886),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

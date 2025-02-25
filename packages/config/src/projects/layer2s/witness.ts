@@ -88,7 +88,7 @@ export const witness: Layer2 = polygonCDKStack({
   chainConfig: {
     chainId: 1702448187,
     name: 'witness',
-    minTimestampForTvl: new UnixTime(1718569535),
+    sinceTimestamp: new UnixTime(1718569535),
   },
   rpcUrl: 'https://witnesschain-sequencer.eu-north-2.gateway.fm/',
   nonTemplateEscrows: [

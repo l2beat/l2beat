@@ -56,7 +56,7 @@ export const soneium = opStackL2({
       url: 'https://soneium.blockscout.com/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: new UnixTime(1733134751),
+    sinceTimestamp: new UnixTime(1733134751),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

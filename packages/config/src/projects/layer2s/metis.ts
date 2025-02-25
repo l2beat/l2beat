@@ -74,7 +74,7 @@ export const metis: Layer2 = {
       url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-11-18T21:19:39Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

@@ -382,7 +382,7 @@ export const linea: Layer2 = {
       url: 'https://api.lineascan.build/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

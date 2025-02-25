@@ -93,7 +93,7 @@ export const lumia: Layer2 = polygonCDKStack({
     name: 'lumia',
     chainId: 994873017,
     explorerUrl: 'https://explorer.lumia.org',
-    minTimestampForTvl: new UnixTime(1719499031),
+    sinceTimestamp: new UnixTime(1719499031),
   },
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [

@@ -68,6 +68,6 @@ export const bob: Layer2 = opStackL2({
       url: 'https://explorer.gobob.xyz/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: new UnixTime(1712861989),
+    sinceTimestamp: new UnixTime(1712861989),
   },
 })

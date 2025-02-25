@@ -103,7 +103,7 @@ export const phala: Layer2 = {
       url: 'https://explorer.phala.network/api',
       type: 'blockscout',
     },
-    minTimestampForTvl: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2024-12-16T22:14:09Z')),
   },
   config: {
     escrows: [

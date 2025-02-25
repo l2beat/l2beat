@@ -45,7 +45,7 @@ export const zeronetwork: Layer2 = zkStackL2({
     name: 'zeronetwork',
     chainId: 543210,
     explorerUrl: 'https://explorer.zero.network',
-    minTimestampForTvl: new UnixTime(1729616414),
+    sinceTimestamp: new UnixTime(1729616414),
   },
   diamondContract: discovery.getContract('ZeroNetworkZkEvm'),
   nonTemplateTrackedTxs: [

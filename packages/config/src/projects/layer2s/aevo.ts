@@ -52,7 +52,7 @@ export const aevo: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   transactionApi: {
     type: 'rpc',

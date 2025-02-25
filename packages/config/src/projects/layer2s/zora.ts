@@ -55,7 +55,7 @@ export const zora: Layer2 = opStackL2({
     // ~ Timestamp of block number 0 on Zora
     // The first full hour timestamp that will return the block number
     // https://explorer.zora.energy/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-06-14T01:04:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

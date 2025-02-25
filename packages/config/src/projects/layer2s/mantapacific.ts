@@ -59,7 +59,7 @@ export const mantapacific: Layer2 = opStackL2({
     },
     // ~ Timestamp of block number 0 on MantaPacific
     // https://pacific-explorer.manta.network/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
       {
         sinceBlock: 332890,

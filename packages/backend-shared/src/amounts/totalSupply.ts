@@ -13,7 +13,7 @@ export function getTotalSupplyEntry(
   project: Project<'tvlConfig', 'chainConfig'>,
 ): TotalSupplyEntry {
   assert(token.supply === 'totalSupply' && token.address)
-  assert(chain.minTimestampForTvl, 'Chain with token should have minTimestamp')
+  assert(chain.sinceTimestamp, 'Chain with token should have minTimestamp')
 
   const assetId = AssetId.create(chain.name, token.address)
   const includeInTotal = !token.excludeFromTotal
@@ -21,7 +21,7 @@ export function getTotalSupplyEntry(
     token.symbol,
   )
   const sinceTimestamp = UnixTime.max(
-    chain.minTimestampForTvl,
+    chain.sinceTimestamp,
     token.sinceTimestamp,
   )
   const type = 'totalSupply'

@@ -87,7 +87,7 @@ export const zksyncera: Layer2 = zkStackL2({
       url: 'https://api-era.zksync.network/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1676384520),
+    sinceTimestamp: new UnixTime(1676384520),
     multicallContracts: [
       {
         version: '3',

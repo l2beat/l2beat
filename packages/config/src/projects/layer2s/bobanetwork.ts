@@ -188,6 +188,6 @@ export const bobanetwork: Layer2 = opStackL2({
     },
     coingeckoPlatform: 'boba',
     // ~ Timestamp of block number 1
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
   },
 })

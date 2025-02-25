@@ -77,7 +77,7 @@ export const cyber: Layer2 = opStackL2({
       url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api',
       type: 'etherscan',
     },
-    minTimestampForTvl: new UnixTime(1713428569), // block 1 ts
+    sinceTimestamp: new UnixTime(1713428569), // block 1 ts
     multicallContracts: [
       {
         sinceBlock: 1,

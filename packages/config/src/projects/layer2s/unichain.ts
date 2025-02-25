@@ -91,7 +91,7 @@ export const unichain: Layer2 = opStackL2({
         version: '3',
       },
     ],
-    minTimestampForTvl: genesisTimestamp,
+    sinceTimestamp: genesisTimestamp,
   },
   milestones: [
     {

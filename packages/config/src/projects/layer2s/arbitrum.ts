@@ -271,7 +271,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       type: 'etherscan',
     },
     // ~ Timestamp of block number 0 on Arbitrum
-    minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

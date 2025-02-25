@@ -169,7 +169,7 @@ export async function makeConfig(
 function getEthereumMinTimestamp(chains: ChainConfig[]) {
   const minBlockTimestamp = chains.find(
     (c) => c.name === 'ethereum',
-  )?.minTimestampForTvl
+  )?.sinceTimestamp
   if (!minBlockTimestamp) {
     throw new Error('Missing minBlockTimestamp for ethereum')
   }

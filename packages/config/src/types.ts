@@ -53,7 +53,7 @@ export interface ChainConfig {
    * timestamp of the first block. For example Optimism had block 0 on
    * January 2021 but the block 1 on November 2021.
    */
-  minTimestampForTvl?: UnixTime
+  sinceTimestamp?: UnixTime
   multicallContracts?: MulticallContractConfig[]
   coingeckoPlatform?: string
 }

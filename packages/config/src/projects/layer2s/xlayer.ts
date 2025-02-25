@@ -67,7 +67,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
-    minTimestampForTvl: new UnixTime(1711782180),
+    sinceTimestamp: new UnixTime(1711782180),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

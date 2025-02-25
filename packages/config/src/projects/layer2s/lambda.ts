@@ -55,7 +55,7 @@ export const lambda: Layer2 = opStackL2({
       type: 'blockscout',
     },
     blockscoutV2ApiUrl: 'https://scan.lambda.im/api/v2',
-    minTimestampForTvl: new UnixTime(1713345623),
+    sinceTimestamp: new UnixTime(1713345623),
     multicallContracts: [
       // fails the tests since the address is not the usual one
       // {

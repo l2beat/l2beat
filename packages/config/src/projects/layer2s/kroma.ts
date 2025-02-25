@@ -116,7 +116,7 @@ export const kroma: Layer2 = {
       type: 'etherscan',
     },
     multicallContracts: [],
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+    sinceTimestamp: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   config: {
     associatedTokens: ['KRO'],

@@ -58,7 +58,7 @@ describe('bridges', () => {
     })
   })
 
-  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+  describe('every escrow sinceTimestamp is greater or equal to chains sinceTimestamp', () => {
     for (const bridge of bridges) {
       for (const escrow of bridge.config.escrows) {
         const chain = chains.find((c) => c.name === escrow.chain)
@@ -69,14 +69,14 @@ describe('bridges', () => {
             `Chain not found for escrow ${escrow.address.toString()}`,
           )
           assert(
-            chain.minTimestampForTvl,
-            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+            chain.sinceTimestamp,
+            `Escrow ${escrow.address.toString()} added for chain without sinceTimestamp ${
               chain.name
             }`,
           )
 
           expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain.minTimestampForTvl.toNumber(),
+            chain.sinceTimestamp.toNumber(),
           )
         })
       }
