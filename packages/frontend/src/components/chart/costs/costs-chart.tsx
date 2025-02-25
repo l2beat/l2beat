@@ -44,27 +44,9 @@ const chartMeta = {
   posted: {
     label: 'Posted',
     color: 'red',
-    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+    indicatorType: { shape: 'line', strokeDasharray: '9 3' },
   },
 } satisfies ChartMeta
-
-export const costUnitToPostedScale: Record<
-  CostsUnit,
-  Record<CostsResolution, number>
-> = {
-  gas: {
-    hourly: 1,
-    daily: 1,
-  },
-  eth: {
-    hourly: 30000000,
-    daily: 100000000,
-  },
-  usd: {
-    hourly: 10000,
-    daily: 25000,
-  },
-}
 
 interface CostsChartDataPoint {
   timestamp: number
@@ -83,6 +65,7 @@ interface Props {
   resolution: CostsResolution
   showPosted: boolean
   className?: string
+  daScale?: number
 }
 
 export function CostsChart({
@@ -93,6 +76,7 @@ export function CostsChart({
   className,
   resolution,
   showPosted,
+  daScale,
 }: Props) {
   return (
     <ChartContainer
@@ -148,7 +132,6 @@ export function CostsChart({
           <Line
             dataKey="posted"
             stroke={chartMeta.posted.color}
-            strokeWidth={2}
             dot={false}
             activeDot={false}
             isAnimationActive={false}
@@ -168,7 +151,13 @@ export function CostsChart({
           },
         })}
         <ChartTooltip
-          content={<CustomTooltip unit={unit} resolution={resolution} />}
+          content={
+            <CustomTooltip
+              unit={unit}
+              resolution={resolution}
+              daScale={daScale}
+            />
+          }
         />
       </ComposedChart>
     </ChartContainer>
@@ -181,9 +170,11 @@ function CustomTooltip({
   label,
   unit,
   resolution,
+  daScale,
 }: TooltipProps<number, string> & {
   unit: CostsUnit
   resolution: CostsResolution
+  daScale?: number
 }) {
   if (!active || !payload || typeof label !== 'number') return null
   const reversedPayload = [...payload].reverse()
@@ -228,10 +219,8 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {entry.name === 'posted'
-                    ? formatBytes(
-                        entry.value * costUnitToPostedScale[unit][resolution],
-                      )
+                  {entry.name === 'posted' && daScale
+                    ? formatBytes(entry.value / daScale)
                     : formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>

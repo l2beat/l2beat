@@ -12,7 +12,7 @@ import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/react'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
-import { CostsChart, costUnitToPostedScale } from './costs-chart'
+import { CostsChart } from './costs-chart'
 import { CostsChartTimeRangeControls } from './costs-chart-time-range-controls'
 
 interface Props {
@@ -40,7 +40,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   )
   const timestampedDaData = Object.fromEntries(daData ?? [])
   const chartData = useMemo(() => {
-    if (!costsData || !timestampedDaData) {
+    if (!costsData) {
       return undefined
     }
     return costsData?.map(
@@ -59,9 +59,6 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         blobsEth,
         blobsUsd,
       ]) => {
-        const dailyTimestamp = new UnixTime(timestamp).toStartOf('day')
-        const posted = timestampedDaData[dailyTimestamp.toNumber()]
-        const postedScale = costUnitToPostedScale[unit][resolution]
         return {
           timestamp,
           calldata:
@@ -84,15 +81,50 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted: posted
-            ? resolution === 'daily'
-              ? posted / postedScale
-              : posted / postedScale / 24
-            : null,
         }
       },
     )
-  }, [costsData, resolution, timestampedDaData, unit])
+  }, [costsData, unit])
+
+  const scale = useMemo(() => {
+    if (!chartData) return undefined
+    const minDaTimestamp = Math.min(
+      ...Object.keys(timestampedDaData).map(Number),
+    )
+    const maxDaValue = Math.max(...Object.values(timestampedDaData))
+    const maxCostValue = Math.max(
+      ...chartData
+        .filter((p) => p.timestamp >= minDaTimestamp)
+        .map(
+          (point) =>
+            point.calldata +
+            point.overhead +
+            point.compute +
+            (point.blobs ?? 0),
+        ),
+    )
+    const scale = maxCostValue / maxDaValue
+    return resolution === 'daily' ? scale : scale * 24
+  }, [chartData, resolution, timestampedDaData])
+
+  const chartDataWithPosted = useMemo(() => {
+    if (!timestampedDaData || scale === undefined) {
+      return
+    }
+
+    return chartData?.map((point) => {
+      const dailyTimestamp = new UnixTime(point.timestamp).toStartOf('day')
+      const posted = timestampedDaData[dailyTimestamp.toNumber()]
+      return {
+        ...point,
+        posted: posted
+          ? resolution === 'daily'
+            ? posted * scale
+            : (posted / 24) * scale
+          : null,
+      }
+    })
+  }, [chartData, resolution, scale, timestampedDaData])
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
   const isLoading = isCostsLoading || isDaLoading
@@ -117,13 +149,14 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         </div>
       </div>
       <CostsChart
-        data={chartData}
+        data={chartDataWithPosted}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
         resolution={resolution}
         showPosted={showPosted}
         className="mb-2 mt-4"
+        daScale={scale}
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
     </div>
