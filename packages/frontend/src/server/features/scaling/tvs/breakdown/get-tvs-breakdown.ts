@@ -85,6 +85,10 @@ export function getTvsBreakdown(
               config.type !== 'circulatingSupply',
           )
 
+          const explorer = chains.find(
+            (c) => c.name === config.chain,
+          )?.explorerUrl
+
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
             asset.usdValue += valueAsNumber
@@ -116,6 +120,9 @@ export function getTvsBreakdown(
                   escrowAddress: config.escrowAddress,
                   ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                   isSharedEscrow,
+                  url: explorer
+                    ? `${explorer}/address/${config.escrowAddress}`
+                    : undefined,
                 },
               ],
             })

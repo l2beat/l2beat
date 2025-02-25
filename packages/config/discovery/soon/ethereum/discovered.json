@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 21895028,
-  "configHash": "0x2586d39f1f2143fbdcbe4c9f5e3f336cf642a082ec2bec1731151b88ac9d3d68",
+  "configHash": "0xd7735ee99821bc25b14a7c2ab5ab0d784c577f893a56c54a7f946c270d72ce67",
   "contracts": [
     {
       "name": "L2OutputOracle",

@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 21845178,
-  "configHash": "0x3136e37bc1c0bc16bf1d86390c99799c5109c6d16e37b2b95eaf63b1028d4b04",
+  "configHash": "0x1690e28f29da802bb197b48e891a7d015a5c9507904c645e9a8f9a0a0312e992",
   "contracts": [
     {
       "name": "ZKProofVerifier",

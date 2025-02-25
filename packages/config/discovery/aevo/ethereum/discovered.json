@@ -2,7 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "blockNumber": 21808921,
-  "configHash": "0x88b6a7db1042d4552f0a758c8086bee223b4cfbc6a5a8b81c620541953acd6ff",
+  "configHash": "0x6ccac68ac446fef21f009249471ca032d0fa43bbaca28b8617b738803c6c331c",
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

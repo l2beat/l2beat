@@ -95,7 +95,7 @@ export function getCanonicallyBridgedColumns(showSharedEscrowTooltip: boolean) {
         return (
           <TokenAddressCell
             address={value.escrows[0]!.escrowAddress}
-            url={value.url}
+            url={value.escrows[0]?.url}
           />
         )
       },

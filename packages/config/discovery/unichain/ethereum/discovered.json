@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 21914468,
-  "configHash": "0x2cde0346785f2160f0f49d7763a5bcfe5c30b7f79b4939fa2d13247e6e69046d",
+  "configHash": "0x2d19ff2fd7434aa60f1275401cab93dce98f74a92c944c9069759430f8b927b2",
   "contracts": [
     {
       "name": "LivenessModule",

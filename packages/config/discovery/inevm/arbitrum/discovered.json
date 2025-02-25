@@ -2,7 +2,7 @@
   "name": "inevm",
   "chain": "arbitrum",
   "blockNumber": 287771173,
-  "configHash": "0xc74a61c37a1296f35cd7a128344d83a29549af62c046c22948b6b0f75ae6ab00",
+  "configHash": "0xf629d8dddff3536339c3c59b4195b116da708ac25dbece9551e0a50799f2230e",
   "contracts": [
     {
       "name": "L1OrbitCustomGateway",

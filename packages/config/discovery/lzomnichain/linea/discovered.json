@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "linea",
   "blockNumber": 15810626,
-  "configHash": "0xe389234f52e0ab4fd53fa87541ed7049efb1b80caea31da3f619cfd1ecba977d",
+  "configHash": "0x89646f3746e7a5816bf172d8fdb1ea0698b7cedb951e2caa76ba4626da7ef822",
   "contracts": [
     {
       "name": "MPTValidator01",

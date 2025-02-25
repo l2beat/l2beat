@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe9efecb80c9ecce0fdb5508a701aae9c3e273e9f
+Generated with discovered.json: 0x9bef403f2da339fdac1f1b99bc2d9ef000fd5cae
 
-# Diff at Mon, 24 Feb 2025 11:32:04 GMT:
+# Diff at Mon, 24 Feb 2025 15:41:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 752779
@@ -8,8 +8,7 @@ Generated with discovered.json: 0xe9efecb80c9ecce0fdb5508a701aae9c3e273e9f
 
 ## Description
 
-Bridged Kinto upgraded for their token sale.
-Config related: Hide relatives that are not interesting from discovery.
+Config: added a single caldera multisig name.
 
 ## Watched changes
 

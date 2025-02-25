@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x35684e800ad7aa3214ce61213a634d697c867252
+Generated with discovered.json: 0x6b44e146fcfe164dcf21b64c7c2a4563e07e8c5b
 
-# Diff at Mon, 24 Feb 2025 11:15:31 GMT:
+# Diff at Mon, 24 Feb 2025 15:37:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@cfe18eb30997850b8abc4c6e718cd2a363aa4309 block: 21895114
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x35684e800ad7aa3214ce61213a634d697c867252
 
 ## Description
 
-staker count 1->2 (staker count != validator count, in orbit validators often just watch and stake as soon as they want to challenge). onchain the activity here just looks like gelato is rotating the proposing (staking) validator.
+Config: added a single caldera multisig name.
 
 ## Watched changes
 

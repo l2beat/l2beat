@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "bsc",
   "blockNumber": 40976255,
-  "configHash": "0x2fc1ece8f214e66a4748567ec8713806e7c0790c95e764645012525b2ed5309f",
+  "configHash": "0x8be9d606ba197c43e4c9ddf4697c5a6ec52c3ba09b7cb19d257e6b374391cc43",
   "contracts": [
     {
       "name": "FPValidator",
