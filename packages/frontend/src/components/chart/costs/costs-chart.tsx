@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart, Line } from 'recharts'
+import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
@@ -43,7 +43,7 @@ const chartMeta = {
   },
   posted: {
     label: 'Data posted',
-    color: 'green',
+    color: 'hsl(var(--chart-da-avail))',
     indicatorType: { shape: 'line', strokeDasharray: '9 3' },
   },
 } satisfies ChartMeta
@@ -65,7 +65,6 @@ interface Props {
   resolution: CostsResolution
   showDataPosted: boolean
   className?: string
-  daScale?: number
 }
 
 export function CostsChart({
@@ -76,7 +75,6 @@ export function CostsChart({
   className,
   resolution,
   showDataPosted,
-  daScale,
 }: Props) {
   return (
     <ChartContainer
@@ -89,6 +87,7 @@ export function CostsChart({
       <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
+          yAxisId="left"
           dataKey="overhead"
           fill={chartMeta.overhead.color}
           fillOpacity={1}
@@ -99,6 +98,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="compute"
           fill={chartMeta.compute.color}
           fillOpacity={1}
@@ -109,6 +109,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="blobs"
           fill={chartMeta.blobs.color}
           fillOpacity={1}
@@ -119,6 +120,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="calldata"
           fill={chartMeta.calldata.color}
           fillOpacity={1}
@@ -130,13 +132,28 @@ export function CostsChart({
 
         {showDataPosted && (
           <Line
+            yAxisId="right"
             dataKey="posted"
             stroke={chartMeta.posted.color}
             dot={false}
-            activeDot={false}
             isAnimationActive={false}
             strokeDasharray={chartMeta.posted.indicatorType.strokeDasharray}
             type={resolution === 'hourly' ? 'stepAfter' : undefined}
+          />
+        )}
+        {showDataPosted && (
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickFormatter={(value: number) => formatBytes(value)}
+            tickLine={false}
+            axisLine={false}
+            mirror
+            tickCount={3}
+            dy={-10}
+            tick={{
+              width: 100,
+            }}
           />
         )}
 
@@ -144,6 +161,7 @@ export function CostsChart({
           data,
           isLoading,
           yAxis: {
+            yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
@@ -151,13 +169,7 @@ export function CostsChart({
           },
         })}
         <ChartTooltip
-          content={
-            <CustomTooltip
-              unit={unit}
-              resolution={resolution}
-              daScale={daScale}
-            />
-          }
+          content={<CustomTooltip unit={unit} resolution={resolution} />}
         />
       </ComposedChart>
     </ChartContainer>
@@ -170,11 +182,9 @@ function CustomTooltip({
   label,
   unit,
   resolution,
-  daScale,
 }: TooltipProps<number, string> & {
   unit: CostsUnit
   resolution: CostsResolution
-  daScale?: number
 }) {
   if (!active || !payload || typeof label !== 'number') return null
   const reversedPayload = [...payload].reverse()
@@ -219,8 +229,8 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium">
-                  {entry.name === 'posted' && daScale
-                    ? formatBytes(entry.value / daScale)
+                  {entry.name === 'posted'
+                    ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>
