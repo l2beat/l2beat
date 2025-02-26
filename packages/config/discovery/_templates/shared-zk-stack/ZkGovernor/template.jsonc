@@ -55,5 +55,6 @@
         ] // ProposalQueued(uint256 proposalId, uint256 eta)
       }
     }
-  }
+  },
+  "category": "gov"
 }

@@ -15,5 +15,6 @@
         "permissions": [{ "type": "guard" }]
       }
     }
-  }
+  },
+  "category": "core"
 }
