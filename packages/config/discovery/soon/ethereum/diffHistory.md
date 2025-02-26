@@ -1,14 +1,31 @@
-Generated with discovered.json: 0x85a397f2fa064556556ebc196a8b585e7cb94820
+Generated with discovered.json: 0xa16aba5be4b302b91a2a8372946097f772a3a830
 
-# Diff at Wed, 26 Feb 2025 10:33:12 GMT:
+# Diff at Wed, 26 Feb 2025 16:48:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21895028
-- current block number: 21895028
+- comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 21895028
+- current block number: 21931798
 
 ## Description
 
+Withdrawal unfrozen and finalized:
+- prove (https://etherscan.io/tx/0x79eda9b1db8676c0bac77e96a1eb76b27e9c4bd557019b35632f70bd7b90f90c)
+- freeze (https://etherscan.io/tx/0x296cc7e2aa191bcf14b2c2f157f86e336448c696c07994b39671c89c396a9eb0)
+- unfreeze (https://etherscan.io/tx/0x7b49b8bd227cd19e5e5535ca8860d3c3ce5f7c1b202b19f463a2e64903810f7d)
+- finalize (https://etherscan.io/tx/0xf6ac1f315271e5db80c179889623c8fddef37c6cccc6dccdc2c1e9ea25a03347)
+
 config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x5A0702C7EbbEC83802b35DB737FCcDc5fc6c5E07) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals. This version (originally from SOON) of the OptimismPortal is modified to support Solana addresses. It disallows ERC20 token deposits and L1->L2 transactions that would create a contract. Withdrawals can be frozen / blacklisted by a permissioned actor. Has a MIN_BRIDGE_VALUE set to 0.001 ETH.
++++ description: Lists all frozen withdrawals.
+      values.frozenWithdrawals.0:
+-        "0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba"
+    }
+```
 
 ## Config/verification related changes
 

@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21929677,
+  "blockNumber": 21931798,
   "configHash": "0xd7735ee99821bc25b14a7c2ab5ab0d784c577f893a56c54a7f946c270d72ce67",
   "contracts": [
     {
@@ -61,10 +61,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 910000,
-        "latestOutputIndex": 181,
-        "nextBlockNumber": 915000,
-        "nextOutputIndex": 182,
+        "latestBlockNumber": 930000,
+        "latestOutputIndex": 185,
+        "nextBlockNumber": 935000,
+        "nextOutputIndex": 186,
         "proposer": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "PROPOSER": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "startingBlockNumber": 0,
@@ -384,7 +384,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292657052",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292657263",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

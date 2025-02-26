@@ -1,7 +1,7 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 21930757,
+  "blockNumber": 21931801,
   "configHash": "0xa47b22048aae3d301002d60c3e51e3def4a1304c5c74ff823f8e452c90c746bd",
   "contracts": [
     {
@@ -361,7 +361,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 1065,
+        "gameCount": 1067,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x42D15f045159Ce4adE9EDC7da5704eF36056c936",
@@ -371,7 +371,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 1065,
+        "permissionedGamesTotal": 1067,
         "version": "1.0.0"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -764,7 +764,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21930756
+          "prevBlockNum": 21931796
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1059,7 +1059,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660046",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660347",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
