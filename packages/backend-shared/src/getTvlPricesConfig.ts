@@ -8,7 +8,7 @@ export function getTvlPricesConfig(
   const prices = new Map<string, PriceConfigEntry>()
 
   for (const token of tokenList) {
-    const chain = chains.find((x) => x.chainId === +token.chainId)
+    const chain = chains.find((x) => x.name === token.chainName)
     assert(chain, `Chain not found for token ${token.id}`)
 
     const key = `${chain.name}-${(token.address ?? 'native').toString()}`

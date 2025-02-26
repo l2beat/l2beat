@@ -4,12 +4,7 @@ import {
   type ProjectTvlEscrow,
   tokenList,
 } from '@l2beat/config'
-import {
-  assert,
-  type AmountConfigEntry,
-  AssetId,
-  ChainId,
-} from '@l2beat/shared-pure'
+import { assert, type AmountConfigEntry, AssetId } from '@l2beat/shared-pure'
 import { getElasticChainEtherEntry } from '../elasticChainEther'
 import { getElasticChainL2TokenEntry } from '../elasticChainL2Tokens'
 
@@ -32,7 +27,7 @@ export function elasticChainEscrowToEntries(
     ) {
       continue
     }
-    const chain = chains.find((x) => x.chainId === +token.chainId)
+    const chain = chains.find((x) => x.name === token.chainName)
     assert(chain, `Chain not found for token ${token.id}`)
     assert(chain.name === escrow.chain, 'Programmer error: chain mismatch')
 
@@ -50,7 +45,7 @@ export function elasticChainEscrowToEntries(
     (t) => AssetId.create('ethereum', t.address) === AssetId.ETH,
   )
   assert(ether, 'ETH on ethereum not found')
-  const ethereum = chains.find((x) => x.chainId === ChainId.ETHEREUM)
+  const ethereum = chains.find((x) => x.name === 'ethereum')
   assert(ethereum !== undefined)
 
   const etherEntry = getElasticChainEtherEntry(
