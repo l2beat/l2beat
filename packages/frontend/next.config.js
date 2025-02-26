@@ -89,6 +89,21 @@ const nextConfig = {
         destination: '/scaling/projects/op-mainnet/:path*',
         permanent: true,
       },
+      {
+        source: '/data-availability/projects/espressoDA/espressoDA',
+        destination: '/data-availability/projects/espresso-da/espresso-da',
+        permanent: true,
+      },
+      {
+        source: '/zk-catalog/SP1Blobstream/:path*',
+        destination: '/zk-catalog/sp1-blobstream/:path*',
+        permanent: true,
+      },
+      {
+        source: '/zk-catalog/SP1Vector/:path*',
+        destination: '/zk-catalog/sp1-vector/:path*',
+        permanent: true,
+      },
       // Legacy pathnames
       {
         source: '/project/:name',

@@ -109,6 +109,8 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Discodrive markers */
+  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export type ScalingProjectCapability = 'universal' | 'appchain'
@@ -652,6 +654,7 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
+  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export interface BridgeDisplay {
@@ -824,6 +827,7 @@ export interface BaseProject {
   daBridge?: DaBridge
   permissions?: Record<string, ProjectPermissions>
   contracts?: ProjectContracts
+  discoveryInfo?: ProjectDiscoveryInfo
   chainConfig?: ChainConfig
   milestones?: Milestone[]
   // tags
@@ -1079,6 +1083,12 @@ export interface ProjectContracts {
   addresses: Record<string, ProjectContract[]>
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
+}
+
+export interface ProjectDiscoveryInfo {
+  isDiscoDriven: boolean
+  permissionsDiscoDriven: boolean
+  contractsDiscoDriven: boolean
 }
 
 export interface ProjectUpgradeableActor {

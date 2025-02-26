@@ -54,6 +54,7 @@
   "linea.png": "68306128056611a1efe4fbf01c055ba6",
   "lisk.png": "8f5715be77cc05fc6e771b8553002dad",
   "loopring.png": "616b2bed6b0d7772b21377842c429edc",
+  "lootchain.png": "4e1d4d02cb60a95bdb5f54cedb4fce0f",
   "lyra.png": "8cc116c263efaf2c8d132ecbd1cd7ed2",
   "mantapacific.png": "25c3472a42f29a4d2a64d25c6b42cce3",
   "mantle.png": "ac96754945ab7561caa2b764d0e7adba",
@@ -256,11 +257,11 @@
   "silicon.png": "1d7d37a3495e858a49ac57a23de37426",
   "nebraupa.png": "01247d19105e5fc0ad0204c23bd3120c",
   "nebra-upa.png": "743a70d8c03bd7ad117fb3b6b7de9853",
-  "SP1Blobstream.png": "0d30e9b8757ea586823637ad7a5d6205",
+  "sp1-blobstream.png": "0d30e9b8757ea586823637ad7a5d6205",
   "arithmic.png": "7d3f971cfd268076be50267755f24717",
   "avail.png": "71d3ef1a2b8d71ddd97c49d49f11ddc2",
   "vector.png": "71d3ef1a2b8d71ddd97c49d49f11ddc2",
-  "SP1Vector.png": "af0592ee3395c8cc13044d8da267f605",
+  "sp1-vector.png": "af0592ee3395c8cc13044d8da267f605",
   "memo.png": "9f4d80e3a496c7f30863d7d5823e6e61",
   "polynomial.png": "162e18a83237f92aceedf4db811c4af8",
   "donatuz.png": "b2c11be805e20aed056d86a7cb010894",
@@ -293,7 +294,7 @@
   "gmnetwork.png": "c8b90b4e9464c50d8fa82e967684b9c8",
   "automata.png": "18b08372cbb68e0fc2ea74b740ff837e",
   "singularity-finance.png": "aa026403718cbaed93229ca40ca51537",
-  "espressoDA.png": "34afaa88fb8d9664c8252c4d02c5c1f4",
+  "espresso-da.png": "34afaa88fb8d9664c8252c4d02c5c1f4",
   "b3.png": "05f49322fcf6f3638539aeb46548c726",
   "degenlayer.png": "40d0e272449c92bcb04a51e5a6165b04",
   "leaf.png": "8e2ad7f1e958e3b0b9dba9b9b68a6b96",
@@ -351,5 +352,6 @@
   "lachain.png": "3db99de8c4e274898e33d1c6ba1f26ba",
   "union.png": "9519a26d04a3df119dbc9f1792f5dd5a",
   "wonderfi.png": "7603a325ef05b5f6d4d2884c0814770d",
-  "genlayer.png": "b5154791191cdfeabdf9f02985440db4"
+  "genlayer.png": "b5154791191cdfeabdf9f02985440db4",
+  "gameswift.png": "5ab1800619a0da02570e1e8b1e2a5a5d"
 }

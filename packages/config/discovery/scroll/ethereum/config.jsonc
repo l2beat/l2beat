@@ -65,6 +65,14 @@
     "0x67260A8B73C5B77B55c1805218A42A7A6F98F515": "DaiEscrow"
   },
   "overrides": {
+    "SecurityCouncil": {
+      "references": [
+        {
+          "text": "Security Council members - Scroll Docs",
+          "href": "https://scroll.io/gov-docs/content/security-council"
+        }
+      ]
+    },
     "pufETHEscrow": {
       "ignoreRelatives": ["owner", "$admin", "counterpart"]
     },

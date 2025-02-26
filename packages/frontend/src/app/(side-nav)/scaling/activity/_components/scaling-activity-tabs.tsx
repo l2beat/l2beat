@@ -86,19 +86,23 @@ export function ScalingActivityTabs(props: Props) {
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
+            <RollupsInfo />
             <ScalingActivityChart
               entries={entries.rollups}
               milestones={props.milestones}
               type="Rollups"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <RollupsInfo />
             <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
+          <DirectoryTabsContent
+            value="validiumsAndOptimiums"
+            className="pt-4 sm:pt-3"
+          >
+            <ValidiumsAndOptimiumsInfo />
             <ScalingActivityChart
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
@@ -106,12 +110,12 @@ export function ScalingActivityTabs(props: Props) {
               type="ValidiumsAndOptimiums"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <ValidiumsAndOptimiumsInfo />
             <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="others" className="pt-5">
+          <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
+            <OthersInfo />
             <ScalingActivityChart
               entries={entries.others}
               milestones={props.milestones}
@@ -119,7 +123,6 @@ export function ScalingActivityTabs(props: Props) {
               type="Others"
             />
             <HorizontalSeparator className="mb-3 mt-5" />
-            <OthersInfo />
             <ScalingActivityTable entries={entries.others} />
             <OtherMigrationTabNotice
               projectsToBeMigrated={projectToBeMigratedToOthers}

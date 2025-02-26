@@ -9,7 +9,7 @@ import { PROOFS } from './common/proofSystems'
 
 export const sp1blobstream: BaseProject = {
   id: ProjectId('sp1blobstream'),
-  slug: 'SP1Blobstream', // TODO: lowercase + redirect
+  slug: 'sp1-blobstream',
   name: 'SP1Blobstream',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-04')),

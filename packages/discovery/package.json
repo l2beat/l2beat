@@ -26,6 +26,7 @@
     "@mradomski/fast-solidity-parser": "0.1.1",
     "bignumber.js": "^9.1.2",
     "chalk": "^4.1.2",
+    "clingo-wasm": "0.1.1",
     "cmd-ts": "^0.13.0",
     "deep-diff": "^1.0.2",
     "ethers": "^5.7.2",
