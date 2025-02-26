@@ -87,38 +87,38 @@ export function ScalingTvsTabs(props: Props) {
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
+            <RollupsInfo />
             <ScalingStackedTvsChart
               tab="rollups"
               entries={entries.rollups}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <RollupsInfo />
             <ScalingTvsTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="validiumsAndOptimiums" className="pt-5">
+            <ValidiumsAndOptimiumsInfo />
             <ScalingStackedTvsChart
               tab="validiumsAndOptimiums"
               entries={entries.validiumsAndOptimiums}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <ValidiumsAndOptimiumsInfo />
             <ScalingTvsTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others" className="pt-5">
+            <OthersInfo />
             <ScalingStackedTvsChart
               tab="others"
               entries={entries.others}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <OthersInfo />
             <ScalingTvsTable entries={entries.others} />
             <OtherMigrationTabNotice
               projectsToBeMigrated={projectToBeMigratedToOthers}
