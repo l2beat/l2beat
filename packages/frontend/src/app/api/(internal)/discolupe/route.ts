@@ -64,8 +64,10 @@ function toResponseProject(
     tvs,
     display: project.display,
     type: project.type === 'layer2' ? 'L2' : 'L3',
-    arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(project),
-    areContractsDiscoveryDriven: areContractsDiscoveryDriven(project),
+    arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(
+      project.permissions,
+    ),
+    areContractsDiscoveryDriven: areContractsDiscoveryDriven(project.contracts),
     isArchived: project.isArchived === true,
     isUpcoming: project.isUpcoming === true,
     isUnderReview: project.isUnderReview === true,
