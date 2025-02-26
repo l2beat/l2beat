@@ -1,7 +1,6 @@
 'use client'
 
 import type { Milestone } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
@@ -27,24 +26,17 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
 
   const resolution = rangeToResolution(range)
 
-  const { data: costsData, isLoading: isCostsLoading } =
-    api.costs.chart.useQuery({
-      range,
-      filter: { type: 'projects', projectIds: [projectId] },
-    })
-  const { data: daData, isLoading: isDaLoading } = api.da.projectChart.useQuery(
-    {
-      range,
-      projectId,
-    },
-  )
-  const timestampedDaData = Object.fromEntries(daData ?? [])
+  const { data, isLoading } = api.costs.chartWithDataPosted.useQuery({
+    range,
+    projectId,
+  })
+
   const chartData = useMemo(() => {
-    if (!costsData) {
+    if (!data) {
       return undefined
     }
 
-    return costsData?.map(
+    return data?.map(
       ([
         timestamp,
         overheadGas,
@@ -59,9 +51,8 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         blobsGas,
         blobsEth,
         blobsUsd,
+        posted,
       ]) => {
-        const dailyTimestamp = new UnixTime(timestamp).toStartOf('day')
-        const posted = timestampedDaData[dailyTimestamp.toNumber()]
         return {
           timestamp,
           calldata:
@@ -88,25 +79,23 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         }
       },
     )
-  }, [costsData, timestampedDaData, unit])
+  }, [data, unit])
+
+  const hasPostedData = !!chartData?.some((cost) => cost.posted !== null)
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
-  const isLoading = isCostsLoading || isDaLoading
 
   return (
     <div>
       <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
-          <Checkbox
-            name="showDataPosted"
-            checked={showDataPosted}
-            onCheckedChange={(state) => setShowDataPosted(!!state)}
-            disabled={daData?.length === 0}
-            labelTitle={daData?.length === 0 ? 'No data' : undefined}
-          >
-            Show data posted
-          </Checkbox>
+          <DataPostedCheckbox
+            hasPostedData={hasPostedData}
+            showDataPosted={showDataPosted}
+            setShowDataPosted={setShowDataPosted}
+            isLoading={isLoading}
+          />
           <CostsChartTimeRangeControls
             projectSection
             timeRange={range}
@@ -128,6 +117,34 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
   )
 }
 
+function DataPostedCheckbox({
+  hasPostedData,
+  showDataPosted,
+  setShowDataPosted,
+  isLoading,
+}: {
+  hasPostedData: boolean
+  showDataPosted: boolean
+  setShowDataPosted: (value: boolean) => void
+  isLoading: boolean
+}) {
+  if (isLoading) {
+    return <Skeleton className="h-8 w-[156px]" />
+  }
+
+  return (
+    <Checkbox
+      name="showDataPosted"
+      checked={showDataPosted}
+      onCheckedChange={(state) => setShowDataPosted(!!state)}
+      disabled={!hasPostedData}
+      labelTitle={!hasPostedData ? 'No data' : undefined}
+    >
+      Show data posted
+    </Checkbox>
+  )
+}
+
 function UnitControls({
   unit,
   setUnit,
@@ -140,7 +157,7 @@ function UnitControls({
   return (
     <div className="flex items-center justify-between gap-2">
       {isLoading ? (
-        <Skeleton className="h-8 w-[156px]" />
+        <Skeleton className="h-8 w-[168px]" />
       ) : (
         <RadioGroup name="costsChartUnit" value={unit} onValueChange={setUnit}>
           <RadioGroupItem value="usd">USD</RadioGroupItem>
