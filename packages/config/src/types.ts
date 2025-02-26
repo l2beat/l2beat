@@ -52,16 +52,26 @@ export interface ChainConfig {
   apis: ChainApiConfig[]
 }
 
-export type ChainApiConfig = ChainBasicApi | ChainExplorerApi | ChainStarkexApi
+export type ChainApiConfig =
+  | ChainBasicApi<'rpc'>
+  | ChainBasicApi<'starknet'>
+  | ChainBasicApi<'zksync'>
+  | ChainBasicApi<'loopring'>
+  | ChainBasicApi<'degate3'>
+  | ChainBasicApi<'fuel'>
+  | ChainExplorerApi<'etherscan'>
+  | ChainExplorerApi<'blockscout'>
+  | ChainExplorerApi<'blockscoutV2'>
+  | ChainStarkexApi
 
-export interface ChainBasicApi {
-  type: 'rpc' | 'starknet' | 'zksync' | 'loopring' | 'degate3' | 'fuel'
+export interface ChainBasicApi<T extends string> {
+  type: T
   url: string
   callsPerMinute?: number
 }
 
-export interface ChainExplorerApi {
-  type: 'etherscan' | 'blockscout' | 'blockscoutV2'
+export interface ChainExplorerApi<T extends string> {
+  type: T
   url: string
   contractCreationUnsupported?: boolean
 }

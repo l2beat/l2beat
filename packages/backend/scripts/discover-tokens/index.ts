@@ -394,16 +394,7 @@ function getEtherscanClient(chain: string, chains: ChainConfig[]) {
           ]),
           url: api.url,
         }
-      : api.type === 'blockscout'
-        ? {
-            type: api.type,
-            url: api.url,
-          }
-        : undefined
-
-  if (!chainConfig) {
-    return undefined
-  }
+      : { type: api.type, url: api.url }
 
   return new BlockIndexerClient(
     new HttpClient(),
