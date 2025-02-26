@@ -3,7 +3,7 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
-  type UnixTime,
+  UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -55,6 +55,8 @@ import type {
   ScalingProjectStateValidationCategory,
   ScalingProjectTechnology,
   StageConfig,
+  TableReadyValue,
+  TransactionApiConfig,
 } from '../../../types'
 import { BADGES } from '../../badges'
 import { EXPLORER_URLS } from '../../chains/explorerUrls'
@@ -66,6 +68,12 @@ import {
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
+
+type DAProvider = ProjectDataAvailability & {
+  riskViewDA: TableReadyValue
+  riskViewExitWindow: TableReadyValue
+  technology: ProjectTechnologyChoice
+}
 
 const EVM_OTHER_CONSIDERATIONS: ProjectTechnologyChoice[] = [
   {
@@ -387,6 +395,7 @@ function orbitStackCommon(
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
+  const daProvider = getDAProvider(templateVars)
 
   const isUsingEspressoSequencer =
     templateVars.discovery.getContractValueOrUndefined<string>(
@@ -484,7 +493,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
-    riskView: getRiskView(type, templateVars),
+    riskView: getRiskView(type, templateVars, daProvider),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -529,44 +538,26 @@ function orbitStackCommon(
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       stateCorrectness:
         templateVars.nonTemplateTechnology?.stateCorrectness ?? undefined,
-      dataAvailability:
-        (templateVars.nonTemplateTechnology?.dataAvailability ??
-        postsToExternalDA)
-          ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
-
-                return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
-          : {
-              ...(usesBlobs
-                ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
-                : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
-              references: [
-                {
-                  title:
-                    'Sequencing followed by deterministic execution - Arbitrum documentation',
-                  url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-                },
-                ...explorerReferences(explorerUrl, [
-                  {
-                    title:
-                      'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
-                    address: safeGetImplementation(templateVars.sequencerInbox),
-                  },
-                ]),
-              ],
+      dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ??
+        daProvider?.technology ?? {
+          ...(usesBlobs
+            ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+            : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
+          references: [
+            {
+              title:
+                'Sequencing followed by deterministic execution - Arbitrum documentation',
+              url: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
             },
+            ...explorerReferences(explorerUrl, [
+              {
+                title:
+                  'SequencerInbox.sol - source code, addSequencerL2BatchFromOrigin function',
+                address: safeGetImplementation(templateVars.sequencerInbox),
+              },
+            ]),
+          ],
+        },
       operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -652,32 +643,7 @@ function orbitStackCommon(
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          }
-        })()
-      : nativeDA,
+    dataAvailability: decideDA(daProvider, nativeDA),
   }
 }
 
@@ -863,6 +829,124 @@ function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
   return sequencerVersion === '0x00'
 }
 
+function getTrackedTxs(): Layer2TxConfig[] | undefined {
+  return [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1661457944),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x6f12b0c9',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+        sinceTimestamp: new UnixTime(1661457944),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1661457944),
+        untilTimestamp: new UnixTime(1739368811), // deprecated (reverts)
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1710427823),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x6e620055',
+        functionSignature:
+          'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x917cf8ac',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6'),
+        selector: '0x69cacded',
+        functionSignature:
+          'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
+        sinceTimestamp: new UnixTime(1739368811),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840'),
+        selector: '0xa04cee60',
+        functionSignature:
+          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+        sinceTimestamp: new UnixTime(1661455766),
+      },
+    },
+  ]
+}
+
 function ifPostsToEthereum<T>(
   templateVars: OrbitStackConfigCommon,
   value: T,
@@ -879,20 +963,13 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
+  daProvider: DAProvider | undefined,
 ): ScalingProjectRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
 
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
@@ -909,8 +986,6 @@ function getRiskView(
       'RollupProxy',
       'validatorWhitelistDisabled',
     )
-
-  const postsToExternalDA = !postsToEthereum(templateVars)
 
   return {
     stateValidation:
@@ -934,32 +1009,16 @@ function getRiskView(
         }
       })(),
     dataAvailability:
-      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
-        ? (() => {
-            if (isUsingValidBlobstreamWmr) {
-              return RISK_VIEW.DATA_CELESTIA(true)
-            } else {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            }
-          })()
+      templateVars.nonTemplateRiskView?.dataAvailability ??
+      (daProvider !== undefined
+        ? daProvider.riskViewDA
         : type === 'layer2'
           ? RISK_VIEW.DATA_ON_CHAIN
-          : RISK_VIEW.DATA_ON_CHAIN_L3,
+          : RISK_VIEW.DATA_ON_CHAIN_L3),
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      (isUsingValidBlobstreamWmr
-        ? pickWorseRisk(
-            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-          )
+      (daProvider !== undefined
+        ? daProvider.riskViewExitWindow
         : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
     sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
@@ -990,6 +1049,71 @@ function getRiskView(
         }
       })(),
   }
+}
+
+function getDAProvider(
+  templateVars: OrbitStackConfigCommon,
+): DAProvider | undefined {
+  if (postsToEthereum(templateVars)) {
+    return undefined
+  }
+
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
+
+  if (isUsingValidBlobstreamWmr) {
+    return {
+      riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
+      riskViewExitWindow: pickWorseRisk(
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+      ),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
+      layer: DA_LAYERS.CELESTIA,
+      bridge: DA_BRIDGES.BLOBSTREAM,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }
+  } else {
+    const DAC = templateVars.discovery.getContractValue<{
+      membersCount: number
+      requiredSignatures: number
+    }>('SequencerInbox', 'dacKeyset')
+
+    return {
+      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+      layer: DA_LAYERS.DAC,
+      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    }
+  }
+}
+
+function decideDA(
+  daProvider: DAProvider | undefined,
+  nativeDA: ProjectDataAvailability | undefined,
+): ProjectDataAvailability | undefined {
+  if (daProvider !== undefined) {
+    return {
+      layer: daProvider.layer,
+      bridge: daProvider.bridge,
+      mode: daProvider.mode,
+    }
+  }
+
+  return nativeDA
 }
 
 function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
