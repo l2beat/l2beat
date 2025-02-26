@@ -120,11 +120,11 @@ importers:
         specifier: ^14.1.0
         version: 14.2.0
       react:
-        specifier: ^18.1.0
-        version: 18.3.1
+        specifier: ^19.0.0
+        version: 19.0.0
       react-dom:
-        specifier: ^18.1.0
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.0.0
+        version: 19.0.0(react@19.0.0)
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -169,11 +169,11 @@ importers:
         specifier: ^2.6.2
         version: 2.6.11
       '@types/react':
-        specifier: ^18.0.12
-        version: 18.3.12
+        specifier: ^19.0.10
+        version: 19.0.10
       '@types/react-dom':
-        specifier: ^18.0.5
-        version: 18.3.1
+        specifier: ^19.0.4
+        version: 19.0.4(@types/react@19.0.10)
       '@types/stream-chain':
         specifier: ^2.1.0
         version: 2.1.0
@@ -2745,8 +2745,8 @@ packages:
   '@radix-ui/react-switch@1.1.2':
     resolution: {integrity: sha512-zGukiWHjEdBCRyXvKR6iXAQG6qXm2esuAD6kDOi9Cn+1X6ev3ASo4+CsYaD6Fov9r/AQFekqnD/7+V0Cs6/98g==}
     peerDependencies:
-      '@types/react': '*'
-      '@types/react-dom': '*'
+      '@types/react': 19.0.8
+      '@types/react-dom': 19.0.3
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
     peerDependenciesMeta:
