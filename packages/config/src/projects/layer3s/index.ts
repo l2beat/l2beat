@@ -48,6 +48,7 @@ import { rari } from './rari'
 import { rivalz } from './rivalz'
 import { sanko } from './sanko'
 import { skynet } from './skynet'
+import { slingshot } from './slingshot'
 import { songprotocol } from './songprotocol'
 import { spheron } from './spheron'
 import { stack } from './stack'
@@ -105,6 +106,7 @@ export const layer3s: Layer3[] = [
   sanko,
   stack,
   skynet,
+  slingshot,
   syndicateframe,
   meliora,
   mindchain,
