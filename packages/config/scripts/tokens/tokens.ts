@@ -50,12 +50,7 @@ async function main() {
     (x) => x.chainConfig,
   )
 
-  const chainConverter = new ChainConverter(
-    chains
-      .filter((x) => x.chainId !== undefined)
-      // biome-ignore lint/style/noNonNullAssertion: we just checked
-      .map((x) => ({ name: x.name, chainId: ChainId(x.chainId!) })),
-  )
+  const chainConverter = new ChainConverter(chains)
 
   function saveToken(token: GeneratedToken) {
     const index = result.findIndex(
