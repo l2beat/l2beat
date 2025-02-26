@@ -3,3 +3,4 @@ build
 .env
 discovery/**/*.lp
 !discovery/_templates/**/*.lp
+!discovery/_clingo/**/*.lp
