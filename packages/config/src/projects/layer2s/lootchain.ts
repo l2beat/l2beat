@@ -10,7 +10,7 @@ export const lootchain: Layer2 = upcomingL2({
     name: 'Loot Chain',
     slug: 'lootchain',
     description:
-      'Loot Chain is a high-performance, customizable, and application-specific layer-two blockchain deployed with Caldera.',
+      'Loot Chain is a high-performance, customizable L2 blockchain deployed with Caldera. It provides specialized support for builders on Lootverse and Autonomous Worlds.',
     purposes: ['NFT'],
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
