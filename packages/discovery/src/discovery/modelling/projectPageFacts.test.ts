@@ -7,7 +7,7 @@ import { runClingo } from './projectPageFacts'
 // add custom serialization/deserialization logic for WebAssembly exceptions.
 // This seems to conflicts with `makeEthersError` in our codebase.
 // Until it's fixed, this test is disabled.
-xdescribe(runClingo.name, () => {
+describe(runClingo.name, () => {
   it('runs clingo on passed program', async () => {
     const program = 'a. b :- a.'
     const result = await runClingo(program)
