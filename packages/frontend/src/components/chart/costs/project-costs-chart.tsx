@@ -102,6 +102,8 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
             name="showDataPosted"
             checked={showDataPosted}
             onCheckedChange={(state) => setShowDataPosted(!!state)}
+            disabled={daData?.length === 0}
+            labelTitle={daData?.length === 0 ? 'No data' : undefined}
           >
             Show data posted
           </Checkbox>
