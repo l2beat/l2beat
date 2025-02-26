@@ -9,6 +9,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   assert,
   type ChainConverter,
+  ChainId,
   UnixTime,
   assertUnreachable,
 } from '@l2beat/shared-pure'
@@ -217,7 +218,7 @@ export class UpdateMonitor {
 
     await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,
-      chainId: this.chainConverter.toChainId(runner.chain),
+      chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       timestamp,
       blockNumber,
       discovery,
@@ -226,7 +227,7 @@ export class UpdateMonitor {
 
     await this.db.flatSources.upsert({
       projectName: projectConfig.name,
-      chainId: this.chainConverter.toChainId(runner.chain),
+      chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       blockNumber,
       contentHash: hashJson(sortObjectByKeys(flatSources)),
       flat: flatSources,
@@ -255,7 +256,7 @@ export class UpdateMonitor {
   ): Promise<DiscoveryOutput | undefined> {
     const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
-      this.chainConverter.toChainId(runner.chain),
+      ChainId(this.chainConverter.toChainId(runner.chain)),
     )
     let previousDiscovery: DiscoveryOutput
     if (databaseEntry && databaseEntry.configHash === projectConfig.hash) {
@@ -308,7 +309,7 @@ export class UpdateMonitor {
         projectConfig.name,
         diff,
         blockNumber,
-        this.chainConverter.toChainId(chain),
+        ChainId(this.chainConverter.toChainId(chain)),
         dependents,
         unknownContracts,
         timestamp,

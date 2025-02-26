@@ -207,5 +207,5 @@ This method allows ZK rollups to prove that the data used in their validity proo
       { type: 'rpc', url: 'https://eth-mainnet.alchemyapi.io/v2/demo' },
     ],
   },
-  acitivityConfig: { type: 'block', startBlock: 8929324 },
+  activityConfig: { type: 'block', startBlock: 8929324 },
 }

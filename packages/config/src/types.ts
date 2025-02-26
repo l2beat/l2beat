@@ -820,7 +820,7 @@ export interface BaseProject {
   scalingDa?: ProjectDataAvailability
   tvlInfo?: ProjectTvlInfo
   tvlConfig?: ProjectTvlConfig
-  acitivityConfig?: ProjectActivityConfig
+  activityConfig?: ProjectActivityConfig
   /** Display information for the liveness feature. If present liveness is enabled for this project. */
   livenessInfo?: ProjectLivenessInfo
   livenessConfig?: ProjectLivenessConfig

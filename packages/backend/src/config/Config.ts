@@ -9,7 +9,6 @@ import type { DiscoveryChainConfig } from '@l2beat/discovery'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import type {
   AmountConfigEntry,
-  ChainId,
   PriceConfigEntry,
   ProjectId,
   UnixTime,
@@ -37,7 +36,7 @@ export interface Config {
   readonly flatSourceModuleEnabled: boolean
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
-  readonly chains: { name: string; chainId: ChainId }[]
+  readonly chains: { name: string; chainId: number | undefined }[]
   readonly verifiers: VerifiersConfig | false
   readonly daBeat: DaBeatConfig | false
   readonly chainConfig: ChainApi[]
@@ -144,7 +143,6 @@ export interface ChainTvlConfig {
   readonly chain: string
   readonly config?: {
     readonly projectId: ProjectId
-    readonly chainId: ChainId
     readonly providerUrl: string
     readonly providerCallsPerMinute: number
     readonly minBlockTimestamp: UnixTime

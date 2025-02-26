@@ -1,6 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import type { ProjectService, TransactionApiConfig } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { Project, ProjectService } from '@l2beat/config'
 import type { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
 import type { ActivityConfig } from '../Config'
 import type { FeatureFlags } from '../FeatureFlags'
@@ -14,8 +13,7 @@ export async function getActivityConfig(
   flags: FeatureFlags,
 ): Promise<ActivityConfig> {
   const projects = await ps.getProjects({
-    select: ['transactionApiConfig'],
-    optional: ['chainConfig'],
+    select: ['activityConfig', 'chainConfig'],
     whereNot: ['isArchived'],
   })
 
@@ -24,60 +22,76 @@ export async function getActivityConfig(
       .filter((x) => flags.isEnabled('activity', x.id.toString()))
       .map((x) => ({
         id: x.id,
-        config: getActivityTransactionConfig(env, x.id, x.transactionApiConfig),
+        config: getActivityTransactionConfig(env, x),
       })),
   }
 }
 
 function getActivityTransactionConfig(
   env: Env,
-  projectId: ProjectId,
-  transactionApi: TransactionApiConfig,
+  project: Project<'activityConfig' | 'chainConfig'>,
 ): ActivityTransactionConfig {
-  if (transactionApi.type === 'rpc') {
-    return {
-      type: 'rpc',
-      url: env.string(
-        [
-          Env.key(projectId, 'RPC_URL_FOR_ACTIVITY'),
-          Env.key(projectId, 'RPC_URL'),
-        ],
-        transactionApi.defaultUrl,
-      ),
-      callsPerMinute: env.integer(
-        [
-          Env.key(projectId, 'RPC_CALLS_PER_MINUTE_FOR_ACTIVITY'),
-          Env.key(projectId, 'RPC_CALLS_PER_MINUTE'),
-        ],
-        transactionApi.defaultCallsPerMinute ?? DEFAULT_RPC_CALLS_PER_MINUTE,
-      ),
-      adjustCount: transactionApi.adjustCount,
-      startBlock: transactionApi.startBlock,
+  if (project.activityConfig.type === 'block') {
+    for (const api of project.chainConfig.apis) {
+      if (api.type === 'rpc') {
+        return {
+          type: 'rpc',
+          url: env.string(
+            [
+              Env.key(project.id, 'RPC_URL_FOR_ACTIVITY'),
+              Env.key(project.id, 'RPC_URL'),
+            ],
+            api.url,
+          ),
+          callsPerMinute: env.integer(
+            [
+              Env.key(project.id, 'RPC_CALLS_PER_MINUTE_FOR_ACTIVITY'),
+              Env.key(project.id, 'RPC_CALLS_PER_MINUTE'),
+            ],
+            api.callsPerMinute ?? DEFAULT_RPC_CALLS_PER_MINUTE,
+          ),
+          adjustCount: project.activityConfig.adjustCount,
+          startBlock: project.activityConfig.startBlock,
+        }
+      } else if (
+        api.type === 'loopring' ||
+        api.type === 'degate3' ||
+        api.type === 'fuel' ||
+        api.type === 'zksync' ||
+        api.type === 'starknet'
+      ) {
+        return {
+          type: api.type,
+          url: env.string(
+            [
+              Env.key(project.id, 'API_URL_FOR_ACTIVITY'),
+              Env.key(project.id, 'API_URL'),
+            ],
+            api.url,
+          ),
+          callsPerMinute: env.integer(
+            [
+              Env.key(project.id, 'API_CALLS_PER_MINUTE_FOR_ACTIVITY'),
+              Env.key(project.id, 'API_CALLS_PER_MINUTE'),
+            ],
+            api.callsPerMinute ?? DEFAULT_RPC_CALLS_PER_MINUTE,
+          ),
+        }
+      }
     }
-  } else if (transactionApi.type === 'starkex') {
-    return {
-      type: 'starkex',
-      product: transactionApi.product,
-      sinceTimestamp: transactionApi.sinceTimestamp,
-      resyncLastDays: transactionApi.resyncLastDays ?? DEFAULT_RESYNC_LAST_DAYS,
-    }
+    throw new Error('Missing appropriate api for activity project')
   } else {
-    return {
-      type: transactionApi.type,
-      url: env.string(
-        [
-          Env.key(projectId, 'API_URL_FOR_ACTIVITY'),
-          Env.key(projectId, 'API_URL'),
-        ],
-        transactionApi.defaultUrl,
-      ),
-      callsPerMinute: env.integer(
-        [
-          Env.key(projectId, 'API_CALLS_PER_MINUTE_FOR_ACTIVITY'),
-          Env.key(projectId, 'API_CALLS_PER_MINUTE'),
-        ],
-        transactionApi.defaultCallsPerMinute ?? DEFAULT_RPC_CALLS_PER_MINUTE,
-      ),
+    for (const api of project.chainConfig.apis) {
+      if (api.type === 'starkex') {
+        return {
+          type: 'starkex',
+          product: api.product,
+          sinceTimestamp: project.activityConfig.sinceTimestamp,
+          resyncLastDays:
+            project.activityConfig.resyncLastDays ?? DEFAULT_RESYNC_LAST_DAYS,
+        }
+      }
     }
+    throw new Error('Missing appropriate api for activity project')
   }
 }

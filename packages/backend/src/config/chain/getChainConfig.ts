@@ -1,13 +1,13 @@
 import { Env } from '@l2beat/backend-tools'
-import { type ChainConfig, layer2s, layer3s, tokenList } from '@l2beat/config'
-import { assert, notUndefined } from '@l2beat/shared-pure'
+import { layer2s, layer3s, tokenList } from '@l2beat/config'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import { getChainsWithTokens } from '../features/chains'
 import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
 import type { IndexerApi } from './IndexerApi'
 
-export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
+export function getChainConfig(env: Env): ChainApi[] {
   const { configuredChains, projects } = getConfiguredChains()
 
   const rpcChains: ChainApi[] = []
@@ -18,31 +18,76 @@ export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
     }
     const project = projects.find((p) => p.id === chain)
     assert(project, `${chain}: Project not found`)
-    // TODO: we need to find a better way to link project to it's chain
-    const chainConfig = chains.find((c) => c.name === chain.replace(/-/g, ''))
 
-    const indexerConfig =
-      project.chainConfig?.explorerApi || chainConfig?.explorerApi
     const indexerApis: IndexerApi[] = []
-    if (indexerConfig) {
-      const type = indexerConfig.type
-      const url = indexerConfig.url
+    const blockApis: BlockApi[] = []
 
-      if (type === 'etherscan') {
-        indexerApis.push({
-          type,
-          url,
-          apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY')),
-        })
-      } else {
-        indexerApis.push({
-          type,
-          url,
-        })
+    for (const api of project.chainConfig?.apis ?? []) {
+      switch (api.type) {
+        case 'etherscan':
+          indexerApis.push({
+            type: api.type,
+            url: api.url,
+            apiKey: env.string(Env.key(chain, 'ETHERSCAN_API_KEY')),
+          })
+          break
+        case 'blockscout':
+          indexerApis.push({
+            type: api.type,
+            url: api.url,
+          })
+          break
+        case 'blockscoutV2':
+          // TODO: not sure why we don't support this
+          break
+        case 'rpc':
+          blockApis.push({
+            type: 'rpc',
+            url: api.url,
+            callsPerMinute: api.callsPerMinute ?? 60,
+            // TODO: add configuration param
+            retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
+          })
+          break
+        case 'fuel':
+        case 'loopring':
+        case 'degate3':
+        case 'zksync':
+          blockApis.push({
+            type: api.type,
+            url: api.url,
+            callsPerMinute: api.callsPerMinute ?? 60,
+            retryStrategy: 'RELIABLE',
+          })
+          break
+        case 'starkex': {
+          const starkexApiKey = env.optionalString('STARKEX_API_KEY')
+          if (starkexApiKey) {
+            blockApis.push({
+              type: 'starkex',
+              apiKey: starkexApiKey,
+              callsPerMinute: env.integer('STARKEX_API_CALLS_PER_MINUTE', 600),
+              retryStrategy: 'RELIABLE',
+            })
+          }
+          break
+        }
+        case 'starknet':
+          blockApis.push({
+            type: 'starknet',
+            url: env.string('STARKNET_RPC_URL', api.url),
+            callsPerMinute: env.integer(
+              'STARKNET_RPC_CALLS_PER_MINUTE',
+              api.callsPerMinute,
+            ),
+            retryStrategy: 'RELIABLE',
+          })
+          break
+        default:
+          assertUnreachable(api)
       }
     }
 
-    const blockApis: BlockApi[] = []
     const rpcUrls = getRpcUrlsFromEnv(env, chain)
     for (const url of rpcUrls) {
       const callsPerMinute = env.integer(
@@ -53,17 +98,6 @@ export function getChainConfig(env: Env, chains: ChainConfig[]): ChainApi[] {
         type: 'rpc',
         url,
         callsPerMinute,
-        // TODO: add configuration param
-        retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
-      })
-    }
-
-    const defaultRpcConfig = project.config.transactionApi
-    if (defaultRpcConfig && defaultRpcConfig.type === 'rpc') {
-      blockApis.push({
-        type: 'rpc',
-        url: defaultRpcConfig.defaultUrl,
-        callsPerMinute: defaultRpcConfig.defaultCallsPerMinute ?? 60,
         // TODO: add configuration param
         retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
       })
@@ -88,7 +122,7 @@ function getRpcUrlsFromEnv(env: Env, chain: string) {
     env.optionalString(Env.key(chain, 'RPC_URL')),
     env.optionalString(Env.key(chain, 'RPC_URL_FOR_TVL')),
     env.optionalString(Env.key(chain, 'RPC_URL_FOR_ACTIVITY')),
-  ].filter(notUndefined)
+  ].filter((x) => x !== undefined)
 }
 
 function getConfiguredChains() {
@@ -112,8 +146,8 @@ function getConfiguredChains() {
   ]
 
   const activityChains = projects
-    .flatMap((x) => (x.config.transactionApi ? x.id : undefined))
-    .filter(notUndefined)
+    .flatMap((x) => (x.config.activityConfig ? x.id : undefined))
+    .filter((x) => x !== undefined)
 
   const configuredChains = [...tvlChains, ...activityChains]
   return { configuredChains, projects }
