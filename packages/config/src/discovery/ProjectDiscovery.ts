@@ -81,8 +81,7 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.name,
-      displayName: contract.displayName,
+      name: contract.displayName ?? contract.name,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -185,7 +184,7 @@ export class ProjectDiscovery {
       .map((m) => this.getContractByAddress(m))
       .filter(notUndefined)
       .map((contract) => ({
-        name: contract.name,
+        name: contract.displayName ?? contract.name,
         description: trimTrailingDots(contract.description ?? ''),
       }))
       .map(
@@ -236,7 +235,7 @@ export class ProjectDiscovery {
     ]
 
     return {
-      name: contract.name,
+      name: contract.displayName ?? contract.name,
       description: descriptionWithContractNames,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
@@ -443,7 +442,7 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      name: contract.name,
+      name: contract.displayName ?? contract.name,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -455,7 +454,7 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
-      name: contract.name,
+      name: contract.displayName ?? contract.name,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
