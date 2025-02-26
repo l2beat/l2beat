@@ -279,7 +279,7 @@ function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
   }
 }
 
-function getDiscoveryInfo(
+export function getDiscoveryInfo(
   project: Layer2 | Layer3 | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)

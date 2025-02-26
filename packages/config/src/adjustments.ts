@@ -4,12 +4,9 @@ import { badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
 import { layer3s } from './projects/layer3s'
+import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
 import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from './utils/discoveryDriven'
 import { isProjectVerified, isVerified } from './verification/isVerified'
 
 /**
@@ -53,15 +50,7 @@ function adjustLegacy(
   }
   adjustContracts(project, chains)
 
-  const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
-  const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
-    project.permissions,
-  )
-  project.discoveryInfo = {
-    contractsDiscoDriven,
-    permissionsDiscoDriven,
-    isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
-  }
+  project.discoveryInfo = getDiscoveryInfo(project)
 }
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
