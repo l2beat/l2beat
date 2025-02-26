@@ -1,4 +1,3 @@
-import { GlossarySideNavItem } from '~/app/(top-nav)/glossary/_components/side-nav/glossary-side-nav-item'
 import { cn } from '~/utils/cn'
 import type { FaqItemWithId } from '../page'
 
@@ -24,5 +23,3 @@ export const FaqSideNavItem = ({ ref, entry, selected }: Props) => {
     </li>
   )
 }
-
-GlossarySideNavItem.displayName = 'GlossarySideNavItem'
