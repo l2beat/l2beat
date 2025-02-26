@@ -149,6 +149,9 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
       </span>
+      {entry.displayName && (
+        <span className="text-coffee-400 text-xs">({entry.displayName})</span>
+      )}
     </li>
   )
 }
