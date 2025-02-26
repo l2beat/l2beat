@@ -1,14 +1,29 @@
-Generated with discovered.json: 0x1f63ec5d70ded7ce2ccb2c0d9b6c719870896255
+Generated with discovered.json: 0x093f3dab64b8cbc670476958de7629ddb9915c16
 
-# Diff at Wed, 26 Feb 2025 10:33:09 GMT:
+# Diff at Wed, 26 Feb 2025 16:48:30 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21872714
-- current block number: 21872714
+- comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 21872714
+- current block number: 21931801
 
 ## Description
 
+gasLimit raised a bit (60M->30M in last update).
+
 config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        40000000
+    }
+```
 
 ## Config/verification related changes
 
