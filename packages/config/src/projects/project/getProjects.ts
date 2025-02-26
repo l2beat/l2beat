@@ -28,6 +28,10 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
+import {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+} from '../../utils/discoveryDriven'
 
 export function getProjects(): BaseProject[] {
   return refactored
@@ -65,6 +69,13 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
+    discoveryInfo: {
+      isDiscoDriven:
+        arePermissionsDiscoveryDriven(p.permissions) &&
+        areContractsDiscoveryDriven(p.contracts),
+      contractsDiscoDriven: areContractsDiscoveryDriven(p.contracts),
+      permissionsDiscoDriven: arePermissionsDiscoveryDriven(p.permissions),
+    },
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -183,6 +194,13 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
+    discoveryInfo: {
+      isDiscoDriven:
+        arePermissionsDiscoveryDriven(p.permissions) &&
+        areContractsDiscoveryDriven(p.contracts),
+      contractsDiscoDriven: areContractsDiscoveryDriven(p.contracts),
+      permissionsDiscoDriven: arePermissionsDiscoveryDriven(p.permissions),
+    },
     bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],

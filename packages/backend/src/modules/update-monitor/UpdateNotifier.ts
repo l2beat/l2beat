@@ -256,7 +256,7 @@ function flattenReminders(
 export async function generateTemplatizedStatus(): Promise<string> {
   const ps = new ProjectService()
   const scaling = await ps.getProjects({
-    select: ['scalingInfo'],
+    select: ['scalingInfo', 'discoveryInfo'],
     where: ['isScaling'],
     whereNot: ['isUpcoming', 'isArchived'],
   })
@@ -278,7 +278,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
   for (const stack of stacks) {
     const isFullyTemplatized = scaling
       .filter((p) => p.scalingInfo.stack === stack)
-      .map((p) => isDiscoveryDriven(p))
+      .map((p) => p.discoveryInfo.isDiscoDriven)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length
     entries.push({
