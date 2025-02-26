@@ -1,5 +1,3 @@
-import { isArray, sum } from 'lodash'
-
 import {
   EIP712_methods,
   ERC20ROUTER_methods,
@@ -15,8 +13,10 @@ import {
   isMulticallv3,
 } from '@l2beat/shared'
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
+import { isArray, sum } from 'lodash'
+import type { UopsAnalyzer } from './types'
 
-export class RpcUopsAnalyzer {
+export class RpcUopsAnalyzer implements UopsAnalyzer {
   calculateUops(rpcBlock: Block) {
     const uops = rpcBlock.transactions.map((tx: Transaction) =>
       this.mapTransaction(tx),

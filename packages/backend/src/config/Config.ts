@@ -3,6 +3,7 @@ import type {
   Layer2FinalityConfig,
   OnchainVerifier,
   Project,
+  ProjectActivityConfig,
   ProjectDaTrackingConfig,
 } from '@l2beat/config'
 import type { DiscoveryChainConfig } from '@l2beat/discovery'
@@ -13,7 +14,6 @@ import type {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
 import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
@@ -166,7 +166,10 @@ export interface ActivityConfig {
 
 export interface ActivityConfigProject {
   id: ProjectId
-  config: ActivityTransactionConfig
+  chainName: string
+  activityConfig: ProjectActivityConfig
+  /** @deprecated This should somehow be configured differently */
+  batchSize: number
 }
 
 export interface MetricsAuthConfig {

@@ -1,7 +1,8 @@
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import { isArray } from 'lodash'
+import type { UopsAnalyzer } from './types'
 
-export class StarknetUopsAnalyzer {
+export class StarknetUopsAnalyzer implements UopsAnalyzer {
   calculateUops(block: Block) {
     const uops = block.transactions.reduce(
       (acc, tx) => acc + this.getOperationsCount(tx, block.number),

@@ -139,7 +139,7 @@ export async function makeConfig(
     flatSourceModuleEnabled: flags.isEnabled('flatSourcesModule'),
     chains: chains.map((x) => ({ name: x.name, chainId: x.chainId })),
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
-    chainConfig: getChainConfig(env),
+    chainConfig: await getChainConfig(ps, env),
     beaconApi: {
       url: env.optionalString([
         'ETHEREUM_BEACON_API_URL_FOR_FINALITY',

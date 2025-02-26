@@ -1,23 +1,21 @@
 import { Env } from '@l2beat/backend-tools'
-import { layer2s, layer3s, tokenList } from '@l2beat/config'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import { uniq } from 'lodash'
-import { getChainsWithTokens } from '../features/chains'
+import type { ProjectService } from '@l2beat/config'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import type { BlockApi } from './BlockApi'
 import type { ChainApi } from './ChainApi'
 import type { IndexerApi } from './IndexerApi'
 
-export function getChainConfig(env: Env): ChainApi[] {
-  const { configuredChains, projects } = getConfiguredChains()
+const DEFAULT_CALLS_PER_MINUTE = 60
 
-  const rpcChains: ChainApi[] = []
-  for (const chain of configuredChains) {
-    if (chain === 'ethereum') {
-      rpcChains.push(getEthereumConfig(env))
-      continue
-    }
-    const project = projects.find((p) => p.id === chain)
-    assert(project, `${chain}: Project not found`)
+export async function getChainConfig(
+  ps: ProjectService,
+  env: Env,
+): Promise<ChainApi[]> {
+  const projects = await ps.getProjects({ select: ['chainConfig'] })
+
+  const apis: ChainApi[] = []
+  for (const project of projects) {
+    const chain = project.chainConfig.name
 
     const indexerApis: IndexerApi[] = []
     const blockApis: BlockApi[] = []
@@ -44,7 +42,10 @@ export function getChainConfig(env: Env): ChainApi[] {
           blockApis.push({
             type: 'rpc',
             url: api.url,
-            callsPerMinute: api.callsPerMinute ?? 60,
+            callsPerMinute: env.integer(
+              Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
+              api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
+            ),
             // TODO: add configuration param
             retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
           })
@@ -56,7 +57,7 @@ export function getChainConfig(env: Env): ChainApi[] {
           blockApis.push({
             type: api.type,
             url: api.url,
-            callsPerMinute: api.callsPerMinute ?? 60,
+            callsPerMinute: api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             retryStrategy: 'RELIABLE',
           })
           break
@@ -65,6 +66,7 @@ export function getChainConfig(env: Env): ChainApi[] {
           if (starkexApiKey) {
             blockApis.push({
               type: 'starkex',
+              product: api.product,
               apiKey: starkexApiKey,
               callsPerMinute: env.integer('STARKEX_API_CALLS_PER_MINUTE', 600),
               retryStrategy: 'RELIABLE',
@@ -78,7 +80,7 @@ export function getChainConfig(env: Env): ChainApi[] {
             url: env.string('STARKNET_RPC_URL', api.url),
             callsPerMinute: env.integer(
               'STARKNET_RPC_CALLS_PER_MINUTE',
-              api.callsPerMinute,
+              api.callsPerMinute ?? DEFAULT_CALLS_PER_MINUTE,
             ),
             retryStrategy: 'RELIABLE',
           })
@@ -88,36 +90,39 @@ export function getChainConfig(env: Env): ChainApi[] {
       }
     }
 
-    const rpcUrls = getRpcUrlsFromEnv(env, chain)
-    for (const url of rpcUrls) {
+    for (const url of getConfiguredRpcs(env, chain)) {
+      // TODO: every rpc for a given chain has the same calls per minute!
       const callsPerMinute = env.integer(
         Env.key(chain, 'RPC_CALLS_PER_MINUTE'),
-        60,
+        DEFAULT_CALLS_PER_MINUTE,
       )
-      blockApis.push({
-        type: 'rpc',
-        url,
-        callsPerMinute,
-        // TODO: add configuration param
-        retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
-      })
+      // only add previously unknown urls
+      if (!blockApis.some((x) => x.type === 'rpc' && x.url === url)) {
+        blockApis.push({
+          type: 'rpc',
+          url,
+          callsPerMinute,
+          // TODO: add configuration param
+          retryStrategy: chain === 'zkfair' ? 'UNRELIABLE' : 'RELIABLE',
+        })
+      }
     }
 
-    if (blockApis.length > 0) {
-      rpcChains.push({
-        name: chain,
-        indexerApis,
-        blockApis,
-      })
+    if (indexerApis.length > 0 || blockApis.length > 0) {
+      apis.push({ name: chain, indexerApis, blockApis })
     }
   }
 
-  const otherChains = getOtherChains(env)
+  const exceptions = getExceptions(env)
+  apis.push(...exceptions)
 
-  return [...rpcChains, ...otherChains]
+  return apis
 }
 
-function getRpcUrlsFromEnv(env: Env, chain: string) {
+function getConfiguredRpcs(env: Env, chain: string) {
+  if (chain === 'starknet' || chain === 'paradex') {
+    return []
+  }
   return [
     env.optionalString(Env.key(chain, 'RPC_URL')),
     env.optionalString(Env.key(chain, 'RPC_URL_FOR_TVL')),
@@ -125,155 +130,27 @@ function getRpcUrlsFromEnv(env: Env, chain: string) {
   ].filter((x) => x !== undefined)
 }
 
-function getConfiguredChains() {
-  const sharedEscrowsChains = layer2s
-    .filter((c) =>
-      c.config.escrows.some(
-        (e) =>
-          e.sharedEscrow?.type === 'AggLayer' ||
-          e.sharedEscrow?.type === 'ElasticChain',
-      ),
-    )
-    .map((l) => l.id)
-
-  const tvlChains = uniq(
-    getChainsWithTokens(tokenList).concat(sharedEscrowsChains),
-  )
-
-  const projects = [
-    ...layer2s.filter((layer2) => !layer2.isArchived),
-    ...layer3s,
-  ]
-
-  const activityChains = projects
-    .flatMap((x) => (x.config.activityConfig ? x.id : undefined))
-    .filter((x) => x !== undefined)
-
-  const configuredChains = [...tvlChains, ...activityChains]
-  return { configuredChains, projects }
-}
-
-function getEthereumConfig(env: Env): ChainApi {
-  return {
-    name: 'ethereum',
-    indexerApis: [
-      {
-        type: 'etherscan',
-        url: 'https://api.etherscan.io/api',
-        apiKey: env.string('ETHEREUM_ETHERSCAN_API_KEY'),
-      },
-    ],
-    blockApis: [
-      {
-        type: 'rpc',
-        url: env.string('ETHEREUM_RPC_URL'),
-        callsPerMinute: env.integer('ETHEREUM_RPC_CALLS_PER_MINUTE', 60),
-        retryStrategy: 'RELIABLE',
-      },
-    ],
-  }
-}
-
-function getOtherChains(env: Env): ChainApi[] {
-  const chains: ChainApi[] = [
-    {
-      name: 'zksync',
-      indexerApis: [],
-      blockApis: [
-        {
-          // TODO: rename to zksynclite
-          type: 'zksync',
-          url: 'https://api.zksync.io/api/v0.2',
-          callsPerMinute: 3_000,
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    },
-    {
-      name: 'loopring',
-      indexerApis: [],
-      blockApis: [
-        {
-          type: 'loopring',
-          url: 'https://api3.loopring.io/api/v3',
-          callsPerMinute: 240,
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    },
-    {
-      name: 'degate3',
-      indexerApis: [],
-      blockApis: [
-        {
-          type: 'degate3',
-          url: 'https://v1-mainnet-backend.degate.com/order-book-api',
-          callsPerMinute: 120,
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    },
-    {
-      name: 'fuel',
-      indexerApis: [],
-      blockApis: [
-        {
-          type: 'fuel',
-          url: 'https://mainnet.fuel.network/v1/graphql',
-          callsPerMinute: 120,
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    },
-  ]
-
-  const starknetRpc = env.optionalString('STARKNET_RPC_URL')
-  if (starknetRpc) {
-    chains.push({
-      name: 'starknet',
-      indexerApis: [],
-      blockApis: [
-        {
-          type: 'starknet',
-          url: starknetRpc,
-          callsPerMinute: env.integer('STARKNET_RPC_CALLS_PER_MINUTE', 60),
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    })
-  }
+function getExceptions(env: Env): ChainApi[] {
+  const apis: ChainApi[] = []
 
   const paradexRpc = env.optionalString('PARADEX_RPC_URL')
   if (paradexRpc) {
-    chains.push({
+    apis.push({
       name: 'paradex',
       indexerApis: [],
       blockApis: [
         {
           type: 'starknet',
           url: paradexRpc,
-          callsPerMinute: env.integer('PARADEX_RPC_CALLS_PER_MINUTE', 60),
+          callsPerMinute: env.integer(
+            'PARADEX_RPC_CALLS_PER_MINUTE',
+            DEFAULT_CALLS_PER_MINUTE,
+          ),
           retryStrategy: 'RELIABLE',
         },
       ],
     })
   }
 
-  const starkexApiKey = env.optionalString('STARKEX_API_KEY')
-  if (starkexApiKey) {
-    chains.push({
-      name: 'starkex',
-      indexerApis: [],
-      blockApis: [
-        {
-          type: 'starkex',
-          apiKey: starkexApiKey,
-          callsPerMinute: env.integer('STARKEX_API_CALLS_PER_MINUTE', 600),
-          retryStrategy: 'RELIABLE',
-        },
-      ],
-    })
-  }
-
-  return chains
+  return apis
 }

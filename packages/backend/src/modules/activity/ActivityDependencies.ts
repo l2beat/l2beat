@@ -6,72 +6,36 @@ import type { Providers } from '../../providers/Providers'
 import type { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import type { TxsCountService } from './indexers/types'
 import { BlockTxsCountService } from './services/txs/BlockTxsCountService'
-import { StarkexTxsCountService } from './services/txs/StarkexTxsCountService'
-import { RpcUopsAnalyzer } from './services/uops/analyzers/RpcUopsAnalyzer'
-import { StarknetUopsAnalyzer } from './services/uops/analyzers/StarknetUopsAnalyzer'
+import { DayTxsCountService } from './services/txs/DayTxsCountService'
 
 export class ActivityDependencies {
-  private readonly rpcUopsAnalyzer: RpcUopsAnalyzer
-  private readonly starknetUopsAnalyzer: StarknetUopsAnalyzer
-
   constructor(
     private readonly config: ActivityConfig,
     readonly database: Database,
     private readonly providers: Providers,
-  ) {
-    this.rpcUopsAnalyzer = new RpcUopsAnalyzer()
-    this.starknetUopsAnalyzer = new StarknetUopsAnalyzer()
-  }
+  ) {}
 
   getTxsCountService(chain: string): TxsCountService {
-    const project = this.config.projects.find((p) => p.id === chain)
+    const project = this.config.projects.find((p) => p.chainName === chain)
     assert(project, `Project ${chain} not found`)
 
-    switch (project.config.type) {
-      case 'rpc': {
+    switch (project.activityConfig.type) {
+      case 'block': {
         const provider = this.providers.block.getBlockProvider(chain)
-
+        const analyzer = this.providers.uops.getUopsAnalyzer(chain)
         return new BlockTxsCountService({
           provider,
           projectId: project.id,
-          assessCount: assesCount(project.config.adjustCount),
-          uopsAnalyzer: this.rpcUopsAnalyzer,
+          assessCount: assesCount(project.activityConfig.adjustCount),
+          uopsAnalyzer: analyzer,
         })
       }
-      case 'starknet': {
-        const provider = this.providers.block.getBlockProvider(chain)
-        return new BlockTxsCountService({
-          provider,
-          projectId: project.id,
-          uopsAnalyzer: this.starknetUopsAnalyzer,
-          assessCount: (count) => count,
-        })
+      case 'day': {
+        const provider = this.providers.day.getDayProvider(chain)
+        return new DayTxsCountService(provider, project.id)
       }
-      case 'zksync':
-      case 'fuel':
-      case 'degate3':
-      case 'loopring': {
-        const provider = this.providers.block.getBlockProvider(chain)
-        return new BlockTxsCountService({
-          provider,
-          projectId: project.id,
-          assessCount: (count) => count,
-        })
-      }
-      case 'starkex': {
-        assert(
-          this.providers.block.starkexClient,
-          'starkexClient should be defined',
-        )
-        return new StarkexTxsCountService(
-          this.providers.block.starkexClient,
-          project.id,
-          project.config.product,
-        )
-      }
-
       default:
-        assertUnreachable(project.config)
+        assertUnreachable(project.activityConfig)
     }
   }
 
