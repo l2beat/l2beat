@@ -19,7 +19,7 @@ export const pandasea: Layer2 = underReviewL2({
     links: {
       websites: ['https://pandasea.io/'],
       explorers: ['https://pandaseascan.com/'],
-      apps: ['https://bridge.pandasea.io/'],
+      apps: ['https://bridge.pandasea.io/']
     },
   },
   transactionApi: {
