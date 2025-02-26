@@ -339,7 +339,7 @@ function orbitStackCommon(
   blockNumberOpcodeTimeSeconds: number,
 ): Omit<
   ScalingProject,
-  'type' | 'display' | 'config' | 'stage' | 'riskView'
+  'type' | 'display' | 'config' | 'riskView'
 > & {
   display: Pick<
     ScalingProjectDisplay,
@@ -473,6 +473,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
+    stage: computedStage(templateVars),
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
@@ -751,43 +752,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     type: 'layer3',
     ...common,
     hostChain: ProjectId(hostChain),
-    display: {
-      ...common.display,
-      ...templateVars.display,
-    },
-    stage:
-      templateVars.stage ??
-      (postsToExternalDA
-        ? {
-            stage: 'NotApplicable',
-          }
-        : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
-            },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
-            },
-          )),
+    display: { ...common.display, ...templateVars.display },
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
@@ -853,62 +818,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 }
 
-function getDaTracking(
-  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
-): ProjectDaTrackingConfig[] | undefined {
-  if (templateVars.nonTemplateDaTracking) {
-    return templateVars.nonTemplateDaTracking
-  }
-
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
-
-  const batchPosters = templateVars.discovery.getContractValue<string[]>(
-    'SequencerInbox',
-    'batchPosters',
-  )
-
-  // TODO: update to value from discovery
-  const inboxDeploymentBlockNumber = 0
-
-  return usesBlobs
-    ? [
-        {
-          type: 'ethereum',
-          daLayer: ProjectId('ethereum'),
-          sinceBlock: inboxDeploymentBlockNumber,
-          inbox: templateVars.sequencerInbox.address,
-          sequencers: batchPosters,
-        },
-      ]
-    : templateVars.celestiaDa
-      ? [
-          {
-            type: 'celestia',
-            daLayer: ProjectId('celestia'),
-            // TODO: update to value from discovery
-            sinceBlock: templateVars.celestiaDa.sinceBlock,
-            namespace: templateVars.celestiaDa.namespace,
-          },
-        ]
-      : templateVars.availDa
-        ? [
-            {
-              type: 'avail',
-              daLayer: ProjectId('avail'),
-              // TODO: update to value from discovery
-              sinceBlock: templateVars.availDa.sinceBlock,
-              appId: templateVars.availDa.appId,
-            },
-          ]
-        : undefined
-}
-
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
@@ -968,9 +877,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       ...common.display,
       ...templateVars.display,
 
-      finality: {
-        finalizationPeriod: challengePeriodSeconds,
-      },
+      finality: { finalizationPeriod: challengePeriodSeconds },
       liveness: postsToExternalDA
         ? undefined
         : (templateVars.display.liveness ?? {
@@ -986,39 +893,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )} after it has been posted.`,
           }),
     },
-    stage:
-      templateVars.stage ??
-      (postsToExternalDA
-        ? {
-            stage: 'NotApplicable',
-          }
-        : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable:
-                  templateVars.isNodeAvailable ?? 'UnderReview',
-              },
-              stage1: {
-                principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: true,
-                securityCouncilProperlySetUp: false,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: false,
-                fraudProofSystemIsPermissionless: false,
-                delayWith30DExitWindow: false,
-              },
-            },
-            {
-              rollupNodeLink: templateVars.nodeSourceLink,
-            },
-          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           if (isUsingValidBlobstreamWmr) {
@@ -1158,4 +1032,121 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
+}
+
+function getDaTracking(
+  templateVars: OrbitStackConfigL2 | OrbitStackConfigL3,
+): ProjectDaTrackingConfig[] | undefined {
+  if (templateVars.nonTemplateDaTracking) {
+    return templateVars.nonTemplateDaTracking
+  }
+
+  const usesBlobs =
+    templateVars.usesBlobs ??
+    templateVars.discovery.getContractValueOrUndefined(
+      'SequencerInbox',
+      'postsBlobs',
+    ) ??
+    false
+
+  const batchPosters = templateVars.discovery.getContractValue<string[]>(
+    'SequencerInbox',
+    'batchPosters',
+  )
+
+  // TODO: update to value from discovery
+  const inboxDeploymentBlockNumber = 0
+
+  return usesBlobs
+    ? [
+        {
+          type: 'ethereum',
+          daLayer: ProjectId('ethereum'),
+          sinceBlock: inboxDeploymentBlockNumber,
+          inbox: templateVars.sequencerInbox.address,
+          sequencers: batchPosters,
+        },
+      ]
+    : templateVars.celestiaDa
+      ? [
+          {
+            type: 'celestia',
+            daLayer: ProjectId('celestia'),
+            // TODO: update to value from discovery
+            sinceBlock: templateVars.celestiaDa.sinceBlock,
+            namespace: templateVars.celestiaDa.namespace,
+          },
+        ]
+      : templateVars.availDa
+        ? [
+            {
+              type: 'avail',
+              daLayer: ProjectId('avail'),
+              // TODO: update to value from discovery
+              sinceBlock: templateVars.availDa.sinceBlock,
+              appId: templateVars.availDa.appId,
+            },
+          ]
+        : undefined
+}
+
+
+function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  return sequencerVersion === '0x00'
+}
+
+function ifPostsToEthereum<T>(
+  templateVars: OrbitStackConfigCommon,
+  value: T,
+): T | undefined {
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  const postsToEthereum = sequencerVersion === '0x00'
+
+  return postsToEthereum ? value : undefined
+}
+
+function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
+  const postsToL1 = postsToEthereum(templateVars)
+
+  if (templateVars.stage !== undefined) {
+    return templateVars.stage
+  }
+  if (!postsToL1) {
+    return { stage: 'NotApplicable' }
+  }
+
+  return getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable:
+          templateVars.isNodeAvailable ?? 'UnderReview',
+      },
+      stage1: {
+        principle: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: false,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: templateVars.nodeSourceLink,
+    },
+  )
 }
