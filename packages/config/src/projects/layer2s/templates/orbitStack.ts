@@ -43,6 +43,7 @@ import type {
   ProjectTechnologyChoice,
   ProjectUpgradeableActor,
   ReasonForBeingInOther,
+  ScalingProject,
   ScalingProjectCapability,
   ScalingProjectDisplay,
   ScalingProjectPurpose,
@@ -123,6 +124,9 @@ interface OrbitStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
+  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
+    category?: ScalingProjectDisplay['category']
+  }
   bridge: ContractParameters
   blockNumberOpcodeTimeSeconds?: number
   finality?: Layer2FinalityConfig
@@ -140,7 +144,6 @@ interface OrbitStackConfigCommon {
   stage?: StageConfig
   stateValidation?: ScalingProjectStateValidation
   stateDerivation?: ScalingProjectStateDerivation
-  upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
   additionalPurposes?: ScalingProjectPurpose[]
   overridingPurposes?: ScalingProjectPurpose[]
@@ -157,23 +160,18 @@ interface OrbitStackConfigCommon {
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
   celestiaDa?: {
     namespace: string
-    /* IMPORTANT: Block number on Celestia Network */
-    sinceBlock: number
+    sinceBlock: number // Block number on Celestia Network
   }
   /** Configure to enable DA metrics tracking for chain using Avail DA */
   availDa?: {
     appId: string
-    /* IMPORTANT: Block number on Avail Network */
-    sinceBlock: number
+    sinceBlock: number // Block number on Avail Network
   }
   /** Configure to enable custom DA tracking e.g. project that switched DA */
   nonTemplateDaTracking?: ProjectDaTrackingConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
-  display: Omit<ScalingProjectDisplay, 'provider' | 'category' | 'purposes'> & {
-    category?: ScalingProjectDisplay['category']
-  }
   stackedRiskView?: Partial<ScalingProjectRiskView>
 }
 
@@ -181,6 +179,7 @@ export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'purposes'> & {
     category?: Layer2Display['category']
   }
+  upgradesAndGovernance?: string
 }
 
 function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
@@ -338,7 +337,20 @@ function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<Layer2, 'type' | 'display' | 'config' | 'stage' | 'riskView'> {
+): Omit<
+  ScalingProject,
+  'type' | 'display' | 'config' | 'stage' | 'riskView'
+> & {
+  display: Pick<
+    ScalingProjectDisplay,
+    | 'stateValidationImage'
+    | 'architectureImage'
+    | 'purposes'
+    | 'stack'
+    | 'category'
+    | 'warning'
+  >
+} {
   const nativeContractRisks = templateVars.nonTemplateContractRisks ?? [
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ]
@@ -431,11 +443,36 @@ function orbitStackCommon(
   //     'validatorWhitelistDisabled',
   //   )
 
+  const architectureImage = existFastConfirmer
+    ? 'orbit-optimium-fastconfirm'
+    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
+      ? 'orbit-optimium-blobstream-espresso'
+      : isUsingValidBlobstreamWmr
+        ? 'orbit-optimium-blobstream'
+        : postsToExternalDA
+          ? 'orbit-optimium'
+          : 'orbit-rollup'
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
     isArchived: templateVars.isArchived ?? undefined,
+    display: {
+      architectureImage,
+      stateValidationImage: 'orbit',
+      purposes: templateVars.overridingPurposes ?? [
+        'Universal',
+        ...(templateVars.additionalPurposes ?? []),
+      ],
+      ...templateVars.display,
+      warning:
+        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+      stack: 'Arbitrum',
+      category:
+        templateVars.display.category ??
+        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+    },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
@@ -556,7 +593,6 @@ function orbitStackCommon(
           existFastConfirmer,
         )
       })(),
-    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones ?? [],
     badges: mergeBadges(
       [
@@ -705,56 +741,19 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     }
   }
 
-  const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
-      'RollupProxy',
-      'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
-
-  const isUsingEspressoSequencer =
-    templateVars.discovery.getContractValueOrUndefined<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== undefined &&
-    templateVars.discovery.getContractValue<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
-
-  const architectureImage = existFastConfirmer
-    ? 'orbit-optimium-fastconfirm'
-    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream-espresso'
-      : isUsingValidBlobstreamWmr
-        ? 'orbit-optimium-blobstream'
-        : postsToExternalDA
-          ? 'orbit-optimium'
-          : 'orbit-rollup'
+  const common = orbitStackCommon(
+    templateVars,
+    baseChain.chainConfig?.explorerUrl,
+    blockNumberOpcodeTimeSeconds,
+  )
 
   return {
     type: 'layer3',
-    ...orbitStackCommon(
-      templateVars,
-      baseChain.chainConfig?.explorerUrl,
-      blockNumberOpcodeTimeSeconds,
-    ),
+    ...common,
     hostChain: ProjectId(hostChain),
     display: {
-      architectureImage,
-      stateValidationImage: 'orbit',
-      purposes: templateVars.overridingPurposes ?? [
-        'Universal',
-        ...(templateVars.additionalPurposes ?? []),
-      ],
+      ...common.display,
       ...templateVars.display,
-      warning:
-        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      stack: 'Arbitrum',
-      category:
-        templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
     stage:
       templateVars.stage ??
@@ -939,40 +938,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
 
-  const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
-      'RollupProxy',
-      'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
-
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
     'wasmModuleRoot',
   )
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const isUsingEspressoSequencer =
-    templateVars.discovery.getContractValueOrUndefined<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== undefined &&
-    templateVars.discovery.getContractValue<string>(
-      'SequencerInbox',
-      'espressoTEEVerifier',
-    ) !== EthereumAddress.ZERO
-
-  const architectureImage = existFastConfirmer
-    ? 'orbit-optimium-fastconfirm'
-    : isUsingEspressoSequencer && isUsingValidBlobstreamWmr
-      ? 'orbit-optimium-blobstream-espresso'
-      : isUsingValidBlobstreamWmr
-        ? 'orbit-optimium-blobstream'
-        : postsToExternalDA
-          ? 'orbit-optimium'
-          : 'orbit-rollup'
 
   const usesBlobs =
     templateVars.usesBlobs ??
@@ -988,21 +959,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       'validatorWhitelistDisabled',
     )
 
+  const common = orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12)
+
   return {
     type: 'layer2',
-    ...orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12),
+    ...common,
     display: {
-      architectureImage,
-      stateValidationImage: 'orbit',
-      purposes: templateVars.overridingPurposes ?? [
-        'Universal',
-        ...(templateVars.additionalPurposes ?? []),
-      ],
-      warning:
-        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+      ...common.display,
       ...templateVars.display,
-      stack: 'Arbitrum',
-      category,
+
       finality: {
         finalizationPeriod: challengePeriodSeconds,
       },
@@ -1191,5 +1156,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           templateVars.gasTokens?.untracked ?? [],
         ) ?? [],
     },
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
