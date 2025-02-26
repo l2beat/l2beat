@@ -193,5 +193,6 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
 function chainNameToId(chainName: string, chains: ChainConfig[]): ChainId {
   const chain = chains.find((chain) => chain.name === chainName)
   assert(chain, `Unknown chain name: ${chainName}`)
+  assert(chain.chainId, `Missing chainId for chain: ${chainName}`)
   return ChainId(chain.chainId)
 }

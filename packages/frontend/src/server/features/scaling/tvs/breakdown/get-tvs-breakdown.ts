@@ -26,9 +26,7 @@ export function getTvsBreakdown(
   chains: ChainConfig[],
 ) {
   return async function (projectId: ProjectId, target?: UnixTime) {
-    const chainConverter = new ChainConverter(
-      chains.map((c) => ({ name: c.name, chainId: ChainId(c.chainId) })),
-    )
+    const chainConverter = new ChainConverter(chains)
 
     const targetTimestamp =
       target ?? UnixTime.now().toStartOf('hour').add(-2, 'hours')
@@ -108,7 +106,7 @@ export function getTvsBreakdown(
                * chain from amount config is different for frontend and backend purposes.
                * E.g. Elastic chain and AggLayer where we have shared escrows.
                */
-              chainId: chainConverter.toChainId(priceConfig.chain),
+              chainId: ChainId(chainConverter.toChainId(priceConfig.chain)),
               amount: amountAsNumber,
               usdValue: valueAsNumber,
               usdPrice: price.toString(),
@@ -135,7 +133,7 @@ export function getTvsBreakdown(
 
           breakdown.external.push({
             assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
+            chainId: ChainId(chainConverter.toChainId(config.chain)),
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
@@ -151,7 +149,7 @@ export function getTvsBreakdown(
           const address = getTokenAddress(config)
           breakdown.native.push({
             assetId: priceConfig.assetId,
-            chainId: chainConverter.toChainId(config.chain),
+            chainId: ChainId(chainConverter.toChainId(config.chain)),
             amount: amountAsNumber,
             usdValue: valueAsNumber,
             usdPrice: price.toString(),
