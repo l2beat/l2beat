@@ -1,8 +1,4 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import { PrimaryCard } from '~/components/primary-card'
-import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import { AlphabetSelector } from './alphabet-selector/alphabet-selector'
 
@@ -11,15 +7,6 @@ export function Header<T extends { id: string }>({
 }: {
   glossaryEntries: T[]
 }) {
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 200)
-  }
-
-  useEventListener('scroll', handleScroll)
-  useEffect(handleScroll, [])
-
   return (
     <>
       <PrimaryCard className="relative z-10 w-full md:rounded-b-none md:pb-0">
@@ -37,12 +24,12 @@ export function Header<T extends { id: string }>({
             </p>
           </div>
         </div>
+        <div className="absolute -bottom-2 left-0 h-2 w-full bg-surface-primary" />
       </PrimaryCard>
       <div className="fixed top-0 -z-1 h-8 w-full bg-background" />
       <PrimaryCard
         className={cn(
-          'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all md:top-6 md:rounded-t-none',
-          isScrolled && 'md:rounded-t-xl',
+          'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all md:top-6 md:rounded-t-xl',
         )}
       >
         <AlphabetSelector entries={glossaryEntries} />
