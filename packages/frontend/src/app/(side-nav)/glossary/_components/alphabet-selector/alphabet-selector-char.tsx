@@ -14,8 +14,6 @@ export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {
     <li ref={ref}>
       <a
         href={href}
-        data-role="alphabet-selector-item"
-        data-char={char.toLowerCase()}
         aria-disabled={!href}
         className={cn(
           'flex size-[34px] items-center justify-center rounded border transition ease-out',

@@ -27,30 +27,25 @@ export function GlossarySideNav(props: Props) {
   }, [currentSection, scrollToItem])
 
   return (
-    <nav
-      data-role="glossary-side-nav"
-      className="sticky top-[145px] hidden max-h-[calc(70vh-122px)] w-[246px] min-w-[246px] lg:block"
-    >
-      <div className="custom-scrollbar relative h-full">
-        <ul
-          className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6"
-          ref={overflowContainer}
-        >
-          {props.entries.map((entry) => {
-            const selected = currentSection?.id === entry.id
+    <div className="custom-scrollbar sticky top-28 mt-5 hidden h-[calc(100vh-350px)] w-[246px] min-w-[246px] lg:block">
+      <ul
+        className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6"
+        ref={overflowContainer}
+      >
+        {props.entries.map((entry) => {
+          const selected = currentSection?.id === entry.id
 
-            return (
-              <GlossarySideNavItem
-                key={entry.id}
-                entry={entry}
-                selected={selected}
-                ref={selected ? selectedItem : undefined}
-              />
-            )
-          })}
-        </ul>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-background-reading via-background-reading" />
-      </div>
-    </nav>
+          return (
+            <GlossarySideNavItem
+              key={entry.id}
+              entry={entry}
+              selected={selected}
+              ref={selected ? selectedItem : undefined}
+            />
+          )
+        })}
+      </ul>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-background via-transparent" />
+    </div>
   )
 }

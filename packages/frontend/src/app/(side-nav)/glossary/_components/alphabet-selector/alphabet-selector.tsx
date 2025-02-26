@@ -34,26 +34,24 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const optionsWithEntry = getOptionsWithEntry(props.entries)
 
   return (
-    <div data-role="alphabet-selector">
-      <OverflowWrapper ref={overflowContainer}>
-        <ul className="flex gap-2">
-          {optionsWithEntry.map(({ char, entry }) => {
-            const selected = currentSection
-              ? isSelected(currentSection?.id, char)
-              : false
-            return (
-              <AlphabetSelectorChar
-                key={`alphabet-selector-${char}`}
-                char={char}
-                href={entry ? `#${entry.id}` : undefined}
-                selected={selected}
-                ref={selected ? selectedItem : undefined}
-              />
-            )
-          })}
-        </ul>
-      </OverflowWrapper>
-    </div>
+    <OverflowWrapper ref={overflowContainer}>
+      <ul className="flex gap-2">
+        {optionsWithEntry.map(({ char, entry }) => {
+          const selected = currentSection
+            ? isSelected(currentSection?.id, char)
+            : false
+          return (
+            <AlphabetSelectorChar
+              key={`alphabet-selector-${char}`}
+              char={char}
+              href={entry ? `#${entry.id}` : undefined}
+              selected={selected}
+              ref={selected ? selectedItem : undefined}
+            />
+          )
+        })}
+      </ul>
+    </OverflowWrapper>
   )
 }
 
