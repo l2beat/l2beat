@@ -170,7 +170,7 @@ export async function getDaProjectEntry(
     header: {
       links: getProjectLinks(
         layer.display.links,
-        ...bridges.map((x) => x.display.links),
+        ...bridges.filter((x) => x.id !== layer.id).map((x) => x.display.links),
       ),
       daLayerGrissiniValues: layerGrissiniValues,
       daBridgeGrissiniValues: bridgeGrissiniValues,
