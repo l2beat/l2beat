@@ -69,19 +69,20 @@ function createActivityIndexers(
   activityConfig.projects.forEach((project) => {
     switch (project.activityConfig.type) {
       case 'block': {
-        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexer(
-          clock,
-          project,
-          dependencies,
-          indexerService,
-          logger,
-        )
+        const { blockTargetIndexer, activityIndexer } =
+          createBlockBasedIndexers(
+            clock,
+            project,
+            dependencies,
+            indexerService,
+            logger,
+          )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
       }
       case 'day': {
-        const activityIndexer = createStarkexIndexer(
+        const activityIndexer = createDayActivityIndexer(
           dayTargetIndexer,
           project,
           dependencies,
@@ -97,13 +98,13 @@ function createActivityIndexers(
   return indexers
 }
 
-function createBlockBasedIndexer(
+function createBlockBasedIndexers(
   clock: Clock,
   project: ActivityConfigProject,
   dependencies: ActivityDependencies,
   indexerService: IndexerService,
   logger: Logger,
-): [BlockTargetIndexer, BlockActivityIndexer] {
+) {
   assert(project.activityConfig.type === 'block')
 
   const blockTimestampProvider = dependencies.getBlockTimestampProvider(
@@ -129,10 +130,10 @@ function createBlockBasedIndexer(
     indexerService,
     db: dependencies.database,
   })
-  return [blockTargetIndexer, activityIndexer]
+  return { blockTargetIndexer, activityIndexer }
 }
 
-function createStarkexIndexer(
+function createDayActivityIndexer(
   dayTargetIndexer: DayTargetIndexer,
   project: ActivityConfigProject,
   dependencies: ActivityDependencies,
