@@ -167,10 +167,7 @@ describe('getProjects', () => {
       const encountered = new Set()
       for (const chain of chains) {
         if (encountered.has(chain.chainId)) {
-          if (chain.chainId !== 360) {
-            // TODO: known collision of shape and molten. We should remove the uniqueness assumption!
-            expect(chain.chainId).toEqual(undefined)
-          }
+          expect(chain.chainId).toEqual(undefined)
         }
         encountered.add(chain.chainId)
       }

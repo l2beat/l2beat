@@ -41,7 +41,8 @@ export const shape: Layer2 = opStackL2({
   isNodeAvailable: true,
   chainConfig: {
     name: 'shape',
-    chainId: 360,
+    // TODO: known collision of shape and molten = 360. We should remove the uniqueness assumption!
+    chainId: undefined,
     apis: [
       {
         type: 'rpc',
