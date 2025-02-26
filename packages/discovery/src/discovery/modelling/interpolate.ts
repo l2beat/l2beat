@@ -58,17 +58,11 @@ export function normalizeId(s: string) {
 export function contractValuesForInterpolation(
   contract: ContractParameters | EoaParameters,
 ): Record<string, ContractValue | undefined> {
-  const values = isContract(contract) ? contract.values : {}
+  const values = 'values' in contract ? (contract.values ?? {}) : {}
   return {
     '$.address': contract.address.toLowerCase(),
     '$.name': contract.name ?? '',
     '$.description': contract.description,
     ...values,
   }
-}
-
-export function isContract(
-  contractOrEoa: ContractParameters | EoaParameters,
-): contractOrEoa is ContractParameters {
-  return 'values' in contractOrEoa
 }

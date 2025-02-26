@@ -20,5 +20,6 @@
         "maxLength": 50
       }
     }
-  }
+  },
+  "category": "core"
 }

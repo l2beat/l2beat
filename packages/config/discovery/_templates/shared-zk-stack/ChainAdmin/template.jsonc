@@ -29,5 +29,6 @@
         "add": { "event": "UpdateUpgradeTimestamp" }
       }
     }
-  }
+  },
+  "category": "gov"
 }

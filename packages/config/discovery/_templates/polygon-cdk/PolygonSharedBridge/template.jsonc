@@ -15,5 +15,6 @@
       "description": "pauses the bridge, managed by the PolygonRollupManager.",
       "severity": "HIGH"
     }
-  }
+  },
+  "category": "shared"
 }
