@@ -109,6 +109,8 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
+  /** Discodrive markers */
+  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export type ScalingProjectCapability = 'universal' | 'appchain'
@@ -652,6 +654,7 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
+  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export interface BridgeDisplay {

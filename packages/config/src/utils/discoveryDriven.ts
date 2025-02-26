@@ -1,4 +1,4 @@
-import type { BaseProject, ProjectContracts, ProjectPermissions } from '../'
+import type { ProjectContracts, ProjectPermissions } from '../'
 
 export function arePermissionsDiscoveryDriven(
   permissions?: Record<string, ProjectPermissions>,
@@ -18,11 +18,4 @@ export function areContractsDiscoveryDriven(
   return Object.values(contracts?.addresses ?? {}).every((e) =>
     e.every((a) => a.discoveryDrivenData === true),
   )
-}
-
-export function isDiscoveryDriven(project: BaseProject): boolean {
-  const permissions = arePermissionsDiscoveryDriven(project.permissions)
-  const contracts = areContractsDiscoveryDriven(project.contracts)
-
-  return permissions && contracts
 }

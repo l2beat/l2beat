@@ -9,7 +9,10 @@ import { expect } from 'earl'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../../test/constants'
 import { checkRisk } from '../../test/helpers'
 import type { BaseProject } from '../../types'
-import { isDiscoveryDriven } from '../../utils/discoveryDriven'
+import {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+} from '../../utils/discoveryDriven'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { getProjects } from './getProjects'
@@ -432,7 +435,8 @@ describe('getProjects', () => {
     for (const p of filteredProjects) {
       it(`${p.id.toString()} is discovery driven`, () => {
         assert(
-          isDiscoveryDriven(p),
+          arePermissionsDiscoveryDriven(p.permissions) &&
+            areContractsDiscoveryDriven(p.contracts),
           'New projects are expected to be discovery driven. Read the comment in constants.ts',
         )
       })
