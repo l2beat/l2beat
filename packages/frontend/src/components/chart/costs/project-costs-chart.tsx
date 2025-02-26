@@ -81,7 +81,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     )
   }, [data, unit])
 
-  const hasPostedData = !!chartData?.some((cost) => cost.posted !== null)
+  const hasPostedData = chartData?.some((cost) => cost.posted !== null)
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
@@ -94,7 +94,6 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
             hasPostedData={hasPostedData}
             showDataPosted={showDataPosted}
             setShowDataPosted={setShowDataPosted}
-            isLoading={isLoading}
           />
           <CostsChartTimeRangeControls
             projectSection
@@ -121,14 +120,12 @@ function DataPostedCheckbox({
   hasPostedData,
   showDataPosted,
   setShowDataPosted,
-  isLoading,
 }: {
-  hasPostedData: boolean
+  hasPostedData: boolean | undefined
   showDataPosted: boolean
   setShowDataPosted: (value: boolean) => void
-  isLoading: boolean
 }) {
-  if (isLoading) {
+  if (hasPostedData === undefined) {
     return <Skeleton className="h-8 w-[156px]" />
   }
 
