@@ -331,7 +331,7 @@ const wmrValidForBlobstream = [
   '0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287',
 ]
 
-// TO DO: Add blobstream delay when timelock is enabled
+// TODO: Add blobstream delay when timelock is enabled
 const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
@@ -340,7 +340,7 @@ function orbitStackCommon(
   explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
   incomingNativeDA?: ProjectDataAvailability,
-): Omit<ScalingProject, 'type' | 'display' | 'riskView'> & {
+): Omit<ScalingProject, 'type' | 'display'> & {
   display: Pick<
     ScalingProjectDisplay,
     | 'stateValidationImage'
@@ -484,6 +484,7 @@ function orbitStackCommon(
         templateVars.display.category ??
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
+    riskView: getRiskView(type, templateVars),
     stage: computedStage(templateVars),
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -690,119 +691,37 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const blockNumberOpcodeTimeSeconds =
     templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
-  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'confirmPeriodBlocks',
-  )
-  const challengePeriodSeconds =
-    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
-
-  const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
-  )
-  const validatorAfkTimeSeconds =
-    validatorAfkBlocks * blockNumberOpcodeTimeSeconds
-
-  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
-    templateVars.discovery,
-  )
-
-  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
-
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
-  )
-  const postsToExternalDA = sequencerVersion !== '0x00'
-
-  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
-    'RollupProxy',
-    'validators',
-  ).length
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const riskView = {
-    stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
-      ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
-        nOfChallengers,
-        templateVars.hasAtLeastFiveExternalChallengers ?? false,
-        challengePeriodSeconds,
-      ),
-      secondLine: formatChallengePeriod(challengePeriodSeconds),
-    },
-    dataAvailability:
-      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
-        ? (() => {
-            if (isUsingValidBlobstreamWmr) {
-              return RISK_VIEW.DATA_CELESTIA(true)
-            } else {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            }
-          })()
-        : RISK_VIEW.DATA_ON_CHAIN_L3,
-    exitWindow:
-      templateVars.nonTemplateRiskView?.exitWindow ??
-      (isUsingValidBlobstreamWmr
-        ? pickWorseRisk(
-            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-          )
-        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
-    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-      secondLine: formatDelay(selfSequencingDelaySeconds),
-    },
-    proposerFailure: templateVars.nonTemplateRiskView?.proposerFailure ?? {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-        challengePeriodSeconds + validatorAfkTimeSeconds,
-      ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-      secondLine: formatDelay(challengePeriodSeconds + validatorAfkTimeSeconds),
-    },
-  }
-
   const getStackedRisks = () => {
     return {
       stateValidation:
         templateVars.stackedRiskView?.stateValidation ??
         pickWorseRisk(
-          riskView.stateValidation,
+          common.riskView.stateValidation,
           baseChain.riskView.stateValidation,
         ),
       dataAvailability:
         templateVars.stackedRiskView?.dataAvailability ??
         pickWorseRisk(
-          riskView.dataAvailability,
+          common.riskView.dataAvailability,
           baseChain.riskView.dataAvailability,
         ),
       exitWindow:
         templateVars.stackedRiskView?.exitWindow ??
-        pickWorseRisk(riskView.exitWindow, baseChain.riskView.exitWindow),
+        pickWorseRisk(
+          common.riskView.exitWindow,
+          baseChain.riskView.exitWindow,
+        ),
       sequencerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
-          riskView.sequencerFailure,
+          common.riskView.sequencerFailure,
           baseChain.riskView.sequencerFailure,
           RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
         ),
       proposerFailure:
         templateVars.stackedRiskView?.sequencerFailure ??
         sumRisk(
-          riskView.proposerFailure,
+          common.riskView.proposerFailure,
           baseChain.riskView.proposerFailure,
           RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
         ),
@@ -823,7 +742,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
     stackedRiskView: getStackedRisks(),
-    riskView,
   }
 }
 
@@ -842,34 +760,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
-  const sequencerVersion = templateVars.discovery.getContractValue<string>(
-    'SequencerInbox',
-    'sequencerVersion',
-  )
-  const postsToExternalDA = sequencerVersion !== '0x00'
-
-  const category =
-    templateVars.display.category ??
-    (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
-
-  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
-    'RollupProxy',
-    'wasmModuleRoot',
-  )
-  const isUsingValidBlobstreamWmr =
-    wmrValidForBlobstream.includes(wasmModuleRoot)
-
-  const validatorWhitelistDisabled =
-    templateVars.discovery.getContractValue<boolean>(
-      'RollupProxy',
-      'validatorWhitelistDisabled',
-    )
-
   const common = orbitStackCommon(
     'layer2',
     templateVars,
     EXPLORER_URLS['ethereum'],
-    12,
+    assumedBlockTime,
   )
 
   return {
@@ -878,97 +773,22 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     display: {
       ...common.display,
       ...templateVars.display,
-
       finality: { finalizationPeriod: challengePeriodSeconds },
-      liveness: postsToExternalDA
-        ? undefined
-        : (templateVars.display.liveness ?? {
-            warnings: {
-              stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-            },
-            explanation: `${
-              templateVars.display.name
-            } is an ${category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-              selfSequencingDelaySeconds,
-            )}. The state root gets finalized ${formatSeconds(
-              challengePeriodSeconds,
-            )} after it has been posted.`,
-          }),
-    },
-    riskView: {
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        (() => {
-          if (validatorWhitelistDisabled) {
-            return RISK_VIEW.STATE_FP_INT
-          }
-
-          const nOfChallengers = templateVars.discovery.getContractValue<
-            string[]
-          >('RollupProxy', 'validators').length
-
-          return {
-            ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
-              nOfChallengers,
-              templateVars.hasAtLeastFiveExternalChallengers ?? false,
-              challengePeriodSeconds,
-            ),
-            secondLine: formatChallengePeriod(challengePeriodSeconds),
-          }
-        })(),
-      dataAvailability:
-        (templateVars.nonTemplateRiskView?.dataAvailability ??
-        postsToExternalDA)
-          ? (() => {
-              if (isUsingValidBlobstreamWmr) {
-                return RISK_VIEW.DATA_CELESTIA(true)
-              } else {
-                const DAC = templateVars.discovery.getContractValue<{
-                  membersCount: number
-                  requiredSignatures: number
-                }>('SequencerInbox', 'dacKeyset')
-                const { membersCount, requiredSignatures } = DAC
-                return RISK_VIEW.DATA_EXTERNAL_DAC({
-                  membersCount,
-                  requiredSignatures,
-                })
-              }
-            })()
-          : RISK_VIEW.DATA_ON_CHAIN,
-      exitWindow:
-        templateVars.nonTemplateRiskView?.exitWindow ??
-        (isUsingValidBlobstreamWmr
-          ? pickWorseRisk(
-              RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-              RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-            )
-          : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
-      sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
-        ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
-        secondLine: formatDelay(selfSequencingDelaySeconds),
-      },
-      proposerFailure:
-        templateVars.nonTemplateRiskView?.proposerFailure ??
-        (() => {
-          if (validatorWhitelistDisabled) {
-            return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
-          }
-          const validatorAfkBlocks =
-            templateVars.discovery.getContractValue<number>(
-              'RollupProxy',
-              'VALIDATOR_AFK_BLOCKS',
-            )
-          const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
-
-          return {
-            ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
-              challengePeriodSeconds + validatorAfkTimeSeconds,
-            ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
-            secondLine: formatDelay(
-              challengePeriodSeconds + validatorAfkTimeSeconds,
-            ),
-          }
-        })(),
+      liveness: ifPostsToEthereum(
+        templateVars,
+        templateVars.display.liveness ?? {
+          warnings: {
+            stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+          },
+          explanation: `${
+            templateVars.display.name
+          } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
+            selfSequencingDelaySeconds,
+          )}. The state root gets finalized ${formatSeconds(
+            challengePeriodSeconds,
+          )} after it has been posted.`,
+        },
+      ),
     },
     config: {
       ...common.config,
@@ -1054,6 +874,122 @@ function ifPostsToEthereum<T>(
   const postsToEthereum = sequencerVersion === '0x00'
 
   return postsToEthereum ? value : undefined
+}
+
+function getRiskView(
+  type: (Layer2 | Layer3)['type'],
+  templateVars: OrbitStackConfigCommon,
+): ScalingProjectRiskView {
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
+
+  const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
+    'RollupProxy',
+    'wasmModuleRoot',
+  )
+
+  const isUsingValidBlobstreamWmr =
+    wmrValidForBlobstream.includes(wasmModuleRoot)
+
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+
+  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
+    'RollupProxy',
+    'confirmPeriodBlocks',
+  )
+  const challengePeriodSeconds =
+    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
+
+  const validatorWhitelistDisabled =
+    templateVars.discovery.getContractValue<boolean>(
+      'RollupProxy',
+      'validatorWhitelistDisabled',
+    )
+
+  const postsToExternalDA = !postsToEthereum(templateVars)
+
+  return {
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      (() => {
+        if (validatorWhitelistDisabled) {
+          return RISK_VIEW.STATE_FP_INT
+        }
+
+        const nOfChallengers = templateVars.discovery.getContractValue<
+          string[]
+        >('RollupProxy', 'validators').length
+
+        return {
+          ...RISK_VIEW.STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
+            nOfChallengers,
+            templateVars.hasAtLeastFiveExternalChallengers ?? false,
+            challengePeriodSeconds,
+          ),
+          secondLine: formatChallengePeriod(challengePeriodSeconds),
+        }
+      })(),
+    dataAvailability:
+      (templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA)
+        ? (() => {
+            if (isUsingValidBlobstreamWmr) {
+              return RISK_VIEW.DATA_CELESTIA(true)
+            } else {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
+              return RISK_VIEW.DATA_EXTERNAL_DAC({
+                membersCount,
+                requiredSignatures,
+              })
+            }
+          })()
+        : type === 'layer2'
+          ? RISK_VIEW.DATA_ON_CHAIN
+          : RISK_VIEW.DATA_ON_CHAIN_L3,
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      (isUsingValidBlobstreamWmr
+        ? pickWorseRisk(
+            RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+            RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+          )
+        : RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds)),
+    sequencerFailure: templateVars.nonTemplateRiskView?.sequencerFailure ?? {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
+      secondLine: formatDelay(selfSequencingDelaySeconds),
+    },
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      (() => {
+        if (validatorWhitelistDisabled) {
+          return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+        }
+
+        const validatorAfkBlocks =
+          templateVars.discovery.getContractValue<number>(
+            'RollupProxy',
+            'VALIDATOR_AFK_BLOCKS',
+          )
+        const validatorAfkTimeSeconds =
+          validatorAfkBlocks * blockNumberOpcodeTimeSeconds
+
+        return {
+          ...RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+            challengePeriodSeconds + validatorAfkTimeSeconds,
+          ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
+          secondLine: formatDelay(
+            challengePeriodSeconds + validatorAfkTimeSeconds,
+          ),
+        }
+      })(),
+  }
 }
 
 function computedStage(templateVars: OrbitStackConfigCommon): StageConfig {
