@@ -43,7 +43,7 @@ const chartMeta = {
   },
   posted: {
     label: 'Data posted',
-    color: 'hsl(var(--chart-da-avail))',
+    color: 'hsl(var(--chart-emerald))',
     indicatorType: { shape: 'line' },
   },
 } satisfies ChartMeta
