@@ -90,9 +90,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/data-availability/projects/espressoDA/espressoDA/:path*',
-        destination:
-          '/data-availability/projects/espresso-da/espresso-da/:path*',
+        source: '/data-availability/projects/espressoDA/espressoDA',
+        destination: '/data-availability/projects/espresso-da/espresso-da',
         permanent: true,
       },
       {
