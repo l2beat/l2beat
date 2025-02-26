@@ -53,11 +53,13 @@ export async function runDiscovery(
   const templatesFolder = path.join(configReader.rootPath, TEMPLATES_PATH)
 
   await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+    rootFolder: configReader.rootPath,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
     buildModels: config.buildModels,
+    buildProjectPageFacts: config.buildProjectPageFacts,
     templatesFolder,
   })
 

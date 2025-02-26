@@ -8,19 +8,21 @@ import type { DiscoveryLogger } from '../DiscoveryLogger'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { buildAndSaveModels } from '../modelling/build'
+import { buildProjectPageFacts } from '../modelling/projectPageFacts'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
 import { toPrettyJson } from './toPrettyJson'
 
 export interface SaveDiscoveryResultOptions {
-  rootFolder?: string
+  rootFolder: string
   sourcesFolder?: string
   flatSourcesFolder?: string
   discoveryFilename?: string
   metaFilename?: string
   saveSources?: boolean
   buildModels?: boolean
+  buildProjectPageFacts?: boolean
   templatesFolder: string
 }
 
@@ -31,18 +33,29 @@ export async function saveDiscoveryResult(
   logger: DiscoveryLogger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const root =
-    options.rootFolder ?? posix.join('discovery', config.name, config.chain)
-  await mkdirp(root)
+  const projectDiscoveryFolder = posix.join(
+    options.rootFolder,
+    'discovery',
+    config.name,
+    config.chain,
+  )
+  await mkdirp(projectDiscoveryFolder)
 
   const discoveryOutput = toDiscoveryOutput(config, blockNumber, results)
-  await saveDiscoveredJson(discoveryOutput, root, options)
-  await saveFlatSources(root, results, logger, options)
+  await saveDiscoveredJson(discoveryOutput, projectDiscoveryFolder, options)
+  await saveFlatSources(projectDiscoveryFolder, results, logger, options)
   if (options.saveSources) {
-    await saveSources(root, results, options)
+    await saveSources(projectDiscoveryFolder, results, options)
   }
   if (options.buildModels) {
-    buildAndSaveModels(discoveryOutput, options.templatesFolder, root)
+    buildAndSaveModels(
+      discoveryOutput,
+      options.templatesFolder,
+      projectDiscoveryFolder,
+    )
+  }
+  if (options.buildProjectPageFacts) {
+    await buildProjectPageFacts(config.name, options.rootFolder)
   }
 }
 

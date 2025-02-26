@@ -4,6 +4,7 @@ import { badgesCompareFn } from './projects/badges'
 import { bridges } from './projects/bridges'
 import { layer2s } from './projects/layer2s'
 import { layer3s } from './projects/layer3s'
+import { getDiscoveryInfo } from './projects/project/getProjects'
 import { refactored } from './projects/refactored'
 import type { BaseProject, Bridge, ChainConfig, Layer2, Layer3 } from './types'
 import { isProjectVerified, isVerified } from './verification/isVerified'
@@ -37,6 +38,9 @@ function adjustLegacy(
     const chain = chains.find((x) => x.name === escrow.chain)
     assert(chain, `Missing chain: ${escrow.chain}`)
     escrow.chainId = chain?.chainId
+    if (escrow.contract) {
+      escrow.contract.url = `${chain.explorerUrl}/address/${escrow.address}#code`
+    }
   }
   if (project.type !== 'bridge') {
     project.badges?.sort(badgesCompareFn)
@@ -45,6 +49,8 @@ function adjustLegacy(
     }
   }
   adjustContracts(project, chains)
+
+  project.discoveryInfo = getDiscoveryInfo(project)
 }
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {

@@ -21,7 +21,19 @@ describe(LowLevelProvider.name, () => {
 
   beforeEach(() => {
     originalConsole = { log: console.log, error: console.error }
+
     time = install()
+
+    time.setTimeout = (callback, _, ...args) => {
+      callback(...args)
+      return 0
+    }
+
+    time.setInterval = (callback, _, ...args) => {
+      callback(...args)
+      return 0
+    }
+
     console.error = () => {}
     console.log = () => {}
   })
@@ -62,10 +74,9 @@ describe(LowLevelProvider.name, () => {
       ETHERSCAN_PROVIDER,
     )
 
-    const result = provider.call(EthereumAddress.random(), bytes, 10)
-    await time.runAllAsync()
+    const result = await provider.call(EthereumAddress.random(), bytes, 10)
 
-    expect(await result).toEqual(bytes)
+    expect(result).toEqual(bytes)
   })
 
   it('retries up to maximum attempts and then throws', async () => {
@@ -82,11 +93,9 @@ describe(LowLevelProvider.name, () => {
       ETHERSCAN_PROVIDER,
     )
 
-    await expect(async () => {
-      const result = provider.call(EthereumAddress.random(), bytes, 10)
-      await time.runAllAsync()
-      await result
-    }).toBeRejectedWith(errorMessage)
+    await expect(
+      provider.call(EthereumAddress.random(), bytes, 10),
+    ).toBeRejectedWith(errorMessage)
   })
 
   const outOfGasMessage = [
@@ -108,11 +117,9 @@ describe(LowLevelProvider.name, () => {
         ETHERSCAN_PROVIDER,
       )
 
-      await expect(async () => {
-        const result = provider.call(EthereumAddress.random(), bytes, 10)
-        await time.runAllAsync()
-        await result
-      }).toBeRejectedWith('LowLevelProvider test')
+      await expect(
+        provider.call(EthereumAddress.random(), bytes, 10),
+      ).toBeRejectedWith('LowLevelProvider test')
     })
   }
 
@@ -141,11 +148,9 @@ describe(LowLevelProvider.name, () => {
       ETHERSCAN_PROVIDER,
     )
 
-    await expect(async () => {
-      const result = provider.call(EthereumAddress.random(), bytes, 10)
-      await time.runAllAsync()
-      await result
-    }).toBeRejectedWith(topErrorMessage)
+    await expect(
+      provider.call(EthereumAddress.random(), bytes, 10),
+    ).toBeRejectedWith(topErrorMessage)
   })
 
   const errors = [
@@ -211,9 +216,8 @@ describe(LowLevelProvider.name, () => {
         ethersProvider,
         ETHERSCAN_PROVIDER,
       )
-      const result = provider.call(EthereumAddress.random(), bytes, 10)
-      await time.runAllAsync()
-      expect(await result).toEqual(bytes)
+      const result = await provider.call(EthereumAddress.random(), bytes, 10)
+      expect(result).toEqual(bytes)
     })
   }
 })

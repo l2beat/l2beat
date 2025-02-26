@@ -67,16 +67,16 @@ describe(PriceService.name, () => {
 
   describe(PriceService.prototype.fetchPricesWithFallback.name, () => {
     it('returns DB record when PriceProvider fails', async () => {
-      const coingeckoId = CoingeckoId('coingecko-id')
       const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-      const from = to.add(-1, 'hours').add(1, 'seconds')
+      const from = to.add(-1, 'hours').add(1, 'seconds') // indexer ticks
+      const lastFetched = to.add(-1, 'hours')
       const configurations = [configuration('id', 1, null)]
 
       const priceProvider = mockObject<PriceProvider>({
         getUsdPriceHistoryHourly: mockFn().rejectsWith(new Error('error')),
       })
       const priceTable = mockObject<Database['price']>({
-        getLatestPrice: async () => price('id', to.toNumber()),
+        getLatestPrice: async () => price('id', lastFetched.toNumber()),
       })
 
       const service = new PriceService({
@@ -86,15 +86,15 @@ describe(PriceService.name, () => {
       })
 
       const result = await service.fetchPricesWithFallback(
-        coingeckoId,
+        CoingeckoId('coingecko-id'),
         from,
         to,
         configurations,
       )
 
-      expect(result).toEqual([{ value: to.toNumber(), timestamp: to }])
+      expect(result).toEqual([{ value: lastFetched.toNumber(), timestamp: to }])
       expect(priceProvider.getUsdPriceHistoryHourly).toHaveBeenOnlyCalledWith(
-        coingeckoId,
+        CoingeckoId('coingecko-id'),
         from,
         to,
       )

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x94b1bd782dd0aa450534d44d899abc56ba295747
+
+# Diff at Wed, 26 Feb 2025 09:16:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@19452803941a301154c7aa617f3c2cc295e20731 block: 21679349
+- current block number: 21679349
+
+## Description
+
+Config related: Add SC reference.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21679349 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncil (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      references:
++        [{"text":"Security Council members - Scroll Docs","href":"https://scroll.io/gov-docs/content/security-council"}]
+    }
+```
+
 Generated with discovered.json: 0xea359131fd8dab35747ad6a95de93324df3503b5
 
 # Diff at Mon, 27 Jan 2025 08:45:16 GMT:

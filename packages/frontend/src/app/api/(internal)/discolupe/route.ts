@@ -1,10 +1,5 @@
 import type { Layer2, Layer3 } from '@l2beat/config'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-  layer2s,
-  layer3s,
-} from '@l2beat/config'
+import { layer2s, layer3s } from '@l2beat/config'
 import { NextResponse } from 'next/server'
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { getFinalityProjects } from '~/server/features/scaling/finality/get-scaling-finality-entries'
@@ -27,7 +22,7 @@ export async function GET() {
 }
 
 async function getResponse() {
-  const tvs = await get7dTvsBreakdown()
+  const tvs = await get7dTvsBreakdown({ type: 'layer2' })
   const costs = (await getCostsProjects()).map((p) => p.id.toString())
   const liveness = Object.keys(await getLiveness())
   const finality = (await getFinalityProjects()).map((f) => f.id.toString())
@@ -64,8 +59,10 @@ function toResponseProject(
     tvs,
     display: project.display,
     type: project.type === 'layer2' ? 'L2' : 'L3',
-    arePermissionsDiscoveryDriven: arePermissionsDiscoveryDriven(project),
-    areContractsDiscoveryDriven: areContractsDiscoveryDriven(project),
+    arePermissionsDiscoveryDriven:
+      project.discoveryInfo?.permissionsDiscoDriven ?? false,
+    areContractsDiscoveryDriven:
+      project.discoveryInfo?.contractsDiscoDriven ?? false,
     isArchived: project.isArchived === true,
     isUpcoming: project.isUpcoming === true,
     isUnderReview: project.isUnderReview === true,

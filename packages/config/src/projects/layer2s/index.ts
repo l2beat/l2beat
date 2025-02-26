@@ -59,6 +59,7 @@ import { fuelv1 } from './fuelv1'
 import { funki } from './funki'
 import { fuse } from './fuse'
 import { galxegravity } from './galxegravity'
+import { gameswift } from './gameswift'
 import { genlayer } from './genlayer'
 import { gluon } from './gluon'
 import { gmnetwork } from './gmnetwork'
@@ -96,6 +97,7 @@ import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
+import { lootchain } from './lootchain'
 import { lumia } from './lumia'
 import { lyra } from './lyra'
 import { mantapacific } from './mantapacific'
@@ -274,6 +276,7 @@ export const layer2s: Layer2[] = [
   gmnetwork,
   gpt,
   galxegravity,
+  gameswift,
   grvt,
   gwyneth,
   hemi,
@@ -306,6 +309,7 @@ export const layer2s: Layer2[] = [
   linea,
   lisk,
   loopring,
+  lootchain,
   lumia,
   lyra,
   race,

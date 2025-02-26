@@ -2,7 +2,7 @@
 
 source .env
 
-FEATURES_NAMES=("da" "tvl" "finality")
+FEATURES_NAMES=("da" "tvs" "finality")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability"
     "IndexerState IndexerConfiguration BlockTimestamp Amount Price Value"
@@ -14,7 +14,7 @@ clear_tables() {
   local table_name
   local quoted_tables=""
 
-  echo "Clearing local TVL tables: ${tables[*]}"
+  echo "Clearing local tables: ${tables[*]}"
 
   # This is needed for case-sensitive tables
   for table_name in "${tables[@]}"; do
@@ -48,17 +48,17 @@ dump_tables() {
     table_args+=" -t \"$table_name\""
   done
 
-  echo "Dumping TVL tables from remote: ${tables[*]} (this may take a while)..."
+  echo "Dumping tables from remote: ${tables[*]} (this may take a while)..."
   pg_dump -d "$DEV_REMOTE_DB_URL_READ_ONLY" $table_args -a -F c -f "./db.pgdump"
 }
 
 restore_tables() {
-  echo "Restoring TVL tables (this may take a while)..."
+  echo "Restoring tables (this may take a while)..."
   pg_restore -d "$DEV_LOCAL_DB_URL" "./db.pgdump"
 }
 
 if [ -z "$1" ]; then
-  echo "Usage: ./tvl-restore <FEATURE>"
+  echo "Usage: ./db-restore <FEATURE>"
   echo "Available features: ${FEATURES_NAMES[*]}"
   exit 1
 fi
@@ -93,4 +93,4 @@ restore_tables
 echo "Removing dump"
 rm db.pgdump
 
-echo "✅ TVL data restored for feature '$FEATURE'"
+echo "✅ DB data restored for feature '$FEATURE'"

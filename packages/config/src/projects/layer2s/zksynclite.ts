@@ -223,7 +223,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Validity proofs - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#validity-proofs',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#validity-proofs',
         },
         {
           title:
@@ -237,7 +237,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Cryptography used - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#cryptography-used',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#cryptography-used',
         },
         {
           title: 'PlonkCore.sol#L1193 - Etherscan source code',
@@ -250,7 +250,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Overview - ZKsync documentation',
-          url: 'https://zksync.io/dev/#overview',
+          url: 'https://docs.lite.zksync.io/dev/#overview',
         },
 
         {
@@ -265,7 +265,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'How decentralized is ZKsync - ZKsync FAQ',
-          url: 'https://zksync.io/faq/decentralization.html#how-decentralized-is-zksync',
+          url: 'https://docs.lite.zksync.io/userdocs/decentralization/#how-decentralized-is-zksync',
         },
         {
           title:
@@ -279,7 +279,7 @@ export const zksynclite: Layer2 = {
       references: [
         {
           title: 'Priority queue - ZKsync FAQ',
-          url: 'https://zksync.io/faq/security.html#priority-queue',
+          url: 'https://docs.lite.zksync.io/userdocs/security/#priority-queue',
         },
         {
           title:
