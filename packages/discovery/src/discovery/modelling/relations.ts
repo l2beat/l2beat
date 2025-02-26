@@ -8,16 +8,14 @@ import type {
 import {
   contractValuesForInterpolation,
   interpolateModelTemplate,
-  isContract,
 } from './interpolate'
+
+type ContractOrEoa = (ContractParameters | EoaParameters) & { isEoa?: boolean }
 
 const RELATIONS_FILENAME = 'relations.lp'
 interface InlineTemplate {
   content: string
-  when: (
-    c: ContractParameters | EoaParameters,
-    p?: ReceivedPermission,
-  ) => boolean
+  when: (c: ContractOrEoa, p?: ReceivedPermission) => boolean
 }
 
 const contractTemplate: InlineTemplate = {
@@ -26,14 +24,14 @@ contract(
   @self,
   "#$.address:raw",
   "#$.name").`,
-  when: (c) => isContract(c),
+  when: (c) => !c.isEoa,
 }
 const contractDescriptionTemplate: InlineTemplate = {
   content: `
 contractDescription(
   @self,
   "#$.description").`,
-  when: (c) => isContract(c) && c.description !== undefined,
+  when: (c) => !c.isEoa && c.description !== undefined,
 }
 const eoaTemplate: InlineTemplate = {
   content: `
@@ -41,7 +39,7 @@ eoa(
   @self,
   "#$.address:raw",
   "#$.name").`,
-  when: (c) => !isContract(c),
+  when: (c) => !!c.isEoa,
 }
 const permissionTemplate: InlineTemplate = {
   content: `
@@ -75,10 +73,11 @@ export function buildRelationsModels(
   addressToNameMap: Record<string, string>,
 ): Record<string, string[]> {
   const relationsModel: string[] = []
-  for (const contractOrEoa of [
+  const contractsAndEOAs = [
     ...discoveryOutput.contracts,
-    ...discoveryOutput.eoas,
-  ]) {
+    ...discoveryOutput.eoas.map((eoa) => ({ ...eoa, isEoa: true })),
+  ]
+  for (const contractOrEoa of contractsAndEOAs) {
     const contractValues = contractValuesForInterpolation(contractOrEoa)
 
     for (const template of [
