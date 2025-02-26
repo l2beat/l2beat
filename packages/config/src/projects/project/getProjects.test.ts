@@ -288,7 +288,7 @@ describe('getProjects', () => {
       const addresses = new Set<string>()
 
       for (const project of projects) {
-        for (const { address, chain } of project.tvlInfo?.escrows ?? []) {
+        for (const { address, chain } of project.tvlConfig?.escrows ?? []) {
           it(address.toString(), () => {
             const key = addressToKey(address, chain ?? 'ethereum')
             expect(addresses.has(key)).toEqual(false)

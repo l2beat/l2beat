@@ -96,7 +96,6 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     scalingDa: p.dataAvailability,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
-      escrows: p.config.escrows,
       warnings: [p.display.tvlWarning].filter((x) => x !== undefined),
     },
     tvlConfig: getTvlConfig(p),
@@ -187,7 +186,6 @@ function bridgeToProject(p: Bridge): BaseProject {
     bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
-      escrows: p.config.escrows,
       warnings: [],
     },
     tvlConfig: getTvlConfig(p),
