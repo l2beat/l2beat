@@ -30,11 +30,6 @@ export {
 } from './tokens/tokens'
 export type * from './types'
 export { getCommonContractsIn } from './utils/commonContracts'
-export {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-  isDiscoveryDriven,
-} from './utils/discoveryDriven'
 export { isVerified } from './verification/isVerified'
 
 import { runConfigAdjustments } from './adjustments'
