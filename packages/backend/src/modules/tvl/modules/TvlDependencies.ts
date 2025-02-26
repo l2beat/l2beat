@@ -44,6 +44,8 @@ export class TvlDependencies {
     this.circulatingSupplyService = new CirculatingSupplyService({
       circulatingSupplyProvider:
         this.circulatingSupplyProviders.getCirculatingSupplyProvider(),
+      database,
+      logger,
     })
     this.clients = providers.clients
   }

@@ -37,6 +37,9 @@ function adjustLegacy(
     const chain = chains.find((x) => x.name === escrow.chain)
     assert(chain, `Missing chain: ${escrow.chain}`)
     escrow.chainId = chain?.chainId
+    if (escrow.contract) {
+      escrow.contract.url = `${chain.explorerUrl}/address/${escrow.address}#code`
+    }
   }
   if (project.type !== 'bridge') {
     project.badges?.sort(badgesCompareFn)

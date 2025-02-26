@@ -1,5 +1,6 @@
 import { createAmountId } from '@l2beat/backend-shared'
-import type { AmountRecord } from '@l2beat/database'
+import { Logger } from '@l2beat/backend-tools'
+import type { AmountRecord, Database } from '@l2beat/database'
 import {
   type CirculatingSupplyProvider,
   CoingeckoQueryService,
@@ -11,7 +12,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { CirculatingSupplyService } from './CirculatingSupplyService'
 
 describe(CirculatingSupplyService.name, () => {
@@ -28,6 +29,8 @@ describe(CirculatingSupplyService.name, () => {
 
       const service = new CirculatingSupplyService({
         circulatingSupplyProvider: circulatingSupplyProvider,
+        logger: Logger.SILENT,
+        database: mockObject<Database>(),
       })
 
       const from = new UnixTime(100)
@@ -58,6 +61,97 @@ describe(CirculatingSupplyService.name, () => {
         circulatingSupplyProvider.getCirculatingSupplies,
       ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
     })
+
+    it('returns DB record when CirculatingSupplyProvider fails', async () => {
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to.add(-1, 'hours').add(1, 'seconds') // indexer ticks
+      const lastFetched = to.add(-1, 'hours')
+
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const config = mockObject<CirculatingSupplyEntry>({
+        chain: 'chain',
+        project: ProjectId('project'),
+        type: 'circulatingSupply',
+        address: EthereumAddress.random(),
+        coingeckoId,
+        decimals: 18,
+        category: 'other',
+      })
+
+      const configId = createAmountId(config)
+      const configWithId = { ...config, id: configId }
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getCirculatingSupplies: mockFn().rejectsWith(new Error('error')),
+      })
+
+      const amountTable = mockObject<Database['amount']>({
+        getLatestAmount: async () => ({
+          configId,
+          timestamp: lastFetched,
+          amount: BigInt(lastFetched.toNumber()) * 10n ** 18n,
+        }),
+      })
+
+      const service = new CirculatingSupplyService({
+        circulatingSupplyProvider,
+        database: mockObject<Database>({ amount: amountTable }),
+        logger: Logger.SILENT,
+      })
+
+      const result = await service.fetchCirculatingSupplies(
+        from,
+        to,
+        configWithId,
+      )
+
+      expect(result).toEqual([
+        {
+          configId,
+          timestamp: to,
+          amount: BigInt(lastFetched.toNumber()) * 10n ** 18n,
+        },
+      ])
+
+      expect(
+        circulatingSupplyProvider.getCirculatingSupplies,
+      ).toHaveBeenOnlyCalledWith(coingeckoId, { from, to })
+      expect(amountTable.getLatestAmount).toHaveBeenOnlyCalledWith(configId)
+    })
+
+    it('works only for latest hour', async () => {
+      const coingeckoId = CoingeckoId('coingecko-id')
+      const to = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const from = to.add(-365, 'days')
+
+      const config = mockObject<CirculatingSupplyEntry>({
+        chain: 'chain',
+        project: ProjectId('project'),
+        type: 'circulatingSupply',
+        address: EthereumAddress.random(),
+        coingeckoId,
+        decimals: 18,
+        category: 'other',
+      })
+
+      const configId = createAmountId(config)
+      const configWithId = { ...config, id: configId }
+
+      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+        getCirculatingSupplies: mockFn().rejectsWith(new Error('error')),
+      })
+
+      const service = new CirculatingSupplyService({
+        circulatingSupplyProvider,
+        database: mockObject<Database>(),
+        logger: Logger.SILENT,
+      })
+
+      await expect(
+        async () =>
+          await service.fetchCirculatingSupplies(from, to, configWithId),
+      ).toBeRejectedWith('error')
+    })
   })
 
   describe(CirculatingSupplyService.prototype.getAdjustedTo.name, () => {
@@ -67,6 +161,8 @@ describe(CirculatingSupplyService.name, () => {
 
       const circulatingSupplyProvider = new CirculatingSupplyService({
         circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
+        logger: Logger.SILENT,
+        database: mockObject<Database>(),
       })
 
       const result = circulatingSupplyProvider.getAdjustedTo(from, to)

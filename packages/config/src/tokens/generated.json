@@ -2662,6 +2662,20 @@
       "supply": "zero"
     },
     {
+      "name": "Heurist",
+      "coingeckoId": "heurist",
+      "address": "0xec463D00aa4dA76fb112cD2e4AC1C6BeF02da6ea",
+      "symbol": "HEU",
+      "decimals": 18,
+      "deploymentTimestamp": 1731814295,
+      "coingeckoListingTimestamp": 1733702400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51361/large/200X200.png?1733764636",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "HITMAKR",
       "coingeckoId": "hitmakr",
       "address": "0x3300b02efa180c99a2F61f4731665b51e4E254C4",
@@ -2755,6 +2769,20 @@
       "coingeckoListingTimestamp": 1617148800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14468/large/logo-200x200.png?1696514154",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Image Generation AI | imgnAI.com",
+      "coingeckoId": "imgnai",
+      "address": "0xA735A3AF76CC30791C61c10d585833829d36CBe0",
+      "symbol": "imgnAI",
+      "decimals": 9,
+      "deploymentTimestamp": 1670625107,
+      "coingeckoListingTimestamp": 1672963200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28666/large/imgnai-200x200.png?1698476572",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3231,6 +3259,20 @@
       "coingeckoListingTimestamp": 1689552000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "MANTRA DAO",
+      "coingeckoId": "mantra-dao",
+      "address": "0x3593D125a4f7849a1B059E64F4517A86Dd60c95d",
+      "symbol": "OM",
+      "decimals": 18,
+      "deploymentTimestamp": 1608211311,
+      "coingeckoListingTimestamp": 1597708800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12151/large/OM_Token.png?1696511991",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4547,6 +4589,20 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/1031/large/Request_icon_green.png?1696502140",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "ResearchCoin",
+      "coingeckoId": "researchcoin",
+      "address": "0xD101dCC414F310268c37eEb4cD376CcFA507F571",
+      "symbol": "RSC",
+      "decimals": 18,
+      "deploymentTimestamp": 1596243338,
+      "coingeckoListingTimestamp": 1667865600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28146/large/RH_BOTTLE_CLEAN_Aug_2024_1.png?1732742001",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -8155,6 +8211,28 @@
           {
             "name": "CCIP (via interport.fi)",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped BTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      "symbol": "WBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1737044211,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
