@@ -143,6 +143,8 @@ export const scroll: Layer2 = {
     },
     {
       rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
+      securityCouncilReference:
+        'https://scroll.io/gov-docs/content/security-council',
     },
   ),
   chainConfig: {
