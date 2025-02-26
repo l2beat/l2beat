@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ink",
   "blockNumber": 7087697,
-  "configHash": "0x4caefea409176dd74729b3e2d680d60203a70ccb9ad844977ced43017cbce427",
+  "configHash": "0x4283f030ac4559e0564ed4abe11c7a838b4d903da9aaa8057a83d58cebb376b0",
   "contracts": [
     {
       "name": "L2CrossDomainMessenger",
@@ -312,7 +312,7 @@
       }
     },
     {
-      "name": "",
+      "name": "OptimismMintableERC721Factory",
       "address": "0x4200000000000000000000000000000000000017",
       "unverified": true,
       "template": "opstack/Layer2/OptimismMintableERC721Factory",
@@ -331,7 +331,8 @@
         "$implementation": "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017",
         "$pastUpgrades": [],
         "$upgradeCount": 0
-      }
+      },
+      "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
@@ -1069,12 +1070,12 @@
     "opstack/Layer2/L1Block": "0x0efaa9627630398f5f36d8d15f901df9f53e82e1276b922d7d5edb9ddad03c1c",
     "opstack/Layer2/L1BlockNumber": "0x9e117ac1aa13ebca691fa34c4efdc181225a9046c45703a17b79f434ddae7a63",
     "opstack/Layer2/L2CrossDomainMessenger": "0x2322423e0cc39c40cfc8896d9b4a89235c68a48facfc0748dddece5bb0643ea2",
-    "opstack/Layer2/L2ERC721Bridge": "0xdaf5c3eeac722685fa14e65bd1fb3417706b8b64b6556ae9874863795f874764",
+    "opstack/Layer2/L2ERC721Bridge": "0xf26bb3478909d44da27de601dc17eb79cee6333bbf34c3d2d9005f80a1377024",
     "opstack/Layer2/L2ProxyAdmin": "0x967722cf238985813947d9d3f21578ee5bc6d6af28471cc0ee046a29fdda0d9d",
     "opstack/Layer2/L2StandardBridge": "0x968a64fb492d6b57cf8c9ddaca9605f5495f12a80b3548cc9f3a33db6a9722aa",
     "opstack/Layer2/L2ToL1MessagePasser": "0xdd61530f54cee5e5ec7646388307ca74647ec91aa19a183cf85d8cb4f0f57bfb",
     "opstack/Layer2/OptimismMintableERC20Factory": "0xc7a314ca7624e6056853eded40254a42e8bf2d9d96a9c4124e323664caa3fa8d",
-    "opstack/Layer2/OptimismMintableERC721Factory": "0x21e5ac84ead3ea08805155c052b419744ece0be58e315f3df4a540b4b364d08f",
+    "opstack/Layer2/OptimismMintableERC721Factory": "0x83b5082a5b1a255037e5cb39b93e34b4c45e63df2351d035770153fc55f9a836",
     "opstack/Layer2/SchemaRegistry": "0x6de6cfeea7afca40224334935b2576943882fada7f44852e0614d88e6f3d4796",
     "opstack/Layer2/SequencerFeeVault": "0xf57290e1817879f70342718a01eb26c384e447018d7710156fb2930625c70e0f"
   }

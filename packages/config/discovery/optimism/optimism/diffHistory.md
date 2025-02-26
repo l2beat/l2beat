@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xef9b544e39d60e3dea96586e7b57ccbe952597a8
+Generated with discovered.json: 0xa20dbac407383e6f0e0971bc51433cc752d26cb4
 
-# Diff at Wed, 26 Feb 2025 15:23:15 GMT:
+# Diff at Wed, 26 Feb 2025 16:18:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 132390328
-- current block number: 132489097
+- current block number: 132493968
 
 ## Description
 
@@ -135,7 +135,7 @@ discovery. Values are for block 132390328 (main branch discovery), not current.
     contract EAS (0x4200000000000000000000000000000000000021) {
     +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
       template:
-+        "opstack/Layer2/SequencerFeeVault copy 4"
++        "opstack/Layer2/EAS"
     }
 ```
 

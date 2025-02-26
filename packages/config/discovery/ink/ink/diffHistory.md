@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1bc88884db8415916a1553b8f19f5f4a533418fc
+Generated with discovered.json: 0x4df0da577a3b1875047b38f816dd33599e2e54e8
 
-# Diff at Wed, 26 Feb 2025 16:12:07 GMT:
+# Diff at Wed, 26 Feb 2025 16:18:31 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@9eb8b2d626938c85a098b11b809352a92a892736 block: 6881137
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1bc88884db8415916a1553b8f19f5f4a533418fc
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related: Add L2 contracts as templates with source.
 
 ## Config/verification related changes
 
@@ -105,11 +105,8 @@ discovery. Values are for block 6881137 (main branch discovery), not current.
 ```
 
 ```diff
-    contract  (0x4200000000000000000000000000000000000017) {
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
     +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
-      name:
--        "OptimismMintableERC721Factory"
-+        ""
       template:
 +        "opstack/Layer2/OptimismMintableERC721Factory"
     }

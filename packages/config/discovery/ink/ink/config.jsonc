@@ -18,7 +18,8 @@
     "0x4200000000000000000000000000000000000021"
   ],
   "names": {
-    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias"
+    "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner_L2Alias",
+    "0x4200000000000000000000000000000000000017": "OptimismMintableERC721Factory" // because displayName does not work
   },
   "overrides": {
     "0x4200000000000000000000000000000000000017": {
