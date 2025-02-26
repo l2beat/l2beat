@@ -466,7 +466,8 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "SP1VerifierGateway",
@@ -644,7 +645,8 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.0.0"
       },
-      "derivedName": "L1CrossDomainMessenger"
+      "derivedName": "L1CrossDomainMessenger",
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L1ERC721Bridge",
@@ -687,7 +689,8 @@
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x420000000000000000000000000000000000000A",
         "version": "1.0.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ProxyAdmin",
@@ -970,7 +973,8 @@
         "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000009",
         "version": "1.0.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "AssetManager",
@@ -2644,10 +2648,10 @@
     "global/ProxyAdmin": "0x02855da1dcadbd7374c349e817243f8de621b62b46c5027276c46dd8fabb38ab",
     "global/Timelock": "0xe09ef3053ce20980b4ff0f3bb1bf2a3add4269cfcd5921748fe06a7f6a4e9db1",
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
-    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
-    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15",
+    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
+    "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",
+    "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
+    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15",
     "succinct/SP1SuccinctGateway": "0x5afcd1d6328298e040516db4b10567b17e543a1f43468f4d77ba68e8dcbf5151"
   }
 }
