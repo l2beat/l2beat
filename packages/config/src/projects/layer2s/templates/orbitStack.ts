@@ -38,6 +38,7 @@ import type {
   Milestone,
   ProjectActivityConfig,
   ProjectDaTrackingConfig,
+  ProjectDataAvailability,
   ProjectEscrow,
   ProjectPermission,
   ProjectTechnologyChoice,
@@ -334,13 +335,12 @@ const wmrValidForBlobstream = [
 const BLOBSTREAM_DELAY_SECONDS = 0
 
 function orbitStackCommon(
+  type: (Layer2 | Layer3)['type'],
   templateVars: OrbitStackConfigCommon,
   explorerUrl: string | undefined,
   blockNumberOpcodeTimeSeconds: number,
-): Omit<
-  ScalingProject,
-  'type' | 'display' | 'config' | 'riskView'
-> & {
+  incomingNativeDA?: ProjectDataAvailability,
+): Omit<ScalingProject, 'type' | 'display' | 'riskView'> & {
   display: Pick<
     ScalingProjectDisplay,
     | 'stateValidationImage'
@@ -370,6 +370,10 @@ function orbitStackCommon(
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
+
+  const upgradeability = templateVars.upgradeability ?? {
+    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
+  }
 
   const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
@@ -406,9 +410,16 @@ function orbitStackCommon(
       'DA badge is required for external DA',
     )
   }
+
   const daBadge = usesBlobs
     ? BADGES.DA.EthereumBlobs
     : BADGES.DA.EthereumCalldata
+
+  const nativeDA = incomingNativeDA ?? {
+    layer: usesBlobs ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA : DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+  }
 
   const sequencers: ProjectPermission =
     templateVars.discovery.getPermissionDetails(
@@ -474,6 +485,40 @@ function orbitStackCommon(
         (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
     },
     stage: computedStage(templateVars),
+    config: {
+      associatedTokens: templateVars.associatedTokens,
+      escrows:
+        templateVars.overrideEscrows ??
+        unionBy(
+          [
+            ...(templateVars.nonTemplateEscrows ?? []),
+            templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: templateVars.bridge.address,
+              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
+              description: templateVars.gasTokens
+                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
+                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+              ...upgradeability,
+            }),
+          ],
+          'address',
+        ),
+      activityConfig: getActivityConfig(
+        templateVars.activityConfig,
+        templateVars.chainConfig,
+        {
+          type: 'block',
+          startBlock: 1,
+          adjustCount: { type: 'SubtractOne' },
+        },
+      ),
+      daTracking: getDaTracking(templateVars),
+      gasTokens:
+        templateVars.gasTokens?.tracked?.concat(
+          templateVars.gasTokens?.untracked ?? [],
+        ) ?? [],
+    },
     contracts: {
       addresses: generateDiscoveryDrivenContracts(allDiscoveries),
       risks: nativeContractRisks,
@@ -606,6 +651,32 @@ function orbitStackCommon(
     ),
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
+    dataAvailability: postsToExternalDA
+      ? (() => {
+          if (isUsingValidBlobstreamWmr) {
+            return {
+              layer: DA_LAYERS.CELESTIA,
+              bridge: DA_BRIDGES.BLOBSTREAM,
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            }
+          } else {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+
+            return {
+              layer: DA_LAYERS.DAC,
+              bridge: DA_BRIDGES.DAC_MEMBERS({
+                membersCount,
+                requiredSignatures,
+              }),
+              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+            }
+          }
+        })()
+      : nativeDA,
   }
 }
 
@@ -649,10 +720,6 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     'RollupProxy',
     'validators',
   ).length
-
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
-  }
 
   const wasmModuleRoot = templateVars.discovery.getContractValue<string>(
     'RollupProxy',
@@ -743,9 +810,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 
   const common = orbitStackCommon(
+    'layer3',
     templateVars,
     baseChain.chainConfig?.explorerUrl,
     blockNumberOpcodeTimeSeconds,
+    baseChain.dataAvailability,
   )
 
   return {
@@ -753,68 +822,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     ...common,
     hostChain: ProjectId(hostChain),
     display: { ...common.display, ...templateVars.display },
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          }
-        })()
-      : baseChain.dataAvailability,
     stackedRiskView: getStackedRisks(),
     riskView,
-    config: {
-      associatedTokens: templateVars.associatedTokens,
-      escrows:
-        templateVars.overrideEscrows ??
-        unionBy(
-          [
-            ...(templateVars.nonTemplateEscrows ?? []),
-            templateVars.discovery.getEscrowDetails({
-              includeInTotal: false,
-              address: templateVars.bridge.address,
-              tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-              description: templateVars.gasTokens
-                ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
-                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-              ...upgradeability,
-            }),
-          ],
-          'address',
-        ),
-      activityConfig: getActivityConfig(
-        templateVars.activityConfig,
-        templateVars.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-          adjustCount: { type: 'SubtractOne' },
-        },
-      ),
-      daTracking: getDaTracking(templateVars),
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
-    },
   }
 }
 
@@ -839,10 +848,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
-  const upgradeability = templateVars.upgradeability ?? {
-    upgradableBy: [{ name: 'ProxyAdmin', delay: 'no' }],
-  }
-
   const category =
     templateVars.display.category ??
     (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup')
@@ -854,21 +859,18 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const isUsingValidBlobstreamWmr =
     wmrValidForBlobstream.includes(wasmModuleRoot)
 
-  const usesBlobs =
-    templateVars.usesBlobs ??
-    templateVars.discovery.getContractValueOrUndefined(
-      'SequencerInbox',
-      'postsBlobs',
-    ) ??
-    false
-
   const validatorWhitelistDisabled =
     templateVars.discovery.getContractValue<boolean>(
       'RollupProxy',
       'validatorWhitelistDisabled',
     )
 
-  const common = orbitStackCommon(templateVars, EXPLORER_URLS['ethereum'], 12)
+  const common = orbitStackCommon(
+    'layer2',
+    templateVars,
+    EXPLORER_URLS['ethereum'],
+    12,
+  )
 
   return {
     type: 'layer2',
@@ -893,38 +895,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )} after it has been posted.`,
           }),
     },
-    dataAvailability: postsToExternalDA
-      ? (() => {
-          if (isUsingValidBlobstreamWmr) {
-            return {
-              layer: DA_LAYERS.CELESTIA,
-              bridge: DA_BRIDGES.BLOBSTREAM,
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          } else {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
-
-            return {
-              layer: DA_LAYERS.DAC,
-              bridge: DA_BRIDGES.DAC_MEMBERS({
-                membersCount,
-                requiredSignatures,
-              }),
-              mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-            }
-          }
-        })()
-      : {
-          layer: usesBlobs
-            ? DA_LAYERS.ETH_BLOBS_OR_CALLDATA
-            : DA_LAYERS.ETH_CALLDATA,
-          bridge: DA_BRIDGES.ENSHRINED,
-          mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        },
     riskView: {
       stateValidation:
         templateVars.nonTemplateRiskView?.stateValidation ??
@@ -1001,34 +971,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         })(),
     },
     config: {
-      associatedTokens: templateVars.associatedTokens,
-      escrows: templateVars.overrideEscrows ?? [
-        templateVars.discovery.getEscrowDetails({
-          address: templateVars.bridge.address,
-          tokens: templateVars.gasTokens?.tracked ?? ['ETH'],
-          description: templateVars.gasTokens
-            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.gasTokens.tracked?.join(', ')} sent to L2.`
-            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
-          ...upgradeability,
-        }),
-        ...(templateVars.nonTemplateEscrows ?? []),
-      ],
-      activityConfig: getActivityConfig(
-        templateVars.activityConfig,
-        templateVars.chainConfig,
-        {
-          type: 'block',
-          startBlock: 1,
-          adjustCount: { type: 'SubtractOne' },
-        },
-      ),
-      daTracking: getDaTracking(templateVars),
+      ...common.config,
       trackedTxs: templateVars.trackedTxs,
       finality: templateVars.finality,
-      gasTokens:
-        templateVars.gasTokens?.tracked?.concat(
-          templateVars.gasTokens?.untracked ?? [],
-        ) ?? [],
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -1089,7 +1034,6 @@ function getDaTracking(
           ]
         : undefined
 }
-
 
 function postsToEthereum(templateVars: OrbitStackConfigCommon): boolean {
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
