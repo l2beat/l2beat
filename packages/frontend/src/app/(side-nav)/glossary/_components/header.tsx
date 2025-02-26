@@ -47,11 +47,16 @@ export function Header<T extends { id: string }>({
         )}
       >
         <AlphabetSelector entries={glossaryEntries} />
+        <div
+          className={cn(
+            'absolute inset-x-0 -bottom-4 h-4 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:hidden md:h-10 md:w-[calc(100%-278px)] md:via-background md:via-40%',
+          )}
+        />
       </PrimaryCard>
       {/* Gradient */}
       <div
         className={cn(
-          'sticky top-16 h-10 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:w-[calc(100%-278px)] md:via-background md:via-40%',
+          'sticky top-16 hidden h-4 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:block md:h-10 md:w-full md:via-background md:via-40% lg:w-[calc(100%-278px)]',
         )}
       />
     </>

@@ -1,12 +1,12 @@
 'use client'
-import type { RefObject } from 'react'
+import type { RefCallback } from 'react'
 import { cn } from '~/utils/cn'
 
 interface CharProps {
   char: string
   href: string | undefined
   selected: boolean
-  ref?: RefObject<HTMLLIElement | null>
+  ref?: RefCallback<HTMLLIElement | null>
 }
 
 export function AlphabetSelectorChar({ char, href, selected, ref }: CharProps) {

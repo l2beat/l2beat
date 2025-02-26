@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
 
 import { glossarySectionTreshold } from '~/components/nav/consts'
@@ -16,7 +16,6 @@ interface Props<T> {
 }
 
 export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
-  const selectedItem = useRef<HTMLLIElement>(null)
   const overflowContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection(glossarySectionTreshold)
 
@@ -25,11 +24,6 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
       scrollHorizontallyToItem({ item, overflowingContainer }),
     [],
   )
-
-  useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
-    scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [currentSection, scrollToItem])
 
   const optionsWithEntry = getOptionsWithEntry(props.entries)
 
@@ -46,7 +40,11 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
               char={char}
               href={entry ? `#${entry.id}` : undefined}
               selected={selected}
-              ref={selected ? selectedItem : undefined}
+              ref={(node) => {
+                if (node && selected && overflowContainer.current) {
+                  scrollToItem(node, overflowContainer.current)
+                }
+              }}
             />
           )
         })}

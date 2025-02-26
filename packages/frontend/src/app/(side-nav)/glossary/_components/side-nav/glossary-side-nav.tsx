@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { glossarySectionTreshold } from '~/components/nav/consts'
 import type { CollectionEntry } from '~/content/get-collection'
 import { useCurrentSection } from '~/hooks/use-current-section'
@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function GlossarySideNav(props: Props) {
-  const selectedItem = useRef<HTMLLIElement>(null)
   const overflowContainer = useRef<HTMLUListElement>(null)
   const currentSection = useCurrentSection(glossarySectionTreshold)
 
@@ -20,11 +19,6 @@ export function GlossarySideNav(props: Props) {
       scrollVerticallyToItem({ item, overflowingContainer }),
     [],
   )
-
-  useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
-    scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [currentSection, scrollToItem])
 
   return (
     <div className="custom-scrollbar sticky top-28 mt-5 hidden h-[calc(100vh-350px)] w-[246px] min-w-[246px] lg:block">
@@ -40,7 +34,11 @@ export function GlossarySideNav(props: Props) {
               key={entry.id}
               entry={entry}
               selected={selected}
-              ref={selected ? selectedItem : undefined}
+              ref={(node) => {
+                if (node && selected && overflowContainer.current) {
+                  scrollToItem(node, overflowContainer.current)
+                }
+              }}
             />
           )
         })}

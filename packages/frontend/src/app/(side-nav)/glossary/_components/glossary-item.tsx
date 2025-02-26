@@ -8,8 +8,11 @@ interface Props {
 
 export function GlossaryItem(props: Props) {
   return (
-    <section className="mt-6 scroll-mt-24 first:mt-0" id={props.entry.id}>
-      <div className="flex items-center gap-2 pb-2 text-primary">
+    <section
+      className="mt-6 scroll-m-12 first:mt-0 md:scroll-mt-24"
+      id={props.entry.id}
+    >
+      <div className="group flex items-center gap-2 pb-2 text-primary">
         <a
           href={`#${props.entry.id}`}
           className="flex items-center gap-2 text-2xl font-bold leading-[115%] no-underline"

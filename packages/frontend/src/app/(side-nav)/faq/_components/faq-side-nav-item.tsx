@@ -7,7 +7,7 @@ interface Props {
   ref?: React.RefCallback<HTMLLIElement | null>
 }
 
-export const FaqSideNavItem = ({ ref, entry, selected }: Props) => {
+export function FaqSideNavItem({ ref, entry, selected }: Props) {
   return (
     <li ref={ref}>
       <a
