@@ -81,7 +81,8 @@ export class ProjectDiscovery {
     }
 
     return {
-      name: contract.displayName ?? contract.name,
+      name: contract.name,
+      displayName: contract.displayName,
       isVerified: isEntryVerified(contract),
       address: contract.address,
       upgradeability: getUpgradeability(contract),
@@ -442,7 +443,8 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       isVerified: isEntryVerified(contract),
-      name: contract.displayName ?? contract.name,
+      name: contract.name,
+      displayName: contract.displayName,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
@@ -454,7 +456,7 @@ export class ProjectDiscovery {
     description: string,
   ): ProjectPermission {
     return {
-      name: contract.displayName ?? contract.name,
+      name: contract.name,
       accounts: this.formatPermissionedAccounts([contract.address]),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -626,7 +628,7 @@ export class ProjectDiscovery {
           contractOrEoa.address,
         ),
       )
-      .map((contract) => contract.name)
+      .map((contract) => contract.displayName ?? contract.name)
     return safesWithThisMember.length === 0
       ? []
       : ['Member of ' + safesWithThisMember.join(', ') + '.']
@@ -709,8 +711,9 @@ export class ProjectDiscovery {
     path: ResolvedPermissionPath,
     skipName: boolean = false,
   ): string {
+    const contract = this.getContractByAddress(path.address)
     const name =
-      this.getContractByAddress(path.address)?.name ?? path.address.toString()
+      contract?.displayName ?? contract?.name ?? path.address.toString()
 
     const result = skipName ? [] : [name]
     if (path.delay) {
