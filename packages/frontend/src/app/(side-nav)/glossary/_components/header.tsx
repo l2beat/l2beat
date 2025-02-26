@@ -41,8 +41,7 @@ export function Header<T extends { id: string }>({
       <div className="fixed top-0 -z-1 h-8 w-full bg-background" />
       <PrimaryCard
         className={cn(
-          'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all',
-          'md:top-6 md:rounded-t-none',
+          'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all md:top-6 md:rounded-t-none',
           isScrolled && 'md:rounded-t-xl',
         )}
       >
