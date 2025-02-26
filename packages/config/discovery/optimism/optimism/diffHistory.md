@@ -8,7 +8,7 @@ Generated with discovered.json: 0xef9b544e39d60e3dea96586e7b57ccbe952597a8
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Config related: Add L2 contracts as templates with source.
 
 ## Config/verification related changes
 
