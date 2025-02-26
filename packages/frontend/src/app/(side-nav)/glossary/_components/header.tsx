@@ -38,7 +38,7 @@ export function Header<T extends { id: string }>({
           </div>
         </div>
       </PrimaryCard>
-      {isScrolled && <div className="fixed top-0 h-8 w-full bg-background" />}
+      <div className="fixed top-0 -z-1 h-8 w-full bg-background" />
       <PrimaryCard
         className={cn(
           'sticky top-0 z-10 w-full bg-surface-primary py-4 transition-all',
@@ -47,6 +47,7 @@ export function Header<T extends { id: string }>({
         )}
       >
         <AlphabetSelector entries={glossaryEntries} />
+        {/* Mobile gradient */}
         <div
           className={cn(
             'absolute inset-x-0 -bottom-4 h-4 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:hidden md:h-10 md:w-[calc(100%-278px)] md:via-background md:via-40%',

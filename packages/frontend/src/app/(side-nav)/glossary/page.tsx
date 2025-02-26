@@ -24,7 +24,7 @@ export default function Page() {
       <MainPageHeader>Glossary</MainPageHeader>
       <Header glossaryEntries={glossaryEntries} />
       <main className="mt-0 flex gap-8 border-t border-divider md:-mt-2 md:border-t-0">
-        <PrimaryCard>
+        <PrimaryCard className="-z-10">
           {glossaryEntries.map((entry) => (
             <GlossaryItem key={entry.id} entry={entry} />
           ))}
