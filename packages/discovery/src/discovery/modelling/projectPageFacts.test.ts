@@ -8,7 +8,6 @@ import { runClingo } from './projectPageFacts'
 // This seems to conflicts with `makeEthersError` in our codebase.
 // Until it's fixed, this test is disabled.
 xdescribe(runClingo.name, () => {
-  // TODO: fix conflict
   it('runs clingo on passed program', async () => {
     const program = 'a. b :- a.'
     const result = await runClingo(program)
