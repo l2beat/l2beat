@@ -1,8 +1,8 @@
-import { InfoWithMobileDrawer } from '~/components/scaling-tabs-info'
+import { TabInfoWithDrawer } from '~/components/tab-info-with-drawer'
 
 export function PublicSystemInfo() {
   return (
-    <InfoWithMobileDrawer
+    <TabInfoWithDrawer
       title="What are public DA layers?"
       content="Public DA layers are data availability solutions designed for broad,
       general use across multiple scaling projects. These solutions aim to be
@@ -14,7 +14,7 @@ export function PublicSystemInfo() {
 
 export function CustomSystemInfo() {
   return (
-    <InfoWithMobileDrawer
+    <TabInfoWithDrawer
       title="What are custom DA layers?"
       content="Custom DA layers are data availability solutions that are tightly
       integrated with a single scaling project and would require substantial
