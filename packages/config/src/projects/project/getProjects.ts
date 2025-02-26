@@ -18,6 +18,10 @@ import type {
   ProjectTvlConfig,
   ProjectTvlEscrow,
 } from '../../types'
+import {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+} from '../../utils/discoveryDriven'
 import { isVerified } from '../../verification/isVerified'
 import { badgesCompareFn } from '../badges'
 import { bridges } from '../bridges'
@@ -28,10 +32,6 @@ import { getHostChain } from './utils/getHostChain'
 import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { isUnderReview } from './utils/isUnderReview'
-import {
-  areContractsDiscoveryDriven,
-  arePermissionsDiscoveryDriven,
-} from '../../utils/discoveryDriven'
 
 export function getProjects(): BaseProject[] {
   return refactored

@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
-import { ProjectService, isDiscoveryDriven } from '@l2beat/config'
+import { ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
   type Channel,
