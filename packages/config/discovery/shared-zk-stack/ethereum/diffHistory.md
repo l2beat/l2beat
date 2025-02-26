@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x8240be23b7c2deb2da1c1ec6b7dcf4a49cf73f04
+
+# Diff at Wed, 26 Feb 2025 10:33:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21802976
+- current block number: 21802976
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21802976 (main branch discovery), not current.
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: Sits between the shared bridge and the StateTransitionManager(s) and relays L1 <-> L2 messages from the shared bridge or other ZK stack chains to their respective destinations.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2, emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xBDFfCC71FE84020238F2990a6D2954e87355De0D) {
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract creation and upgrade data, the proof system for the `ZKsync diamond` contract connected to it (and other L2 diamond contracts that share the logic).
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract Guardians (0xD677e09324F8Bb3cC64F009973693f751c33A888) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
+```diff
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: This bridge contract escrows all ERC-20s and ETH that are deposited to registered ZK stack chains like ZKsync Era.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xdEFd1eDEE3E8c5965216bd59C866f7f5307C9b29) {
+    +++ description: A custom contract allowing a 3/3 of 0xBDFfCC71FE84020238F2990a6D2954e87355De0D, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0xD677e09324F8Bb3cC64F009973693f751c33A888 to `executeEmergencyUpgrade()` via the 0x8f7a9912416e8AdC4D9c21FAe1415D3318A11897.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
 Generated with discovered.json: 0xeaf42c32ac714e06060a1a87b07efbfd885d6659
 
 # Diff at Fri, 21 Feb 2025 09:00:11 GMT:

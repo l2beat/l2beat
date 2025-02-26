@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xd8eaa4079c583de936dfdfa0c256cb68dcd0ea4d
+
+# Diff at Wed, 26 Feb 2025 10:33:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 22580368
+- current block number: 22580368
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22580368 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x80292D35789462aeD1D694899f1FaAE184Fe3E5b) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x936c137699230c4732d534c7E968cC7cEAa6Cf45) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SystemConfig (0xad22377De22537e4e6bd192AeBCa524a79B0d3Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OptimismPortal (0xdD83c537B35d98776913D7ab60EBaA5c28F9dD01) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xFC57b0947C079073A1C5Fe61887Eb3495972EE72) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      category:
++        {"name":"Governance","priority":3}
+    }
+```
+
 Generated with discovered.json: 0x35265e56d5c3fa25fb3036926d209b23e4bbe783
 
 # Diff at Fri, 21 Feb 2025 14:13:27 GMT:

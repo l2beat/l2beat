@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x1f63ec5d70ded7ce2ccb2c0d9b6c719870896255
+
+# Diff at Wed, 26 Feb 2025 10:33:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 21872714
+- current block number: 21872714
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21872714 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x5933e323bE8896DfaCd1cD671442F27dAA10a053) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract SystemConfig (0x7A8Ed66B319911A0F3E7288BDdAB30d9c0C875c3) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x88e529A6ccd302c948689Cd5156C83D4614FAE92) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      category:
++        {"name":"Shared Infrastructure","priority":4}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xeb9bf100225c214Efc3E7C651ebbaDcF85177607) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0xf7727238a444a72d5c5913965abbf5e4f44f8876
 
 # Diff at Fri, 21 Feb 2025 09:00:15 GMT:

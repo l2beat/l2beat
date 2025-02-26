@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x77bbd3a5fe1dfa4c90507a6c378fce13e7fca9a7
+
+# Diff at Wed, 26 Feb 2025 10:33:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@18513668f913fbe57a197f43655b19111df0e627 block: 26809248
+- current block number: 26809248
+
+## Description
+
+config related: added categories for all opstack, op stack and polygoncdk stack templates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26809248 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract OptimismPortal (0x52fA397D799f1CE416a2089B964Aa293c347994F) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract SystemConfig (0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category:
++        {"name":"Canonical Bridges","priority":2}
+    }
+```
+
 Generated with discovered.json: 0x62f8540a6f3231f5221543f381f0661e9e3fe6c6
 
 # Diff at Fri, 21 Feb 2025 14:13:47 GMT:

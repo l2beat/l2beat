@@ -143,7 +143,8 @@
           "severity": "HIGH",
           "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "usdcBridge",
@@ -192,7 +193,8 @@
       "displayName": "Verifier",
       "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
       "sinceTimestamp": 1726821035,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "wstETHBridge",
@@ -663,7 +665,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x354d36e57cbd86810e3718a66aba98e45bf3c7b96661ab24975e59c0dff79ad2",
-    "polygon-cdk/PolygonZkEVM": "0xe2c57685413c8179cfb2fd9ad8dd97326cad97f79beb9d6138f5b1a1c62c6ee4",
-    "polygon-cdk/Verifier": "0x92aa638d072228b88b85f32cc356418ce1e079a257103155501f42560cf4438d"
+    "polygon-cdk/PolygonZkEVM": "0xa3db9cd4750e048e231aadcba1dd439bc7ca32cfc261f65c34038f8df919df94",
+    "polygon-cdk/Verifier": "0x91958a5b0be4b117823c293cd53c0324e2bde3dab453684d3d5f4cca5bd24684"
   }
 }
