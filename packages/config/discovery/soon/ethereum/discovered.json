@@ -1,7 +1,7 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 21895028,
+  "blockNumber": 21929677,
   "configHash": "0xd7735ee99821bc25b14a7c2ab5ab0d784c577f893a56c54a7f946c270d72ce67",
   "contracts": [
     {
@@ -61,10 +61,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 665000,
-        "latestOutputIndex": 132,
-        "nextBlockNumber": 670000,
-        "nextOutputIndex": 133,
+        "latestBlockNumber": 910000,
+        "latestOutputIndex": 181,
+        "nextBlockNumber": 915000,
+        "nextOutputIndex": 182,
         "proposer": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "PROPOSER": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "startingBlockNumber": 0,
@@ -228,9 +228,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "frozenWithdrawals": [
-          "0x5783689b654645b28b467e821b79f6d159056b605f538188905e6d41c4c66fba"
-        ],
+        "frozenWithdrawals": [],
         "guardian": "0x7fFB604c57FAFbAeaE6587DF035a0DB032301593",
         "l2Oracle": "0x017A4D5A1F670F5a9dfEBD0F0cB25C2C44a82448",
         "l2Sender": "0x0000000000000000000000000000000000000000000000000000000000000001",
@@ -382,7 +380,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641786",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292657052",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
