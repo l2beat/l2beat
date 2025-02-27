@@ -23,6 +23,7 @@ interface Props {
 
 export function ScalingProjectStats({ project, className }: Props) {
   const isAppchain = project.capability === 'appchain'
+  console.log(project.stageConfig)
 
   return (
     <div
@@ -63,8 +64,14 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <ProjectStat
-        title="Type"
-        value={<TypeInfo>{project.header.category}</TypeInfo>}
+        title="30D tx count"
+        value={
+          project.header.activity ? (
+            formatNumber(project.header.activity.tpsCount)
+          ) : (
+            <NoDataBadge />
+          )
+        }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
       {project.stageConfig.stage !== 'NotApplicable' ? (
@@ -84,11 +91,6 @@ export function ScalingProjectStats({ project, className }: Props) {
         title="Type"
         value={<TypeInfo>{project.header.category}</TypeInfo>}
       />
-      <ProjectStat
-        title={pluralize(project.header.purposes.length, 'Purpose')}
-        value={project.header.purposes.join(', ')}
-      />
-
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}
         value={project.header.purposes.join(', ')}

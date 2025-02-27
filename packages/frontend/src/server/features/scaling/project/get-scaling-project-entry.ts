@@ -96,9 +96,11 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   return {
     ...common,
     type: project.type,
-    stageConfig: {
-      stage: 'NotApplicable' as const,
-    },
+    stageConfig: isProjectOther(project)
+      ? {
+          stage: 'NotApplicable' as const,
+        }
+      : project.stage,
     baseLayerRosetteValues,
     stackedRosetteValues,
     hostChainName: hostChain?.display.name,
