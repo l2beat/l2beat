@@ -97,7 +97,6 @@ export const nova: Layer2 = orbitStackL2({
     BADGES.VM.WasmVM,
     BADGES.Stack.Nitro,
     BADGES.Other.Governance,
-    BADGES.Other.L3HostChain,
   ],
   discovery,
   hasAtLeastFiveExternalChallengers: true,
