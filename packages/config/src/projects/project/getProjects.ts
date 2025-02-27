@@ -13,11 +13,16 @@ import type {
   Layer2TxConfig,
   Layer3,
   ProjectCostsInfo,
+  ProjectDiscoveryInfo,
   ProjectEscrow,
   ProjectLivenessInfo,
   ProjectTvlConfig,
   ProjectTvlEscrow,
 } from '../../types'
+import {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+} from '../../utils/discoveryDriven'
 import { isVerified } from '../../verification/isVerified'
 import { badgesCompareFn } from '../badges'
 import { bridges } from '../bridges'
@@ -65,6 +70,7 @@ function layer2Or3ToProject(p: Layer2 | Layer3): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
+    discoveryInfo: getDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -183,6 +189,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
+    discoveryInfo: getDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvlInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
@@ -269,6 +276,21 @@ function getTvlConfig(project: Layer2 | Layer3 | Bridge): ProjectTvlConfig {
   return {
     escrows: project.config.escrows.map(toProjectEscrow),
     associatedTokens: project.config.associatedTokens ?? [],
+  }
+}
+
+export function getDiscoveryInfo(
+  project: Layer2 | Layer3 | Bridge,
+): ProjectDiscoveryInfo {
+  const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
+  const permissionsDiscoDriven = arePermissionsDiscoveryDriven(
+    project.permissions,
+  )
+
+  return {
+    contractsDiscoDriven,
+    permissionsDiscoDriven,
+    isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
   }
 }
 

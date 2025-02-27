@@ -2,7 +2,6 @@ import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
-import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
@@ -12,7 +11,6 @@ import {
   CostsProjectsFilter,
   getCostsProjects,
 } from './utils/get-costs-projects'
-import { getCostsTargetTimestamp } from './utils/get-costs-target-timestamp'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
@@ -51,22 +49,11 @@ export const getCachedCostsChartData = cache(
       return []
     }
     const resolution = rangeToResolution(timeRange)
-    const targetTimestamp = getCostsTargetTimestamp()
-    const [from, to] = getRangeWithMax(timeRange, resolution, {
-      now: targetTimestamp,
-    })
-
-    const fromToQuery = from
-      ? // one-off
-        from.add(-1, resolution === 'daily' ? 'days' : 'hours')
-      : MIN_TIMESTAMPS.costs
-
-    // to is exclusive
-    const rangeForQuery: [UnixTime, UnixTime] = [fromToQuery, to]
+    const range = getRangeWithMax(timeRange, resolution)
 
     const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
       projects.map((p) => p.id),
-      rangeForQuery,
+      range,
     )
 
     if (data.length === 0) {
@@ -74,8 +61,12 @@ export const getCachedCostsChartData = cache(
     }
 
     const summedByTimestamp = sumByTimestamp(data, resolution)
+
+    const minTimestamp = new UnixTime(Math.min(...summedByTimestamp.keys()))
+    const maxTimestamp = new UnixTime(Math.max(...summedByTimestamp.keys()))
+
     const timestamps = generateTimestamps(
-      [fromToQuery, to.add(-1, resolution === 'daily' ? 'days' : 'hours')],
+      [minTimestamp, maxTimestamp],
       resolution,
     )
     const result = timestamps.map((timestamp) => {

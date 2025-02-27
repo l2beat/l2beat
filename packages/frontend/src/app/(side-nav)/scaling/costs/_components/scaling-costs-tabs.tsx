@@ -91,27 +91,27 @@ export function ScalingCostsTabs(props: Props) {
           )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="rollups" className="pt-5">
+          <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
+            <RollupsInfo />
             <ScalingCostsChart
               tab="rollups"
               entries={entries.rollups}
               milestones={props.milestones}
             />
             <HorizontalSeparator className="my-5" />
-            <RollupsInfo />
             <ScalingCostsTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
         {showOthers && (
           <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others" className="pt-5">
+            <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
+              <OthersInfo />
               <ScalingCostsChart
                 tab="others"
                 entries={entries.others}
                 milestones={props.milestones}
               />
               <HorizontalSeparator className="my-5" />
-              <OthersInfo />
               <ScalingCostsTable entries={entries.others} />
               <OtherMigrationTabNotice
                 projectsToBeMigrated={projectToBeMigratedToOthers}

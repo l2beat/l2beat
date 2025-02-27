@@ -48,5 +48,6 @@
         "type": "polygoncdkScheduledTransactions"
       }
     }
-  }
+  },
+  "category": "gov"
 }

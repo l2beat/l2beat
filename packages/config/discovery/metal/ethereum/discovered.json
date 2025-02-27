@@ -130,7 +130,8 @@
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -324,7 +325,8 @@
         "proposer": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
         "deletedOutputs": { "severity": "HIGH" }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OptimismPortal",
@@ -409,7 +411,8 @@
         "SYSTEM_CONFIG": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
         "systemConfig": "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA",
         "version": "2.5.0"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GnosisSafe",
@@ -531,7 +534,8 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SuperchainProxyAdmin",
@@ -681,7 +685,8 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SystemConfig",
@@ -802,7 +807,8 @@
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
         }
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OpFoundationUpgradeSafe",
@@ -943,7 +949,8 @@
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "OpFoundationOperationsSafe",
@@ -1703,13 +1710,13 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xbf09136c280484ee64edb52bd001d64ccf893d29dfa459662549b59a778a6e18",
     "gnosisSafeModules/LivenessModule": "0xaf5f707166f662310012e2d9d33d92bef536591231e024ae86fe1fb1d74633f8",
     "opstack/AddressManager": "0xb79845ff2bb19d24468ea1455546bde88d3a76b44462d233d9c6b2b0b1a05c37",
-    "opstack/L1CrossDomainMessenger": "0x0df1fd2780d94e7377d4ca4cf8d697e81a4a49c7783f07c0ba6020f7fdcb2a1c",
-    "opstack/L1ERC721Bridge": "0xd200c36245a04d7f75960c09d07c65a3e17c643b3b92079dff8ad5c16e2694eb",
-    "opstack/L1StandardBridge": "0x5c2431e93b35778e4591ef455137cd3cb85edfff86e2a3a86fe087de4911236f",
-    "opstack/L2OutputOracle": "0xd91f271978defba509ad5603ecad2d9fcb73dd6dd253bf85bbbdad58bf27cf9e",
+    "opstack/L1CrossDomainMessenger": "0x8ecdf493ffe75de8cbd7492148db159b26c9ecc38bb6dd7b8488be72d0c7bf4e",
+    "opstack/L1ERC721Bridge": "0x75f13310a0c37850676bb421a095318b633336022aeb2fb69c7f961890b6f69c",
+    "opstack/L1StandardBridge": "0xb5b5649b6b4840246dac801a2fd9cb94eaf6ccab8e2f3a65f57d8e060623dfe5",
+    "opstack/L2OutputOracle": "0x1f3a79744f58781fffa6c018ccd268ad7f3f33c1e89ec7268d7bd19bda0867be",
     "opstack/OptimismMintableERC20Factory": "0xbe5127f9c37405c8dc990f7fe7781b92be5eb7fd1b14674c6d01c9218120817d",
-    "opstack/OptimismPortal": "0xf17f63fc6b0c816fcfbb8833c522f74270a25aaa8237b58aa8709d1a03a1b36a",
-    "opstack/SuperchainConfig": "0xd96c933fe77c5607dbb0bd2707b6d12a547d27638fd38932e6bbe2c83c2c12ee",
-    "opstack/SystemConfig": "0x2176fe60367a2700d2407e9cc71665f8e605da2f60d16e82802c207280e72c15"
+    "opstack/OptimismPortal": "0x750f5e07f37ab3d0a766982dc74c1c619779a2044e8a1484ed1e2859854ec514",
+    "opstack/SuperchainConfig": "0x38b312497b6b9a5247e304b69929d797dffc28d476435a84fdeb9f5d901bc1c2",
+    "opstack/SystemConfig": "0x37085bf2a3f9fb32987ae3ff52b27f92a0e61f1d4a4ce2a7099a325db2be9a15"
   }
 }

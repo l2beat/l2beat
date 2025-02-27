@@ -6,7 +6,13 @@ import {
 } from '@l2beat/shared'
 import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../../test/constants'
 import { checkRisk } from '../../test/helpers'
+import type { BaseProject } from '../../types'
+import {
+  areContractsDiscoveryDriven,
+  arePermissionsDiscoveryDriven,
+} from '../../utils/discoveryDriven'
 import { layer2s } from '../layer2s'
 import { layer3s } from '../layer3s'
 import { getProjects } from './getProjects'
@@ -19,6 +25,7 @@ describe('getProjects', () => {
     const slugs = new Set<string>()
     for (const project of projects) {
       it(`${project.name} id: ${project.id}, slug: ${project.slug}`, () => {
+        expect(project.slug).toMatchRegex(/^[a-z\-\d]+$/)
         expect(ids.has(project.id)).toEqual(false)
         ids.add(project.id)
         if (project.slug === 'payy' || project.slug === 'near') {
@@ -287,5 +294,164 @@ describe('getProjects', () => {
         }
       })
     })
+  })
+
+  describe('escrows', () => {
+    it('every escrow is unique', () => {
+      const addressToKey = (address: EthereumAddress, chain: string) =>
+        `${address.toString()} (${chain})`
+      const addresses = new Set<string>()
+
+      for (const project of projects) {
+        for (const { address, chain } of project.tvlConfig?.escrows ?? []) {
+          it(address.toString(), () => {
+            const key = addressToKey(address, chain ?? 'ethereum')
+            expect(addresses.has(key)).toEqual(false)
+            addresses.add(key)
+          })
+        }
+      }
+    })
+  })
+
+  describe('links', () => {
+    describe('every project has at least one website link', () => {
+      for (const project of projects) {
+        if (project.display?.links.websites) {
+          it(project.name, () => {
+            expect(
+              project.display?.links.websites?.length ?? 0,
+            ).toBeGreaterThan(0)
+          })
+        }
+      }
+    })
+
+    describe('every link is https', () => {
+      const links = projects.flatMap((x) =>
+        (Object.values(x.display?.links ?? {}) as string[]).flat(),
+      )
+      for (const link of links) {
+        it(link, () => {
+          expect(link).toMatchRegex(/^https:\/\//)
+        })
+      }
+    })
+
+    describe('social media links are properly formatted', () => {
+      const links = projects.flatMap((x) => x.display?.links.socialMedia ?? [])
+      for (const link of links) {
+        it(link, () => {
+          if (link.includes('discord')) {
+            expect(link).toMatchRegex(
+              /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
+            )
+          } else if (link.includes('t.me')) {
+            expect(link).toMatchRegex(
+              /^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/,
+            )
+          } else if (link.includes('medium')) {
+            expect(link).toMatchRegex(
+              /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/,
+            )
+          } else if (link.includes('twitter')) {
+            expect(link).toMatchRegex(/^https:\/\/twitter\.com\/[\w-]+$/)
+          } else if (link.includes('reddit')) {
+            expect(link).toMatchRegex(/^https:\/\/reddit\.com\/r\/[\w-]+\/$/)
+          } else if (link.includes('youtube')) {
+            if (!link.includes('playlist')) {
+              expect(link).toMatchRegex(
+                /^https:\/\/youtube\.com\/((c|channel)\/|@)[\w-]+$/,
+              )
+            }
+          } else if (link.includes('twitch')) {
+            expect(link).toMatchRegex(/^https:\/\/twitch\.tv\/[\w-]+$/)
+          } else if (link.includes('gitter')) {
+            expect(link).toMatchRegex(/^https:\/\/gitter\.im\/[\w-/]+$/)
+          } else if (link.includes('instagram')) {
+            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-./]+$/)
+          }
+        })
+      }
+    })
+  })
+
+  // TODO: refactor config so there are no more zeroes, resync data
+  describe('daTracking', () => {
+    // Some of the projects have sinceBlock set to zero because they were added at DA Module start
+    const excluded = new Set([
+      'aevo',
+      'ancient',
+      'arbitrum',
+      'base',
+      'bob',
+      'fuel',
+      'hypr',
+      'ink',
+      'karak',
+      'kinto',
+      'kroma',
+      'linea',
+      'loopring',
+      'lyra',
+      'eclipse',
+      'mantapacific',
+      'mint',
+      'morph',
+      'optimism',
+      'orderly',
+      'paradex',
+      'polynomial',
+      'scroll',
+      'sophon',
+      'starknet',
+      'superlumio',
+      'taiko',
+      'b3',
+      'deri',
+      'ham',
+      'rari',
+      'stack',
+    ])
+
+    // All new projects should have non-zero sinceBlock - it will make sync more efficient
+    describe('every project has non-zero sinceBlock', () => {
+      for (const project of projects) {
+        if (project.daTrackingConfig) {
+          if (!excluded.has(project.id)) {
+            it(project.id, () => {
+              assert(project.daTrackingConfig) // type issue
+              for (const config of project.daTrackingConfig) {
+                expect(config.sinceBlock).toBeGreaterThan(0)
+              }
+            })
+          }
+        }
+      }
+    })
+  })
+
+  describe('all new projects are discovery driven', () => {
+    const isNormalProject = (p: BaseProject) => {
+      return (
+        p.isScaling === true && p.isArchived !== true && p.isUpcoming !== true
+      )
+    }
+
+    const filteredProjects = projects.filter(
+      (p) =>
+        isNormalProject(p) &&
+        !NON_DISCOVERY_DRIVEN_PROJECTS.includes(p.id.toString()),
+    )
+
+    for (const p of filteredProjects) {
+      it(`${p.id.toString()} is discovery driven`, () => {
+        assert(
+          arePermissionsDiscoveryDriven(p.permissions) &&
+            areContractsDiscoveryDriven(p.contracts),
+          'New projects are expected to be discovery driven. Read the comment in constants.ts',
+        )
+      })
+    }
   })
 })

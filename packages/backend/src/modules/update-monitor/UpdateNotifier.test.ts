@@ -458,7 +458,7 @@ describe(UpdateNotifier.name, () => {
         ['project-a', 'arbitrum', '', '', '', '12'],
       ]
       const table = formatAsAsciiTable(headers, rows)
-      const templatizationStatus = generateTemplatizedStatus()
+      const templatizationStatus = await generateTemplatizedStatus()
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 

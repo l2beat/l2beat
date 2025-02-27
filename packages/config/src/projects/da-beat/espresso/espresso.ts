@@ -14,7 +14,7 @@ const discovery = new ProjectDiscovery('espresso')
 
 export const espresso: BaseProject = {
   id: ProjectId('espresso'),
-  slug: 'espressoDA',
+  slug: 'espresso-da',
   name: 'Espresso DA',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
@@ -73,9 +73,8 @@ Once the proposer sends data to HotShot node operators, they initiate Espresso D
 
 - **VID Layer**: Disperses erasure-coded data to all nodes. VID layer nodes only store chunks of the data.
 - **DA Committee Layer**: Uploads the data and commitment to a small DA committee. Every node in the committee stores the full data.
-- **CDN Layer**: Uploads the full data to a content delivery network (CDN). \  
+- **CDN Layer**: Uploads the full data to a content delivery network (CDN). 
 
-  
 Once nodes receive and store the data, they return votes to the proposer. DAVotes are votes from committee nodes storing the full data, while QuorumVotes are votes from nodes storing erasure-coded shares of the data.
 A DA certificate consists of two components, the retrievability certificate and the optimistic DAC certificate:
 
