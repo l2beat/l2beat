@@ -23,7 +23,7 @@ export function ScalingProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
       <section id="summary" className="w-full max-md:bg-header-primary">
-        <div className="flex gap-10">
+        <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
             <ProjectHeader title={project.name} slug={project.slug} />
             <div className="space-y-2">
@@ -64,7 +64,7 @@ export function ScalingProjectSummary({ project }: Props) {
             <div className="max-md:hidden">
               <DesktopProjectLinks projectLinks={project.header.links} />
             </div>
-            <div className="grid w-full md:grid-cols-3 md:gap-4">
+            <div className="grid w-full md:gap-3 xl:grid-cols-3 [@media(min-width:1000px)]:grid-cols-[260px_1fr_1fr] [@media(min-width:1300px)]:grid-cols-[300px_1fr_1fr]">
               <ValueSecuredSummary
                 tvs={project.header.tvs}
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}

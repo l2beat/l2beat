@@ -27,7 +27,7 @@ export function ScalingProjectStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-3 md:bg-header-secondary md:px-6 md:py-5',
+        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5',
         className,
       )}
     >
@@ -42,7 +42,7 @@ export function ScalingProjectStats({ project, className }: Props) {
           project.header.activity ? (
             <ValueWithPercentageChange
               change={project.header.activity.uopsWeeklyChange}
-              className="font-medium !leading-none md:text-xl md:font-bold"
+              className="font-medium !leading-none md:text-lg md:font-bold"
               changeClassName="md:text-base md:font-medium !leading-none"
             >
               {project.header.activity.lastDayUops.toFixed(2)}
@@ -62,6 +62,10 @@ export function ScalingProjectStats({ project, className }: Props) {
           )
         }
       />
+      <ProjectStat
+        title="Type"
+        value={<TypeInfo>{project.header.category}</TypeInfo>}
+      />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
       {project.stageConfig.stage !== 'NotApplicable' ? (
         <ProjectStat
@@ -80,6 +84,11 @@ export function ScalingProjectStats({ project, className }: Props) {
         title="Type"
         value={<TypeInfo>{project.header.category}</TypeInfo>}
       />
+      <ProjectStat
+        title={pluralize(project.header.purposes.length, 'Purpose')}
+        value={project.header.purposes.join(', ')}
+      />
+
       <ProjectStat
         title={pluralize(project.header.purposes.length, 'Purpose')}
         value={project.header.purposes.join(', ')}
@@ -118,7 +127,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="text-lg font-medium !leading-none md:font-bold">
         {props.value}
       </span>
     </li>
