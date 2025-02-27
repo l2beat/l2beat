@@ -112,6 +112,10 @@ export class OpStackT2IAnalyzer extends BaseAnalyzer {
             tx.blockNumber,
           )
         if (blobs.length === 0) return []
+        const data = getRollupData(blobs)
+        if (Number(data.toString()) === 0) {
+          return []
+        }
         return getRollupData(blobs)
       }
       default:
