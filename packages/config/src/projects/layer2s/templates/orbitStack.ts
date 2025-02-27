@@ -976,10 +976,7 @@ function getDAProvider(
 
 function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
   const sequencerInbox = templateVars.discovery.getContract('SequencerInbox')
-  // TODO(radomski): This will be removed once displayName is merged
-  const outbox = templateVars.discovery.hasContract('Outbox')
-    ? templateVars.discovery.getContract('Outbox')
-    : templateVars.discovery.getContract('ERC20Outbox')
+  const outbox = templateVars.discovery.getContract('Outbox')
 
   assert(
     sequencerInbox.sinceTimestamp !== undefined,
