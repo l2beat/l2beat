@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xffa9d2e7aabbf216872be5865efac382969c7c6e
+
+# Diff at Thu, 27 Feb 2025 11:27:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7afe405a4930423077d17ed79971752d0831e02a block: 9838404
+- current block number: 9907287
+
+## Description
+
+Config related: Add L2 contracts as templates with source.
+
+## Watched changes
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+      values.$pastUpgrades.0:
++        ["2024-12-05T19:19:37.000Z","0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]]
+      values.$upgradeCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x4896f584e32c30c45de35c5820fdf4d674c49759
 
 # Diff at Wed, 26 Feb 2025 16:19:31 GMT:

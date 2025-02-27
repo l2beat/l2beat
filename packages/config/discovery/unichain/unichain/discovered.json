@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 9838404,
+  "blockNumber": 9907287,
   "configHash": "0xd7900d9a8307f89e14f07a6b752577fbe3ca3d8c693ad4de9f7e39f6c5c9e14e",
   "contracts": [
     {
@@ -57,7 +57,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620038",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620041",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -97,14 +97,14 @@
         "$upgradeCount": 0,
         "baseFee": 0,
         "baseFeeScalar": 2000,
-        "blobBaseFee": 18391084153,
+        "blobBaseFee": 604204580,
         "blobBaseFeeScalar": 900000,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
-        "l1BaseFee": 2059144393,
+        "l1BaseFee": 680294497,
         "version": "1.3.1-beta.1"
       }
     },
@@ -295,10 +295,10 @@
         "$implementation": "0xc0d3C0D3C0D3c0D3C0D3C0d3C0D3c0D3c0d30015",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "basefee": 2059144393,
+        "basefee": 680294497,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
-        "blobBaseFee": 18391084153,
+        "blobBaseFee": 604204580,
         "blobBaseFeeScalar": 900000,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
@@ -307,13 +307,13 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x30adf4fbf1d1e45f506191c2e92015d96f37a37eec5cb4f068084065f43d3e5d",
+        "hash": "0x5aa10d9a2f3334975d1025ab92b895dd5ece62d24f9422ebebd657330197c4fe",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 21931653,
-        "sequenceNumber": 6,
-        "timestamp": 1740586703,
+        "number": 21937364,
+        "sequenceNumber": 11,
+        "timestamp": 1740655583,
         "version": "1.5.1-beta.1"
       }
     },
