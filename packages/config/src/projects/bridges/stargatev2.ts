@@ -104,18 +104,16 @@ export const stargatev2: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations since no assets can be burned or minted.
-      While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
-      Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
-      
-      
-      While Stargate operates the local token pools on each supported chain, they are all connected through the LayerZero messaging protocol, which is responsible for verifying and delivering the crosschain messages.
-      Verification is done by Stargate-selected permissioned verifiers (called DVNs in LayerZero terminology), currently configured as a 2/2 of Stargate and Nethermind custom Multisigs. 
-      Crosschain message passing is done by professional relayers and executors but could technically be done by anyone (even the user themselves if they have access to the bridge message signed by the two verifiers e.g. in case they have committed the verification onchain).
-      
-      
-      Just like the assets themselves, so-called *credits* (also OFTs) are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
-      These credits can be moved and rebalanced (but not minted) by a permissioned role called Planner.`,
+On chains where assets are available through other bridges, Stargate acts as a Liquidity Bridge. This requires Stargate liquidity pools for assets at the sources and destinations since no assets can be burned or minted.
+While liquidity providers need to keep all pools buffered with assets, users can deposit into a pool on their chosen source chain and quickly receive the equivalent asset at the destination through an Executor.
+Users can choose between an economical batched bridge mode ('bus') or an individual fast 'taxi' mode that delivers the bridging message as soon as the user deposits.
+
+While Stargate operates the local token pools on each supported chain, they are all connected through the LayerZero messaging protocol, which is responsible for verifying and delivering the crosschain messages.
+Verification is done by Stargate-selected permissioned verifiers (called DVNs in LayerZero terminology), currently configured as a 2/2 of Stargate and Nethermind custom Multisigs. 
+Crosschain message passing is done by professional relayers and executors but could technically be done by anyone (even the user themselves if they have access to the bridge message signed by the two verifiers e.g. in case they have committed the verification onchain).
+
+Just like the assets themselves, so-called *credits* (also OFTs) are bridged among the supported pools in the Stargate v2 system. Credits can be seen as claims on assets, so a liquidity pool needs credits for a remote pool to be able to bridge there.
+These credits can be moved and rebalanced (but not minted) by a permissioned role called Planner.`,
       references: [
         {
           title: 'Stargate Docs: Modes of transport',

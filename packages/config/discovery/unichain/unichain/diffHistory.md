@@ -1,20 +1,16 @@
-Generated with discovered.json: 0x2977df8f3180a600c965bb0348f9cf5ac71b8b25
+Generated with discovered.json: 0xefbd9ce6105d07f1e7df78c9ecedbf955f1ce88e
 
-# Diff at Thu, 27 Feb 2025 12:27:00 GMT:
+# Diff at Thu, 27 Feb 2025 13:53:22 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@8b84a9596e4bb8c192dbcfae68208aa4fda4acfb block: 9838404
-- current block number: 9838404
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7afe405a4930423077d17ed79971752d0831e02a block: 9838404
+- current block number: 9916035
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related: Add L2 contracts as templates with source.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 9838404 (main branch discovery), not current.
+## Watched changes
 
 ```diff
     contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
@@ -46,6 +42,23 @@ discovery. Values are for block 9838404 (main branch discovery), not current.
       values.$upgradeCount:
 -        0
 +        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 9838404 (main branch discovery), not current.
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      displayName:
+-        "L2ProxyAdmin"
     }
 ```
 
