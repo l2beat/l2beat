@@ -292,7 +292,7 @@ export const taiko: Layer2 = {
   riskView: {
     stateValidation: {
       description: `A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.
-        The system allows for an invalid state to be finalized by compromised Guardians (the highest two tiers) and does not enforce ZK proofs.`,
+        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs.`,
       sentiment: 'bad',
       value: 'Multi-proofs',
       secondLine: `${SGXcooldownWindow} challenge period`,

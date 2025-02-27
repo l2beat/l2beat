@@ -23,7 +23,7 @@
     value: "Self sequence"
   }
   stateValidation: {
-    description: "A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.\n        The system allows for an invalid state to be finalized by compromised Guardians (the highest two tiers) and does not enforce ZK proofs."
+    description: "A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.\n        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs."
     secondLine: "4h challenge period"
     sentiment: "bad"
     value: "Multi-proofs"
