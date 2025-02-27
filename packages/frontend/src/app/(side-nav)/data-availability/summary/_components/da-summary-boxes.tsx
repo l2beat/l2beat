@@ -138,7 +138,7 @@ function SummaryThroughputBox({
     {
       label: 'Avail',
       value: latest.avail,
-      className: 'bg-[hsl(var(--chart-da-avail))]',
+      className: 'bg-[hsl(var(--chart-emerald))]',
       percentage: round((latest.avail / total) * 100, 2),
     },
   ]
